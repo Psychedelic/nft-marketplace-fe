@@ -1,25 +1,42 @@
-# Getting Started with Create React App
+<div align="center" style="padding-bottom: 20px;">
+  <img src="./.repo/images/crowns-marketplace-logo.png" width="140px" height="auto"/>
+</div>
+
+# NFT Marketplace UI
+
+The NFT Marketplace UI provides you with the opportunity to sell, purchase, offer Crowns NFT collection. Crowns are a collection of 10,000 uniquely generated NFTs on the Internet Computer. With a mix of traditional and psychedelic materials.
+
+## 📒 Table of Contents 
+
+- [Requirements](#-requirements)
+- [Getting Started](#-getting-started)
+  - [Development](#-development)
+- [Contribution guideline](#-contribution-guideline)
+
+## ⚙️ Requirements
+
+- Nodejs
+- Yarn or NPM
+- Configure NPM for [Github Package Registry](https://github.com/features/packages)
+
+## 🤔 Getting started
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### ⚡ Development
 
-In the project directory, you can run:
+Install required packages.\
 
-### `npm start`
+```sh
+yarn install
+```
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
+```sh
+yarn start
+```
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -27,20 +44,44 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```sh
+yarn build
+```
 
-### `npm run eject`
+## 🙏 Contribution guideline
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Create branches from the `main` branch and name it in accordance to **conventional commits** [here](https://www.conventionalcommits.org/en/v1.0.0/), or follow the examples bellow:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```txt
+test: 💍 Adding missing tests
+feat: 🎸 A new feature
+fix: 🐛 A bug fix
+chore: 🤖 Build process or auxiliary tool changes
+docs: ✏️ Documentation only changes
+refactor: 💡 A code change that neither fixes a bug or adds a feature
+style: 💄 Markup, white-space, formatting, missing semi-colons...
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The following example, demonstrates how to branch-out from `main`, creating a `test/a-test-scenario` branch and commit two changes!
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```sh
+git checkout main
 
-## Learn More
+git checkout -b test/a-test-scenario
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+git commit -m 'test: verified X equals Z when Foobar'
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+git commit -m 'refactor: input value changes'
+```
+
+Here's an example of a refactor of an hypotetical `address-panel`:
+
+```sh
+git checkout main
+
+git checkout -b refactor/address-panel
+
+git commit -m 'fix: font-size used in the address description'
+
+git commit -m 'refactor: simplified markup for the address panel'
+```
