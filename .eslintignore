@@ -1,0 +1,4 @@
+*.css
+*.svg
+node_modules
+build
