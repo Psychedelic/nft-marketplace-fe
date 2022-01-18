@@ -1,19 +1,15 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './views/Home';
+import DevelopedComponents from './views/DevelopedComponents';
 
-const App = () => {
-  const { t } = useTranslation();
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>{t('translation:common.title')}</p>
-      </header>
-    </div>
-  );
-};
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/components" element={<DevelopedComponents />} />
+    </Routes>
+  </BrowserRouter>
+);
 
 export default App;
