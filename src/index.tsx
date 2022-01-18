@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import './index.css';
 import App from './App';
+import localesConfig from './locales';
 import reportWebVitals from './reportWebVitals';
+
+i18n.use(initReactI18next).init(localesConfig);
 
 ReactDOM.render(
   <React.StrictMode>
