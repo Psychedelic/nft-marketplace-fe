@@ -1,5 +1,8 @@
 {
   "common": {
     "title": "NFT Marketplace UI"
+  },
+  "buttons": {
+    "getStarted": "Get Started"
   }
 }
