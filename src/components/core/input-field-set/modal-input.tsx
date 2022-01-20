@@ -1,6 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Container, Input } from './styles';
+import wicpLogo from '../../../assets/wicpIcon.png';
+import {
+  Container,
+  Input,
+  AmountTypeContainer,
+  AmountTypeTitle,
+  AmountTypeIcon,
+} from './styles';
 
 export const ModalInput = () => {
   const { t } = useTranslation();
@@ -11,6 +18,10 @@ export const ModalInput = () => {
         name="modalInput"
         placeholder={t('translation:inputField.placeholder.amount')}
       />
+      <AmountTypeContainer>
+        <AmountTypeIcon src={wicpLogo} alt="WICP" />
+        <AmountTypeTitle>WICP</AmountTypeTitle>
+      </AmountTypeContainer>
     </Container>
   );
 };

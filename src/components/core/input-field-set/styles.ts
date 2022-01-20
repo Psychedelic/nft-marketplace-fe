@@ -56,7 +56,7 @@ export const Input = styled('input', {
         lineHeight: '19px',
       },
       modalInput: {
-        padding: '15px 21px',
+        padding: '15px 116px 15px 21px',
         fontSize: '22px',
         fontWeight: 600,
         lineHeight: '27px',
@@ -72,4 +72,31 @@ export const SearchIcon = styled('img', {
   left: '0px',
   top: '0px',
   padding: '14px 16px',
+});
+
+export const AmountTypeContainer = styled('div', {
+  position: 'absolute',
+  top: '0px',
+  right: '0px',
+  width: '93px',
+  height: '53px',
+  background: '#FAFBFD',
+  borderRadius: '0px 14px 14px 0px',
+  border: '1.5px solid #E5E8EB',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+export const AmountTypeTitle = styled('div', {
+  color: '#23262F',
+  fontSize: '18px',
+  fontWeight: '500',
+  lineHeight: '22px',
+});
+
+export const AmountTypeIcon = styled('img', {
+  width: '14px',
+  height: '14px',
+  marginRight: '5px',
 });
