@@ -1,8 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import searchLogo from '../../../assets/searchIcon.svg';
+import { Container, Input, SearchIcon } from './styles';
 
 export const SearchInput = () => {
   const { t } = useTranslation();
 
-  return <input placeholder={t('translation:inputField.placeholder')} />;
+  return (
+    <Container name="searchInput">
+      <SearchIcon src={searchLogo} alt="search" />
+      <Input
+        name="searchInput"
+        placeholder={t('translation:inputField.placeholder.searchCollection')}
+      />
+    </Container>
+  );
 };

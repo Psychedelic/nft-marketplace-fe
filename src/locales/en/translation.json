@@ -6,6 +6,11 @@
     "getStarted": "Get Started"
   },
   "inputField": {
-    "placeholder": "Placeholder"
+    "placeholder": {
+      "searchCollection": "Search collection by ID",
+      "priceMin": "Min",
+      "priceMax": "Max",
+      "amount": "Enter Amount"
+    }
   }
 }

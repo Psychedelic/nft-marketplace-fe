@@ -1,17 +1,30 @@
 import React from 'react';
 import { Container, Title, ComponentWrapper, ComponentTitle } from './styles';
-import { ActionButton, SearchInput } from '../../components';
+import {
+  ActionButton,
+  SearchInput,
+  FilterInput,
+  ModalInput,
+} from '../../components';
 
 const DevelopedComponents = () => (
   <Container>
     <Title>Developed Components</Title>
     <ComponentWrapper>
-      <ComponentTitle>Buttons:</ComponentTitle>
+      <ComponentTitle>Buttons</ComponentTitle>
       <ActionButton />
     </ComponentWrapper>
     <ComponentWrapper>
-      <ComponentTitle>Input Field Set:</ComponentTitle>
+      <ComponentTitle>SearchInput</ComponentTitle>
       <SearchInput />
+    </ComponentWrapper>
+    <ComponentWrapper>
+      <ComponentTitle>FilterInput</ComponentTitle>
+      <FilterInput />
+    </ComponentWrapper>
+    <ComponentWrapper>
+      <ComponentTitle>ModalInput</ComponentTitle>
+      <ModalInput />
     </ComponentWrapper>
   </Container>
 );
