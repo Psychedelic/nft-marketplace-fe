@@ -20,7 +20,9 @@ export const ModalInput = () => {
       />
       <AmountTypeContainer>
         <AmountTypeIcon src={wicpLogo} alt="WICP" />
-        <AmountTypeTitle>WICP</AmountTypeTitle>
+        <AmountTypeTitle>
+          {t('translation:inputField.amountTypes.wicp')}
+        </AmountTypeTitle>
       </AmountTypeContainer>
     </Container>
   );

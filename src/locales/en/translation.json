@@ -11,6 +11,9 @@
       "priceMin": "Min",
       "priceMax": "Max",
       "amount": "Enter Amount"
+    },
+    "amountTypes": {
+      "wicp": "WICP"
     }
   }
 }
