@@ -26,7 +26,9 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>FilterInput</ComponentTitle>
-        <FilterInput />
+        <FilterInput
+          placeholder={t('translation:inputField.placeholder.priceMin')}
+        />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>ModalInput</ComponentTitle>

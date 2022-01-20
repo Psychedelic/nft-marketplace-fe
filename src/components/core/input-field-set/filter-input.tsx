@@ -1,16 +1,30 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { forwardRef, ChangeEvent } from 'react';
 import { Container, Input } from './styles';
 
-export const FilterInput = () => {
-  const { t } = useTranslation();
-
-  return (
-    <Container name="filterInput">
-      <Input
-        name="filterInput"
-        placeholder={t('translation:inputField.placeholder.priceMin')}
-      />
-    </Container>
-  );
+export type FilterInputProps = {
+  placeholder?: string;
+  setValue?: (value: string) => void;
 };
+
+export const FilterInput = forwardRef<HTMLInputElement, FilterInputProps>(
+  ({ placeholder = '', setValue }, ref) => {
+    const handleValueChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const value = event?.target?.value;
+      if (setValue) {
+        setValue(value);
+      }
+    };
+
+    return (
+      <Container name="filterInput">
+        <Input
+          ref={ref}
+          name="filterInput"
+          type="number"
+          placeholder={placeholder}
+          onChange={handleValueChange}
+        />
+      </Container>
+    );
+  },
+);
