@@ -32,7 +32,9 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>ModalInput</ComponentTitle>
-        <ModalInput />
+        <ModalInput
+          placeholder={t('translation:inputField.placeholder.amount')}
+        />
       </ComponentWrapper>
     </Container>
   );
