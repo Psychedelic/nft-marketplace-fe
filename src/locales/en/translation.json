@@ -4,5 +4,8 @@
   },
   "buttons": {
     "getStarted": "Get Started"
+  },
+  "inputField": {
+    "placeholder": "Placeholder"
   }
 }
