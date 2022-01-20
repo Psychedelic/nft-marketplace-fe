@@ -4,5 +4,16 @@
   },
   "buttons": {
     "getStarted": "Get Started"
+  },
+  "inputField": {
+    "placeholder": {
+      "searchCollection": "Search collection by ID",
+      "priceMin": "Min",
+      "priceMax": "Max",
+      "amount": "Enter Amount"
+    },
+    "amountTypes": {
+      "wicp": "WICP"
+    }
   }
 }
