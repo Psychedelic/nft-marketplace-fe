@@ -31,11 +31,9 @@ export const TraitChipContainer = styled('div', {
   boxSizing: 'border-box',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
   padding: '12px 15px',
   borderRadius: '14px',
   background: '#F4F5F6',
-  margin: '0px 10px 10px 0px',
 
   // variants
   variants: {
@@ -43,6 +41,13 @@ export const TraitChipContainer = styled('div', {
       filtered: {
         background: 'rgba(34, 83, 255, 0.1)',
         border: '1.5px solid #87A1FF',
+        margin: '0px 10px 10px 0px',
+      },
+
+      nft: {
+        minWidth: '150px',
+        background: '#F4F5F6',
+        margin: '0px 15px 15px 0px',
       },
     },
   },
@@ -60,13 +65,39 @@ export const TraitName = styled('div', {
   lineHeight: '19px',
   color: '#23262F',
   marginBottom: '2px',
+
+  // variants
+  variants: {
+    type: {
+      nft: {
+        marginBottom: '4px',
+      },
+    },
+  },
 });
 
 export const TraitRim = styled('div', {
+  // base styles
   fontSize: '12px',
   fontWeight: '500',
   lineHeight: '15px',
   color: '#767D8E',
+
+  // variants
+  variants: {
+    type: {
+      nft: {
+        marginBottom: '3px',
+      },
+    },
+  },
+});
+
+export const Traitvalue = styled('div', {
+  fontSize: '14px',
+  fontWeight: 'normal',
+  lineHeight: '17px',
+  color: '#23262F',
 });
 
 export const TraitActionContainer = styled('div', {

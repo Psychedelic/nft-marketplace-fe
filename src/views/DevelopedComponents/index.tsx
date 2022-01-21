@@ -96,7 +96,11 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>NFTTraitsChip</ComponentTitle>
-        <NFTTraitsChip />
+        <ComponentsList>
+          <NFTTraitsChip name="Crystal" rimValue="420 (4.20%)" />
+          <NFTTraitsChip name="Crystal" rimValue="420 (4.20%)" />
+          <NFTTraitsChip name="Crystal" rimValue="420 (4.20%)" />
+        </ComponentsList>
       </ComponentWrapper>
     </Container>
   );

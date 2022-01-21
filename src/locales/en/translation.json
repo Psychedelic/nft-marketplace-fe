@@ -21,7 +21,8 @@
     "labels": {
       "itemsLabel": "Items",
       "OwnersLabel": "Owners",
-      "FloorPriceLabel": "Floor Price"
+      "FloorPriceLabel": "Floor Price",
+      "rim": "Rim"
     }
   },
   "logoAlts": {
