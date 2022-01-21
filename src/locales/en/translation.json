@@ -25,6 +25,7 @@
     }
   },
   "logoAlts": {
-    "wicp": "WICP"
+    "wicp": "WICP",
+    "close": "close"
   }
 }

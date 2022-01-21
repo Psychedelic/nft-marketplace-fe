@@ -67,7 +67,32 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>FilteredTraitsChip</ComponentTitle>
-        <FilteredTraitsChip />
+        <ComponentsList>
+          <FilteredTraitsChip
+            name="Red"
+            rim="Big Gem"
+            removeFilter={() => {
+              // eslint-disable-next-line no-console
+              console.log('callback');
+            }}
+          />
+          <FilteredTraitsChip
+            name="Crystal"
+            rim="Big Gem"
+            removeFilter={() => {
+              // eslint-disable-next-line no-console
+              console.log('callback');
+            }}
+          />
+          <FilteredTraitsChip
+            name="Psychedelic"
+            rim="Rim"
+            removeFilter={() => {
+              // eslint-disable-next-line no-console
+              console.log('callback');
+            }}
+          />
+        </ComponentsList>
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>NFTTraitsChip</ComponentTitle>
