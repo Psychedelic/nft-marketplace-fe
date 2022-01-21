@@ -7,6 +7,7 @@ import {
   ModalInput,
   ActionButton,
   LinkButton,
+  ConnectToPlug,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -66,6 +67,7 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Connect To Plug</ComponentTitle>
+        <ConnectToPlug />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>
