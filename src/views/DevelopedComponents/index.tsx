@@ -1,6 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Container, Title, ComponentWrapper, ComponentTitle } from './styles';
+import {
+  Container,
+  Title,
+  ComponentWrapper,
+  ComponentTitle,
+  ComponentsList,
+} from './styles';
 import {
   ActionButton,
   SearchInput,
@@ -41,7 +47,23 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>FilteredCountChip</ComponentTitle>
-        <FilteredCountChip />
+        <ComponentsList>
+          <FilteredCountChip
+            label={t('translation:chips.labels.itemsLabel')}
+            count="10.0k"
+            showLogo={false}
+          />
+          <FilteredCountChip
+            label={t('translation:chips.labels.OwnersLabel')}
+            count="5.9k"
+            showLogo={false}
+          />
+          <FilteredCountChip
+            label={t('translation:chips.labels.FloorPriceLabel')}
+            count="22.12"
+            showLogo
+          />
+        </ComponentsList>
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>FilteredTraitsChip</ComponentTitle>

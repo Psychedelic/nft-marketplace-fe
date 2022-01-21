@@ -17,6 +17,14 @@
     }
   },
   "chips": {
-    "placeholder": "Chips"
+    "placeholder": "Chips",
+    "labels": {
+      "itemsLabel": "Items",
+      "OwnersLabel": "Owners",
+      "FloorPriceLabel": "Floor Price"
+    }
+  },
+  "logoAlts": {
+    "wicp": "WICP"
   }
 }
