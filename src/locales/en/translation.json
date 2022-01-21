@@ -3,7 +3,18 @@
     "title": "NFT Marketplace UI"
   },
   "buttons": {
-    "getStarted": "Get Started"
+    "links": {
+      "website": "Website",
+      "discord": "discord",
+      "twitter": "twitter",
+      "back": "back"
+    },
+    "action": {
+      "buyNfts": "Buy NFT's",
+      "allNfts": "All NFTs",
+      "buyNow": "Buy Now",
+      "makeOffer": "Make Offer"
+    }
   },
   "inputField": {
     "placeholder": {

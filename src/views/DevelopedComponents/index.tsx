@@ -23,19 +23,19 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Link Buttons</ComponentTitle>
         <LinkButton outline="light" text="bold">
-          Website
+          {t('translation:buttons.links.website')}
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
-          <img src={discord} alt="discord" />
+          <img src={discord} alt={t('translation:buttons.links.discord')} />
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
-          <img src={twitter} alt="twitter" />
+          <img src={twitter} alt={t('translation:buttons.links.twitter')} />
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
-          <img src={back} alt="back" />
+          <img src={back} alt={t('translation:buttons.links.back')} />
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
@@ -49,15 +49,19 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Action Buttons</ComponentTitle>
         <ActionButton background="filled" text="bold">
-          Buy NFTs
+          {t('translation:buttons.action.buyNfts')}
         </ActionButton>
         &nbsp;
         <ActionButton outline="solid" text="bold">
-          All NFTs
+          {t('translation:buttons.action.allNfts')}
+        </ActionButton>
+        &nbsp;
+        <ActionButton background="filled" text="bold">
+          {t('translation:buttons.action.buyNow')}
         </ActionButton>
         &nbsp;
         <ActionButton outline="light" text="bold">
-          Make Offer
+          {t('translation:buttons.action.makeOffer')}
         </ActionButton>
       </ComponentWrapper>
       <ComponentWrapper>

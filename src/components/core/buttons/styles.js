@@ -35,6 +35,7 @@ export const Button = styled('button', {
       },
     },
   },
+  cursor: 'pointer',
   borderRadius: '14px',
   fontSize: '14px',
   padding: '10px 20px',
