@@ -6,6 +6,9 @@ import {
   SearchInput,
   FilterInput,
   ModalInput,
+  FilteredCountChip,
+  FilteredTraitsChip,
+  NFTTraitsChip,
 } from '../../components';
 
 const DevelopedComponents = () => {
@@ -35,6 +38,18 @@ const DevelopedComponents = () => {
         <ModalInput
           placeholder={t('translation:inputField.placeholder.amount')}
         />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>FilteredCountChip</ComponentTitle>
+        <FilteredCountChip />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>FilteredTraitsChip</ComponentTitle>
+        <FilteredTraitsChip />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>NFTTraitsChip</ComponentTitle>
+        <NFTTraitsChip />
       </ComponentWrapper>
     </Container>
   );

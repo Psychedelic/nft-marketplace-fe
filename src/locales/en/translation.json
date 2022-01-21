@@ -15,5 +15,8 @@
     "amountTypes": {
       "wicp": "WICP"
     }
+  },
+  "chips": {
+    "placeholder": "Chips"
   }
 }
