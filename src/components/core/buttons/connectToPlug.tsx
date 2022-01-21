@@ -6,7 +6,7 @@ export const ConnectToPlug = () => (
     <PlugConnect
       title="Connect to Plug"
       whitelist={['canister-id']}
-      onConnectCallback={() => console.log(window.ic.plug.agent.getPrincipal())}
+      onConnectCallback={() => console.log('connected')}
     />
   </div>
 );
