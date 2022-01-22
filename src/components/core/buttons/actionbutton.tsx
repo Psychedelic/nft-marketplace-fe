@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Button } from './styles.js';
+import { Button } from './styles';
 
-interface ActionButtonProps {
+export type ActionButtonProps = {
   background?;
   outline?;
   text?;
@@ -26,10 +25,3 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
     {children}
   </Button>
 );
-
-ActionButton.defaultProps = {
-  children: PropTypes.node,
-  background: PropTypes.any,
-  outline: PropTypes.any,
-  text: PropTypes.any,
-};

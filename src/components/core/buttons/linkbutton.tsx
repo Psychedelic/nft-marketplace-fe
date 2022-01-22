@@ -1,8 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Button } from './styles.js';
+import { Button } from './styles';
 
-interface LinkButtonProps {
+export type LinkButtonProps = {
   background?;
   outline?;
   text?;
@@ -26,10 +25,3 @@ export const LinkButton: React.FC<LinkButtonProps> = ({
     {children}
   </Button>
 );
-
-LinkButton.defaultProps = {
-  children: PropTypes.node,
-  background: PropTypes.any,
-  outline: PropTypes.any,
-  text: PropTypes.any,
-};
