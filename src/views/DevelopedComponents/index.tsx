@@ -14,11 +14,11 @@ const DevelopedComponents = () => {
 
   // dropdown content
   const dropDownContent = [
-    'Recently Listed',
-    'Recently Sold',
-    'Price: Low to High',
-    'Price: High to High',
-    'Highest Last Sale',
+    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
+    `${t('translation:dropdown.priceFilter.recentlySold')}`,
+    `${t('translation:dropdown.priceFilter.lowToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highestLastSale')}`,
   ];
 
   return (
@@ -26,7 +26,10 @@ const DevelopedComponents = () => {
       <Title>Developed Components</Title>
       <ComponentWrapper>
         <ComponentTitle>Dropdown</ComponentTitle>
-        <PriceFilter trigger="Price: Low to High" content={dropDownContent} />
+        <PriceFilter
+          trigger={`${t('translation:dropdown.priceFilter.lowToHigh')}`}
+          content={dropDownContent}
+        />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Buttons</ComponentTitle>
