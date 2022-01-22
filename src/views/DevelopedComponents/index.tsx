@@ -6,14 +6,28 @@ import {
   SearchInput,
   FilterInput,
   ModalInput,
+  PriceFilter,
 } from '../../components';
 
 const DevelopedComponents = () => {
   const { t } = useTranslation();
 
+  // dropdown content
+  const dropDownContent = [
+    'Recently Listed',
+    'Recently Sold',
+    'Price: Low to High',
+    'Price: High to High',
+    'Highest Last Sale',
+  ];
+
   return (
     <Container>
       <Title>Developed Components</Title>
+      <ComponentWrapper>
+        <ComponentTitle>Dropdown</ComponentTitle>
+        <PriceFilter trigger="Price: Low to High" content={dropDownContent} />
+      </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Buttons</ComponentTitle>
         <ActionButton />
