@@ -46,6 +46,8 @@ const DevelopedComponents = () => {
         <LinkButton outline="light" text="bold">
           <img src={closeDrawer} alt="close-tab" />
         </LinkButton>
+        &nbsp;
+        <ConnectToPlug />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Action Buttons</ComponentTitle>
