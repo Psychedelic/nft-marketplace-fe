@@ -28,7 +28,7 @@ const DevelopedComponents = () => {
         <ComponentTitle>Dropdown</ComponentTitle>
         <PriceFilter
           trigger={`${t('translation:dropdown.priceFilter.lowToHigh')}`}
-          content={dropDownContent}
+          options={dropDownContent}
         />
       </ComponentWrapper>
       <ComponentWrapper>

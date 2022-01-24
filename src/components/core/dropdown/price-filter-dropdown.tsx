@@ -10,17 +10,17 @@ import {
 } from './styles';
 import arrowdown from '../../../assets/arrowdown.svg';
 
-export type PriceFilterProps = {
+export type PriceFilterDropdownProps = {
   trigger: string;
-  content: Array<string>;
+  options: Array<string>;
   handleValueChange?: () => void;
 }
 
-export const PriceFilter: React.FC<PriceFilterProps> = ({
+export const PriceFilter = ({
   trigger,
-  content,
+  options,
   handleValueChange,
-}) => {
+}: PriceFilterDropdownProps) => {
   const [selectedValue, setSelectedValue] = useState(`${trigger}`);
 
   return (
@@ -32,7 +32,7 @@ export const PriceFilter: React.FC<PriceFilterProps> = ({
 
       <DropdownContent>
         <DropdownRadioGroup onValueChange={(e) => setSelectedValue(e)}>
-          {content.map((item) => (
+          {options.map((item) => (
             <div key={item}>
               <DropdownMenuItem value={item} textValue={item}>
                 {item}

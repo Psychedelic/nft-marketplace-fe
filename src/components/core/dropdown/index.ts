@@ -1,1 +1,1 @@
-export * from './pricefilter';
+export * from './price-filter-dropdown';
