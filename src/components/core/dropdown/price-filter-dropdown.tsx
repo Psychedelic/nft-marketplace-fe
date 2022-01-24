@@ -11,17 +11,17 @@ import {
 import arrowdown from '../../../assets/arrowdown.svg';
 
 export type PriceFilterDropdownProps = {
-  trigger: string;
+  defaultValue: string;
   options: Array<string>;
   handleValueChange?: () => void;
 };
 
 export const PriceFilterDropdown = ({
-  trigger,
+  defaultValue,
   options,
   handleValueChange,
 }: PriceFilterDropdownProps) => {
-  const [selectedValue, setSelectedValue] = useState(`${trigger}`);
+  const [selectedValue, setSelectedValue] = useState(`${defaultValue}`);
 
   return (
     <DropdownMenu.Root>

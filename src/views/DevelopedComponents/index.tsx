@@ -13,7 +13,8 @@ import {
   FilterInput,
   ModalInput,
   PriceFilterDropdown,
-  MoreOptionsDropdown,
+  CardOptionsDropdown,
+  PlugProfileDropdown,
   FilteredCountChip,
   FilteredTraitsChip,
   NFTTraitsChip,
@@ -37,14 +38,17 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Dropdown</ComponentTitle>
         <PriceFilterDropdown
-          trigger={`${t('translation:dropdown.priceFilter.lowToHigh')}`}
+          defaultValue={`${t('translation:dropdown.priceFilter.lowToHigh')}`}
           options={dropDownContent}
         />
-        &nbsp;
         <br />
-        <MoreOptionsDropdown
+        <CardOptionsDropdown
           content={`${t('translation:dropdown.moreOptions.copyLink')}`}
         />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Plug Dropdown Button</ComponentTitle>
+        <PlugProfileDropdown />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Buttons</ComponentTitle>

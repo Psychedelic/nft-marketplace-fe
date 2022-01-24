@@ -1315,6 +1315,13 @@
     schema-utils "^3.0.0"
     source-map "^0.7.3"
 
+"@psychedelic/plug-connect@^0.1.4":
+  version "0.1.4"
+  resolved "https://npm.pkg.github.com/download/@psychedelic/plug-connect/0.1.4/96dc1f300a0e4dee1322469d11845bdf0997738db6e6ac0a3fc200a1139b49cf#2b1fbfe5b636829e8effe8ff91ae0455405bcca9"
+  integrity sha512-pbqf0WigqUKLg+keFcrEv7MDzd+kA5W5HuB+NKlaGr9IHEfZGD16/l4R5//ZyQ2JXjQHD54JfTOKk8RN+HqqvQ==
+  dependencies:
+    "@stitches/react" "^0.2.3"
+
 "@radix-ui/popper@0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@radix-ui/popper/-/popper-0.1.0.tgz#c387a38f31b7799e1ea0d2bb1ca0c91c2931b063"
@@ -1406,6 +1413,22 @@
     "@radix-ui/react-compose-refs" "0.1.0"
     "@radix-ui/react-primitive" "0.1.3"
     "@radix-ui/react-use-callback-ref" "0.1.0"
+
+"@radix-ui/react-hover-card@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-hover-card/-/react-hover-card-0.1.3.tgz#6cce36280c310cf014d1a3eea396336ea6846420"
+  integrity sha512-nHcH1Q4OaeontN4Elfc7MlYs4oHMLeE16JDu5SLA1Tch4US4K6s6Qri47dvIkNSsCeGVNggGBQAis70fZO1l8A==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@radix-ui/primitive" "0.1.0"
+    "@radix-ui/react-compose-refs" "0.1.0"
+    "@radix-ui/react-context" "0.1.1"
+    "@radix-ui/react-dismissable-layer" "0.1.3"
+    "@radix-ui/react-popper" "0.1.3"
+    "@radix-ui/react-portal" "0.1.3"
+    "@radix-ui/react-presence" "0.1.1"
+    "@radix-ui/react-primitive" "0.1.3"
+    "@radix-ui/react-use-controllable-state" "0.1.0"
 
 "@radix-ui/react-id@0.1.4":
   version "0.1.4"
@@ -1625,6 +1648,11 @@
   integrity sha512-OAPJUAtgeINhh/TAlUID4QTs53Njm7xzddaVlEs/SXwgtiD1tW22zAB/W1wdqfrpmikgaWQ9Fw6Ws+hsiRm5Vg==
   dependencies:
     "@sinonjs/commons" "^1.7.0"
+
+"@stitches/react@^0.2.3":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@stitches/react/-/react-0.2.5.tgz#ad15b4e59ac2a0679542ba002d41253244be7dab"
+  integrity sha512-RDVn89kW0R/M4q4TdYvsJ7nckFndzRWGGFJnEHbIH9flOpahtNdPsrxVSsZSjFpxeVqCoOxKujlQjiyRrec1VA==
 
 "@stitches/react@^1.2.6":
   version "1.2.6"
