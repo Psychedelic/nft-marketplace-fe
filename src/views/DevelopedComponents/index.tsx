@@ -8,10 +8,11 @@ import {
   ComponentsList,
 } from './styles';
 import {
-  ActionButton,
   SearchInput,
   FilterInput,
   ModalInput,
+  ActionButton,
+  LinkButton,
   PriceFilterDropdown,
   CardOptionsDropdown,
   PlugProfileDropdown,
@@ -19,6 +20,11 @@ import {
   FilteredTraitsChip,
   NFTTraitsChip,
 } from '../../components';
+import discord from '../../assets/buttons/discord.svg';
+import twitter from '../../assets/buttons/twitter.svg';
+import back from '../../assets/buttons/back.svg';
+import closeDrawer from '../../assets/buttons/close-drawer.svg';
+import darkTheme from '../../assets/buttons/dark-theme.svg';
 
 const DevelopedComponents = () => {
   const { t } = useTranslation();
@@ -36,6 +42,50 @@ const DevelopedComponents = () => {
     <Container>
       <Title>Developed Components</Title>
       <ComponentWrapper>
+        <ComponentTitle>Link Buttons</ComponentTitle>
+        <LinkButton outline="light" text="bold">
+          {t('translation:buttons.links.website')}
+        </LinkButton>
+        &nbsp;
+        <LinkButton outline="light" text="bold">
+          <img src={discord} alt={t('translation:buttons.links.discord')} />
+        </LinkButton>
+        &nbsp;
+        <LinkButton outline="light" text="bold">
+          <img src={twitter} alt={t('translation:buttons.links.twitter')} />
+        </LinkButton>
+        &nbsp;
+        <LinkButton outline="light" text="bold">
+          <img src={back} alt={t('translation:buttons.links.back')} />
+        </LinkButton>
+        &nbsp;
+        <LinkButton outline="light" text="bold">
+          <img src={darkTheme} alt="dark-theme" />
+        </LinkButton>
+        &nbsp;
+        <LinkButton outline="light" text="bold">
+          <img src={closeDrawer} alt="close-tab" />
+        </LinkButton>
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Action Buttons</ComponentTitle>
+        <ActionButton background="filled" text="bold">
+          {t('translation:buttons.action.buyNfts')}
+        </ActionButton>
+        &nbsp;
+        <ActionButton outline="solid" text="bold">
+          {t('translation:buttons.action.allNfts')}
+        </ActionButton>
+        &nbsp;
+        <ActionButton background="filled" text="bold">
+          {t('translation:buttons.action.buyNow')}
+        </ActionButton>
+        &nbsp;
+        <ActionButton outline="light" text="bold">
+          {t('translation:buttons.action.makeOffer')}
+        </ActionButton>
+      </ComponentWrapper>
+      <ComponentWrapper>
         <ComponentTitle>Dropdown</ComponentTitle>
         <PriceFilterDropdown
           defaultValue={`${t('translation:dropdown.priceFilter.lowToHigh')}`}
@@ -47,10 +97,6 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Plug Dropdown Button</ComponentTitle>
         <PlugProfileDropdown />
-      </ComponentWrapper>
-      <ComponentWrapper>
-        <ComponentTitle>Buttons</ComponentTitle>
-        <ActionButton />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>

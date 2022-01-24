@@ -1,8 +1,27 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Button } from './styles';
 
-export const ActionButton = () => {
-  const { t } = useTranslation();
-
-  return <button type="button">{t('translation:buttons.getStarted')}</button>;
+export type ActionButtonProps = {
+  background?: string;
+  outline?: boolean;
+  text?: string;
+  children?: React.ReactNode;
+  onClick: () => void;
 };
+
+export const ActionButton = ({
+  background, // background = "filled"
+  outline, // outline = "solid"
+  text,
+  children,
+  onClick,
+}: ActionButtonProps) => (
+  <Button
+    onClick={onClick}
+    backgroundColor={background}
+    outline={outline}
+    text={text}
+  >
+    {children}
+  </Button>
+);
