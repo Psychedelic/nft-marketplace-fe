@@ -42,7 +42,28 @@ export const DropdownRadioGroup = styled(DropdownMenu.RadioGroup, {
   display: 'block',
 });
 
-export const DropdownMenuItem = styled(DropdownMenu.RadioItem, {
+export const DropdownGroup = styled(DropdownMenu.Group, {
+  display: 'block',
+});
+
+export const DropdownRadioMenuItem = styled(DropdownMenu.RadioItem, {
+  display: 'flex',
+  alignItems: 'center',
+  padding: '15px',
+  position: 'relative',
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '19px',
+  color: '#23262F',
+  cursor: 'pointer',
+
+  '&:focus': {
+    outline: 'none',
+  },
+});
+
+export const DropdownMenuItem = styled(DropdownMenu.Item, {
   display: 'flex',
   alignItems: 'center',
   padding: '15px',
@@ -63,4 +84,15 @@ export const DropdownMenuSeparator = styled(DropdownMenu.Separator, {
   height: 1,
   backgroundColor: '#E5E8EB',
   width: '100%',
+});
+
+export const Flex = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '100%',
+
+  '& p': {
+    margin: '0',
+  },
 });

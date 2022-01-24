@@ -17,3 +17,8 @@ export const ComponentTitle = styled('h2', {
   fontSize: '18px',
   marginBottom: '25px',
 });
+
+export const ComponentsList = styled('div', {
+  display: 'flex',
+  flexWrap: 'wrap',
+});

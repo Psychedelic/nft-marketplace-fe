@@ -12,6 +12,9 @@
       "highestLastSale": "Highest Last Sale",
       "recentlySold": "Recently Sold",
       "recentlyListed": "Recently Listed"
+    },
+    "moreOptions": {
+      "copyLink": "Copy Link"
     }
   },
   "inputField": {
@@ -24,5 +27,18 @@
     "amountTypes": {
       "wicp": "WICP"
     }
+  },
+  "chips": {
+    "placeholder": "Chips",
+    "labels": {
+      "itemsLabel": "Items",
+      "OwnersLabel": "Owners",
+      "FloorPriceLabel": "Floor Price",
+      "rim": "Rim"
+    }
+  },
+  "logoAlts": {
+    "wicp": "WICP",
+    "close": "close"
   }
 }

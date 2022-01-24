@@ -4,7 +4,7 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {
   DropdownStyle,
   DropdownContent,
-  DropdownMenuItem,
+  DropdownRadioMenuItem,
   DropdownMenuSeparator,
   DropdownRadioGroup,
 } from './styles';
@@ -14,9 +14,9 @@ export type PriceFilterDropdownProps = {
   trigger: string;
   options: Array<string>;
   handleValueChange?: () => void;
-}
+};
 
-export const PriceFilter = ({
+export const PriceFilterDropdown = ({
   trigger,
   options,
   handleValueChange,
@@ -34,9 +34,9 @@ export const PriceFilter = ({
         <DropdownRadioGroup onValueChange={(e) => setSelectedValue(e)}>
           {options.map((item) => (
             <div key={item}>
-              <DropdownMenuItem value={item} textValue={item}>
+              <DropdownRadioMenuItem value={item} textValue={item}>
                 {item}
-              </DropdownMenuItem>
+              </DropdownRadioMenuItem>
               <DropdownMenuSeparator />
             </div>
           ))}
