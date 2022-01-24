@@ -11,8 +11,8 @@ import {
 import arrowdown from '../../../assets/arrowdown.svg';
 
 export type PriceFilterDropdownProps = {
-  defaultValue: string;
-  options: Array<string>;
+  defaultValue: string; // Price: High To Low
+  options: Array<string>; // ["Low To High", "High To Low"]
 };
 
 export const PriceFilterDropdown = ({
