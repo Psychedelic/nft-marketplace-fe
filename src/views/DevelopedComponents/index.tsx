@@ -12,6 +12,9 @@ import {
   SearchInput,
   FilterInput,
   ModalInput,
+  PriceFilterDropdown,
+  CardOptionsDropdown,
+  PlugProfileDropdown,
   FilteredCountChip,
   FilteredTraitsChip,
   NFTTraitsChip,
@@ -20,9 +23,31 @@ import {
 const DevelopedComponents = () => {
   const { t } = useTranslation();
 
+  // dropdown content
+  const dropDownContent = [
+    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
+    `${t('translation:dropdown.priceFilter.recentlySold')}`,
+    `${t('translation:dropdown.priceFilter.lowToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highestLastSale')}`,
+  ];
+
   return (
     <Container>
       <Title>Developed Components</Title>
+      <ComponentWrapper>
+        <ComponentTitle>Dropdown</ComponentTitle>
+        <PriceFilterDropdown
+          defaultValue={`${t('translation:dropdown.priceFilter.lowToHigh')}`}
+          options={dropDownContent}
+        />
+        <br />
+        <CardOptionsDropdown />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Plug Dropdown Button</ComponentTitle>
+        <PlugProfileDropdown />
+      </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Buttons</ComponentTitle>
         <ActionButton />
