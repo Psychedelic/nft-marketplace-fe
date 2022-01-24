@@ -42,9 +42,7 @@ const DevelopedComponents = () => {
           options={dropDownContent}
         />
         <br />
-        <CardOptionsDropdown
-          content={`${t('translation:dropdown.moreOptions.copyLink')}`}
-        />
+        <CardOptionsDropdown />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Plug Dropdown Button</ComponentTitle>

@@ -1,5 +1,6 @@
 import React from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { useTranslation } from 'react-i18next';
 
 import {
   Flex,
@@ -10,21 +11,25 @@ import {
 import moreoptions from '../../../assets/moreoptions.svg';
 import copy from '../../../assets/copy.svg';
 
-export const CardOptionsDropdown = ({ content }) => (
-  <DropdownMenu.Root>
-    <DropdownMenu.Trigger asChild>
-      <img src={moreoptions} alt="more-options" />
-    </DropdownMenu.Trigger>
+export const CardOptionsDropdown = () => {
+  const { t } = useTranslation();
 
-    <DropdownContent>
-      <DropdownGroup>
-        <DropdownMenuItem>
-          <Flex>
-            <p>{content}</p>
-            <img src={copy} alt="copy-link" />
-          </Flex>
-        </DropdownMenuItem>
-      </DropdownGroup>
-    </DropdownContent>
-  </DropdownMenu.Root>
-);
+  return (
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
+        <img src={moreoptions} alt="more-options" />
+      </DropdownMenu.Trigger>
+
+      <DropdownContent>
+        <DropdownGroup>
+          <DropdownMenuItem>
+            <Flex>
+              <p>{`${t('translation:dropdown.moreOptions.copyLink')}`}</p>
+              <img src={copy} alt="copy-link" />
+            </Flex>
+          </DropdownMenuItem>
+        </DropdownGroup>
+      </DropdownContent>
+    </DropdownMenu.Root>
+  );
+};
