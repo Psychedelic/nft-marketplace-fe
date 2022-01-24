@@ -2,11 +2,11 @@ import React from 'react';
 import PlugConnect from '@psychedelic/plug-connect';
 import * as HoverCard from '@radix-ui/react-hover-card';
 
-import { ConnectToPlugButton, Flex } from './styles';
+import { ConnectToPlug, Flex } from './styles';
 import offers from '../../../assets/buttons/offers.svg';
 import disconnect from '../../../assets/buttons/disconnect.svg';
 
-export const ConnectToPlug = () => (
+export const ConnectToPlugButton = () => (
   <HoverCard.Root openDelay={300}>
     <HoverCard.Trigger>
       <PlugConnect
@@ -15,7 +15,7 @@ export const ConnectToPlug = () => (
         onConnectCallback={() => console.log('connected')}
       />
     </HoverCard.Trigger>
-    <ConnectToPlugButton align="end">
+    <ConnectToPlug align="end">
       <Flex>
         <img src={offers} alt="offers" />
         <p>My Offers</p>
@@ -25,6 +25,6 @@ export const ConnectToPlug = () => (
         <img src={disconnect} alt="disconnect" />
         <p>Disconnect</p>
       </Flex>
-    </ConnectToPlugButton>
+    </ConnectToPlug>
   </HoverCard.Root>
 );

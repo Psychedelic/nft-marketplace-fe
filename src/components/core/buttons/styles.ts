@@ -42,7 +42,18 @@ export const Button = styled('button', {
   padding: '10px 20px',
 });
 
-export const ConnectToPlugButton = styled(HoverCard.Content, {
+export const LinkButtonStyles = styled('a', {
+  border: '2px solid #E5E8EB',
+  background: 'transparent',
+  fontWeight: '800',
+  color: '#23262F',
+  cursor: 'pointer',
+  borderRadius: '14px',
+  fontSize: '14px',
+  padding: '10px 20px',
+});
+
+export const ConnectToPlug = styled(HoverCard.Content, {
   minWidth: '220px',
   backgroundColor: 'white',
   border: '2px solid #E5E8EB',

@@ -7,7 +7,7 @@ import {
   ModalInput,
   ActionButton,
   LinkButton,
-  ConnectToPlug,
+  ConnectToPlugButton,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -47,7 +47,7 @@ const DevelopedComponents = () => {
           <img src={closeDrawer} alt="close-tab" />
         </LinkButton>
         &nbsp;
-        <ConnectToPlug />
+        <ConnectToPlugButton />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Action Buttons</ComponentTitle>
@@ -69,7 +69,7 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Connect To Plug</ComponentTitle>
-        <ConnectToPlug />
+        <ConnectToPlugButton />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>
