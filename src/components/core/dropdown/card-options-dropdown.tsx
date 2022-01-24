@@ -10,11 +10,11 @@ import {
 import moreoptions from '../../../assets/moreoptions.svg';
 import copy from '../../../assets/copy.svg';
 
-export type MoreOptionsDropdownProps = {
+export type CardOptionsDropdownProps = {
   content: string;
 };
 
-export const MoreOptionsDropdown = ({ content }: MoreOptionsDropdownProps) => (
+export const CardOptionsDropdown = ({ content }: CardOptionsDropdownProps) => (
   <DropdownMenu.Root>
     <DropdownMenu.Trigger asChild>
       <img src={moreoptions} alt="more-options" />

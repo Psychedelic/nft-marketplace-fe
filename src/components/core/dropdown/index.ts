@@ -1,2 +1,2 @@
 export * from './price-filter-dropdown';
-export * from './more-options-dropdown';
+export * from './card-options-dropdown';
