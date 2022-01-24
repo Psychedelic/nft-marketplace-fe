@@ -16,6 +16,18 @@
       "makeOffer": "Make Offer"
     }
   },
+  "dropdown": {
+    "priceFilter": {
+      "lowToHigh": "Price: Low to High",
+      "highToHigh": "Price: High to High",
+      "highestLastSale": "Highest Last Sale",
+      "recentlySold": "Recently Sold",
+      "recentlyListed": "Recently Listed"
+    },
+    "moreOptions": {
+      "copyLink": "Copy Link"
+    }
+  },
   "inputField": {
     "placeholder": {
       "searchCollection": "Search collection by ID",

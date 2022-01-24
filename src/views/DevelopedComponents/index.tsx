@@ -13,6 +13,9 @@ import {
   ModalInput,
   ActionButton,
   LinkButton,
+  PriceFilterDropdown,
+  CardOptionsDropdown,
+  PlugProfileDropdown,
   FilteredCountChip,
   FilteredTraitsChip,
   NFTTraitsChip,
@@ -25,6 +28,15 @@ import darkTheme from '../../assets/buttons/dark-theme.svg';
 
 const DevelopedComponents = () => {
   const { t } = useTranslation();
+
+  // dropdown content
+  const dropDownContent = [
+    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
+    `${t('translation:dropdown.priceFilter.recentlySold')}`,
+    `${t('translation:dropdown.priceFilter.lowToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highestLastSale')}`,
+  ];
 
   return (
     <Container>
@@ -72,6 +84,19 @@ const DevelopedComponents = () => {
         <ActionButton outline="light" text="bold">
           {t('translation:buttons.action.makeOffer')}
         </ActionButton>
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Dropdown</ComponentTitle>
+        <PriceFilterDropdown
+          defaultValue={`${t('translation:dropdown.priceFilter.lowToHigh')}`}
+          options={dropDownContent}
+        />
+        <br />
+        <CardOptionsDropdown />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Plug Dropdown Button</ComponentTitle>
+        <PlugProfileDropdown />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>

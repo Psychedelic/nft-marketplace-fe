@@ -1,4 +1,3 @@
-import * as HoverCard from '@radix-ui/react-hover-card';
 import { styled } from '../../../stitches.config';
 
 export const Button = styled('button', {
