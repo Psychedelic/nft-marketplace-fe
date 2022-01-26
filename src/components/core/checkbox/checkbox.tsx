@@ -34,6 +34,7 @@ export const Checkbox = ({
           name={value}
           value={value}
           onClick={handleSelectedFilters}
+          checked={selectedFilters.includes(value) && true}
         />
         {value}
       </label>
@@ -41,6 +42,3 @@ export const Checkbox = ({
     </Wrapper>
   );
 };
-
-// value
-// percentage
