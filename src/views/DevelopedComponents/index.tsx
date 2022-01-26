@@ -20,6 +20,7 @@ import {
   FilteredTraitsChip,
   NFTTraitsChip,
   CheckboxFilterAccordion,
+  AboutAccordion,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -102,6 +103,9 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Accordions</ComponentTitle>
         <CheckboxFilterAccordion />
+        <br />
+        <br />
+        <AboutAccordion />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>

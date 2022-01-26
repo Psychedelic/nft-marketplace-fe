@@ -1,10 +1,35 @@
 import React, { useState } from 'react';
 import * as Accordion from '@radix-ui/react-accordion';
+import { Checkbox } from '../checkbox/checkbox';
 import { AccordionStyle, AccordionTrigger, AccordionContent } from './styles';
 import arrowdown from '../../../assets/arrowdown.svg';
 
 export const CheckboxFilterAccordion = () => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const [selectedFilters, setSelectedFilters] = useState<Array<string>>([]);
+
+  const checkboxDummyData = [
+    {
+      value: 'Red',
+      percentage: '1291 (12.9%)',
+    },
+    {
+      value: 'Purple',
+      percentage: '1291 (12.9%)',
+    },
+    {
+      value: 'Yellow',
+      percentage: '1291 (12.9%)',
+    },
+    {
+      value: 'Orange',
+      percentage: '1291 (12.9%)',
+    },
+    {
+      value: 'Green',
+      percentage: '1291 (12.9%)',
+    },
+  ];
 
   return (
     <AccordionStyle
@@ -12,67 +37,33 @@ export const CheckboxFilterAccordion = () => {
       defaultValue="item-1"
       collapsible
       backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
+      width="small"
     >
       <Accordion.Item value="item-1">
-        <AccordionTrigger onClick={() => setIsAccordionOpen(!isAccordionOpen)}>
+        <AccordionTrigger
+          padding="small"
+          backgroundColor="none"
+          borderTop="none"
+          onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+        >
           <p>
             Big Gem&nbsp;
-            <span>(1)</span>
+            <span>
+              {selectedFilters.length > 0 ? `(${selectedFilters.length})` : ''}
+            </span>
           </p>
           <img src={arrowdown} alt="arrow-down" />
         </AccordionTrigger>
-        <AccordionContent>
+        <AccordionContent padding="small">
           <form>
-            <div>
-              <label htmlFor="red">
-                <input type="checkbox" id="red" name="red" value="Red" />
-                Red
-              </label>
-              <span>1291 (12.9%)</span>
-            </div>
-            <div>
-              <label htmlFor="Purple">
-                <input
-                  type="checkbox"
-                  id="Purple"
-                  name="Purple"
-                  value="Purple"
-                />
-                Purple
-              </label>
-              <span>1291 (12.9%)</span>
-            </div>
-            <div>
-              <label htmlFor="Yellow">
-                <input
-                  type="checkbox"
-                  id="Yellow"
-                  name="Yellow"
-                  value="Yellow"
-                />
-                Yellow
-              </label>
-              <span>1291 (12.9%)</span>
-            </div>
-            <div>
-              <label htmlFor="Orange">
-                <input
-                  type="checkbox"
-                  id="Orange"
-                  name="Orange"
-                  value="Orange"
-                />
-                Orange
-              </label>
-              <span>1291 (12.9%)</span>
-            </div>
-            <div>
-              <label htmlFor="Green">
-                <input type="checkbox" id="Green" name="Green" value="Green" />
-                Green
-              </label>
-              <span>1291 (12.9%)</span>
-            </div>
+            {checkboxDummyData.map((data) => (
+              <Checkbox
+                value={data.value}
+                percentage={data.percentage}
+                selectedFilters={selectedFilters}
+                setSelectedFilters={setSelectedFilters}
+              />
+            ))}
           </form>
         </AccordionContent>
       </Accordion.Item>

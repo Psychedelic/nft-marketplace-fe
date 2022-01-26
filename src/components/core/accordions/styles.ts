@@ -3,8 +3,7 @@ import { styled } from '../../../stitches.config';
 
 export const AccordionStyle = styled(Accordion.Root, {
   border: '2px solid #E5E8EB',
-  borderRadius: '14px',
-  background: '#FAFBFD',
+  borderRadius: '15px',
   variants: {
     backgroundColor: {
       open: {
@@ -14,30 +13,120 @@ export const AccordionStyle = styled(Accordion.Root, {
         backgroundColor: 'white',
       },
     },
+    width: {
+      small: {
+        width: '300px',
+      },
+      medium: {
+        width: '650px',
+      },
+    },
   },
-  width: '300px',
+});
+
+export const AccordionHead = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '35px 25px',
+});
+
+export const AccordionHeadContent = styled('div', {
+  display: 'flex',
+
+  '& img': {
+    marginRight: '12px',
+  },
+
+  '& span': {
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: '14px',
+    lineHeight: '17px',
+    display: 'flex',
+    alignitems: 'center',
+    color: '#767D8E',
+  },
+
+  '& p': {
+    margin: '5px 0 0',
+    fontStyle: 'normal',
+    fontWeight: '500',
+    fontSize: '18px',
+    lineHeight: '22px',
+    display: 'flex',
+    alignitems: 'center',
+    color: '#23262F',
+  },
 });
 
 export const AccordionTrigger = styled(Accordion.Trigger, {
-  backgroundColor: 'transparent',
-  height: '44px',
-  padding: '0 15px',
+  variants: {
+    backgroundColor: {
+      open: {
+        backgroundColor: '#FAFBFD',
+      },
+      notopen: {
+        backgroundColor: 'white',
+      },
+      none: {
+        backgroundColor: 'unset',
+      },
+    },
+    padding: {
+      small: {
+        padding: '0 15px',
+        height: '44px',
+      },
+      medium: {
+        padding: '25px 25px',
+      },
+    },
+    borderTop: {
+      none: {
+        border: 'none',
+      },
+      borderSet: {
+        borderRadius: '0px 0px 15px 15px',
+        borderTop: '1.5px solid #E5E8EB',
+        borderRight: 'none',
+        borderLeft: 'none',
+        borderBottom: 'none',
+      },
+    },
+  },
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   width: '100%',
   fontSize: '16px',
   lineHeight: '19px',
-  border: 'none',
   cursor: 'pointer',
   boxSizing: 'border-box',
+
+  '& div': {
+    display: 'flex',
+
+    '& img': {
+      marginRight: '10px',
+    },
+  },
 
   '& p': {
     margin: '0',
     fontStyle: 'normal',
     fontWeight: '500',
-    fontSize: '16px',
-    lineHeight: '19px',
+    variants: {
+      fontSize: {
+        small: {
+          fontSize: '16px',
+          lineHeight: '19px',
+        },
+        medium: {
+          fontSize: '18px',
+          lineHeight: '22px',
+        },
+      },
+    },
     display: 'flex',
     alignItems: 'center',
     color: '#23262F',
@@ -56,52 +145,54 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
 });
 
 export const AccordionContent = styled(Accordion.Content, {
-  backgroundColor: 'transparent',
-  padding: '0 15px',
+  backroundColor: 'transparent',
+  variants: {
+    padding: {
+      small: {
+        padding: '0 15px',
+      },
+      medium: {
+        padding: '0 25px',
+      },
+    },
+  },
   fontSize: '16px',
   lineHeight: '19px',
   border: 'none',
+});
 
+export const Description = styled('p', {
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '19px',
+  color: '#777E90',
+  margin: '0 0 25px',
+});
+
+export const MetaDataWrapper = styled('div', {
   '& div': {
-    padding: '8px 0',
-    cursor: 'pointer',
     display: 'flex',
+    alignItems: 'center',
     justifyContent: 'space-between',
 
-    '&:last-child': {
-      paddingBottom: '15px',
-    },
-
-    '& label': {
-      display: 'flex',
-      alignItems: 'center',
+    '& p': {
       fontStyle: 'normal',
       fontWeight: '500',
       fontSize: '16px',
-      lineHeight: '20px',
-      color: '#23262F',
+      lineHeight: '19px',
+      color: '#777E90',
+      margin: '10px 0px',
 
-      '& input[type="checkbox"]': {
-        marginRight: '8px',
-        marginLeft: '0px',
-        border: '1px solid #777E8F',
-        boxSizing: 'border-box',
-        borderRadius: '4px',
-        width: '22px',
-        height: '17px',
-        cursor: 'pointer',
+      '&:last-child': {
+        fontWeight: 'bold',
+        color: '#23262F',
       },
     },
-
-    '& span': {
-      fontStyle: 'normal',
-      fontWeight: '500',
-      fontSize: '13px',
-      lineHeight: '20px',
-      display: 'flex',
-      alignItems: 'center',
-      textAlign: 'right',
-      color: '#777E8F',
-    },
   },
+});
+
+export const ButtonWrapper = styled('div', {
+  width: '30%',
+  margin: '25px 0',
 });
