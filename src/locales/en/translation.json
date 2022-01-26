@@ -28,6 +28,17 @@
       "copyLink": "Copy Link"
     }
   },
+  "checkbox": {
+    "bigGem": {
+      "bigGem": "Big Gem",
+      "red": "Red",
+      "purple": "Purple",
+      "yellow": "Yellow",
+      "orange": "Orange",
+      "green": "Green",
+      "percentage": "1291 (12.9%)"
+    }
+  },
   "inputField": {
     "placeholder": {
       "searchCollection": "Search collection by ID",

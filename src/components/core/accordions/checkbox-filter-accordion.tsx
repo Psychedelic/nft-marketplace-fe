@@ -1,33 +1,35 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import { Checkbox } from '../checkbox/checkbox';
 import { AccordionStyle, AccordionTrigger, AccordionContent } from './styles';
 import arrowdown from '../../../assets/arrowdown.svg';
 
 export const CheckboxFilterAccordion = () => {
+  const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<Array<string>>([]);
 
   const checkboxDummyData = [
     {
-      value: 'Red',
-      percentage: '1291 (12.9%)',
+      value: `${t('translation:checkbox.bigGem.red')}`,
+      percentage: `${t('translation:checkbox.bigGem.percentage')}`,
     },
     {
-      value: 'Purple',
-      percentage: '1291 (12.9%)',
+      value: `${t('translation:checkbox.bigGem.purple')}`,
+      percentage: `${t('translation:checkbox.bigGem.percentage')}`,
     },
     {
-      value: 'Yellow',
-      percentage: '1291 (12.9%)',
+      value: `${t('translation:checkbox.bigGem.yellow')}`,
+      percentage: `${t('translation:checkbox.bigGem.percentage')}`,
     },
     {
-      value: 'Orange',
-      percentage: '1291 (12.9%)',
+      value: `${t('translation:checkbox.bigGem.orange')}`,
+      percentage: `${t('translation:checkbox.bigGem.percentage')}`,
     },
     {
-      value: 'Green',
-      percentage: '1291 (12.9%)',
+      value: `${t('translation:checkbox.bigGem.green')}`,
+      percentage: `${t('translation:checkbox.bigGem.percentage')}`,
     },
   ];
 
@@ -47,7 +49,8 @@ export const CheckboxFilterAccordion = () => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <p>
-            Big Gem&nbsp;
+            {`${t('translation:checkbox.bigGem.bigGem')}`}
+            &nbsp;
             <span>
               {selectedFilters.length > 0 ? `(${selectedFilters.length})` : ''}
             </span>
