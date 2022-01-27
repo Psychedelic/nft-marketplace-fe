@@ -145,8 +145,18 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
 });
 
 export const AccordionContent = styled(Accordion.Content, {
-  backroundColor: 'transparent',
   variants: {
+    backgroundColor: {
+      open: {
+        backgroundColor: '#FAFBFD',
+      },
+      notopen: {
+        backgroundColor: 'white',
+      },
+      none: {
+        backgroundColor: 'unset',
+      },
+    },
     padding: {
       small: {
         padding: '0 15px',
@@ -156,6 +166,8 @@ export const AccordionContent = styled(Accordion.Content, {
       },
     },
   },
+  borderBottomLeftRadius: '15px',
+  borderBottomRightRadius: '15px',
   fontSize: '16px',
   lineHeight: '19px',
   border: 'none',
@@ -194,5 +206,5 @@ export const MetaDataWrapper = styled('div', {
 
 export const ButtonWrapper = styled('div', {
   width: '30%',
-  margin: '25px 0',
+  padding: '25px 0',
 });

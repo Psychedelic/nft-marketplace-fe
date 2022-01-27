@@ -22,9 +22,67 @@ import collection from '../../../assets/accordions/collection.svg';
 import creator from '../../../assets/accordions/creator.svg';
 import owner from '../../../assets/accordions/owner.svg';
 
-export const AboutAccordion = () => {
+export type AboutAccordionProps = {
+  owned: boolean;
+};
+
+export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+
+  const AccordionHeadContentData = [
+    {
+      subheading: `${t('translation:accordions.about.header.capCrowns')}`,
+      heading: `${t('translation:accordions.about.header.collection')}`,
+      image: collection,
+    },
+    {
+      subheading: `${t('translation:accordions.about.header.capCrowns')}`,
+      heading: `${t('translation:accordions.about.header.creator')}`,
+      image: creator,
+    },
+    {
+      subheading: owned
+        ? `${t('translation:accordions.about.header.you')}`
+        : 'rgblt...whfy',
+      heading: `${t('translation:accordions.about.header.owner')}`,
+      image: owner,
+    },
+  ];
+
+  const AccordionContentMetaData = [
+    {
+      title: `${t('translation:accordions.about.header.canisterId')}`,
+      value: 't7wg4-tyaaa-aaaak-qacaa-cai',
+    },
+    {
+      title: `${t('translation:accordions.about.header.tokenStandard')}`,
+      value: 'DIP20',
+    },
+    {
+      title: `${t('translation:accordions.about.header.tokenId')}`,
+      value: '2713',
+    },
+    {
+      title: `${t('translation:accordions.about.header.blockchain')}`,
+      value: `${t('translation:accordions.about.header.internetComputer')}`,
+    },
+  ];
+
+  const Buttons = [
+    {
+      image: discord,
+      alt: `${t('translation:buttons.links.discord')}`,
+    },
+    {
+      image: twitter,
+      alt: `${t('translation:buttons.links.twitter')}`,
+    },
+    {
+      image: back,
+      alt: `${t('translation:buttons.links.back')} `,
+    },
+  ];
 
   return (
     <AccordionStyle
@@ -34,29 +92,15 @@ export const AboutAccordion = () => {
       width="medium"
     >
       <AccordionHead>
-        <AccordionHeadContent>
-          <img src={collection} alt="collection" />
-          <div>
-            <span>
-              {`${t('translation:accordions.about.header.collection')}`}
-            </span>
-            <p>{`${t('translation:accordions.about.header.capCrowns')}`}</p>
-          </div>
-        </AccordionHeadContent>
-        <AccordionHeadContent>
-          <img src={creator} alt="creator" />
-          <div>
-            <span>{`${t('translation:accordions.about.header.creator')}`}</span>
-            <p>{`${t('translation:accordions.about.header.psychedelic')}`}</p>
-          </div>
-        </AccordionHeadContent>
-        <AccordionHeadContent>
-          <img src={owner} alt="owner" />
-          <div>
-            <span>{`${t('translation:accordions.about.header.owner')}`}</span>
-            <p>{`${t('translation:accordions.about.header.you')}`}</p>
-          </div>
-        </AccordionHeadContent>
+        {AccordionHeadContentData.map((data) => (
+          <AccordionHeadContent>
+            <img src={data.image} alt={data.heading} />
+            <div>
+              <span>{data.heading}</span>
+              <p>{data.subheading}</p>
+            </div>
+          </AccordionHeadContent>
+        ))}
       </AccordionHead>
       <Accordion.Item value="item-1">
         <AccordionTrigger
@@ -71,53 +115,33 @@ export const AboutAccordion = () => {
           </div>
           <img src={!isAccordionOpen ? arrowup : arrowdown} alt="arrow-down" />
         </AccordionTrigger>
-        <AccordionContent padding="medium">
+        <AccordionContent
+          padding="medium"
+          backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
+        >
           <Description>
             {`${t('translation:accordions.about.header.description')}`}
           </Description>
           <MetaDataWrapper>
-            <div>
-              <p>{`${t('translation:accordions.about.header.canisterId')}`}</p>
-              <p>t7wg4-tyaaa-aaaak-qacaa-cai</p>
-            </div>
-            <div>
-              <p>
-                {`${t('translation:accordions.about.header.tokenStandard')}`}
-              </p>
-              <p>DIP20</p>
-            </div>
-            <div>
-              <p>{`${t('translation:accordions.about.header.tokenId')}`}</p>
-              <p>2713</p>
-            </div>
-            <div>
-              <p>{`${t('translation:accordions.about.header.blockchain')}`}</p>
-              <p>
-                {`${t('translation:accordions.about.header.internetComputer')}`}
-              </p>
-            </div>
+            {AccordionContentMetaData.map((data) => (
+              <div>
+                <p>{data.title}</p>
+                <p>{data.value}</p>
+              </div>
+            ))}
             <ButtonWrapper>
               <LinkButton outline="light" text="bold">
                 {t('translation:buttons.links.website')}
               </LinkButton>
               &nbsp;
-              <LinkButton outline="light" text="bold" padding="narrow">
-                <img
-                  src={discord}
-                  alt={t('translation:buttons.links.discord')}
-                />
-              </LinkButton>
-              &nbsp;
-              <LinkButton outline="light" text="bold" padding="narrow">
-                <img
-                  src={twitter}
-                  alt={t('translation:buttons.links.twitter')}
-                />
-              </LinkButton>
-              &nbsp;
-              <LinkButton outline="light" text="bold" padding="narrow">
-                <img src={back} alt={t('translation:buttons.links.back')} />
-              </LinkButton>
+              {Buttons.map((button) => (
+                <>
+                  <LinkButton outline="light" text="bold">
+                    <img src={button.image} alt={button.image} />
+                  </LinkButton>
+                  &nbsp;
+                </>
+              ))}
             </ButtonWrapper>
           </MetaDataWrapper>
         </AccordionContent>

@@ -105,7 +105,7 @@ const DevelopedComponents = () => {
         <CheckboxFilterAccordion />
         <br />
         <br />
-        <AboutAccordion />
+        <AboutAccordion owned />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>
