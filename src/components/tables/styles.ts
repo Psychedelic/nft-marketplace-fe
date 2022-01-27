@@ -111,6 +111,60 @@ export const TableWrapper = styled('div', {
           },
         },
       },
+
+      nftActivity: {
+        table: {
+          background: '#FAFBFD',
+          border: '1.5px solid #E5E8EB',
+          boxSizing: 'border-box',
+          borderRadius: '15px',
+          thead: {
+            tr: {
+              th: {
+                color: '#767D8E',
+                fontSize: '18px',
+                fontWeight: '500',
+                lineHeight: '22px',
+                borderTop: 'initial',
+                borderBottom: '1px solid #E5E8EB',
+                padding: '16px 20px',
+
+                '&:first-child': {
+                  paddingLeft: '20px',
+                },
+              },
+            },
+          },
+          tbody: {
+            tr: {
+              background: '#FAFBFD',
+              td: {
+                color: '#23262F',
+                padding: '24px 20px',
+                fontSize: '18px',
+                fontWeight: '500',
+                lineHeight: '22px',
+                borderBottom: '1px solid #E5E8EB',
+                '&:first-child': {
+                  paddingLeft: '20px',
+                },
+              },
+              '&:last-child': {
+                borderRadius: '15px',
+                td: {
+                  borderBottom: 'initial',
+                  '&:first-child': {
+                    borderRadius: '15px',
+                  },
+                  '&:last-child': {
+                    borderRadius: '15px',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
 });

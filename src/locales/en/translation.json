@@ -63,7 +63,7 @@
       "to": "To",
       "time": "Time",
       "event": "Event",
-      "data": "Date",
+      "date": "Date",
       "floorDifference": "Floor Difference",
       "expiration": "Expiration",
       "action": "Action"

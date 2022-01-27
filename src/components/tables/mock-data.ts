@@ -11,7 +11,7 @@ export const mockTableData = [
     to: 'rgblt...whfy',
     time: '7 hours ago',
     floorDifference: '12.42% above',
-    expiration: '2 days',
+    expiration: '2 days ago',
   },
   {
     item: {
@@ -25,7 +25,7 @@ export const mockTableData = [
     to: 'rgblt...whfy',
     time: '7 hours ago',
     floorDifference: '12.42% above',
-    expiration: '2 days',
+    expiration: '2 days ago',
   },
   {
     item: {
@@ -39,7 +39,7 @@ export const mockTableData = [
     to: 'rgblt...whfy',
     time: '7 hours ago',
     floorDifference: '12.42% above',
-    expiration: '2 days',
+    expiration: '2 days ago',
   },
   {
     item: {
@@ -53,7 +53,7 @@ export const mockTableData = [
     to: 'rgblt...whfy',
     time: '7 hours ago',
     floorDifference: '12.42% above',
-    expiration: '2 days',
+    expiration: '2 days ago',
   },
   {
     item: {
@@ -67,6 +67,6 @@ export const mockTableData = [
     to: 'rgblt...whfy',
     time: '7 hours ago',
     floorDifference: '12.42% above',
-    expiration: '2 days',
+    expiration: '2 days ago',
   },
 ];
