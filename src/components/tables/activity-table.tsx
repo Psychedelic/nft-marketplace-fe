@@ -5,6 +5,7 @@ import {
   TypeDetailsCell,
   PriceDetailsCell,
   TextCell,
+  TextLinkCell,
 } from '../core';
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
@@ -54,11 +55,15 @@ export const ActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.from'),
-        accessor: ({ from }: rowProps) => <div>{from}</div>,
+        accessor: ({ from }: rowProps) => (
+          <TextLinkCell text={from} url="" type="" />
+        ),
       },
       {
         Header: t('translation:tables.titles.to'),
-        accessor: ({ to }: rowProps) => <div>{to}</div>,
+        accessor: ({ to }: rowProps) => (
+          <TextLinkCell text={to} url="" type="" />
+        ),
       },
       {
         Header: t('translation:tables.titles.time'),

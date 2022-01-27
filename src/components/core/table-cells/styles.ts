@@ -95,3 +95,22 @@ export const TextDetails = styled('div', {
     },
   },
 });
+
+export const TextLinkDetails = styled('a', {
+  fontSize: '16px',
+  fontWeight: '600',
+  lineHeight: '20px',
+  color: '#2253FF',
+  textDecoration: 'none',
+
+  variants: {
+    type: {
+      nftActivity: {
+        fontSize: '18px',
+        fontWeight: '500',
+        lineHeight: '22px',
+        color: '#2253FF',
+      },
+    },
+  },
+});
