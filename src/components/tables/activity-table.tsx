@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ItemDetailsCell } from '../core';
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
 import { Container } from './styles';
@@ -7,6 +8,7 @@ import { Container } from './styles';
 export interface rowProps {
   item: {
     name: string;
+    logo: string;
   };
   type: string;
   price: string;
@@ -23,7 +25,9 @@ export const ActivityTable = () => {
     () => [
       {
         Header: t('translation:tables.titles.item'),
-        accessor: ({ item }: rowProps) => <div>{item.name}</div>,
+        accessor: ({ item }: rowProps) => (
+          <ItemDetailsCell name={item.name} logo={item.logo} />
+        ),
       },
       {
         Header: t('translation:tables.titles.type'),

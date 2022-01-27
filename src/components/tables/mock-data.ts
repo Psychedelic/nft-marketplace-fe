@@ -1,8 +1,10 @@
+import crownsLogo from '../../assets/crowns-logo.svg';
+
 export const mockTableData = [
   {
     item: {
       name: 'CAP Crowns #2713',
-      logo: '',
+      logo: crownsLogo,
     },
     type: 'Sale',
     price: '5.12 WICP',
@@ -15,8 +17,8 @@ export const mockTableData = [
   },
   {
     item: {
-      name: 'CAP Crowns #2713',
-      logo: '',
+      name: 'CAP Crowns #2714',
+      logo: crownsLogo,
     },
     type: 'Sale',
     price: '5.12 WICP',
@@ -29,8 +31,8 @@ export const mockTableData = [
   },
   {
     item: {
-      name: 'CAP Crowns #2713',
-      logo: '',
+      name: 'CAP Crowns #2715',
+      logo: crownsLogo,
     },
     type: 'Sale',
     price: '5.12 WICP',
@@ -43,8 +45,8 @@ export const mockTableData = [
   },
   {
     item: {
-      name: 'CAP Crowns #2713',
-      logo: '',
+      name: 'CAP Crowns #2716',
+      logo: crownsLogo,
     },
     type: 'Sale',
     price: '5.12 WICP',
@@ -57,8 +59,8 @@ export const mockTableData = [
   },
   {
     item: {
-      name: 'CAP Crowns #2713',
-      logo: '',
+      name: 'CAP Crowns #2717',
+      logo: crownsLogo,
     },
     type: 'Sale',
     price: '5.12 WICP',
