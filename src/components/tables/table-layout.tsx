@@ -1,15 +1,20 @@
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { useTable } from 'react-table';
 import { TableWrapper } from './styles';
 
 export interface TableLayoutProps {
-  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   columns: any;
   data: Array<object>;
+  tableType: any;
 }
 
-export const TableLayout = ({ columns, data }: TableLayoutProps) => {
+export const TableLayout = ({
+  columns,
+  data,
+  tableType,
+}: TableLayoutProps) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -22,7 +27,7 @@ export const TableLayout = ({ columns, data }: TableLayoutProps) => {
   });
 
   return (
-    <TableWrapper>
+    <TableWrapper type={tableType}>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (

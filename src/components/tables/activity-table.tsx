@@ -55,7 +55,11 @@ export const ActivityTable = () => {
 
   return (
     <Container>
-      <TableLayout columns={columns} data={mockTableData} />
+      <TableLayout
+        columns={columns}
+        data={mockTableData}
+        tableType="activity"
+      />
     </Container>
   );
 };

@@ -65,4 +65,52 @@ export const TableWrapper = styled('div', {
       },
     },
   },
+
+  // Variants
+  variants: {
+    type: {
+      offers: {
+        table: {
+          background: '#FFFFFF',
+          thead: {
+            tr: {
+              th: {
+                color: '#777E90',
+                fontSize: '16px',
+                fontWeight: '500',
+                lineHeight: '19px',
+                borderBottom: '1px solid #E5E8EB',
+                padding: '10px 20px',
+
+                '&:first-child': {
+                  paddingLeft: '20px',
+                },
+              },
+            },
+          },
+          tbody: {
+            tr: {
+              background: '#FAFBFD',
+              td: {
+                color: '#777E90',
+                padding: '16px 20px',
+                fontSize: '16px',
+                fontWeight: '500',
+                lineHeight: '19px',
+                borderBottom: '1px solid #E5E8EB',
+                '&:first-child': {
+                  paddingLeft: '20px',
+                },
+              },
+              '&:last-child': {
+                td: {
+                  borderBottom: 'initial',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 });
