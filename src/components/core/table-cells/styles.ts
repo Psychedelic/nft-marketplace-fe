@@ -73,3 +73,25 @@ export const PriceText = styled('div', {
   lineHeight: '20px',
   color: '#777E90',
 });
+
+export const TextDetails = styled('div', {
+  fontSize: '16px',
+  fontWeight: '600',
+  lineHeight: '20px',
+  color: '#23262F',
+
+  variants: {
+    type: {
+      activityTime: {
+        color: '#2253FF',
+      },
+
+      nftActivityDate: {
+        fontSize: '18px',
+        fontWeight: '500',
+        lineHeight: '22px',
+        color: '#2253FF',
+      },
+    },
+  },
+});

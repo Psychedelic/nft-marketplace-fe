@@ -4,6 +4,7 @@ import {
   ItemDetailsCell,
   TypeDetailsCell,
   PriceDetailsCell,
+  TextCell,
 } from '../core';
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
@@ -47,7 +48,9 @@ export const ActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.quantity'),
-        accessor: ({ quantity }: rowProps) => <div>{quantity}</div>,
+        accessor: ({ quantity }: rowProps) => (
+          <TextCell text={quantity} type="" />
+        ),
       },
       {
         Header: t('translation:tables.titles.from'),
@@ -59,7 +62,9 @@ export const ActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.time'),
-        accessor: ({ time }: rowProps) => <div>{time}</div>,
+        accessor: ({ time }: rowProps) => (
+          <TextCell text={time} type="activityTime" />
+        ),
       },
     ],
     [], // eslint-disable-line react-hooks/exhaustive-deps
