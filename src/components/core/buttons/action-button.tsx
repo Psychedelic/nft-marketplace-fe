@@ -3,7 +3,7 @@ import { Button } from './styles';
 
 export type ActionButtonProps = {
   background?: string;
-  outline?: boolean;
+  outline?: string;
   text?: string;
   children?: React.ReactNode;
   onClick: () => void;
