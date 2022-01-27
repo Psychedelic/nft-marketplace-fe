@@ -19,6 +19,9 @@ import {
   FilteredCountChip,
   FilteredTraitsChip,
   NFTTraitsChip,
+  ActivityTable,
+  NFTActivityTable,
+  OffersTable,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -172,6 +175,18 @@ const DevelopedComponents = () => {
           <NFTTraitsChip name="Crystal" rimValue="420 (4.20%)" />
           <NFTTraitsChip name="Crystal" rimValue="420 (4.20%)" />
         </ComponentsList>
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Activity Table</ComponentTitle>
+        <ActivityTable />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>NFT Activity Table</ComponentTitle>
+        <NFTActivityTable />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Offers Table</ComponentTitle>
+        <OffersTable />
       </ComponentWrapper>
     </Container>
   );

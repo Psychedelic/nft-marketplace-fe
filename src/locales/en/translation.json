@@ -53,6 +53,7 @@
     "close": "close"
   },
   "tables": {
+    "placeholder": "Table",
     "titles": {
       "item": "Item",
       "type": "Type",
