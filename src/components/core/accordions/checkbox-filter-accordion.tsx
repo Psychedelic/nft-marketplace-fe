@@ -12,24 +12,24 @@ export const CheckboxFilterAccordion = () => {
 
   const checkboxDummyData = [
     {
-      value: `${t('translation:checkbox.bigGem.red')}`,
-      percentage: `${t('translation:checkbox.bigGem.percentage')}`,
+      value: `${t('translation:accordions.checkbox.bigGem.red')}`,
+      percentage: `${t('translation:accordions.checkbox.bigGem.percentage')}`,
     },
     {
-      value: `${t('translation:checkbox.bigGem.purple')}`,
-      percentage: `${t('translation:checkbox.bigGem.percentage')}`,
+      value: `${t('translation:accordions.checkbox.bigGem.purple')}`,
+      percentage: `${t('translation:accordions.checkbox.bigGem.percentage')}`,
     },
     {
-      value: `${t('translation:checkbox.bigGem.yellow')}`,
-      percentage: `${t('translation:checkbox.bigGem.percentage')}`,
+      value: `${t('translation:accordions.checkbox.bigGem.yellow')}`,
+      percentage: `${t('translation:accordions.checkbox.bigGem.percentage')}`,
     },
     {
-      value: `${t('translation:checkbox.bigGem.orange')}`,
-      percentage: `${t('translation:checkbox.bigGem.percentage')}`,
+      value: `${t('translation:accordions.checkbox.bigGem.orange')}`,
+      percentage: `${t('translation:accordions.checkbox.bigGem.percentage')}`,
     },
     {
-      value: `${t('translation:checkbox.bigGem.green')}`,
-      percentage: `${t('translation:checkbox.bigGem.percentage')}`,
+      value: `${t('translation:accordions.checkbox.bigGem.green')}`,
+      percentage: `${t('translation:accordions.checkbox.bigGem.percentage')}`,
     },
   ];
 
@@ -49,7 +49,7 @@ export const CheckboxFilterAccordion = () => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <p>
-            {`${t('translation:checkbox.bigGem.bigGem')}`}
+            {`${t('translation:accordions.checkbox.bigGem.bigGem')}`}
             &nbsp;
             <span>
               {selectedFilters.length > 0 ? `(${selectedFilters.length})` : ''}

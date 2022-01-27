@@ -37,22 +37,24 @@ export const AboutAccordion = () => {
         <AccordionHeadContent>
           <img src={collection} alt="collection" />
           <div>
-            <span>Collection</span>
-            <p>CAP Crowns</p>
+            <span>
+              {`${t('translation:accordions.about.header.collection')}`}
+            </span>
+            <p>{`${t('translation:accordions.about.header.capCrowns')}`}</p>
           </div>
         </AccordionHeadContent>
         <AccordionHeadContent>
           <img src={creator} alt="creator" />
           <div>
-            <span>Creator</span>
-            <p>Psychedelic</p>
+            <span>{`${t('translation:accordions.about.header.creator')}`}</span>
+            <p>{`${t('translation:accordions.about.header.psychedelic')}`}</p>
           </div>
         </AccordionHeadContent>
         <AccordionHeadContent>
           <img src={owner} alt="owner" />
           <div>
-            <span>Owner</span>
-            <p>You</p>
+            <span>{`${t('translation:accordions.about.header.owner')}`}</span>
+            <p>{`${t('translation:accordions.about.header.you')}`}</p>
           </div>
         </AccordionHeadContent>
       </AccordionHead>
@@ -65,32 +67,34 @@ export const AboutAccordion = () => {
         >
           <div>
             <img src={info} alt="about-collection" />
-            <p>About Crowns</p>
+            <p>{`${t('translation:accordions.about.header.aboutCrowns')}`}</p>
           </div>
           <img src={!isAccordionOpen ? arrowup : arrowdown} alt="arrow-down" />
         </AccordionTrigger>
         <AccordionContent padding="medium">
           <Description>
-            Crowns are a collection of 10,000 uniquely generated NFTs on the
-            Internet Computer. With a mix of traditional and psychedelic
-            materials.
+            {`${t('translation:accordions.about.header.description')}`}
           </Description>
           <MetaDataWrapper>
             <div>
-              <p>Canister ID</p>
+              <p>{`${t('translation:accordions.about.header.canisterId')}`}</p>
               <p>t7wg4-tyaaa-aaaak-qacaa-cai</p>
             </div>
             <div>
-              <p>Token Standard</p>
+              <p>
+                {`${t('translation:accordions.about.header.tokenStandard')}`}
+              </p>
               <p>DIP20</p>
             </div>
             <div>
-              <p>Token ID</p>
+              <p>{`${t('translation:accordions.about.header.tokenId')}`}</p>
               <p>2713</p>
             </div>
             <div>
-              <p>Blockchain</p>
-              <p>Internet Computer</p>
+              <p>{`${t('translation:accordions.about.header.blockchain')}`}</p>
+              <p>
+                {`${t('translation:accordions.about.header.internetComputer')}`}
+              </p>
             </div>
             <ButtonWrapper>
               <LinkButton outline="light" text="bold">
