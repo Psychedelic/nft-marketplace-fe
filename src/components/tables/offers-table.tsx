@@ -1,5 +1,11 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  PriceDetailsCell,
+  TextCell,
+  TextLinkCell,
+  ActionButton,
+} from '../core';
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
 import { Container } from './styles';
@@ -7,7 +13,7 @@ import { Container } from './styles';
 export interface rowProps {
   price: string;
   floorDifference: string;
-  from: string;
+  offerFrom: string;
   expiration: string;
 }
 
@@ -18,27 +24,46 @@ export const OffersTable = () => {
     () => [
       {
         Header: t('translation:tables.titles.price'),
-        accessor: ({ price }: rowProps) => <div>{price}</div>,
+        accessor: ({ price }: rowProps) => (
+          <PriceDetailsCell
+            wicp="5.12 WICP"
+            price={price}
+            tableType="offers"
+          />
+        ),
       },
       {
         Header: t('translation:tables.titles.floorDifference'),
         accessor: ({ floorDifference }: rowProps) => (
-          <div>{floorDifference}</div>
+          <TextCell text={floorDifference} type="offers" />
         ),
       },
       {
         Header: t('translation:tables.titles.expiration'),
         accessor: ({ expiration }: rowProps) => (
-          <div>{expiration}</div>
+          <TextCell text={expiration} type="offers" />
         ),
       },
       {
         Header: t('translation:tables.titles.from'),
-        accessor: ({ from }: rowProps) => <div>{from}</div>,
+        accessor: ({ offerFrom }: rowProps) => (
+          <TextLinkCell text={offerFrom} url="" type="offers" />
+        ),
       },
       {
         Header: t('translation:tables.titles.action'),
-        accessor: () => <div>Action</div>,
+        accessor: () => (
+          <ActionButton
+            outline="solid"
+            text="Accept"
+            onClick={() => {
+              // eslint-disable-next-line no-console
+              console.log('callback');
+            }}
+          >
+            Accept
+          </ActionButton>
+        ),
       },
     ],
     [], // eslint-disable-line react-hooks/exhaustive-deps

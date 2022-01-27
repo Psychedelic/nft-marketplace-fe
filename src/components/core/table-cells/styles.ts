@@ -48,6 +48,13 @@ export const TypeName = styled('div', {
         lineHeight: '22px',
         color: '#23262F',
       },
+
+      offers: {
+        fontSize: '16px',
+        fontWeight: '500',
+        lineHeight: '19px',
+        color: '#23262F',
+      },
     },
   },
 });
@@ -69,6 +76,10 @@ export const WICPContainer = styled('div', {
       nftActivity: {
         marginBottom: '2px',
       },
+
+      offers: {
+        marginBottom: '3px',
+      },
     },
   },
 });
@@ -86,6 +97,13 @@ export const WICPText = styled('div', {
         fontSize: '18px',
         fontWeight: '500',
         lineHeight: '22px',
+        color: '#23262F',
+      },
+
+      offers: {
+        fontSize: '16px',
+        fontWeight: '500',
+        lineHeight: '19px',
         color: '#23262F',
       },
     },
@@ -106,6 +124,13 @@ export const PriceText = styled('div', {
   variants: {
     tableType: {
       nftActivity: {
+        fontSize: '14px',
+        fontWeight: '500',
+        lineHeight: '17px',
+        color: '#767D8E',
+      },
+
+      offers: {
         fontSize: '14px',
         fontWeight: '500',
         lineHeight: '17px',
@@ -133,6 +158,13 @@ export const TextDetails = styled('div', {
         lineHeight: '22px',
         color: '#2253FF',
       },
+
+      offers: {
+        fontSize: '16px',
+        fontWeight: '500',
+        lineHeight: '19px',
+        color: '#777E90',
+      },
     },
   },
 });
@@ -150,6 +182,13 @@ export const TextLinkDetails = styled('a', {
         fontSize: '18px',
         fontWeight: '500',
         lineHeight: '22px',
+        color: '#2253FF',
+      },
+
+      offers: {
+        fontSize: '16px',
+        fontWeight: '500',
+        lineHeight: '19px',
         color: '#2253FF',
       },
     },
