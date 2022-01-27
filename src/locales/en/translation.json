@@ -51,5 +51,21 @@
   "logoAlts": {
     "wicp": "WICP",
     "close": "close"
+  },
+  "tables": {
+    "titles": {
+      "item": "Item",
+      "type": "Type",
+      "price": "Price",
+      "quantity": "Quantity",
+      "from": "From",
+      "to": "To",
+      "time": "Time",
+      "event": "Event",
+      "data": "Date",
+      "floorDifference": "Floor Difference",
+      "expiration": "Expiration",
+      "action": "Action"
+    }
   }
 }
