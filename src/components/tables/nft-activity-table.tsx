@@ -1,5 +1,11 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  TypeDetailsCell,
+  PriceDetailsCell,
+  TextCell,
+  TextLinkCell,
+} from '../core';
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
 import { Container } from './styles';
@@ -19,24 +25,40 @@ export const NFTActivityTable = () => {
     () => [
       {
         Header: t('translation:tables.titles.event'),
-        accessor: ({ type }: rowProps) => <div>{type}</div>,
+        accessor: ({ type }: rowProps) => (
+          <TypeDetailsCell
+            name={type}
+            type={type}
+            tableType="nftActivity"
+          />
+        ),
       },
       {
         Header: t('translation:tables.titles.price'),
-        accessor: ({ price }: rowProps) => <div>{price}</div>,
+        accessor: ({ price }: rowProps) => (
+          <PriceDetailsCell
+            wicp="5.12 WICP"
+            price={price}
+            tableType="nftActivity"
+          />
+        ),
       },
       {
         Header: t('translation:tables.titles.from'),
-        accessor: ({ from }: rowProps) => <div>{from}</div>,
+        accessor: ({ from }: rowProps) => (
+          <TextLinkCell text={from} url="" type="nftActivity" />
+        ),
       },
       {
         Header: t('translation:tables.titles.to'),
-        accessor: ({ to }: rowProps) => <div>{to}</div>,
+        accessor: ({ to }: rowProps) => (
+          <TextLinkCell text={to} url="" type="nftActivity" />
+        ),
       },
       {
         Header: t('translation:tables.titles.date'),
         accessor: ({ expiration }: rowProps) => (
-          <div>{expiration}</div>
+          <TextCell text={expiration} type="nftActivityDate" />
         ),
       },
     ],

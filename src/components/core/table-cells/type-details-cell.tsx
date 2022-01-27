@@ -8,11 +8,14 @@ import { TypeDetails, TypeLogo, TypeName } from './styles';
 export interface TypeDetailsCellProps {
   name?: string;
   type?: string;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  tableType: any;
 }
 
 export const TypeDetailsCell = ({
   name,
   type,
+  tableType,
 }: TypeDetailsCellProps) => (
   <TypeDetails>
     {type === 'transfer' && (
@@ -21,6 +24,6 @@ export const TypeDetailsCell = ({
     {type === 'mint' && <TypeLogo src={mintLogo} alt="mint" />}
     {type === 'list' && <TypeLogo src={listLogo} alt="list" />}
     {type === 'sale' && <TypeLogo src={saleLogo} alt="sale" />}
-    <TypeName>{name}</TypeName>
+    <TypeName tableType={tableType}>{name}</TypeName>
   </TypeDetails>
 );

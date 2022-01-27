@@ -11,17 +11,20 @@ import {
 export interface PriceDetailsCellProps {
   wicp?: string;
   price?: string;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  tableType: any;
 }
 
 export const PriceDetailsCell = ({
   wicp,
   price,
+  tableType,
 }: PriceDetailsCellProps) => (
   <PriceDetails>
-    <WICPContainer>
-      <WICPText>{wicp}</WICPText>
+    <WICPContainer tableType={tableType}>
+      <WICPText tableType={tableType}>{wicp}</WICPText>
       <WICPLogo src={wicpIcon} alt="wicp" />
     </WICPContainer>
-    <PriceText>{price}</PriceText>
+    <PriceText tableType={tableType}>{price}</PriceText>
   </PriceDetails>
 );

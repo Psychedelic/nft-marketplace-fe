@@ -39,6 +39,17 @@ export const TypeName = styled('div', {
   lineHeight: '20px',
   color: '#23262F',
   textTransform: 'capitalize',
+
+  variants: {
+    tableType: {
+      nftActivity: {
+        fontSize: '18px',
+        fontWeight: '500',
+        lineHeight: '22px',
+        color: '#23262F',
+      },
+    },
+  },
 });
 
 export const PriceDetails = styled('div', {
@@ -52,6 +63,14 @@ export const WICPContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   marginBottom: '6px',
+
+  variants: {
+    tableType: {
+      nftActivity: {
+        marginBottom: '2px',
+      },
+    },
+  },
 });
 
 export const WICPText = styled('div', {
@@ -60,6 +79,17 @@ export const WICPText = styled('div', {
   lineHeight: '20px',
   color: '#23262F',
   marginRight: '4px',
+
+  variants: {
+    tableType: {
+      nftActivity: {
+        fontSize: '18px',
+        fontWeight: '500',
+        lineHeight: '22px',
+        color: '#23262F',
+      },
+    },
+  },
 });
 
 export const WICPLogo = styled('img', {
@@ -72,6 +102,17 @@ export const PriceText = styled('div', {
   fontWeight: '500',
   lineHeight: '20px',
   color: '#777E90',
+
+  variants: {
+    tableType: {
+      nftActivity: {
+        fontSize: '14px',
+        fontWeight: '500',
+        lineHeight: '17px',
+        color: '#767D8E',
+      },
+    },
+  },
 });
 
 export const TextDetails = styled('div', {

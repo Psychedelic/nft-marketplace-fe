@@ -38,13 +38,17 @@ export const ActivityTable = () => {
       {
         Header: t('translation:tables.titles.type'),
         accessor: ({ type }: rowProps) => (
-          <TypeDetailsCell name={type} type={type} />
+          <TypeDetailsCell name={type} type={type} tableType="" />
         ),
       },
       {
         Header: t('translation:tables.titles.price'),
         accessor: ({ price }: rowProps) => (
-          <PriceDetailsCell wicp="5.12 WICP" price={price} />
+          <PriceDetailsCell
+            wicp="5.12 WICP"
+            price={price}
+            tableType=""
+          />
         ),
       },
       {
