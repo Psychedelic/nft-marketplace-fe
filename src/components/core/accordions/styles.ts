@@ -142,6 +142,10 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
       color: '#2253FF',
     },
   },
+
+  '&:focus': {
+    outline: 'none',
+  },
 });
 
 export const AccordionContent = styled(Accordion.Content, {
