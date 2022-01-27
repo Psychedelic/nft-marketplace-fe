@@ -5,7 +5,7 @@ export const Button = styled('button', {
     backgroundColor: {
       filled: {
         backgroundColor: '#2253FF',
-        fontWeight: '800',
+        fontWeight: '600',
         color: '#FCFCFD',
         border: 'none',
       },
@@ -17,28 +17,34 @@ export const Button = styled('button', {
     outline: {
       solid: {
         background: 'transparent',
-        border: '2px solid #2253FF',
-        fontWeight: '800',
+        border: '1px solid #2253FF',
+        fontWeight: '600',
         color: '#2253FF',
       },
       light: {
-        border: '2px solid #E5E8EB',
+        border: '1px solid #E5E8EB',
         background: 'transparent',
-        fontWeight: '800',
+        fontWeight: '600',
         color: '#23262F',
       },
       text: {
         bold: {
-          fontWeight: '800',
+          fontWeight: '600',
           color: 'pink',
         },
       },
     },
   },
   cursor: 'pointer',
-  borderRadius: '14px',
-  fontSize: '14px',
-  padding: '10px 20px',
+  borderRadius: '10px',
+  fontSize: '16px',
+  lineHeight: '19px',
+  padding: '6px 12px',
+  minWidth: '98px',
+  minHeight: '33px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 });
 
 export const LinkButtonStyles = styled('a', {
