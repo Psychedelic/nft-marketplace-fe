@@ -1,6 +1,10 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ItemDetailsCell, TypeDetailsCell } from '../core';
+import {
+  ItemDetailsCell,
+  TypeDetailsCell,
+  PriceDetailsCell,
+} from '../core';
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
 import { Container } from './styles';
@@ -37,7 +41,9 @@ export const ActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.price'),
-        accessor: ({ price }: rowProps) => <div>{price}</div>,
+        accessor: ({ price }: rowProps) => (
+          <PriceDetailsCell wicp="5.12 WICP" price={price} />
+        ),
       },
       {
         Header: t('translation:tables.titles.quantity'),

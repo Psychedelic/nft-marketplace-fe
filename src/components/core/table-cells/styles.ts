@@ -40,3 +40,36 @@ export const TypeName = styled('div', {
   color: '#23262F',
   textTransform: 'capitalize',
 });
+
+export const PriceDetails = styled('div', {
+  // base styles
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+export const WICPContainer = styled('div', {
+  // base styles
+  display: 'flex',
+  alignItems: 'center',
+  marginBottom: '6px',
+});
+
+export const WICPText = styled('div', {
+  fontSize: '16px',
+  fontWeight: '600',
+  lineHeight: '20px',
+  color: '#23262F',
+  marginRight: '4px',
+});
+
+export const WICPLogo = styled('img', {
+  width: '15px',
+  height: '15px',
+});
+
+export const PriceText = styled('div', {
+  fontSize: '16px',
+  fontWeight: '500',
+  lineHeight: '20px',
+  color: '#777E90',
+});
