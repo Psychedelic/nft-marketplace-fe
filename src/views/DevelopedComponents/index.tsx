@@ -22,6 +22,7 @@ import {
   ActivityTable,
   NFTActivityTable,
   OffersTable,
+  NftCard,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -51,11 +52,17 @@ const DevelopedComponents = () => {
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
-          <img src={discord} alt={t('translation:buttons.links.discord')} />
+          <img
+            src={discord}
+            alt={t('translation:buttons.links.discord')}
+          />
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
-          <img src={twitter} alt={t('translation:buttons.links.twitter')} />
+          <img
+            src={twitter}
+            alt={t('translation:buttons.links.twitter')}
+          />
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
@@ -91,11 +98,29 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Dropdown</ComponentTitle>
         <PriceFilterDropdown
-          defaultValue={`${t('translation:dropdown.priceFilter.lowToHigh')}`}
+          defaultValue={`${t(
+            'translation:dropdown.priceFilter.lowToHigh',
+          )}`}
           options={dropDownContent}
         />
         <br />
         <CardOptionsDropdown />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Nft Card</ComponentTitle>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <NftCard />
+          &nbsp;
+          <NftCard notForSale />
+          &nbsp;
+          <NftCard forSaleAndOffer />
+          &nbsp;
+        </div>
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Plug Dropdown Button</ComponentTitle>
@@ -104,13 +129,17 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>
         <SearchInput
-          placeholder={t('translation:inputField.placeholder.searchCollection')}
+          placeholder={t(
+            'translation:inputField.placeholder.searchCollection',
+          )}
         />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>FilterInput</ComponentTitle>
         <FilterInput
-          placeholder={t('translation:inputField.placeholder.priceMin')}
+          placeholder={t(
+            'translation:inputField.placeholder.priceMin',
+          )}
         />
       </ComponentWrapper>
       <ComponentWrapper>
