@@ -2,26 +2,20 @@ import React from 'react';
 import { Button } from './styles';
 
 export type ActionButtonProps = {
-  background?: string;
-  outline?: string;
-  text?: string;
-  children?: React.ReactNode;
-  onClick: () => void;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+  type: any;
+  danger?: boolean;
+  text: string;
+  handleClick: () => void;
 };
 
 export const ActionButton = ({
-  background, // background = "filled"
-  outline, // outline = "solid"
+  type, // type - primary/secondary
+  danger = false, // danger - true/false
   text,
-  children,
-  onClick,
+  handleClick,
 }: ActionButtonProps) => (
-  <Button
-    onClick={onClick}
-    backgroundColor={background}
-    outline={outline}
-    text={text}
-  >
-    {children}
+  <Button onClick={handleClick} type={type} danger={danger}>
+    {text}
   </Button>
 );

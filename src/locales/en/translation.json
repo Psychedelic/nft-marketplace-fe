@@ -3,6 +3,11 @@
     "title": "NFT Marketplace UI"
   },
   "buttons": {
+    "placeholder": {
+      "primary": "Primary",
+      "secondary": "Secondary",
+      "danger": "Danger"
+    },
     "links": {
       "website": "Website",
       "discord": "discord",

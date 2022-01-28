@@ -6,6 +6,7 @@ import {
   ComponentWrapper,
   ComponentTitle,
   ComponentsList,
+  ButtonWrapper,
 } from './styles';
 import {
   SearchInput,
@@ -51,11 +52,17 @@ const DevelopedComponents = () => {
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
-          <img src={discord} alt={t('translation:buttons.links.discord')} />
+          <img
+            src={discord}
+            alt={t('translation:buttons.links.discord')}
+          />
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
-          <img src={twitter} alt={t('translation:buttons.links.twitter')} />
+          <img
+            src={twitter}
+            alt={t('translation:buttons.links.twitter')}
+          />
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
@@ -72,26 +79,46 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Action Buttons</ComponentTitle>
-        <ActionButton background="filled" text="bold">
-          {t('translation:buttons.action.buyNfts')}
-        </ActionButton>
-        &nbsp;
-        <ActionButton outline="solid" text="bold">
-          {t('translation:buttons.action.allNfts')}
-        </ActionButton>
-        &nbsp;
-        <ActionButton background="filled" text="bold">
-          {t('translation:buttons.action.buyNow')}
-        </ActionButton>
-        &nbsp;
-        <ActionButton outline="light" text="bold">
-          {t('translation:buttons.action.makeOffer')}
-        </ActionButton>
+        <ComponentsList>
+          <ButtonWrapper>
+            <ActionButton
+              type="primary"
+              text={t('translation:buttons.placeholder.primary')}
+              handleClick={() => {
+                // eslint-disable-next-line no-console
+                console.log('callback');
+              }}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <ActionButton
+              type="secondary"
+              text={t('translation:buttons.placeholder.secondary')}
+              handleClick={() => {
+                // eslint-disable-next-line no-console
+                console.log('callback');
+              }}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <ActionButton
+              type="primary"
+              text={t('translation:buttons.placeholder.danger')}
+              handleClick={() => {
+                // eslint-disable-next-line no-console
+                console.log('callback');
+              }}
+              danger
+            />
+          </ButtonWrapper>
+        </ComponentsList>
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Dropdown</ComponentTitle>
         <PriceFilterDropdown
-          defaultValue={`${t('translation:dropdown.priceFilter.lowToHigh')}`}
+          defaultValue={`${t(
+            'translation:dropdown.priceFilter.lowToHigh',
+          )}`}
           options={dropDownContent}
         />
         <br />
@@ -104,13 +131,17 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>
         <SearchInput
-          placeholder={t('translation:inputField.placeholder.searchCollection')}
+          placeholder={t(
+            'translation:inputField.placeholder.searchCollection',
+          )}
         />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>FilterInput</ComponentTitle>
         <FilterInput
-          placeholder={t('translation:inputField.placeholder.priceMin')}
+          placeholder={t(
+            'translation:inputField.placeholder.priceMin',
+          )}
         />
       </ComponentWrapper>
       <ComponentWrapper>
