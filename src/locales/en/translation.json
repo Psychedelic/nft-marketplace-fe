@@ -6,6 +6,7 @@
     "placeholder": {
       "primary": "Primary",
       "secondary": "Secondary",
+      "secondaryColored": "Outline",
       "danger": "Danger"
     },
     "links": {

@@ -30,10 +30,23 @@ export const Button = styled('button', {
         color: '#23262F',
         border: '1.5px solid #E5E8EB',
       },
+      outline: {
+        backgroundColor: 'transparent',
+        color: '#2253FF',
+        border: '1.5px solid #2253FF',
+      },
     },
     danger: {
       true: {
         backgroundColor: '#EF4444',
+      },
+    },
+
+    size: {
+      small: {
+        fontSize: '16px',
+        lineHeight: '19px',
+        borderWidth: '1px',
       },
     },
   },

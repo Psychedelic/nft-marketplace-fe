@@ -102,6 +102,18 @@ const DevelopedComponents = () => {
           </ButtonWrapper>
           <ButtonWrapper>
             <ActionButton
+              type="outline"
+              text={t(
+                'translation:buttons.placeholder.secondaryColored',
+              )}
+              handleClick={() => {
+                // eslint-disable-next-line no-console
+                console.log('callback');
+              }}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <ActionButton
               type="primary"
               text={t('translation:buttons.placeholder.danger')}
               handleClick={() => {
