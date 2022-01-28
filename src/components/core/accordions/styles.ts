@@ -18,7 +18,7 @@ export const AccordionStyle = styled(Accordion.Root, {
         width: '300px',
       },
       medium: {
-        width: '650px',
+        width: '700px',
       },
     },
   },
@@ -32,6 +32,37 @@ export const AccordionHead = styled('div', {
 
 export const AccordionHeadContent = styled('div', {
   display: 'flex',
+  variants: {
+    flexProperties: {
+      offer: {
+        justifyContent: 'space-between',
+        width: '100%',
+      },
+    },
+  },
+
+  '& h3': {
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: '32px',
+    lineHeight: '39px',
+    display: 'flex',
+    alignItems: 'center',
+    textAlign: 'right',
+    color: '#767D8E',
+    margin: '0',
+  },
+
+  '& h4': {
+    margin: '5px 0 0',
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fontSize: '32px',
+    lineHeight: '39px',
+    display: 'flex',
+    alignitems: 'center',
+    color: '#23262F',
+  },
 
   '& img': {
     marginRight: '12px',
@@ -57,6 +88,12 @@ export const AccordionHeadContent = styled('div', {
     alignitems: 'center',
     color: '#23262F',
   },
+});
+
+export const FlexRight = styled('div', {
+  display: 'flex',
+  width: '50%',
+  alignItems: 'center',
 });
 
 export const AccordionTrigger = styled(Accordion.Trigger, {
@@ -167,6 +204,9 @@ export const AccordionContent = styled(Accordion.Content, {
       },
       medium: {
         padding: '0 25px',
+      },
+      none: {
+        padding: '0',
       },
     },
   },

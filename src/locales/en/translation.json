@@ -56,6 +56,11 @@
         "blockchain": "Blockchain",
         "internetComputer": "Internet Computer"
       }
+    },
+    "offer": {
+      "header": {
+        "offer": "Offers (12)"
+      }
     }
   },
   "inputField": {
@@ -81,5 +86,22 @@
   "logoAlts": {
     "wicp": "WICP",
     "close": "close"
+  },
+  "tables": {
+    "placeholder": "Table",
+    "titles": {
+      "item": "Item",
+      "type": "Type",
+      "price": "Price",
+      "quantity": "Quantity",
+      "from": "From",
+      "to": "To",
+      "time": "Time",
+      "event": "Event",
+      "date": "Date",
+      "floorDifference": "Floor Difference",
+      "expiration": "Expiration",
+      "action": "Action"
+    }
   }
 }

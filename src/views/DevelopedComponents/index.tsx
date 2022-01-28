@@ -21,6 +21,10 @@ import {
   NFTTraitsChip,
   CheckboxFilterAccordion,
   AboutAccordion,
+  OfferAccordion,
+  ActivityTable,
+  NFTActivityTable,
+  OffersTable,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -50,11 +54,17 @@ const DevelopedComponents = () => {
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
-          <img src={discord} alt={t('translation:buttons.links.discord')} />
+          <img
+            src={discord}
+            alt={t('translation:buttons.links.discord')}
+          />
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
-          <img src={twitter} alt={t('translation:buttons.links.twitter')} />
+          <img
+            src={twitter}
+            alt={t('translation:buttons.links.twitter')}
+          />
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
@@ -90,7 +100,9 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Dropdown</ComponentTitle>
         <PriceFilterDropdown
-          defaultValue={`${t('translation:dropdown.priceFilter.lowToHigh')}`}
+          defaultValue={`${t(
+            'translation:dropdown.priceFilter.lowToHigh',
+          )}`}
           options={dropDownContent}
         />
         <br />
@@ -105,18 +117,25 @@ const DevelopedComponents = () => {
         <CheckboxFilterAccordion />
         <br />
         <br />
+        <OfferAccordion owned />
+        <br />
+        <br />
         <AboutAccordion owned />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>
         <SearchInput
-          placeholder={t('translation:inputField.placeholder.searchCollection')}
+          placeholder={t(
+            'translation:inputField.placeholder.searchCollection',
+          )}
         />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>FilterInput</ComponentTitle>
         <FilterInput
-          placeholder={t('translation:inputField.placeholder.priceMin')}
+          placeholder={t(
+            'translation:inputField.placeholder.priceMin',
+          )}
         />
       </ComponentWrapper>
       <ComponentWrapper>
@@ -181,6 +200,18 @@ const DevelopedComponents = () => {
           <NFTTraitsChip name="Crystal" rimValue="420 (4.20%)" />
           <NFTTraitsChip name="Crystal" rimValue="420 (4.20%)" />
         </ComponentsList>
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Activity Table</ComponentTitle>
+        <ActivityTable />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>NFT Activity Table</ComponentTitle>
+        <NFTActivityTable />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Offers Table</ComponentTitle>
+        <OffersTable />
       </ComponentWrapper>
     </Container>
   );
