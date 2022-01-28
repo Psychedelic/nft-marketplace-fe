@@ -76,6 +76,9 @@
     }
   },
   "modals": {
-    "step": "Step"
+    "placeholder": {
+      "step": "Step Content",
+      "modal": "Modal Content"
+    }
   }
 }
