@@ -74,5 +74,8 @@
       "expiration": "Expiration",
       "action": "Action"
     }
+  },
+  "modals": {
+    "step": "Step"
   }
 }
