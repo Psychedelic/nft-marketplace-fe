@@ -23,6 +23,7 @@ import {
   ActivityTable,
   NFTActivityTable,
   OffersTable,
+  SellModal,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -230,6 +231,10 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Offers Table</ComponentTitle>
         <OffersTable />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Sell Modal</ComponentTitle>
+        <SellModal />
       </ComponentWrapper>
     </Container>
   );

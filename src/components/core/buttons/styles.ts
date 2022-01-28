@@ -47,6 +47,7 @@ export const Button = styled('button', {
         fontSize: '16px',
         lineHeight: '19px',
         borderWidth: '1px',
+        borderRadius: '10px',
       },
     },
   },

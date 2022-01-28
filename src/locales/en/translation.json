@@ -19,7 +19,8 @@
       "buyNfts": "Buy NFT's",
       "allNfts": "All NFTs",
       "buyNow": "Buy Now",
-      "makeOffer": "Make Offer"
+      "makeOffer": "Make Offer",
+      "sell": "Sell"
     }
   },
   "dropdown": {
@@ -79,6 +80,22 @@
     "placeholder": {
       "step": "Step Content",
       "modal": "Modal Content"
+    },
+    "title": {
+      "listForSale": "List for Sale"
+    },
+    "description": {
+      "listForsale": "Enter the sale price you want for your NFT."
+    },
+    "labels": {
+      "listingFee": "Listing Fee",
+      "listingFeePercent": "2.5%",
+      "creatorRoyalityFee": "Creator Royalty Fee",
+      "creatorRoyalityFeePercent": "2.5%"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "completeListing": "Complete Listing"
     }
   }
 }
