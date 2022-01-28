@@ -31,7 +31,7 @@ export const OfferAccordion = () => {
           <FlexRight>
             <img src={dfinity} alt={dfinity} />
             <div>
-              <span>Current Price</span>
+              <span>{`${t('translation:accordions.offer.header.currentPrice')}`}</span>
               <h4>21.12 WICP</h4>
             </div>
           </FlexRight>

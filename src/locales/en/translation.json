@@ -59,7 +59,8 @@
     },
     "offer": {
       "header": {
-        "offer": "Offers (12)"
+        "offer": "Offers (12)",
+        "currentPrice": "Current Price"
       }
     }
   },
