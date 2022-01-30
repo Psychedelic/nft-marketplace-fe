@@ -8,8 +8,8 @@ export const CardWrapper = styled('div', {
   boxSizing: 'border-box',
   boxShadow: '0px 0px 8px #E6E9EF',
   borderRadius: '14px',
-  width: '200px',
-  height: '300px',
+  width: '100%',
+  height: '100%',
   padding: '10px',
 });
 

@@ -24,6 +24,13 @@ export const DropdownStyle = styled(DropdownMenu.Trigger, {
 });
 
 export const DropdownContent = styled(DropdownMenu.Content, {
+  variants: {
+    width: {
+      small: {
+        minWidth: '200px',
+      },
+    },
+  },
   minWidth: '250px',
   backgroundColor: 'white',
   border: '2px solid #E5E8EB',
@@ -37,6 +44,7 @@ export const DropdownContent = styled(DropdownMenu.Content, {
   borderRadius: '15px',
   marginTop: '2%',
   padding: '0',
+  cursor: 'pointer',
 });
 
 export const DropdownRadioGroup = styled(DropdownMenu.RadioGroup, {

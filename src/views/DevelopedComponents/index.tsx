@@ -22,7 +22,7 @@ import {
   ActivityTable,
   NFTActivityTable,
   OffersTable,
-  NftCard,
+  NftList,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -107,19 +107,9 @@ const DevelopedComponents = () => {
         <CardOptionsDropdown />
       </ComponentWrapper>
       <ComponentWrapper>
-        <ComponentTitle>Nft Card</ComponentTitle>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <NftCard />
-          &nbsp;
-          <NftCard notForSale />
-          &nbsp;
-          <NftCard forSaleAndOffer />
-          &nbsp;
+        <ComponentTitle>Nft Card/List</ComponentTitle>
+        <div>
+          <NftList />
         </div>
       </ComponentWrapper>
       <ComponentWrapper>

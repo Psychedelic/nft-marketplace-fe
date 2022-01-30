@@ -16,15 +16,22 @@ export const CardOptionsDropdown = () => {
 
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger asChild>
+      <DropdownMenu.Trigger
+        asChild
+        style={{
+          cursor: 'pointer',
+        }}
+      >
         <img src={moreoptions} alt="more-options" />
       </DropdownMenu.Trigger>
 
-      <DropdownContent>
+      <DropdownContent width="small">
         <DropdownGroup>
           <DropdownMenuItem>
             <Flex>
-              <p>{`${t('translation:dropdown.moreOptions.copyLink')}`}</p>
+              <p>
+                {`${t('translation:dropdown.moreOptions.copyLink')}`}
+              </p>
               <img src={copy} alt="copy-link" />
             </Flex>
           </DropdownMenuItem>
