@@ -2,6 +2,8 @@ import React from 'react';
 import { CardOptionsDropdown } from '../dropdown';
 import {
   CardWrapper,
+  SkeletonLarge,
+  SkeletonSmall,
   Flex,
   OwnedCardText,
   NftName,
@@ -26,37 +28,45 @@ export const NftCard = ({
   data,
 }: NftCardProps) => (
   <CardWrapper>
-    <Flex>
-      <OwnedCardText>{owned ? 'Owned' : ''}</OwnedCardText>
-      <CardOptionsDropdown />
-    </Flex>
-    <Image>
-      <img src={data?.nftImage} alt="nft-card" />
-    </Image>
-    <Flex>
-      <NftName>{data?.nftName}</NftName>
-      {notForSale ? (
-        ''
-      ) : (
-        <Dfinity>
-          {data?.dfinityValue}
-          <img src={data?.dfintiyIcon} alt="" />
-        </Dfinity>
-      )}
-    </Flex>
+    {data.loading ? (
+      <>
+        <SkeletonLarge variant="rectangular" />
+        <SkeletonSmall variant="text" />
+        <SkeletonSmall variant="text" />
+      </>
+    ) : (
+      <>
+        <Flex>
+          <OwnedCardText>{owned ? 'Owned' : ''}</OwnedCardText>
+          <CardOptionsDropdown />
+        </Flex>
+        <Image>
+          <img src={data?.nftImage} alt="nft-card" />
+        </Image>
+        <Flex>
+          <NftName>{data?.nftName}</NftName>
+          {notForSale ? (
+            ''
+          ) : (
+            <Dfinity>
+              {data?.dfinityValue}
+              <img src={data?.dfintiyIcon} alt="" />
+            </Dfinity>
+          )}
+        </Flex>
 
-    <Flex>
-      <NftId>{data?.nftId}</NftId>
-      {notForSale ? (
-        ''
-      ) : (
-        <LastOffer>
-          {forSaleAndOffer ? 'Offer for ' : 'Last '}
-          <b>
-            {data?.lastOffer}
-          </b>
-        </LastOffer>
-      )}
-    </Flex>
+        <Flex>
+          <NftId>{data?.nftId}</NftId>
+          {notForSale ? (
+            ''
+          ) : (
+            <LastOffer>
+              {forSaleAndOffer ? 'Offer for ' : 'Last '}
+              <b>{data?.lastOffer}</b>
+            </LastOffer>
+          )}
+        </Flex>
+      </>
+    )}
   </CardWrapper>
 );

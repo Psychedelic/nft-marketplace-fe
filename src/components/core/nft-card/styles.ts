@@ -1,3 +1,4 @@
+import Skeleton from '@mui/material/Skeleton';
 import { styled } from '../../../stitches.config';
 
 export const CardWrapper = styled('div', {
@@ -11,6 +12,27 @@ export const CardWrapper = styled('div', {
   width: '100%',
   height: '100%',
   padding: '10px',
+  cursor: 'pointer',
+  transition: 'all 0.5s ease-in-out',
+
+  '&:hover': {
+    boxShadow: '0px 0px 8px 3px #E6E9EF',
+    transform: 'scale(1.015)',
+  },
+});
+
+export const SkeletonLarge = styled(Skeleton, {
+  width: '100%',
+  height: '100% !important',
+  borderRadius: '14px',
+  background: 'linear-gradient(90deg, #E5E8EB 0%, #F7F8FA 59.9%)',
+});
+
+export const SkeletonSmall = styled(Skeleton, {
+  width: '100%',
+  height: '30px !important',
+  borderRadius: '14px !important',
+  background: 'linear-gradient(90deg, #E5E8EB 0%, #F7F8FA 59.9%)',
 });
 
 export const Image = styled('div', {

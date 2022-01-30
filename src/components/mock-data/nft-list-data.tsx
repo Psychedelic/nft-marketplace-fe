@@ -9,6 +9,7 @@ export const NftListData = [
     dfinityValue: '21.12',
     nftId: '2713',
     lastOffer: '4.28',
+    loading: true,
   },
   {
     nftImage: nftCard,
