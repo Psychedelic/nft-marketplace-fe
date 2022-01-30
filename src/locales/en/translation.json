@@ -13,7 +13,10 @@
       "buyNfts": "Buy NFT's",
       "allNfts": "All NFTs",
       "buyNow": "Buy Now",
-      "makeOffer": "Make Offer"
+      "makeOffer": "Make Offer",
+      "cancelListing": "Cancel Listing",
+      "changePrice": "Change Price",
+      "backToResults": "Back to results"
     }
   },
   "dropdown": {

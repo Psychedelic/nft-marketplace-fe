@@ -28,6 +28,7 @@ import twitter from '../../assets/buttons/twitter.svg';
 import back from '../../assets/buttons/back.svg';
 import closeDrawer from '../../assets/buttons/close-drawer.svg';
 import darkTheme from '../../assets/buttons/dark-theme.svg';
+import NftActionBar from '../../components/core/nft-action-bar/nft-action-bar';
 
 const DevelopedComponents = () => {
   const { t } = useTranslation();
@@ -45,17 +46,27 @@ const DevelopedComponents = () => {
     <Container>
       <Title>Developed Components</Title>
       <ComponentWrapper>
+        <ComponentTitle>Action Bar</ComponentTitle>
+        <NftActionBar />
+      </ComponentWrapper>
+      <ComponentWrapper>
         <ComponentTitle>Link Buttons</ComponentTitle>
         <LinkButton outline="light" text="bold">
           {t('translation:buttons.links.website')}
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
-          <img src={discord} alt={t('translation:buttons.links.discord')} />
+          <img
+            src={discord}
+            alt={t('translation:buttons.links.discord')}
+          />
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
-          <img src={twitter} alt={t('translation:buttons.links.twitter')} />
+          <img
+            src={twitter}
+            alt={t('translation:buttons.links.twitter')}
+          />
         </LinkButton>
         &nbsp;
         <LinkButton outline="light" text="bold">
@@ -91,7 +102,9 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Dropdown</ComponentTitle>
         <PriceFilterDropdown
-          defaultValue={`${t('translation:dropdown.priceFilter.lowToHigh')}`}
+          defaultValue={`${t(
+            'translation:dropdown.priceFilter.lowToHigh',
+          )}`}
           options={dropDownContent}
         />
         <br />
@@ -104,13 +117,17 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>
         <SearchInput
-          placeholder={t('translation:inputField.placeholder.searchCollection')}
+          placeholder={t(
+            'translation:inputField.placeholder.searchCollection',
+          )}
         />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>FilterInput</ComponentTitle>
         <FilterInput
-          placeholder={t('translation:inputField.placeholder.priceMin')}
+          placeholder={t(
+            'translation:inputField.placeholder.priceMin',
+          )}
         />
       </ComponentWrapper>
       <ComponentWrapper>

@@ -6,7 +6,7 @@ export type ActionButtonProps = {
   outline?: string;
   text?: string;
   children?: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 export const ActionButton = ({
