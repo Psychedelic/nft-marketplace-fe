@@ -19,7 +19,6 @@ const NftActionBar = () => {
           {t('translation:buttons.action.cancelListing')}
         </ActionButton>
         &nbsp;
-        &nbsp;
         <ActionButton background="filled" text="bold">
           {t('translation:buttons.action.changePrice')}
         </ActionButton>

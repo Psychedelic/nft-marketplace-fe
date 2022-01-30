@@ -39,7 +39,7 @@ export const Button = styled('button', {
   borderRadius: '10px',
   fontSize: '16px',
   lineHeight: '19px',
-  padding: '6px 12px',
+  padding: '8px 12px',
   minWidth: '98px',
   minHeight: '33px',
   display: 'flex',
