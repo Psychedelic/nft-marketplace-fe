@@ -21,7 +21,8 @@
       "buyNow": "Buy Now",
       "makeOffer": "Make Offer",
       "sell": "Sell",
-      "changePrice": "Change Price"
+      "changePrice": "Change Price",
+      "cancelListing": "Cancel Listing"
     }
   },
   "dropdown": {
@@ -89,7 +90,8 @@
       "changePrice": "Change Price",
       "nftPurchased": "NFT Purchased!",
       "makeAnOffer": "Make an Offer",
-      "offerSubmitted": "Offer Submitted"
+      "offerSubmitted": "Offer Submitted",
+      "cancelListing": "Cancel Listing"
     },
     "description": {
       "listForsale": "Enter the sale price you want for your NFT.",
@@ -98,7 +100,8 @@
       "changePrice": "Enter the new sale price you want for your NFT.",
       "nftPurchased": "Congrats, you successfully purchased an NFT.",
       "makeAnOffer": "Enter the offer you want to make.",
-      "offerSubmitted": "Congrats, you successfully placed an offer."
+      "offerSubmitted": "Congrats, you successfully placed an offer.",
+      "cancelListing": "Are you sure you want to cancel the listing?"
     },
     "labels": {
       "listingFee": "Listing Fee",
@@ -111,7 +114,8 @@
       "completeListing": "Complete Listing",
       "viewListing": "View Listing",
       "viewNFT": "View NFT",
-      "submitOffer": "Submit Offer"
+      "submitOffer": "Submit Offer",
+      "cancelListing": "Cancel Listing"
     }
   }
 }

@@ -27,6 +27,7 @@ import {
   ChangePriceModal,
   BuyNowModal,
   MakeOfferModal,
+  CancelListingModal,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -250,6 +251,10 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Make Offer Modal</ComponentTitle>
         <MakeOfferModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Cancel Listing Modal</ComponentTitle>
+        <CancelListingModal />
       </ComponentWrapper>
     </Container>
   );
