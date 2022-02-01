@@ -82,10 +82,14 @@
       "modal": "Modal Content"
     },
     "title": {
-      "listForSale": "List for Sale"
+      "listForSale": "List for Sale",
+      "pendingConfirmation": "Pending Confirmation",
+      "listingComplete": "Listing Complete"
     },
     "description": {
-      "listForsale": "Enter the sale price you want for your NFT."
+      "listForsale": "Enter the sale price you want for your NFT.",
+      "pendingConfirmation": "Please confirm the transaction within Plug Wallet.",
+      "listingComplete": "Congrats, your NFT is now listed for sale."
     },
     "labels": {
       "listingFee": "Listing Fee",
@@ -95,7 +99,8 @@
     },
     "buttons": {
       "cancel": "Cancel",
-      "completeListing": "Complete Listing"
+      "completeListing": "Complete Listing",
+      "viewListing": "View Listing"
     }
   }
 }

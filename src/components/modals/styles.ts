@@ -139,4 +139,12 @@ export const ModalButtonWrapper = styled('div', {
   '&:last-child': {
     marginRight: '0px',
   },
+
+  variants: {
+    fullWidth: {
+      true: {
+        width: '430px',
+      },
+    },
+  },
 });

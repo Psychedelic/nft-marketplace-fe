@@ -3,4 +3,4 @@ export * from './dropdown';
 export * from './input-field-set';
 export * from './chips';
 export * from './table-cells';
-export * from './modal-confirmation-steps';
+export * from './status-indicators';
