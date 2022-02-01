@@ -87,14 +87,18 @@
       "pendingConfirmation": "Pending Confirmation",
       "listingComplete": "Listing Complete",
       "changePrice": "Change Price",
-      "nftPurchased": "NFT Purchased!"
+      "nftPurchased": "NFT Purchased!",
+      "makeAnOffer": "Make an Offer",
+      "offerSubmitted": "Offer Submitted"
     },
     "description": {
       "listForsale": "Enter the sale price you want for your NFT.",
       "pendingConfirmation": "Please confirm the transaction within Plug Wallet.",
       "listingComplete": "Congrats, your NFT is now listed for sale.",
       "changePrice": "Enter the new sale price you want for your NFT.",
-      "nftPurchased": "Congrats, you successfully purchased an NFT."
+      "nftPurchased": "Congrats, you successfully purchased an NFT.",
+      "makeAnOffer": "Enter the offer you want to make.",
+      "offerSubmitted": "Congrats, you successfully placed an offer."
     },
     "labels": {
       "listingFee": "Listing Fee",
@@ -106,7 +110,8 @@
       "cancel": "Cancel",
       "completeListing": "Complete Listing",
       "viewListing": "View Listing",
-      "viewNFT": "View NFT"
+      "viewNFT": "View NFT",
+      "submitOffer": "Submit Offer"
     }
   }
 }
