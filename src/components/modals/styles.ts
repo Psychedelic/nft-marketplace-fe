@@ -31,6 +31,11 @@ export const ChangePriceModalTrigger = styled('div', {
   height: '50px',
 });
 
+export const BuyNowModalTrigger = styled('div', {
+  width: '140px',
+  height: '50px',
+});
+
 export const ModalOverlay = styled(DialogPrimitive.Overlay, {
   backgroundColor: 'rgba(250, 251, 253, 0.9)',
   position: 'fixed',
