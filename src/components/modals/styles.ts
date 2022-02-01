@@ -51,6 +51,11 @@ export const CancelOfferModalTrigger = styled('div', {
   height: '50px',
 });
 
+export const AcceptOfferModalTrigger = styled('div', {
+  width: '98px',
+  height: '33px',
+});
+
 export const ModalOverlay = styled(DialogPrimitive.Overlay, {
   backgroundColor: 'rgba(250, 251, 253, 0.9)',
   position: 'fixed',
@@ -148,6 +153,127 @@ export const FeePercent = styled('div', {
   lineHeight: '20px',
   color: '#767D8E',
   marginLeft: '6px',
+});
+
+export const ItemDetailsWrapper = styled('div', {
+  // base styles
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '12px 0px 32px',
+  borderBottom: '1.5px solid #E5E8EB',
+
+  // variants
+  variants: {
+    lastChild: {
+      true: {
+        padding: '32px 0px 12px',
+        borderTop: '1.5px solid #E5E8EB',
+        borderBottom: 'initial',
+        marginTop: '35px',
+      },
+    },
+  },
+});
+
+export const ItemDetails = styled('div', {
+  // base styles
+  display: 'flex',
+  alignItems: 'center',
+});
+
+export const ItemLogo = styled('img', {
+  width: '48px',
+  height: '48px',
+  borderRadius: '10px',
+  marginRight: '12px',
+});
+
+export const ItemName = styled('div', {
+  fontSize: '18px',
+  fontWeight: '600',
+  lineHeight: '20px',
+  color: '#23262F',
+});
+
+export const PriceDetails = styled('div', {
+  // base styles
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+export const WICPContainer = styled('div', {
+  // base styles
+  display: 'flex',
+  alignItems: 'center',
+  marginBottom: '6px',
+
+  // variants
+  variants: {
+    size: {
+      small: {
+        marginBottom: '4px',
+      },
+
+      large: {
+        marginBottom: '8px',
+      },
+    },
+  },
+});
+
+export const WICPText = styled('div', {
+  fontSize: '16px',
+  fontWeight: '600',
+  lineHeight: '20px',
+  color: '#23262F',
+
+  // variants
+  variants: {
+    size: {
+      small: {
+        fontSize: '18px',
+      },
+
+      large: {
+        fontSize: '24px',
+      },
+    },
+  },
+});
+
+export const WICPLogo = styled('img', {
+  width: '15px',
+  height: '15px',
+  marginRight: '5px',
+
+  // variants
+  variants: {
+    size: {
+      large: {
+        width: '20px',
+        height: '20px',
+        marginRight: '4px',
+      },
+    },
+  },
+});
+
+export const PriceText = styled('div', {
+  fontSize: '18px',
+  fontWeight: '500',
+  lineHeight: '20px',
+  color: '#777E90',
+  textAlign: 'right',
+
+  // variants
+  variants: {
+    size: {
+      large: {
+        fontSize: '20px',
+      },
+    },
+  },
 });
 
 export const ModalButtonsList = styled('div', {
