@@ -20,7 +20,8 @@
       "allNfts": "All NFTs",
       "buyNow": "Buy Now",
       "makeOffer": "Make Offer",
-      "sell": "Sell"
+      "sell": "Sell",
+      "changePrice": "Change Price"
     }
   },
   "dropdown": {
@@ -84,12 +85,14 @@
     "title": {
       "listForSale": "List for Sale",
       "pendingConfirmation": "Pending Confirmation",
-      "listingComplete": "Listing Complete"
+      "listingComplete": "Listing Complete",
+      "changePrice": "Change Price"
     },
     "description": {
       "listForsale": "Enter the sale price you want for your NFT.",
       "pendingConfirmation": "Please confirm the transaction within Plug Wallet.",
-      "listingComplete": "Congrats, your NFT is now listed for sale."
+      "listingComplete": "Congrats, your NFT is now listed for sale.",
+      "changePrice": "Enter the new sale price you want for your NFT."
     },
     "labels": {
       "listingFee": "Listing Fee",
