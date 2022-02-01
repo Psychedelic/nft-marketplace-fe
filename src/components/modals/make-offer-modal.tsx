@@ -23,7 +23,7 @@ export const MakeOfferModal = () => {
   const { t } = useTranslation();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  // Sell modal steps: listingInfo/submitted
+  // MakeOffer modal steps: listingInfo/submitted
   const [modalStep, setModalStep] = useState<string>('listingInfo');
 
   const handleModalOpen = (status: boolean) => {

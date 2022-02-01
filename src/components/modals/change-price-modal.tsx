@@ -35,7 +35,7 @@ export const ChangePriceModal = () => {
   const { t } = useTranslation();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  // Sell modal steps: listingInfo/pending/confirmed
+  // ChangePrice modal steps: listingInfo/pending/confirmed
   const [modalStep, setModalStep] = useState<string>('listingInfo');
 
   const handleModalOpen = (status: boolean) => {

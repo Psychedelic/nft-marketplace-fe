@@ -22,7 +22,7 @@ export const BuyNowModal = () => {
   const { t } = useTranslation();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  // Sell modal steps: pending/confirmed
+  // BuyNow modal steps: pending/confirmed
   const [modalStep, setModalStep] = useState<string>('pending');
 
   const handleModalOpen = (status: boolean) => {
