@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, ModalInput } from '../core';
@@ -8,6 +8,7 @@ import {
   ModalOverlay,
   ModalContent,
   Container,
+  ModalHeader,
   ModalTitle,
   ModalDescription,
   SaleContentWrapper,
@@ -21,33 +22,63 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+/* --------------------------------------------------------------------------
+ * Sell Modal Component
+ * --------------------------------------------------------------------------*/
+
 export const SellModal = () => {
   const { t } = useTranslation();
 
+  const [modalOpened, setModalOpened] = useState<boolean>(false);
+
   return (
-    <DialogPrimitive.Root>
+    <DialogPrimitive.Root
+      open={modalOpened}
+      onOpenChange={setModalOpened}
+    >
+      {/*
+        ---------------------------------
+        Modal Trigger
+        ---------------------------------
+      */}
       <DialogPrimitive.Trigger asChild>
         <SellModalTrigger>
           <ActionButton
-            asChild
             type="primary"
             text={t('translation:buttons.action.sell')}
             handleClick={() => {
               // eslint-disable-next-line no-console
-              console.log('callback');
+              console.log('Sell modal opened');
             }}
           />
         </SellModalTrigger>
       </DialogPrimitive.Trigger>
+      {/*
+        ---------------------------------
+        Modal Overlay
+        ---------------------------------
+      */}
       <ModalOverlay />
       <ModalContent>
         <Container>
-          <ModalTitle>
-            {t('translation:modals.title.listForSale')}
-          </ModalTitle>
-          <ModalDescription>
-            {t('translation:modals.description.listForsale')}
-          </ModalDescription>
+          {/*
+            ---------------------------------
+            Modal Header
+            ---------------------------------
+          */}
+          <ModalHeader>
+            <ModalTitle>
+              {t('translation:modals.title.listForSale')}
+            </ModalTitle>
+            <ModalDescription>
+              {t('translation:modals.description.listForsale')}
+            </ModalDescription>
+          </ModalHeader>
+          {/*
+            ---------------------------------
+            Sale Details
+            ---------------------------------
+          */}
           <SaleContentWrapper>
             <ModalInput
               placeholder={t(
@@ -83,14 +114,18 @@ export const SellModal = () => {
               </FeeDetails>
             </FeeContainer>
           </SaleContentWrapper>
+          {/*
+            ---------------------------------
+            Modal Action Buttons
+            ---------------------------------
+          */}
           <ModalButtonsList>
             <ModalButtonWrapper>
               <ActionButton
                 type="secondary"
                 text={t('translation:modals.buttons.cancel')}
                 handleClick={() => {
-                  // eslint-disable-next-line no-console
-                  console.log('callback');
+                  setModalOpened(false);
                 }}
               />
             </ModalButtonWrapper>

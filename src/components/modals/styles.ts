@@ -57,6 +57,12 @@ export const Container = styled('div', {
   width: '100%',
 });
 
+export const ModalHeader = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  margin: '0px 0px 30px',
+});
+
 export const ModalTitle = styled(DialogPrimitive.Title, {
   fontSize: '32px',
   fontWeight: 'bold',
@@ -70,7 +76,7 @@ export const ModalDescription = styled(DialogPrimitive.Description, {
   fontWeight: '600',
   lineHeight: '20px',
   color: '#767D8E',
-  margin: '0px 0px 30px',
+  margin: '0px',
 });
 
 export const SaleContentWrapper = styled('div', {
@@ -80,7 +86,7 @@ export const SaleContentWrapper = styled('div', {
 export const FeeContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  margin: '35px 0px',
+  margin: '35px 0px 0px',
 });
 
 export const FeeDetails = styled('div', {
@@ -122,6 +128,7 @@ export const FeePercent = styled('div', {
 export const ModalButtonsList = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
+  marginTop: '35px',
 });
 
 export const ModalButtonWrapper = styled('div', {
