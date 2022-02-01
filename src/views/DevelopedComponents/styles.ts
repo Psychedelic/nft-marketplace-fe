@@ -22,3 +22,9 @@ export const ComponentsList = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
 });
+
+export const ButtonWrapper = styled('div', {
+  width: '140px',
+  height: '50px',
+  margin: '10px 10px 10px 0px',
+});

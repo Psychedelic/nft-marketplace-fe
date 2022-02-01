@@ -3,6 +3,12 @@
     "title": "NFT Marketplace UI"
   },
   "buttons": {
+    "placeholder": {
+      "primary": "Primary",
+      "secondary": "Secondary",
+      "secondaryColored": "Outline",
+      "danger": "Danger"
+    },
     "links": {
       "website": "Website",
       "discord": "discord",
@@ -13,7 +19,12 @@
       "buyNfts": "Buy NFT's",
       "allNfts": "All NFTs",
       "buyNow": "Buy Now",
-      "makeOffer": "Make Offer"
+      "makeOffer": "Make Offer",
+      "sell": "Sell",
+      "changePrice": "Change Price",
+      "cancelListing": "Cancel Listing",
+      "cancelOffer": "Cancel Offer",
+      "acceptOffer": "Accept"
     }
   },
   "dropdown": {
@@ -67,6 +78,56 @@
       "floorDifference": "Floor Difference",
       "expiration": "Expiration",
       "action": "Action"
+    }
+  },
+  "modals": {
+    "placeholder": {
+      "step": "Step Content",
+      "modal": "Modal Content"
+    },
+    "title": {
+      "listForSale": "List for Sale",
+      "pendingConfirmation": "Pending Confirmation",
+      "listingComplete": "Listing Complete",
+      "changePrice": "Change Price",
+      "nftPurchased": "NFT Purchased!",
+      "makeAnOffer": "Make an Offer",
+      "offerSubmitted": "Offer Submitted",
+      "cancelListing": "Cancel Listing",
+      "cancelOffer": "Cancel Offer",
+      "acceptOffer": "Accept Offer",
+      "offerAccepted": "Offer Accepted!"
+    },
+    "description": {
+      "listForsale": "Enter the sale price you want for your NFT.",
+      "pendingConfirmation": "Please confirm the transaction within Plug Wallet.",
+      "listingComplete": "Congrats, your NFT is now listed for sale.",
+      "changePrice": "Enter the new sale price you want for your NFT.",
+      "nftPurchased": "Congrats, you successfully purchased an NFT.",
+      "makeAnOffer": "Enter the offer you want to make.",
+      "offerSubmitted": "Congrats, you successfully placed an offer.",
+      "cancelListing": "Are you sure you want to cancel the listing?",
+      "cancelOffer": "Are you sure you want to cancel this Offer?",
+      "acceptOffer": "Review the following offer and accept the bid.",
+      "offerAccepted": "Congrats, you successfully accepted an offer."
+    },
+    "labels": {
+      "listingFee": "Listing Fee",
+      "listingFeePercent": "2.5%",
+      "creatorRoyalityFee": "Creator Royalty Fee",
+      "creatorRoyalityFeePercent": "2.5%",
+      "totalEarnings": "Total Earnings"
+    },
+    "buttons": {
+      "cancel": "Cancel",
+      "completeListing": "Complete Listing",
+      "viewListing": "View Listing",
+      "viewNFT": "View NFT",
+      "submitOffer": "Submit Offer",
+      "cancelListing": "Cancel Listing",
+      "cancelOffer": "Cancel Offer",
+      "acceptOffer": "Accept Offer",
+      "done": "Done"
     }
   }
 }
