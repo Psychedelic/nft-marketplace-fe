@@ -30,6 +30,7 @@ import {
   CancelListingModal,
   CancelOfferModal,
   AcceptOfferModal,
+  Tab,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -265,6 +266,10 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Accept Offer Modal</ComponentTitle>
         <AcceptOfferModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Tabs</ComponentTitle>
+        <Tab />
       </ComponentWrapper>
     </Container>
   );
