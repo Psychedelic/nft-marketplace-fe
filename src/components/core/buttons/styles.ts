@@ -1,37 +1,53 @@
 import { styled } from '../../../stitches.config';
 
 export const Button = styled('button', {
+  // base styles
+  width: '100%',
+  height: '100%',
+  minWidth: '98px',
+  minHeight: '33px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '18px',
+  fontWeight: '600',
+  lineHeight: '22px',
+  borderRadius: '14px',
+
+  '&:hover': {
+    cursor: 'pointer',
+  },
+
   variants: {
-    backgroundColor: {
-      filled: {
+    type: {
+      primary: {
         backgroundColor: '#2253FF',
-        fontWeight: '600',
         color: '#FCFCFD',
         border: 'none',
       },
-      notfilled: {
+      secondary: {
         backgroundColor: 'transparent',
         color: '#23262F',
+        border: '1.5px solid #E5E8EB',
+      },
+      outline: {
+        backgroundColor: 'transparent',
+        color: '#2253FF',
+        border: '1.5px solid #2253FF',
       },
     },
-    outline: {
-      solid: {
-        background: 'transparent',
-        border: '1px solid #2253FF',
-        fontWeight: '600',
-        color: '#2253FF',
+    danger: {
+      true: {
+        backgroundColor: '#EF4444',
       },
-      light: {
-        border: '1px solid #E5E8EB',
-        background: 'transparent',
-        fontWeight: '600',
-        color: '#23262F',
-      },
-      text: {
-        bold: {
-          fontWeight: '600',
-          color: 'pink',
-        },
+    },
+
+    size: {
+      small: {
+        fontSize: '16px',
+        lineHeight: '19px',
+        borderWidth: '1px',
+        borderRadius: '10px',
       },
     },
   },
