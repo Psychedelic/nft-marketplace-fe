@@ -14,7 +14,7 @@ import {
   ModalInput,
   ActionButton,
   LinkButton,
-  CollectionMetadata,
+  NFTOverview,
   PriceFilterDropdown,
   CardOptionsDropdown,
   PlugProfileDropdown,
@@ -152,6 +152,16 @@ const DevelopedComponents = () => {
         <PlugProfileDropdown />
       </ComponentWrapper>
       <ComponentWrapper>
+        <ComponentTitle>Accordions</ComponentTitle>
+        <CheckboxFilterAccordion />
+        <br />
+        <br />
+        <OfferAccordion owned />
+        <br />
+        <br />
+        <AboutAccordion owned />
+      </ComponentWrapper>
+      <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>
         <SearchInput
           placeholder={t(
@@ -272,15 +282,7 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Collection Metadata</ComponentTitle>
-        <CollectionMetadata />
-        <ComponentTitle>Accordions</ComponentTitle>
-        <CheckboxFilterAccordion />
-        <br />
-        <br />
-        <OfferAccordion owned />
-        <br />
-        <br />
-        <AboutAccordion owned />
+        <NFTOverview />
       </ComponentWrapper>
     </Container>
   );

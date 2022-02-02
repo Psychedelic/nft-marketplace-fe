@@ -6,7 +6,7 @@ import { CollectionMetadataWrapper } from './styles';
 import back from '../../../assets/buttons/back.svg';
 import verified from '../../../assets/verified.svg';
 
-export const CollectionMetadata = () => {
+export const NFTOverview = () => {
   const { t } = useTranslation();
 
   return (

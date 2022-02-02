@@ -5,5 +5,5 @@ export * from './chips';
 export * from './accordions';
 export * from './checkbox';
 export * from './table-cells';
-export * from './collection-metadata';
+export * from './nft-overview';
 export * from './status-indicators';
