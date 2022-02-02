@@ -1,27 +1,19 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { LinkButtonStyles } from './styles';
 
 export type LinkButtonProps = {
-  background?: string;
-  outline?: boolean;
-  text?: string;
+  type?: any;
   children?: React.ReactNode;
   url?: string;
 };
 
 export const LinkButton = ({
-  background,
-  outline,
-  text,
+  type,
   children,
   url,
 }: LinkButtonProps) => (
-  <LinkButtonStyles
-    href={url}
-    backgroundColor={background}
-    outline={outline}
-    text={text}
-  >
+  <LinkButtonStyles type={type} href={url}>
     {children}
   </LinkButtonStyles>
 );

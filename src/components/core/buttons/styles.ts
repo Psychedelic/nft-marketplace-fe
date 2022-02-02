@@ -54,14 +54,31 @@ export const Button = styled('button', {
 });
 
 export const LinkButtonStyles = styled('a', {
+  // base styles
   border: '2px solid #E5E8EB',
-  background: 'transparent',
-  fontWeight: '800',
+  background: '#FFFFFF',
+  fontWeight: '500',
   color: '#23262F',
   cursor: 'pointer',
   borderRadius: '14px',
-  fontSize: '14px',
-  padding: '10px 20px',
+  fontSize: '16px',
+  width: '40px',
+  height: '40px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginRight: '10px',
+
+  // variants
+  variants: {
+    type: {
+      textBtn: {
+        padding: '12px',
+        width: 'initial',
+        height: 'initial',
+      },
+    },
+  },
 });
 
 export const PlugButtonContainer = styled('button', {
