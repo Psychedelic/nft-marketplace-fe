@@ -25,7 +25,8 @@
       "changePrice": "Change Price",
       "cancelListing": "Cancel Listing",
       "cancelOffer": "Cancel Offer",
-      "acceptOffer": "Accept"
+      "acceptOffer": "Accept",
+      "connectToPlug": "Connect To Plug"
     }
   },
   "dropdown": {

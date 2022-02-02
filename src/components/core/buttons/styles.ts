@@ -63,3 +63,30 @@ export const LinkButtonStyles = styled('a', {
   fontSize: '14px',
   padding: '10px 20px',
 });
+
+export const PlugButtonContainer = styled('button', {
+  // base styles
+  padding: '2px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '16px',
+  fontWeight: '500',
+  lineHeight: '19px',
+  borderRadius: '14px',
+  border: 'none',
+  background:
+    // eslint-disable-next-line max-len
+    'linear-gradient(93.07deg, #FFD719 0.61%, #F754D4 33.98%, #1FD1EC 65.84%, #48FA6B 97.7%)',
+});
+
+export const PlugButtonText = styled('div', {
+  // base styles
+  width: '136px',
+  height: '40px',
+  background: '#FFF',
+  borderRadius: '14px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
