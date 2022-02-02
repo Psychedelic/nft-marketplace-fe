@@ -32,48 +32,38 @@ export const NftCard = ({
 
   return (
     <CardWrapper>
-      {data.loading ? (
-        <>
-          <SkeletonLarge variant="rectangular" />
-          <SkeletonSmall variant="text" />
-          <SkeletonSmall variant="text" />
-        </>
-      ) : (
-        <>
-          <Flex>
-            <OwnedCardText>
-              {owned ? `${t('translation:nftCard.owned')}` : ''}
-            </OwnedCardText>
-            <CardOptionsDropdown />
-          </Flex>
-          <Image>
-            <img src={data?.nftImage} alt="nft-card" />
-          </Image>
-          <Flex>
-            <NftName>{data?.nftName}</NftName>
-            {notForSale ? (
-              ''
-            ) : (
-              <Dfinity>
-                {data?.dfinityValue}
-                <img src={data?.dfintiyIcon} alt="" />
-              </Dfinity>
-            )}
-          </Flex>
+      <Flex>
+        <OwnedCardText>
+          {owned ? `${t('translation:nftCard.owned')}` : ''}
+        </OwnedCardText>
+        <CardOptionsDropdown />
+      </Flex>
+      <Image>
+        <img src={data?.nftImage} alt="nft-card" />
+      </Image>
+      <Flex>
+        <NftName>{data?.nftName}</NftName>
+        {notForSale ? (
+          ''
+        ) : (
+          <Dfinity>
+            {data?.dfinityValue}
+            <img src={data?.dfintiyIcon} alt="" />
+          </Dfinity>
+        )}
+      </Flex>
 
-          <Flex>
-            <NftId>{data?.nftId}</NftId>
-            {notForSale ? (
-              ''
-            ) : (
-              <LastOffer>
-                {forSaleAndOffer ? 'Offer for ' : 'Last '}
-                <b>{data?.lastOffer}</b>
-              </LastOffer>
-            )}
-          </Flex>
-        </>
-      )}
+      <Flex>
+        <NftId>{data?.nftId}</NftId>
+        {notForSale ? (
+          ''
+        ) : (
+          <LastOffer>
+            {forSaleAndOffer ? 'Offer for ' : 'Last '}
+            <b>{data?.lastOffer}</b>
+          </LastOffer>
+        )}
+      </Flex>
     </CardWrapper>
   );
 };

@@ -116,10 +116,6 @@
       "action": "Action"
     }
   },
-<<<<<<< HEAD
-  "nftCard": {
-    "owned": "Owned"
-=======
   "modals": {
     "placeholder": {
       "step": "Step Content",
@@ -169,6 +165,8 @@
       "acceptOffer": "Accept Offer",
       "done": "Done"
     }
->>>>>>> 7035b16b27aec334963abd4e0a8f29e59029e0d5
+  },
+  "nftCard": {
+    "owned": "Owned"
   }
 }

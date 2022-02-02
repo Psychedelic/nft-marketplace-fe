@@ -7,3 +7,4 @@ export * from './checkbox';
 export * from './table-cells';
 export * from './nft-card';
 export * from './status-indicators';
+export * from './nft-skeleton';
