@@ -1,6 +1,6 @@
 import React from 'react';
-import { NftCard } from '../nft-card';
-import { NftListData } from '../../mock-data/nft-list-data';
+import { NftCard } from '../core/nft-card';
+import { NftListData } from '../mock-data/nft-list-data';
 import { ListWrapper } from './styles';
 
 export const NftList = () => (

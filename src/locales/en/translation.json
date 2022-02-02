@@ -68,5 +68,8 @@
       "expiration": "Expiration",
       "action": "Action"
     }
+  },
+  "nftCard": {
+    "owned": "Owned"
   }
 }

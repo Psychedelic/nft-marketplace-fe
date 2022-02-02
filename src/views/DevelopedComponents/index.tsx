@@ -107,12 +107,6 @@ const DevelopedComponents = () => {
         <CardOptionsDropdown />
       </ComponentWrapper>
       <ComponentWrapper>
-        <ComponentTitle>Nft Card/List</ComponentTitle>
-        <div>
-          <NftList />
-        </div>
-      </ComponentWrapper>
-      <ComponentWrapper>
         <ComponentTitle>Plug Dropdown Button</ComponentTitle>
         <PlugProfileDropdown />
       </ComponentWrapper>
@@ -206,6 +200,12 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Offers Table</ComponentTitle>
         <OffersTable />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Nft Card/List</ComponentTitle>
+        <div>
+          <NftList />
+        </div>
       </ComponentWrapper>
     </Container>
   );
