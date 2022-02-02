@@ -104,13 +104,13 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
               </div>
             ))}
             <ButtonWrapper>
-              <LinkButton outline="light" text="bold">
+              <LinkButton type="textBtn">
                 {t('translation:buttons.links.website')}
               </LinkButton>
               &nbsp;
               {Buttons.map((button) => (
                 <>
-                  <LinkButton outline="light" text="bold">
+                  <LinkButton>
                     <img src={button.image} alt={button.image} />
                   </LinkButton>
                   &nbsp;
