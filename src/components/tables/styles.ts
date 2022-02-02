@@ -169,3 +169,8 @@ export const TableWrapper = styled('div', {
     },
   },
 });
+
+export const ButtonWrapper = styled('div', {
+  width: '98px',
+  height: '33px',
+});
