@@ -35,6 +35,7 @@ import {
   AcceptOfferModal,
   NftList,
   NftSkeletonList,
+  NavBar,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -292,6 +293,9 @@ const DevelopedComponents = () => {
         <div>
           <NftSkeletonList />
         </div>
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <NavBar />
       </ComponentWrapper>
     </Container>
   );

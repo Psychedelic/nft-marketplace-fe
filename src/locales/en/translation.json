@@ -1,6 +1,7 @@
 {
   "common": {
-    "title": "NFT Marketplace UI"
+    "title": "NFT Marketplace UI",
+    "collectionName": "Crowns"
   },
   "buttons": {
     "placeholder": {
