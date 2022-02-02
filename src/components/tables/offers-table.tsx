@@ -8,7 +8,7 @@ import {
 } from '../core';
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
-import { Container } from './styles';
+import { Container, ButtonWrapper } from './styles';
 
 export interface rowProps {
   price: string;
@@ -53,16 +53,17 @@ export const OffersTable = () => {
       {
         Header: t('translation:tables.titles.action'),
         accessor: () => (
-          <ActionButton
-            outline="solid"
-            text="Accept"
-            onClick={() => {
-              // eslint-disable-next-line no-console
-              console.log('callback');
-            }}
-          >
-            Accept
-          </ActionButton>
+          <ButtonWrapper>
+            <ActionButton
+              type="outline"
+              text="Accept"
+              size="small"
+              handleClick={() => {
+                // eslint-disable-next-line no-console
+                console.log('callback');
+              }}
+            />
+          </ButtonWrapper>
         ),
       },
     ],
