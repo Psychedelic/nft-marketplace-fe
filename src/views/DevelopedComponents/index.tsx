@@ -20,6 +20,9 @@ import {
   FilteredCountChip,
   FilteredTraitsChip,
   NFTTraitsChip,
+  CheckboxFilterAccordion,
+  AboutAccordion,
+  OfferAccordion,
   ActivityTable,
   NFTActivityTable,
   OffersTable,
@@ -146,6 +149,16 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Plug Dropdown Button</ComponentTitle>
         <PlugProfileDropdown />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Accordions</ComponentTitle>
+        <CheckboxFilterAccordion />
+        <br />
+        <br />
+        <OfferAccordion owned />
+        <br />
+        <br />
+        <AboutAccordion owned />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>
