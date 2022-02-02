@@ -1,4 +1,4 @@
-import { styled } from '../../../stitches.config';
+import { styled } from '../../stitches.config';
 
 export const NftActionBarWrapper = styled('div', {
   display: 'flex',
@@ -22,5 +22,6 @@ export const NftActionBarWrapper = styled('div', {
   '& div': {
     display: 'flex',
     alignItems: 'center',
+    width: '25%',
   },
 });

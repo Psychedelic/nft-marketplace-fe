@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActionButton } from '..';
+import { ActionButton } from '../core';
 
 import { NftActionBarWrapper } from './styles';
-import back from '../../../assets/back.svg';
+import back from '../../assets/back.svg';
 
 const NftActionBar = () => {
   const { t } = useTranslation();
@@ -15,13 +15,17 @@ const NftActionBar = () => {
         {t('translation:buttons.action.backToResults')}
       </p>
       <div>
-        <ActionButton outline="light" text="bold">
-          {t('translation:buttons.action.cancelListing')}
-        </ActionButton>
+        <ActionButton
+          outline="light"
+          text={`${t('translation:buttons.action.cancelListing')}`}
+          type="outline"
+        />
         &nbsp;
-        <ActionButton background="filled" text="bold">
-          {t('translation:buttons.action.changePrice')}
-        </ActionButton>
+        <ActionButton
+          background="filled"
+          text={`${t('translation:buttons.action.changePrice')}`}
+          type="primary"
+        />
       </div>
     </NftActionBarWrapper>
   );

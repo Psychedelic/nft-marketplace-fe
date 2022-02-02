@@ -39,7 +39,7 @@ import twitter from '../../assets/buttons/twitter.svg';
 import back from '../../assets/buttons/back.svg';
 import closeDrawer from '../../assets/buttons/close-drawer.svg';
 import darkTheme from '../../assets/buttons/dark-theme.svg';
-import NftActionBar from '../../components/core/nft-action-bar/nft-action-bar';
+import NftActionBar from '../../components/nft-action-bar/nft-action-bar';
 
 const DevelopedComponents = () => {
   const { t } = useTranslation();
@@ -56,10 +56,6 @@ const DevelopedComponents = () => {
   return (
     <Container>
       <Title>Developed Components</Title>
-      <ComponentWrapper>
-        <ComponentTitle>Action Bar</ComponentTitle>
-        <NftActionBar />
-      </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Link Buttons</ComponentTitle>
         <LinkButton outline="light" text="bold">
@@ -283,6 +279,10 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Accept Offer Modal</ComponentTitle>
         <AcceptOfferModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Action Bar</ComponentTitle>
+        <NftActionBar />
       </ComponentWrapper>
     </Container>
   );
