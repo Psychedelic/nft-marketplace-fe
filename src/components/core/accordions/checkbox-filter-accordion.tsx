@@ -2,36 +2,20 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import { Checkbox } from '../checkbox/checkbox';
-import { AccordionStyle, AccordionTrigger, AccordionContent } from './styles';
+import { checkboxDummyData } from '../../mock-data/accordion-data';
+import {
+  AccordionStyle,
+  AccordionTrigger,
+  AccordionContent,
+} from './styles';
 import arrowdown from '../../../assets/arrowdown.svg';
 
 export const CheckboxFilterAccordion = () => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState<Array<string>>([]);
-
-  const checkboxDummyData = [
-    {
-      value: `${t('translation:accordions.checkbox.bigGem.red')}`,
-      percentage: `${t('translation:accordions.checkbox.bigGem.percentage')}`,
-    },
-    {
-      value: `${t('translation:accordions.checkbox.bigGem.purple')}`,
-      percentage: `${t('translation:accordions.checkbox.bigGem.percentage')}`,
-    },
-    {
-      value: `${t('translation:accordions.checkbox.bigGem.yellow')}`,
-      percentage: `${t('translation:accordions.checkbox.bigGem.percentage')}`,
-    },
-    {
-      value: `${t('translation:accordions.checkbox.bigGem.orange')}`,
-      percentage: `${t('translation:accordions.checkbox.bigGem.percentage')}`,
-    },
-    {
-      value: `${t('translation:accordions.checkbox.bigGem.green')}`,
-      percentage: `${t('translation:accordions.checkbox.bigGem.percentage')}`,
-    },
-  ];
+  const [selectedFilters, setSelectedFilters] = useState<
+    Array<string>
+  >([]);
 
   return (
     <AccordionStyle
@@ -52,7 +36,9 @@ export const CheckboxFilterAccordion = () => {
             {`${t('translation:accordions.checkbox.bigGem.bigGem')}`}
             &nbsp;
             <span>
-              {selectedFilters.length > 0 ? `(${selectedFilters.length})` : ''}
+              {selectedFilters.length > 0
+                ? `(${selectedFilters.length})`
+                : ''}
             </span>
           </p>
           <img src={arrowdown} alt="arrow-down" />

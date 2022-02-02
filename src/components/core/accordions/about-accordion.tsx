@@ -3,6 +3,10 @@ import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import { LinkButton } from '../buttons';
 import {
+  AccordionContentMetaData,
+  Buttons,
+} from '../../mock-data/accordion-data';
+import {
   AccordionStyle,
   AccordionTrigger,
   AccordionContent,
@@ -15,9 +19,6 @@ import {
 import info from '../../../assets/accordions/info.svg';
 import arrowdown from '../../../assets/accordions/arrow-down.svg';
 import arrowup from '../../../assets/accordions/arrow-up.svg';
-import discord from '../../../assets/buttons/discord.svg';
-import twitter from '../../../assets/buttons/twitter.svg';
-import back from '../../../assets/buttons/back.svg';
 import collection from '../../../assets/accordions/collection.svg';
 import creator from '../../../assets/accordions/creator.svg';
 import owner from '../../../assets/accordions/owner.svg';
@@ -32,55 +33,19 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
 
   const AccordionHeadContentData = [
     {
-      subheading: `${t('translation:accordions.about.header.capCrowns')}`,
-      heading: `${t('translation:accordions.about.header.collection')}`,
+      subheading: 'CAP Crowns',
+      heading: 'Collection',
       image: collection,
     },
     {
-      subheading: `${t('translation:accordions.about.header.capCrowns')}`,
-      heading: `${t('translation:accordions.about.header.creator')}`,
+      subheading: 'Psychedelic',
+      heading: 'Creator',
       image: creator,
     },
     {
-      subheading: owned
-        ? `${t('translation:accordions.about.header.you')}`
-        : 'rgblt...whfy',
-      heading: `${t('translation:accordions.about.header.owner')}`,
+      subheading: owned ? 'You' : 'rgblt...whfy',
+      heading: 'Owner',
       image: owner,
-    },
-  ];
-
-  const AccordionContentMetaData = [
-    {
-      title: `${t('translation:accordions.about.header.canisterId')}`,
-      value: 't7wg4-tyaaa-aaaak-qacaa-cai',
-    },
-    {
-      title: `${t('translation:accordions.about.header.tokenStandard')}`,
-      value: 'DIP20',
-    },
-    {
-      title: `${t('translation:accordions.about.header.tokenId')}`,
-      value: '2713',
-    },
-    {
-      title: `${t('translation:accordions.about.header.blockchain')}`,
-      value: `${t('translation:accordions.about.header.internetComputer')}`,
-    },
-  ];
-
-  const Buttons = [
-    {
-      image: discord,
-      alt: `${t('translation:buttons.links.discord')}`,
-    },
-    {
-      image: twitter,
-      alt: `${t('translation:buttons.links.twitter')}`,
-    },
-    {
-      image: back,
-      alt: `${t('translation:buttons.links.back')} `,
     },
   ];
 
@@ -111,16 +76,25 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
         >
           <div>
             <img src={info} alt="about-collection" />
-            <p>{`${t('translation:accordions.about.header.aboutCrowns')}`}</p>
+            <p>
+              {`${t(
+                'translation:accordions.about.header.aboutCrowns',
+              )}`}
+            </p>
           </div>
-          <img src={!isAccordionOpen ? arrowup : arrowdown} alt="arrow-down" />
+          <img
+            src={!isAccordionOpen ? arrowup : arrowdown}
+            alt="arrow-down"
+          />
         </AccordionTrigger>
         <AccordionContent
           padding="medium"
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
         >
           <Description>
-            {`${t('translation:accordions.about.header.description')}`}
+            {`${t(
+              'translation:accordions.about.header.description',
+            )}`}
           </Description>
           <MetaDataWrapper>
             {AccordionContentMetaData.map((data) => (
