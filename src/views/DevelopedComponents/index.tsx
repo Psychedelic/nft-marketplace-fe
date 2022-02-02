@@ -6,6 +6,7 @@ import {
   ComponentWrapper,
   ComponentTitle,
   ComponentsList,
+  ButtonWrapper,
 } from './styles';
 import {
   SearchInput,
@@ -19,10 +20,20 @@ import {
   FilteredCountChip,
   FilteredTraitsChip,
   NFTTraitsChip,
+  CheckboxFilterAccordion,
+  AboutAccordion,
+  OfferAccordion,
   ActivityTable,
   NFTActivityTable,
   OffersTable,
   NftMetadata,
+  SellModal,
+  ChangePriceModal,
+  BuyNowModal,
+  MakeOfferModal,
+  CancelListingModal,
+  CancelOfferModal,
+  AcceptOfferModal,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -45,10 +56,6 @@ const DevelopedComponents = () => {
   return (
     <Container>
       <Title>Developed Components</Title>
-      <ComponentWrapper>
-        <ComponentTitle>Nft Metadata</ComponentTitle>
-        <NftMetadata />
-      </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Link Buttons</ComponentTitle>
         <LinkButton outline="light" text="bold">
@@ -83,21 +90,51 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Action Buttons</ComponentTitle>
-        <ActionButton background="filled" text="bold">
-          {t('translation:buttons.action.buyNfts')}
-        </ActionButton>
-        &nbsp;
-        <ActionButton outline="solid" text="bold">
-          {t('translation:buttons.action.allNfts')}
-        </ActionButton>
-        &nbsp;
-        <ActionButton background="filled" text="bold">
-          {t('translation:buttons.action.buyNow')}
-        </ActionButton>
-        &nbsp;
-        <ActionButton outline="light" text="bold">
-          {t('translation:buttons.action.makeOffer')}
-        </ActionButton>
+        <ComponentsList>
+          <ButtonWrapper>
+            <ActionButton
+              type="primary"
+              text={t('translation:buttons.placeholder.primary')}
+              handleClick={() => {
+                // eslint-disable-next-line no-console
+                console.log('callback');
+              }}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <ActionButton
+              type="secondary"
+              text={t('translation:buttons.placeholder.secondary')}
+              handleClick={() => {
+                // eslint-disable-next-line no-console
+                console.log('callback');
+              }}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <ActionButton
+              type="outline"
+              text={t(
+                'translation:buttons.placeholder.secondaryColored',
+              )}
+              handleClick={() => {
+                // eslint-disable-next-line no-console
+                console.log('callback');
+              }}
+            />
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <ActionButton
+              type="primary"
+              text={t('translation:buttons.placeholder.danger')}
+              handleClick={() => {
+                // eslint-disable-next-line no-console
+                console.log('callback');
+              }}
+              danger
+            />
+          </ButtonWrapper>
+        </ComponentsList>
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Dropdown</ComponentTitle>
@@ -113,6 +150,16 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Plug Dropdown Button</ComponentTitle>
         <PlugProfileDropdown />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Accordions</ComponentTitle>
+        <CheckboxFilterAccordion />
+        <br />
+        <br />
+        <OfferAccordion owned />
+        <br />
+        <br />
+        <AboutAccordion owned />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>
@@ -204,6 +251,38 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Offers Table</ComponentTitle>
         <OffersTable />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Sell Modal</ComponentTitle>
+        <SellModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Change Price Modal</ComponentTitle>
+        <ChangePriceModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Cancel Listing Modal</ComponentTitle>
+        <CancelListingModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Make Offer Modal</ComponentTitle>
+        <MakeOfferModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Buy Now Modal</ComponentTitle>
+        <BuyNowModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Cancel Offer Modal</ComponentTitle>
+        <CancelOfferModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Accept Offer Modal</ComponentTitle>
+        <AcceptOfferModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Collection Overview</ComponentTitle>
+        <NftMetadata />
       </ComponentWrapper>
     </Container>
   );
