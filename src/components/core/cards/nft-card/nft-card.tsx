@@ -1,10 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { CardOptionsDropdown } from '../dropdown';
+import { CardOptionsDropdown } from '../../dropdown';
 import {
   CardWrapper,
-  SkeletonLarge,
-  SkeletonSmall,
   Flex,
   OwnedCardText,
   NftName,

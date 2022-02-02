@@ -1,5 +1,5 @@
 import React from 'react';
-import { NftCard } from '../core/nft-card';
+import { NftCard } from '../core/cards/nft-card';
 import { NftListData } from '../mock-data/nft-list-data';
 import { ListWrapper } from './styles';
 
