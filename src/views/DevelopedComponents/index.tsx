@@ -64,32 +64,27 @@ const DevelopedComponents = () => {
           <LinkButton type="textBtn">
             {t('translation:buttons.links.website')}
           </LinkButton>
-          &nbsp;
           <LinkButton>
             <img
               src={discord}
               alt={t('translation:buttons.links.discord')}
             />
           </LinkButton>
-          &nbsp;
           <LinkButton>
             <img
               src={twitter}
               alt={t('translation:buttons.links.twitter')}
             />
           </LinkButton>
-          &nbsp;
           <LinkButton>
             <img
               src={back}
               alt={t('translation:buttons.links.back')}
             />
           </LinkButton>
-          &nbsp;
           <LinkButton>
             <img src={darkTheme} alt="dark-theme" />
           </LinkButton>
-          &nbsp;
           <LinkButton>
             <img src={closeDrawer} alt="close-tab" />
           </LinkButton>
