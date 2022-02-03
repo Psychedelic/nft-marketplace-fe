@@ -14,6 +14,7 @@ import {
   ModalInput,
   ActionButton,
   LinkButton,
+  NFTOverview,
   PriceFilterDropdown,
   CardOptionsDropdown,
   PlugProfileDropdown,
@@ -26,6 +27,7 @@ import {
   ActivityTable,
   NFTActivityTable,
   OffersTable,
+  NftMetadata,
   SellModal,
   ChangePriceModal,
   BuyNowModal,
@@ -33,6 +35,9 @@ import {
   CancelListingModal,
   CancelOfferModal,
   AcceptOfferModal,
+  NftList,
+  NftSkeletonList,
+  NavBar,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -58,35 +63,35 @@ const DevelopedComponents = () => {
       <Title>Developed Components</Title>
       <ComponentWrapper>
         <ComponentTitle>Link Buttons</ComponentTitle>
-        <LinkButton outline="light" text="bold">
-          {t('translation:buttons.links.website')}
-        </LinkButton>
-        &nbsp;
-        <LinkButton outline="light" text="bold">
-          <img
-            src={discord}
-            alt={t('translation:buttons.links.discord')}
-          />
-        </LinkButton>
-        &nbsp;
-        <LinkButton outline="light" text="bold">
-          <img
-            src={twitter}
-            alt={t('translation:buttons.links.twitter')}
-          />
-        </LinkButton>
-        &nbsp;
-        <LinkButton outline="light" text="bold">
-          <img src={back} alt={t('translation:buttons.links.back')} />
-        </LinkButton>
-        &nbsp;
-        <LinkButton outline="light" text="bold">
-          <img src={darkTheme} alt="dark-theme" />
-        </LinkButton>
-        &nbsp;
-        <LinkButton outline="light" text="bold">
-          <img src={closeDrawer} alt="close-tab" />
-        </LinkButton>
+        <ComponentsList>
+          <LinkButton type="textBtn">
+            {t('translation:buttons.links.website')}
+          </LinkButton>
+          <LinkButton>
+            <img
+              src={discord}
+              alt={t('translation:buttons.links.discord')}
+            />
+          </LinkButton>
+          <LinkButton>
+            <img
+              src={twitter}
+              alt={t('translation:buttons.links.twitter')}
+            />
+          </LinkButton>
+          <LinkButton>
+            <img
+              src={back}
+              alt={t('translation:buttons.links.back')}
+            />
+          </LinkButton>
+          <LinkButton>
+            <img src={darkTheme} alt="dark-theme" />
+          </LinkButton>
+          <LinkButton>
+            <img src={closeDrawer} alt="close-tab" />
+          </LinkButton>
+        </ComponentsList>
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Action Buttons</ComponentTitle>
@@ -279,6 +284,29 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Accept Offer Modal</ComponentTitle>
         <AcceptOfferModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Nft Card/List</ComponentTitle>
+        <div>
+          <NftList />
+        </div>
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Nft Skeleton List</ComponentTitle>
+        <div>
+          <NftSkeletonList />
+        </div>
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <NavBar />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Collection Overview</ComponentTitle>
+        <NftMetadata />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Collection Metadata</ComponentTitle>
+        <NFTOverview />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Action Bar</ComponentTitle>

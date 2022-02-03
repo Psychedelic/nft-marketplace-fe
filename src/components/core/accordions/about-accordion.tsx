@@ -11,10 +11,11 @@ import {
   AccordionTrigger,
   AccordionContent,
   Description,
-  MetaDataWrapper,
   ButtonWrapper,
   AccordionHead,
   AccordionHeadContent,
+  Flex,
+  Subtext,
 } from './styles';
 import info from '../../../assets/accordions/info.svg';
 import arrowdown from '../../../assets/accordions/arrow-down.svg';
@@ -96,28 +97,28 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
               'translation:accordions.about.header.description',
             )}`}
           </Description>
-          <MetaDataWrapper>
+          <div>
             {AccordionContentMetaData.map((data) => (
-              <div>
-                <p>{data.title}</p>
-                <p>{data.value}</p>
-              </div>
+              <Flex>
+                <Subtext>{data.title}</Subtext>
+                <Subtext>{data.value}</Subtext>
+              </Flex>
             ))}
             <ButtonWrapper>
-              <LinkButton outline="light" text="bold">
+              <LinkButton type="textBtn">
                 {t('translation:buttons.links.website')}
               </LinkButton>
               &nbsp;
               {Buttons.map((button) => (
                 <>
-                  <LinkButton outline="light" text="bold">
+                  <LinkButton>
                     <img src={button.image} alt={button.image} />
                   </LinkButton>
                   &nbsp;
                 </>
               ))}
             </ButtonWrapper>
-          </MetaDataWrapper>
+          </div>
         </AccordionContent>
       </Accordion.Item>
     </AccordionStyle>
