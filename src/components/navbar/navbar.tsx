@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SearchInput, PlugButton, LinkButton } from '../core';
+import { PlugButton, LinkButton } from '../core';
+import { GlobalSearch } from '../search';
 import appLogo from '../../assets/app-logo.svg';
 import appName from '../../assets/app-name.svg';
 import darkTheme from '../../assets/buttons/dark-theme.svg';
@@ -9,7 +10,6 @@ import {
   LogoContainer,
   LogoIcon,
   LogoName,
-  SearchContainer,
   ActionButtonsContainer,
 } from './styles';
 
@@ -32,17 +32,7 @@ export const NavBar = () => {
           alt={t('translation:common.collectionName')}
         />
       </LogoContainer>
-      <SearchContainer>
-        <SearchInput
-          placeholder={t(
-            'translation:inputField.placeholder.searchCollection',
-          )}
-          handleClick={() => {
-            // eslint-disable-next-line no-console
-            console.log('click callback');
-          }}
-        />
-      </SearchContainer>
+      <GlobalSearch />
       <ActionButtonsContainer>
         <LinkButton>
           <img src={darkTheme} alt="dark-theme" />

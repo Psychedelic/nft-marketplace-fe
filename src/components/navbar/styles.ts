@@ -30,13 +30,6 @@ export const LogoName = styled('img', {
   marginTop: '5px',
 });
 
-export const SearchContainer = styled('div', {
-  // base styles
-  width: '100%',
-  maxWidth: '600px',
-  marginRight: '7px',
-});
-
 export const ActionButtonsContainer = styled('div', {
   // base styles
   display: 'flex',
