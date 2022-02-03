@@ -230,7 +230,6 @@ export const MetaDataWrapper = styled('div', {
   '& div': {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
 
     '& p': {
       fontStyle: 'normal',
@@ -249,6 +248,5 @@ export const MetaDataWrapper = styled('div', {
 });
 
 export const ButtonWrapper = styled('div', {
-  width: '30%',
   padding: '25px 0',
 });

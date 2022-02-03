@@ -2,6 +2,7 @@ import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
   padding: '40px',
+  marginTop: '35px',
 });
 
 export const Title = styled('h2', {
