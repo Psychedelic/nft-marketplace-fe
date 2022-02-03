@@ -5,28 +5,32 @@ import { Container, Input, SearchIcon } from './styles';
 export type SearchInputProps = {
   placeholder?: string;
   setValue?: (value: string) => void;
+  handleClick?: () => void;
 };
 
-export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
-  ({ placeholder = '', setValue }, ref) => {
-    const handleValueChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const value = event?.target?.value;
-      if (setValue) {
-        setValue(value);
-      }
-    };
+export const SearchInput = forwardRef<
+  HTMLInputElement,
+  SearchInputProps
+>(({ placeholder = '', setValue, handleClick }, ref) => {
+  const handleValueChange = (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const value = event?.target?.value;
+    if (setValue) {
+      setValue(value);
+    }
+  };
 
-    return (
-      <Container name="searchInput">
-        <SearchIcon src={searchLogo} alt="search" />
-        <Input
-          ref={ref}
-          name="searchInput"
-          type="text"
-          placeholder={placeholder}
-          onChange={handleValueChange}
-        />
-      </Container>
-    );
-  },
-);
+  return (
+    <Container name="searchInput" onClick={handleClick}>
+      <SearchIcon src={searchLogo} alt="search" />
+      <Input
+        ref={ref}
+        name="searchInput"
+        type="text"
+        placeholder={placeholder}
+        onChange={handleValueChange}
+      />
+    </Container>
+  );
+});
