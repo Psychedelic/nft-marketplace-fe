@@ -9,6 +9,7 @@ import {
   ModalOverlay,
   ModalContent,
   SearchContainer,
+  ItemsEmptyContainer,
   ItemsListContainer,
   ItemDetailsWrapper,
   ItemDetails,
@@ -29,9 +30,11 @@ export const GlobalSearch = () => {
   const { t } = useTranslation();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
+  const [searchText, setSearchText] = useState<string>('');
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
+    setSearchText('');
   };
 
   return (
@@ -74,25 +77,33 @@ export const GlobalSearch = () => {
             placeholder={t(
               'translation:inputField.placeholder.searchCollection',
             )}
+            setValue={(value) => setSearchText(value)}
           />
         </SearchContainer>
-        <ItemsListContainer>
-          {mockNFTList.map((nft) => (
-            <ItemDetailsWrapper key={nft.id}>
-              <ItemDetails>
-                <ItemLogo src={nft.logo} alt="crowns" />
-                <ItemName>{nft.name}</ItemName>
-              </ItemDetails>
-              <PriceDetails>
-                <WICPContainer size="small">
-                  <WICPLogo src={wicpIcon} alt="wicp" />
-                  <WICPText size="small">{nft.wicp}</WICPText>
-                </WICPContainer>
-                <PriceText>{nft.price}</PriceText>
-              </PriceDetails>
-            </ItemDetailsWrapper>
-          ))}
-        </ItemsListContainer>
+        {searchText && (
+          <ItemsListContainer>
+            {mockNFTList.map((nft) => (
+              <ItemDetailsWrapper key={nft.id}>
+                <ItemDetails>
+                  <ItemLogo src={nft.logo} alt="crowns" />
+                  <ItemName>{nft.name}</ItemName>
+                </ItemDetails>
+                <PriceDetails>
+                  <WICPContainer size="small">
+                    <WICPLogo src={wicpIcon} alt="wicp" />
+                    <WICPText size="small">{nft.wicp}</WICPText>
+                  </WICPContainer>
+                  <PriceText>{nft.price}</PriceText>
+                </PriceDetails>
+              </ItemDetailsWrapper>
+            ))}
+          </ItemsListContainer>
+        )}
+        {!searchText && (
+          <ItemsEmptyContainer>
+            {t('translation:common.noRecentSearch')}
+          </ItemsEmptyContainer>
+        )}
       </ModalContent>
     </DialogPrimitive.Root>
   );

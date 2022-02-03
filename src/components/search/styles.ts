@@ -13,11 +13,11 @@ const overlayShow = keyframes({
 const contentShow = keyframes({
   '0%': {
     opacity: 0,
-    transform: 'translate(-50%, -13%) scale(.96)',
+    transform: 'translateX(-50%) scale(.96)',
   },
   '100%': {
     opacity: 1,
-    transform: 'translate(-50%, -15%) scale(1)',
+    transform: 'translateX(-50%) scale(1)',
   },
 });
 
@@ -47,7 +47,7 @@ export const ModalContent = styled(DialogPrimitive.Content, {
   position: 'fixed',
   top: '15%',
   left: '50%',
-  transform: 'translate(-50%, -15%)',
+  transform: 'translateX(-50%)',
   padding: 20,
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
@@ -63,13 +63,26 @@ export const SearchContainer = styled('div', {
   marginBottom: '10px',
 });
 
+export const ItemsEmptyContainer = styled('div', {
+  // base styles
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  padding: '0px 0px 10px',
+  height: '200px',
+  color: '#969faf',
+  fontSize: '14px',
+  fontWeight: 'normal',
+});
+
 export const ItemsListContainer = styled('div', {
   // base styles
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
   padding: '0px 0px 10px',
-  maxHeight: '400px',
+  maxHeight: '325px',
   overflow: 'scroll',
 });
 
