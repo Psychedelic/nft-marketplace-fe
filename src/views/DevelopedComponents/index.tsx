@@ -34,6 +34,8 @@ import {
   CancelListingModal,
   CancelOfferModal,
   AcceptOfferModal,
+  NftList,
+  NftSkeletonList,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -279,6 +281,18 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Accept Offer Modal</ComponentTitle>
         <AcceptOfferModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Nft Card/List</ComponentTitle>
+        <div>
+          <NftList />
+        </div>
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Nft Skeleton List</ComponentTitle>
+        <div>
+          <NftSkeletonList />
+        </div>
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Collection Overview</ComponentTitle>

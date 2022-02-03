@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../buttons';
+import { LinkButton } from '../core/buttons';
 import {
   NftMetadataWrapper,
   NftMetadataBackground,
@@ -11,12 +11,12 @@ import {
   Subtext,
   ButtonsWrapper,
 } from './styles';
-import background from '../../../assets/nft-background.png';
-import crown from '../../../assets/crown-pfp.png';
-import verified from '../../../assets/verified.svg';
-import discord from '../../../assets/buttons/discord.svg';
-import twitter from '../../../assets/buttons/twitter.svg';
-import back from '../../../assets/buttons/back.svg';
+import background from '../../assets/nft-background.png';
+import crown from '../../assets/crown-pfp.png';
+import verified from '../../assets/verified.svg';
+import discord from '../../assets/buttons/discord.svg';
+import twitter from '../../assets/buttons/twitter.svg';
+import back from '../../assets/buttons/back.svg';
 
 export const NftMetadata = () => {
   const { t } = useTranslation();
