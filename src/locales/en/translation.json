@@ -1,6 +1,7 @@
 {
   "common": {
-    "title": "NFT Marketplace UI"
+    "title": "NFT Marketplace UI",
+    "collectionName": "Crowns"
   },
   "buttons": {
     "placeholder": {
@@ -24,7 +25,8 @@
       "changePrice": "Change Price",
       "cancelListing": "Cancel Listing",
       "cancelOffer": "Cancel Offer",
-      "acceptOffer": "Accept"
+      "acceptOffer": "Accept",
+      "connectToPlug": "Connect To Plug"
     }
   },
   "dropdown": {

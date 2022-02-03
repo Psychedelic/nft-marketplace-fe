@@ -42,7 +42,7 @@ export const NftMetadata = () => {
           </div>
         </NftMetadataContentWrapper>
         <ButtonsWrapper>
-          <LinkButton outline="light" text="bold">
+          <LinkButton type="textBtn">
             {t('translation:buttons.links.website')}
           </LinkButton>
           &nbsp;
