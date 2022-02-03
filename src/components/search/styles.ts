@@ -60,6 +60,7 @@ export const ModalContent = styled(DialogPrimitive.Content, {
 export const SearchContainer = styled('div', {
   // base styles
   width: '600px',
+  marginBottom: '10px',
 });
 
 export const ItemsListContainer = styled('div', {
@@ -67,7 +68,9 @@ export const ItemsListContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
-  padding: '10px 0px',
+  padding: '0px 0px 10px',
+  maxHeight: '400px',
+  overflow: 'scroll',
 });
 
 export const ItemDetailsWrapper = styled('div', {
@@ -77,7 +80,7 @@ export const ItemDetailsWrapper = styled('div', {
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '32px 20px',
-  borderBottom: '1.5px solid #E5E8EB',
+  border: '1.5px solid #E5E8EB',
   background: 'rgb(244, 245, 246)',
   borderRadius: '14px',
   margin: '5px 0px',
@@ -96,7 +99,7 @@ export const ItemDetailsWrapper = styled('div', {
 
   '&:hover': {
     cursor: 'pointer',
-    background: 'rgb(250, 251, 253)',
+    background: '#FFF',
   },
 });
 
