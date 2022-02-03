@@ -13,11 +13,11 @@ const overlayShow = keyframes({
 const contentShow = keyframes({
   '0%': {
     opacity: 0,
-    transform: 'translate(-50%, -48%) scale(.96)',
+    transform: 'translate(-50%, -13%) scale(.96)',
   },
   '100%': {
     opacity: 1,
-    transform: 'translate(-50%, -50%) scale(1)',
+    transform: 'translate(-50%, -15%) scale(1)',
   },
 });
 
@@ -38,19 +38,163 @@ export const ModalOverlay = styled(DialogPrimitive.Overlay, {
 });
 
 export const ModalContent = styled(DialogPrimitive.Content, {
+  minHeight: '200px',
+  maxHeight: '600px',
   backgroundColor: 'white',
   borderRadius: '30px',
   border: '1.5px solid #E5E8EB',
   boxShadow: '0px 4px 24px rgba(0, 0, 0, 0.25)',
   position: 'fixed',
-  top: '50%',
+  top: '15%',
   left: '50%',
-  transform: 'translate(-50%, -50%)',
-  padding: 45,
+  transform: 'translate(-50%, -15%)',
+  padding: 20,
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
   },
   '&:focus': {
     outline: 'none',
+  },
+});
+
+export const SearchContainer = styled('div', {
+  // base styles
+  width: '600px',
+});
+
+export const ItemsListContainer = styled('div', {
+  // base styles
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  padding: '10px 0px',
+});
+
+export const ItemDetailsWrapper = styled('div', {
+  // base styles
+  width: '560px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '32px 20px',
+  borderBottom: '1.5px solid #E5E8EB',
+  background: 'rgb(244, 245, 246)',
+  borderRadius: '14px',
+  margin: '5px 0px',
+
+  // variants
+  variants: {
+    lastChild: {
+      true: {
+        padding: '32px 0px 12px',
+        borderTop: '1.5px solid #E5E8EB',
+        borderBottom: 'initial',
+        marginTop: '35px',
+      },
+    },
+  },
+
+  '&:hover': {
+    cursor: 'pointer',
+    background: 'rgb(250, 251, 253)',
+  },
+});
+
+export const ItemDetails = styled('div', {
+  // base styles
+  display: 'flex',
+  alignItems: 'center',
+});
+
+export const ItemLogo = styled('img', {
+  width: '40px',
+  height: '40px',
+  marginRight: '12px',
+});
+
+export const ItemName = styled('div', {
+  fontSize: '16px',
+  fontWeight: '600',
+  lineHeight: '20px',
+  color: '#23262F',
+});
+
+export const PriceDetails = styled('div', {
+  // base styles
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+export const WICPContainer = styled('div', {
+  // base styles
+  display: 'flex',
+  alignItems: 'center',
+  marginBottom: '6px',
+
+  // variants
+  variants: {
+    size: {
+      small: {
+        marginBottom: '4px',
+      },
+
+      large: {
+        marginBottom: '8px',
+      },
+    },
+  },
+});
+
+export const WICPText = styled('div', {
+  fontSize: '16px',
+  fontWeight: '600',
+  lineHeight: '20px',
+  color: '#23262F',
+
+  // variants
+  variants: {
+    size: {
+      small: {
+        fontSize: '16px',
+      },
+
+      large: {
+        fontSize: '24px',
+      },
+    },
+  },
+});
+
+export const WICPLogo = styled('img', {
+  width: '15px',
+  height: '15px',
+  marginRight: '5px',
+
+  // variants
+  variants: {
+    size: {
+      large: {
+        width: '20px',
+        height: '20px',
+        marginRight: '4px',
+      },
+    },
+  },
+});
+
+export const PriceText = styled('div', {
+  fontSize: '16px',
+  fontWeight: '500',
+  lineHeight: '20px',
+  color: '#777E90',
+  textAlign: 'right',
+
+  // variants
+  variants: {
+    size: {
+      large: {
+        fontSize: '20px',
+      },
+    },
   },
 });
