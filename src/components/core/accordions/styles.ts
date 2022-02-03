@@ -226,27 +226,28 @@ export const Description = styled('p', {
   margin: '0 0 25px',
 });
 
-export const MetaDataWrapper = styled('div', {
-  '& div': {
-    display: 'flex',
-    alignItems: 'center',
+export const Flex = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+});
 
-    '& p': {
-      fontStyle: 'normal',
-      fontWeight: '500',
-      fontSize: '16px',
-      lineHeight: '19px',
-      color: '#777E90',
-      margin: '10px 0px',
+export const Subtext = styled('p', {
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '19px',
+  color: '#777E90',
+  margin: '10px 0px',
 
-      '&:last-child': {
-        fontWeight: 'bold',
-        color: '#23262F',
-      },
-    },
+  '&:last-child': {
+    fontWeight: 'bold',
+    color: '#23262F',
   },
 });
 
 export const ButtonWrapper = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
   padding: '25px 0',
 });

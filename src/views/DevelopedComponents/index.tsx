@@ -26,6 +26,7 @@ import {
   ActivityTable,
   NFTActivityTable,
   OffersTable,
+  NftMetadata,
   SellModal,
   ChangePriceModal,
   BuyNowModal,
@@ -296,6 +297,10 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <NavBar />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Collection Overview</ComponentTitle>
+        <NftMetadata />
       </ComponentWrapper>
     </Container>
   );
