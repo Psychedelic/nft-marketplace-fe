@@ -6,3 +6,4 @@ export * from './accordions';
 export * from './checkbox';
 export * from './table-cells';
 export * from './status-indicators';
+export * from './cards';

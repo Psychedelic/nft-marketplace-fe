@@ -165,5 +165,8 @@
       "acceptOffer": "Accept Offer",
       "done": "Done"
     }
+  },
+  "nftCard": {
+    "owned": "Owned"
   }
 }
