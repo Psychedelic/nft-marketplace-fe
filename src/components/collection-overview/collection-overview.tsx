@@ -13,7 +13,7 @@ import {
 } from './styles';
 import background from '../../assets/nft-background.png';
 import crown from '../../assets/crown-pfp.png';
-import verified from '../../assets/verified.svg';
+import verified from '../../assets/verified-large.svg';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
 import back from '../../assets/buttons/back.svg';

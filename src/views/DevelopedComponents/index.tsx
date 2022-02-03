@@ -14,6 +14,7 @@ import {
   ModalInput,
   ActionButton,
   LinkButton,
+  NFTOverview,
   PriceFilterDropdown,
   CardOptionsDropdown,
   PlugProfileDropdown,
@@ -301,6 +302,10 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Collection Overview</ComponentTitle>
         <NftMetadata />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Collection Metadata</ComponentTitle>
+        <NFTOverview />
       </ComponentWrapper>
     </Container>
   );
