@@ -1,14 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../buttons';
+import { LinkButton } from '../core/buttons';
 
 import {
   CollectionMetadataWrapper,
   Heading,
   Subtext,
 } from './styles';
-import back from '../../../assets/buttons/back.svg';
-import verified from '../../../assets/verified.svg';
+import back from '../../assets/buttons/back.svg';
+import verified from '../../assets/verified.svg';
 
 export const NFTOverview = () => {
   const { t } = useTranslation();
