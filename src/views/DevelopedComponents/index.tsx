@@ -294,7 +294,7 @@ const DevelopedComponents = () => {
           <NftSkeletonList />
         </div>
       </ComponentWrapper>
-       <ComponentWrapper>
+      <ComponentWrapper>
         <ComponentTitle>Collection Metadata</ComponentTitle>
         <NFTOverview />
       </ComponentWrapper>
