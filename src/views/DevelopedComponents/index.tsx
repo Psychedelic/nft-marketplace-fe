@@ -20,6 +20,9 @@ import {
   FilteredCountChip,
   FilteredTraitsChip,
   NFTTraitsChip,
+  CheckboxFilterAccordion,
+  AboutAccordion,
+  OfferAccordion,
   ActivityTable,
   NFTActivityTable,
   OffersTable,
@@ -31,6 +34,8 @@ import {
   CancelOfferModal,
   AcceptOfferModal,
   Tab,
+  NftList,
+  NftSkeletonList,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
@@ -147,6 +152,16 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Plug Dropdown Button</ComponentTitle>
         <PlugProfileDropdown />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Accordions</ComponentTitle>
+        <CheckboxFilterAccordion />
+        <br />
+        <br />
+        <OfferAccordion owned />
+        <br />
+        <br />
+        <AboutAccordion owned />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>SearchInput</ComponentTitle>
@@ -266,6 +281,18 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Accept Offer Modal</ComponentTitle>
         <AcceptOfferModal />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Nft Card/List</ComponentTitle>
+        <div>
+          <NftList />
+        </div>
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Nft Skeleton List</ComponentTitle>
+        <div>
+          <NftSkeletonList />
+        </div>
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Tabs</ComponentTitle>
