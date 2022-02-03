@@ -44,6 +44,7 @@ import twitter from '../../assets/buttons/twitter.svg';
 import back from '../../assets/buttons/back.svg';
 import closeDrawer from '../../assets/buttons/close-drawer.svg';
 import darkTheme from '../../assets/buttons/dark-theme.svg';
+import NftActionBar from '../../components/nft-action-bar/nft-action-bar';
 
 const DevelopedComponents = () => {
   const { t } = useTranslation();
@@ -306,6 +307,10 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Collection Metadata</ComponentTitle>
         <NFTOverview />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Action Bar</ComponentTitle>
+        <NftActionBar />
       </ComponentWrapper>
     </Container>
   );

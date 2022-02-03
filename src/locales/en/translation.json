@@ -21,9 +21,10 @@
       "allNfts": "All NFTs",
       "buyNow": "Buy Now",
       "makeOffer": "Make Offer",
-      "sell": "Sell",
-      "changePrice": "Change Price",
       "cancelListing": "Cancel Listing",
+      "changePrice": "Change Price",
+      "backToResults": "Back to results",
+      "sell": "Sell",
       "cancelOffer": "Cancel Offer",
       "acceptOffer": "Accept",
       "connectToPlug": "Connect To Plug"

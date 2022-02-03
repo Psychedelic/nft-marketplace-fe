@@ -51,6 +51,16 @@ export const Button = styled('button', {
       },
     },
   },
+  cursor: 'pointer',
+  borderRadius: '10px',
+  fontSize: '16px',
+  lineHeight: '19px',
+  padding: '8px 12px',
+  minWidth: '98px',
+  minHeight: '33px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 });
 
 export const LinkButtonStyles = styled('a', {
