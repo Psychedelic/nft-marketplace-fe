@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from './styles';
 
 export type ActionButtonProps = {
+  onClick?: () => void;
   type: any;
   danger?: boolean;
   size?: any;
