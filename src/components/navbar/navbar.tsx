@@ -37,6 +37,10 @@ export const NavBar = () => {
           placeholder={t(
             'translation:inputField.placeholder.searchCollection',
           )}
+          handleClick={() => {
+            // eslint-disable-next-line no-console
+            console.log('click callback');
+          }}
         />
       </SearchContainer>
       <ActionButtonsContainer>
