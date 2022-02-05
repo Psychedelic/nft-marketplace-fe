@@ -2,11 +2,12 @@ import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
   width: '100%',
+  paddingBottom: '8px', // TODO: make variant
 });
 
 export const TableWrapper = styled('div', {
   position: 'relative',
-  marginTop: '44px',
+  // marginTop: '44px', // TODO: make variant
   width: '100%',
   height: '100%',
   overflowX: 'auto',
@@ -27,7 +28,7 @@ export const TableWrapper = styled('div', {
       lineHeight: '22px',
       borderBottom: '1px solid #292929',
       whiteSpace: 'nowrap',
-      minWidth: '100px',
+      // minWidth: '100px', // TODO: make variant
     },
 
     thead: {

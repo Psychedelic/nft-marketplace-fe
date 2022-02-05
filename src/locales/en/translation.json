@@ -1,6 +1,8 @@
 {
   "common": {
-    "title": "NFT Marketplace UI"
+    "title": "NFT Marketplace UI",
+    "collectionName": "Crowns",
+    "noRecentSearch": "No recent searches"
   },
   "buttons": {
     "placeholder": {
@@ -20,11 +22,13 @@
       "allNfts": "All NFTs",
       "buyNow": "Buy Now",
       "makeOffer": "Make Offer",
-      "sell": "Sell",
-      "changePrice": "Change Price",
       "cancelListing": "Cancel Listing",
+      "changePrice": "Change Price",
+      "backToResults": "Back to results",
+      "sell": "Sell",
       "cancelOffer": "Cancel Offer",
-      "acceptOffer": "Accept"
+      "acceptOffer": "Accept",
+      "connectToPlug": "Connect To Plug"
     }
   },
   "dropdown": {
@@ -37,6 +41,42 @@
     },
     "moreOptions": {
       "copyLink": "Copy Link"
+    }
+  },
+  "accordions": {
+    "checkbox": {
+      "bigGem": {
+        "bigGem": "Big Gem",
+        "red": "Red",
+        "purple": "Purple",
+        "yellow": "Yellow",
+        "orange": "Orange",
+        "green": "Green",
+        "percentage": "1291 (12.9%)"
+      }
+    },
+    "about": {
+      "header": {
+        "collection": "Collection",
+        "capCrowns": "CAP Crowns",
+        "creator": "Creator",
+        "psychedelic": "Psychedelic",
+        "owner": "Owner",
+        "you": "You",
+        "aboutCrowns": "About Crowns",
+        "description": "Crowns are a collection of 10,000 uniquely generated NFTs on the Internet Computer. With a mix of traditional and psychedelic materials.",
+        "canisterId": "Canister ID",
+        "tokenStandard": "Token Standard",
+        "tokenId": "Token ID",
+        "blockchain": "Blockchain",
+        "internetComputer": "Internet Computer"
+      }
+    },
+    "offer": {
+      "header": {
+        "offer": "Offers (12)",
+        "currentPrice": "Current Price"
+      }
     }
   },
   "inputField": {
@@ -129,5 +169,8 @@
       "acceptOffer": "Accept Offer",
       "done": "Done"
     }
+  },
+  "nftCard": {
+    "owned": "Owned"
   }
 }
