@@ -20,7 +20,9 @@
     "action": {
       "buyNfts": "Buy NFT's",
       "allNfts": "All NFTs",
+      "myNfts": "My NFT’s",
       "buyNow": "Buy Now",
+      "hasOffers": "Has Offers",
       "makeOffer": "Make Offer",
       "cancelListing": "Cancel Listing",
       "changePrice": "Change Price",
@@ -47,6 +49,33 @@
     "checkbox": {
       "bigGem": {
         "bigGem": "Big Gem",
+        "red": "Red",
+        "purple": "Purple",
+        "yellow": "Yellow",
+        "orange": "Orange",
+        "green": "Green",
+        "percentage": "1291 (12.9%)"
+      },
+      "smallGem": {
+        "smallGem": "Small Gem",
+        "red": "Red",
+        "purple": "Purple",
+        "yellow": "Yellow",
+        "orange": "Orange",
+        "green": "Green",
+        "percentage": "1291 (12.9%)"
+      },
+      "base": {
+        "base": "Base",
+        "red": "Red",
+        "purple": "Purple",
+        "yellow": "Yellow",
+        "orange": "Orange",
+        "green": "Green",
+        "percentage": "1291 (12.9%)"
+      },
+      "rim": {
+        "rim": "Rim",
         "red": "Red",
         "purple": "Purple",
         "yellow": "Yellow",

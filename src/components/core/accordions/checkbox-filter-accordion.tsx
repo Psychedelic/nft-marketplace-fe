@@ -10,7 +10,11 @@ import {
 } from './styles';
 import arrowdown from '../../../assets/arrowdown.svg';
 
-export const CheckboxFilterAccordion = () => {
+export type CheckboxFilterAccordionProps = {
+  title: string;
+};
+
+export const CheckboxFilterAccordion = ({ title }: CheckboxFilterAccordionProps) => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<
@@ -33,7 +37,7 @@ export const CheckboxFilterAccordion = () => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <p>
-            {`${t('translation:accordions.checkbox.bigGem.bigGem')}`}
+            {title}
             &nbsp;
             <span>
               {selectedFilters.length > 0

@@ -15,7 +15,7 @@ export const AccordionStyle = styled(Accordion.Root, {
     },
     width: {
       small: {
-        width: '300px',
+        width: '100%',
       },
       medium: {
         width: '700px',

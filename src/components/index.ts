@@ -7,3 +7,4 @@ export * from './nft-skeleton-list';
 export * from './collection-overview';
 export * from './search';
 export * from './navbar';
+export * from './filters';
