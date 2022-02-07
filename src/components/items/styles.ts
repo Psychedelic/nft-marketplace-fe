@@ -2,6 +2,7 @@ import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
   borderTop: '1px solid rgb(229, 232, 235)',
+  padding: '0px 80px 80px',
 });
 
 export const ContentWrapper = styled('div', {

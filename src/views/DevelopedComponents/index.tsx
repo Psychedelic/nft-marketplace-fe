@@ -27,7 +27,7 @@ import {
   ActivityTable,
   NFTActivityTable,
   OffersTable,
-  NftMetadata,
+  CollectionOverview,
   SellModal,
   ChangePriceModal,
   BuyNowModal,
@@ -303,7 +303,7 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Collection Overview</ComponentTitle>
-        <NftMetadata />
+        <CollectionOverview />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Collection Metadata</ComponentTitle>

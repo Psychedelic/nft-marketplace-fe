@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CardOptionsDropdown } from '../../dropdown';
 import {
@@ -29,39 +30,41 @@ export const NftCard = ({
   const { t } = useTranslation();
 
   return (
-    <CardWrapper>
-      <Flex>
-        <OwnedCardText>
-          {owned ? `${t('translation:nftCard.owned')}` : ''}
-        </OwnedCardText>
-        <CardOptionsDropdown />
-      </Flex>
-      <Image>
-        <img src={data?.nftImage} alt="nft-card" />
-      </Image>
-      <Flex>
-        <NftName>{data?.nftName}</NftName>
-        {notForSale ? (
-          ''
-        ) : (
-          <Dfinity>
-            {data?.dfinityValue}
-            <img src={data?.dfintiyIcon} alt="" />
-          </Dfinity>
-        )}
-      </Flex>
+    <RouterLink to="/nft/2713">
+      <CardWrapper>
+        <Flex>
+          <OwnedCardText>
+            {owned ? `${t('translation:nftCard.owned')}` : ''}
+          </OwnedCardText>
+          <CardOptionsDropdown />
+        </Flex>
+        <Image>
+          <img src={data?.nftImage} alt="nft-card" />
+        </Image>
+        <Flex>
+          <NftName>{data?.nftName}</NftName>
+          {notForSale ? (
+            ''
+          ) : (
+            <Dfinity>
+              {data?.dfinityValue}
+              <img src={data?.dfintiyIcon} alt="" />
+            </Dfinity>
+          )}
+        </Flex>
 
-      <Flex>
-        <NftId>{data?.nftId}</NftId>
-        {notForSale ? (
-          ''
-        ) : (
-          <LastOffer>
-            {forSaleAndOffer ? 'Offer for ' : 'Last '}
-            <b>{data?.lastOffer}</b>
-          </LastOffer>
-        )}
-      </Flex>
-    </CardWrapper>
+        <Flex>
+          <NftId>{data?.nftId}</NftId>
+          {notForSale ? (
+            ''
+          ) : (
+            <LastOffer>
+              {forSaleAndOffer ? 'Offer for ' : 'Last '}
+              <b>{data?.lastOffer}</b>
+            </LastOffer>
+          )}
+        </Flex>
+      </CardWrapper>
+    </RouterLink>
   );
 };

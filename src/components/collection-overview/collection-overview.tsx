@@ -10,6 +10,7 @@ import {
   Heading,
   Subtext,
   ButtonsWrapper,
+  HeaderWrapper,
 } from './styles';
 import background from '../../assets/nft-background.png';
 import crown from '../../assets/crown-pfp.png';
@@ -18,7 +19,7 @@ import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
 import back from '../../assets/buttons/back.svg';
 
-export const NftMetadata = () => {
+export const CollectionOverview = () => {
   const { t } = useTranslation();
 
   return (
@@ -29,7 +30,7 @@ export const NftMetadata = () => {
           <NftProfilePictureWrapper>
             <img src={crown} alt="crown-pfp" />
           </NftProfilePictureWrapper>
-          <div>
+          <HeaderWrapper>
             <Heading>
               Crowns
               <img src={verified} alt="verified" />
@@ -39,7 +40,7 @@ export const NftMetadata = () => {
               NFTs on the Internet Computer. With a mix of traditional
               and psychedelic materials.
             </Subtext>
-          </div>
+          </HeaderWrapper>
         </NftMetadataContentWrapper>
         <ButtonsWrapper>
           <LinkButton type="textBtn">
