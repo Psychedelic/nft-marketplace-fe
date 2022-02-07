@@ -1,6 +1,6 @@
 import React from 'react';
-import { NftActionBar } from '../../components';
-import { Container } from './styles';
+import { NftActionBar, NFTActivityTable } from '../../components';
+import { Container, NFTDetailsWrapper } from './styles';
 
 /* --------------------------------------------------------------------------
  * NFT View Component
@@ -9,6 +9,9 @@ import { Container } from './styles';
 const NFTView = () => (
   <Container>
     <NftActionBar />
+    <NFTDetailsWrapper>
+      <NFTActivityTable />
+    </NFTDetailsWrapper>
   </Container>
 );
 

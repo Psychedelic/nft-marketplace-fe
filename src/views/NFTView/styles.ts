@@ -4,3 +4,9 @@ export const Container = styled('div', {
   width: '100%',
   paddingTop: '72px',
 });
+
+export const NFTDetailsWrapper = styled('div', {
+  maxWidth: '1190px',
+  margin: 'auto',
+  padding: '30px 30px',
+});
