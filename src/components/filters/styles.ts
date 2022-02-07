@@ -5,14 +5,20 @@ export const Container = styled('div', {
   background: 'white',
   borderRight: '1px solid #E5E8EB',
   height: '100%',
-  padding: '15px 20px',
+  padding: '40px 20px 30px',
   borderTop: '1px solid #E5E8EB',
+  position: 'relative',
 });
 
 export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
   margin: '0 0 12%',
+
+  '& a': {
+    position: 'absolute',
+    right: '-22px',
+  },
 
   variants: {
     justify: {

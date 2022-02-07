@@ -44,7 +44,7 @@ import {
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
 import back from '../../assets/buttons/back.svg';
-import closeDrawer from '../../assets/buttons/close-drawer.svg';
+import closeFilter from '../../assets/buttons/close-filters.svg';
 import darkTheme from '../../assets/buttons/dark-theme.svg';
 
 const DevelopedComponents = () => {
@@ -90,7 +90,7 @@ const DevelopedComponents = () => {
             <img src={darkTheme} alt="dark-theme" />
           </LinkButton>
           <LinkButton>
-            <img src={closeDrawer} alt="close-tab" />
+            <img src={closeFilter} alt="close-tab" />
           </LinkButton>
         </ComponentsList>
       </ComponentWrapper>
