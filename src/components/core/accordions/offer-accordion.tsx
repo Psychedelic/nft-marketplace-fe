@@ -17,21 +17,20 @@ import { OffersTable } from '../../tables';
 
 export const OfferAccordion = () => {
   const { t } = useTranslation();
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
 
   return (
-    <AccordionStyle
-      type="single"
-      defaultValue="item-1"
-      collapsible
-      width="medium"
-    >
+    <AccordionStyle type="single" collapsible width="medium">
       <AccordionHead>
         <AccordionHeadContent flexProperties="offer">
           <FlexRight>
             <img src={dfinity} alt={dfinity} />
             <div>
-              <span>{`${t('translation:accordions.offer.header.currentPrice')}`}</span>
+              <span>
+                {t(
+                  'translation:accordions.offer.header.currentPrice',
+                )}
+              </span>
               <h4>21.12 WICP</h4>
             </div>
           </FlexRight>

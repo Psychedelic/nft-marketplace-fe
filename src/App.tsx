@@ -1,14 +1,18 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { darkTheme } from './stitches.config';
-import Home from './views/Home';
+import { NavBar } from './components';
+import CollectionView from './views/CollectionView';
+import NFTView from './views/NFTView';
 import DevelopedComponents from './views/DevelopedComponents';
 
 const App = () => (
   <div className={darkTheme}>
+    <NavBar />
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<CollectionView />} />
+        <Route path="/nft/:nftId" element={<NFTView />} />
         <Route path="/components" element={<DevelopedComponents />} />
       </Routes>
     </BrowserRouter>

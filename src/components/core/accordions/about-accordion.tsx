@@ -30,7 +30,7 @@ export type AboutAccordionProps = {
 
 export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
   const { t } = useTranslation();
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
 
   const AccordionHeadContentData = [
     {
@@ -51,12 +51,7 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
   ];
 
   return (
-    <AccordionStyle
-      type="single"
-      defaultValue="item-1"
-      collapsible
-      width="medium"
-    >
+    <AccordionStyle type="single" collapsible width="medium">
       <AccordionHead>
         {AccordionHeadContentData.map((data) => (
           <AccordionHeadContent>

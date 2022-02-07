@@ -14,7 +14,7 @@ import {
   ModalInput,
   ActionButton,
   LinkButton,
-  NFTOverview,
+  NFTMetaData,
   PriceFilterDropdown,
   CardOptionsDropdown,
   PlugProfileDropdown,
@@ -27,7 +27,7 @@ import {
   ActivityTable,
   NFTActivityTable,
   OffersTable,
-  NftMetadata,
+  CollectionOverview,
   SellModal,
   ChangePriceModal,
   BuyNowModal,
@@ -39,13 +39,13 @@ import {
   NftList,
   NftSkeletonList,
   NavBar,
+  NftActionBar,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
 import back from '../../assets/buttons/back.svg';
 import closeDrawer from '../../assets/buttons/close-drawer.svg';
 import darkTheme from '../../assets/buttons/dark-theme.svg';
-import NftActionBar from '../../components/nft-action-bar/nft-action-bar';
 
 const DevelopedComponents = () => {
   const { t } = useTranslation();
@@ -303,11 +303,11 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Collection Overview</ComponentTitle>
-        <NftMetadata />
+        <CollectionOverview />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Collection Metadata</ComponentTitle>
-        <NFTOverview />
+        <NFTMetaData />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Action Bar</ComponentTitle>
