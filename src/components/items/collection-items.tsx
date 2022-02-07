@@ -1,0 +1,81 @@
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { NftList } from '../nft-list';
+import {
+  Container,
+  ContentWrapper,
+  Flex,
+  ContentFlex,
+} from './styles';
+import {
+  FilteredCountChip,
+  FilteredTraitsChip,
+  PriceFilterDropdown,
+} from '../core';
+
+export const CollectionItems = () => {
+  const { t } = useTranslation();
+
+  const dropDownContent = [
+    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
+    `${t('translation:dropdown.priceFilter.recentlySold')}`,
+    `${t('translation:dropdown.priceFilter.lowToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highestLastSale')}`,
+  ];
+
+  return (
+    <Container>
+      <ContentWrapper>
+        <Flex withMargin justifyContent>
+          <ContentFlex>
+            <FilteredCountChip
+              label={t('translation:chips.labels.itemsLabel')}
+              count="10.0k"
+              showLogo={false}
+            />
+            <FilteredCountChip
+              label={t('translation:chips.labels.OwnersLabel')}
+              count="5.9k"
+              showLogo={false}
+            />
+            <FilteredCountChip
+              label={t('translation:chips.labels.FloorPriceLabel')}
+              count="22.12"
+              showLogo
+            />
+          </ContentFlex>
+          <ContentFlex>
+            <PriceFilterDropdown
+              defaultValue={`${t(
+                'translation:dropdown.priceFilter.lowToHigh',
+              )}`}
+              options={dropDownContent}
+            />
+          </ContentFlex>
+        </Flex>
+        <Flex>
+          <ContentFlex>
+            <FilteredTraitsChip
+              name="Red"
+              rim="Big Gem"
+              removeFilter={() => {
+                // eslint-disable-next-line no-console
+                console.log('callback');
+              }}
+            />
+            <FilteredTraitsChip
+              name="Psychedelic"
+              rim="Rim"
+              removeFilter={() => {
+                // eslint-disable-next-line no-console
+                console.log('callback');
+              }}
+            />
+          </ContentFlex>
+        </Flex>
+      </ContentWrapper>
+      <NftList />
+    </Container>
+  );
+};
