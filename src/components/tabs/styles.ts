@@ -57,19 +57,3 @@ export const TabsTrigger = styled(Tabs.Trigger, {
     outline: 'none',
   },
 });
-
-export const ContentWrapper = styled('div', {
-  margin: '25px 0',
-});
-
-export const Flex = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  margin: '25px 0 10px',
-});
-
-export const ContentFlex = styled('div', {
-  display: 'flex',
-  alignItems: 'center',
-});

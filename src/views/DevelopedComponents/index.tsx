@@ -35,7 +35,7 @@ import {
   CancelListingModal,
   CancelOfferModal,
   AcceptOfferModal,
-  Tab,
+  CollectionTabs,
   NftList,
   NftSkeletonList,
   NavBar,
@@ -315,7 +315,7 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Tabs</ComponentTitle>
-        <Tab />
+        <CollectionTabs />
       </ComponentWrapper>
     </Container>
   );

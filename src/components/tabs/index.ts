@@ -1,1 +1,1 @@
-export * from './tabs';
+export * from './collection-tabs';
