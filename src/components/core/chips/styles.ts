@@ -8,7 +8,7 @@ export const CountContainer = styled('div', {
   color: '#777E90',
   display: 'flex',
   alignItems: 'center',
-  margin: '0px 25px 20px 0px',
+  margin: '0px 25px 0px 0px',
 });
 
 export const CountLabel = styled('div', {
@@ -50,6 +50,10 @@ export const TraitChipContainer = styled('div', {
         margin: '0px 15px 15px 0px',
       },
     },
+  },
+
+  '&:last-child': {
+    marginRight: '0px',
   },
 });
 

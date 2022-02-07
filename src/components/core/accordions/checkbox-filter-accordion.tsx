@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import { Checkbox } from '../checkbox/checkbox';
 import { checkboxDummyData } from '../../mock-data/accordion-data';
@@ -15,7 +14,6 @@ export type CheckboxFilterAccordionProps = {
 };
 
 export const CheckboxFilterAccordion = ({ title }: CheckboxFilterAccordionProps) => {
-  const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<
     Array<string>

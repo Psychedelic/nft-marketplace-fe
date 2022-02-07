@@ -201,5 +201,9 @@
   },
   "nftCard": {
     "owned": "Owned"
+  },
+  "tabs": {
+    "items": "Items",
+    "activity": "Activity"
   }
 }

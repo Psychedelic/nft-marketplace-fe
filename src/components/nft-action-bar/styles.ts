@@ -1,9 +1,18 @@
 import { styled } from '../../stitches.config';
 
+export const Container = styled('div', {
+  width: '100%',
+  height: '72px',
+  background: '#FAFBFD',
+});
+
 export const NftActionBarWrapper = styled('div', {
+  maxWidth: '1190px',
+  height: '100%',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  margin: 'auto',
 });
 
 export const ActionText = styled('p', {
@@ -20,12 +29,11 @@ export const ActionText = styled('p', {
   },
 });
 
-export const ButtonWrapper = styled('div', {
+export const ButtonListWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
-  width: '25%',
+});
 
-  '& button:first-child': {
-    marginRight: '5px',
-  },
+export const ButtonWrapper = styled('div', {
+  marginLeft: '10px',
 });

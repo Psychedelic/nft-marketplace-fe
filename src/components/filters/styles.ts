@@ -6,9 +6,7 @@ export const Container = styled('div', {
   borderRight: '1px solid #E5E8EB',
   height: '100%',
   padding: '15px 20px',
-  //   position: 'fixed',
-  //   left: 0,
-  zIndex: '-1',
+  borderTop: '1px solid #E5E8EB',
 });
 
 export const Flex = styled('div', {
