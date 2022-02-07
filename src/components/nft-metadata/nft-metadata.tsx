@@ -10,7 +10,7 @@ import {
 import back from '../../assets/buttons/back.svg';
 import verified from '../../assets/verified-small.svg';
 
-export const NFTOverview = () => {
+export const NFTMetaData = () => {
   const { t } = useTranslation();
 
   return (
