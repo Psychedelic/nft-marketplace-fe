@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  NavBar,
-  CollectionOverview,
-  CollectionTabs,
-} from '../../components';
+import { CollectionOverview, CollectionTabs } from '../../components';
 import { Container, CollectionWrapper } from './styles';
 
 /* --------------------------------------------------------------------------
@@ -12,7 +8,6 @@ import { Container, CollectionWrapper } from './styles';
 
 const CollectionView = () => (
   <Container>
-    <NavBar />
     <CollectionWrapper>
       <CollectionOverview />
     </CollectionWrapper>
