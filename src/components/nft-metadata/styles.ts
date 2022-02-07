@@ -4,7 +4,9 @@ export const CollectionMetadataWrapper = styled('div', {
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'space-between',
-  width: '600px',
+  width: '100%',
+  maxWidth: '670px',
+  marginBottom: '25px',
 });
 
 export const Heading = styled('h3', {

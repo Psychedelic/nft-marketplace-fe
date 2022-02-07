@@ -51,6 +51,10 @@ export const TraitChipContainer = styled('div', {
       },
     },
   },
+
+  '&:last-child': {
+    marginRight: '0px',
+  },
 });
 
 export const TraitSpecsContainer = styled('div', {

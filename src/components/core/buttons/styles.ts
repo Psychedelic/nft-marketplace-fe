@@ -89,6 +89,10 @@ export const LinkButtonStyles = styled('a', {
       },
     },
   },
+
+  '&:last-child': {
+    marginRight: '0px',
+  },
 });
 
 export const PlugButtonContainer = styled('button', {
