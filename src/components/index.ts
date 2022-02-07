@@ -9,3 +9,4 @@ export * from './collection-overview';
 export * from './search';
 export * from './navbar';
 export * from './items';
+export * from './nft-action-bar';

@@ -39,13 +39,13 @@ import {
   NftList,
   NftSkeletonList,
   NavBar,
+  NftActionBar,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
 import back from '../../assets/buttons/back.svg';
 import closeDrawer from '../../assets/buttons/close-drawer.svg';
 import darkTheme from '../../assets/buttons/dark-theme.svg';
-import NftActionBar from '../../components/nft-action-bar/nft-action-bar';
 
 const DevelopedComponents = () => {
   const { t } = useTranslation();

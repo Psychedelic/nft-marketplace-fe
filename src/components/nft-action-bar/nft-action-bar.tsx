@@ -9,7 +9,7 @@ import {
 } from './styles';
 import back from '../../assets/back.svg';
 
-const NftActionBar = () => {
+export const NftActionBar = () => {
   const { t } = useTranslation();
 
   return (
@@ -33,5 +33,3 @@ const NftActionBar = () => {
     </NftActionBarWrapper>
   );
 };
-
-export default NftActionBar;
