@@ -12,6 +12,6 @@ export const ItemDetailsCell = ({
 }: ItemDetailsCellProps) => (
   <ItemDetails>
     <ItemLogo src={logo} alt="crowns" />
-    <ItemName>{name}</ItemName>
+    <ItemName className="item-name">{name}</ItemName>
   </ItemDetails>
 );

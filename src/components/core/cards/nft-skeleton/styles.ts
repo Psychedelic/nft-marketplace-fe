@@ -21,7 +21,7 @@ export const CardWrapper = styled('div', {
 });
 
 export const SkeletonLarge = styled('div', {
-  height: '280px',
+  height: '220px',
   width: '100%',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   borderRadius: '14px',
@@ -34,7 +34,7 @@ export const SkeletonSmall = styled('div', {
   width: '100%',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   borderRadius: '14px',
-  margin: '4px 0',
+  margin: '8px 0px 0px',
   background:
     'linear-gradient(90deg, rgb(229, 232, 235) 0%, rgb(247, 248, 250) 59.9%)',
 });

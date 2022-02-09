@@ -6,6 +6,11 @@ export const Container = styled('div', {
   width: '100%',
 });
 
+export const FilteredContainer = styled('div', {
+  maxWidth: '1280px',
+  margin: 'auto',
+});
+
 export const ContentWrapper = styled('div', {
   margin: '25px 0px 15px',
 });

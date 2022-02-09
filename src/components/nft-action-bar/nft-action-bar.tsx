@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CancelListingModal, ChangePriceModal } from '../modals';
 
@@ -17,10 +18,12 @@ export const NftActionBar = () => {
   return (
     <Container>
       <NftActionBarWrapper>
-        <ActionText>
-          <img src={back} alt="back to results" />
-          {t('translation:buttons.action.backToResults')}
-        </ActionText>
+        <RouterLink to="/">
+          <ActionText>
+            <img src={back} alt="back to results" />
+            {t('translation:buttons.action.backToResults')}
+          </ActionText>
+        </RouterLink>
         <ButtonListWrapper>
           <ButtonWrapper>
             <CancelListingModal />
