@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NftList } from '../nft-list';
+import { NftSkeletonList } from '../nft-skeleton-list';
 import {
   Container,
   FilteredContainer,
@@ -77,6 +78,7 @@ export const CollectionItems = () => {
             </ContentFlex>
           </Flex>
         </ContentWrapper>
+        <NftSkeletonList />
         <NftList />
       </FilteredContainer>
     </Container>
