@@ -42,7 +42,8 @@ export const DropdownContent = styled(DropdownMenu.Content, {
   variants: {
     width: {
       small: {
-        minWidth: '200px',
+        marginTop: '2px',
+        minWidth: '160px',
       },
     },
   },
