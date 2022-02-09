@@ -1,11 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  PriceDetailsCell,
-  TextCell,
-  TextLinkCell,
-  ActionButton,
-} from '../core';
+import { PriceDetailsCell, TextCell, TextLinkCell } from '../core';
+import { AcceptOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
 import { Container, ButtonWrapper } from './styles';
@@ -54,15 +50,7 @@ export const OffersTable = () => {
         Header: t('translation:tables.titles.action'),
         accessor: () => (
           <ButtonWrapper>
-            <ActionButton
-              type="outline"
-              text="Accept"
-              size="small"
-              handleClick={() => {
-                // eslint-disable-next-line no-console
-                console.log('callback');
-              }}
-            />
+            <AcceptOfferModal />
           </ButtonWrapper>
         ),
       },
