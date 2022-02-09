@@ -8,8 +8,8 @@ import DevelopedComponents from './views/DevelopedComponents';
 
 const App = () => (
   <div className={darkTheme}>
-    <NavBar />
     <BrowserRouter>
+      <NavBar />
       <Routes>
         <Route path="/" element={<CollectionView />} />
         <Route path="/nft/:nftId" element={<NFTView />} />

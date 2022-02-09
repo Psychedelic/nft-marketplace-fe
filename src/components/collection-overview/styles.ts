@@ -1,19 +1,23 @@
 import { styled } from '../../stitches.config';
+import background from '../../assets/nft-background.png';
 
 export const NftMetadataWrapper = styled('div', {
   display: 'block',
 });
 
-export const NftMetadataBackground = styled('img', {
-  width: '100%',
-  maxHeight: '200px',
+export const NftMetadataBackground = styled('div', {
+  height: '200px',
+  backgroundImage: `url(${background})`,
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
 });
 
 export const NftMetadataContent = styled('div', {
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'space-between',
-  margin: '20px 0px 25px',
+  maxWidth: '1280px',
+  margin: '20px auto 25px',
   padding: '0 50px',
 });
 

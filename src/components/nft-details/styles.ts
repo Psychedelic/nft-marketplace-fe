@@ -30,4 +30,5 @@ export const DetailsContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-end',
+  padding: '0px 0px 0px 30px',
 });

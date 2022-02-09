@@ -14,7 +14,8 @@ export const DropdownStyle = styled(DropdownMenu.Trigger, {
   alignItems: 'center',
   justifyContent: 'space-between',
   color: '#23262F',
-  width: '250px',
+  width: '210px',
+  height: '44px',
   padding: '0 15px',
   cursor: 'pointer',
 
@@ -24,7 +25,7 @@ export const DropdownStyle = styled(DropdownMenu.Trigger, {
 });
 
 export const DropdownContent = styled(DropdownMenu.Content, {
-  minWidth: '250px',
+  minWidth: '210px',
   backgroundColor: 'white',
   border: '2px solid #E5E8EB',
   boxSizing: 'border-box',
@@ -35,13 +36,14 @@ export const DropdownContent = styled(DropdownMenu.Content, {
     willChange: 'transform, opacity',
   },
   borderRadius: '15px',
-  marginTop: '2%',
+  marginTop: '10px',
   padding: '0',
   cursor: 'pointer',
   variants: {
     width: {
       small: {
-        minWidth: '200px',
+        marginTop: '2px',
+        minWidth: '160px',
       },
     },
   },

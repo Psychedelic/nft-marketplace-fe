@@ -63,6 +63,12 @@ export const TableWrapper = styled('div', {
             paddingLeft: '80px',
           },
         },
+        '&:hover': {
+          background: '#F4F5F6',
+          '.item-name': {
+            color: '#2253FF',
+          },
+        },
       },
     },
   },
