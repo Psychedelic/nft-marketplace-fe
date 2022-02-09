@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
@@ -18,6 +18,8 @@ import {
 export const CollectionItems = () => {
   const { t } = useTranslation();
 
+  const [loading, setLoading] = useState<boolean>(true);
+
   const dropDownContent = [
     `${t('translation:dropdown.priceFilter.recentlyListed')}`,
     `${t('translation:dropdown.priceFilter.recentlySold')}`,
@@ -25,6 +27,13 @@ export const CollectionItems = () => {
     `${t('translation:dropdown.priceFilter.highToHigh')}`,
     `${t('translation:dropdown.priceFilter.highestLastSale')}`,
   ];
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <Container>
@@ -78,8 +87,7 @@ export const CollectionItems = () => {
             </ContentFlex>
           </Flex>
         </ContentWrapper>
-        <NftSkeletonList />
-        <NftList />
+        {loading ? <NftSkeletonList /> : <NftList />}
       </FilteredContainer>
     </Container>
   );
