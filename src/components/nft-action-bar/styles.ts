@@ -8,6 +8,7 @@ export const Container = styled('div', {
 
 export const NftActionBarWrapper = styled('div', {
   maxWidth: '1190px',
+  padding: '0px 30px',
   height: '100%',
   display: 'flex',
   alignItems: 'center',
