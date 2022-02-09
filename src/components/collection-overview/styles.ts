@@ -13,7 +13,8 @@ export const NftMetadataContent = styled('div', {
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'space-between',
-  margin: '20px 0px 25px',
+  maxWidth: '1280px',
+  margin: '20px auto 25px',
   padding: '0 50px',
 });
 

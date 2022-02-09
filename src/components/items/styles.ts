@@ -5,6 +5,11 @@ export const Container = styled('div', {
   padding: '0px 80px 80px',
 });
 
+export const FilteredContainer = styled('div', {
+  maxWidth: '1280px',
+  margin: 'auto',
+});
+
 export const ContentWrapper = styled('div', {
   margin: '25px 0px 15px',
 });
