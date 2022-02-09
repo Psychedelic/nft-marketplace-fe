@@ -37,7 +37,7 @@ export const NavBar = () => {
       </RouterLink>
       <GlobalSearch />
       <ActionButtonsContainer>
-        <Tooltip text="Coming soon!">
+        <Tooltip text={t('translation:common.comingSoon')}>
           <LinkButton>
             <img src={darkTheme} alt="dark-theme" />
           </LinkButton>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../core/buttons';
+import { LinkButton, Tooltip } from '../core';
 import {
   NftMetadataWrapper,
   NftMetadataBackground,
@@ -57,12 +57,15 @@ export const CollectionOverview = () => {
               alt={t('translation:buttons.links.twitter')}
             />
           </LinkButton>
-          <LinkButton>
-            <img
-              src={back}
-              alt={t('translation:buttons.links.back')}
-            />
-          </LinkButton>
+
+          <Tooltip text={t('translation:common.comingSoon')}>
+            <LinkButton>
+              <img
+                src={back}
+                alt={t('translation:buttons.links.back')}
+              />
+            </LinkButton>
+          </Tooltip>
         </ButtonsWrapper>
       </NftMetadataContent>
     </NftMetadataWrapper>

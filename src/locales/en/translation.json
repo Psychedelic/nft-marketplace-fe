@@ -2,7 +2,8 @@
   "common": {
     "title": "NFT Marketplace UI",
     "collectionName": "Crowns",
-    "noRecentSearch": "No recent searches"
+    "noRecentSearch": "No recent searches",
+    "comingSoon": "Coming soon!"
   },
   "buttons": {
     "placeholder": {
