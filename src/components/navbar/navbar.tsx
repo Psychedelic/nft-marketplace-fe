@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { PlugButton, LinkButton } from '../core';
+import { PlugButton, LinkButton, Tooltip } from '../core';
 import { GlobalSearch } from '../search';
 import appLogo from '../../assets/app-logo.svg';
 import appName from '../../assets/app-name.svg';
@@ -37,9 +37,11 @@ export const NavBar = () => {
       </RouterLink>
       <GlobalSearch />
       <ActionButtonsContainer>
-        <LinkButton>
-          <img src={darkTheme} alt="dark-theme" />
-        </LinkButton>
+        <Tooltip text="Coming soon!">
+          <LinkButton>
+            <img src={darkTheme} alt="dark-theme" />
+          </LinkButton>
+        </Tooltip>
         <PlugButton />
       </ActionButtonsContainer>
     </Container>
