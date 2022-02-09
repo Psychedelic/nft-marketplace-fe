@@ -42,25 +42,22 @@ export const CollectionOverview = () => {
           </HeaderWrapper>
         </NftMetadataContentWrapper>
         <ButtonsWrapper>
-          <LinkButton type="textBtn">
+          <LinkButton type="textBtn" url="https://crowns.ooo/">
             {t('translation:buttons.links.website')}
           </LinkButton>
-          &nbsp;
-          <LinkButton outline="light" text="bold">
+          <LinkButton url="https://discord.gg/yVEcEzmrgm">
             <img
               src={discord}
               alt={t('translation:buttons.links.discord')}
             />
           </LinkButton>
-          &nbsp;
-          <LinkButton outline="light" text="bold">
+          <LinkButton url="https://twitter.com/cap_ois">
             <img
               src={twitter}
               alt={t('translation:buttons.links.twitter')}
             />
           </LinkButton>
-          &nbsp;
-          <LinkButton outline="light" text="bold">
+          <LinkButton>
             <img
               src={back}
               alt={t('translation:buttons.links.back')}
