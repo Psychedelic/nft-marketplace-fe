@@ -12,7 +12,6 @@ import {
   ButtonsWrapper,
   HeaderWrapper,
 } from './styles';
-import background from '../../assets/nft-background.png';
 import crown from '../../assets/crown-pfp.png';
 import verified from '../../assets/verified-large.svg';
 import discord from '../../assets/buttons/discord.svg';
@@ -24,7 +23,7 @@ export const CollectionOverview = () => {
 
   return (
     <NftMetadataWrapper>
-      <NftMetadataBackground src={background} />
+      <NftMetadataBackground />
       <NftMetadataContent>
         <NftMetadataContentWrapper>
           <NftProfilePictureWrapper>
