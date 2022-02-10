@@ -1,25 +1,45 @@
 import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
-  width: '340px',
-  background: 'white',
-  height: '100%',
-  padding: '40px 20px 30px',
-  borderTop: '1px solid #E5E8EB',
   position: 'relative',
 });
 
 export const CloseFilterContainer = styled('div', {
+  // base styles
   position: 'absolute',
   right: '-22px',
   top: '24px',
   zIndex: 1,
+
+  // variants
+  variants: {
+    opened: {
+      true: {
+        position: 'absolute',
+        right: '-34px',
+        top: '24px',
+        zIndex: 1,
+      },
+    },
+  },
+});
+
+export const FiltersContainer = styled('div', {
+  width: '340px',
+  background: 'white',
+  height: '100%',
+  borderTop: '1px solid #E5E8EB',
+  position: 'relative',
+});
+
+export const FiltersWrapper = styled('div', {
+  padding: '32px 20px',
 });
 
 export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
-  margin: '0 0 12%',
+  margin: '0 0 0px',
 
   variants: {
     justify: {
@@ -28,6 +48,18 @@ export const Flex = styled('div', {
       },
     },
   },
+});
+
+export const FilterSection = styled('div', {
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  margin: '35px 0px 35px',
+});
+
+export const FilterGroup = styled('div', {
+  width: '100%',
+  marginBottom: '30px',
 });
 
 export const Heading = styled('h5', {
@@ -39,6 +71,19 @@ export const Heading = styled('h5', {
   margin: 0,
 });
 
+export const ClearButton = styled('div', {
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '14px',
+  lineHeight: '19px',
+  color: '#2253FF',
+  margin: '0px 0px 0px 15px',
+
+  '&:hover': {
+    cursor: 'pointer',
+  },
+});
+
 export const Subtext = styled('p', {
   fontStyle: 'normal',
   fontWeight: '500',
@@ -46,7 +91,6 @@ export const Subtext = styled('p', {
   lineHeight: '19px',
   color: '#2253FF',
   margin: '0px 0px 0px 30px',
-  cursor: 'pointer',
 
   variants: {
     color: {
@@ -59,13 +103,13 @@ export const Subtext = styled('p', {
     },
     margin: {
       left: {
-        margin: '0px 0px 0px 30px',
+        margin: '0px 0px 0px 15px',
       },
       right: {
         margin: '0px 30px 0px 0px',
       },
       rightAndLeft: {
-        margin: '0px 15px',
+        margin: '0px 8px',
       },
       topAndBottom: {
         margin: '30px 0px',
@@ -80,12 +124,21 @@ export const Subtext = styled('p', {
 export const Subheadings = styled('p', {
   fontStyle: 'normal',
   fontWeight: '500',
-  fontSize: '14px',
+  fontSize: '16px',
   lineHeight: '19px',
   color: '#777E90',
-  margin: '20px 0px',
+  margin: '0px 0px 15px',
 });
 
 export const CheckboxFilters = styled('div', {
-  margin: '20px 0px',
+  margin: '0px 0px 15px',
+
+  '.checkbox-accordian': {
+    marginBottom: '0px',
+  },
+});
+
+export const FilterButtonWrapper = styled('div', {
+  width: '135px',
+  height: '44px',
 });

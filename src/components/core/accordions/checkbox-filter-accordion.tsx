@@ -29,6 +29,7 @@ export const CheckboxFilterAccordion = ({
       collapsible
       backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
       width="small"
+      className="checkbox-accordian"
     >
       <Accordion.Item value={id}>
         <AccordionTrigger
