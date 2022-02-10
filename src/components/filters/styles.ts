@@ -1,9 +1,8 @@
 import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
-  width: '25%',
+  width: '340px',
   background: 'white',
-  borderRight: '1px solid #E5E8EB',
   height: '100%',
   padding: '40px 20px 30px',
   borderTop: '1px solid #E5E8EB',
@@ -14,11 +13,6 @@ export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
   margin: '0 0 12%',
-
-  '& a': {
-    position: 'absolute',
-    right: '-22px',
-  },
 
   variants: {
     justify: {

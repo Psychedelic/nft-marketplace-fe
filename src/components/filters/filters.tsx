@@ -4,7 +4,6 @@ import {
   ActionButton,
   CheckboxFilterAccordion,
   FilterInput,
-  LinkButton,
 } from '../core';
 import {
   Container,
@@ -14,7 +13,6 @@ import {
   Subheadings,
   CheckboxFilters,
 } from './styles';
-import closeFilters from '../../assets/buttons/close-filters.svg';
 
 export const Filters = () => {
   const { t } = useTranslation();
@@ -24,9 +22,6 @@ export const Filters = () => {
       <Flex>
         <Heading>Filters</Heading>
         <Subtext margin="left">Clear All</Subtext>
-        <LinkButton>
-          <img src={closeFilters} alt="close-tab" />
-        </LinkButton>
       </Flex>
       <div>
         <Subheadings>Display</Subheadings>

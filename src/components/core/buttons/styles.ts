@@ -126,3 +126,24 @@ export const PlugButtonText = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
 });
+
+export const IconButtonStyles = styled('div', {
+  // base styles
+  border: '2px solid #E5E8EB',
+  background: '#FFFFFF',
+  fontWeight: '500',
+  color: '#23262F',
+  cursor: 'pointer',
+  borderRadius: '14px',
+  fontSize: '16px',
+  width: '40px',
+  height: '40px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginRight: '10px',
+
+  '&:last-child': {
+    marginRight: '0px',
+  },
+});

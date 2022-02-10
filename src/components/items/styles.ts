@@ -1,9 +1,17 @@
 import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
+  position: 'relative',
   borderTop: '1px solid rgb(229, 232, 235)',
   padding: '0px 80px 80px',
   width: '100%',
+  borderLeft: '1px solid rgb(229, 232, 235)',
+});
+
+export const CloseFilterContainer = styled('div', {
+  position: 'absolute',
+  left: '-22px',
+  top: '24px',
 });
 
 export const FilteredContainer = styled('div', {
