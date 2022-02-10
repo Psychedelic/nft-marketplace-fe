@@ -11,10 +11,14 @@ import arrowdown from '../../../assets/arrowdown.svg';
 
 export type CheckboxFilterAccordionProps = {
   title: string;
+  id: string;
 };
 
-export const CheckboxFilterAccordion = ({ title }: CheckboxFilterAccordionProps) => {
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+export const CheckboxFilterAccordion = ({
+  title,
+  id = 'item-1',
+}: CheckboxFilterAccordionProps) => {
+  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [selectedFilters, setSelectedFilters] = useState<
     Array<string>
   >([]);
@@ -22,12 +26,11 @@ export const CheckboxFilterAccordion = ({ title }: CheckboxFilterAccordionProps)
   return (
     <AccordionStyle
       type="single"
-      defaultValue="item-1"
       collapsible
       backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
       width="small"
     >
-      <Accordion.Item value="item-1">
+      <Accordion.Item value={id}>
         <AccordionTrigger
           padding="small"
           backgroundColor="none"
