@@ -8,12 +8,6 @@ export const Container = styled('div', {
   borderLeft: '1px solid rgb(229, 232, 235)',
 });
 
-export const CloseFilterContainer = styled('div', {
-  position: 'absolute',
-  left: '-22px',
-  top: '24px',
-});
-
 export const FilteredContainer = styled('div', {
   margin: 'auto',
 });

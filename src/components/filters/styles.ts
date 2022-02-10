@@ -9,6 +9,13 @@ export const Container = styled('div', {
   position: 'relative',
 });
 
+export const CloseFilterContainer = styled('div', {
+  position: 'absolute',
+  right: '-22px',
+  top: '24px',
+  zIndex: 1,
+});
+
 export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',

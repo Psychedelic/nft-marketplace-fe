@@ -2,16 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
-import closeFilters from '../../assets/buttons/close-filters.svg';
 import {
   FilteredCountChip,
   FilteredTraitsChip,
   PriceFilterDropdown,
-  IconActionButton,
 } from '../core';
 import {
   Container,
-  CloseFilterContainer,
   FilteredContainer,
   ContentWrapper,
   Flex,
@@ -40,16 +37,6 @@ export const CollectionItems = () => {
 
   return (
     <Container>
-      <CloseFilterContainer>
-        <IconActionButton
-          handleClick={() => {
-            // eslint-disable-next-line no-console
-            console.log('icon action button click');
-          }}
-        >
-          <img src={closeFilters} alt="close-tab" />
-        </IconActionButton>
-      </CloseFilterContainer>
       <FilteredContainer>
         <ContentWrapper>
           <Flex withMargin justifyContent>

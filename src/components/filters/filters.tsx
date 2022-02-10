@@ -4,9 +4,12 @@ import {
   ActionButton,
   CheckboxFilterAccordion,
   FilterInput,
+  IconActionButton,
 } from '../core';
+import closeFilters from '../../assets/buttons/close-filters.svg';
 import {
   Container,
+  CloseFilterContainer,
   Flex,
   Heading,
   Subtext,
@@ -19,6 +22,16 @@ export const Filters = () => {
 
   return (
     <Container>
+      <CloseFilterContainer>
+        <IconActionButton
+          handleClick={() => {
+            // eslint-disable-next-line no-console
+            console.log('icon action button click');
+          }}
+        >
+          <img src={closeFilters} alt="close-tab" />
+        </IconActionButton>
+      </CloseFilterContainer>
       <Flex>
         <Heading>Filters</Heading>
         <Subtext margin="left">Clear All</Subtext>
