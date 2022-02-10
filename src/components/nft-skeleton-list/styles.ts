@@ -2,7 +2,7 @@ import { styled } from '../../stitches.config';
 
 export const ListWrapper = styled('div', {
   display: 'grid',
-  gridTemplateColumns: 'repeat(5, 1fr)',
-  columnGap: '3%',
-  rowGap: '5%',
+  gridTemplateColumns: 'repeat(auto-fill,minmax(185px, 1fr))',
+  gridAutoFlow: 'row dense',
+  gridGap: '35px 50px',
 });

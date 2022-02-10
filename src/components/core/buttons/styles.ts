@@ -89,6 +89,10 @@ export const LinkButtonStyles = styled('a', {
       },
     },
   },
+
+  '&:last-child': {
+    marginRight: '0px',
+  },
 });
 
 export const PlugButtonContainer = styled('button', {
@@ -102,9 +106,14 @@ export const PlugButtonContainer = styled('button', {
   lineHeight: '19px',
   borderRadius: '14px',
   border: 'none',
+  marginLeft: '10px',
   background:
     // eslint-disable-next-line max-len
     'linear-gradient(93.07deg, #FFD719 0.61%, #F754D4 33.98%, #1FD1EC 65.84%, #48FA6B 97.7%)',
+
+  '&:hover': {
+    cursor: 'pointer',
+  },
 });
 
 export const PlugButtonText = styled('div', {
@@ -116,4 +125,25 @@ export const PlugButtonText = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+});
+
+export const IconButtonStyles = styled('div', {
+  // base styles
+  border: '2px solid #E5E8EB',
+  background: '#FFFFFF',
+  fontWeight: '500',
+  color: '#23262F',
+  cursor: 'pointer',
+  borderRadius: '14px',
+  fontSize: '16px',
+  width: '40px',
+  height: '40px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginRight: '10px',
+
+  '&:last-child': {
+    marginRight: '0px',
+  },
 });

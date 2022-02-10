@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../core/buttons';
+import { LinkButton, Tooltip } from '../core';
 
 import {
   CollectionMetadataWrapper,
@@ -10,7 +10,7 @@ import {
 import back from '../../assets/buttons/back.svg';
 import verified from '../../assets/verified-small.svg';
 
-export const NFTOverview = () => {
+export const NFTMetaData = () => {
   const { t } = useTranslation();
 
   return (
@@ -22,9 +22,11 @@ export const NFTOverview = () => {
           <img src={verified} alt="verified" />
         </Subtext>
       </div>
-      <LinkButton outline="light" text="bold">
-        <img src={back} alt={t('translation:buttons.links.back')} />
-      </LinkButton>
+      <Tooltip text={t('translation:common.comingSoon')}>
+        <LinkButton>
+          <img src={back} alt={t('translation:buttons.links.back')} />
+        </LinkButton>
+      </Tooltip>
     </CollectionMetadataWrapper>
   );
 };

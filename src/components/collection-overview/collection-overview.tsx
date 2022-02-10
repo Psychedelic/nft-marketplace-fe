@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { LinkButton } from '../core/buttons';
+import { LinkButton, Tooltip } from '../core';
 import {
   NftMetadataWrapper,
   NftMetadataBackground,
@@ -10,26 +10,26 @@ import {
   Heading,
   Subtext,
   ButtonsWrapper,
+  HeaderWrapper,
 } from './styles';
-import background from '../../assets/nft-background.png';
 import crown from '../../assets/crown-pfp.png';
 import verified from '../../assets/verified-large.svg';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
 import back from '../../assets/buttons/back.svg';
 
-export const NftMetadata = () => {
+export const CollectionOverview = () => {
   const { t } = useTranslation();
 
   return (
     <NftMetadataWrapper>
-      <NftMetadataBackground src={background} />
+      <NftMetadataBackground />
       <NftMetadataContent>
         <NftMetadataContentWrapper>
           <NftProfilePictureWrapper>
             <img src={crown} alt="crown-pfp" />
           </NftProfilePictureWrapper>
-          <div>
+          <HeaderWrapper>
             <Heading>
               Crowns
               <img src={verified} alt="verified" />
@@ -39,33 +39,33 @@ export const NftMetadata = () => {
               NFTs on the Internet Computer. With a mix of traditional
               and psychedelic materials.
             </Subtext>
-          </div>
+          </HeaderWrapper>
         </NftMetadataContentWrapper>
         <ButtonsWrapper>
-          <LinkButton type="textBtn">
+          <LinkButton type="textBtn" url="https://crowns.ooo/">
             {t('translation:buttons.links.website')}
           </LinkButton>
-          &nbsp;
-          <LinkButton outline="light" text="bold">
+          <LinkButton url="https://discord.gg/yVEcEzmrgm">
             <img
               src={discord}
               alt={t('translation:buttons.links.discord')}
             />
           </LinkButton>
-          &nbsp;
-          <LinkButton outline="light" text="bold">
+          <LinkButton url="https://twitter.com/cap_ois">
             <img
               src={twitter}
               alt={t('translation:buttons.links.twitter')}
             />
           </LinkButton>
-          &nbsp;
-          <LinkButton outline="light" text="bold">
-            <img
-              src={back}
-              alt={t('translation:buttons.links.back')}
-            />
-          </LinkButton>
+
+          <Tooltip text={t('translation:common.comingSoon')}>
+            <LinkButton>
+              <img
+                src={back}
+                alt={t('translation:buttons.links.back')}
+              />
+            </LinkButton>
+          </Tooltip>
         </ButtonsWrapper>
       </NftMetadataContent>
     </NftMetadataWrapper>

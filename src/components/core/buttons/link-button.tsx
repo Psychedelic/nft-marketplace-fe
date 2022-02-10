@@ -13,7 +13,7 @@ export const LinkButton = ({
   children,
   url,
 }: LinkButtonProps) => (
-  <LinkButtonStyles type={type} href={url}>
+  <LinkButtonStyles type={type} href={url} target="_blank">
     {children}
   </LinkButtonStyles>
 );

@@ -12,6 +12,7 @@ export const Container = styled('div', {
   padding: '14px 20px',
   background: '#FFFFFF',
   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.08)',
+  zIndex: 2,
 });
 
 export const LogoContainer = styled('div', {

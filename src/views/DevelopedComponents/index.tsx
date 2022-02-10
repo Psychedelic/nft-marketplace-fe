@@ -14,20 +14,19 @@ import {
   ModalInput,
   ActionButton,
   LinkButton,
-  NFTOverview,
+  NFTMetaData,
   PriceFilterDropdown,
   CardOptionsDropdown,
   PlugProfileDropdown,
   FilteredCountChip,
   FilteredTraitsChip,
   NFTTraitsChip,
-  CheckboxFilterAccordion,
   AboutAccordion,
   OfferAccordion,
   ActivityTable,
   NFTActivityTable,
   OffersTable,
-  NftMetadata,
+  CollectionOverview,
   SellModal,
   ChangePriceModal,
   BuyNowModal,
@@ -35,16 +34,18 @@ import {
   CancelListingModal,
   CancelOfferModal,
   AcceptOfferModal,
+  CollectionTabs,
   NftList,
   NftSkeletonList,
   NavBar,
+  Filters,
+  NftActionBar,
 } from '../../components';
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
 import back from '../../assets/buttons/back.svg';
-import closeDrawer from '../../assets/buttons/close-drawer.svg';
+import closeFilter from '../../assets/buttons/close-filters.svg';
 import darkTheme from '../../assets/buttons/dark-theme.svg';
-import NftActionBar from '../../components/nft-action-bar/nft-action-bar';
 
 const DevelopedComponents = () => {
   const { t } = useTranslation();
@@ -89,7 +90,7 @@ const DevelopedComponents = () => {
             <img src={darkTheme} alt="dark-theme" />
           </LinkButton>
           <LinkButton>
-            <img src={closeDrawer} alt="close-tab" />
+            <img src={closeFilter} alt="close-tab" />
           </LinkButton>
         </ComponentsList>
       </ComponentWrapper>
@@ -158,9 +159,6 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Accordions</ComponentTitle>
-        <CheckboxFilterAccordion />
-        <br />
-        <br />
         <OfferAccordion owned />
         <br />
         <br />
@@ -302,15 +300,22 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Collection Overview</ComponentTitle>
-        <NftMetadata />
+        <CollectionOverview />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Collection Metadata</ComponentTitle>
-        <NFTOverview />
+        <NFTMetaData />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Action Bar</ComponentTitle>
         <NftActionBar />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <ComponentTitle>Tabs</ComponentTitle>
+        <CollectionTabs />
+      </ComponentWrapper>
+      <ComponentWrapper>
+        <Filters />
       </ComponentWrapper>
     </Container>
   );

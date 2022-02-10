@@ -22,6 +22,7 @@ export const CardWrapper = styled('div', {
 
 export const Image = styled('div', {
   marginBottom: '10px',
+  minHeight: '125px',
 
   '& img': {
     width: '100%',

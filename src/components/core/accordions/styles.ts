@@ -4,6 +4,7 @@ import { styled } from '../../../stitches.config';
 export const AccordionStyle = styled(Accordion.Root, {
   border: '2px solid #E5E8EB',
   borderRadius: '15px',
+  marginBottom: '25px',
   variants: {
     backgroundColor: {
       open: {
@@ -15,10 +16,11 @@ export const AccordionStyle = styled(Accordion.Root, {
     },
     width: {
       small: {
-        width: '300px',
+        width: '100%',
       },
       medium: {
-        width: '700px',
+        width: '100%',
+        maxWidth: '670px',
       },
     },
   },
