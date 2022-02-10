@@ -7,7 +7,6 @@ export const Container = styled('div', {
 });
 
 export const FilteredContainer = styled('div', {
-  maxWidth: '1280px',
   margin: 'auto',
 });
 
