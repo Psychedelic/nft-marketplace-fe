@@ -8,6 +8,7 @@ import activityActive from '../../assets/activity.svg';
 import itemsActive from '../../assets/items.svg';
 import itemsInactive from '../../assets/items-inactive.svg';
 import activityInactive from '../../assets/activity-inactive.svg';
+import { Filters } from '../filters';
 
 export const CollectionTabs = () => {
   const { t } = useTranslation();
@@ -18,51 +19,54 @@ export const CollectionTabs = () => {
     currentTab === 'activity' ? 'active' : 'inactive';
 
   return (
-    <>
-      <TabsRoot defaultValue="items" value={currentTab}>
-        <TabsList aria-label="Manage your account">
-          <TabsTrigger
-            value="items"
-            status={itemIsActive}
-            onClick={() => {
-              setCurrentTab('items');
-            }}
-          >
-            <img
-              src={
-                itemIsActive === 'active'
-                  ? itemsActive
-                  : itemsInactive
-              }
-              alt="items-tab"
-            />
-            {t('translation:tabs.items')}
-          </TabsTrigger>
-          <TabsTrigger
-            value="activity"
-            status={activityIsActive}
-            onClick={() => {
-              setCurrentTab('activity');
-            }}
-          >
-            <img
-              src={
-                activityIsActive === 'active'
-                  ? activityActive
-                  : activityInactive
-              }
-              alt="activity-tab"
-            />
-            {t('translation:tabs.activity')}
-          </TabsTrigger>
-        </TabsList>
-        <Tabs.Content value="items">
+    <TabsRoot defaultValue="items" value={currentTab}>
+      <TabsList aria-label="Manage your account">
+        <TabsTrigger
+          value="items"
+          status={itemIsActive}
+          onClick={() => {
+            setCurrentTab('items');
+          }}
+        >
+          <img
+            src={
+              itemIsActive === 'active' ? itemsActive : itemsInactive
+            }
+            alt="items-tab"
+          />
+          {t('translation:tabs.items')}
+        </TabsTrigger>
+        <TabsTrigger
+          value="activity"
+          status={activityIsActive}
+          onClick={() => {
+            setCurrentTab('activity');
+          }}
+        >
+          <img
+            src={
+              activityIsActive === 'active'
+                ? activityActive
+                : activityInactive
+            }
+            alt="activity-tab"
+          />
+          {t('translation:tabs.activity')}
+        </TabsTrigger>
+      </TabsList>
+      <Tabs.Content value="items">
+        <div
+          style={{
+            display: 'flex',
+          }}
+        >
+          <Filters />
           <CollectionItems />
-        </Tabs.Content>
-        <Tabs.Content value="activity">
-          <ActivityTable />
-        </Tabs.Content>
-      </TabsRoot>
-    </>
+        </div>
+      </Tabs.Content>
+      <Tabs.Content value="activity">
+        <ActivityTable />
+      </Tabs.Content>
+    </TabsRoot>
   );
 };

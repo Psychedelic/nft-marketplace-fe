@@ -3,17 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import {
+  FilteredCountChip,
+  FilteredTraitsChip,
+  PriceFilterDropdown,
+} from '../core';
+import {
   Container,
   FilteredContainer,
   ContentWrapper,
   Flex,
   ContentFlex,
 } from './styles';
-import {
-  FilteredCountChip,
-  FilteredTraitsChip,
-  PriceFilterDropdown,
-} from '../core';
 
 export const CollectionItems = () => {
   const { t } = useTranslation();

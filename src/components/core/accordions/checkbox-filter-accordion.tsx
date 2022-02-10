@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import { Checkbox } from '../checkbox/checkbox';
 import { checkboxDummyData } from '../../mock-data/accordion-data';
@@ -10,9 +9,16 @@ import {
 } from './styles';
 import arrowdown from '../../../assets/arrowdown.svg';
 
-export const CheckboxFilterAccordion = () => {
-  const { t } = useTranslation();
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+export type CheckboxFilterAccordionProps = {
+  title: string;
+  id: string;
+};
+
+export const CheckboxFilterAccordion = ({
+  title,
+  id = 'item-1',
+}: CheckboxFilterAccordionProps) => {
+  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [selectedFilters, setSelectedFilters] = useState<
     Array<string>
   >([]);
@@ -20,12 +26,12 @@ export const CheckboxFilterAccordion = () => {
   return (
     <AccordionStyle
       type="single"
-      defaultValue="item-1"
       collapsible
       backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
       width="small"
+      className="checkbox-accordian"
     >
-      <Accordion.Item value="item-1">
+      <Accordion.Item value={id}>
         <AccordionTrigger
           padding="small"
           backgroundColor="none"
@@ -33,7 +39,7 @@ export const CheckboxFilterAccordion = () => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <p>
-            {`${t('translation:accordions.checkbox.bigGem.bigGem')}`}
+            {title}
             &nbsp;
             <span>
               {selectedFilters.length > 0

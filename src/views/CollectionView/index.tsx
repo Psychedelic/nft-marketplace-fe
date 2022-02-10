@@ -1,5 +1,8 @@
 import React from 'react';
-import { CollectionOverview, CollectionTabs } from '../../components';
+import {
+  CollectionOverview,
+  CollectionTabs,
+} from '../../components';
 import { Container, CollectionWrapper } from './styles';
 
 /* --------------------------------------------------------------------------

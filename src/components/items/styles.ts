@@ -1,12 +1,14 @@
 import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
+  position: 'relative',
   borderTop: '1px solid rgb(229, 232, 235)',
   padding: '0px 80px 80px',
+  width: '100%',
+  borderLeft: '1px solid rgb(229, 232, 235)',
 });
 
 export const FilteredContainer = styled('div', {
-  maxWidth: '1280px',
   margin: 'auto',
 });
 
