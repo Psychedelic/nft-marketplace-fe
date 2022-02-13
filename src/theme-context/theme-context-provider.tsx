@@ -2,9 +2,7 @@ import * as React from 'react';
 import {
   theme as defaultTheme,
   darkTheme,
-  funTheme,
-  redTheme,
-} from './stitches.config';
+} from '../stitches.config';
 
 const { createContext, useState, useEffect } = React;
 export const ColourModeContext = createContext(null);
@@ -18,7 +16,7 @@ type AvailableThemes = {
 };
 
 const availableThemes: AvailableThemes = {
-  light: defaultTheme.className, // stitches' default theme
+  light: defaultTheme.className,
   dark: darkTheme.className,
 };
 
@@ -33,11 +31,8 @@ const saveColorMode = (newMode: ColourMode) => {
 const getSavedColorModePreference = (): ColourMode => {
   try {
     const savedMode = window.localStorage.getItem('color-mode');
-    // If the user has explicitly chosen a colour mode,
-    // let's use it. Otherwise, this value will be null.
     if (typeof savedMode === 'string') return savedMode;
   } catch (e) {
-    // When Chrome in incognito, localStorage cannot be accessed
     console.warn(e);
     return null;
   }
@@ -46,7 +41,6 @@ const getSavedColorModePreference = (): ColourMode => {
 
 // eslint-disable-next-line
 const getMediaTheme = (): MediaTheme => {
-  // If they haven't been explicitly set, let's check the media query
   const mql = matchMedia('(prefers-color-scheme: dark)');
   const hasMediaQueryPreference = typeof mql.matches === 'boolean';
   if (hasMediaQueryPreference) return mql.matches ? 'dark' : 'light';
@@ -75,9 +69,6 @@ const useColorMode = (): ColourModeProviderType => {
     setColorMode(savedColorMode);
   }, [savedColorMode]);
 
-  // Listen out for if a user changes operating system mode,
-  // but don't save the change in local storage.
-  // The only two options here are dark or light.
   window
     .matchMedia('(prefers-color-scheme: dark)')
     .addEventListener('change', (e) => {

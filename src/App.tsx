@@ -5,13 +5,14 @@ import { NavBar } from './components';
 import CollectionView from './views/CollectionView';
 import NFTView from './views/NFTView';
 import DevelopedComponents from './views/DevelopedComponents';
-import ColourModeProvider from './ColourModeProvider';
+import ColourModeProvider from './theme-context/theme-context-provider';
 
 const globalStyles = globalCss({
   html: {
-    fontFamily: '$default',
     margin: 0,
+    fontFamily: '$default',
     backgroundColor: '$loContrast',
+    color: '$text',
   },
 });
 

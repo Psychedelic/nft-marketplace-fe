@@ -26,5 +26,6 @@ export const darkTheme = createTheme({
   colors: {
     hiContrast: '#FFFFFF',
     loContrast: '#000000',
+    text: '#ffffff',
   },
 });
