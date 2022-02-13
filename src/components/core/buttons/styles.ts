@@ -13,6 +13,7 @@ export const Button = styled('button', {
   fontWeight: '600',
   lineHeight: '22px',
   borderRadius: '14px',
+  fontFamily: 'proxima-nova, sans-serif',
 
   '&:hover': {
     cursor: 'pointer',
@@ -52,15 +53,7 @@ export const Button = styled('button', {
     },
   },
   cursor: 'pointer',
-  borderRadius: '10px',
-  fontSize: '16px',
-  lineHeight: '19px',
   padding: '8px 12px',
-  minWidth: '98px',
-  minHeight: '33px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
 });
 
 export const LinkButtonStyles = styled('a', {
@@ -125,6 +118,7 @@ export const PlugButtonText = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  fontFamily: 'proxima-nova, sans-serif',
 });
 
 export const IconButtonStyles = styled('div', {

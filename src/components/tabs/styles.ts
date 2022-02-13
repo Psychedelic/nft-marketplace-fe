@@ -32,6 +32,7 @@ export const TabsTrigger = styled(Tabs.Trigger, {
   lineHeight: '22px',
   border: '0px',
   cursor: 'pointer',
+  fontFamily: 'proxima-nova, sans-serif',
   variants: {
     status: {
       active: {

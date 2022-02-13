@@ -3,6 +3,7 @@ import background from '../../assets/nft-background.png';
 
 export const NftMetadataWrapper = styled('div', {
   display: 'block',
+  fontFamily: 'proxima-nova, sans-serif',
 });
 
 export const NftMetadataBackground = styled('div', {

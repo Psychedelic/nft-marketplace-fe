@@ -18,6 +18,7 @@ export const DropdownStyle = styled(DropdownMenu.Trigger, {
   height: '44px',
   padding: '0 15px',
   cursor: 'pointer',
+  fontFamily: 'proxima-nova, sans-serif',
 
   '&:focus': {
     outline: 'none',

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ColourModeContext } from '../../ColourModeProvider';
 import { PlugButton, LinkButton, Tooltip } from '../core';
 import { GlobalSearch } from '../search';
 import appLogo from '../../assets/app-logo.svg';
@@ -18,6 +19,17 @@ import {
  * NavBar Component
  * --------------------------------------------------------------------------*/
 
+const ColorModeToggleButton = () => (
+  <ColourModeContext.Consumer>
+    {(context: any) => (
+      <button type="button" onClick={context.cycleToggleMode}>
+        Mode:
+        {context.colorMode}
+      </button>
+    )}
+  </ColourModeContext.Consumer>
+);
+
 export const NavBar = () => {
   const { t } = useTranslation();
 
@@ -29,6 +41,7 @@ export const NavBar = () => {
             src={appLogo}
             alt={t('translation:common.collectionName')}
           />
+          <ColorModeToggleButton />
           <LogoName
             src={appName}
             alt={t('translation:common.collectionName')}

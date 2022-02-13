@@ -141,6 +141,7 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
   lineHeight: '19px',
   cursor: 'pointer',
   boxSizing: 'border-box',
+  fontFamily: 'proxima-nova, sans-serif',
 
   '& div': {
     display: 'flex',
