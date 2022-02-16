@@ -12,6 +12,7 @@ The NFT Marketplace UI provides you with the opportunity to sell, purchase, offe
 - [Configure NPM for Github Package Registry](#-configure-npm-for-github-package-registry)
 - [Getting Started](#-getting-started)
   - [Development](#-development)
+  - [Service dependencies](#-service-dependencies)
 - [Contribution guideline](#-contribution-guideline)
 
 ## ⚙️ Requirements
@@ -59,13 +60,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### ⚡ Development
 
-Install required packages.\
+Install required packages.
 
 ```sh
 yarn install
 ```
 
-Runs the app in the development mode.\
+Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ```sh
@@ -81,6 +82,20 @@ Your app is ready to be deployed!
 ```sh
 yarn build
 ```
+
+### 👾 Service dependencies
+
+The Marketplace Frontend interacts with [Cap](https://github.com/Psychedelic/cap), [Dab](https://github.com/Psychedelic/dab), [Crowns](https://github.com/Psychedelic/crowns) (a [DIP-721](https://github.com/Psychedelic/DIP721) token) and [wICP](https://github.com/Psychedelic/wicp) (a [DIP-20](https://github.com/Psychedelic/DIP20) token), when developing, you'll need these to be running on your local network replica.
+
+Utility commands are provided for your own convinience, find the [Service dependencies](/docs/service-dependencies.md) guideline for more details.
+
+In short, start the Services by executing:
+
+```sh
+yarn services:start
+```
+
+You'll need to read the [Marketplace Service](https://github.com/Psychedelic/nft-marketplace) guidelines to understand how to interact with the Services.
 
 ## 🙏 Contribution guideline
 
