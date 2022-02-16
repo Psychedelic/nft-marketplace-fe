@@ -36,7 +36,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+    "services:init": "git submodule update --init --recursive",
+    "services:start": "cd ./nft-marketplace && npm run services:start",
+    "services:reset": "cd ./nft-marketplace && dfx stop && npm run reset"
   },
   "browserslist": {
     "production": [
