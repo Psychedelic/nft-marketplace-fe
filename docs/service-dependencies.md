@@ -22,10 +22,12 @@ yarn services:init
 
 Before starting the Services, you need to have a `local replica network`, unless you are interacting with `mainnet`; to keep the guideline short, we're assuming you're developing locally.
 
-Launch the local replica in the foreground (you're advised to do it, to monitor the service, otherwise feel free to add the --background flag). You can open a new shell session afterwards while monitoring the local replica network.
+Launch the local replica in the foreground (you're advised to do it, to monitor the service, otherwise feel free to use the --background flag, for that you'd modify the `Services local replica` wrapped command or start the Dfx network yourself by `cd ./nft-marketplace` and `dfx start --background`).
+
+You can open a new shell session afterwards while monitoring the local replica network.
 
 ```sh
-dfx start --clean
+yarn services:local-replica
 ```
 
 Start the Services [Cap](https://github.com/Psychedelic/cap), [Dab](https://github.com/Psychedelic/dab), [Crowns](https://github.com/Psychedelic/crowns) (a [DIP-721](https://github.com/Psychedelic/DIP721) token) and [wICP](https://github.com/Psychedelic/wicp) (a [DIP-20](https://github.com/Psychedelic/DIP20) token).
@@ -43,3 +45,5 @@ yarn services:reset
 ```
 
 Bare in mind, that there might be need to troubleshoot when the process is not stopped correctly, or in any other OS issues. So, make sure you look into the [Marketplace Service](https://github.com/Psychedelic/nft-marketplace) guidelines.
+
+👏 That's it, at this point you should have all the necessary Services running in your local replica!

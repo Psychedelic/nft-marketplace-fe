@@ -38,6 +38,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "services:init": "git submodule update --init --recursive",
+    "services:local-replica": "cd ./nft-marketplace && dfx start --clean",
     "services:start": "cd ./nft-marketplace && npm run services:start",
     "services:reset": "cd ./nft-marketplace && dfx stop && npm run reset"
   },
