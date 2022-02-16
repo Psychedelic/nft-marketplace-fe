@@ -47,3 +47,19 @@ yarn services:reset
 Bare in mind, that there might be need to troubleshoot when the process is not stopped correctly, or in any other OS issues. So, make sure you look into the [Marketplace Service](https://github.com/Psychedelic/nft-marketplace) guidelines.
 
 👏 That's it, at this point you should have all the necessary Services running in your local replica!
+
+## 🙋‍♀️ F.A.Q
+
+### How to use a Service checked into particular commit of history?
+
+Let's say that there are new features in the Service repositories e.g. the `Cap` and you'd like to have it locally. For that, all you need to do is checkout the repository to that particular commit in the original repository history. locate the Service in the [nft-marketplace](https://github.com/Psychedelic/nft-marketplace) repository directory, open it and use the `git checkout <hash>`, as you'd generally do. In the root of [nft-marketplace-fe](https://github.com/Psychedelic/nft-marketplace-fe), you could then commit the point in history you're interested in, to your current feature branch.
+
+### What's the interface to interact with the Marketplace?
+
+You'd start by looking into the Marketplace Canister Candid IDL (the interface description language file). Open the [Candid marketplace.did](https://github.com/Psychedelic/nft-marketplace/blob/develop/marketplace/marketplace.did) and read the `Service` field, which provides the endpoints you'll be interested in!
+
+### Why I'm getting unauthorised when I try to X or Y?
+
+The Services you're interacting with have restrictions, for example, the marketplace can't simply move a client balance; or transfer tokens to users without explicit approvals and verification. We won't go through the specifications for the approval/allowances in the business logic, as that's publicly available in the [nft-marketplace](https://github.com/Psychedelic/nft-marketplace) repository source-code, but you need to understand the basics.
+
+A practical example of how allowances are managed (approvals, ownership, controllers) is to check the [healtcheck](https://github.com/Psychedelic/nft-marketplace/blob/develop/healthcheck.sh), that while does not provide an example of all possible use-cases, gives you an idea of how it sets permissions.
