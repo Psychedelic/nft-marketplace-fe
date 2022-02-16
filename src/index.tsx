@@ -6,6 +6,7 @@ import './index.css';
 import App from './App';
 import localesConfig from './locales';
 import reportWebVitals from './reportWebVitals';
+// install and import required state management config file
 
 i18n.use(initReactI18next).init(localesConfig);
 
