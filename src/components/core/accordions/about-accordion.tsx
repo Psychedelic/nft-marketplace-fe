@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import { LinkButton } from '../buttons';
@@ -18,7 +18,9 @@ import {
   Subtext,
 } from './styles';
 import info from '../../../assets/accordions/info.svg';
+import infoDark from '../../../assets/accordions/info-dark.svg';
 import arrowdown from '../../../assets/accordions/arrow-down.svg';
+import arrowdownDark from '../../../assets/accordions/arrow-down-dark.svg';
 import arrowup from '../../../assets/accordions/arrow-up.svg';
 import collection from '../../../assets/accordions/collection.svg';
 import creator from '../../../assets/accordions/creator.svg';
@@ -31,6 +33,14 @@ export type AboutAccordionProps = {
 export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+  const [theme, setTheme] = useState('lightTheme');
+
+  useEffect(() => {
+    const getTheme = localStorage.getItem('theme');
+    setTheme(getTheme);
+  });
+
+  const arrowdownTheme = theme === 'lightTheme' ? arrowdown : arrowdownDark;
 
   const AccordionHeadContentData = [
     {
@@ -71,7 +81,7 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
-            <img src={info} alt="about-collection" />
+            <img src={theme === 'lightTheme' ? info : infoDark} alt="about-collection" />
             <p>
               {`${t(
                 'translation:accordions.about.header.aboutCrowns',
@@ -79,7 +89,7 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
             </p>
           </div>
           <img
-            src={!isAccordionOpen ? arrowup : arrowdown}
+            src={!isAccordionOpen ? arrowup : arrowdownTheme}
             alt="arrow-down"
           />
         </AccordionTrigger>

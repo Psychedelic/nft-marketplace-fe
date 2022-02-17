@@ -3,10 +3,10 @@ import { styled } from '../../../../stitches.config';
 export const CardWrapper = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  background: '#FFFFFF',
-  border: '1.5px solid #E5E8EB',
+  background: '$backgroundColor',
+  border: '1.5px solid $borderColor',
   boxSizing: 'border-box',
-  boxShadow: '0px 0px 8px #E6E9EF',
+  boxShadow: '0px 0px 8px $navBackgroundColor',
   borderRadius: '14px',
   width: '100%',
   height: '100%',
@@ -15,7 +15,7 @@ export const CardWrapper = styled('div', {
   transition: 'all 0.5s ease-in-out',
 
   '&:hover': {
-    boxShadow: '0px 0px 8px 3px #E6E9EF',
+    boxShadow: '0px 0px 8px 3px $navBackgroundColor',
     transform: 'scale(1.015)',
   },
 });
@@ -57,7 +57,7 @@ export const Dfinity = styled('p', {
   fontWeight: '600',
   fontSize: '16px',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$mainTextColor',
   display: 'flex',
   alignItems: 'center',
 
@@ -71,7 +71,7 @@ export const NftName = styled('p', {
   fontWeight: '600',
   fontSize: '16px',
   lineHeight: '20px',
-  color: '#767D8E',
+  color: '$nftCardName',
 });
 
 export const NftId = styled('p', {
@@ -79,7 +79,7 @@ export const NftId = styled('p', {
   fontWeight: '600',
   fontSize: '16px',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$nftCardId',
 });
 
 export const LastOffer = styled('span', {
@@ -90,6 +90,6 @@ export const LastOffer = styled('span', {
   color: '#777E90',
 
   '& b': {
-    color: '#23262F',
+    color: '$mainTextColor',
   },
 });

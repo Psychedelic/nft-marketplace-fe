@@ -42,7 +42,7 @@ export const ModalContent = styled(DialogPrimitive.Content, {
   maxHeight: '600px',
   backgroundColor: 'white',
   borderRadius: '30px',
-  border: '1.5px solid #E5E8EB',
+  border: '1.5px solid $borderColor',
   boxShadow: '0px 4px 24px rgba(0, 0, 0, 0.25)',
   position: 'fixed',
   top: '15%',
@@ -93,7 +93,7 @@ export const ItemDetailsWrapper = styled('div', {
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '32px 20px',
-  border: '1.5px solid #E5E8EB',
+  border: '1.5px solid $borderColor',
   background: 'rgb(244, 245, 246)',
   borderRadius: '14px',
   margin: '5px 0px',
@@ -103,7 +103,7 @@ export const ItemDetailsWrapper = styled('div', {
     lastChild: {
       true: {
         padding: '32px 0px 12px',
-        borderTop: '1.5px solid #E5E8EB',
+        borderTop: '1.5px solid $borderColor',
         borderBottom: 'initial',
         marginTop: '35px',
       },

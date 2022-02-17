@@ -16,7 +16,7 @@ export const Heading = styled('h3', {
   lineHeight: '39px',
   display: 'flex',
   alignItems: 'center',
-  color: '#23262F',
+  color: '$mainTextColor',
   margin: '0 0 10px',
 });
 

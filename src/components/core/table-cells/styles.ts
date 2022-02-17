@@ -17,7 +17,7 @@ export const ItemName = styled('div', {
   fontSize: '16px',
   fontWeight: '600',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$mainTextColor',
 });
 
 export const TypeDetails = styled('div', {
@@ -29,7 +29,7 @@ export const TypeDetails = styled('div', {
 export const TypeLogo = styled('img', {
   width: '18px',
   height: '18px',
-  color: '#23262F',
+  color: '$mainTextColor',
   marginRight: '8px',
 });
 
@@ -37,7 +37,7 @@ export const TypeName = styled('div', {
   fontSize: '16px',
   fontWeight: '600',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$mainTextColor',
   textTransform: 'capitalize',
 
   variants: {
@@ -46,14 +46,16 @@ export const TypeName = styled('div', {
         fontSize: '18px',
         fontWeight: '500',
         lineHeight: '22px',
-        color: '#23262F',
+
+        color: '$mainTextColor',
       },
 
       offers: {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '19px',
-        color: '#23262F',
+
+        color: '$mainTextColor',
       },
     },
   },
@@ -88,7 +90,7 @@ export const WICPText = styled('div', {
   fontSize: '16px',
   fontWeight: '600',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$mainTextColor',
   marginRight: '4px',
 
   variants: {
@@ -97,14 +99,16 @@ export const WICPText = styled('div', {
         fontSize: '18px',
         fontWeight: '500',
         lineHeight: '22px',
-        color: '#23262F',
+
+        color: '$mainTextColor',
       },
 
       offers: {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '19px',
-        color: '#23262F',
+
+        color: '$mainTextColor',
       },
     },
   },
@@ -144,7 +148,7 @@ export const TextDetails = styled('div', {
   fontSize: '16px',
   fontWeight: '600',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$mainTextColor',
 
   variants: {
     type: {
@@ -163,7 +167,7 @@ export const TextDetails = styled('div', {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '19px',
-        color: '#777E90',
+        color: '$tableTextColor',
       },
     },
   },
@@ -189,7 +193,7 @@ export const TextLinkDetails = styled('a', {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '19px',
-        color: '#2253FF',
+        color: '$tableLinkTextColor',
       },
     },
   },

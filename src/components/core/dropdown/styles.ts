@@ -3,7 +3,7 @@ import * as HoverCard from '@radix-ui/react-hover-card';
 import { styled } from '../../../stitches.config';
 
 export const DropdownStyle = styled(DropdownMenu.Trigger, {
-  border: '2px solid #E5E8EB',
+  border: '2px solid $borderColor',
   background: 'transparent',
   boxSizing: 'border-box',
   borderRadius: '14px',
@@ -13,7 +13,7 @@ export const DropdownStyle = styled(DropdownMenu.Trigger, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  color: '#23262F',
+  color: '$mainTextColor',
   width: '210px',
   height: '44px',
   padding: '0 15px',
@@ -27,8 +27,8 @@ export const DropdownStyle = styled(DropdownMenu.Trigger, {
 
 export const DropdownContent = styled(DropdownMenu.Content, {
   minWidth: '210px',
-  backgroundColor: 'white',
-  border: '2px solid #E5E8EB',
+  background: '$backgroundColor !important',
+  border: '2px solid $borderColor',
   boxSizing: 'border-box',
   boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.15)',
   '@media (prefers-reduced-motion: no-preference)': {
@@ -56,6 +56,7 @@ export const DropdownRadioGroup = styled(DropdownMenu.RadioGroup, {
 
 export const DropdownGroup = styled(DropdownMenu.Group, {
   display: 'block',
+  background: '$backgroundColor !important',
 });
 
 export const DropdownRadioMenuItem = styled(DropdownMenu.RadioItem, {
@@ -100,8 +101,8 @@ export const DropdownMenuSeparator = styled(DropdownMenu.Separator, {
 
 export const ConnectToPlug = styled(HoverCard.Content, {
   minWidth: '220px',
-  backgroundColor: 'white',
-  border: '2px solid #E5E8EB',
+  backgroundColor: '$backgroundColor',
+  border: '2px solid $borderColor',
   boxSizing: 'border-box',
   boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.15)',
   '@media (prefers-reduced-motion: no-preference)': {

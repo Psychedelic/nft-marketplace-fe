@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton, Tooltip } from '../core';
 
@@ -8,10 +8,17 @@ import {
   Subtext,
 } from './styles';
 import back from '../../assets/buttons/back.svg';
+import backDark from '../../assets/buttons/back-dark.svg';
 import verified from '../../assets/verified-small.svg';
 
 export const NFTMetaData = () => {
   const { t } = useTranslation();
+  const [theme, setTheme] = useState('lightTheme');
+
+  useEffect(() => {
+    const getTheme = localStorage.getItem('theme');
+    setTheme(getTheme);
+  });
 
   return (
     <CollectionMetadataWrapper>
@@ -24,7 +31,10 @@ export const NFTMetaData = () => {
       </div>
       <Tooltip text={t('translation:common.comingSoon')}>
         <LinkButton>
-          <img src={back} alt={t('translation:buttons.links.back')} />
+          <img
+            src={theme === 'lightTheme' ? back : backDark}
+            alt={t('translation:buttons.links.back')}
+          />
         </LinkButton>
       </Tooltip>
     </CollectionMetadataWrapper>

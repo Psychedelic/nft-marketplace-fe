@@ -26,9 +26,9 @@ export const CloseFilterContainer = styled('div', {
 
 export const FiltersContainer = styled('div', {
   width: '340px',
-  background: 'white',
+  background: '$backgroundColor',
   height: '100%',
-  borderTop: '1px solid #E5E8EB',
+  borderTop: '1px solid $borderColor',
   position: 'relative',
 });
 
@@ -67,7 +67,7 @@ export const Heading = styled('h5', {
   fontWeight: 'bold',
   fontSize: '22px',
   lineHeight: '27px',
-  color: '#23262F',
+  color: '$mainTextColor',
   margin: 0,
 });
 

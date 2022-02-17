@@ -2,16 +2,18 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { styled } from '../../../stitches.config';
 
 export const AccordionStyle = styled(Accordion.Root, {
-  border: '2px solid #E5E8EB',
+  border: '2px solid $borderColor',
   borderRadius: '15px',
   marginBottom: '25px',
+  // background: '$backgroundColor',
+
   variants: {
     backgroundColor: {
       open: {
-        backgroundColor: '#FAFBFD',
+        backgroundColor: '$openAccordion',
       },
       notopen: {
-        backgroundColor: 'white',
+        backgroundColor: '$closeAccordion',
       },
     },
     width: {
@@ -34,6 +36,7 @@ export const AccordionHead = styled('div', {
 
 export const AccordionHeadContent = styled('div', {
   display: 'flex',
+
   variants: {
     flexProperties: {
       offer: {
@@ -51,7 +54,7 @@ export const AccordionHeadContent = styled('div', {
     display: 'flex',
     alignItems: 'center',
     textAlign: 'right',
-    color: '#767D8E',
+    color: '$mainTextColor',
     margin: '0',
   },
 
@@ -63,7 +66,7 @@ export const AccordionHeadContent = styled('div', {
     lineHeight: '39px',
     display: 'flex',
     alignitems: 'center',
-    color: '#23262F',
+    color: '$mainTextColor',
   },
 
   '& img': {
@@ -88,7 +91,7 @@ export const AccordionHeadContent = styled('div', {
     lineHeight: '22px',
     display: 'flex',
     alignitems: 'center',
-    color: '#23262F',
+    color: '$mainTextColor',
   },
 });
 
@@ -102,10 +105,10 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
   variants: {
     backgroundColor: {
       open: {
-        backgroundColor: '#FAFBFD',
+        background: '$openAccordion',
       },
       notopen: {
-        backgroundColor: 'white',
+        background: '$closeAccordion',
       },
       none: {
         backgroundColor: 'unset',
@@ -126,7 +129,7 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
       },
       borderSet: {
         borderRadius: '0px 0px 15px 15px',
-        borderTop: '1.5px solid #E5E8EB',
+        borderTop: '1.5px solid $borderColor',
         borderRight: 'none',
         borderLeft: 'none',
         borderBottom: 'none',
@@ -169,7 +172,7 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
     },
     display: 'flex',
     alignItems: 'center',
-    color: '#23262F',
+    color: '$mainTextColor',
 
     '& span': {
       margin: '0',
@@ -179,7 +182,7 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
       lineHeight: '19px',
       display: 'flex',
       alignItems: 'center',
-      color: '#2253FF',
+      color: '$mainTextColor',
     },
   },
 
@@ -192,7 +195,7 @@ export const AccordionContent = styled(Accordion.Content, {
   variants: {
     backgroundColor: {
       open: {
-        backgroundColor: '#FAFBFD',
+        background: '$backgroundColor',
       },
       notopen: {
         backgroundColor: 'white',
@@ -226,7 +229,7 @@ export const Description = styled('p', {
   fontSize: '16px',
   lineHeight: '19px',
   color: '#777E90',
-  margin: '0 0 25px',
+  margin: '15px 0 25px',
 });
 
 export const Flex = styled('div', {
@@ -245,7 +248,7 @@ export const Subtext = styled('p', {
 
   '&:last-child': {
     fontWeight: 'bold',
-    color: '#23262F',
+    color: '$mainTextColor',
   },
 });
 

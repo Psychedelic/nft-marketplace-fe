@@ -4,6 +4,7 @@ import background from '../../assets/nft-background.png';
 export const NftMetadataWrapper = styled('div', {
   display: 'block',
   fontFamily: 'proxima-nova, sans-serif',
+  backgroundColor: '$backgroundColor',
 });
 
 export const NftMetadataBackground = styled('div', {
@@ -17,8 +18,8 @@ export const NftMetadataContent = styled('div', {
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'space-between',
-  margin: '20px auto 25px',
-  padding: '0 80px',
+  margin: '20px auto 0',
+  padding: '0px 80px 25px',
 });
 
 export const NftMetadataContentWrapper = styled('div', {
@@ -29,7 +30,7 @@ export const NftMetadataContentWrapper = styled('div', {
 
 export const NftProfilePictureWrapper = styled('div', {
   position: 'absolute',
-  border: '2px solid white',
+  border: 'transparent',
   marginRight: '10px',
 
   '& img': {
@@ -49,7 +50,7 @@ export const Heading = styled('h2', {
   lineHeight: '39px',
   display: 'flex',
   alignItems: 'center',
-  color: '#23262F',
+  color: '$mainTextColor',
   margin: '0',
 
   '& img': {

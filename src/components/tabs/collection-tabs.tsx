@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Tabs from '@radix-ui/react-tabs';
 import { ActivityTable } from '../tables';
@@ -6,17 +6,26 @@ import { CollectionItems } from '../items';
 import { TabsRoot, TabsTrigger, TabsList } from './styles';
 import activityActive from '../../assets/activity.svg';
 import itemsActive from '../../assets/items.svg';
+import itemsActiveDark from '../../assets/items-active-dark.svg';
 import itemsInactive from '../../assets/items-inactive.svg';
 import activityInactive from '../../assets/activity-inactive.svg';
+// import activityInactiveDark from '../../assets/activity-inactive-dark.svg';
 import { Filters } from '../filters';
 
 export const CollectionTabs = () => {
   const { t } = useTranslation();
   const [currentTab, setCurrentTab] = useState('items');
+  const [theme, setTheme] = useState('lightTheme');
+
+  useEffect(() => {
+    const getTheme = localStorage.getItem('theme');
+    setTheme(getTheme);
+  });
+
   const itemIsActive = currentTab === 'items' ? 'active' : 'inactive';
   // eslint-disable-next-line
-  const activityIsActive =
-    currentTab === 'activity' ? 'active' : 'inactive';
+  const activityIsActive = currentTab === 'activity' ? 'active' : 'inactive';
+  const itemeActiveTheme = theme === 'lightTheme' ? itemsActive : itemsActiveDark;
 
   return (
     <TabsRoot defaultValue="items" value={currentTab}>
@@ -30,7 +39,7 @@ export const CollectionTabs = () => {
         >
           <img
             src={
-              itemIsActive === 'active' ? itemsActive : itemsInactive
+              itemIsActive === 'active' ? itemeActiveTheme : itemsInactive
             }
             alt="items-tab"
           />

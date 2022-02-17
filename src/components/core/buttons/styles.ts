@@ -28,8 +28,8 @@ export const Button = styled('button', {
       },
       secondary: {
         backgroundColor: 'transparent',
-        color: '#23262F',
-        border: '1.5px solid #E5E8EB',
+        color: '$mainTextColor',
+        border: '1.5px solid $borderColor',
       },
       outline: {
         backgroundColor: 'transparent',
@@ -59,9 +59,9 @@ export const Button = styled('button', {
 export const LinkButtonStyles = styled('a', {
   // base styles
   border: '2px solid #E5E8EB',
-  background: '#FFFFFF',
+  backgroundColor: '$buttonBackgroundColor',
   fontWeight: '500',
-  color: '#23262F',
+  color: '$mainTextColor',
   cursor: 'pointer',
   borderRadius: '14px',
   fontSize: '16px',
@@ -113,7 +113,8 @@ export const PlugButtonText = styled('div', {
   // base styles
   width: '136px',
   height: '40px',
-  background: '#FFF',
+  backgroundColor: '$buttonBackgroundColor',
+  color: '$mainTextColor',
   borderRadius: '14px',
   display: 'flex',
   alignItems: 'center',
@@ -123,8 +124,8 @@ export const PlugButtonText = styled('div', {
 
 export const IconButtonStyles = styled('div', {
   // base styles
-  border: '2px solid #E5E8EB',
-  background: '#FFFFFF',
+  border: '2px solid $borderColor',
+  backgroundColor: '$buttonBackgroundColor',
   fontWeight: '500',
   color: '#23262F',
   cursor: 'pointer',
