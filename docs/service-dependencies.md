@@ -10,7 +10,7 @@ We're going to use `yarn` through the guide, but feel free to use `npm`, if that
 
 Once in the project repository, you'll have to execute the `Services initialisation`, which will pull the Service repositories to your machine. This is only required once e.g. at least one time, after you've cloned the [NFT Marketplace frontend](https://github.com/Psychedelic/nft-marketplace-fe).
 
-> Note: Make sure you have the [DFX SDK](https://smartcontracts.org/) installed to run the DFX cli, otherwise visit the [Dfinity](https://dfinity.org/) for instructions
+> Note: Make sure you have the [DFX SDK](https://smartcontracts.org/) installed to run the DFX cli, otherwise visit the [Dfinity](https://dfinity.org/) for instructions. And also make sure you always login with SSH key, otherwise visit GitHub docs to [Generate and add a new SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 
 If you haven't yet, execute:
 
