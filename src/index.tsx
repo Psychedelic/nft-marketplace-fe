@@ -8,7 +8,6 @@ import './index.css';
 import App from './App';
 import localesConfig from './locales';
 import reportWebVitals from './reportWebVitals';
-// install and import required state management config file
 
 // application store
 import { store } from './store';
