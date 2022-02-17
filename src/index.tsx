@@ -2,17 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { Provider as ReduxProvider } from 'react-redux';
+
 import './index.css';
 import App from './App';
 import localesConfig from './locales';
 import reportWebVitals from './reportWebVitals';
 // install and import required state management config file
 
+// application store
+import { store } from './store';
+
 i18n.use(initReactI18next).init(localesConfig);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ReduxProvider store={store}>
+      <App />
+    </ReduxProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
