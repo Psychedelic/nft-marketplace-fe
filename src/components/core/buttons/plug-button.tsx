@@ -1,23 +1,20 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { PlugButtonContainer, PlugButtonText } from './styles';
 
 export type PlugButtonProps = {
   handleClick: () => void;
+  text: string;
 };
 
 /* --------------------------------------------------------------------------
  * Plug Button Component
  * --------------------------------------------------------------------------*/
 
-export const PlugButton = ({ handleClick }: PlugButtonProps) => {
-  const { t } = useTranslation();
-
-  return (
-    <PlugButtonContainer onClick={handleClick}>
-      <PlugButtonText>
-        {t('translation:buttons.action.connectToPlug')}
-      </PlugButtonText>
-    </PlugButtonContainer>
-  );
-};
+export const PlugButton = ({
+  handleClick,
+  text,
+}: PlugButtonProps) => (
+  <PlugButtonContainer onClick={handleClick}>
+    <PlugButtonText>{text}</PlugButtonText>
+  </PlugButtonContainer>
+);
