@@ -4,12 +4,15 @@ import type { RootState } from '../../store';
 
 // Define a type for the slice state
 interface PlugState {
+  isInstalled: boolean;
   isConnected: boolean;
   principalId?: string;
 }
 
 // Define the initial state using that type
 const initialState: PlugState = {
+  isInstalled:
+    (window?.ic && typeof window.ic?.plug === 'object') || false,
   isConnected: false,
   principalId: undefined,
 };
