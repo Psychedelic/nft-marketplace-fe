@@ -31,7 +31,10 @@
       "sell": "Sell",
       "cancelOffer": "Cancel Offer",
       "acceptOffer": "Accept",
-      "connectToPlug": "Connect To Plug"
+      "connectToPlug": "Connect To Plug",
+      "installPlug": "Install Plug",
+      "loading": "Loading...",
+      "connecting": "Connecting..."
     }
   },
   "dropdown": {

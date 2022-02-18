@@ -12,7 +12,10 @@ export const PlugProfileDropdown = () => (
       <PlugConnect
         title="Connect to Plug"
         whitelist={['canister-id']}
-        onConnectCallback={() => console.log('connected')}
+        onConnectCallback={() => {
+          // eslint-disable-next-line no-console
+          console.log('connected');
+        }}
       />
     </HoverCard.Trigger>
     <ConnectToPlug align="end">

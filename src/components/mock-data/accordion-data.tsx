@@ -1,5 +1,3 @@
-import React from 'react';
-
 import discord from '../../assets/buttons/discord.svg';
 import twitter from '../../assets/buttons/twitter.svg';
 import back from '../../assets/buttons/back.svg';
