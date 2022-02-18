@@ -53,6 +53,7 @@ export const CheckboxFilterAccordion = ({
           <form>
             {checkboxDummyData.map((data) => (
               <Checkbox
+                key={data.value}
                 value={data.value}
                 percentage={data.percentage}
                 selectedFilters={selectedFilters}

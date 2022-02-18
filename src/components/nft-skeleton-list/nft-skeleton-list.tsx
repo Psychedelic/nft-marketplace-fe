@@ -5,8 +5,8 @@ import { ListWrapper } from './styles';
 
 export const NftSkeletonList = () => (
   <ListWrapper>
-    {NftListData.map(() => (
-      <NftSkeleton />
+    {NftListData.map((item) => (
+      <NftSkeleton key={item.id} />
     ))}
   </ListWrapper>
 );
