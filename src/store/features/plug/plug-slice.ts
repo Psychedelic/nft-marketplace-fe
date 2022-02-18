@@ -24,9 +24,11 @@ export const plugSlice = createSlice({
   reducers: {
     setIsConnected: (state, action: PayloadAction<boolean>) => {
       state.isConnected = action.payload;
-      state.connectionStatus = PLUG_STATUS_CODES.Connected;
       if (!action.payload) {
         state.principalId = undefined;
+        state.connectionStatus = PLUG_STATUS_CODES.FailedToConnect;
+      } else {
+        state.connectionStatus = PLUG_STATUS_CODES.Connected;
       }
     },
     setPrincipalId: (state, action: PayloadAction<string>) => {

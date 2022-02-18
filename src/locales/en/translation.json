@@ -33,7 +33,8 @@
       "acceptOffer": "Accept",
       "connectToPlug": "Connect To Plug",
       "installPlug": "Install Plug",
-      "loading": "Loading..."
+      "loading": "Loading...",
+      "connecting": "Connecting..."
     }
   },
   "dropdown": {

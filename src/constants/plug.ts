@@ -6,4 +6,5 @@ export enum PLUG_STATUS_CODES {
   Connected = 'connected',
   NotInstalled = 'not-installed',
   Installed = 'installed',
+  Connecting = 'connecting',
 }

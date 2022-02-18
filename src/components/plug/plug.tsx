@@ -9,6 +9,9 @@ import {
 import {
   isPlugInstalled,
   requestConnectToPlug,
+  checkIsConnected,
+  getPrincipal,
+  formatAddress,
 } from '../../integrations/plug';
 import {
   PLUG_WALLET_WEBSITE_URL,
@@ -18,7 +21,9 @@ import { CANISTER_ID, NETWORK } from '../../config';
 
 export const Plug = () => {
   const { t } = useTranslation();
-  const { isConnected, connectionStatus } = usePlugStore();
+  // eslint-disable-next-line
+  const { isConnected, connectionStatus, principalId } =
+    usePlugStore();
   const dispatch = useAppDispatch();
   const hasPlug = isPlugInstalled();
 
@@ -27,31 +32,72 @@ export const Plug = () => {
     return connectionStatus === PLUG_STATUS_CODES.Verifying;
   }, [connectionStatus]);
 
+  // eslint-disable-next-line
+  const isConnecting = useMemo(() => {
+    return connectionStatus === PLUG_STATUS_CODES.Connecting;
+  }, [connectionStatus]);
+
   useEffect(() => {
-    if (!hasPlug) {
-      // update connection status to not-installed
-      dispatch(
-        plugActions.setConnectionStatus(
-          PLUG_STATUS_CODES.NotInstalled,
-        ),
-      );
-    } else {
-      // update connection status to installed
-      dispatch(
-        plugActions.setConnectionStatus(PLUG_STATUS_CODES.Installed),
-      );
-    }
+    const verifyPlugConnection = async () => {
+      if (!hasPlug) {
+        // update connection status to not-installed
+        dispatch(
+          plugActions.setConnectionStatus(
+            PLUG_STATUS_CODES.NotInstalled,
+          ),
+        );
+
+        return;
+      }
+
+      const connected = await checkIsConnected();
+
+      if (!connected) {
+        // update connection status to installed
+        dispatch(
+          plugActions.setConnectionStatus(
+            PLUG_STATUS_CODES.FailedToConnect,
+          ),
+        );
+
+        return;
+      }
+
+      // update connection status to connected
+      dispatch(plugActions.setIsConnected(connected));
+    };
+
+    verifyPlugConnection();
   }, [hasPlug, dispatch]);
 
-  const handleConnect = (connected: boolean) => {
-    dispatch(plugActions.setIsConnected(connected));
-  };
+  // update principal Id
+  useEffect(() => {
+    if (isConnected) {
+      const getPrincipalId = async () => {
+        const principal = await getPrincipal();
+
+        if (principal) {
+          if (typeof principal === 'string') {
+            dispatch(
+              plugActions.setPrincipalId(
+                principal as unknown as string,
+              ),
+            );
+          } else {
+            dispatch(plugActions.setPrincipalId(principal.toText()));
+          }
+        }
+      };
+
+      getPrincipalId();
+    }
+  }, [isConnected, dispatch]);
 
   const handleConnectToPlug = async () => {
     try {
       // verifying plug connection
       dispatch(
-        plugActions.setConnectionStatus(PLUG_STATUS_CODES.Verifying),
+        plugActions.setConnectionStatus(PLUG_STATUS_CODES.Connecting),
       );
 
       const whitelist = [CANISTER_ID];
@@ -63,18 +109,17 @@ export const Plug = () => {
         host,
       });
 
+      if (!connected) {
+        throw Error('Oops! Failed to connect to plug.');
+      }
+
       // connected to plug
-      handleConnect(connected);
+      dispatch(plugActions.setIsConnected(true));
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err);
-    } finally {
-      // app failed to connect with plug
-      dispatch(
-        plugActions.setConnectionStatus(
-          PLUG_STATUS_CODES.FailedToConnect,
-        ),
-      );
+      // failed to connect plug
+      dispatch(plugActions.setIsConnected(false));
     }
   };
 
@@ -98,7 +143,13 @@ export const Plug = () => {
           text={t('translation:buttons.action.loading')}
         />
       )}
-      {!isVerifying && !isConnected && (
+      {isConnecting && (
+        <PlugButton
+          handleClick={handleClick}
+          text={t('translation:buttons.action.connecting')}
+        />
+      )}
+      {!isVerifying && !isConnecting && !isConnected && (
         <PlugButton
           handleClick={handleClick}
           text={
@@ -108,8 +159,18 @@ export const Plug = () => {
           }
         />
       )}
-      {!isVerifying && isConnected && (
-        <PlugButton handleClick={handleClick} text="Connected" />
+      {!isVerifying && !isConnecting && isConnected && (
+        <PlugButton
+          handleClick={() => {
+            // eslint-disable-next-line no-console
+            console.log('Already connected to plug!');
+          }}
+          text={
+            principalId
+              ? formatAddress(principalId)
+              : t('translation:buttons.action.loading')
+          }
+        />
       )}
     </>
   );
