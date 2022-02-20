@@ -24,7 +24,11 @@ export interface rowProps {
   time: string;
 }
 
-export const ActivityTable = () => {
+export interface activityTableProps {
+  theme: string;
+}
+
+export const ActivityTable = ({ theme }: activityTableProps) => {
   const { t } = useTranslation();
 
   const columns = useMemo(
@@ -38,7 +42,12 @@ export const ActivityTable = () => {
       {
         Header: t('translation:tables.titles.type'),
         accessor: ({ type }: rowProps) => (
-          <TypeDetailsCell name={type} type={type} tableType="" />
+          <TypeDetailsCell
+            name={type}
+            type={type}
+            tableType=""
+            theme={theme}
+          />
         ),
       },
       {
@@ -76,7 +85,7 @@ export const ActivityTable = () => {
         ),
       },
     ],
-    [], // eslint-disable-line react-hooks/exhaustive-deps
+    [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return (

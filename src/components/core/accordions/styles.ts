@@ -182,7 +182,7 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
       lineHeight: '19px',
       display: 'flex',
       alignItems: 'center',
-      color: '$mainTextColor',
+      color: '$checkboxSelectedFiltersText',
     },
   },
 

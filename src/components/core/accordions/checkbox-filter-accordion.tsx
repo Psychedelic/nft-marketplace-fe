@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Accordion from '@radix-ui/react-accordion';
 import { Checkbox } from '../checkbox/checkbox';
 import { checkboxDummyData } from '../../mock-data/accordion-data';
@@ -8,6 +8,7 @@ import {
   AccordionContent,
 } from './styles';
 import arrowdown from '../../../assets/arrowdown.svg';
+import arrowdownDark from '../../../assets/arrowdown-dark.svg';
 
 export type CheckboxFilterAccordionProps = {
   title: string;
@@ -22,6 +23,12 @@ export const CheckboxFilterAccordion = ({
   const [selectedFilters, setSelectedFilters] = useState<
     Array<string>
   >([]);
+  const [theme, setTheme] = useState('lightTheme');
+
+  useEffect(() => {
+    const getTheme = localStorage.getItem('theme');
+    setTheme(getTheme);
+  });
 
   return (
     <AccordionStyle
@@ -47,7 +54,7 @@ export const CheckboxFilterAccordion = ({
                 : ''}
             </span>
           </p>
-          <img src={arrowdown} alt="arrow-down" />
+          <img src={theme === 'lightTheme' ? arrowdown : arrowdownDark} alt="arrow-down" />
         </AccordionTrigger>
         <AccordionContent padding="small">
           <form>

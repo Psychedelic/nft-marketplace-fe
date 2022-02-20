@@ -1,9 +1,3 @@
-import React from 'react';
-
-import discord from '../../assets/buttons/discord.svg';
-import twitter from '../../assets/buttons/twitter.svg';
-import back from '../../assets/buttons/back.svg';
-
 export const AccordionContentMetaData = [
   {
     title: 'Canister ID',
@@ -20,21 +14,6 @@ export const AccordionContentMetaData = [
   {
     title: 'Blockchain',
     value: 'Internet Computer',
-  },
-];
-
-export const Buttons = [
-  {
-    image: discord,
-    alt: 'discord',
-  },
-  {
-    image: twitter,
-    alt: 'twitter',
-  },
-  {
-    image: back,
-    alt: 'back',
   },
 ];
 

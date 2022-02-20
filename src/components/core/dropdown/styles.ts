@@ -2,9 +2,13 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import * as HoverCard from '@radix-ui/react-hover-card';
 import { styled } from '../../../stitches.config';
 
+export const DropdownRoot = styled(DropdownMenu.Root, {
+  background: '$backgroundColor',
+});
+
 export const DropdownStyle = styled(DropdownMenu.Trigger, {
   border: '2px solid $borderColor',
-  background: 'transparent',
+  background: '$backgroundColor',
   boxSizing: 'border-box',
   borderRadius: '14px',
   fontWeight: '500',
@@ -27,8 +31,6 @@ export const DropdownStyle = styled(DropdownMenu.Trigger, {
 
 export const DropdownContent = styled(DropdownMenu.Content, {
   minWidth: '210px',
-  background: '$backgroundColor !important',
-  border: '2px solid $borderColor',
   boxSizing: 'border-box',
   boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.15)',
   '@media (prefers-reduced-motion: no-preference)': {
@@ -47,16 +49,28 @@ export const DropdownContent = styled(DropdownMenu.Content, {
         minWidth: '160px',
       },
     },
+    background: {
+      dark: {
+        background: '#141416',
+        color: '#ffffff',
+        border: '2px solid #353945',
+      },
+      light: {
+        background: '#ffffff',
+        color: '#23262F',
+        border: '2px solid #E5E8EB',
+      },
+    },
   },
 });
 
 export const DropdownRadioGroup = styled(DropdownMenu.RadioGroup, {
   display: 'block',
+  borderRadius: '15px',
 });
 
 export const DropdownGroup = styled(DropdownMenu.Group, {
   display: 'block',
-  background: '$backgroundColor !important',
 });
 
 export const DropdownRadioMenuItem = styled(DropdownMenu.RadioItem, {
@@ -68,7 +82,6 @@ export const DropdownRadioMenuItem = styled(DropdownMenu.RadioItem, {
   fontWeight: '500',
   fontSize: '16px',
   lineHeight: '19px',
-  color: '#23262F',
   cursor: 'pointer',
 
   '&:focus': {
@@ -85,7 +98,6 @@ export const DropdownMenuItem = styled(DropdownMenu.Item, {
   fontWeight: '500',
   fontSize: '16px',
   lineHeight: '19px',
-  color: '#23262F',
   cursor: 'pointer',
 
   '&:focus': {
@@ -95,7 +107,16 @@ export const DropdownMenuItem = styled(DropdownMenu.Item, {
 
 export const DropdownMenuSeparator = styled(DropdownMenu.Separator, {
   height: 1,
-  backgroundColor: '#E5E8EB',
+  variants: {
+    background: {
+      dark: {
+        background: '#353945',
+      },
+      light: {
+        background: '#E5E8EB',
+      },
+    },
+  },
   width: '100%',
 });
 

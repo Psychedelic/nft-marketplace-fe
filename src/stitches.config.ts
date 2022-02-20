@@ -12,7 +12,7 @@ export const {
 } = createStitches({
   theme: {
     colors: {
-      backgroundColor: '#FFFFFF',
+      backgroundColor: '#ffffff',
       navBackgroundColor: '#ffffff',
       buttonBackgroundColor: '#ffffff',
       mainTextColor: '#23262F',
@@ -35,6 +35,7 @@ export const {
       modalOverlay: '#fafbfde6',
       skeletonBackground:
         'linear-gradient(90deg, rgb(229, 232, 235) 0%, rgb(247, 248, 250) 59.9%)',
+      checkboxSelectedFiltersText: '#23262F',
     },
     space: {},
     fonts: {},
@@ -68,5 +69,6 @@ export const darkTheme = createTheme({
     modalOverlay: '#0a0a0ae6',
     skeletonBackground:
       'linear-gradient(90deg, rgb(36 34 34) 0%, rgb(41 42 44) 59.9%)',
+    checkboxSelectedFiltersText: '#2253FF',
   },
 });

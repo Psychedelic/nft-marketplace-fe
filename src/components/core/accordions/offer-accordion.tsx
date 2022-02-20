@@ -15,6 +15,7 @@ import dfinity from '../../../assets/accordions/dfinity.svg';
 import arrowdown from '../../../assets/accordions/arrow-down.svg';
 import arrowdownDark from '../../../assets/accordions/arrow-down-dark.svg';
 import arrowup from '../../../assets/accordions/arrow-up.svg';
+import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import { OffersTable } from '../../tables';
 
 export const OfferAccordion = () => {
@@ -28,6 +29,7 @@ export const OfferAccordion = () => {
   });
 
   const arrowdownTheme = theme === 'lightTheme' ? arrowdown : arrowdownDark;
+  const arrowupTheme = theme === 'lightTheme' ? arrowup : arrowupDark;
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
@@ -61,7 +63,7 @@ export const OfferAccordion = () => {
             </p>
           </div>
           <img
-            src={!isAccordionOpen ? arrowup : arrowdownTheme}
+            src={!isAccordionOpen ? arrowupTheme : arrowdownTheme}
             alt="arrow-down"
           />
         </AccordionTrigger>

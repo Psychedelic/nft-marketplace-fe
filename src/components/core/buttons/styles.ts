@@ -59,7 +59,7 @@ export const Button = styled('button', {
 export const LinkButtonStyles = styled('a', {
   // base styles
   border: '2px solid #E5E8EB',
-  backgroundColor: '$buttonBackgroundColor',
+  backgroundColor: '$backgroundColor',
   fontWeight: '500',
   color: '$mainTextColor',
   cursor: 'pointer',

@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import { LinkButton } from '../buttons';
-import {
-  AccordionContentMetaData,
-  Buttons,
-} from '../../mock-data/accordion-data';
+import { AccordionContentMetaData } from '../../mock-data/accordion-data';
 import {
   AccordionStyle,
   AccordionTrigger,
@@ -22,9 +19,16 @@ import infoDark from '../../../assets/accordions/info-dark.svg';
 import arrowdown from '../../../assets/accordions/arrow-down.svg';
 import arrowdownDark from '../../../assets/accordions/arrow-down-dark.svg';
 import arrowup from '../../../assets/accordions/arrow-up.svg';
+import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import collection from '../../../assets/accordions/collection.svg';
 import creator from '../../../assets/accordions/creator.svg';
 import owner from '../../../assets/accordions/owner.svg';
+import discord from '../../../assets/buttons/discord.svg';
+import discordDark from '../../../assets/buttons/discord-dark.svg';
+import twitter from '../../../assets/buttons/twitter.svg';
+import twitterDark from '../../../assets/buttons/twitter-dark.svg';
+import back from '../../../assets/buttons/back.svg';
+import backDark from '../../../assets/buttons/back-dark.svg';
 
 export type AboutAccordionProps = {
   owned: boolean;
@@ -41,6 +45,22 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
   });
 
   const arrowdownTheme = theme === 'lightTheme' ? arrowdown : arrowdownDark;
+  const arrowupTheme = theme === 'lightTheme' ? arrowup : arrowupDark;
+
+  const Buttons = [
+    {
+      image: theme === 'lightTheme' ? discord : discordDark,
+      alt: 'discord',
+    },
+    {
+      image: theme === 'lightTheme' ? twitter : twitterDark,
+      alt: 'twitter',
+    },
+    {
+      image: theme === 'lightTheme' ? back : backDark,
+      alt: 'back',
+    },
+  ];
 
   const AccordionHeadContentData = [
     {
@@ -81,7 +101,10 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
-            <img src={theme === 'lightTheme' ? info : infoDark} alt="about-collection" />
+            <img
+              src={theme === 'lightTheme' ? info : infoDark}
+              alt="about-collection"
+            />
             <p>
               {`${t(
                 'translation:accordions.about.header.aboutCrowns',
@@ -89,7 +112,7 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
             </p>
           </div>
           <img
-            src={!isAccordionOpen ? arrowup : arrowdownTheme}
+            src={!isAccordionOpen ? arrowupTheme : arrowdownTheme}
             alt="arrow-down"
           />
         </AccordionTrigger>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 
 import {
+  DropdownRoot,
   DropdownStyle,
   DropdownContent,
   DropdownRadioMenuItem,
@@ -31,7 +31,7 @@ export const PriceFilterDropdown = ({
   });
 
   return (
-    <DropdownMenu.Root>
+    <DropdownRoot>
       <DropdownStyle>
         <p>{selectedValue}</p>
         <img
@@ -40,20 +40,24 @@ export const PriceFilterDropdown = ({
         />
       </DropdownStyle>
 
-      <DropdownContent>
+      <DropdownContent
+        background={theme === 'darkTheme' ? 'dark' : 'light'}
+      >
         <DropdownRadioGroup
           onValueChange={(e) => setSelectedValue(e)}
         >
           {options.map((item) => (
-            <div key={item}>
+            <>
               <DropdownRadioMenuItem value={item} textValue={item}>
                 {item}
               </DropdownRadioMenuItem>
-              <DropdownMenuSeparator />
-            </div>
+              <DropdownMenuSeparator
+                background={theme === 'darkTheme' ? 'dark' : 'light'}
+              />
+            </>
           ))}
         </DropdownRadioGroup>
       </DropdownContent>
-    </DropdownMenu.Root>
+    </DropdownRoot>
   );
 };

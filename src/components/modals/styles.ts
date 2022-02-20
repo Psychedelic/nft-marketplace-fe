@@ -195,7 +195,7 @@ export const ItemName = styled('div', {
   fontSize: '18px',
   fontWeight: '600',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$mainTextColor',
 });
 
 export const PriceDetails = styled('div', {
@@ -228,7 +228,7 @@ export const WICPText = styled('div', {
   fontSize: '16px',
   fontWeight: '600',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$mainTextColor',
 
   // variants
   variants: {
