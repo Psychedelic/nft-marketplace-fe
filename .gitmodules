@@ -1,0 +1,3 @@
+[submodule "nft-marketplace"]
+	path = nft-marketplace
+	url = git@github.com:Psychedelic/nft-marketplace.git
