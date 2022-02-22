@@ -27,7 +27,9 @@ export const CheckboxFilterAccordion = ({
 
   useEffect(() => {
     const getTheme = localStorage.getItem('theme');
-    setTheme(getTheme);
+    if (getTheme) {
+      setTheme(getTheme);
+    }
   });
 
   return (

@@ -12,7 +12,9 @@ const App = () => {
 
   useEffect(() => {
     const getTheme = localStorage.getItem('theme');
-    setCurrentTheme(getTheme);
+    if (getTheme) {
+      setCurrentTheme(getTheme);
+    }
   });
 
   return (

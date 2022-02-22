@@ -17,7 +17,9 @@ export const NFTMetaData = () => {
 
   useEffect(() => {
     const getTheme = localStorage.getItem('theme');
-    setTheme(getTheme);
+    if (getTheme) {
+      setTheme(getTheme);
+    }
   });
 
   return (

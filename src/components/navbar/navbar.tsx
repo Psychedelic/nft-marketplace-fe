@@ -35,7 +35,9 @@ export const NavBar = ({
 
   useEffect(() => {
     const getTheme = localStorage.getItem('theme');
-    setTheme(getTheme);
+    if (getTheme) {
+      setTheme(getTheme);
+    }
   });
 
   return (
@@ -47,7 +49,9 @@ export const NavBar = ({
             alt={t('translation:common.collectionName')}
           />
           <LogoName
-            src={theme === 'lightTheme' ? appName : appNameDark}
+            src={
+              theme === 'lightTheme' ? appName : appNameDark
+            }
             alt={t('translation:common.collectionName')}
           />
         </LogoContainer>
@@ -62,8 +66,8 @@ export const NavBar = ({
             }}
           >
             <img
-              src={currentTheme === 'lightTheme' ? moon : sun}
-              alt={currentTheme}
+              src={theme === 'lightTheme' ? moon : sun}
+              alt={theme}
             />
           </LinkButton>
         </Tooltip>

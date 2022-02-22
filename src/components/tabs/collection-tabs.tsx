@@ -19,7 +19,9 @@ export const CollectionTabs = () => {
 
   useEffect(() => {
     const getTheme = localStorage.getItem('theme');
-    setTheme(getTheme);
+    if (getTheme) {
+      setTheme(getTheme);
+    }
   });
 
   const itemIsActive = currentTab === 'items' ? 'active' : 'inactive';

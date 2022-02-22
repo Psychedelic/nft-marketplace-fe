@@ -18,7 +18,9 @@ export const CardOptionsDropdown = () => {
 
   useEffect(() => {
     const getTheme = localStorage.getItem('theme');
-    setTheme(getTheme);
+    if (getTheme) {
+      setTheme(getTheme);
+    }
   });
 
   return (

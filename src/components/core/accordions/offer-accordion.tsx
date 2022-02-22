@@ -25,7 +25,9 @@ export const OfferAccordion = () => {
 
   useEffect(() => {
     const getTheme = localStorage.getItem('theme');
-    setTheme(getTheme);
+    if (getTheme) {
+      setTheme(getTheme);
+    }
   });
 
   const arrowdownTheme = theme === 'lightTheme' ? arrowdown : arrowdownDark;

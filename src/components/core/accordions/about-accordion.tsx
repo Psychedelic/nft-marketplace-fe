@@ -41,7 +41,9 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
 
   useEffect(() => {
     const getTheme = localStorage.getItem('theme');
-    setTheme(getTheme);
+    if (getTheme) {
+      setTheme(getTheme);
+    }
   });
 
   const arrowdownTheme = theme === 'lightTheme' ? arrowdown : arrowdownDark;

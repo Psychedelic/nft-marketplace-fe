@@ -37,7 +37,9 @@ export const Filters = () => {
 
   useEffect(() => {
     const getTheme = localStorage.getItem('theme');
-    setTheme(getTheme);
+    if (getTheme) {
+      setTheme(getTheme);
+    }
   });
 
   const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
