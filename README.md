@@ -13,6 +13,7 @@ The NFT Marketplace UI provides you with the opportunity to sell, purchase, offe
 - [Getting Started](#-getting-started)
   - [Development](#-development)
   - [Service dependencies](#-service-dependencies)
+  - [Integration tools](#-integration-tools)
 - [Contribution guideline](#-contribution-guideline)
 
 ## ⚙️ Requirements
@@ -96,6 +97,10 @@ yarn services:start
 ```
 
 You'll need to read the [Marketplace Service](https://github.com/Psychedelic/nft-marketplace) guidelines to understand how to interact with the Services.
+
+### 🪚 Integration tools
+
+The following [Integrations document](https://github.com/Psychedelic/nft-marketplace/blob/develop/docs/integrations.md) provides a brief explanation on how the integration process came into play. It won't provide every single detail about it, but hopefully an overview to help onboarding; or allow the frontend team find appropriate tools to interact with the services, as easily as possible. Learn more about it [here!](https://github.com/Psychedelic/nft-marketplace/blob/develop/docs/integrations.md)
 
 ## 🙏 Contribution guideline
 
