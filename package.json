@@ -42,7 +42,8 @@
     "services:init": "git submodule update --init --recursive",
     "services:local-replica": "cd ./nft-marketplace && dfx start --clean",
     "services:start": "cd ./nft-marketplace && npm run services:start",
-    "services:reset": "cd ./nft-marketplace && dfx stop && npm run reset"
+    "services:reset": "cd ./nft-marketplace && dfx stop && npm run reset",
+    "mock:generate-tokens": "cd ./nft-marketplace && yarn mock:generate-tokens"
   },
   "browserslist": {
     "production": [
