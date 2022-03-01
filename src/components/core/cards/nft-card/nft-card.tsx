@@ -11,6 +11,7 @@ import {
   LastOffer,
   Dfinity,
   Image,
+  Video,
 } from './styles';
 
 export type NftCardProps = {
@@ -38,9 +39,22 @@ export const NftCard = ({
           </OwnedCardText>
           <CardOptionsDropdown />
         </Flex>
-        <Image>
+        {/* <Image>
           <img src={data?.nftImage} alt="nft-card" />
-        </Image>
+        </Image> */}
+        <Video
+          loop
+          autoPlay
+          muted
+          preload="metadata"
+          controls={false}
+          poster="/assets/random-crown.png"
+        >
+          <source
+            src="https://vqcq7-gqaaa-aaaam-qaara-cai.raw.ic0.app/9791.mp4"
+            type="video/mp4"
+          />
+        </Video>
         <Flex>
           <NftName>{data?.nftName}</NftName>
           {notForSale ? (
