@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   ActionButton,
@@ -7,7 +7,9 @@ import {
   IconActionButton,
 } from '../core';
 import closeFiltersIcon from '../../assets/buttons/close-filters.svg';
+import closeFiltersIconDark from '../../assets/buttons/close-filters-dark.svg';
 import openFiltersIcon from '../../assets/buttons/open-filters.svg';
+import openFiltersIconDark from '../../assets/buttons/open-filters-dark.svg';
 import {
   Container,
   CloseFilterContainer,
@@ -31,11 +33,23 @@ import {
 export const Filters = () => {
   const { t } = useTranslation();
 
+  const [theme, setTheme] = useState('lightTheme');
+
+  useEffect(() => {
+    const getTheme = localStorage.getItem('theme');
+    if (getTheme) {
+      setTheme(getTheme);
+    }
+  });
+
   const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
   // eslint-disable-next-line
   const [displayFilter, setDisplayFilter] =
     useState<string>('allNfts');
   const [statusFilter, setStatusFilter] = useState<string>('');
+
+  const closeFiltersIconTheme = theme === 'lightTheme' ? closeFiltersIcon : closeFiltersIconDark;
+  const openFiltersIconTheme = theme === 'lightTheme' ? openFiltersIcon : openFiltersIconDark;
 
   return (
     <Container>
@@ -46,7 +60,7 @@ export const Filters = () => {
           }}
         >
           <img
-            src={filtersOpened ? closeFiltersIcon : openFiltersIcon}
+            src={filtersOpened ? closeFiltersIconTheme : openFiltersIconTheme}
             alt="filter-icon"
           />
         </IconActionButton>

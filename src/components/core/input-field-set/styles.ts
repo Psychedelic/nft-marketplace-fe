@@ -37,7 +37,8 @@ export const Input = styled('input', {
   fontSize: 16,
   lineHeight: 1,
   color: '#23262F',
-  border: '1.5px solid #E5E8EB',
+
+  border: '1.5px solid $borderColor',
   boxSizing: 'border-box',
 
   // variants
@@ -82,7 +83,7 @@ export const AmountTypeContainer = styled('div', {
   height: '53px',
   background: '#FAFBFD',
   borderRadius: '0px 14px 14px 0px',
-  border: '1.5px solid #E5E8EB',
+  border: '1.5px solid $borderColor',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

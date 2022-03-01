@@ -19,7 +19,7 @@ export const TableWrapper = styled('div', {
     borderColor: 'transparent',
     borderImage: 'initial',
     width: 'inherit',
-    background: '#FAFBFD',
+    background: '$tableBackgroundColor',
 
     th: {
       textAlign: 'left',
@@ -37,10 +37,10 @@ export const TableWrapper = styled('div', {
           fontSize: '16px',
           fontWeight: '600',
           lineHeight: '19px',
-          color: '#23262F',
+          color: '$mainTextColor',
           padding: '25px 0px 25px 10px',
-          borderTop: '1px solid #E5E8EB',
-          borderBottom: '1px solid #E5E8EB',
+          borderTop: '1px solid $borderColor',
+          borderBottom: '1px solid $borderColor',
 
           '&:first-child': {
             paddingLeft: '80px',
@@ -52,11 +52,12 @@ export const TableWrapper = styled('div', {
     tbody: {
       tr: {
         opacity: 1,
-        background: '#FFFFFF',
+        background: '$backgroundColor',
+
         td: {
           fontWeight: '500',
           padding: '25px 0px 25px 10px',
-          borderBottom: '1px solid #E5E8EB',
+          borderBottom: '1px solid $borderColor',
           whiteSpace: 'nowrap',
 
           '&:first-child': {
@@ -64,7 +65,7 @@ export const TableWrapper = styled('div', {
           },
         },
         '&:hover': {
-          background: '#F4F5F6',
+          background: '$tableRowHoverColor',
           '.item-name': {
             color: '#2253FF',
           },
@@ -78,15 +79,15 @@ export const TableWrapper = styled('div', {
     type: {
       offers: {
         table: {
-          background: '#FFFFFF',
+          background: '$backgroundColor',
           thead: {
             tr: {
               th: {
-                color: '#777E90',
+                color: '$tableTextColor',
                 fontSize: '16px',
                 fontWeight: '500',
                 lineHeight: '19px',
-                borderBottom: '1px solid #E5E8EB',
+                borderBottom: '1px solid $borderColor',
                 padding: '10px 20px',
 
                 '&:first-child': {
@@ -97,14 +98,14 @@ export const TableWrapper = styled('div', {
           },
           tbody: {
             tr: {
-              background: '#FAFBFD',
+              background: '$tableBackgroundColor',
               td: {
-                color: '#777E90',
+                color: '$tableTextColor',
                 padding: '16px 20px',
                 fontSize: '16px',
                 fontWeight: '500',
                 lineHeight: '19px',
-                borderBottom: '1px solid #E5E8EB',
+                borderBottom: '1px solid $borderColor',
                 '&:first-child': {
                   paddingLeft: '20px',
                 },
@@ -121,19 +122,20 @@ export const TableWrapper = styled('div', {
 
       nftActivity: {
         table: {
-          background: '#FAFBFD',
-          border: '1.5px solid #E5E8EB',
+          background: '$tableBackgroundColor',
+          border: '1.5px solid $borderColor',
           boxSizing: 'border-box',
           borderRadius: '15px',
           thead: {
             tr: {
               th: {
-                color: '#767D8E',
+                // color: '#767D8E',
+                color: '$mainTextColor',
                 fontSize: '18px',
                 fontWeight: '500',
                 lineHeight: '22px',
                 borderTop: 'initial',
-                borderBottom: '1px solid #E5E8EB',
+                borderBottom: '1px solid $borderColor',
                 padding: '16px 20px',
 
                 '&:first-child': {
@@ -144,14 +146,14 @@ export const TableWrapper = styled('div', {
           },
           tbody: {
             tr: {
-              background: '#FAFBFD',
+              background: '$tableBackgroundColor',
               td: {
-                color: '#23262F',
+                color: '$mainTextColor',
                 padding: '24px 20px',
                 fontSize: '18px',
                 fontWeight: '500',
                 lineHeight: '22px',
-                borderBottom: '1px solid #E5E8EB',
+                borderBottom: '1px solid $borderColor',
                 '&:first-child': {
                   paddingLeft: '20px',
                 },

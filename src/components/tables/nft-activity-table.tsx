@@ -18,7 +18,11 @@ export interface rowProps {
   expiration: string;
 }
 
-export const NFTActivityTable = () => {
+export interface nftActivityTableProps {
+  theme: string;
+}
+
+export const NFTActivityTable = ({ theme }: nftActivityTableProps) => {
   const { t } = useTranslation();
 
   const columns = useMemo(
@@ -30,6 +34,7 @@ export const NFTActivityTable = () => {
             name={type}
             type={type}
             tableType="nftActivity"
+            theme={theme}
           />
         ),
       },
@@ -62,7 +67,7 @@ export const NFTActivityTable = () => {
         ),
       },
     ],
-    [], // eslint-disable-line react-hooks/exhaustive-deps
+    [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return (

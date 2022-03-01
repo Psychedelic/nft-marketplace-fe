@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton, Tooltip } from '../core';
 import {
@@ -13,13 +13,25 @@ import {
   HeaderWrapper,
 } from './styles';
 import crown from '../../assets/crown-pfp.png';
+import crownDark from '../../assets/crown-pfp-dark.png';
 import verified from '../../assets/verified-large.svg';
 import discord from '../../assets/buttons/discord.svg';
+import discordDark from '../../assets/buttons/discord-dark.svg';
 import twitter from '../../assets/buttons/twitter.svg';
+import twitterDark from '../../assets/buttons/twitter-dark.svg';
 import back from '../../assets/buttons/back.svg';
+import backDark from '../../assets/buttons/back-dark.svg';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
+  const [theme, setTheme] = useState('lightTheme');
+
+  useEffect(() => {
+    const getTheme = localStorage.getItem('theme');
+    if (getTheme) {
+      setTheme(getTheme);
+    }
+  });
 
   return (
     <NftMetadataWrapper>
@@ -27,7 +39,10 @@ export const CollectionOverview = () => {
       <NftMetadataContent>
         <NftMetadataContentWrapper>
           <NftProfilePictureWrapper>
-            <img src={crown} alt="crown-pfp" />
+            <img
+              src={theme === 'lightTheme' ? crown : crownDark}
+              alt="crown-pfp"
+            />
           </NftProfilePictureWrapper>
           <HeaderWrapper>
             <Heading>
@@ -47,13 +62,13 @@ export const CollectionOverview = () => {
           </LinkButton>
           <LinkButton url="https://discord.gg/yVEcEzmrgm">
             <img
-              src={discord}
+              src={theme === 'lightTheme' ? discord : discordDark}
               alt={t('translation:buttons.links.discord')}
             />
           </LinkButton>
           <LinkButton url="https://twitter.com/cap_ois">
             <img
-              src={twitter}
+              src={theme === 'lightTheme' ? twitter : twitterDark}
               alt={t('translation:buttons.links.twitter')}
             />
           </LinkButton>
@@ -61,7 +76,7 @@ export const CollectionOverview = () => {
           <Tooltip text={t('translation:common.comingSoon')}>
             <LinkButton>
               <img
-                src={back}
+                src={theme === 'lightTheme' ? back : backDark}
                 alt={t('translation:buttons.links.back')}
               />
             </LinkButton>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useTranslation } from 'react-i18next';
 
@@ -10,9 +10,18 @@ import {
 } from './styles';
 import moreoptions from '../../../assets/moreoptions.svg';
 import copy from '../../../assets/copy.svg';
+import copyDark from '../../../assets/copy-dark.svg';
 
 export const CardOptionsDropdown = () => {
   const { t } = useTranslation();
+  const [theme, setTheme] = useState('lightTheme');
+
+  useEffect(() => {
+    const getTheme = localStorage.getItem('theme');
+    if (getTheme) {
+      setTheme(getTheme);
+    }
+  });
 
   return (
     <DropdownMenu.Root>
@@ -25,14 +34,20 @@ export const CardOptionsDropdown = () => {
         <img src={moreoptions} alt="more-options" />
       </DropdownMenu.Trigger>
 
-      <DropdownContent width="small">
+      <DropdownContent
+        width="small"
+        background={theme === 'darkTheme' ? 'dark' : 'light'}
+      >
         <DropdownGroup>
           <DropdownMenuItem>
             <Flex>
               <p>
                 {`${t('translation:dropdown.moreOptions.copyLink')}`}
               </p>
-              <img src={copy} alt="copy-link" />
+              <img
+                src={theme === 'lightTheme' ? copy : copyDark}
+                alt="copy-link"
+              />
             </Flex>
           </DropdownMenuItem>
         </DropdownGroup>
