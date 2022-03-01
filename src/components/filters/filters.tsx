@@ -31,7 +31,7 @@ import {
 export const Filters = () => {
   const { t } = useTranslation();
 
-  const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
+  const [filtersOpened, setFiltersOpened] = useState<boolean>(true);
   // eslint-disable-next-line
   const [displayFilter, setDisplayFilter] =
     useState<string>('allNfts');

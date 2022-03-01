@@ -260,7 +260,7 @@ const DevelopedComponents = () => {
         <SellModal />
       </ComponentWrapper>
       <ComponentWrapper>
-        <ComponentTitle>Change Price Modal</ComponentTitle>
+        <ComponentTitle>Edit Listing Modal</ComponentTitle>
         <ChangePriceModal />
       </ComponentWrapper>
       <ComponentWrapper>
