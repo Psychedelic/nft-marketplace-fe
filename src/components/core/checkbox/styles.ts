@@ -17,7 +17,7 @@ export const Wrapper = styled('div', {
     fontWeight: '500',
     fontSize: '16px',
     lineHeight: '20px',
-    color: '#23262F',
+    color: '$mainTextColor',
 
     '& input[type="checkbox"]': {
       marginRight: '8px',

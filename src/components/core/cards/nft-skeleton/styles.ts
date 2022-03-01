@@ -3,8 +3,8 @@ import { styled } from '../../../../stitches.config';
 export const CardWrapper = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  background: '#FFFFFF',
-  border: '1.5px solid #E5E8EB',
+  background: '$backgroundColor',
+  border: '1.5px solid $borderColor',
   boxSizing: 'border-box',
   boxShadow: '0px 0px 8px #E6E9EF',
   borderRadius: '14px',
@@ -26,7 +26,7 @@ export const SkeletonLarge = styled('div', {
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   borderRadius: '14px',
   background:
-    'linear-gradient(90deg, rgb(229, 232, 235) 0%, rgb(247, 248, 250) 59.9%)',
+    '$skeletonBackground',
 });
 
 export const SkeletonSmall = styled('div', {
@@ -35,6 +35,5 @@ export const SkeletonSmall = styled('div', {
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   borderRadius: '14px',
   margin: '8px 0px 0px',
-  background:
-    'linear-gradient(90deg, rgb(229, 232, 235) 0%, rgb(247, 248, 250) 59.9%)',
+  background: '$skeletonBackground',
 });

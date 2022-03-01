@@ -6,14 +6,21 @@ export type LinkButtonProps = {
   type?: any;
   children?: React.ReactNode;
   url?: string;
+  handleClick?: () => void;
 };
 
 export const LinkButton = ({
   type,
   children,
   url,
+  handleClick,
 }: LinkButtonProps) => (
-  <LinkButtonStyles type={type} href={url} target="_blank">
+  <LinkButtonStyles
+    type={type}
+    href={url}
+    target="_blank"
+    onClick={handleClick}
+  >
     {children}
   </LinkButtonStyles>
 );

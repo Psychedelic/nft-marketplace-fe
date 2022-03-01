@@ -10,7 +10,7 @@ export const Container = styled('div', {
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '14px 20px',
-  background: '#FFFFFF',
+  backgroundColor: '$navBackgroundColor',
   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.08)',
   zIndex: 2,
 });

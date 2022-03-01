@@ -57,7 +57,7 @@ export const AcceptOfferModalTrigger = styled('div', {
 });
 
 export const ModalOverlay = styled(DialogPrimitive.Overlay, {
-  backgroundColor: 'rgba(250, 251, 253, 0.9)',
+  backgroundColor: '$modalOverlay',
   position: 'fixed',
   inset: 0,
   zIndex: 1,
@@ -67,9 +67,9 @@ export const ModalOverlay = styled(DialogPrimitive.Overlay, {
 });
 
 export const ModalContent = styled(DialogPrimitive.Content, {
-  backgroundColor: 'white',
+  backgroundColor: '$backgroundColor',
   borderRadius: '30px',
-  border: '1.5px solid #E5E8EB',
+  border: '1.5px solid $borderColor',
   boxShadow: '0px 4px 24px rgba(0, 0, 0, 0.25)',
   position: 'fixed',
   top: '50%',
@@ -99,7 +99,7 @@ export const ModalTitle = styled(DialogPrimitive.Title, {
   fontSize: '32px',
   fontWeight: 'bold',
   lineHeight: '39px',
-  color: '#23262F',
+  color: '$mainTextColor',
   margin: '0px 0px 20px',
 });
 
@@ -195,7 +195,7 @@ export const ItemName = styled('div', {
   fontSize: '18px',
   fontWeight: '600',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$mainTextColor',
 });
 
 export const PriceDetails = styled('div', {
@@ -228,7 +228,7 @@ export const WICPText = styled('div', {
   fontSize: '16px',
   fontWeight: '600',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$mainTextColor',
 
   // variants
   variants: {

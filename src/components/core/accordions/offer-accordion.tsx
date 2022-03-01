@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import {
@@ -10,14 +10,28 @@ import {
   FlexRight,
 } from './styles';
 import offer from '../../../assets/accordions/offer.svg';
+import offerDark from '../../../assets/accordions/offer-dark.svg';
 import dfinity from '../../../assets/accordions/dfinity.svg';
 import arrowdown from '../../../assets/accordions/arrow-down.svg';
+import arrowdownDark from '../../../assets/accordions/arrow-down-dark.svg';
 import arrowup from '../../../assets/accordions/arrow-up.svg';
+import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import { OffersTable } from '../../tables';
 
 export const OfferAccordion = () => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+  const [theme, setTheme] = useState('lightTheme');
+
+  useEffect(() => {
+    const getTheme = localStorage.getItem('theme');
+    if (getTheme) {
+      setTheme(getTheme);
+    }
+  });
+
+  const arrowdownTheme = theme === 'lightTheme' ? arrowdown : arrowdownDark;
+  const arrowupTheme = theme === 'lightTheme' ? arrowup : arrowupDark;
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
@@ -45,13 +59,13 @@ export const OfferAccordion = () => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
-            <img src={offer} alt="offer-collection" />
+            <img src={theme === 'lightTheme' ? offer : offerDark} alt="offer-collection" />
             <p>
               {`${t('translation:accordions.offer.header.offer')}`}
             </p>
           </div>
           <img
-            src={!isAccordionOpen ? arrowup : arrowdown}
+            src={!isAccordionOpen ? arrowupTheme : arrowdownTheme}
             alt="arrow-down"
           />
         </AccordionTrigger>
