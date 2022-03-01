@@ -13,6 +13,7 @@ export const Button = styled('button', {
   fontWeight: '600',
   lineHeight: '22px',
   borderRadius: '14px',
+  fontFamily: 'proxima-nova, sans-serif',
 
   '&:hover': {
     cursor: 'pointer',
@@ -27,8 +28,8 @@ export const Button = styled('button', {
       },
       secondary: {
         backgroundColor: 'transparent',
-        color: '#23262F',
-        border: '1.5px solid #E5E8EB',
+        color: '$mainTextColor',
+        border: '1.5px solid $borderColor',
       },
       outline: {
         backgroundColor: 'transparent',
@@ -52,23 +53,15 @@ export const Button = styled('button', {
     },
   },
   cursor: 'pointer',
-  borderRadius: '10px',
-  fontSize: '16px',
-  lineHeight: '19px',
   padding: '8px 12px',
-  minWidth: '98px',
-  minHeight: '33px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
 });
 
 export const LinkButtonStyles = styled('a', {
   // base styles
   border: '2px solid #E5E8EB',
-  background: '#FFFFFF',
+  backgroundColor: '$backgroundColor',
   fontWeight: '500',
-  color: '#23262F',
+  color: '$mainTextColor',
   cursor: 'pointer',
   borderRadius: '14px',
   fontSize: '16px',
@@ -120,17 +113,19 @@ export const PlugButtonText = styled('div', {
   // base styles
   width: '136px',
   height: '40px',
-  background: '#FFF',
+  backgroundColor: '$buttonBackgroundColor',
+  color: '$mainTextColor',
   borderRadius: '14px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  fontFamily: 'proxima-nova, sans-serif',
 });
 
 export const IconButtonStyles = styled('div', {
   // base styles
-  border: '2px solid #E5E8EB',
-  background: '#FFFFFF',
+  border: '2px solid $borderColor',
+  backgroundColor: '$buttonBackgroundColor',
   fontWeight: '500',
   color: '#23262F',
   cursor: 'pointer',

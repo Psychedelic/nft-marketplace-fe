@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import closeIcon from '../../../assets/closeIcon.svg';
+import closeIconDark from '../../../assets/closeIcon-dark.svg';
 import {
   TraitChipContainer,
   TraitSpecsContainer,
@@ -22,6 +23,14 @@ export const FilteredTraitsChip = ({
   removeFilter,
 }: FilteredTraitsChipProps) => {
   const { t } = useTranslation();
+  const [theme, setTheme] = useState('lightTheme');
+
+  useEffect(() => {
+    const getTheme = localStorage.getItem('theme');
+    if (getTheme) {
+      setTheme(getTheme);
+    }
+  });
 
   return (
     <TraitChipContainer type="filtered">
@@ -30,7 +39,10 @@ export const FilteredTraitsChip = ({
         <TraitRim>{rim}</TraitRim>
       </TraitSpecsContainer>
       <TraitActionContainer onClick={() => removeFilter()}>
-        <TraitClear src={closeIcon} alt={t('translation:logoAlts.close')} />
+        <TraitClear
+          src={theme === 'lightTheme' ? closeIcon : closeIconDark}
+          alt={t('translation:logoAlts.close')}
+        />
       </TraitActionContainer>
     </TraitChipContainer>
   );

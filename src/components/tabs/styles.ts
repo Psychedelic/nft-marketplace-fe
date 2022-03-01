@@ -4,6 +4,7 @@ import { styled } from '../../stitches.config';
 export const TabsRoot = styled(Tabs.Root, {
   display: 'flex',
   flexDirection: 'column',
+  backgroundColor: '$backgroundColor',
 
   '&:focus': {
     outline: 'none',
@@ -21,7 +22,7 @@ export const TabsList = styled(Tabs.List, {
 });
 
 export const TabsTrigger = styled(Tabs.Trigger, {
-  backgroundColor: 'white',
+  backgroundColor: '$backgroundColor',
   padding: '0 20px',
   height: 45,
   display: 'flex',
@@ -32,11 +33,12 @@ export const TabsTrigger = styled(Tabs.Trigger, {
   lineHeight: '22px',
   border: '0px',
   cursor: 'pointer',
+  fontFamily: 'proxima-nova, sans-serif',
   variants: {
     status: {
       active: {
-        borderBottom: '3px solid #23262F',
-        color: '#23262F',
+        borderBottom: '3px solid $tabActive',
+        color: '$mainTextColor',
         borderTop: 'none',
         borderLeft: 'none',
         borderRight: 'none',
@@ -51,7 +53,7 @@ export const TabsTrigger = styled(Tabs.Trigger, {
     marginRight: '12px',
   },
   '&:hover': {
-    color: '#23262F',
+    color: '$mainTextColor',
   },
   '&:focus': {
     outline: 'none',

@@ -17,7 +17,7 @@ export const CountLabel = styled('div', {
 
 export const CountInNumbers = styled('div', {
   fontWeight: '600',
-  color: '#000000',
+  color: '$chipsTextColor',
 });
 
 export const CountLogo = styled('img', {
@@ -33,7 +33,7 @@ export const TraitChipContainer = styled('div', {
   alignItems: 'center',
   padding: '12px 15px',
   borderRadius: '14px',
-  background: '#F4F5F6',
+  background: '$chipsBackgroundColor',
 
   // variants
   variants: {
@@ -46,7 +46,8 @@ export const TraitChipContainer = styled('div', {
 
       nft: {
         minWidth: '150px',
-        background: '#F4F5F6',
+        background: '$chipsNftBackgroundColor',
+        border: '1.5px solid $borderColor',
         margin: '0px 15px 15px 0px',
       },
     },
@@ -67,7 +68,7 @@ export const TraitName = styled('div', {
   fontSize: '16px',
   fontWeight: '600',
   lineHeight: '19px',
-  color: '#23262F',
+  color: '$mainTextColor',
   marginBottom: '2px',
 
   // variants
@@ -101,7 +102,7 @@ export const Traitvalue = styled('div', {
   fontSize: '14px',
   fontWeight: 'normal',
   lineHeight: '17px',
-  color: '#23262F',
+  color: '$mainTextColor',
 });
 
 export const TraitActionContainer = styled('div', {
