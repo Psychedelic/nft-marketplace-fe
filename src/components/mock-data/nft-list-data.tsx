@@ -9,6 +9,7 @@ export const NftListData = [
     dfinityValue: '21.12',
     nftId: '2713',
     lastOffer: '4.28',
+    id: 1,
   },
   {
     nftImage: nftCard,
@@ -17,6 +18,7 @@ export const NftListData = [
     dfinityValue: '21.12',
     nftId: '2713',
     lastOffer: '4.28',
+    id: 2,
   },
   {
     nftImage: nftCard,
@@ -25,6 +27,7 @@ export const NftListData = [
     dfinityValue: '21.12',
     nftId: '2713',
     lastOffer: '4.28',
+    id: 3,
   },
   {
     nftImage: nftCard,
@@ -33,6 +36,7 @@ export const NftListData = [
     dfinityValue: '21.12',
     nftId: '2713',
     lastOffer: '4.28',
+    id: 4,
   },
   {
     nftImage: nftCard,
@@ -41,6 +45,7 @@ export const NftListData = [
     dfinityValue: '21.12',
     nftId: '2713',
     lastOffer: '4.28',
+    id: 5,
   },
   {
     nftImage: nftCard,
@@ -49,6 +54,7 @@ export const NftListData = [
     dfinityValue: '21.12',
     nftId: '2713',
     lastOffer: '4.28',
+    id: 6,
   },
   {
     nftImage: nftCard,
@@ -57,6 +63,7 @@ export const NftListData = [
     dfinityValue: '21.12',
     nftId: '2713',
     lastOffer: '4.28',
+    id: 7,
   },
   {
     nftImage: nftCard,
@@ -65,6 +72,7 @@ export const NftListData = [
     dfinityValue: '21.12',
     nftId: '2713',
     lastOffer: '4.28',
+    id: 8,
   },
   {
     nftImage: nftCard,
@@ -73,6 +81,7 @@ export const NftListData = [
     dfinityValue: '21.12',
     nftId: '2713',
     lastOffer: '4.28',
+    id: 9,
   },
   {
     nftImage: nftCard,
@@ -81,5 +90,6 @@ export const NftListData = [
     dfinityValue: '21.12',
     nftId: '2713',
     lastOffer: '4.28',
+    id: 10,
   },
 ];

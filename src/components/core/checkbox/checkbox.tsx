@@ -1,3 +1,4 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { Wrapper } from './styles';
 
@@ -25,7 +26,9 @@ export const Checkbox = ({
     } else {
       // if it does, remove value from the array
       setSelectedFilters(
-        selectedFilters.filter((item) => item !== selectedFilterValue),
+        selectedFilters.filter(
+          (item) => item !== selectedFilterValue,
+        ),
       );
     }
   };
