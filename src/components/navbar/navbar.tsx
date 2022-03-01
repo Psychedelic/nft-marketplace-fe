@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { PlugButton, LinkButton, Tooltip } from '../core';
+import { LinkButton, Tooltip } from '../core';
 import { GlobalSearch } from '../search';
+import { Plug } from '../plug';
 import appLogo from '../../assets/app-logo.svg';
 import appName from '../../assets/app-name.svg';
 import appNameDark from '../../assets/app-name-dark.svg';
@@ -71,7 +72,7 @@ export const NavBar = ({
             />
           </LinkButton>
         </Tooltip>
-        <PlugButton />
+        <Plug />
       </ActionButtonsContainer>
     </Container>
   );

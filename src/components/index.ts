@@ -12,3 +12,4 @@ export * from './filters';
 export * from './items';
 export * from './nft-action-bar';
 export * from './nft-details';
+export * from './plug';

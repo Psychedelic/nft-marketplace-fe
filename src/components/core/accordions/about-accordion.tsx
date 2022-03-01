@@ -86,7 +86,7 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
     <AccordionStyle type="single" collapsible width="medium">
       <AccordionHead>
         {AccordionHeadContentData.map((data) => (
-          <AccordionHeadContent>
+          <AccordionHeadContent key={data.heading}>
             <img src={data.image} alt={data.heading} />
             <div>
               <span>{data.heading}</span>
@@ -129,7 +129,7 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
           </Description>
           <div>
             {AccordionContentMetaData.map((data) => (
-              <Flex>
+              <Flex key={data.title}>
                 <Subtext>{data.title}</Subtext>
                 <Subtext>{data.value}</Subtext>
               </Flex>
@@ -140,13 +140,11 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
               </LinkButton>
               &nbsp;
               {Buttons.map((button) => (
-                <>
-                  <LinkButton>
-                    <img src={button.image} alt={button.image} />
-                  </LinkButton>
-                  &nbsp;
-                </>
+                <LinkButton key={button.alt}>
+                  <img src={button.image} alt={button.image} />
+                </LinkButton>
               ))}
+              &nbsp;
             </ButtonWrapper>
           </div>
         </AccordionContent>
