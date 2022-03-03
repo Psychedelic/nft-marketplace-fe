@@ -73,6 +73,27 @@ export const Filters = ({
   const [displayFilter, setDisplayFilter] =
     useState<string>('allNfts');
 
+  // const selectFilter = (
+  //   displayFilterValue: string,
+  //   displayFilterName: string,
+  //   displayFilterCategory: string,
+  // ) => {
+  //   if (statusFilter === displayFilterValue) {
+  //     setStatusFilter('');
+  //   } else {
+  //     setDisplayFilter(displayFilterValue);
+  //     setSelectedFilters([
+  //       ...selectedFilters,
+  //       {
+  //         filterName: displayFilterName,
+  //         filterCategory: displayFilterCategory,
+  //       },
+  //     ]);
+  //     setDisplayChip(true);
+  //     console.log('selectedFilters', selectedFilters);
+  //   }
+  // };
+
   const closeFiltersIconTheme = theme === 'lightTheme' ? closeFiltersIcon : closeFiltersIconDark;
   const openFiltersIconTheme = theme === 'lightTheme' ? openFiltersIcon : openFiltersIconDark;
 
