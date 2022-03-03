@@ -41,11 +41,7 @@ export const NftCard = ({
           </OwnedCardText>
           <CardOptionsDropdown />
         </Flex>
-        {!displayVideo ? (
-          <Image>
-            <img src={data?.nftImage} alt="nft-card" />
-          </Image>
-        ) : (
+        {displayVideo ? (
           <Video
             loop
             autoPlay
@@ -59,6 +55,10 @@ export const NftCard = ({
               type="video/mp4"
             />
           </Video>
+        ) : (
+           <Image>
+            <img src={data?.nftImage} alt="nft-card" />
+           </Image>
         )}
         <Flex>
           <NftName>{data?.nftName}</NftName>
