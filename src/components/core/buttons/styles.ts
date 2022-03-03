@@ -76,7 +76,7 @@ export const LinkButtonStyles = styled('a', {
   variants: {
     type: {
       textBtn: {
-        padding: '12px',
+        padding: '8px 12px',
         width: 'initial',
         height: 'initial',
       },

@@ -30,14 +30,48 @@ import {
  * Filters Component
  * --------------------------------------------------------------------------*/
 
-export const Filters = () => {
+// add chip when filter is selected
+// unselect filter when chip is removed
+// should by default remove the chip from the screen
+
+export interface FiltersProps {
+  statusFilter: string;
+  setStatusFilter: (value: string) => void;
+  setDisplayChip: (value: boolean) => void;
+  selectedFilters: Array<{
+    filterName: string;
+    filterCategory: string;
+  }>;
+  setSelectedFilters: (
+    value: Array<{
+      filterName: string;
+      filterCategory: string;
+    }>,
+  ) => void;
+}
+
+export const Filters = ({
+  statusFilter,
+  setStatusFilter,
+  setDisplayChip,
+  selectedFilters,
+  setSelectedFilters,
+}: FiltersProps) => {
   const { t } = useTranslation();
+
+  const [theme, setTheme] = useState('lightTheme');
+
+  useEffect(() => {
+    const getTheme = localStorage.getItem('theme');
+    if (getTheme) {
+      setTheme(getTheme);
+    }
+  });
 
   const [filtersOpened, setFiltersOpened] = useState<boolean>(true);
   // eslint-disable-next-line
   const [displayFilter, setDisplayFilter] =
     useState<string>('allNfts');
-  const [statusFilter, setStatusFilter] = useState<string>('');
 
   const closeFiltersIconTheme = theme === 'lightTheme' ? closeFiltersIcon : closeFiltersIconDark;
   const openFiltersIconTheme = theme === 'lightTheme' ? openFiltersIcon : openFiltersIconDark;
@@ -51,7 +85,11 @@ export const Filters = () => {
           }}
         >
           <img
-            src={filtersOpened ? closeFiltersIconTheme : openFiltersIconTheme}
+            src={
+              filtersOpened
+                ? closeFiltersIconTheme
+                : openFiltersIconTheme
+            }
             alt="filter-icon"
           />
         </IconActionButton>
@@ -69,6 +107,7 @@ export const Filters = () => {
               >
                 Clear All
               </ClearButton>
+              {/* should remove all filters on click */}
             </Flex>
             <FilterSection>
               <FilterGroup>
@@ -83,7 +122,7 @@ export const Filters = () => {
                       }
                       text={t('translation:buttons.action.allNfts')}
                       handleClick={() => {
-                        setDisplayFilter('allNfts');
+                        setDisplayFilter('All Nfts');
                       }}
                     />
                   </FilterButtonWrapper>
@@ -101,6 +140,18 @@ export const Filters = () => {
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
                         setDisplayFilter('myNfts');
+                        setSelectedFilters([
+                          ...selectedFilters,
+                          {
+                            filterName: 'My Nfts',
+                            filterCategory: 'Display',
+                          },
+                        ]);
+                        setDisplayChip(true);
+                        console.log(
+                          'selectedFilters',
+                          selectedFilters,
+                        );
                       }}
                     />
                   </FilterButtonWrapper>
@@ -122,11 +173,22 @@ export const Filters = () => {
                           setStatusFilter('');
                         } else {
                           setStatusFilter('buyNow');
+                          setSelectedFilters([
+                            ...selectedFilters,
+                            {
+                              filterName: 'Buy Now',
+                              filterCategory: 'Status',
+                            },
+                          ]);
+                          setDisplayChip(true);
+                          console.log(
+                            'selectedFilters',
+                            selectedFilters,
+                          );
                         }
                       }}
                     />
                   </FilterButtonWrapper>
-
                   <Subtext margin="rightAndLeft" color="secondary">
                     or
                   </Subtext>
@@ -143,6 +205,18 @@ export const Filters = () => {
                           setStatusFilter('');
                         } else {
                           setStatusFilter('hasOffers');
+                          setSelectedFilters([
+                            ...selectedFilters,
+                            {
+                              filterName: 'Has Offers',
+                              filterCategory: 'Status',
+                            },
+                          ]);
+                          setDisplayChip(true);
+                          console.log(
+                            'selectedFilters',
+                            selectedFilters,
+                          );
                         }
                       }}
                     />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
@@ -15,7 +15,20 @@ import {
   ContentFlex,
 } from './styles';
 
-export const CollectionItems = () => {
+export interface CollectionItemsProps {
+  selectedFilters: Array<{
+    filterName: string;
+    filterCategory: string;
+  }>;
+  statusFilter: string;
+  displayChip: boolean;
+}
+
+export const CollectionItems = ({
+  selectedFilters,
+  statusFilter,
+  displayChip,
+}: CollectionItemsProps) => {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -68,22 +81,18 @@ export const CollectionItems = () => {
           </Flex>
           <Flex>
             <ContentFlex>
-              <FilteredTraitsChip
-                name="Red"
-                rim="Big Gem"
-                removeFilter={() => {
-                  // eslint-disable-next-line no-console
-                  console.log('callback');
-                }}
-              />
-              <FilteredTraitsChip
-                name="Psychedelic"
-                rim="Rim"
-                removeFilter={() => {
-                  // eslint-disable-next-line no-console
-                  console.log('callback');
-                }}
-              />
+              {/* Create state to control display for these chips */}
+              {/* We need an array to store the selected filters */}
+              {displayChip && selectedFilters.map((selectedFilter) => (
+                <FilteredTraitsChip
+                  name={`${selectedFilter.filterName}`}
+                  rim={`${selectedFilter.filterCategory}`}
+                  removeFilter={() => {
+                    // eslint-disable-next-line no-console
+                    console.log('callback');
+                  }}
+                />
+              ))}
             </ContentFlex>
           </Flex>
         </ContentWrapper>

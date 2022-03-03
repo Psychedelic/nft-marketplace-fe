@@ -16,6 +16,19 @@ export const CollectionTabs = () => {
   const { t } = useTranslation();
   const [currentTab, setCurrentTab] = useState('items');
   const [theme, setTheme] = useState('lightTheme');
+  const [statusFilter, setStatusFilter] = useState<string>('');
+  const [displayChip, setDisplayChip] = useState<boolean>(false);
+  /* We need an array to store the selected filters */
+  const [selectedFilters, setSelectedFilters] = useState<Array<object>>([
+    {
+      filterName: '',
+      filterCategory: '',
+    },
+  ]);
+
+  // state for active chips goes here
+  // based on their text content we'd have the filters to be displayed
+  // if empty we'll display nothing
 
   useEffect(() => {
     const getTheme = localStorage.getItem('theme');
@@ -74,8 +87,18 @@ export const CollectionTabs = () => {
             display: 'flex',
           }}
         >
-          <Filters />
-          <CollectionItems />
+          <Filters
+            statusFilter={statusFilter}
+            setStatusFilter={setStatusFilter}
+            selectedFilters={selectedFilters}
+            setSelectedFilters={setSelectedFilters}
+            setDisplayChip={setDisplayChip}
+          />
+          <CollectionItems
+            selectedFilters={selectedFilters}
+            statusFilter={statusFilter}
+            displayChip={displayChip}
+          />
         </div>
       </Tabs.Content>
       <Tabs.Content value="activity">
