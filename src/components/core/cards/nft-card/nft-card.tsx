@@ -20,6 +20,7 @@ export type NftCardProps = {
   forSaleAndOffer?: boolean;
   forSale?: boolean;
   data?;
+  displayVideo: boolean;
 };
 
 export const NftCard = ({
@@ -27,6 +28,7 @@ export const NftCard = ({
   notForSale,
   forSaleAndOffer,
   data,
+  displayVideo,
 }: NftCardProps) => {
   const { t } = useTranslation();
 
@@ -39,22 +41,25 @@ export const NftCard = ({
           </OwnedCardText>
           <CardOptionsDropdown />
         </Flex>
-        {/* <Image>
-          <img src={data?.nftImage} alt="nft-card" />
-        </Image> */}
-        <Video
-          loop
-          autoPlay
-          muted
-          preload="metadata"
-          controls={false}
-          poster="/assets/random-crown.png"
-        >
-          <source
-            src="https://vqcq7-gqaaa-aaaam-qaara-cai.raw.ic0.app/9791.mp4"
-            type="video/mp4"
-          />
-        </Video>
+        {!displayVideo ? (
+          <Image>
+            <img src={data?.nftImage} alt="nft-card" />
+          </Image>
+        ) : (
+          <Video
+            loop
+            autoPlay
+            muted
+            preload="metadata"
+            controls={false}
+            poster="/assets/random-crown.png"
+          >
+            <source
+              src="https://vqcq7-gqaaa-aaaam-qaara-cai.raw.ic0.app/9791.mp4"
+              type="video/mp4"
+            />
+          </Video>
+        )}
         <Flex>
           <NftName>{data?.nftName}</NftName>
           {notForSale ? (
