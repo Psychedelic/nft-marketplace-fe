@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNFTSFetcher } from '../../hooks';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import {
@@ -15,10 +16,12 @@ import {
   ContentFlex,
 } from './styles';
 
+import { useNFTSStore } from '../../store';
+
 export const CollectionItems = () => {
   const { t } = useTranslation();
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const { loadingNFTs, failedToLoadNFTSMessage } = useNFTSStore();
 
   const dropDownContent = [
     `${t('translation:dropdown.priceFilter.recentlyListed')}`,
@@ -28,12 +31,7 @@ export const CollectionItems = () => {
     `${t('translation:dropdown.priceFilter.highestLastSale')}`,
   ];
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
+  useNFTSFetcher();
 
   return (
     <Container>
@@ -87,7 +85,16 @@ export const CollectionItems = () => {
             </ContentFlex>
           </Flex>
         </ContentWrapper>
-        {loading ? <NftSkeletonList /> : <NftList />}
+        {loadingNFTs ? <NftSkeletonList /> : <NftList />}
+        {failedToLoadNFTSMessage && (
+          <p
+            style={{
+              color: 'red',
+            }}
+          >
+            {failedToLoadNFTSMessage}
+          </p>
+        )}
       </FilteredContainer>
     </Container>
   );

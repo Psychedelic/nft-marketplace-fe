@@ -1,12 +1,17 @@
 import React from 'react';
 import { NftCard } from '../core/cards/nft-card';
-import { NftListData } from '../mock-data/nft-list-data';
 import { ListWrapper } from './styles';
 
-export const NftList = () => (
-  <ListWrapper>
-    {NftListData.map((data) => (
-      <NftCard data={data} key={data.id} displayVideo />
-    ))}
-  </ListWrapper>
-);
+import { useNFTSStore } from '../../store';
+
+export const NftList = () => {
+  const { loadedNFTS } = useNFTSStore();
+
+  return (
+    <ListWrapper>
+      {loadedNFTS.map((nft) => (
+        <NftCard data={nft} key={nft.id} />
+      ))}
+    </ListWrapper>
+  );
+};
