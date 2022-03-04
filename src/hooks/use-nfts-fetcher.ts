@@ -69,5 +69,5 @@ export const useNFTSFetcher = () => {
         dispatch(nftsActions.setFailedToLoadNFTS(error.message));
       }
     })();
-  }, []);
+  }, [dispatch]);
 };
