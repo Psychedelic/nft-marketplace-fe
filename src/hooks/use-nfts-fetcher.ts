@@ -17,6 +17,8 @@ export const useNFTSFetcher = () => {
       try {
         const actor = await createActor();
         const allNFTS = await actor.totalSupplyDip721();
+
+        // TODO: update promises with token
         const promises = [
           ...new Array(JsonBigInt.parse(allNFTS)),
         ].map((_, index) => {
@@ -25,7 +27,7 @@ export const useNFTSFetcher = () => {
         });
         const fetchedNFTS = await Promise.allSettled(promises);
 
-        const extractedNFTList = fetchedNFTS.map((nft) => {
+        const extractedNFTSList = fetchedNFTS.map((nft) => {
           const { Ok } = nft.value;
           const metadataDesc = (Ok as MetadataDesc)?.pop();
           const traits = metadataDesc?.key_val_data.reduce(
@@ -43,21 +45,24 @@ export const useNFTSFetcher = () => {
 
           const metadata = {
             id: traits.location.split('/')[3].split('.')[0],
+            name: 'Cap Crowns',
             traits,
             rendered: (metadataDesc as any)?.purpose?.Rendered,
             preview: (metadataDesc as any)?.purpose?.Preview,
+            // TODO: update preview video URL
             location: `https://vzb3d-qyaaa-aaaam-qaaqq-cai.raw.ic0.app/${
               traits.location.split('/')[3].split('.')[0]
             }.mp4`,
           };
           return metadata;
         });
-        // eslint-disable-next-line no-console
-        console.log(extractedNFTList, 'extractedNFTList');
-        dispatch(nftsActions.setIsNFTSLoading(false));
+
+        // update store with loaded NFTS details
+        dispatch(nftsActions.setLoadedNFTS(extractedNFTSList));
       } catch (error) {
         // eslint-disable-next-line no-console
         console.warn(error);
+
         // set loading NFTS state to false on error
         dispatch(nftsActions.setIsNFTSLoading(false));
       }
