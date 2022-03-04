@@ -86,7 +86,15 @@ export const CollectionItems = () => {
           </Flex>
         </ContentWrapper>
         {loadingNFTs ? <NftSkeletonList /> : <NftList />}
-        {failedToLoadNFTSMessage && <p>{failedToLoadNFTSMessage}</p>}
+        {failedToLoadNFTSMessage && (
+          <p
+            style={{
+              color: 'red',
+            }}
+          >
+            {failedToLoadNFTSMessage}
+          </p>
+        )}
       </FilteredContainer>
     </Container>
   );
