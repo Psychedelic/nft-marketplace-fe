@@ -13,12 +13,15 @@ import {
   Image,
 } from './styles';
 
+import { NFTMetadata } from '../../../../declarations/nft';
+import wicpLogo from '../../../../assets/wicpIcon.png';
+
 export type NftCardProps = {
   owned?: boolean;
   notForSale?: boolean;
   forSaleAndOffer?: boolean;
   forSale?: boolean;
-  data?;
+  data: NFTMetadata;
 };
 
 export const NftCard = ({
@@ -39,22 +42,38 @@ export const NftCard = ({
           <CardOptionsDropdown />
         </Flex>
         <Image>
-          <img src={data?.nftImage} alt="nft-card" />
+          {data.preview ? (
+            <img src={data?.preview} alt="nft-card" />
+          ) : (
+            <video
+              data-icon-video
+              loop
+              autoPlay
+              muted
+              style={{
+                width: '100%',
+                minHeight: '125px',
+                borderRadius: '14px',
+              }}
+            >
+              <source src={data.location} type="video/mp4" />
+            </video>
+          )}
         </Image>
         <Flex>
-          <NftName>{data?.nftName}</NftName>
+          <NftName>{data?.name}</NftName>
           {notForSale ? (
             ''
           ) : (
             <Dfinity>
-              {data?.dfinityValue}
-              <img src={data?.dfintiyIcon} alt="" />
+              {data?.price}
+              <img src={wicpLogo} alt="" />
             </Dfinity>
           )}
         </Flex>
 
         <Flex>
-          <NftId>{data?.nftId}</NftId>
+          <NftId>{data?.id}</NftId>
           {notForSale ? (
             ''
           ) : (

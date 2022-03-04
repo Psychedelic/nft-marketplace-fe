@@ -63,6 +63,7 @@ export const Dfinity = styled('p', {
 
   '& img': {
     marginLeft: '3px',
+    width: '15px',
   },
 });
 
