@@ -1,15 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
+import { NFTMetadata } from '../../../declarations/nft';
 
 // Define a type for the slice state
 interface NFTSState {
   loadingNFTs: boolean;
+  loadedNFTS: NFTMetadata[];
 }
 
 // Define the initial state using that type
 const initialState: NFTSState = {
   loadingNFTs: false,
+  loadedNFTS: [],
 };
 
 export const nftsSlice = createSlice({
@@ -19,6 +22,10 @@ export const nftsSlice = createSlice({
   reducers: {
     setIsNFTSLoading: (state, action: PayloadAction<boolean>) => {
       state.loadingNFTs = action.payload;
+    },
+    setLoadedNFTS: (state, action: PayloadAction<NFTMetadata[]>) => {
+      state.loadedNFTS = action.payload;
+      state.loadingNFTs = false;
     },
   },
 });

@@ -46,6 +46,14 @@ export type MetadataContainer =
   | { data: Array<MetadataValue> }
   | { json: string };
 export type MetadataDesc = Array<MetadataPart>;
+export type NFTMetadata = {
+  id: string;
+  name: string;
+  traits: Record<string, any>;
+  rendered: boolean;
+  preview: string;
+  location: string;
+};
 export interface MetadataKeyVal {
   key: string;
   val: MetadataVal;
