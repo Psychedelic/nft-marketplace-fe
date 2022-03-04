@@ -16,10 +16,12 @@ import {
   ContentFlex,
 } from './styles';
 
+import { useNFTSStore } from '../../store';
+
 export const CollectionItems = () => {
   const { t } = useTranslation();
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const { loadingNFTs } = useNFTSStore();
 
   const dropDownContent = [
     `${t('translation:dropdown.priceFilter.recentlyListed')}`,
@@ -30,13 +32,6 @@ export const CollectionItems = () => {
   ];
 
   useNFTSFetcher();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <Container>
@@ -90,7 +85,7 @@ export const CollectionItems = () => {
             </ContentFlex>
           </Flex>
         </ContentWrapper>
-        {loading ? <NftSkeletonList /> : <NftList />}
+        {loadingNFTs ? <NftSkeletonList /> : <NftList />}
       </FilteredContainer>
     </Container>
   );
