@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNFTSFetcher } from '../../hooks';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import {
@@ -27,6 +28,8 @@ export const CollectionItems = () => {
     `${t('translation:dropdown.priceFilter.highToHigh')}`,
     `${t('translation:dropdown.priceFilter.highestLastSale')}`,
   ];
+
+  useNFTSFetcher();
 
   useEffect(() => {
     const timer = setTimeout(() => {
