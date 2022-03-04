@@ -4,7 +4,7 @@ import { Secp256k1KeyIdentity } from '@dfinity/identity';
 import nftIdlFactory from '../../declarations/nft.did';
 import NFTIdlService from '../../declarations/nft';
 
-export const actor = async () => {
+export const createActor = async () => {
   const httpAgent = new HttpAgent({
     host: 'http://127.0.0.1:8000',
     fetch,
@@ -22,9 +22,11 @@ export const actor = async () => {
     try {
       await agent.fetchRootKey();
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.warn(
         'Oops! Unable to fetch root key, is the local replica running?',
       );
+      // eslint-disable-next-line no-console
       console.error(err);
     }
   }
