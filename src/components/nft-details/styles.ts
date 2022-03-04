@@ -14,6 +14,16 @@ export const PreviewContainer = styled('div', {
   flexDirection: 'column',
 });
 
+export const Video = styled('video', {
+  width: '100%',
+  height: 'auto',
+  borderRadius: '14px',
+  maxWidth: '100%',
+  maxHeight: '100%',
+  minHeight: '125px',
+  marginBottom: '10px',
+});
+
 export const NFTPreview = styled('img', {
   width: '100%',
   maxWidth: '480px',

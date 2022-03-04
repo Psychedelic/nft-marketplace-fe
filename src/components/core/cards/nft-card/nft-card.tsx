@@ -11,6 +11,7 @@ import {
   LastOffer,
   Dfinity,
   Image,
+  Video,
 } from './styles';
 
 import { NFTMetadata } from '../../../../declarations/nft';
@@ -22,6 +23,7 @@ export type NftCardProps = {
   forSaleAndOffer?: boolean;
   forSale?: boolean;
   data: NFTMetadata;
+  displayVideo?: boolean;
 };
 
 export const NftCard = ({
@@ -29,6 +31,7 @@ export const NftCard = ({
   notForSale,
   forSaleAndOffer,
   data,
+  displayVideo,
 }: NftCardProps) => {
   const { t } = useTranslation();
 
@@ -42,7 +45,7 @@ export const NftCard = ({
           <CardOptionsDropdown />
         </Flex>
         <Image>
-          {data.preview ? (
+          {data.preview && !displayVideo ? (
             <img src={data?.preview} alt="nft-card" />
           ) : (
             <video
