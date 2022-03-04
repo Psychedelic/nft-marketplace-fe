@@ -3,10 +3,11 @@ import { Actor, HttpAgent } from '@dfinity/agent';
 import { Secp256k1KeyIdentity } from '@dfinity/identity';
 import nftIdlFactory from '../../declarations/nft.did';
 import NFTIdlService from '../../declarations/nft';
+import config from '../../config/env';
 
 export const createActor = async () => {
   const httpAgent = new HttpAgent({
-    host: 'http://127.0.0.1:8000',
+    host: config.host,
     fetch,
   });
   const identity = Secp256k1KeyIdentity.generate();
@@ -34,7 +35,7 @@ export const createActor = async () => {
   // Creates an actor by using NFTIdlService, nftIdlFactory and the HttpAgent
   return Actor.createActor<NFTIdlService>(nftIdlFactory, {
     // Change to the actual nft canister id
-    canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
+    canisterId: config.canisterId,
     agent,
   });
 };
