@@ -65,8 +65,8 @@ export const useNFTSFetcher = () => {
         // eslint-disable-next-line no-console
         console.warn(error);
 
-        // set loading NFTS state to false on error
-        dispatch(nftsActions.setIsNFTSLoading(false));
+        // set NFTS failed to load
+        dispatch(nftsActions.setFailedToLoadNFTS(error.message));
       }
     })();
   }, []);
