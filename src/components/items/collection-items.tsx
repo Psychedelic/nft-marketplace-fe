@@ -21,7 +21,7 @@ import { useNFTSStore } from '../../store';
 export const CollectionItems = () => {
   const { t } = useTranslation();
 
-  const { loadingNFTs } = useNFTSStore();
+  const { loadingNFTs, failedToLoadNFTSMessage } = useNFTSStore();
 
   const dropDownContent = [
     `${t('translation:dropdown.priceFilter.recentlyListed')}`,
@@ -86,6 +86,7 @@ export const CollectionItems = () => {
           </Flex>
         </ContentWrapper>
         {loadingNFTs ? <NftSkeletonList /> : <NftList />}
+        {failedToLoadNFTSMessage && <p>{failedToLoadNFTSMessage}</p>}
       </FilteredContainer>
     </Container>
   );

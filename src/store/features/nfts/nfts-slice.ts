@@ -7,12 +7,16 @@ import { NFTMetadata } from '../../../declarations/nft';
 interface NFTSState {
   loadingNFTs: boolean;
   loadedNFTS: NFTMetadata[];
+  failedToLoadNFTS: boolean;
+  failedToLoadNFTSMessage: string;
 }
 
 // Define the initial state using that type
 const initialState: NFTSState = {
   loadingNFTs: false,
   loadedNFTS: [],
+  failedToLoadNFTS: false,
+  failedToLoadNFTSMessage: '',
 };
 
 export const nftsSlice = createSlice({
@@ -22,9 +26,18 @@ export const nftsSlice = createSlice({
   reducers: {
     setIsNFTSLoading: (state, action: PayloadAction<boolean>) => {
       state.loadingNFTs = action.payload;
+      if (state.failedToLoadNFTS) {
+        state.failedToLoadNFTS = false;
+        state.failedToLoadNFTSMessage = '';
+      }
     },
     setLoadedNFTS: (state, action: PayloadAction<NFTMetadata[]>) => {
       state.loadedNFTS = action.payload;
+      state.loadingNFTs = false;
+    },
+    setFailedToLoadNFTS: (state, action: PayloadAction<string>) => {
+      state.failedToLoadNFTSMessage = action.payload;
+      state.failedToLoadNFTS = true;
       state.loadingNFTs = false;
     },
   },
