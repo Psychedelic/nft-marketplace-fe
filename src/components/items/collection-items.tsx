@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  useFilterStore,
+  filterActions,
+  useAppDispatch,
+} from '../../store';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import {
@@ -15,21 +20,10 @@ import {
   ContentFlex,
 } from './styles';
 
-export interface CollectionItemsProps {
-  selectedFilters: Array<{
-    filterName: string;
-    filterCategory: string;
-  }>;
-  statusFilter: string;
-  displayChip: boolean;
-}
-
-export const CollectionItems = ({
-  selectedFilters,
-  statusFilter,
-  displayChip,
-}: CollectionItemsProps) => {
+export const CollectionItems = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const appliedFilters = useFilterStore();
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -83,13 +77,17 @@ export const CollectionItems = ({
             <ContentFlex>
               {/* Create state to control display for these chips */}
               {/* We need an array to store the selected filters */}
-              {displayChip && selectedFilters.map((selectedFilter) => (
+              {appliedFilters.map((appliedFilter) => (
                 <FilteredTraitsChip
-                  name={`${selectedFilter.filterName}`}
-                  rim={`${selectedFilter.filterCategory}`}
+                  name={`${appliedFilter.filterName}`}
+                  rim={`${appliedFilter.filterCategory}`}
                   removeFilter={() => {
                     // eslint-disable-next-line no-console
-                    console.log('callback');
+                    dispatch(
+                      filterActions.removeFilter(
+                        appliedFilter.filterName,
+                      ),
+                    );
                   }}
                 />
               ))}

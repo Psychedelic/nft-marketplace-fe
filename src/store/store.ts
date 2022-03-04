@@ -2,10 +2,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import plugReducer from './features/plug/plug-slice';
+import filterReducer from './features/filters/filter-slice';
 
 export const store = configureStore({
   reducer: {
     plug: plugReducer,
+    filter: filterReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

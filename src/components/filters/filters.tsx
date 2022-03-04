@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  useFilterStore,
+  filterActions,
+  useAppDispatch,
+} from '../../store';
+import {
   ActionButton,
   CheckboxFilterAccordion,
   FilterInput,
@@ -30,34 +35,18 @@ import {
  * Filters Component
  * --------------------------------------------------------------------------*/
 
-// add chip when filter is selected
-// unselect filter when chip is removed
-// should by default remove the chip from the screen
+// check if category has been selected with different filter name = update filter name
+// check if category and filter name has been selected = removed chip
 
-export interface FiltersProps {
-  statusFilter: string;
-  setStatusFilter: (value: string) => void;
-  setDisplayChip: (value: boolean) => void;
-  selectedFilters: Array<{
-    filterName: string;
-    filterCategory: string;
-  }>;
-  setSelectedFilters: (
-    value: Array<{
-      filterName: string;
-      filterCategory: string;
-    }>,
-  ) => void;
-}
-
-export const Filters = ({
-  statusFilter,
-  setStatusFilter,
-  setDisplayChip,
-  selectedFilters,
-  setSelectedFilters,
-}: FiltersProps) => {
+export const Filters = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const appliedFilters = useFilterStore();
+  const [statusFilter, setStatusFilter] = useState<string>('');
+  const [filtersOpened, setFiltersOpened] = useState<boolean>(true);
+  // eslint-disable-next-line
+  const [displayFilter, setDisplayFilter] =
+    useState<string>('All Nfts');
 
   const [theme, setTheme] = useState('lightTheme');
 
@@ -68,34 +57,52 @@ export const Filters = ({
     }
   });
 
-  const [filtersOpened, setFiltersOpened] = useState<boolean>(true);
-  // eslint-disable-next-line
-  const [displayFilter, setDisplayFilter] =
-    useState<string>('allNfts');
-
-  // const selectFilter = (
-  //   displayFilterValue: string,
-  //   displayFilterName: string,
-  //   displayFilterCategory: string,
-  // ) => {
-  //   if (statusFilter === displayFilterValue) {
-  //     setStatusFilter('');
-  //   } else {
-  //     setDisplayFilter(displayFilterValue);
-  //     setSelectedFilters([
-  //       ...selectedFilters,
-  //       {
-  //         filterName: displayFilterName,
-  //         filterCategory: displayFilterCategory,
-  //       },
-  //     ]);
-  //     setDisplayChip(true);
-  //     console.log('selectedFilters', selectedFilters);
-  //   }
-  // };
-
   const closeFiltersIconTheme = theme === 'lightTheme' ? closeFiltersIcon : closeFiltersIconDark;
   const openFiltersIconTheme = theme === 'lightTheme' ? openFiltersIcon : openFiltersIconDark;
+
+  const applyFilter = (
+    filterCategory: string,
+    filterName: string,
+  ) => {
+    const filterCategoryExists = appliedFilters.some(
+      (appliedFilter) => appliedFilter.filterCategory === filterCategory,
+    );
+
+    const filterNameExists = appliedFilters.some(
+      (appliedFilter) => appliedFilter.filterName === filterName,
+    );
+
+    switch (true) {
+      case filterCategoryExists && filterNameExists:
+        dispatch(filterActions.removeFilter(filterName));
+        console.log('this filter has already been applied');
+        break;
+      case filterCategoryExists && !filterNameExists:
+        // eslint-disable-next-line
+        filterCategory === 'Status' && setStatusFilter(filterName);
+        // eslint-disable-next-line
+        filterCategory === 'Display' && setDisplayFilter(filterName);
+        dispatch(
+          filterActions.updateFilter({
+            filterCategory,
+            filterName,
+          }),
+        );
+        break;
+      default:
+        // eslint-disable-next-line
+        filterCategory === 'Status' && setStatusFilter(filterName);
+        // eslint-disable-next-line
+        filterCategory === 'Display' && setDisplayFilter(filterName);
+        dispatch(
+          filterActions.applyFilter({
+            filterName,
+            filterCategory,
+          }),
+        );
+        break;
+    }
+  };
 
   return (
     <Container>
@@ -123,7 +130,7 @@ export const Filters = ({
               <ClearButton
                 onClick={() => {
                   setStatusFilter('');
-                  setDisplayFilter('allNfts');
+                  setDisplayFilter('All Nfts');
                 }}
               >
                 Clear All
@@ -137,7 +144,7 @@ export const Filters = ({
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        displayFilter === 'allNfts'
+                        displayFilter === 'All Nfts'
                           ? 'outline'
                           : 'secondary'
                       }
@@ -147,32 +154,21 @@ export const Filters = ({
                       }}
                     />
                   </FilterButtonWrapper>
-
                   <Subtext margin="rightAndLeft" color="secondary">
                     or
                   </Subtext>
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        displayFilter === 'myNfts'
+                        displayFilter === 'My Nfts'
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
-                        setDisplayFilter('myNfts');
-                        setSelectedFilters([
-                          ...selectedFilters,
-                          {
-                            filterName: 'My Nfts',
-                            filterCategory: 'Display',
-                          },
-                        ]);
-                        setDisplayChip(true);
-                        console.log(
-                          'selectedFilters',
-                          selectedFilters,
-                        );
+                        // eslint-disable-next-line
+                        displayFilter !== '' && setDisplayFilter('');
+                        applyFilter('Display', 'My Nfts');
                       }}
                     />
                   </FilterButtonWrapper>
@@ -184,29 +180,15 @@ export const Filters = ({
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        statusFilter === 'buyNow'
+                        statusFilter === 'Buy Now'
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.buyNow')}
                       handleClick={() => {
-                        if (statusFilter === 'buyNow') {
-                          setStatusFilter('');
-                        } else {
-                          setStatusFilter('buyNow');
-                          setSelectedFilters([
-                            ...selectedFilters,
-                            {
-                              filterName: 'Buy Now',
-                              filterCategory: 'Status',
-                            },
-                          ]);
-                          setDisplayChip(true);
-                          console.log(
-                            'selectedFilters',
-                            selectedFilters,
-                          );
-                        }
+                        // eslint-disable-next-line
+                        statusFilter !== '' && setStatusFilter('');
+                        applyFilter('Status', 'Buy Now');
                       }}
                     />
                   </FilterButtonWrapper>
@@ -216,29 +198,15 @@ export const Filters = ({
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        statusFilter === 'hasOffers'
+                        statusFilter === 'Has Offers'
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.hasOffers')}
                       handleClick={() => {
-                        if (statusFilter === 'hasOffers') {
-                          setStatusFilter('');
-                        } else {
-                          setStatusFilter('hasOffers');
-                          setSelectedFilters([
-                            ...selectedFilters,
-                            {
-                              filterName: 'Has Offers',
-                              filterCategory: 'Status',
-                            },
-                          ]);
-                          setDisplayChip(true);
-                          console.log(
-                            'selectedFilters',
-                            selectedFilters,
-                          );
-                        }
+                        // eslint-disable-next-line
+                        statusFilter !== '' && setStatusFilter('');
+                        applyFilter('Status', 'Has Offers');
                       }}
                     />
                   </FilterButtonWrapper>
