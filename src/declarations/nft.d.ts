@@ -53,6 +53,8 @@ export type NFTMetadata = {
   rendered: boolean;
   preview: string;
   location: string;
+  price: string;
+  lastOffer: string;
 };
 export interface MetadataKeyVal {
   key: string;

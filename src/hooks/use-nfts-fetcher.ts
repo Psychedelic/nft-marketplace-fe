@@ -44,12 +44,14 @@ export const useNFTSFetcher = () => {
           );
 
           const metadata = {
+            // TODO: update preview video URL, id, name, price
             id: traits.location.split('/')[3].split('.')[0],
             name: 'Cap Crowns',
+            price: '5$',
+            lastOffer: '5$',
             traits,
             rendered: (metadataDesc as any)?.purpose?.Rendered,
             preview: (metadataDesc as any)?.purpose?.Preview,
-            // TODO: update preview video URL
             location: `https://vzb3d-qyaaa-aaaam-qaaqq-cai.raw.ic0.app/${
               traits.location.split('/')[3].split('.')[0]
             }.mp4`,
