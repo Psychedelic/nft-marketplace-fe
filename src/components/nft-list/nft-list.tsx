@@ -6,7 +6,7 @@ import { ListWrapper } from './styles';
 export const NftList = () => (
   <ListWrapper>
     {NftListData.map((data) => (
-      <NftCard data={data} key={data.id} />
+      <NftCard data={data} key={data.id} displayVideo />
     ))}
   </ListWrapper>
 );

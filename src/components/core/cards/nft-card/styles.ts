@@ -29,6 +29,16 @@ export const Image = styled('div', {
   },
 });
 
+export const Video = styled('video', {
+  width: '100%',
+  height: 'auto',
+  borderRadius: '14px',
+  maxWidth: '100%',
+  maxHeight: '100%',
+  minHeight: '125px',
+  marginBottom: '10px',
+});
+
 export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
