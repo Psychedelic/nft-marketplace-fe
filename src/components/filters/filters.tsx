@@ -144,6 +144,7 @@ export const Filters = () => {
                       text={t('translation:buttons.action.allNfts')}
                       handleClick={() => {
                         setDisplayFilter('All Nfts');
+                        dispatch(filterActions.removeFilter('My Nfts'));
                       }}
                     />
                   </FilterButtonWrapper>

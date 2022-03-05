@@ -9,7 +9,7 @@ export interface ThemeState {
 const getTheme = localStorage.getItem('theme');
 
 const initialState: ThemeState = {
-  theme: getTheme ? 'lightTheme' : getTheme,
+  theme: !getTheme ? 'lightTheme' : getTheme,
 };
 
 console.log(getTheme);
@@ -20,7 +20,6 @@ export const themeSlice = createSlice({
   reducers: {
     setTheme: (state, action: PayloadAction<string>) => {
       state.theme = action.payload;
-      console.log(action.payload);
       localStorage.setItem('theme', action.payload);
     },
   },
