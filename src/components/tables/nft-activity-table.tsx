@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useThemeStore } from '../../store';
 import {
   TypeDetailsCell,
   PriceDetailsCell,
@@ -18,12 +19,9 @@ export interface rowProps {
   expiration: string;
 }
 
-export interface nftActivityTableProps {
-  theme: string;
-}
-
-export const NFTActivityTable = ({ theme }: nftActivityTableProps) => {
+export const NFTActivityTable = () => {
   const { t } = useTranslation();
+  const { theme } = useThemeStore();
 
   const columns = useMemo(
     () => [

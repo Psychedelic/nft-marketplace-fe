@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  useThemeStore,
+} from '../../store';
 import { LinkButton, Tooltip } from '../core';
 import {
   NftMetadataWrapper,
@@ -24,14 +27,7 @@ import backDark from '../../assets/buttons/back-dark.svg';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
-  const [theme, setTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
+  const { theme } = useThemeStore();
 
   return (
     <NftMetadataWrapper>

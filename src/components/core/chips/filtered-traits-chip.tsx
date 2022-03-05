@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  useThemeStore,
+} from '../../../store';
 import closeIcon from '../../../assets/closeIcon.svg';
 import closeIconDark from '../../../assets/closeIcon-dark.svg';
 import {
@@ -23,14 +26,7 @@ export const FilteredTraitsChip = ({
   removeFilter,
 }: FilteredTraitsChipProps) => {
   const { t } = useTranslation();
-  const [theme, setTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
+  const { theme } = useThemeStore();
 
   return (
     <TraitChipContainer type="filtered">

@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
+import {
+  useThemeStore,
+} from '../../../store';
 import { LinkButton } from '../buttons';
 import { AccordionContentMetaData } from '../../mock-data/accordion-data';
 import {
@@ -37,14 +40,7 @@ export type AboutAccordionProps = {
 export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-  const [theme, setTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
+  const { theme } = useThemeStore();
 
   const arrowdownTheme = theme === 'lightTheme' ? arrowdown : arrowdownDark;
   const arrowupTheme = theme === 'lightTheme' ? arrowup : arrowupDark;

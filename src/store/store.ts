@@ -3,11 +3,13 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import plugReducer from './features/plug/plug-slice';
 import filterReducer from './features/filters/filter-slice';
+import themeReducer from './features/theme/theme-slice';
 
 export const store = configureStore({
   reducer: {
     plug: plugReducer,
     filter: filterReducer,
+    theme: themeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

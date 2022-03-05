@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
+  useThemeStore,
   filterActions,
   useAppDispatch,
 } from '../../store';
@@ -42,20 +43,12 @@ export const Filters = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
+  const { theme } = useThemeStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
   const [filtersOpened, setFiltersOpened] = useState<boolean>(true);
   // eslint-disable-next-line
   const [displayFilter, setDisplayFilter] =
     useState<string>('All Nfts');
-
-  const [theme, setTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
 
   const closeFiltersIconTheme = theme === 'lightTheme' ? closeFiltersIcon : closeFiltersIconDark;
   const openFiltersIconTheme = theme === 'lightTheme' ? openFiltersIcon : openFiltersIconDark;

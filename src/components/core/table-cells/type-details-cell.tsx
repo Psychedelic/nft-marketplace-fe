@@ -14,7 +14,7 @@ export interface TypeDetailsCellProps {
   type?: string;
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   tableType: any;
-  theme: string;
+  theme: string | null;
 }
 
 export const TypeDetailsCell = ({

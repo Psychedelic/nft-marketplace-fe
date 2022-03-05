@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  useThemeStore,
+} from '../../store';
 import { LinkButton, Tooltip } from '../core';
 
 import {
@@ -13,14 +16,7 @@ import verified from '../../assets/verified-small.svg';
 
 export const NFTMetaData = () => {
   const { t } = useTranslation();
-  const [theme, setTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
+  const { theme } = useThemeStore();
 
   return (
     <CollectionMetadataWrapper>

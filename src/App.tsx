@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  useThemeStore,
+} from './store';
 import { darkTheme, theme as defaultTheme } from './stitches.config';
 import { NavBar } from './components';
 import CollectionView from './views/CollectionView';
@@ -8,25 +11,17 @@ import DevelopedComponents from './views/DevelopedComponents';
 
 // eslint-disable-next-line
 const App = () => {
-  const [currentTheme, setCurrentTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setCurrentTheme(getTheme);
-    }
-  });
+  const { theme } = useThemeStore();
 
   return (
     <div
       className={
-        currentTheme === 'darkTheme' ? darkTheme : defaultTheme
+        theme === 'darkTheme' ? darkTheme : defaultTheme
       }
     >
       <BrowserRouter>
         <NavBar
-          setCurrentTheme={setCurrentTheme}
-          currentTheme={currentTheme}
+          currentTheme={theme}
         />
         <Routes>
           <Route path="/" element={<CollectionView />} />

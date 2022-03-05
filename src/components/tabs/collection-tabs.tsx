@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Tabs from '@radix-ui/react-tabs';
+import {
+  useThemeStore,
+} from '../../store';
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
 import { TabsRoot, TabsTrigger, TabsList } from './styles';
@@ -15,18 +18,11 @@ import { Filters } from '../filters';
 export const CollectionTabs = () => {
   const { t } = useTranslation();
   const [currentTab, setCurrentTab] = useState('items');
-  const [theme, setTheme] = useState('lightTheme');
+  const { theme } = useThemeStore();
 
   // state for active chips goes here
   // based on their text content we'd have the filters to be displayed
   // if empty we'll display nothing
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
 
   const itemIsActive = currentTab === 'items' ? 'active' : 'inactive';
   // eslint-disable-next-line
@@ -83,7 +79,7 @@ export const CollectionTabs = () => {
         </div>
       </Tabs.Content>
       <Tabs.Content value="activity">
-        <ActivityTable theme={theme} />
+        <ActivityTable />
       </Tabs.Content>
     </TabsRoot>
   );
