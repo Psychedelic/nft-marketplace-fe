@@ -117,3 +117,8 @@ export const TraitClear = styled('img', {
     cursor: 'pointer',
   },
 });
+
+export const Image = styled('img', {
+  width: '20px',
+  marginRight: '10px',
+});

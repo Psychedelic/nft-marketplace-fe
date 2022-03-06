@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
 
 export interface FilterState {
-  filterName: string;
+  filterName: any;
   filterCategory: string;
 }
 
@@ -21,6 +21,7 @@ export const filterSlice = createSlice({
       state[filterIndex].filterName = action.payload.filterName;
     },
     removeFilter: (state, action: PayloadAction<string>) => state.filter((appliedFilter) => appliedFilter.filterName !== action.payload),
+    removePriceFilter: (state, action: PayloadAction<string>) => state.filter((appliedFilter) => appliedFilter.filterCategory !== action.payload),
   },
 });
 

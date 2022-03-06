@@ -5,6 +5,7 @@ import {
 } from '../../../store';
 import closeIcon from '../../../assets/closeIcon.svg';
 import closeIconDark from '../../../assets/closeIcon-dark.svg';
+import miniDfinity from '../../../assets/mini-dfinity.svg';
 import {
   TraitChipContainer,
   TraitSpecsContainer,
@@ -12,17 +13,20 @@ import {
   TraitRim,
   TraitActionContainer,
   TraitClear,
+  Image,
 } from './styles';
 
 export interface FilteredTraitsChipProps {
   name?: string;
   rim?: string;
+  appliedFilterValue: object;
   removeFilter: () => void;
 }
 
 export const FilteredTraitsChip = ({
   name,
   rim,
+  appliedFilterValue,
   removeFilter,
 }: FilteredTraitsChipProps) => {
   const { t } = useTranslation();
@@ -30,6 +34,7 @@ export const FilteredTraitsChip = ({
 
   return (
     <TraitChipContainer type="filtered">
+      {appliedFilterValue.filterCategory === 'Price Range' && <Image src={miniDfinity} alt="mini-dfinity" />}
       <TraitSpecsContainer>
         <TraitName>{name}</TraitName>
         <TraitRim>{rim}</TraitRim>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
@@ -46,6 +46,11 @@ export const Filters = () => {
   const { theme } = useThemeStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
   const [filtersOpened, setFiltersOpened] = useState<boolean>(true);
+  const [priceFilterValue, setPriceFilterValue] = useState<object>({
+    min: 0,
+    max: 0,
+  });
+  const [displayButton, setDisplayButton] = useState<boolean>(false);
   // eslint-disable-next-line
   const [displayFilter, setDisplayFilter] =
     useState<string>('All Nfts');
@@ -55,7 +60,7 @@ export const Filters = () => {
 
   const applyFilter = (
     filterCategory: string,
-    filterName: string,
+    filterName: any,
   ) => {
     const filterCategoryExists = appliedFilters.some(
       (appliedFilter) => appliedFilter.filterCategory === filterCategory,
@@ -94,6 +99,14 @@ export const Filters = () => {
           }),
         );
         break;
+    }
+  };
+
+  const applyPriceFilter = () => {
+    if (priceFilterValue.min.length && priceFilterValue.max.length) {
+      setDisplayButton(true);
+    } else {
+      setDisplayButton(false);
     }
   };
 
@@ -213,22 +226,48 @@ export const Filters = () => {
                     placeholder={t(
                       'translation:inputField.placeholder.priceMin',
                     )}
+                    setValue={(value) => {
+                      setPriceFilterValue({
+                        ...priceFilterValue,
+                        min: value,
+                      });
+                      applyPriceFilter();
+                    }}
                   />
                   <Subtext margin="rightAndLeft" color="secondary">
-                    or
+                    to
                   </Subtext>
                   <FilterInput
                     placeholder={t(
                       'translation:inputField.placeholder.priceMax',
                     )}
+                    setValue={(value) => {
+                      setPriceFilterValue({
+                        ...priceFilterValue,
+                        max: value,
+                      });
+                      applyPriceFilter();
+                    }}
                   />
                 </Flex>
+                <br />
+                {displayButton
+                && (
+                  <ActionButton
+                    type="secondary"
+                    text="Apply"
+                    handleClick={() => applyFilter('Price Range', priceFilterValue)}
+                  />
+                )}
               </FilterGroup>
             </FilterSection>
             <Heading>Traits</Heading>
             <FilterSection>
               <CheckboxFilters>
                 <CheckboxFilterAccordion
+                // we need the type of gem it is
+                // we need the values selected
+                // call apply filter
                   title={`${t(
                     'translation:accordions.checkbox.smallGem.smallGem',
                   )}`}

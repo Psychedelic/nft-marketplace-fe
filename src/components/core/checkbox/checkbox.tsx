@@ -1,5 +1,6 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useState } from 'react';
+import { useFilterStore } from '../../../store';
 import { Wrapper } from './styles';
 
 export type CheckboxProps = {
@@ -15,6 +16,8 @@ export const Checkbox = ({
   selectedFilters,
   setSelectedFilters,
 }: CheckboxProps) => {
+  const appliedFilters = useFilterStore();
+
   const handleSelectedFilters = (e: any) => {
     // sets value
     const selectedFilterValue = e.target.value;
@@ -43,7 +46,11 @@ export const Checkbox = ({
           value={value}
           onClick={handleSelectedFilters}
           // checks if value exists in array and sets checked to true
-          checked={selectedFilters.includes(value) && true}
+          checked={
+            appliedFilters.some(
+              (appliedFilter) => appliedFilter.filterName === value,
+            ) && true
+          }
         />
         {value}
       </label>

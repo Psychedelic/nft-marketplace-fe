@@ -24,7 +24,6 @@ export const CollectionItems = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
-
   const [loading, setLoading] = useState<boolean>(true);
 
   const dropDownContent = [
@@ -41,6 +40,23 @@ export const CollectionItems = () => {
     }, 800);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleRemoveFilter = (appliedFilter: object) => {
+    // eslint-disable-next-line no-console
+    if (appliedFilter.filterCategory === 'Price Range') {
+      dispatch(
+        filterActions.removePriceFilter(
+          appliedFilter.filterCategory,
+        ),
+      );
+    } else {
+      dispatch(
+        filterActions.removeFilter(
+          appliedFilter.filterName,
+        ),
+      );
+    }
+  };
 
   return (
     <Container>
@@ -79,16 +95,10 @@ export const CollectionItems = () => {
               {/* We need an array to store the selected filters */}
               {appliedFilters.map((appliedFilter) => (
                 <FilteredTraitsChip
-                  name={`${appliedFilter.filterName}`}
+                  name={appliedFilter.filterCategory !== 'Price Range' ? appliedFilter.filterName : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`}
                   rim={`${appliedFilter.filterCategory}`}
-                  removeFilter={() => {
-                    // eslint-disable-next-line no-console
-                    dispatch(
-                      filterActions.removeFilter(
-                        appliedFilter.filterName,
-                      ),
-                    );
-                  }}
+                  appliedFilterValue={appliedFilter}
+                  removeFilter={() => handleRemoveFilter(appliedFilter)}
                 />
               ))}
             </ContentFlex>
