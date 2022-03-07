@@ -36,7 +36,7 @@ export const NftCard = ({
   const { t } = useTranslation();
 
   return (
-    <RouterLink to="/nft/2713">
+    <RouterLink to={`/nft/${data.id}`}>
       <CardWrapper>
         <Flex>
           <OwnedCardText>

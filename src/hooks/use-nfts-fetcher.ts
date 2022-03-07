@@ -26,8 +26,9 @@ export const useNFTSFetcher = () => {
           return actor.getMetadataDip721(tokenId);
         });
         const fetchedNFTS = await Promise.allSettled(promises);
+        const nftsCount = 999;
 
-        const extractedNFTSList = fetchedNFTS.map((nft) => {
+        const extractedNFTSList = fetchedNFTS.map((nft, index) => {
           const { Ok } = nft.value;
           const metadataDesc = (Ok as MetadataDesc)?.pop();
           const traits = metadataDesc?.key_val_data.reduce(
@@ -45,15 +46,15 @@ export const useNFTSFetcher = () => {
 
           const metadata = {
             // TODO: update preview video URL, id, name, price
-            id: traits.location.split('/')[3].split('.')[0],
+            id: `0${nftsCount - index}`,
             name: 'Cap Crowns',
             price: '5$',
             lastOffer: '5$',
             traits,
             rendered: (metadataDesc as any)?.purpose?.Rendered,
             preview: (metadataDesc as any)?.purpose?.Preview,
-            location: `https://vzb3d-qyaaa-aaaam-qaaqq-cai.raw.ic0.app/${
-              traits.location.split('/')[3].split('.')[0]
+            location: `https://vzb3d-qyaaa-aaaam-qaaqq-cai.raw.ic0.app/0${
+              nftsCount - index
             }.mp4`,
           };
           return metadata;
