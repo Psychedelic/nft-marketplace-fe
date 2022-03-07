@@ -98,11 +98,67 @@ At this point we should have all the global and system dependencies that are req
 yarn install
 ```
 
-From then on, you can start Kyasshu by running:
+From then on, follow the [Start the Kyasshu service](#start-the-kyasshu-service)
+
+### Start the Kyasshu service
+
+Make sure you are in the [nft-marketplace-fe](https://github.com/Psychedelic/nft-marketplace-fe)project root, because we are going to use the project utility scripts to help us start the services. Alternatively, if you much prefer cd into kyasshu and run the commands individually. For the goals of the [nft-marketplace-fe](https://github.com/Psychedelic/nft-marketplace-fe), we're going to use the scripts for quick bootstrap! If you need more control, refer to the services, separate documentation.
+
+Start the Redis service in the foreground of your shell by:
 
 ```sh
-yarn dev
+yarn kyasshu:redis
 ```
+
+Once it starts you should get a similar output to:
+
+```
+...
+
+10199:M 07 Mar 2022 15:47:27.557 # Server initialized
+10199:M 07 Mar 2022 15:47:27.557 * Loading RDB produced by version 6.2.6
+10199:M 07 Mar 2022 15:47:27.557 * RDB age 2 seconds
+10199:M 07 Mar 2022 15:47:27.557 * RDB memory usage when created 1.02 Mb
+10199:M 07 Mar 2022 15:47:27.557 # Done loading RDB, keys loaded: 0, keys expired: 0.
+10199:M 07 Mar 2022 15:47:27.557 * DB loaded from disk: 0.000 seconds
+10199:M 07 Mar 2022 15:47:27.557 * Ready to accept connections
+```
+
+Open a new shell terminal and run the `serverless` development/offline process:
+
+```sh
+yarn kyasshu:start
+```
+
+You should get a similar output to:
+
+```sh
+  ┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                                                                                             │
+  │   GET  | http://localhost:3000/dev/marketplace/{canisterId}/cache/{tokens}                  │
+  │   POST | http://localhost:3000/2015-03-31/functions/cacheCollectionMeta/invocations         │
+  │   GET  | http://localhost:3000/dev/marketplace/{canisterId}/nft/{token}                     │
+  │   POST | http://localhost:3000/2015-03-31/functions/getTokenMeta/invocations                │
+  │   GET  | http://localhost:3000/dev/marketplace/{canisterId}/nfts/{sorting}/{order}/{page}   │
+
+  ...
+```
+
+At this point you should have the Kyasshu services running!
+
+Check the topic of how to get data in your local Kyasshu to learn more.
+
+### Get data in the local Kyasshu
+
+Following, is a command to make a HTTP GET request to the `marketplace` endpoint.
+
+We're going to pass the `mainnet` Crowns Canister ID (vlhm2-4iaaa-aaaam-qaatq-cai) and request a total of `25` tokens - keep the number as short as possible for your needs, otherwise it might be time consuming e.g. for 10k would take a considerable amount of time to handle.
+
+```sh
+curl -X GET http://localhost:3000/dev/marketplace/vlhm2-4iaaa-aaaam-qaatq-cai/cache/25
+```
+
+To learn more about the Marketplace endpoints, check the [Kyasshu documentation](https://github.com/Psychedelic/kyasshu).
 
 ## 🙋‍♀️ F.A.Q
 
