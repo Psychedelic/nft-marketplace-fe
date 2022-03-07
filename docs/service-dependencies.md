@@ -84,6 +84,14 @@ Then followed by the installation command of serverless
 sls dynamodb install
 ```
 
+We'll include Redis, used as a first layer of cache for clients. If you are on mac:
+
+```sh
+brew install redis
+```
+
+Otherwise, if you much prefer to handle the installation process as recommended in the original [documentation](https://redis.io/topics/quickstart), follow the steps [here](https://redis.io/topics/quickstart).
+
 At this point we should have all the global and system dependencies that are required. Let's complete by installing the packages the project requires.
 
 ```sh
