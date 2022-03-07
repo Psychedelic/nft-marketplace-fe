@@ -7,11 +7,27 @@ export const Container = styled('div', {
   marginBottom: '20px',
 });
 
+export const Wrapper = styled('div', {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
+
+  // variants
+  variants: {
+    centered: {
+      true: {
+        justifyContent: 'center',
+      },
+    },
+  },
+});
+
 export const PreviewContainer = styled('div', {
   width: '100%',
   maxWidth: '480px',
   display: 'flex',
   flexDirection: 'column',
+  justifyContent: 'space-between',
 });
 
 export const Video = styled('video', {
