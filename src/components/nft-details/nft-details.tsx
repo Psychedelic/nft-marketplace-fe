@@ -27,8 +27,6 @@ export const NftDetails = () => {
     [loadedNFTS, id],
   );
 
-  console.log(nftDetails, 'nftDetails');
-
   return (
     <Container>
       {nftDetails ? (
@@ -49,9 +47,26 @@ export const NftDetails = () => {
               </Video>
             )}
             <NFTTraitsContainer>
-              <NFTTraitsChip name="Crystal" rimValue="420 (4.20%)" />
-              <NFTTraitsChip name="Crystal" rimValue="420 (4.20%)" />
-              <NFTTraitsChip name="Crystal" rimValue="420 (4.20%)" />
+              <NFTTraitsChip
+                label="Base"
+                name={nftDetails.traits.base}
+                rimValue="420 (4.20%)"
+              />
+              <NFTTraitsChip
+                label="BigGem"
+                name={nftDetails.traits.biggem}
+                rimValue="420 (4.20%)"
+              />
+              <NFTTraitsChip
+                label="Rim"
+                name={nftDetails.traits.rim}
+                rimValue="420 (4.20%)"
+              />
+              <NFTTraitsChip
+                label="SmallGem"
+                name={nftDetails.traits.smallgem}
+                rimValue="420 (4.20%)"
+              />
             </NFTTraitsContainer>
           </PreviewContainer>
           <DetailsContainer>

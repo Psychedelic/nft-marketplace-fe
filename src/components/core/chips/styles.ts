@@ -45,7 +45,7 @@ export const TraitChipContainer = styled('div', {
       },
 
       nft: {
-        minWidth: '150px',
+        minWidth: '145px',
         background: '$chipsNftBackgroundColor',
         border: '1.5px solid $borderColor',
         margin: '0px 15px 15px 0px',
@@ -82,6 +82,23 @@ export const TraitName = styled('div', {
 });
 
 export const TraitRim = styled('div', {
+  // base styles
+  fontSize: '12px',
+  fontWeight: '500',
+  lineHeight: '15px',
+  color: '#767D8E',
+
+  // variants
+  variants: {
+    type: {
+      nft: {
+        marginBottom: '3px',
+      },
+    },
+  },
+});
+
+export const TraitLabel = styled('div', {
   // base styles
   fontSize: '12px',
   fontWeight: '500',
