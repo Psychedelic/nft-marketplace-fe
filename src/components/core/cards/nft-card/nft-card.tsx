@@ -10,8 +10,7 @@ import {
   NftId,
   LastOffer,
   Dfinity,
-  Image,
-  Video,
+  PreviewDetails,
 } from './styles';
 
 import { NFTMetadata } from '../../../../declarations/nft';
@@ -44,7 +43,7 @@ export const NftCard = ({
           </OwnedCardText>
           <CardOptionsDropdown />
         </Flex>
-        <Image>
+        <PreviewDetails>
           {data.preview && !displayVideo ? (
             <img src={data?.preview} alt="nft-card" />
           ) : (
@@ -62,7 +61,7 @@ export const NftCard = ({
               <source src={data.location} type="video/mp4" />
             </video>
           )}
-        </Image>
+        </PreviewDetails>
         <Flex>
           <NftName>{data?.name}</NftName>
           {notForSale ? (

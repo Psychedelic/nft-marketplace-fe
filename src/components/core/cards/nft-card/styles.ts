@@ -20,7 +20,7 @@ export const CardWrapper = styled('div', {
   },
 });
 
-export const Image = styled('div', {
+export const PreviewDetails = styled('div', {
   marginBottom: '10px',
   minHeight: '125px',
 
