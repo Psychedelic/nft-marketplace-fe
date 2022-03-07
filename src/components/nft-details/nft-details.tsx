@@ -6,6 +6,7 @@ import {
   NFTTraitsChip,
 } from '../core';
 import { NFTMetaData } from '../nft-metadata';
+import { NftActionBar } from '../nft-action-bar';
 import {
   Container,
   Wrapper,
@@ -29,6 +30,7 @@ export const NftDetails = () => {
 
   return (
     <Container>
+      <NftActionBar />
       {nftDetails ? (
         <Wrapper>
           <PreviewContainer>
@@ -70,7 +72,7 @@ export const NftDetails = () => {
             </NFTTraitsContainer>
           </PreviewContainer>
           <DetailsContainer>
-            <NFTMetaData />
+            <NFTMetaData id={nftDetails.id} />
             <OfferAccordion />
             <AboutAccordion owned />
           </DetailsContainer>

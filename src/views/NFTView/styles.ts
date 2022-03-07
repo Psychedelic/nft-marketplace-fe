@@ -9,5 +9,5 @@ export const Container = styled('div', {
 export const NFTDetailsWrapper = styled('div', {
   maxWidth: '1190px',
   margin: 'auto',
-  padding: '30px 30px',
+  padding: '10px 30px 30px',
 });

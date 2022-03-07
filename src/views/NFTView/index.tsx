@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  NftActionBar,
-  NFTActivityTable,
-  NftDetails,
-} from '../../components';
+import { NFTActivityTable, NftDetails } from '../../components';
 import { Container, NFTDetailsWrapper } from './styles';
 
 /* --------------------------------------------------------------------------
@@ -22,7 +18,6 @@ const NFTView = () => {
 
   return (
     <Container>
-      <NftActionBar />
       <NFTDetailsWrapper>
         <NftDetails />
         <NFTActivityTable theme={theme} />
