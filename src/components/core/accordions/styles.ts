@@ -31,7 +31,16 @@ export const AccordionStyle = styled(Accordion.Root, {
 export const AccordionHead = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
-  padding: '35px 25px',
+  padding: '30px 25px',
+
+  // variants
+  variants: {
+    flexDirection: {
+      column: {
+        flexDirection: 'column',
+      },
+    },
+  },
 });
 
 export const AccordionHeadContent = styled('div', {
@@ -256,4 +265,8 @@ export const ButtonWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   padding: '25px 0',
+});
+
+export const PlugButtonWrapper = styled('div', {
+  paddingTop: '30px',
 });
