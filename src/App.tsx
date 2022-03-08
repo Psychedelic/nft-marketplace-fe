@@ -25,7 +25,7 @@ const App = () => {
         />
         <Routes>
           <Route path="/" element={<CollectionView />} />
-          <Route path="/nft/:nftId" element={<NFTView />} />
+          <Route path="/nft/:id" element={<NFTView />} />
           <Route
             path="/components"
             element={<DevelopedComponents />}

@@ -20,13 +20,23 @@ export const CardWrapper = styled('div', {
   },
 });
 
-export const Image = styled('div', {
+export const PreviewDetails = styled('div', {
   marginBottom: '10px',
   minHeight: '125px',
 
   '& img': {
     width: '100%',
   },
+});
+
+export const Video = styled('video', {
+  width: '100%',
+  height: 'auto',
+  borderRadius: '14px',
+  maxWidth: '100%',
+  maxHeight: '100%',
+  minHeight: '125px',
+  marginBottom: '10px',
 });
 
 export const Flex = styled('div', {
@@ -63,6 +73,7 @@ export const Dfinity = styled('p', {
 
   '& img': {
     marginLeft: '3px',
+    width: '15px',
   },
 });
 

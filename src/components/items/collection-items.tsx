@@ -4,7 +4,9 @@ import {
   useFilterStore,
   filterActions,
   useAppDispatch,
+  useNFTSStore,
 } from '../../store';
+import { useNFTSFetcher } from '../../hooks';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import {
@@ -24,7 +26,8 @@ export const CollectionItems = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
-  const [loading, setLoading] = useState<boolean>(true);
+
+  const { loadingNFTs, failedToLoadNFTSMessage } = useNFTSStore();
 
   const dropDownContent = [
     `${t('translation:dropdown.priceFilter.recentlyListed')}`,
@@ -34,12 +37,7 @@ export const CollectionItems = () => {
     `${t('translation:dropdown.priceFilter.highestLastSale')}`,
   ];
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
+  useNFTSFetcher();
 
   const handleRemoveFilter = (appliedFilter: object) => {
     // eslint-disable-next-line no-console
@@ -104,7 +102,16 @@ export const CollectionItems = () => {
             </ContentFlex>
           </Flex>
         </ContentWrapper>
-        {loading ? <NftSkeletonList /> : <NftList />}
+        {loadingNFTs ? <NftSkeletonList /> : <NftList />}
+        {failedToLoadNFTSMessage && (
+          <p
+            style={{
+              color: 'red',
+            }}
+          >
+            {failedToLoadNFTSMessage}
+          </p>
+        )}
       </FilteredContainer>
     </Container>
   );

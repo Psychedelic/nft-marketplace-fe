@@ -5,11 +5,11 @@ export const Container = styled('div', {
   height: '72px',
   // background: '#FAFBFD',
   background: '$backgroundColor',
+  paddingBottom: '30px',
 });
 
 export const NftActionBarWrapper = styled('div', {
   maxWidth: '1190px',
-  padding: '0px 30px',
   height: '100%',
   display: 'flex',
   alignItems: 'center',

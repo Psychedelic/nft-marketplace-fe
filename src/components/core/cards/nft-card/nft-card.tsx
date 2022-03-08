@@ -10,15 +10,19 @@ import {
   NftId,
   LastOffer,
   Dfinity,
-  Image,
+  PreviewDetails,
 } from './styles';
+
+import { NFTMetadata } from '../../../../declarations/nft';
+import wicpLogo from '../../../../assets/wicpIcon.png';
 
 export type NftCardProps = {
   owned?: boolean;
   notForSale?: boolean;
   forSaleAndOffer?: boolean;
   forSale?: boolean;
-  data?;
+  data: NFTMetadata;
+  displayVideo?: boolean;
 };
 
 export const NftCard = ({
@@ -26,11 +30,12 @@ export const NftCard = ({
   notForSale,
   forSaleAndOffer,
   data,
+  displayVideo,
 }: NftCardProps) => {
   const { t } = useTranslation();
 
   return (
-    <RouterLink to="/nft/2713">
+    <RouterLink to={`/nft/${data.id}`}>
       <CardWrapper>
         <Flex>
           <OwnedCardText>
@@ -38,23 +43,39 @@ export const NftCard = ({
           </OwnedCardText>
           <CardOptionsDropdown />
         </Flex>
-        <Image>
-          <img src={data?.nftImage} alt="nft-card" />
-        </Image>
+        <PreviewDetails>
+          {data.preview && !displayVideo ? (
+            <img src={data?.preview} alt="nft-card" />
+          ) : (
+            <video
+              data-icon-video
+              loop
+              autoPlay
+              muted
+              style={{
+                width: '100%',
+                minHeight: '125px',
+                borderRadius: '14px',
+              }}
+            >
+              <source src={data.location} type="video/mp4" />
+            </video>
+          )}
+        </PreviewDetails>
         <Flex>
-          <NftName>{data?.nftName}</NftName>
+          <NftName>{data?.name}</NftName>
           {notForSale ? (
             ''
           ) : (
             <Dfinity>
-              {data?.dfinityValue}
-              <img src={data?.dfintiyIcon} alt="" />
+              {data?.price}
+              <img src={wicpLogo} alt="" />
             </Dfinity>
           )}
         </Flex>
 
         <Flex>
-          <NftId>{data?.nftId}</NftId>
+          <NftId>{data?.id}</NftId>
           {notForSale ? (
             ''
           ) : (

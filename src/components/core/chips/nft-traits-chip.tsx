@@ -1,28 +1,28 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   TraitChipContainer,
   TraitSpecsContainer,
   TraitName,
-  TraitRim,
+  TraitLabel,
   Traitvalue,
 } from './styles';
 
 export interface NFTTraitsChipProps {
+  label?: string;
   name?: string;
   rimValue?: string;
 }
 
-export const NFTTraitsChip = ({ name, rimValue }: NFTTraitsChipProps) => {
-  const { t } = useTranslation();
-
-  return (
-    <TraitChipContainer type="nft">
-      <TraitSpecsContainer>
-        <TraitRim type="nft">{t('translation:chips.labels.rim')}</TraitRim>
-        <TraitName type="nft">{name}</TraitName>
-        <Traitvalue>{rimValue}</Traitvalue>
-      </TraitSpecsContainer>
-    </TraitChipContainer>
-  );
-};
+export const NFTTraitsChip = ({
+  label,
+  name,
+  rimValue,
+}: NFTTraitsChipProps) => (
+  <TraitChipContainer type="nft">
+    <TraitSpecsContainer>
+      <TraitLabel type="nft">{label}</TraitLabel>
+      <TraitName type="nft">{name}</TraitName>
+      <Traitvalue>{rimValue}</Traitvalue>
+    </TraitSpecsContainer>
+  </TraitChipContainer>
+);

@@ -2,9 +2,22 @@ import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
   width: '100%',
+  marginBottom: '20px',
+});
+
+export const Wrapper = styled('div', {
+  width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
-  marginBottom: '20px',
+
+  // variants
+  variants: {
+    centered: {
+      true: {
+        justifyContent: 'center',
+      },
+    },
+  },
 });
 
 export const PreviewContainer = styled('div', {
@@ -12,6 +25,16 @@ export const PreviewContainer = styled('div', {
   maxWidth: '480px',
   display: 'flex',
   flexDirection: 'column',
+});
+
+export const Video = styled('video', {
+  width: '100%',
+  height: 'auto',
+  borderRadius: '14px',
+  maxWidth: '100%',
+  maxHeight: '100%',
+  minHeight: '125px',
+  marginBottom: '10px',
 });
 
 export const NFTPreview = styled('img', {
