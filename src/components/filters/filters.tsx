@@ -1,5 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  useFilterStore,
+  useThemeStore,
+  filterActions,
+  useAppDispatch,
+} from '../../store';
 import {
   ActionButton,
   CheckboxFilterAccordion,
@@ -30,26 +36,89 @@ import {
  * Filters Component
  * --------------------------------------------------------------------------*/
 
+// check if category has been selected with different filter name = update filter name
+// check if category and filter name has been selected = removed chip
+
 export const Filters = () => {
   const { t } = useTranslation();
-
-  const [theme, setTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
+  const dispatch = useAppDispatch();
+  const appliedFilters = useFilterStore();
+  const { theme } = useThemeStore();
+  const [statusFilter, setStatusFilter] = useState<string>('');
+  const [filtersOpened, setFiltersOpened] = useState<boolean>(true);
+  const [priceFilterValue, setPriceFilterValue] = useState<object>({
+    min: 0,
+    max: 0,
   });
-
-  const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
+  const [displayButton, setDisplayButton] = useState<boolean>(false);
+  const allNfts = `${t('translation:buttons.action.allNfts')}`;
   // eslint-disable-next-line
   const [displayFilter, setDisplayFilter] =
-    useState<string>('allNfts');
-  const [statusFilter, setStatusFilter] = useState<string>('');
+    useState<string>(allNfts);
+  const isLightTheme = theme === 'lightTheme';
 
-  const closeFiltersIconTheme = theme === 'lightTheme' ? closeFiltersIcon : closeFiltersIconDark;
-  const openFiltersIconTheme = theme === 'lightTheme' ? openFiltersIcon : openFiltersIconDark;
+  const closeFiltersIconTheme = isLightTheme ? closeFiltersIcon : closeFiltersIconDark;
+  const openFiltersIconTheme = isLightTheme ? openFiltersIcon : openFiltersIconDark;
+
+  const filterExists = (filterName: string) => appliedFilters.some(
+    (appliedFilter) => appliedFilter.filterName === filterName,
+  );
+
+  const applyFilter = (
+    filterCategory: string,
+    filterName: any,
+  ) => {
+    const filterCategoryExists = appliedFilters.some(
+      (appliedFilter) => appliedFilter.filterCategory === filterCategory,
+    );
+
+    const filterNameExists = appliedFilters.some(
+      (appliedFilter) => appliedFilter.filterName === filterName,
+    );
+
+    const selectStatusFilter = filterCategory === 'Status' && setStatusFilter(filterName);
+    // eslint-disable-next-line
+    const selectDisplayFilter = filterCategory === 'Display' && setDisplayFilter(filterName);
+
+    // TODO: do something about the switch statement atm hardtyped 
+    switch (true) {
+      case filterCategoryExists && filterNameExists:
+        dispatch(filterActions.removeFilter(filterName));
+        break;
+      case filterCategoryExists && !filterNameExists:
+        // eslint-disable-next-line
+        selectStatusFilter;
+        // eslint-disable-next-line
+        selectDisplayFilter;
+        dispatch(
+          filterActions.updateFilter({
+            filterCategory,
+            filterName,
+          }),
+        );
+        break;
+      default:
+        // eslint-disable-next-line
+        selectStatusFilter;
+        // eslint-disable-next-line
+        selectDisplayFilter;
+        dispatch(
+          filterActions.applyFilter({
+            filterName,
+            filterCategory,
+          }),
+        );
+        break;
+    }
+  };
+
+  const applyPriceFilter = () => {
+    if (priceFilterValue.min.length && priceFilterValue.max.length) {
+      setDisplayButton(true);
+    } else {
+      setDisplayButton(false);
+    }
+  };
 
   return (
     <Container>
@@ -60,7 +129,11 @@ export const Filters = () => {
           }}
         >
           <img
-            src={filtersOpened ? closeFiltersIconTheme : openFiltersIconTheme}
+            src={
+              filtersOpened
+                ? closeFiltersIconTheme
+                : openFiltersIconTheme
+            }
             alt="filter-icon"
           />
         </IconActionButton>
@@ -73,11 +146,12 @@ export const Filters = () => {
               <ClearButton
                 onClick={() => {
                   setStatusFilter('');
-                  setDisplayFilter('allNfts');
+                  setDisplayFilter(allNfts);
                 }}
               >
                 Clear All
               </ClearButton>
+              {/* should remove all filters on click */}
             </Flex>
             <FilterSection>
               <FilterGroup>
@@ -86,30 +160,32 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        displayFilter === 'allNfts'
+                        displayFilter === allNfts
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.allNfts')}
                       handleClick={() => {
-                        setDisplayFilter('allNfts');
+                        setDisplayFilter(allNfts);
+                        dispatch(filterActions.removeFilter(allNfts));
                       }}
                     />
                   </FilterButtonWrapper>
-
                   <Subtext margin="rightAndLeft" color="secondary">
                     or
                   </Subtext>
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        displayFilter === 'myNfts'
+                        filterExists(`${t('translation:buttons.action.myNfts')}`)
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
-                        setDisplayFilter('myNfts');
+                        // eslint-disable-next-line
+                        displayFilter !== '' && setDisplayFilter('');
+                        applyFilter('Display', `${t('translation:buttons.action.myNfts')}`);
                       }}
                     />
                   </FilterButtonWrapper>
@@ -121,38 +197,33 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        statusFilter === 'buyNow'
+                        filterExists(`${t('translation:buttons.action.buyNow')}`)
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.buyNow')}
                       handleClick={() => {
-                        if (statusFilter === 'buyNow') {
-                          setStatusFilter('');
-                        } else {
-                          setStatusFilter('buyNow');
-                        }
+                        // eslint-disable-next-line
+                        statusFilter !== '' && setStatusFilter('');
+                        applyFilter('Status', `${t('translation:buttons.action.buyNow')}`);
                       }}
                     />
                   </FilterButtonWrapper>
-
                   <Subtext margin="rightAndLeft" color="secondary">
                     or
                   </Subtext>
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        statusFilter === 'hasOffers'
+                        filterExists(`${t('translation:buttons.action.hasOffers')}`)
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.hasOffers')}
                       handleClick={() => {
-                        if (statusFilter === 'hasOffers') {
-                          setStatusFilter('');
-                        } else {
-                          setStatusFilter('hasOffers');
-                        }
+                        // eslint-disable-next-line
+                        statusFilter !== '' && setStatusFilter('');
+                        applyFilter('Status', `${t('translation:buttons.action.hasOffers')}`);
                       }}
                     />
                   </FilterButtonWrapper>
@@ -165,22 +236,50 @@ export const Filters = () => {
                     placeholder={t(
                       'translation:inputField.placeholder.priceMin',
                     )}
+                    setValue={(value) => {
+                      setPriceFilterValue({
+                        ...priceFilterValue,
+                        min: value,
+                      });
+                      applyPriceFilter();
+                    }}
                   />
                   <Subtext margin="rightAndLeft" color="secondary">
-                    or
+                    to
                   </Subtext>
                   <FilterInput
                     placeholder={t(
                       'translation:inputField.placeholder.priceMax',
                     )}
+                    setValue={(value) => {
+                      setPriceFilterValue({
+                        ...priceFilterValue,
+                        max: value,
+                      });
+                      applyPriceFilter();
+                    }}
                   />
                 </Flex>
+                <br />
+                {displayButton
+                && (
+                  <ActionButton
+                    type="secondary"
+                    text="Apply"
+                    handleClick={() => {
+                      applyFilter('Price Range', priceFilterValue);
+                    }}
+                  />
+                )}
               </FilterGroup>
             </FilterSection>
             <Heading>Traits</Heading>
             <FilterSection>
               <CheckboxFilters>
                 <CheckboxFilterAccordion
+                // we need the type of gem it is
+                // we need the values selected
+                // call apply filter
                   title={`${t(
                     'translation:accordions.checkbox.smallGem.smallGem',
                   )}`}

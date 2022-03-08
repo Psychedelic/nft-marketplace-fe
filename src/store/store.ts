@@ -2,11 +2,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import plugReducer from './features/plug/plug-slice';
+import filterReducer from './features/filters/filter-slice';
+import themeReducer from './features/theme/theme-slice';
 import nftsReducer from './features/nfts/nfts-slice';
 
 export const store = configureStore({
   reducer: {
     plug: plugReducer,
+    filter: filterReducer,
+    theme: themeReducer,
     nfts: nftsReducer,
   },
   middleware: (getDefaultMiddleware) =>

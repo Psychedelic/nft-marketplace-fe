@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  useThemeStore,
+} from '../../store';
 import { LinkButton, Tooltip } from '../core';
 
 import {
@@ -17,14 +20,8 @@ export interface NFTMetaDataProps {
 
 export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
   const { t } = useTranslation();
-  const [theme, setTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
+  const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
   return (
     <CollectionMetadataWrapper>
@@ -38,7 +35,7 @@ export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
       <Tooltip text={t('translation:common.comingSoon')}>
         <LinkButton>
           <img
-            src={theme === 'lightTheme' ? back : backDark}
+            src={isLightTheme ? back : backDark}
             alt={t('translation:buttons.links.back')}
           />
         </LinkButton>

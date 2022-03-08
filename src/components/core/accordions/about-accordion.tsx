@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
+import {
+  useThemeStore,
+} from '../../../store';
 import { LinkButton } from '../buttons';
 import { AccordionContentMetaData } from '../../mock-data/accordion-data';
 import {
@@ -37,29 +40,23 @@ export type AboutAccordionProps = {
 export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-  const [theme, setTheme] = useState('lightTheme');
+  const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
-
-  const arrowdownTheme = theme === 'lightTheme' ? arrowdown : arrowdownDark;
-  const arrowupTheme = theme === 'lightTheme' ? arrowup : arrowupDark;
+  const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
+  const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
   const Buttons = [
     {
-      image: theme === 'lightTheme' ? discord : discordDark,
+      image: isLightTheme ? discord : discordDark,
       alt: 'discord',
     },
     {
-      image: theme === 'lightTheme' ? twitter : twitterDark,
+      image: isLightTheme ? twitter : twitterDark,
       alt: 'twitter',
     },
     {
-      image: theme === 'lightTheme' ? back : backDark,
+      image: isLightTheme ? back : backDark,
       alt: 'back',
     },
   ];
@@ -104,7 +101,7 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
         >
           <div>
             <img
-              src={theme === 'lightTheme' ? info : infoDark}
+              src={isLightTheme ? info : infoDark}
               alt="about-collection"
             />
             <p>

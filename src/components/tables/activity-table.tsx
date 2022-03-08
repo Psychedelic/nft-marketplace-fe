@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useThemeStore } from '../../store';
 import {
   ItemDetailsCell,
   TypeDetailsCell,
@@ -24,12 +25,9 @@ export interface rowProps {
   time: string;
 }
 
-export interface activityTableProps {
-  theme: string;
-}
-
-export const ActivityTable = ({ theme }: activityTableProps) => {
+export const ActivityTable = () => {
   const { t } = useTranslation();
+  const { theme } = useThemeStore();
 
   const columns = useMemo(
     () => [

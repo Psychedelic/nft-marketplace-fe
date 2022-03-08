@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as Accordion from '@radix-ui/react-accordion';
+import {
+  useThemeStore,
+} from '../../../store';
 import { Checkbox } from '../checkbox/checkbox';
 import { checkboxDummyData } from '../../mock-data/accordion-data';
 import {
@@ -19,18 +22,12 @@ export const CheckboxFilterAccordion = ({
   title,
   id = 'item-1',
 }: CheckboxFilterAccordionProps) => {
+  const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [selectedFilters, setSelectedFilters] = useState<
     Array<string>
   >([]);
-  const [theme, setTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
 
   return (
     <AccordionStyle
@@ -56,12 +53,15 @@ export const CheckboxFilterAccordion = ({
                 : ''}
             </span>
           </p>
-          <img src={theme === 'lightTheme' ? arrowdown : arrowdownDark} alt="arrow-down" />
+          <img src={isLightTheme ? arrowdown : arrowdownDark} alt="arrow-down" />
         </AccordionTrigger>
         <AccordionContent padding="small">
           <form>
             {checkboxDummyData.map((data) => (
+            // call apply filter
+            // eslint-disable-next-line
               <Checkbox
+                title={title}
                 key={data.value}
                 value={data.value}
                 percentage={data.percentage}

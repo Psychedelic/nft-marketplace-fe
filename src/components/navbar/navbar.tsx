@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import {
+  useThemeStore,
+  themeActions,
+  useAppDispatch,
+} from '../../store';
 import { LinkButton, Tooltip } from '../core';
 import { GlobalSearch } from '../search';
 import { Plug } from '../plug';
@@ -22,24 +27,15 @@ import {
  * --------------------------------------------------------------------------*/
 
 export type NavbarProps = {
-  currentTheme: string;
-  setCurrentTheme: (value: string) => void;
+  currentTheme: string | null;
 };
 
-export const NavBar = ({
-  setCurrentTheme,
-  currentTheme,
-}: NavbarProps) => {
+export const NavBar = ({ currentTheme }: NavbarProps) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
   const selectedTheme = currentTheme === 'darkTheme' ? 'lightTheme' : 'darkTheme';
-  const [theme, setTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
 
   return (
     <Container>
@@ -51,7 +47,7 @@ export const NavBar = ({
           />
           <LogoName
             src={
-              theme === 'lightTheme' ? appName : appNameDark
+              isLightTheme ? appName : appNameDark
             }
             alt={t('translation:common.collectionName')}
           />
@@ -61,14 +57,11 @@ export const NavBar = ({
       <ActionButtonsContainer>
         <Tooltip text={t('translation:common.comingSoon')}>
           <LinkButton
-            handleClick={() => {
-              setCurrentTheme(selectedTheme);
-              localStorage.setItem('theme', selectedTheme);
-            }}
+            handleClick={() => dispatch(themeActions.setTheme(selectedTheme))}
           >
             <img
-              src={theme === 'lightTheme' ? moon : sun}
-              alt={theme}
+              src={isLightTheme ? moon : sun}
+              alt=""
             />
           </LinkButton>
         </Tooltip>

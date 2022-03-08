@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
+import {
+  useThemeStore,
+} from '../../../store';
 import {
   AccordionStyle,
   AccordionTrigger,
@@ -25,21 +28,13 @@ import { Plug } from '../../plug';
 export const OfferAccordion = () => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-  const [theme, setTheme] = useState('lightTheme');
+  const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
+
+  const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
+  const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
   const { isConnected } = usePlugStore();
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
-
-  // eslint-disable-next-line operator-linebreak
-  const arrowdownTheme =
-    theme === 'lightTheme' ? arrowdown : arrowdownDark;
-  const arrowupTheme = theme === 'lightTheme' ? arrowup : arrowupDark;
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
@@ -72,10 +67,7 @@ export const OfferAccordion = () => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
-            <img
-              src={theme === 'lightTheme' ? offer : offerDark}
-              alt="offer-collection"
-            />
+            <img src={isLightTheme ? offer : offerDark} alt="offer-collection" />
             <p>
               {`${t('translation:accordions.offer.header.offer')}`}
             </p>

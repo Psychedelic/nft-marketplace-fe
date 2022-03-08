@@ -1,8 +1,14 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-import React from 'react';
+import React, { useState } from 'react';
+import {
+  useFilterStore,
+  filterActions,
+  useAppDispatch,
+} from '../../../store';
 import { Wrapper } from './styles';
 
 export type CheckboxProps = {
+  title: string;
   value: string; // Red
   percentage: string; // 1291 (12.9%)
   selectedFilters: Array<string>;
@@ -10,26 +16,31 @@ export type CheckboxProps = {
 };
 
 export const Checkbox = ({
+  title,
   value,
   percentage,
-  selectedFilters,
-  setSelectedFilters,
 }: CheckboxProps) => {
+  const dispatch = useAppDispatch();
+  const appliedFilters = useFilterStore();
+  const filterNameExists = (filterName: string) => appliedFilters.some((appliedFilter) => appliedFilter.filterName === filterName);
+
   const handleSelectedFilters = (e: any) => {
     // sets value
     const selectedFilterValue = e.target.value;
+    const checkFilterNameExists = filterNameExists(selectedFilterValue);
 
     // checks if value doesn't already exists
-    if (!selectedFilters.includes(selectedFilterValue)) {
+    if (!checkFilterNameExists) {
       // if it doesn't, add value to array
-      setSelectedFilters([...selectedFilters, selectedFilterValue]);
+      dispatch(
+        filterActions.applyFilter({
+          filterName: selectedFilterValue,
+          filterCategory: title,
+        }),
+      );
     } else {
       // if it does, remove value from the array
-      setSelectedFilters(
-        selectedFilters.filter(
-          (item) => item !== selectedFilterValue,
-        ),
-      );
+      dispatch(filterActions.removeFilter(selectedFilterValue));
     }
   };
 
@@ -43,7 +54,7 @@ export const Checkbox = ({
           value={value}
           onClick={handleSelectedFilters}
           // checks if value exists in array and sets checked to true
-          checked={selectedFilters.includes(value) && true}
+          checked={filterNameExists(value) && true}
         />
         {value}
       </label>

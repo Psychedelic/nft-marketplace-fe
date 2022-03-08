@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import {
+  useFilterStore,
+  filterActions,
+  useAppDispatch,
+  useNFTSStore,
+} from '../../store';
 import { useNFTSFetcher } from '../../hooks';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
@@ -16,10 +22,10 @@ import {
   ContentFlex,
 } from './styles';
 
-import { useNFTSStore } from '../../store';
-
 export const CollectionItems = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const appliedFilters = useFilterStore();
 
   const { loadingNFTs, failedToLoadNFTSMessage } = useNFTSStore();
 
@@ -32,6 +38,23 @@ export const CollectionItems = () => {
   ];
 
   useNFTSFetcher();
+
+  const handleRemoveFilter = (appliedFilter: object) => {
+    // eslint-disable-next-line no-console
+    if (appliedFilter.filterCategory === 'Price Range') {
+      dispatch(
+        filterActions.removePriceFilter(
+          appliedFilter.filterCategory,
+        ),
+      );
+    } else {
+      dispatch(
+        filterActions.removeFilter(
+          appliedFilter.filterName,
+        ),
+      );
+    }
+  };
 
   return (
     <Container>
@@ -66,22 +89,16 @@ export const CollectionItems = () => {
           </Flex>
           <Flex>
             <ContentFlex>
-              <FilteredTraitsChip
-                name="Red"
-                rim="Big Gem"
-                removeFilter={() => {
-                  // eslint-disable-next-line no-console
-                  console.log('callback');
-                }}
-              />
-              <FilteredTraitsChip
-                name="Psychedelic"
-                rim="Rim"
-                removeFilter={() => {
-                  // eslint-disable-next-line no-console
-                  console.log('callback');
-                }}
-              />
+              {/* Create state to control display for these chips */}
+              {/* We need an array to store the selected filters */}
+              {appliedFilters.map((appliedFilter) => (
+                <FilteredTraitsChip
+                  name={appliedFilter.filterCategory !== 'Price Range' ? appliedFilter.filterName : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`}
+                  rim={`${appliedFilter.filterCategory}`}
+                  appliedFilterValue={appliedFilter}
+                  removeFilter={() => handleRemoveFilter(appliedFilter)}
+                />
+              ))}
             </ContentFlex>
           </Flex>
         </ContentWrapper>

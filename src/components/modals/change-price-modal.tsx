@@ -28,7 +28,7 @@ import {
 } from './styles';
 
 /* --------------------------------------------------------------------------
- * Change Price Modal Component
+ * Edit Listing Modal Component
  * --------------------------------------------------------------------------*/
 
 export const ChangePriceModal = () => {
@@ -72,10 +72,10 @@ export const ChangePriceModal = () => {
         <ChangePriceModalTrigger>
           <ActionButton
             type="primary"
-            text={t('translation:buttons.action.changePrice')}
+            text={t('translation:buttons.action.editListing')}
             handleClick={() => {
               // eslint-disable-next-line no-console
-              console.log('changePrice modal opened');
+              console.log('editListing modal opened');
             }}
           />
         </ChangePriceModalTrigger>
@@ -106,10 +106,10 @@ export const ChangePriceModal = () => {
             */}
             <ModalHeader>
               <ModalTitle>
-                {t('translation:modals.title.changePrice')}
+                {t('translation:modals.title.editListing')}
               </ModalTitle>
               <ModalDescription>
-                {t('translation:modals.description.changePrice')}
+                {t('translation:modals.description.editListing')}
               </ModalDescription>
             </ModalHeader>
             {/*

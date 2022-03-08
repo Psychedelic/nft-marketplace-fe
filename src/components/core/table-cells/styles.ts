@@ -43,7 +43,7 @@ export const TypeName = styled('div', {
   variants: {
     tableType: {
       nftActivity: {
-        fontSize: '18px',
+        fontSize: '16px',
         fontWeight: '500',
         lineHeight: '22px',
 
@@ -96,7 +96,7 @@ export const WICPText = styled('div', {
   variants: {
     tableType: {
       nftActivity: {
-        fontSize: '18px',
+        fontSize: '16px',
         fontWeight: '500',
         lineHeight: '22px',
 
@@ -157,7 +157,7 @@ export const TextDetails = styled('div', {
       },
 
       nftActivityDate: {
-        fontSize: '18px',
+        fontSize: '16px',
         fontWeight: '500',
         lineHeight: '22px',
         color: '#2253FF',
@@ -183,7 +183,7 @@ export const TextLinkDetails = styled('a', {
   variants: {
     type: {
       nftActivity: {
-        fontSize: '18px',
+        fontSize: '16px',
         fontWeight: '500',
         lineHeight: '22px',
         color: '#2253FF',

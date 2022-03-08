@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState } from 'react';
+import {
+  useThemeStore,
+} from '../../../store';
 import {
   DropdownRoot,
   DropdownStyle,
@@ -23,21 +25,15 @@ export const PriceFilterDropdown = ({
   const [selectedValue, setSelectedValue] = useState(
     `${defaultValue}`,
   );
-  const [theme, setTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
+  const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
   return (
     <DropdownRoot>
       <DropdownStyle>
         <p>{selectedValue}</p>
         <img
-          src={theme === 'lightTheme' ? arrowdown : arrowdownDark}
+          src={isLightTheme ? arrowdown : arrowdownDark}
           alt="arrow-down"
         />
       </DropdownStyle>

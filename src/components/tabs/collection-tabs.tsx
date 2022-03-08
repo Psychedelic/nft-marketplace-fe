@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Tabs from '@radix-ui/react-tabs';
+import {
+  useThemeStore,
+} from '../../store';
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
 import { TabsRoot, TabsTrigger, TabsList } from './styles';
@@ -15,20 +18,18 @@ import { Filters } from '../filters';
 export const CollectionTabs = () => {
   const { t } = useTranslation();
   const [currentTab, setCurrentTab] = useState('items');
-  const [theme, setTheme] = useState('lightTheme');
+  const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
+  // state for active chips goes here
+  // based on their text content we'd have the filters to be displayed
+  // if empty we'll display nothing
 
   const itemIsActive = currentTab === 'items' ? 'active' : 'inactive';
   // eslint-disable-next-line
   const activityIsActive = currentTab === 'activity' ? 'active' : 'inactive';
-  const itemeActiveTheme = theme === 'lightTheme' ? itemsActive : itemsActiveDark;
-  const activityActiveTheme = theme === 'lightTheme' ? activityActive : activityActiveDark;
+  const itemeActiveTheme = isLightTheme ? itemsActive : itemsActiveDark;
+  const activityActiveTheme = isLightTheme ? activityActive : activityActiveDark;
 
   return (
     <TabsRoot defaultValue="items" value={currentTab}>
@@ -79,7 +80,7 @@ export const CollectionTabs = () => {
         </div>
       </Tabs.Content>
       <Tabs.Content value="activity">
-        <ActivityTable theme={theme} />
+        <ActivityTable />
       </Tabs.Content>
     </TabsRoot>
   );

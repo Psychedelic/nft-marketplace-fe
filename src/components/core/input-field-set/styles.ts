@@ -36,7 +36,7 @@ export const Input = styled('input', {
   borderRadius: 14,
   fontSize: 16,
   lineHeight: 1,
-  color: '#23262F',
+  color: '$mainTextColor',
 
   border: '1.5px solid $borderColor',
   boxSizing: 'border-box',

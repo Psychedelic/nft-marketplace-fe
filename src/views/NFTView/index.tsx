@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { NFTActivityTable, NftDetails } from '../../components';
+import {
+  NftActionBar,
+  NFTActivityTable,
+  NftDetails,
+} from '../../components';
 import { Container, NFTDetailsWrapper } from './styles';
 
 /* --------------------------------------------------------------------------

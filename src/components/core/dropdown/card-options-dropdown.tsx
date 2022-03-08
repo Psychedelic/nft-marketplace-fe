@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useTranslation } from 'react-i18next';
+import {
+  useThemeStore,
+} from '../../../store';
 
 import {
   Flex,
@@ -14,14 +17,8 @@ import copyDark from '../../../assets/copy-dark.svg';
 
 export const CardOptionsDropdown = () => {
   const { t } = useTranslation();
-  const [theme, setTheme] = useState('lightTheme');
-
-  useEffect(() => {
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
-  });
+  const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
   return (
     <DropdownMenu.Root>
@@ -45,7 +42,7 @@ export const CardOptionsDropdown = () => {
                 {`${t('translation:dropdown.moreOptions.copyLink')}`}
               </p>
               <img
-                src={theme === 'lightTheme' ? copy : copyDark}
+                src={isLightTheme ? copy : copyDark}
                 alt="copy-link"
               />
             </Flex>
