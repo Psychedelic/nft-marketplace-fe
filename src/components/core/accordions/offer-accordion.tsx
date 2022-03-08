@@ -11,6 +11,7 @@ import {
   AccordionHead,
   AccordionHeadContent,
   FlexRight,
+  PlugButtonWrapper,
 } from './styles';
 import offer from '../../../assets/accordions/offer.svg';
 import offerDark from '../../../assets/accordions/offer-dark.svg';
@@ -21,6 +22,9 @@ import arrowup from '../../../assets/accordions/arrow-up.svg';
 import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import { OffersTable } from '../../tables';
 
+import { usePlugStore } from '../../../store';
+import { Plug } from '../../plug';
+
 export const OfferAccordion = () => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
@@ -30,9 +34,11 @@ export const OfferAccordion = () => {
   const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
   const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
+  const { isConnected } = usePlugStore();
+
   return (
     <AccordionStyle type="single" collapsible width="medium">
-      <AccordionHead>
+      <AccordionHead flexDirection="column">
         <AccordionHeadContent flexProperties="offer">
           <FlexRight>
             <img src={dfinity} alt={dfinity} />
@@ -47,6 +53,11 @@ export const OfferAccordion = () => {
           </FlexRight>
           <h3>$1,283.12</h3>
         </AccordionHeadContent>
+        {!isConnected && (
+          <PlugButtonWrapper>
+            <Plug />
+          </PlugButtonWrapper>
+        )}
       </AccordionHead>
       <Accordion.Item value="item-1">
         <AccordionTrigger

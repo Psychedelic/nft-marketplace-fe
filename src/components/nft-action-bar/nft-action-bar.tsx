@@ -12,8 +12,12 @@ import {
 } from './styles';
 import back from '../../assets/back.svg';
 
+import { usePlugStore } from '../../store';
+
 export const NftActionBar = () => {
   const { t } = useTranslation();
+
+  const { isConnected } = usePlugStore();
 
   return (
     <Container>
@@ -24,14 +28,16 @@ export const NftActionBar = () => {
             {t('translation:buttons.action.backToResults')}
           </ActionText>
         </RouterLink>
-        <ButtonListWrapper>
-          <ButtonWrapper>
-            <CancelListingModal />
-          </ButtonWrapper>
-          <ButtonWrapper>
-            <ChangePriceModal />
-          </ButtonWrapper>
-        </ButtonListWrapper>
+        {isConnected && (
+          <ButtonListWrapper>
+            <ButtonWrapper>
+              <CancelListingModal />
+            </ButtonWrapper>
+            <ButtonWrapper>
+              <ChangePriceModal />
+            </ButtonWrapper>
+          </ButtonListWrapper>
+        )}
       </NftActionBarWrapper>
     </Container>
   );

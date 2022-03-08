@@ -8,12 +8,14 @@ export interface TableLayoutProps {
   columns: any;
   data: Array<object>;
   tableType: any;
+  columnsToHide?: Array<string>;
 }
 
 export const TableLayout = ({
   columns,
   data,
   tableType,
+  columnsToHide = [],
 }: TableLayoutProps) => {
   const {
     getTableProps,
@@ -24,6 +26,9 @@ export const TableLayout = ({
   } = useTable({
     columns,
     data,
+    initialState: {
+      hiddenColumns: columnsToHide,
+    },
   });
 
   return (
