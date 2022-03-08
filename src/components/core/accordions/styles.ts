@@ -269,4 +269,8 @@ export const ButtonWrapper = styled('div', {
 
 export const PlugButtonWrapper = styled('div', {
   paddingTop: '30px',
+
+  '.plug-button': {
+    marginLeft: '0px',
+  },
 });
