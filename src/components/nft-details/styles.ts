@@ -2,9 +2,22 @@ import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
   width: '100%',
+  marginBottom: '20px',
+});
+
+export const Wrapper = styled('div', {
+  width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
-  marginBottom: '20px',
+
+  // variants
+  variants: {
+    centered: {
+      true: {
+        justifyContent: 'center',
+      },
+    },
+  },
 });
 
 export const PreviewContainer = styled('div', {

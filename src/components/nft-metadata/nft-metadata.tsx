@@ -11,7 +11,11 @@ import back from '../../assets/buttons/back.svg';
 import backDark from '../../assets/buttons/back-dark.svg';
 import verified from '../../assets/verified-small.svg';
 
-export const NFTMetaData = () => {
+export interface NFTMetaDataProps {
+  id?: string;
+}
+
+export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
   const { t } = useTranslation();
   const [theme, setTheme] = useState('lightTheme');
 
@@ -25,7 +29,7 @@ export const NFTMetaData = () => {
   return (
     <CollectionMetadataWrapper>
       <div>
-        <Heading>2713</Heading>
+        <Heading>{id}</Heading>
         <Subtext>
           Crowns
           <img src={verified} alt="verified" />
