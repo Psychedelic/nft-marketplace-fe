@@ -26,14 +26,15 @@ export const OffersTable = () => {
   useEffect(() => {
     if (!isConnected && !columnsToHide.includes('action')) {
       setColumnsToHide((oldColumns) => [...oldColumns, 'action']);
+
+      return;
     }
 
-    if (isConnected && columnsToHide.includes('action')) {
-      const newColumnsToHide = columnsToHide.filter(
-        (header) => header !== 'action',
-      );
-      setColumnsToHide(newColumnsToHide);
-    }
+    const newColumnsToHide = columnsToHide.filter(
+      (header) => header !== 'action',
+    );
+
+    setColumnsToHide(newColumnsToHide);
   }, [isConnected]);
 
   const columns = useMemo(
