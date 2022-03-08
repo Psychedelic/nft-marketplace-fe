@@ -11,6 +11,7 @@ We're going to use `yarn` through the guide, but feel free to use `npm`, if that
 Once in the project repository, you'll have to execute the `Services initialisation`, which will pull the Service repositories to your machine. This is only required once e.g. at least one time, after you've cloned the [NFT Marketplace frontend](https://github.com/Psychedelic/nft-marketplace-fe).
 
 > Note: It is important to make sure you have done the following before proceeding;
+>
 > - Installed [DFX SDK](https://smartcontracts.org/) to run the DFX cli, otherwise visit the [Dfinity](https://dfinity.org/) for instructions.
 > - Logged in with SSH key, otherwise visit GitHub docs to [Generate and add a new SSH key to your GitHub account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 > - Installed [Rust](https://doc.rust-lang.org/book/ch01-01-installation.html) and the `ic-cdk-optimizer crate`, instructions on how to do that can be found in the [Dfinity docs](https://smartcontracts.org/docs/rust-guide/rust-optimize.html).
@@ -23,7 +24,11 @@ yarn services:init
 
 ## 🌈 Starting the Services
 
-Before starting the Services, you need to have a `local replica network`, unless you are interacting with `mainnet`; to keep the guideline short, we're assuming you're developing locally.
+We're going to interact with Canister Services and an Off-chain Restful API provided in [Kyasshu](https://github.com/Psychedelic/kyasshu). At the current time, we define Services as any backend service, which includes Canister or Off-chain API, but because the off-chain service as its own dependencies, we'll refer to it separately, as [Kyasshu](https://github.com/Psychedelic/kyasshu).
+
+### Canister Services
+
+Before starting the Canister Services, you need to have a `local replica network`, unless you are interacting with `mainnet`; to keep the guideline short, we're assuming you're developing locally.
 
 Launch the local replica in the foreground (you're advised to do it, to monitor the service, otherwise feel free to use the --background flag, for that you'd modify the `Services local replica` wrapped command or start the Dfx network yourself by `cd ./nft-marketplace` and `dfx start --background`).
 
@@ -50,6 +55,110 @@ yarn services:reset
 Bare in mind, that there might be need to troubleshoot when the process is not stopped correctly, or in any other OS issues. So, make sure you look into the [Marketplace Service](https://github.com/Psychedelic/nft-marketplace) guidelines.
 
 👏 That's it, at this point you should have all the necessary Services running in your local replica!
+
+### Running Kyasshu as off-chain API
+
+We'll need the Kyasshu repository, as such you'll have to run the Service initialisation, as explained earlier. So, make sure that the `kyasshu` directory is populated.
+
+Kyasshu is a [Serverless framework](https://www.serverless.com/) for developing [AWS Lambda](https://aws.amazon.com/lambda/) based services.
+
+To run the stack locally, we'll need to ensure some dependencies are installed in our machine.
+
+One of the AWS features we'll use is [DynamoDb](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html), which require us to [install Java > 6](https://java.com/en/download/). Visit the [download page](https://java.com/en/download/) and install it, please!
+
+Assuming that you have nodejs and npm installed, we'll install the pacakge [serverless](https://www.serverless.com/framework/docs/getting-started) which we depend on, as that's the framework in which [Kyasshu](https://github.com/Psychedelic/kyasshu) was developed.
+
+```sh
+npm install -g serverless
+```
+
+Once completed, we'll add the dynamodb addon to serverless. Start by opening the local project kyasshu repository:
+
+```sh
+cd kyasshu
+```
+
+Then followed by the installation command of serverless
+
+```sh
+sls dynamodb install
+```
+
+We'll include Redis, used as a first layer of cache for clients. If you are on mac:
+
+```sh
+brew install redis
+```
+
+Otherwise, if you much prefer to handle the installation process as recommended in the original [documentation](https://redis.io/topics/quickstart), follow the steps [here](https://redis.io/topics/quickstart).
+
+At this point we should have all the global and system dependencies that are required. Let's complete by installing the packages the project requires.
+
+```sh
+yarn install
+```
+
+From then on, follow the [Start the Kyasshu service](#start-the-kyasshu-service)
+
+### Start the Kyasshu service
+
+Make sure you are in the [nft-marketplace-fe](https://github.com/Psychedelic/nft-marketplace-fe)project root, because we are going to use the project utility scripts to help us start the services. Alternatively, if you much prefer cd into kyasshu and run the commands individually. For the goals of the [nft-marketplace-fe](https://github.com/Psychedelic/nft-marketplace-fe), we're going to use the scripts for quick bootstrap! If you need more control, refer to the services, separate documentation.
+
+Start the Redis service in the foreground of your shell by:
+
+```sh
+yarn kyasshu:redis
+```
+
+Once it starts you should get a similar output to:
+
+```
+...
+
+10199:M 07 Mar 2022 15:47:27.557 # Server initialized
+10199:M 07 Mar 2022 15:47:27.557 * Loading RDB produced by version 6.2.6
+10199:M 07 Mar 2022 15:47:27.557 * RDB age 2 seconds
+10199:M 07 Mar 2022 15:47:27.557 * RDB memory usage when created 1.02 Mb
+10199:M 07 Mar 2022 15:47:27.557 # Done loading RDB, keys loaded: 0, keys expired: 0.
+10199:M 07 Mar 2022 15:47:27.557 * DB loaded from disk: 0.000 seconds
+10199:M 07 Mar 2022 15:47:27.557 * Ready to accept connections
+```
+
+Open a new shell terminal and run the `serverless` development/offline process:
+
+```sh
+yarn kyasshu:start
+```
+
+You should get a similar output to:
+
+```sh
+  ┌─────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                                                                                             │
+  │   GET  | http://localhost:3000/dev/marketplace/{canisterId}/cache/{tokens}                  │
+  │   POST | http://localhost:3000/2015-03-31/functions/cacheCollectionMeta/invocations         │
+  │   GET  | http://localhost:3000/dev/marketplace/{canisterId}/nft/{token}                     │
+  │   POST | http://localhost:3000/2015-03-31/functions/getTokenMeta/invocations                │
+  │   GET  | http://localhost:3000/dev/marketplace/{canisterId}/nfts/{sorting}/{order}/{page}   │
+
+  ...
+```
+
+At this point you should have the Kyasshu services running!
+
+Check the topic of how to get data in your local Kyasshu to learn more.
+
+### Get data in the local Kyasshu
+
+Following, is a command to make a HTTP GET request to the `marketplace` endpoint.
+
+We're going to pass the `mainnet` Crowns Canister ID (vlhm2-4iaaa-aaaam-qaatq-cai) and request a total of `25` tokens - keep the number as short as possible for your needs, otherwise it might be time consuming e.g. for 10k would take a considerable amount of time to handle.
+
+```sh
+curl -X GET http://localhost:3000/dev/marketplace/vlhm2-4iaaa-aaaam-qaatq-cai/cache/25
+```
+
+To learn more about the Marketplace endpoints, check the [Kyasshu documentation](https://github.com/Psychedelic/kyasshu).
 
 ## 🙋‍♀️ F.A.Q
 
