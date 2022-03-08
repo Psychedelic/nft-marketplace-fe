@@ -8,7 +8,7 @@ export interface TableLayoutProps {
   columns: any;
   data: Array<object>;
   tableType: any;
-  columnsToHide: Array<string>;
+  columnsToHide?: Array<string>;
 }
 
 export const TableLayout = ({
