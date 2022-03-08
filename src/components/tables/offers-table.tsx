@@ -19,6 +19,7 @@ export const OffersTable = () => {
   const columns = useMemo(
     () => [
       {
+        id: 'price',
         Header: t('translation:tables.titles.price'),
         accessor: ({ price }: rowProps) => (
           <PriceDetailsCell
@@ -29,24 +30,28 @@ export const OffersTable = () => {
         ),
       },
       {
+        id: 'floorDifference',
         Header: t('translation:tables.titles.floorDifference'),
         accessor: ({ floorDifference }: rowProps) => (
           <TextCell text={floorDifference} type="offers" />
         ),
       },
       {
+        id: 'expiration',
         Header: t('translation:tables.titles.expiration'),
         accessor: ({ expiration }: rowProps) => (
           <TextCell text={expiration} type="offers" />
         ),
       },
       {
+        id: 'from',
         Header: t('translation:tables.titles.from'),
         accessor: ({ offerFrom }: rowProps) => (
           <TextLinkCell text={offerFrom} url="" type="offers" />
         ),
       },
       {
+        id: 'action',
         Header: t('translation:tables.titles.action'),
         accessor: () => (
           <ButtonWrapper>
