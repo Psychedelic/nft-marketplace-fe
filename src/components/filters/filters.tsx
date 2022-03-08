@@ -205,7 +205,6 @@ export const Filters = () => {
                         // eslint-disable-next-line
                         statusFilter !== '' && setStatusFilter('');
                         applyFilter('Status', `${t('translation:buttons.action.buyNow')}`);
-                        console.log(statusFilter);
                       }}
                     />
                   </FilterButtonWrapper>
@@ -224,7 +223,6 @@ export const Filters = () => {
                         // eslint-disable-next-line
                         statusFilter !== '' && setStatusFilter('');
                         applyFilter('Status', `${t('translation:buttons.action.hasOffers')}`);
-                        console.log(statusFilter);
                       }}
                     />
                   </FilterButtonWrapper>
