@@ -19,6 +19,7 @@ export const CollectionTabs = () => {
   const { t } = useTranslation();
   const [currentTab, setCurrentTab] = useState('items');
   const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
   // state for active chips goes here
   // based on their text content we'd have the filters to be displayed
@@ -27,8 +28,8 @@ export const CollectionTabs = () => {
   const itemIsActive = currentTab === 'items' ? 'active' : 'inactive';
   // eslint-disable-next-line
   const activityIsActive = currentTab === 'activity' ? 'active' : 'inactive';
-  const itemeActiveTheme = theme === 'lightTheme' ? itemsActive : itemsActiveDark;
-  const activityActiveTheme = theme === 'lightTheme' ? activityActive : activityActiveDark;
+  const itemeActiveTheme = isLightTheme ? itemsActive : itemsActiveDark;
+  const activityActiveTheme = isLightTheme ? activityActive : activityActiveDark;
 
   return (
     <TabsRoot defaultValue="items" value={currentTab}>

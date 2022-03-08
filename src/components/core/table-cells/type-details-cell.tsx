@@ -22,32 +22,36 @@ export const TypeDetailsCell = ({
   type,
   tableType,
   theme,
-}: TypeDetailsCellProps) => (
-  <TypeDetails>
-    {type === 'transfer' && (
-      <TypeLogo
-        src={theme === 'lightTheme' ? transferLogo : transferLogoDark}
-        alt="transfer"
-      />
-    )}
-    {type === 'mint' && (
-      <TypeLogo
-        src={theme === 'lightTheme' ? mintLogo : mintLogoDark}
-        alt="mint"
-      />
-    )}
-    {type === 'list' && (
-      <TypeLogo
-        src={theme === 'lightTheme' ? listLogo : listLogoDark}
-        alt="list"
-      />
-    )}
-    {type === 'sale' && (
-      <TypeLogo
-        src={theme === 'lightTheme' ? saleLogo : saleLogoDark}
-        alt="sale"
-      />
-    )}
-    <TypeName tableType={tableType}>{name}</TypeName>
-  </TypeDetails>
-);
+}: TypeDetailsCellProps) => {
+  const isLightTheme = theme === 'lightTheme';
+
+  return (
+    <TypeDetails>
+      {type === 'transfer' && (
+        <TypeLogo
+          src={isLightTheme ? transferLogo : transferLogoDark}
+          alt="transfer"
+        />
+      )}
+      {type === 'mint' && (
+        <TypeLogo
+          src={isLightTheme ? mintLogo : mintLogoDark}
+          alt="mint"
+        />
+      )}
+      {type === 'list' && (
+        <TypeLogo
+          src={isLightTheme ? listLogo : listLogoDark}
+          alt="list"
+        />
+      )}
+      {type === 'sale' && (
+        <TypeLogo
+          src={isLightTheme ? saleLogo : saleLogoDark}
+          alt="sale"
+        />
+      )}
+      <TypeName tableType={tableType}>{name}</TypeName>
+    </TypeDetails>
+  );
+};

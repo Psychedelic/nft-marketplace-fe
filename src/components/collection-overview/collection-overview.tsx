@@ -28,6 +28,7 @@ import backDark from '../../assets/buttons/back-dark.svg';
 export const CollectionOverview = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
   return (
     <NftMetadataWrapper>
@@ -36,7 +37,7 @@ export const CollectionOverview = () => {
         <NftMetadataContentWrapper>
           <NftProfilePictureWrapper>
             <img
-              src={theme === 'lightTheme' ? crown : crownDark}
+              src={isLightTheme ? crown : crownDark}
               alt="crown-pfp"
             />
           </NftProfilePictureWrapper>
@@ -58,13 +59,13 @@ export const CollectionOverview = () => {
           </LinkButton>
           <LinkButton url="https://discord.gg/yVEcEzmrgm">
             <img
-              src={theme === 'lightTheme' ? discord : discordDark}
+              src={isLightTheme ? discord : discordDark}
               alt={t('translation:buttons.links.discord')}
             />
           </LinkButton>
           <LinkButton url="https://twitter.com/cap_ois">
             <img
-              src={theme === 'lightTheme' ? twitter : twitterDark}
+              src={isLightTheme ? twitter : twitterDark}
               alt={t('translation:buttons.links.twitter')}
             />
           </LinkButton>
@@ -72,7 +73,7 @@ export const CollectionOverview = () => {
           <Tooltip text={t('translation:common.comingSoon')}>
             <LinkButton>
               <img
-                src={theme === 'lightTheme' ? back : backDark}
+                src={isLightTheme ? back : backDark}
                 alt={t('translation:buttons.links.back')}
               />
             </LinkButton>

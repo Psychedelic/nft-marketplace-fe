@@ -34,6 +34,7 @@ export const NavBar = ({ currentTheme }: NavbarProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
   const selectedTheme = currentTheme === 'darkTheme' ? 'lightTheme' : 'darkTheme';
 
   return (
@@ -46,7 +47,7 @@ export const NavBar = ({ currentTheme }: NavbarProps) => {
           />
           <LogoName
             src={
-              theme === 'lightTheme' ? appName : appNameDark
+              isLightTheme ? appName : appNameDark
             }
             alt={t('translation:common.collectionName')}
           />
@@ -59,7 +60,7 @@ export const NavBar = ({ currentTheme }: NavbarProps) => {
             handleClick={() => dispatch(themeActions.setTheme(selectedTheme))}
           >
             <img
-              src={theme === 'lightTheme' ? moon : sun}
+              src={isLightTheme ? moon : sun}
               alt=""
             />
           </LinkButton>

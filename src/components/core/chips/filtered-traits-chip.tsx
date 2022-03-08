@@ -31,6 +31,7 @@ export const FilteredTraitsChip = ({
 }: FilteredTraitsChipProps) => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
   return (
     <TraitChipContainer type="filtered">
@@ -41,7 +42,7 @@ export const FilteredTraitsChip = ({
       </TraitSpecsContainer>
       <TraitActionContainer onClick={() => removeFilter()}>
         <TraitClear
-          src={theme === 'lightTheme' ? closeIcon : closeIconDark}
+          src={isLightTheme ? closeIcon : closeIconDark}
           alt={t('translation:logoAlts.close')}
         />
       </TraitActionContainer>

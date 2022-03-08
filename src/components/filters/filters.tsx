@@ -51,12 +51,18 @@ export const Filters = () => {
     max: 0,
   });
   const [displayButton, setDisplayButton] = useState<boolean>(false);
+  const allNfts = `${t('translation:buttons.action.allNfts')}`;
   // eslint-disable-next-line
   const [displayFilter, setDisplayFilter] =
-    useState<string>('All Nfts');
+    useState<string>(allNfts);
+  const isLightTheme = theme === 'lightTheme';
 
-  const closeFiltersIconTheme = theme === 'lightTheme' ? closeFiltersIcon : closeFiltersIconDark;
-  const openFiltersIconTheme = theme === 'lightTheme' ? openFiltersIcon : openFiltersIconDark;
+  const closeFiltersIconTheme = isLightTheme ? closeFiltersIcon : closeFiltersIconDark;
+  const openFiltersIconTheme = isLightTheme ? openFiltersIcon : openFiltersIconDark;
+
+  const filterExists = (filterName: string) => appliedFilters.some(
+    (appliedFilter) => appliedFilter.filterName === filterName,
+  );
 
   const applyFilter = (
     filterCategory: string,
@@ -70,16 +76,19 @@ export const Filters = () => {
       (appliedFilter) => appliedFilter.filterName === filterName,
     );
 
+    const selectStatusFilter = filterCategory === 'Status' && setStatusFilter(filterName);
+    // eslint-disable-next-line
+    const selectDisplayFilter = filterCategory === 'Display' && setDisplayFilter(filterName);
+
     switch (true) {
       case filterCategoryExists && filterNameExists:
         dispatch(filterActions.removeFilter(filterName));
-        console.log('this filter has already been applied');
         break;
       case filterCategoryExists && !filterNameExists:
         // eslint-disable-next-line
-        filterCategory === 'Status' && setStatusFilter(filterName);
+        selectStatusFilter;
         // eslint-disable-next-line
-        filterCategory === 'Display' && setDisplayFilter(filterName);
+        selectDisplayFilter;
         dispatch(
           filterActions.updateFilter({
             filterCategory,
@@ -89,9 +98,9 @@ export const Filters = () => {
         break;
       default:
         // eslint-disable-next-line
-        filterCategory === 'Status' && setStatusFilter(filterName);
+        selectStatusFilter;
         // eslint-disable-next-line
-        filterCategory === 'Display' && setDisplayFilter(filterName);
+        selectDisplayFilter;
         dispatch(
           filterActions.applyFilter({
             filterName,
@@ -136,7 +145,7 @@ export const Filters = () => {
               <ClearButton
                 onClick={() => {
                   setStatusFilter('');
-                  setDisplayFilter('All Nfts');
+                  setDisplayFilter(allNfts);
                 }}
               >
                 Clear All
@@ -150,14 +159,14 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        displayFilter === 'All Nfts'
+                        displayFilter === allNfts
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.allNfts')}
                       handleClick={() => {
-                        setDisplayFilter('All Nfts');
-                        dispatch(filterActions.removeFilter('My Nfts'));
+                        setDisplayFilter(allNfts);
+                        dispatch(filterActions.removeFilter(allNfts));
                       }}
                     />
                   </FilterButtonWrapper>
@@ -167,7 +176,7 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        displayFilter === 'My Nfts'
+                        filterExists(`${t('translation:buttons.action.myNfts')}`)
                           ? 'outline'
                           : 'secondary'
                       }
@@ -175,7 +184,7 @@ export const Filters = () => {
                       handleClick={() => {
                         // eslint-disable-next-line
                         displayFilter !== '' && setDisplayFilter('');
-                        applyFilter('Display', 'My Nfts');
+                        applyFilter('Display', `${t('translation:buttons.action.myNfts')}`);
                       }}
                     />
                   </FilterButtonWrapper>
@@ -187,7 +196,7 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        statusFilter === 'Buy Now'
+                        filterExists(`${t('translation:buttons.action.buyNow')}`)
                           ? 'outline'
                           : 'secondary'
                       }
@@ -195,7 +204,8 @@ export const Filters = () => {
                       handleClick={() => {
                         // eslint-disable-next-line
                         statusFilter !== '' && setStatusFilter('');
-                        applyFilter('Status', 'Buy Now');
+                        applyFilter('Status', `${t('translation:buttons.action.buyNow')}`);
+                        console.log(statusFilter);
                       }}
                     />
                   </FilterButtonWrapper>
@@ -205,7 +215,7 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        statusFilter === 'Has Offers'
+                        filterExists(`${t('translation:buttons.action.hasOffers')}`)
                           ? 'outline'
                           : 'secondary'
                       }
@@ -213,7 +223,8 @@ export const Filters = () => {
                       handleClick={() => {
                         // eslint-disable-next-line
                         statusFilter !== '' && setStatusFilter('');
-                        applyFilter('Status', 'Has Offers');
+                        applyFilter('Status', `${t('translation:buttons.action.hasOffers')}`);
+                        console.log(statusFilter);
                       }}
                     />
                   </FilterButtonWrapper>
@@ -256,7 +267,9 @@ export const Filters = () => {
                   <ActionButton
                     type="secondary"
                     text="Apply"
-                    handleClick={() => applyFilter('Price Range', priceFilterValue)}
+                    handleClick={() => {
+                      applyFilter('Price Range', priceFilterValue);
+                    }}
                   />
                 )}
               </FilterGroup>

@@ -26,13 +26,14 @@ export const PriceFilterDropdown = ({
     `${defaultValue}`,
   );
   const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
   return (
     <DropdownRoot>
       <DropdownStyle>
         <p>{selectedValue}</p>
         <img
-          src={theme === 'lightTheme' ? arrowdown : arrowdownDark}
+          src={isLightTheme ? arrowdown : arrowdownDark}
           alt="arrow-down"
         />
       </DropdownStyle>

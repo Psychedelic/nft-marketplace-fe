@@ -25,9 +25,10 @@ export const OfferAccordion = () => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
-  const arrowdownTheme = theme === 'lightTheme' ? arrowdown : arrowdownDark;
-  const arrowupTheme = theme === 'lightTheme' ? arrowup : arrowupDark;
+  const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
+  const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
@@ -55,7 +56,7 @@ export const OfferAccordion = () => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
-            <img src={theme === 'lightTheme' ? offer : offerDark} alt="offer-collection" />
+            <img src={isLightTheme ? offer : offerDark} alt="offer-collection" />
             <p>
               {`${t('translation:accordions.offer.header.offer')}`}
             </p>

@@ -41,21 +41,22 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
-  const arrowdownTheme = theme === 'lightTheme' ? arrowdown : arrowdownDark;
-  const arrowupTheme = theme === 'lightTheme' ? arrowup : arrowupDark;
+  const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
+  const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
   const Buttons = [
     {
-      image: theme === 'lightTheme' ? discord : discordDark,
+      image: isLightTheme ? discord : discordDark,
       alt: 'discord',
     },
     {
-      image: theme === 'lightTheme' ? twitter : twitterDark,
+      image: isLightTheme ? twitter : twitterDark,
       alt: 'twitter',
     },
     {
-      image: theme === 'lightTheme' ? back : backDark,
+      image: isLightTheme ? back : backDark,
       alt: 'back',
     },
   ];
@@ -100,7 +101,7 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
         >
           <div>
             <img
-              src={theme === 'lightTheme' ? info : infoDark}
+              src={isLightTheme ? info : infoDark}
               alt="about-collection"
             />
             <p>

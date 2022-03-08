@@ -17,6 +17,7 @@ import verified from '../../assets/verified-small.svg';
 export const NFTMetaData = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
   return (
     <CollectionMetadataWrapper>
@@ -30,7 +31,7 @@ export const NFTMetaData = () => {
       <Tooltip text={t('translation:common.comingSoon')}>
         <LinkButton>
           <img
-            src={theme === 'lightTheme' ? back : backDark}
+            src={isLightTheme ? back : backDark}
             alt={t('translation:buttons.links.back')}
           />
         </LinkButton>

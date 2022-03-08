@@ -18,6 +18,7 @@ import copyDark from '../../../assets/copy-dark.svg';
 export const CardOptionsDropdown = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
 
   return (
     <DropdownMenu.Root>
@@ -41,7 +42,7 @@ export const CardOptionsDropdown = () => {
                 {`${t('translation:dropdown.moreOptions.copyLink')}`}
               </p>
               <img
-                src={theme === 'lightTheme' ? copy : copyDark}
+                src={isLightTheme ? copy : copyDark}
                 alt="copy-link"
               />
             </Flex>
