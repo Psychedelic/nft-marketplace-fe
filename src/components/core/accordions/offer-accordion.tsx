@@ -8,6 +8,7 @@ import {
   AccordionHead,
   AccordionHeadContent,
   FlexRight,
+  PlugButtonWrapper,
 } from './styles';
 import offer from '../../../assets/accordions/offer.svg';
 import offerDark from '../../../assets/accordions/offer-dark.svg';
@@ -18,10 +19,15 @@ import arrowup from '../../../assets/accordions/arrow-up.svg';
 import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import { OffersTable } from '../../tables';
 
+import { usePlugStore } from '../../../store';
+import { Plug } from '../../plug';
+
 export const OfferAccordion = () => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [theme, setTheme] = useState('lightTheme');
+
+  const { isConnected } = usePlugStore();
 
   useEffect(() => {
     const getTheme = localStorage.getItem('theme');
@@ -30,12 +36,14 @@ export const OfferAccordion = () => {
     }
   });
 
-  const arrowdownTheme = theme === 'lightTheme' ? arrowdown : arrowdownDark;
+  // eslint-disable-next-line operator-linebreak
+  const arrowdownTheme =
+    theme === 'lightTheme' ? arrowdown : arrowdownDark;
   const arrowupTheme = theme === 'lightTheme' ? arrowup : arrowupDark;
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
-      <AccordionHead>
+      <AccordionHead flexDirection="column">
         <AccordionHeadContent flexProperties="offer">
           <FlexRight>
             <img src={dfinity} alt={dfinity} />
@@ -50,6 +58,11 @@ export const OfferAccordion = () => {
           </FlexRight>
           <h3>$1,283.12</h3>
         </AccordionHeadContent>
+        {!isConnected && (
+          <PlugButtonWrapper>
+            <Plug />
+          </PlugButtonWrapper>
+        )}
       </AccordionHead>
       <Accordion.Item value="item-1">
         <AccordionTrigger
@@ -59,7 +72,10 @@ export const OfferAccordion = () => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
-            <img src={theme === 'lightTheme' ? offer : offerDark} alt="offer-collection" />
+            <img
+              src={theme === 'lightTheme' ? offer : offerDark}
+              alt="offer-collection"
+            />
             <p>
               {`${t('translation:accordions.offer.header.offer')}`}
             </p>

@@ -14,7 +14,7 @@ export const PlugButton = ({
   handleClick,
   text,
 }: PlugButtonProps) => (
-  <PlugButtonContainer onClick={handleClick}>
+  <PlugButtonContainer onClick={handleClick} className="plug-button">
     <PlugButtonText>{text}</PlugButtonText>
   </PlugButtonContainer>
 );
