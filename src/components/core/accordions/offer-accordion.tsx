@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import {
-  useThemeStore,
-  usePlugStore,
-} from '../../../store';
-import {
   AccordionStyle,
   AccordionTrigger,
   AccordionContent,
@@ -22,6 +18,7 @@ import arrowdownDark from '../../../assets/accordions/arrow-down-dark.svg';
 import arrowup from '../../../assets/accordions/arrow-up.svg';
 import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import { OffersTable } from '../../tables';
+import { useThemeStore, usePlugStore } from '../../../store';
 import { Plug } from '../../plug';
 
 export const OfferAccordion = () => {
@@ -66,7 +63,10 @@ export const OfferAccordion = () => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
-            <img src={isLightTheme ? offer : offerDark} alt="offer-collection" />
+            <img
+              src={isLightTheme ? offer : offerDark}
+              alt="offer-collection"
+            />
             <p>
               {`${t('translation:accordions.offer.header.offer')}`}
             </p>
