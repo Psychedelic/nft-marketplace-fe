@@ -80,7 +80,7 @@ export const Filters = () => {
     // eslint-disable-next-line
     const selectDisplayFilter = filterCategory === 'Display' && setDisplayFilter(filterName);
 
-    // TODO: do something about the switch statement atm hardtyped 
+    // TODO: do something about the switch statement atm hardtyped
     switch (true) {
       case filterCategoryExists && filterNameExists:
         dispatch(filterActions.removeFilter(filterName));
