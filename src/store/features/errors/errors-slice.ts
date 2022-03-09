@@ -12,16 +12,7 @@ export interface ErrorState {
 }
 
 const initialState: ErrorState = {
-  errorMessages: [
-    {
-      message: 'Failed to connect to Plug, please try again.',
-      id: 10,
-    },
-    {
-      message: 'Failed to fetch collection details, please try refreshing the page.',
-      id: 100,
-    },
-  ],
+  errorMessages: [],
 };
 
 export const errorSlice = createSlice({
