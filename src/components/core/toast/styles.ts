@@ -30,9 +30,12 @@ const swipeOut = keyframes({
   },
 });
 
+export const ToastProvider = styled(ToastPrimitive.Provider, {
+});
+
 export const ToastViewport = styled(ToastPrimitive.Viewport, {
   position: 'fixed',
-  bottom: 0,
+  top: 65,
   right: 0,
   display: 'flex',
   flexDirection: 'column',
@@ -56,10 +59,6 @@ export const Toast = styled(ToastPrimitive.Root, {
   gridTemplateColumns: 'auto max-content',
   columnGap: 15,
   alignItems: 'flex-start',
-  position: 'fixed',
-  top: '85px',
-  right: '30px',
-  width: '20%',
 
   '@media (prefers-reduced-motion: no-preference)': {
     '&[data-state="open"]': {
@@ -102,10 +101,6 @@ export const ToastDescriptionIcon = styled('img', {
   width: '15px',
   marginRight: '10px',
   top: '2px',
-});
-
-export const ToastAction = styled(ToastPrimitive.Action, {
-  gridArea: 'action',
 });
 
 export const ToastActionIcon = styled('img', {

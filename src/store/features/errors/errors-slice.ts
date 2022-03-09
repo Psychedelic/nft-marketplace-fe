@@ -2,33 +2,43 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
 
+export type errorMessages = {
+  message: string;
+  id: number;
+};
+
 export interface ErrorState {
-  nftsErrorMessage: string;
-  plugErrorMessage: string;
-  filtersErrorMessage: string;
+  errorMessages: errorMessages[];
 }
 
 const initialState: ErrorState = {
-  nftsErrorMessage: '',
-  plugErrorMessage: '',
-  filtersErrorMessage: '',
+  errorMessages: [
+    {
+      message: 'Failed to connect to Plug, please try again.',
+      id: 10,
+    },
+    {
+      message: 'Failed to fetch collection details, please try refreshing the page.',
+      id: 100,
+    },
+  ],
 };
 
 export const errorSlice = createSlice({
   name: 'errors',
   initialState,
   reducers: {
-    setNftErrorMessage: (state, action: PayloadAction<string>) => {
-      state.nftsErrorMessage = action.payload;
+    setErrorMessage: (state, action: PayloadAction<string>) => {
+      state.errorMessages.push({
+        message: action.payload,
+        id: Date.now(),
+      });
     },
-    setPlugErrorMessage: (state, action: PayloadAction<string>) => {
-      state.plugErrorMessage = action.payload;
-    },
-    setFiltersErrorMessage: (
-      state,
-      action: PayloadAction<string>,
-    ) => {
-      state.filtersErrorMessage = action.payload;
+    removeErrorMessage: (state, action: PayloadAction<number>) => {
+      console.log(action.payload);
+      state.errorMessages = state.errorMessages.filter(
+        (error) => error.id !== action.payload,
+      );
     },
   },
 });

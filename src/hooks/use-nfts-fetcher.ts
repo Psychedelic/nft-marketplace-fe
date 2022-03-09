@@ -67,7 +67,7 @@ export const useNFTSFetcher = () => {
         console.warn(error);
 
         // set NFTS failed to load
-        dispatch(errorActions.setNftErrorMessage(error.message));
+        dispatch(errorActions.setErrorMessage(error.message));
         dispatch(nftsActions.setFailedToLoadNFTS(false));
       }
     })();

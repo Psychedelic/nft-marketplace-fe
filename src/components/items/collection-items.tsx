@@ -30,7 +30,7 @@ export const CollectionItems = () => {
   const appliedFilters = useFilterStore();
 
   const { loadingNFTs } = useNFTSStore();
-  const { nftsErrorMessage } = useErrorsStore();
+  const errorMessages = useErrorsStore();
 
   const dropDownContent = [
     `${t('translation:dropdown.priceFilter.recentlyListed')}`,
@@ -104,8 +104,7 @@ export const CollectionItems = () => {
           </Flex>
         </ContentWrapper>
         {loadingNFTs ? <NftSkeletonList /> : <NftList />}
-        {nftsErrorMessage && <NftSkeletonList />}
-        {nftsErrorMessage && <Error />}
+        {errorMessages && <NftSkeletonList />}
       </FilteredContainer>
     </Container>
   );
