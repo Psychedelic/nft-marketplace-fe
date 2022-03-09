@@ -21,6 +21,7 @@ export const useNFTSFetcher = () => {
       dispatch(nftsActions.setIsNFTSLoading(true));
 
       try {
+        // TODO: Use page number and count from store
         const response = await axios.get(
           `http://localhost:3000/dev/marketplace/${filters.collection}/nfts/${filters.sort}/${filters.order}/${filters.page}?count=${filters.count}`,
         );
@@ -49,6 +50,7 @@ export const useNFTSFetcher = () => {
           return metadata;
         });
 
+        // TODO: update store by applying pagination
         // update store with loaded NFTS details
         dispatch(nftsActions.setLoadedNFTS(extractedNFTSList));
       } catch (error) {

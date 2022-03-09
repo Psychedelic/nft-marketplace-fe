@@ -38,7 +38,9 @@ export const CollectionItems = () => {
   ];
 
   useNFTSFetcher();
+  // TODO: use infinite loader to do pagination
 
+  // TODO: move applied filters to seperate component
   const handleRemoveFilter = (appliedFilter: object) => {
     // eslint-disable-next-line no-console
     if (appliedFilter.filterCategory === 'Price Range') {
