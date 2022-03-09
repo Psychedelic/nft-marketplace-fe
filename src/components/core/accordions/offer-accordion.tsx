@@ -66,7 +66,10 @@ export const OfferAccordion = () => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
-            <img src={isLightTheme ? offer : offerDark} alt="offer-collection" />
+            <img
+              src={isLightTheme ? offer : offerDark}
+              alt="offer-collection"
+            />
             <p>
               {`${t('translation:accordions.offer.header.offer')}`}
             </p>
