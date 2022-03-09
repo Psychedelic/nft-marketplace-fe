@@ -28,17 +28,15 @@ export const nftsSlice = createSlice({
       state.loadingNFTs = action.payload;
       if (state.failedToLoadNFTS) {
         state.failedToLoadNFTS = false;
-        state.failedToLoadNFTSMessage = '';
       }
     },
     setLoadedNFTS: (state, action: PayloadAction<NFTMetadata[]>) => {
       state.loadedNFTS = action.payload;
       state.loadingNFTs = false;
     },
-    setFailedToLoadNFTS: (state, action: PayloadAction<string>) => {
-      state.failedToLoadNFTSMessage = action.payload;
-      state.failedToLoadNFTS = true;
-      state.loadingNFTs = false;
+    setFailedToLoadNFTS: (state, action: PayloadAction<boolean>) => {
+      state.failedToLoadNFTS = !action.payload;
+      state.loadingNFTs = action.payload;
     },
   },
 });
