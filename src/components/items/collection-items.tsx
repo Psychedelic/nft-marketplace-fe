@@ -6,7 +6,7 @@ import {
   useAppDispatch,
   useNFTSStore,
 } from '../../store';
-import { useNFTSFetcher } from '../../hooks';
+import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import {
