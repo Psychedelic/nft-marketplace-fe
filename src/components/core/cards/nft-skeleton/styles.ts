@@ -21,12 +21,12 @@ export const CardWrapper = styled('div', {
 });
 
 export const SkeletonLarge = styled('div', {
-  height: '220px',
+  height: '200px',
   width: '100%',
+  margin: '10px 0px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   borderRadius: '14px',
-  background:
-    '$skeletonBackground',
+  background: '$skeletonBackground',
 });
 
 export const SkeletonSmall = styled('div', {
