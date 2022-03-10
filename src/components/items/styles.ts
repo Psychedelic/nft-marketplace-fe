@@ -44,3 +44,10 @@ export const ContentFlex = styled('div', {
   display: 'flex',
   alignItems: 'center',
 });
+
+export const SkeletonListWrapper = styled('div', {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill,minmax(185px, 1fr))',
+  gridAutoFlow: 'row dense',
+  gridGap: '35px 50px',
+});

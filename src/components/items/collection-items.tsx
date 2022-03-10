@@ -20,6 +20,7 @@ import {
   ContentWrapper,
   Flex,
   ContentFlex,
+  SkeletonListWrapper,
 } from './styles';
 
 export const CollectionItems = () => {
@@ -102,7 +103,7 @@ export const CollectionItems = () => {
             </ContentFlex>
           </Flex>
         </ContentWrapper>
-        {loadingNFTs ? <NftSkeletonList /> : <NftList />}
+        {loadingNFTs ? <SkeletonListWrapper><NftSkeletonList /></SkeletonListWrapper> : <NftList />}
       </FilteredContainer>
     </Container>
   );
