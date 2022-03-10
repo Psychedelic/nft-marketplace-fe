@@ -52,9 +52,7 @@ export const Filters = () => {
   });
   const [displayButton, setDisplayButton] = useState<boolean>(false);
   const allNfts = `${t('translation:buttons.action.allNfts')}`;
-  // eslint-disable-next-line
-  const [displayFilter, setDisplayFilter] =
-    useState<string>(allNfts);
+  const [displayFilter, setDisplayFilter] = useState<string>(allNfts);
   const isLightTheme = theme === 'lightTheme';
 
   const closeFiltersIconTheme = isLightTheme ? closeFiltersIcon : closeFiltersIconDark;
@@ -77,7 +75,6 @@ export const Filters = () => {
     );
 
     const selectStatusFilter = filterCategory === 'Status' && setStatusFilter(filterName);
-    // eslint-disable-next-line
     const selectDisplayFilter = filterCategory === 'Display' && setDisplayFilter(filterName);
 
     // TODO: do something about the switch statement atm hardtyped
@@ -183,8 +180,7 @@ export const Filters = () => {
                       }
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
-                        // eslint-disable-next-line
-                        displayFilter !== '' && setDisplayFilter('');
+                        if (displayFilter !== '') setDisplayFilter('');
                         applyFilter('Display', `${t('translation:buttons.action.myNfts')}`);
                       }}
                     />
@@ -203,8 +199,7 @@ export const Filters = () => {
                       }
                       text={t('translation:buttons.action.buyNow')}
                       handleClick={() => {
-                        // eslint-disable-next-line
-                        statusFilter !== '' && setStatusFilter('');
+                        if (statusFilter !== '') setStatusFilter('');
                         applyFilter('Status', `${t('translation:buttons.action.buyNow')}`);
                       }}
                     />
@@ -221,8 +216,7 @@ export const Filters = () => {
                       }
                       text={t('translation:buttons.action.hasOffers')}
                       handleClick={() => {
-                        // eslint-disable-next-line
-                        statusFilter !== '' && setStatusFilter('');
+                        if (statusFilter !== '') setStatusFilter('');
                         applyFilter('Status', `${t('translation:buttons.action.hasOffers')}`);
                       }}
                     />

@@ -26,7 +26,6 @@ export const CollectionTabs = () => {
   // if empty we'll display nothing
 
   const itemIsActive = currentTab === 'items' ? 'active' : 'inactive';
-  // eslint-disable-next-line
   const activityIsActive = currentTab === 'activity' ? 'active' : 'inactive';
   const itemeActiveTheme = isLightTheme ? itemsActive : itemsActiveDark;
   const activityActiveTheme = isLightTheme ? activityActive : activityActiveDark;

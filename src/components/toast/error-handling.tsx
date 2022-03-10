@@ -1,22 +1,20 @@
 import React, { useEffect } from 'react';
-// import * as ToastPrimitive from '@radix-ui/react-toast';
 import {
   ToastViewport,
   Toast,
   ToastDescription,
   ToastDescriptionText,
   ToastDescriptionIcon,
-  // ToastAction,
   ToastActionIcon,
   ToastProvider,
 } from './styles';
-import warning from '../../../assets/error-icon.svg';
-import closeWarning from '../../../assets/close-warning.svg';
+import warning from '../../assets/error-icon.svg';
+import closeWarning from '../../assets/close-warning.svg';
 import {
   errorActions,
   useAppDispatch,
   useErrorsStore,
-} from '../../../store';
+} from '../../store';
 
 export const Error = () => {
   const [open, setOpen] = React.useState(false);
@@ -24,14 +22,12 @@ export const Error = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // eslint-disable-next-line
-    errorMessages && setOpen(true);
+    if (errorMessages) setOpen(true);
   }, []);
 
   return (
     <>
       <ToastProvider swipeDirection="right">
-        {/* eslint-disable-next-line */}
         {errorMessages.map((error) => (
           <Toast
             open={open}
@@ -49,7 +45,6 @@ export const Error = () => {
                 </ToastDescriptionText>
               </div>
             </ToastDescription>
-            {/* eslint-disable-next-line */}
             <ToastActionIcon
               src={closeWarning}
               alt="close-warning"

@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {
-  useErrorsStore,
   useThemeStore,
 } from './store';
 import { darkTheme, theme as defaultTheme } from './stitches.config';
@@ -13,7 +12,6 @@ import DevelopedComponents from './views/DevelopedComponents';
 // eslint-disable-next-line
 const App = () => {
   const { theme } = useThemeStore();
-  const errorMessages = useErrorsStore();
 
   return (
     <div
@@ -34,7 +32,7 @@ const App = () => {
           />
         </Routes>
       </BrowserRouter>
-      {errorMessages && <Error />}
+      <Error />
     </div>
   );
 };
