@@ -5,13 +5,11 @@ import {
   filterActions,
   useAppDispatch,
   useNFTSStore,
-  useErrorsStore,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import {
-  Error,
   FilteredCountChip,
   FilteredTraitsChip,
   PriceFilterDropdown,
@@ -30,7 +28,6 @@ export const CollectionItems = () => {
   const appliedFilters = useFilterStore();
 
   const { loadingNFTs } = useNFTSStore();
-  const errorMessages = useErrorsStore();
 
   const dropDownContent = [
     `${t('translation:dropdown.priceFilter.recentlyListed')}`,
@@ -104,7 +101,6 @@ export const CollectionItems = () => {
           </Flex>
         </ContentWrapper>
         {loadingNFTs ? <NftSkeletonList /> : <NftList />}
-        {errorMessages && <NftSkeletonList />}
       </FilteredContainer>
     </Container>
   );
