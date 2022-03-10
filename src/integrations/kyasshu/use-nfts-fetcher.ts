@@ -7,7 +7,7 @@ import { useAppDispatch, nftsActions } from '../../store';
 const filters = {
   collection: 'vlhm2-4iaaa-aaaam-qaatq-cai',
   sort: 'lastModified',
-  order: 'desc',
+  order: 'd',
   page: '0',
   count: '25',
 };
