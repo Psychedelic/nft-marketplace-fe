@@ -1,8 +1,7 @@
 import React from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
 import { NftCard } from '../core/cards/nft-card';
 import { NftSkeletonList } from '../nft-skeleton-list';
-import { ListWrapper } from './styles';
+import { InfiniteScrollWrapper } from './styles';
 
 import { useNFTSStore, useAppDispatch } from '../../store';
 import { fetchNFTS } from '../../integrations/kyasshu/utils';
@@ -15,33 +14,31 @@ export const NftList = () => {
   const dispatch = useAppDispatch();
 
   const loadMoreNFTS = () => {
-    if (!loadingNFTs && hasMoreNFTs) {
-      fetchNFTS({
-        dispatch,
-        sort: 'lastModified',
-        order: 'd',
-        page: nextPageNo,
-        count: '25',
-      });
-    }
+    if (loadingNFTs || !hasMoreNFTs) return;
+
+    fetchNFTS({
+      dispatch,
+      sort: 'lastModified',
+      order: 'd',
+      page: nextPageNo,
+      count: '25',
+    });
   };
 
   return (
-    <ListWrapper>
-      <InfiniteScroll
-        pageStart={0}
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        loadMore={nextPageNo > 0 ? loadMoreNFTS : () => {}}
-        hasMore={hasMoreNFTs}
-        loader={<NftSkeletonList />}
-        useWindow={true || false}
-        threshold={250 * 5}
-        className="infinite-loader"
-      >
-        {loadedNFTS?.map((nft) => (
-          <NftCard data={nft} key={nft.id} />
-        ))}
-      </InfiniteScroll>
-    </ListWrapper>
+    <InfiniteScrollWrapper
+      pageStart={0}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      loadMore={nextPageNo > 0 ? loadMoreNFTS : () => {}}
+      hasMore={hasMoreNFTs}
+      loader={<NftSkeletonList />}
+      useWindow={true || false}
+      threshold={250 * 5}
+      className="infinite-loader"
+    >
+      {loadedNFTS?.map((nft) => (
+        <NftCard data={nft} key={nft.id} />
+      ))}
+    </InfiniteScrollWrapper>
   );
 };

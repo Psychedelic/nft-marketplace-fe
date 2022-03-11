@@ -39,6 +39,7 @@ export const fetchNFTS = async ({
 
     const { data, pages, items } = response.data;
 
+    // TODO: Define nft field types
     const extractedNFTSList = data.map((nft: any) => {
       const metadata = {
         // TODO: update price, lastOffer & traits values
