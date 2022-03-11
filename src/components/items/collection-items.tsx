@@ -27,7 +27,7 @@ export const CollectionItems = () => {
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
 
-  const { loadingNFTs, failedToLoadNFTSMessage } = useNFTSStore();
+  const { loadingNFTs } = useNFTSStore();
 
   const dropDownContent = [
     `${t('translation:dropdown.priceFilter.recentlyListed')}`,
@@ -43,16 +43,10 @@ export const CollectionItems = () => {
     // eslint-disable-next-line no-console
     if (appliedFilter.filterCategory === 'Price Range') {
       dispatch(
-        filterActions.removePriceFilter(
-          appliedFilter.filterCategory,
-        ),
+        filterActions.removePriceFilter(appliedFilter.filterCategory),
       );
     } else {
-      dispatch(
-        filterActions.removeFilter(
-          appliedFilter.filterName,
-        ),
-      );
+      dispatch(filterActions.removeFilter(appliedFilter.filterName));
     }
   };
 
@@ -93,7 +87,11 @@ export const CollectionItems = () => {
               {/* We need an array to store the selected filters */}
               {appliedFilters.map((appliedFilter) => (
                 <FilteredTraitsChip
-                  name={appliedFilter.filterCategory !== 'Price Range' ? appliedFilter.filterName : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`}
+                  name={
+                    appliedFilter.filterCategory !== 'Price Range'
+                      ? appliedFilter.filterName
+                      : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`
+                  }
                   rim={`${appliedFilter.filterCategory}`}
                   appliedFilterValue={appliedFilter}
                   removeFilter={() => handleRemoveFilter(appliedFilter)}
@@ -103,15 +101,6 @@ export const CollectionItems = () => {
           </Flex>
         </ContentWrapper>
         {loadingNFTs ? <NftSkeletonList /> : <NftList />}
-        {failedToLoadNFTSMessage && (
-          <p
-            style={{
-              color: 'red',
-            }}
-          >
-            {failedToLoadNFTSMessage}
-          </p>
-        )}
       </FilteredContainer>
     </Container>
   );

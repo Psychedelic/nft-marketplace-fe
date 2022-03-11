@@ -4,7 +4,7 @@ import JsonBigInt from 'json-bigint';
 
 import { MetadataDesc } from '../declarations/nft';
 import { createActor } from '../integrations/actor';
-import { useAppDispatch, nftsActions } from '../store';
+import { useAppDispatch, nftsActions, errorActions } from '../store';
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
@@ -67,7 +67,7 @@ export const useNFTSFetcher = () => {
         console.warn(error);
 
         // set NFTS failed to load
-        dispatch(nftsActions.setFailedToLoadNFTS(error.message));
+        dispatch(errorActions.setErrorMessage(error.message));
       }
     })();
   }, [dispatch]);

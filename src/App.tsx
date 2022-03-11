@@ -4,7 +4,7 @@ import {
   useThemeStore,
 } from './store';
 import { darkTheme, theme as defaultTheme } from './stitches.config';
-import { NavBar } from './components';
+import { Error, NavBar } from './components';
 import CollectionView from './views/CollectionView';
 import NFTView from './views/NFTView';
 import DevelopedComponents from './views/DevelopedComponents';
@@ -32,6 +32,7 @@ const App = () => {
           />
         </Routes>
       </BrowserRouter>
+      <Error />
     </div>
   );
 };
