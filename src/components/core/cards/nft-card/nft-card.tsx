@@ -34,6 +34,7 @@ export const NftCard = React.memo(
     displayVideo,
   }: NftCardProps) => {
     const { t } = useTranslation();
+    // TODO: Refactor logic to play NFT videos only on hover
 
     return (
       <RouterLink to={`/nft/${data.id}`}>

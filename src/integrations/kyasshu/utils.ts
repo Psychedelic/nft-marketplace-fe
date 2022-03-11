@@ -47,6 +47,7 @@ export const fetchNFTS = async ({
         name: 'Cap Crowns',
         price: nft.lastSalePrice,
         lastOffer: nft.lastSalePrice,
+        // TODO: extract thumbnail URL and assign it to preview
         preview: false,
         location: nft?.url,
         traits: {
