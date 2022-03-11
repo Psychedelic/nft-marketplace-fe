@@ -9,6 +9,8 @@ interface NFTSState {
   loadedNFTS: NFTMetadata[];
   failedToLoadNFTS: boolean;
   failedToLoadNFTSMessage: string;
+  hasMoreNFTs: boolean;
+  nextPageNo: number;
 }
 
 // Define the initial state using that type
@@ -17,7 +19,16 @@ const initialState: NFTSState = {
   loadedNFTS: [],
   failedToLoadNFTS: false,
   failedToLoadNFTSMessage: '',
+  hasMoreNFTs: false,
+  nextPageNo: 0,
 };
+
+interface loadedNFTData {
+  loadedNFTList: NFTMetadata[];
+  totalPages: number;
+  total: number;
+  nextPage: number;
+}
 
 export const nftsSlice = createSlice({
   name: 'nfts',
@@ -30,9 +41,16 @@ export const nftsSlice = createSlice({
         state.failedToLoadNFTS = false;
       }
     },
-    setLoadedNFTS: (state, action: PayloadAction<NFTMetadata[]>) => {
-      state.loadedNFTS = action.payload;
+    setLoadedNFTS: (state, action: PayloadAction<loadedNFTData>) => {
+      const { loadedNFTList, totalPages, nextPage } = action.payload;
       state.loadingNFTs = false;
+      state.loadedNFTS.push(...loadedNFTList);
+      if (nextPage < totalPages) {
+        state.hasMoreNFTs = true;
+        state.nextPageNo = nextPage;
+      } else {
+        state.hasMoreNFTs = false;
+      }
     },
     setFailedToLoadNFTS: (state, action: PayloadAction<boolean>) => {
       state.failedToLoadNFTS = !action.payload;
