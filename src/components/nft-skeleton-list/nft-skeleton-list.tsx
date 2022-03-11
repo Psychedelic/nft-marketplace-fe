@@ -4,9 +4,9 @@ import { NftListData } from '../mock-data/nft-list-data';
 import { ListWrapper } from './styles';
 
 export const NftSkeletonList = () => (
-  <ListWrapper>
+  <>
     {NftListData.map((item) => (
       <NftSkeleton key={item.id} />
     ))}
-  </ListWrapper>
+  </>
 );

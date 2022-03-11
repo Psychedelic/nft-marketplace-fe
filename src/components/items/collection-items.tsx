@@ -20,6 +20,7 @@ import {
   ContentWrapper,
   Flex,
   ContentFlex,
+  SkeletonListWrapper,
 } from './styles';
 
 export const CollectionItems = () => {
@@ -38,7 +39,7 @@ export const CollectionItems = () => {
   ];
 
   useNFTSFetcher();
-
+  // TODO: move applied filters to seperate component
   const handleRemoveFilter = (appliedFilter: object) => {
     // eslint-disable-next-line no-console
     if (appliedFilter.filterCategory === 'Price Range') {
@@ -100,7 +101,7 @@ export const CollectionItems = () => {
             </ContentFlex>
           </Flex>
         </ContentWrapper>
-        {loadingNFTs ? <NftSkeletonList /> : <NftList />}
+        {loadingNFTs ? <SkeletonListWrapper><NftSkeletonList /></SkeletonListWrapper> : <NftList />}
       </FilteredContainer>
     </Container>
   );
