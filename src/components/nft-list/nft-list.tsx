@@ -18,7 +18,6 @@ export const NftList = () => {
     if (!loadingNFTs && hasMoreNFTs) {
       fetchNFTS({
         dispatch,
-        collectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
         sort: 'lastModified',
         order: 'd',
         page: nextPageNo,

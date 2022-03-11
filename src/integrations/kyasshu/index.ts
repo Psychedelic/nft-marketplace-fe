@@ -12,7 +12,6 @@ export const useNFTSFetcher = () => {
   useEffect(() => {
     fetchNFTS({
       dispatch,
-      collectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
       sort: 'lastModified',
       order: 'd',
       page: 0,

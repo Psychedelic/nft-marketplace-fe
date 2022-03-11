@@ -1,10 +1,10 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 import { nftsActions } from '../../store';
+import config from '../../config/env';
 
 export type FetchNFTProps = {
   dispatch: any;
-  collectionId: string;
   sort: string;
   order: string;
   page: number;
@@ -13,7 +13,6 @@ export type FetchNFTProps = {
 
 export const fetchNFTS = async ({
   dispatch,
-  collectionId,
   sort,
   order,
   page,
@@ -30,7 +29,7 @@ export const fetchNFTS = async ({
 
     const response = await axios.post(
       // eslint-disable-next-line max-len
-      `http://localhost:3000/dev/marketplace/${collectionId}/nfts/${sort}/${order}/${page}?count=${count}`,
+      `http://localhost:3000/dev/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`,
       payload,
     );
 
