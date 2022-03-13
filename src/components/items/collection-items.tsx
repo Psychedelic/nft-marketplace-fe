@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
   filterActions,
   useAppDispatch,
   useNFTSStore,
+  settingsActions,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
@@ -46,6 +47,7 @@ export const CollectionItems = () => {
       dispatch(
         filterActions.removePriceFilter(appliedFilter.filterCategory),
       );
+      dispatch(settingsActions.setPriceApplyButton(false));
     } else {
       dispatch(filterActions.removeFilter(appliedFilter.filterName));
     }
@@ -86,7 +88,7 @@ export const CollectionItems = () => {
             <ContentFlex>
               {/* Create state to control display for these chips */}
               {/* We need an array to store the selected filters */}
-              {appliedFilters.map((appliedFilter) => (
+              {appliedFilters.defaultFilters.map((appliedFilter) => (
                 <FilteredTraitsChip
                   name={
                     appliedFilter.filterCategory !== 'Price Range'

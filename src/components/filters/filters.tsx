@@ -5,6 +5,8 @@ import {
   useThemeStore,
   filterActions,
   useAppDispatch,
+  settingsActions,
+  useSettingsStore,
 } from '../../store';
 import {
   ActionButton,
@@ -31,6 +33,7 @@ import {
   CheckboxFilters,
   FilterButtonWrapper,
 } from './styles';
+import { refinedCheckboxDummyData } from '../mock-data/accordion-data';
 
 /* --------------------------------------------------------------------------
  * Filters Component
@@ -44,21 +47,19 @@ export const Filters = () => {
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
   const { theme } = useThemeStore();
+  const { collapsed, displayPriceApplyButton } = useSettingsStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
-  const [filtersOpened, setFiltersOpened] = useState<boolean>(true);
-  const [priceFilterValue, setPriceFilterValue] = useState<object>({
-    min: 0,
-    max: 0,
+  const [priceFilterValue, setPriceFilterValue] = useState({
+    min: '',
+    max: '',
   });
-  const [displayButton, setDisplayButton] = useState<boolean>(false);
-  const allNfts = `${t('translation:buttons.action.allNfts')}`;
-  const [displayFilter, setDisplayFilter] = useState<string>(allNfts);
+  const myNfts = `${t('translation:buttons.action.myNfts')}`;
   const isLightTheme = theme === 'lightTheme';
 
   const closeFiltersIconTheme = isLightTheme ? closeFiltersIcon : closeFiltersIconDark;
   const openFiltersIconTheme = isLightTheme ? openFiltersIcon : openFiltersIconDark;
 
-  const filterExists = (filterName: string) => appliedFilters.some(
+  const filterExists = (filterName: string) => appliedFilters.defaultFilters.some(
     (appliedFilter) => appliedFilter.filterName === filterName,
   );
 
@@ -66,16 +67,13 @@ export const Filters = () => {
     filterCategory: string,
     filterName: any,
   ) => {
-    const filterCategoryExists = appliedFilters.some(
+    const filterCategoryExists = appliedFilters.defaultFilters.some(
       (appliedFilter) => appliedFilter.filterCategory === filterCategory,
     );
 
-    const filterNameExists = appliedFilters.some(
+    const filterNameExists = appliedFilters.defaultFilters.some(
       (appliedFilter) => appliedFilter.filterName === filterName,
     );
-
-    const selectStatusFilter = filterCategory === 'Status' && setStatusFilter(filterName);
-    const selectDisplayFilter = filterCategory === 'Display' && setDisplayFilter(filterName);
 
     // TODO: do something about the switch statement atm hardtyped
     switch (true) {
@@ -83,10 +81,6 @@ export const Filters = () => {
         dispatch(filterActions.removeFilter(filterName));
         break;
       case filterCategoryExists && !filterNameExists:
-        // eslint-disable-next-line
-        selectStatusFilter;
-        // eslint-disable-next-line
-        selectDisplayFilter;
         dispatch(
           filterActions.updateFilter({
             filterCategory,
@@ -95,10 +89,6 @@ export const Filters = () => {
         );
         break;
       default:
-        // eslint-disable-next-line
-        selectStatusFilter;
-        // eslint-disable-next-line
-        selectDisplayFilter;
         dispatch(
           filterActions.applyFilter({
             filterName,
@@ -110,24 +100,22 @@ export const Filters = () => {
   };
 
   const applyPriceFilter = () => {
-    if (priceFilterValue.min.length && priceFilterValue.max.length) {
-      setDisplayButton(true);
-    } else {
-      setDisplayButton(false);
+    if (priceFilterValue.min > 0 && priceFilterValue.max > 0) {
+      dispatch(settingsActions.setPriceApplyButton(true));
     }
   };
 
   return (
     <Container>
-      <CloseFilterContainer opened={!filtersOpened}>
+      <CloseFilterContainer opened={!collapsed}>
         <IconActionButton
           handleClick={() => {
-            setFiltersOpened(!filtersOpened);
+            dispatch(settingsActions.setFilterCollapsed(!collapsed));
           }}
         >
           <img
             src={
-              filtersOpened
+              collapsed
                 ? closeFiltersIconTheme
                 : openFiltersIconTheme
             }
@@ -135,15 +123,14 @@ export const Filters = () => {
           />
         </IconActionButton>
       </CloseFilterContainer>
-      {filtersOpened && (
+      {collapsed && (
         <FiltersContainer>
           <FiltersWrapper>
             <Flex>
               <Heading>Filters</Heading>
               <ClearButton
                 onClick={() => {
-                  setStatusFilter('');
-                  setDisplayFilter(allNfts);
+                  dispatch(filterActions.clearAllFilters());
                 }}
               >
                 Clear All
@@ -157,14 +144,13 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        displayFilter === allNfts
+                        !filterExists(myNfts)
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.allNfts')}
                       handleClick={() => {
-                        setDisplayFilter(allNfts);
-                        dispatch(filterActions.removeFilter(allNfts));
+                        dispatch(filterActions.removeFilter(myNfts));
                       }}
                     />
                   </FilterButtonWrapper>
@@ -174,14 +160,13 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        filterExists(`${t('translation:buttons.action.myNfts')}`)
+                        filterExists(myNfts)
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
-                        if (displayFilter !== '') setDisplayFilter('');
-                        applyFilter('Display', `${t('translation:buttons.action.myNfts')}`);
+                        applyFilter('Display', myNfts);
                       }}
                     />
                   </FilterButtonWrapper>
@@ -230,6 +215,7 @@ export const Filters = () => {
                     placeholder={t(
                       'translation:inputField.placeholder.priceMin',
                     )}
+                    inputValue={priceFilterValue.min}
                     setValue={(value) => {
                       setPriceFilterValue({
                         ...priceFilterValue,
@@ -245,6 +231,7 @@ export const Filters = () => {
                     placeholder={t(
                       'translation:inputField.placeholder.priceMax',
                     )}
+                    inputValue={priceFilterValue.max}
                     setValue={(value) => {
                       setPriceFilterValue({
                         ...priceFilterValue,
@@ -255,13 +242,19 @@ export const Filters = () => {
                   />
                 </Flex>
                 <br />
-                {displayButton
+                {displayPriceApplyButton
                 && (
                   <ActionButton
                     type="secondary"
                     text="Apply"
                     handleClick={() => {
-                      applyFilter('Price Range', priceFilterValue);
+                      if (priceFilterValue.min > 0 && priceFilterValue.max > 0) {
+                        applyFilter('Price Range', priceFilterValue);
+                      }
+                      setPriceFilterValue({
+                        min: '',
+                        max: '',
+                      });
                     }}
                   />
                 )}
@@ -270,39 +263,15 @@ export const Filters = () => {
             <Heading>Traits</Heading>
             <FilterSection>
               <CheckboxFilters>
-                <CheckboxFilterAccordion
-                // we need the type of gem it is
-                // we need the values selected
-                // call apply filter
-                  title={`${t(
-                    'translation:accordions.checkbox.smallGem.smallGem',
-                  )}`}
-                  id="small-gem"
-                />
-              </CheckboxFilters>
-              <CheckboxFilters>
-                <CheckboxFilterAccordion
-                  title={`${t(
-                    'translation:accordions.checkbox.bigGem.bigGem',
-                  )}`}
-                  id="big-gem"
-                />
-              </CheckboxFilters>
-              <CheckboxFilters>
-                <CheckboxFilterAccordion
-                  title={`${t(
-                    'translation:accordions.checkbox.base.base',
-                  )}`}
-                  id="base"
-                />
-              </CheckboxFilters>
-              <CheckboxFilters>
-                <CheckboxFilterAccordion
-                  title={`${t(
-                    'translation:accordions.checkbox.rim.rim',
-                  )}`}
-                  id="rim"
-                />
+                {refinedCheckboxDummyData.map((checkboxData) => (
+                  <CheckboxFilterAccordion
+                    // we need the type of gem it is
+                    // we need the values selected
+                    // call apply filter
+                    checkboxData={checkboxData}
+                    id="small-gem"
+                  />
+                ))}
               </CheckboxFilters>
             </FilterSection>
           </FiltersWrapper>
