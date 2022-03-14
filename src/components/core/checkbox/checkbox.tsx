@@ -31,7 +31,7 @@ export const Checkbox = ({
     if (!checkFilterNameExists) {
       // if it doesn't, add value to array
       dispatch(
-        filterActions.setCheckboxFilters({
+        filterActions.applyCheckboxFilters({
           checkboxTitle: title,
           checkboxValue: value,
         }),

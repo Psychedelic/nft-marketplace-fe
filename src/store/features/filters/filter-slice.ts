@@ -33,7 +33,7 @@ export const filterSlice = createSlice({
       const filterIndex = state.defaultFilters.findIndex((appliedFilter) => appliedFilter.filterCategory === action.payload.filterCategory);
       state.defaultFilters[filterIndex].filterName = action.payload.filterName;
     },
-    setCheckboxFilters: (state, action: PayloadAction<CheckboxDataState>) => {
+    applyCheckboxFilters: (state, action: PayloadAction<CheckboxDataState>) => {
       state.checkboxFilters.push(action.payload);
       state.defaultFilters.push({
         filterName: action.payload.checkboxValue,
@@ -54,6 +54,7 @@ export const filterSlice = createSlice({
     },
     // eslint-disable-next-line
     clearAllFilters: (state) => {
+      state.defaultFilters = [];
       state.defaultFilters = [];
     },
   },

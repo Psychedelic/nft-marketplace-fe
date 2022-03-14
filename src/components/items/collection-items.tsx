@@ -50,6 +50,7 @@ export const CollectionItems = () => {
       dispatch(settingsActions.setPriceApplyButton(false));
     } else {
       dispatch(filterActions.removeFilter(appliedFilter.filterName));
+      dispatch(filterActions.removeCheckboxFilter(appliedFilter.filterName));
     }
   };
 
