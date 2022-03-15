@@ -55,7 +55,7 @@ export const filterSlice = createSlice({
     // eslint-disable-next-line
     clearAllFilters: (state) => {
       state.defaultFilters = [];
-      state.defaultFilters = [];
+      state.checkboxFilters = [];
     },
   },
 });
