@@ -25,20 +25,13 @@ export const fetchNFTS = async ({
 
   try {
     // eslint-disable-next-line object-curly-newline
-    const payload = [
-      {
-        name: 'base',
-        value: ['Gold'],
-      },
-    ];
+    const payload = {};
 
     const response = await axios.post(
       // eslint-disable-next-line max-len
       `http://localhost:3000/dev/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`,
       payload,
     );
-
-    console.log(response);
 
     if (response.status !== 200) {
       throw Error(response.statusText);
