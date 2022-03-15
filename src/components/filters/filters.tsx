@@ -56,20 +56,17 @@ export const Filters = () => {
   const myNfts = `${t('translation:buttons.action.myNfts')}`;
   const isLightTheme = theme === 'lightTheme';
 
-  const closeFiltersIconTheme = isLightTheme ? closeFiltersIcon : closeFiltersIconDark;
-  const openFiltersIconTheme = isLightTheme ? openFiltersIcon : openFiltersIconDark;
+  const closeFiltersIconTheme = isLightTheme
+    ? closeFiltersIcon
+    : closeFiltersIconDark;
+  const openFiltersIconTheme = isLightTheme
+    ? openFiltersIcon
+    : openFiltersIconDark;
 
-  const filterExists = (filterName: string) => appliedFilters.defaultFilters.some(
-    (appliedFilter) => appliedFilter.filterName === filterName,
-  );
+  const filterExists = (filterName: string) => appliedFilters.defaultFilters.some((appliedFilter) => appliedFilter.filterName === filterName);
 
-  const applyFilter = (
-    filterCategory: string,
-    filterName: any,
-  ) => {
-    const filterCategoryExists = appliedFilters.defaultFilters.some(
-      (appliedFilter) => appliedFilter.filterCategory === filterCategory,
-    );
+  const applyFilter = (filterCategory: string, filterName: any) => {
+    const filterCategoryExists = appliedFilters.defaultFilters.some((appliedFilter) => appliedFilter.filterCategory === filterCategory);
 
     const filterNameExists = appliedFilters.defaultFilters.some(
       (appliedFilter) => appliedFilter.filterName === filterName,
@@ -100,7 +97,7 @@ export const Filters = () => {
   };
 
   const applyPriceFilter = () => {
-    if (priceFilterValue.min > 0 && priceFilterValue.max > 0) {
+    if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
       dispatch(settingsActions.setPriceApplyButton(true));
     }
   };
@@ -115,9 +112,7 @@ export const Filters = () => {
         >
           <img
             src={
-              collapsed
-                ? closeFiltersIconTheme
-                : openFiltersIconTheme
+              collapsed ? closeFiltersIconTheme : openFiltersIconTheme
             }
             alt="filter-icon"
           />
@@ -160,9 +155,7 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        filterExists(myNfts)
-                          ? 'outline'
-                          : 'secondary'
+                        filterExists(myNfts) ? 'outline' : 'secondary'
                       }
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
@@ -178,14 +171,19 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        filterExists(`${t('translation:buttons.action.buyNow')}`)
+                        filterExists(
+                          `${t('translation:buttons.action.buyNow')}`,
+                        )
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.buyNow')}
                       handleClick={() => {
                         if (statusFilter !== '') setStatusFilter('');
-                        applyFilter('Status', `${t('translation:buttons.action.buyNow')}`);
+                        applyFilter(
+                          'Status',
+                          `${t('translation:buttons.action.buyNow')}`,
+                        );
                       }}
                     />
                   </FilterButtonWrapper>
@@ -195,14 +193,23 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        filterExists(`${t('translation:buttons.action.hasOffers')}`)
+                        filterExists(
+                          `${t(
+                            'translation:buttons.action.hasOffers',
+                          )}`,
+                        )
                           ? 'outline'
                           : 'secondary'
                       }
                       text={t('translation:buttons.action.hasOffers')}
                       handleClick={() => {
                         if (statusFilter !== '') setStatusFilter('');
-                        applyFilter('Status', `${t('translation:buttons.action.hasOffers')}`);
+                        applyFilter(
+                          'Status',
+                          `${t(
+                            'translation:buttons.action.hasOffers',
+                          )}`,
+                        );
                       }}
                     />
                   </FilterButtonWrapper>
@@ -242,13 +249,12 @@ export const Filters = () => {
                   />
                 </Flex>
                 <br />
-                {displayPriceApplyButton
-                && (
+                {displayPriceApplyButton && (
                   <ActionButton
                     type="secondary"
                     text="Apply"
                     handleClick={() => {
-                      if (priceFilterValue.min > 0 && priceFilterValue.max > 0) {
+                      if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
                         applyFilter('Price Range', priceFilterValue);
                       }
                       setPriceFilterValue({

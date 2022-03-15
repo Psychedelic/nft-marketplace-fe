@@ -20,25 +20,29 @@ export const Checkbox = ({
 }: CheckboxProps) => {
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
-  const filterNameExists = (checkboxValue: string) => appliedFilters.checkboxFilters.some((appliedFilter) => appliedFilter.checkboxValue === checkboxValue);
+  const filterNameExists = (traitsValue: string) => appliedFilters.traitsFilters.some((appliedFilter) => appliedFilter.traitsValue === traitsValue);
 
   const handleSelectedFilters = (e: any) => {
     // sets value
     const selectedFilterValue = e.target.value;
-    const checkFilterNameExists = filterNameExists(selectedFilterValue);
+    const checkFilterNameExists = filterNameExists(
+      selectedFilterValue,
+    );
 
     // checks if value doesn't already exists
     if (!checkFilterNameExists) {
       // if it doesn't, add value to array
       dispatch(
-        filterActions.applyCheckboxFilters({
-          checkboxTitle: title,
-          checkboxValue: value,
+        filterActions.applytraitsFilters({
+          traitsTitle: title,
+          traitsValue: value,
         }),
       );
     } else {
       // if it does, remove value from the array
-      dispatch(filterActions.removeCheckboxFilter(selectedFilterValue));
+      dispatch(
+        filterActions.removeCheckboxFilter(selectedFilterValue),
+      );
       dispatch(filterActions.removeFilter(selectedFilterValue));
     }
   };

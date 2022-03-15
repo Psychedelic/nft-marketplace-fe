@@ -5,13 +5,11 @@ import type { RootState } from '../../store';
 export interface SettingsState {
   collapsed: boolean;
   displayPriceApplyButton: boolean;
-  selectedTraits: CheckboxDataState[];
 }
 
 const initialState: SettingsState = {
   collapsed: true,
   displayPriceApplyButton: false,
-  selectedTraits: [],
 };
 
 export const settingsSlice = createSlice({
@@ -23,9 +21,6 @@ export const settingsSlice = createSlice({
     },
     setPriceApplyButton: (state, action: PayloadAction<boolean>) => {
       state.displayPriceApplyButton = action.payload;
-    },
-    setSelectedTraits: (state, action: PayloadAction<CheckboxDataState>) => {
-      state.selectedTraits.push(action.payload);
     },
   },
 });

@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import * as Accordion from '@radix-ui/react-accordion';
-import {
-  useFilterStore,
-  useThemeStore,
-} from '../../../store';
+import { useFilterStore, useThemeStore } from '../../../store';
 import { Checkbox } from '../checkbox/checkbox';
 import {
   AccordionStyle,
@@ -23,12 +20,12 @@ export const CheckboxFilterAccordion = ({
   checkboxData,
 }: CheckboxFilterAccordionProps) => {
   const { theme } = useThemeStore();
-  const { checkboxFilters } = useFilterStore();
+  const { traitsFilters } = useFilterStore();
   const isLightTheme = theme === 'lightTheme';
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
 
   /* Check if id matches, we need a conditional */
-  const checkboxFiltersCount = checkboxFilters.filter((selectedTrait) => selectedTrait.checkboxTitle === checkboxData.title).length;
+  const traitsFiltersCount = traitsFilters.filter((selectedTrait) => selectedTrait.traitsTitle === checkboxData.title).length;
 
   return (
     <AccordionStyle
@@ -49,16 +46,19 @@ export const CheckboxFilterAccordion = ({
             {checkboxData.title}
             &nbsp;
             <span>
-              {checkboxFiltersCount > 0 && checkboxFiltersCount}
+              {traitsFiltersCount > 0 && traitsFiltersCount}
             </span>
           </p>
-          <img src={isLightTheme ? arrowdown : arrowdownDark} alt="arrow-down" />
+          <img
+            src={isLightTheme ? arrowdown : arrowdownDark}
+            alt="arrow-down"
+          />
         </AccordionTrigger>
         <AccordionContent padding="small">
           <form>
             {checkboxData.values.map((data) => (
-            // call apply filter
-            // eslint-disable-next-line
+              // call apply filter
+              // eslint-disable-next-line
               <Checkbox
                 title={checkboxData.title}
                 key={data.name}
