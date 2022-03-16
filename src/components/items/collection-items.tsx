@@ -42,6 +42,7 @@ export const CollectionItems = () => {
   useNFTSFetcher();
   // TODO: move applied filters to seperate component
   const handleRemoveFilter = (appliedFilter: object) => {
+    // TODO: apply sorting to fetch kyasshu API
     // eslint-disable-next-line no-console
     if (appliedFilter.filterCategory === 'Price Range') {
       dispatch(
