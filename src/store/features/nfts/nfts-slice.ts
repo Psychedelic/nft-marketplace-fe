@@ -56,6 +56,23 @@ export const nftsSlice = createSlice({
       state.failedToLoadNFTS = !action.payload;
       state.loadingNFTs = action.payload;
     },
+    setLoadedNFTDetails: (
+      state,
+      action: PayloadAction<NFTMetadata>,
+    ) => {
+      const { id } = action.payload;
+      const index = state.loadedNFTS.findIndex(
+        (nft) => nft.id === id,
+      );
+
+      if (index > -1) {
+        state.loadedNFTS[index] = action.payload;
+
+        return;
+      }
+
+      state.loadedNFTS.push(action.payload);
+    },
   },
 });
 
