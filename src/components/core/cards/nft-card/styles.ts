@@ -1,3 +1,4 @@
+import HoverVideoPlayer from 'react-hover-video-player';
 import { styled } from '../../../../stitches.config';
 
 export const CardWrapper = styled('div', {
@@ -21,22 +22,21 @@ export const CardWrapper = styled('div', {
 });
 
 export const PreviewDetails = styled('div', {
-  marginBottom: '10px',
-  minHeight: '125px',
-
-  '& img': {
-    width: '100%',
-  },
+  minHeight: '175px',
 });
 
-export const Video = styled('video', {
+export const PreviewImage = styled('img', {
   width: '100%',
-  height: 'auto',
+  objectFit: 'cover',
   borderRadius: '14px',
-  maxWidth: '100%',
-  maxHeight: '100%',
-  minHeight: '125px',
+});
+
+export const VideoPlayer = styled(HoverVideoPlayer, {
   marginBottom: '10px',
+  video: {
+    minHeight: '175px',
+    borderRadius: '14px',
+  },
 });
 
 export const Flex = styled('div', {
