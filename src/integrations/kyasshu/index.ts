@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { useAppDispatch } from '../../store';
 import { fetchNFTS, fetchNFTDetails } from './utils';
@@ -22,11 +23,14 @@ export const useNFTSFetcher = () => {
 
 export const useNFTDetailsFetcher = () => {
   const dispatch = useAppDispatch();
+  const { id } = useParams();
 
   useEffect(() => {
+    if (!id) return;
+
     fetchNFTDetails({
       dispatch,
-      id: '141',
+      id,
     });
-  }, [dispatch]);
+  }, [dispatch, id]);
 };
