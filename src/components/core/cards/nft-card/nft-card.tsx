@@ -25,17 +25,10 @@ export type NftCardProps = {
   forSaleAndOffer?: boolean;
   forSale?: boolean;
   data: NFTMetadata;
-  displayVideo?: boolean;
 };
 
 export const NftCard = React.memo(
-  ({
-    owned,
-    notForSale,
-    forSaleAndOffer,
-    data,
-    displayVideo,
-  }: NftCardProps) => {
+  ({ owned, notForSale, forSaleAndOffer, data }: NftCardProps) => {
     const { t } = useTranslation();
 
     return (

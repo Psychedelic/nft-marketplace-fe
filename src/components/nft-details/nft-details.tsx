@@ -34,20 +34,16 @@ export const NftDetails = () => {
       {nftDetails ? (
         <Wrapper>
           <PreviewContainer>
-            {nftDetails.preview ? (
-              <img src={nftDetails.preview} alt="nft-card" />
-            ) : (
-              <Video
-                loop
-                autoPlay
-                muted
-                preload="metadata"
-                controls={false}
-                poster="/assets/random-crown.png"
-              >
-                <source src={nftDetails.location} type="video/mp4" />
-              </Video>
-            )}
+            <Video
+              loop
+              autoPlay
+              muted
+              preload="metadata"
+              controls={false}
+              poster="/assets/random-crown.png"
+            >
+              <source src={nftDetails.location} type="video/mp4" />
+            </Video>
             <NFTTraitsContainer>
               <NFTTraitsChip
                 label="Base"
