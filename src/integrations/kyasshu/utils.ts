@@ -48,7 +48,11 @@ export const fetchNFTS = async ({
         name: 'Cap Crowns',
         price: nft.lastSalePrice,
         lastOffer: nft.lastSalePrice,
-        preview: false,
+        // TODO: update nft thumbnail
+        preview: nft.url.replace(
+          /\/(\w+)\.\w+/g,
+          '/thumbnails/$1.png',
+        ),
         location: nft?.url,
         traits: {
           base: nft?.metadata?.base?.value?.TextContent,
