@@ -1,6 +1,6 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import axios from 'axios';
-import { nftsActions } from '../../store';
+import { nftsActions, errorActions } from '../../store';
 import config from '../../config/env';
 
 export type FetchNFTProps = {
@@ -98,8 +98,33 @@ export const fetchNFTDetails = async ({
     if (response.status !== 200) {
       throw Error(response.statusText);
     }
+
+    const responseData = response.data;
+
+    const nftDetails = {
+      // TODO: update price, lastOffer & traits values
+      // TODO: Finalize object format after validating mock and kyasshu data
+      id: responseData.index,
+      name: 'Cap Crowns',
+      price: '',
+      lastOffer: '',
+      preview: '',
+      location: responseData?.url,
+      rendered: true,
+      traits: {
+        base: responseData?.metadata?.base?.value?.TextContent,
+        biggem: responseData?.metadata?.biggem?.value?.TextContent,
+        rim: responseData?.metadata?.rim?.value?.TextContent,
+        smallgem:
+          responseData?.metadata?.smallgem?.value?.TextContent,
+      },
+    };
+
+    // update store with loaded NFT details
+    dispatch(nftsActions.setLoadedNFTDetails(nftDetails));
   } catch (error) {
     // eslint-disable-next-line no-console
     console.warn(error);
+    dispatch(errorActions.setErrorMessage(error.message));
   }
 };
