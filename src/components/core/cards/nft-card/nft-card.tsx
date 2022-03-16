@@ -13,6 +13,7 @@ import {
   PreviewDetails,
   VideoPlayer,
   PreviewImage,
+  VideoLoader,
 } from './styles';
 
 import { NFTMetadata } from '../../../../declarations/nft';
@@ -54,6 +55,7 @@ export const NftCard = React.memo(
                 <PreviewImage src={data?.preview} alt="nft-card" />
               </PreviewDetails>
             }
+            loadingOverlay={<VideoLoader />}
           />
           <Flex>
             <NftName>{data?.name}</NftName>
