@@ -11,6 +11,8 @@ import {
   LastOffer,
   Dfinity,
   PreviewDetails,
+  VideoPlayer,
+  PreviewImage,
 } from './styles';
 
 import { NFTMetadata } from '../../../../declarations/nft';
@@ -44,25 +46,15 @@ export const NftCard = React.memo(
             </OwnedCardText>
             <CardOptionsDropdown />
           </Flex>
-          <PreviewDetails>
-            {data.preview && !displayVideo ? (
-              <img src={data?.preview} alt="nft-card" />
-            ) : (
-              <video
-                data-icon-video
-                loop
-                autoPlay
-                muted
-                style={{
-                  width: '100%',
-                  minHeight: '125px',
-                  borderRadius: '14px',
-                }}
-              >
-                <source src={data.location} type="video/mp4" />
-              </video>
-            )}
-          </PreviewDetails>
+          <VideoPlayer
+            videoSrc={data.location}
+            pausedOverlay={
+              // eslint-disable-next-line react/jsx-wrap-multilines
+              <PreviewDetails>
+                <PreviewImage src={data?.preview} alt="nft-card" />
+              </PreviewDetails>
+            }
+          />
           <Flex>
             <NftName>{data?.name}</NftName>
             {notForSale ? (
