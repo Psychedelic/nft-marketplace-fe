@@ -11,6 +11,11 @@ export type FetchNFTProps = {
   count: string;
 };
 
+export type FetchNFTDetailsProps = {
+  dispatch: any;
+  id: string;
+};
+
 export const fetchNFTS = async ({
   dispatch,
   sort,
@@ -75,5 +80,26 @@ export const fetchNFTS = async ({
 
     // set NFTS failed to load
     dispatch(nftsActions.setFailedToLoadNFTS(error.message));
+  }
+};
+
+export const fetchNFTDetails = async ({
+  dispatch,
+  id,
+}: FetchNFTDetailsProps) => {
+  try {
+    // eslint-disable-next-line object-curly-newline
+    const payload = {};
+
+    const response = await axios.get(
+      `http://localhost:3000/dev/marketplace/${config.collectionId}/nft/${id}`,
+    );
+
+    if (response.status !== 200) {
+      throw Error(response.statusText);
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.warn(error);
   }
 };
