@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import {
-  useThemeStore,
-} from '../../../store';
+import { useTranslation } from 'react-i18next';
+import { useThemeStore } from '../../../store';
 import {
   DropdownRoot,
   DropdownStyle,
@@ -13,20 +12,24 @@ import {
 import arrowdown from '../../../assets/arrowdown.svg';
 import arrowdownDark from '../../../assets/arrowdown-dark.svg';
 
-export type PriceFilterDropdownProps = {
-  defaultValue: string; // Price: High To Low
-  options: Array<string>; // ["Low To High", "High To Low"]
-};
+export const SortByFilterDropdown = React.memo(() => {
+  const { t } = useTranslation();
 
-export const PriceFilterDropdown = ({
-  defaultValue,
-  options,
-}: PriceFilterDropdownProps) => {
   const [selectedValue, setSelectedValue] = useState(
-    `${defaultValue}`,
+    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
   );
   const { theme } = useThemeStore();
   const isLightTheme = theme === 'lightTheme';
+
+  const options = [
+    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
+    `${t('translation:dropdown.priceFilter.recentlySold')}`,
+    `${t('translation:dropdown.priceFilter.lowToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highestLastSale')}`,
+  ];
+
+  console.log('options', options);
 
   return (
     <DropdownRoot>
@@ -58,4 +61,4 @@ export const PriceFilterDropdown = ({
       </DropdownContent>
     </DropdownRoot>
   );
-};
+});

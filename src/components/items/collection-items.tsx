@@ -13,7 +13,7 @@ import { NftSkeletonList } from '../nft-skeleton-list';
 import {
   FilteredCountChip,
   FilteredTraitsChip,
-  PriceFilterDropdown,
+  SortByFilterDropdown,
 } from '../core';
 import {
   Container,
@@ -30,14 +30,6 @@ export const CollectionItems = () => {
   const appliedFilters = useFilterStore();
 
   const { loadingNFTs } = useNFTSStore();
-
-  const dropDownContent = [
-    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
-    `${t('translation:dropdown.priceFilter.recentlySold')}`,
-    `${t('translation:dropdown.priceFilter.lowToHigh')}`,
-    `${t('translation:dropdown.priceFilter.highToHigh')}`,
-    `${t('translation:dropdown.priceFilter.highestLastSale')}`,
-  ];
 
   useNFTSFetcher();
   // TODO: move applied filters to seperate component
@@ -78,12 +70,7 @@ export const CollectionItems = () => {
               />
             </ContentFlex>
             <ContentFlex>
-              <PriceFilterDropdown
-                defaultValue={`${t(
-                  'translation:dropdown.priceFilter.lowToHigh',
-                )}`}
-                options={dropDownContent}
-              />
+              <SortByFilterDropdown />
             </ContentFlex>
           </Flex>
           <Flex>

@@ -15,7 +15,7 @@ import {
   ActionButton,
   LinkButton,
   NFTMetaData,
-  PriceFilterDropdown,
+  SortByFilterDropdown,
   CardOptionsDropdown,
   PlugProfileDropdown,
   FilteredCountChip,
@@ -144,7 +144,7 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Dropdown</ComponentTitle>
-        <PriceFilterDropdown
+        <SortByFilterDropdown
           defaultValue={`${t(
             'translation:dropdown.priceFilter.lowToHigh',
           )}`}
