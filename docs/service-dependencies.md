@@ -68,13 +68,23 @@ Here's an example of how to generate 9 crown tokens in the on-chain Crowns Canis
 yarn mock:generate-tokens $(cd ./nft-marketplace/crowns && dfx canister id crowns) 9
 ```
 
-Similarily, you'd cache 9 crown tokens in the off-chain Kyasshu Marketplace API
+Similarily, you'd cache 50 crown tokens in the off-chain Kyasshu Marketplace API
 
 ```sh
-yarn kyasshu:mock 9
+yarn kyasshu:mock 50
 ```
 
+💡 Kyasshu caches 50 at the time, so if we attempt to cache 9 items it'd get 50 minimal.
+
 These scripts are offered for your own convinience check the source repositories for more.
+
+In some cases you might want to reset the redis database:
+
+```sh
+yarn kyasshu:redis-flush-all
+```
+
+🤞 If you find issues, refer to the [troubleshooting](/docs/troubleshooting.md) document for help.
 
 ### Running Kyasshu as off-chain API
 
@@ -168,7 +178,7 @@ At this point you should have the Kyasshu services running!
 
 Check the topic of how to get data in your local Kyasshu to learn more.
 
-🤞 If you findf issues, refer to the [troubleshooting](/docs/troubleshooting.md) document for help.
+🤞 If you find issues, refer to the [troubleshooting](/docs/troubleshooting.md) document for help.
 
 ### Get data in the local Kyasshu
 
