@@ -58,6 +58,16 @@ export const SortByFilterDropdown = React.memo(() => {
     dispatch(filterActions.setSortingFilter(e.key));
   };
 
+  const options = [
+    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
+    `${t('translation:dropdown.priceFilter.recentlySold')}`,
+    `${t('translation:dropdown.priceFilter.lowToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highToHigh')}`,
+    `${t('translation:dropdown.priceFilter.highestLastSale')}`,
+  ];
+
+  console.log('options', options);
+
   return (
     <DropdownRoot>
       <DropdownStyle>
