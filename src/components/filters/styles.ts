@@ -27,9 +27,17 @@ export const CloseFilterContainer = styled('div', {
 export const FiltersContainer = styled('div', {
   width: '340px',
   background: '$backgroundColor',
-  height: '100%',
+  height: '100vh',
   borderTop: '1px solid $borderColor',
-  position: 'relative',
+  position: 'sticky',
+  top: '0',
+  overflow: 'scroll',
+  msOverflowStyle: 'none',
+  scrollbarWidth: 'none',
+
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
 });
 
 export const FiltersWrapper = styled('div', {
@@ -133,9 +141,9 @@ export const Subheadings = styled('p', {
 export const CheckboxFilters = styled('div', {
   margin: '0px 0px 15px',
 
-  '.checkbox-accordian': {
-    marginBottom: '0px',
-  },
+  // '.checkbox-accordian': {
+  //   marginBottom: '0px',
+  // },
 });
 
 export const FilterButtonWrapper = styled('div', {

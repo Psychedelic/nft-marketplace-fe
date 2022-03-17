@@ -6,6 +6,7 @@ import filterReducer from './features/filters/filter-slice';
 import themeReducer from './features/theme/theme-slice';
 import nftsReducer from './features/nfts/nfts-slice';
 import errorsReducer from './features/errors/errors-slice';
+import settingsReducer from './features/settings/settings-slice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     theme: themeReducer,
     nfts: nftsReducer,
     errors: errorsReducer,
+    settings: settingsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
