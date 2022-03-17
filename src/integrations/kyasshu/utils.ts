@@ -1,6 +1,6 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import axios from 'axios';
-import { nftsActions } from '../../store';
+import { nftsActions, errorActions } from '../../store';
 import config from '../../config/env';
 
 export type FetchNFTProps = {
@@ -74,6 +74,6 @@ export const fetchNFTS = async ({
     console.warn(error);
 
     // set NFTS failed to load
-    dispatch(nftsActions.setFailedToLoadNFTS(error.message));
+    dispatch(errorActions.setErrorMessage(error.message));
   }
 };
