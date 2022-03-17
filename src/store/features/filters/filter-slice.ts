@@ -15,11 +15,13 @@ export interface ButtonFilterState {
 export interface FilterState {
   defaultFilters: ButtonFilterState[];
   traitsFilters: CheckboxDataState[];
+  sortBy: string;
 }
 
 const initialState: FilterState = {
   defaultFilters: [],
   traitsFilters: [],
+  sortBy: 'lastModified',
 };
 
 export const filterSlice = createSlice({
@@ -65,6 +67,9 @@ export const filterSlice = createSlice({
     clearAllFilters: (state) => {
       state.defaultFilters = [];
       state.traitsFilters = [];
+    },
+    setSortingFilter: (state, action: PayloadAction<string>) => {
+      state.sortBy = action.payload;
     },
   },
 });
