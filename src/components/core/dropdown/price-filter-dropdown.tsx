@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../../../store';
+import {
+  useThemeStore,
+  filterActions,
+  useAppDispatch,
+} from '../../../store';
 import {
   DropdownRoot,
   DropdownStyle,
@@ -14,6 +18,7 @@ import arrowdownDark from '../../../assets/arrowdown-dark.svg';
 
 export const SortByFilterDropdown = React.memo(() => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const [selectedValue, setSelectedValue] = useState(
     `${t('translation:dropdown.priceFilter.recentlyListed')}`,
@@ -21,15 +26,35 @@ export const SortByFilterDropdown = React.memo(() => {
   const { theme } = useThemeStore();
   const isLightTheme = theme === 'lightTheme';
 
-  const options = [
-    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
-    `${t('translation:dropdown.priceFilter.recentlySold')}`,
-    `${t('translation:dropdown.priceFilter.lowToHigh')}`,
-    `${t('translation:dropdown.priceFilter.highToHigh')}`,
-    `${t('translation:dropdown.priceFilter.highestLastSale')}`,
+  const sortOptions = [
+    {
+      key: 'lastModified',
+      value: `${t(
+        'translation:dropdown.priceFilter.recentlyListed',
+      )}`,
+    },
+    {
+      key: 'lastSale',
+      value: `${t('translation:dropdown.priceFilter.recentlySold')}`,
+    },
+    {
+      key: 'lastSalePrice',
+      value: `${t(
+        'translation:dropdown.priceFilter.highestLastSale',
+      )}`,
+    },
+    {
+      key: 'lastOfferPrice',
+      value: `${t(
+        'translation:dropdown.priceFilter.highestLastOffer',
+      )}`,
+    },
   ];
 
-  console.log('options', options);
+  const setSortBy = (e: any) => {
+    setSelectedValue(e.value);
+    dispatch(filterActions.setSortingFilter(e.key));
+  };
 
   return (
     <DropdownRoot>
@@ -44,13 +69,14 @@ export const SortByFilterDropdown = React.memo(() => {
       <DropdownContent
         background={theme === 'darkTheme' ? 'dark' : 'light'}
       >
-        <DropdownRadioGroup
-          onValueChange={(e) => setSelectedValue(e)}
-        >
-          {options.map((item) => (
+        <DropdownRadioGroup onValueChange={(e) => setSortBy(e)}>
+          {sortOptions.map((item) => (
             <>
-              <DropdownRadioMenuItem value={item} textValue={item}>
-                {item}
+              <DropdownRadioMenuItem
+                value={item}
+                textValue={item.value}
+              >
+                {item.value}
               </DropdownRadioMenuItem>
               <DropdownMenuSeparator
                 background={theme === 'darkTheme' ? 'dark' : 'light'}
