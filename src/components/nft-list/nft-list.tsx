@@ -3,7 +3,11 @@ import { NftCard } from '../core/cards/nft-card';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import { InfiniteScrollWrapper } from './styles';
 
-import { useNFTSStore, useAppDispatch } from '../../store';
+import {
+  useNFTSStore,
+  useAppDispatch,
+  useFilterStore,
+} from '../../store';
 import { fetchNFTS } from '../../integrations/kyasshu/utils';
 
 export const NftList = () => {
@@ -13,12 +17,14 @@ export const NftList = () => {
 
   const dispatch = useAppDispatch();
 
+  const { sortBy } = useFilterStore();
+
   const loadMoreNFTS = () => {
     if (loadingNFTs || !hasMoreNFTs) return;
 
     fetchNFTS({
       dispatch,
-      sort: 'lastModified',
+      sort: sortBy,
       order: 'd',
       page: nextPageNo,
       count: '25',
