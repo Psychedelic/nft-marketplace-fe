@@ -168,6 +168,8 @@ At this point you should have the Kyasshu services running!
 
 Check the topic of how to get data in your local Kyasshu to learn more.
 
+🤞 If you findf issues, refer to the [troubleshooting](/docs/troubleshooting.md) document for help.
+
 ### Get data in the local Kyasshu
 
 Following, is a command to make a HTTP GET request to the `marketplace` endpoint.
