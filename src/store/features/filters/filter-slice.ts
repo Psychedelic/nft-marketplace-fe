@@ -21,6 +21,7 @@ export interface FilterState {
   traits: TraitsDataState[];
   loadedFiltersList: FilterTraitsList[];
   isMyNfts: boolean;
+  sortBy: string;
 }
 
 const initialState: FilterState = {
@@ -28,6 +29,7 @@ const initialState: FilterState = {
   traits: [],
   loadedFiltersList: [],
   isMyNfts: false,
+  sortBy: 'lastModified',
 };
 
 export const filterSlice = createSlice({
@@ -107,6 +109,9 @@ export const filterSlice = createSlice({
     clearAllFilters: (state) => {
       state.defaultFilters = [];
       state.traits = [];
+    },
+    setSortingFilter: (state, action: PayloadAction<string>) => {
+      state.sortBy = action.payload;
     },
   },
 });

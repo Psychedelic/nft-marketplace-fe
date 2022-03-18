@@ -19,6 +19,8 @@ import {
 import { useNFTSStore } from '../../store';
 import { NFTMetadata } from '../../declarations/nft';
 
+import { useNFTDetailsFetcher } from '../../integrations/kyasshu';
+
 export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
@@ -28,26 +30,24 @@ export const NftDetails = () => {
     [loadedNFTS, id],
   );
 
+  useNFTDetailsFetcher();
+
   return (
     <Container>
       <NftActionBar />
       {nftDetails ? (
         <Wrapper>
           <PreviewContainer>
-            {nftDetails.preview ? (
-              <img src={nftDetails.preview} alt="nft-card" />
-            ) : (
-              <Video
-                loop
-                autoPlay
-                muted
-                preload="metadata"
-                controls={false}
-                poster="/assets/random-crown.png"
-              >
-                <source src={nftDetails.location} type="video/mp4" />
-              </Video>
-            )}
+            <Video
+              loop
+              autoPlay
+              muted
+              preload="metadata"
+              controls={false}
+              poster={nftDetails.preview}
+            >
+              <source src={nftDetails.location} type="video/mp4" />
+            </Video>
             <NFTTraitsContainer>
               <NFTTraitsChip
                 label="Base"

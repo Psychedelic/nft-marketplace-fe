@@ -33,6 +33,7 @@ import {
   CheckboxFilters,
   FilterButtonWrapper,
 } from './styles';
+import { refinedCheckboxDummyData } from '../mock-data/accordion-data';
 
 /* --------------------------------------------------------------------------
  * Filters Component

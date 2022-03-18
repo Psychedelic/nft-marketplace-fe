@@ -42,13 +42,15 @@ export const NftList = () => {
     };
   }
 
+  const { sortBy } = useFilterStore();
+
   const loadMoreNFTS = () => {
     if (loadingNFTs || !hasMoreNFTs) return;
 
     fetchMoreNFTS({
       payload,
       dispatch,
-      sort: 'lastModified',
+      sort: sortBy,
       order: 'd',
       page: nextPageNo,
       count: '25',

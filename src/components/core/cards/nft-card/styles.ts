@@ -1,4 +1,14 @@
-import { styled } from '../../../../stitches.config';
+import HoverVideoPlayer from 'react-hover-video-player';
+import { styled, keyframes } from '../../../../stitches.config';
+
+const overlaySpinner = keyframes({
+  from: {
+    transform: 'rotate(0deg)',
+  },
+  to: {
+    transform: 'rotate(360deg)',
+  },
+});
 
 export const CardWrapper = styled('div', {
   display: 'flex',
@@ -21,22 +31,34 @@ export const CardWrapper = styled('div', {
 });
 
 export const PreviewDetails = styled('div', {
-  marginBottom: '10px',
-  minHeight: '125px',
+  minHeight: '175px',
+});
 
-  '& img': {
-    width: '100%',
+export const PreviewImage = styled('img', {
+  width: '100%',
+  objectFit: 'cover',
+  borderRadius: '14px',
+});
+
+export const VideoPlayer = styled(HoverVideoPlayer, {
+  marginBottom: '10px',
+  video: {
+    minHeight: '175px',
+    borderRadius: '14px',
   },
 });
 
-export const Video = styled('video', {
-  width: '100%',
-  height: 'auto',
-  borderRadius: '14px',
-  maxWidth: '100%',
-  maxHeight: '100%',
-  minHeight: '125px',
-  marginBottom: '10px',
+export const VideoLoader = styled('div', {
+  position: 'absolute',
+  left: '40%',
+  top: '40%',
+  transform: 'translate(-60%, -60%)',
+  width: '2em',
+  height: '2em',
+  border: '2px solid white',
+  borderRadius: '50%',
+  borderColor: 'white white transparent transparent',
+  animation: `${overlaySpinner} 1s linear infinite`,
 });
 
 export const Flex = styled('div', {

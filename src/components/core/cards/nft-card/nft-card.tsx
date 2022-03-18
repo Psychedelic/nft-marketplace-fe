@@ -11,6 +11,9 @@ import {
   LastOffer,
   Dfinity,
   PreviewDetails,
+  VideoPlayer,
+  PreviewImage,
+  VideoLoader,
 } from './styles';
 
 import { NFTMetadata } from '../../../../declarations/nft';
@@ -22,17 +25,10 @@ export type NftCardProps = {
   forSaleAndOffer?: boolean;
   forSale?: boolean;
   data: NFTMetadata;
-  displayVideo?: boolean;
 };
 
 export const NftCard = React.memo(
-  ({
-    owned,
-    notForSale,
-    forSaleAndOffer,
-    data,
-    displayVideo,
-  }: NftCardProps) => {
+  ({ owned, notForSale, forSaleAndOffer, data }: NftCardProps) => {
     const { t } = useTranslation();
 
     return (
@@ -44,25 +40,16 @@ export const NftCard = React.memo(
             </OwnedCardText>
             <CardOptionsDropdown />
           </Flex>
-          <PreviewDetails>
-            {data.preview && !displayVideo ? (
-              <img src={data?.preview} alt="nft-card" />
-            ) : (
-              <video
-                data-icon-video
-                loop
-                autoPlay
-                muted
-                style={{
-                  width: '100%',
-                  minHeight: '125px',
-                  borderRadius: '14px',
-                }}
-              >
-                <source src={data.location} type="video/mp4" />
-              </video>
-            )}
-          </PreviewDetails>
+          <VideoPlayer
+            videoSrc={data.location}
+            pausedOverlay={
+              // eslint-disable-next-line react/jsx-wrap-multilines
+              <PreviewDetails>
+                <PreviewImage src={data?.preview} alt="nft-card" />
+              </PreviewDetails>
+            }
+            loadingOverlay={<VideoLoader />}
+          />
           <Flex>
             <NftName>{data?.name}</NftName>
             {notForSale ? (

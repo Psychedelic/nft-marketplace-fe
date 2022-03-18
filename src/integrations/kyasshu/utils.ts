@@ -1,6 +1,6 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import axios from 'axios';
-import { filterActions, nftsActions } from '../../store';
+import { filterActions, nftsActions, errorActions } from '../../store';
 import config from '../../config/env';
 
 export type FetchNFTProps = {
@@ -14,6 +14,11 @@ export type FetchNFTProps = {
 
 export type FetchFilterTraitsProps = {
   dispatch: any;
+};
+
+export type FetchNFTDetailsProps = {
+  dispatch: any;
+  id: string;
 };
 
 export const fetchMoreNFTS = async ({
@@ -34,8 +39,7 @@ export const fetchMoreNFTS = async ({
 
     const response = await axios.post(
       // eslint-disable-next-line max-len
-      `http://localhost:3000/dev/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`,
-      // eslint-disable-next-line object-curly-newline
+      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`,
       payload,
     );
 
@@ -54,7 +58,11 @@ export const fetchMoreNFTS = async ({
         name: 'Cap Crowns',
         price: nft.lastSalePrice,
         lastOffer: nft.lastSalePrice,
-        preview: false,
+        // TODO: update nft thumbnail
+        preview: nft.url.replace(
+          /\/(\w+)\.\w+/g,
+          '/thumbnails/$1.png',
+        ),
         location: nft?.url,
         traits: {
           base: nft?.metadata?.base?.value?.TextContent,
@@ -80,7 +88,54 @@ export const fetchMoreNFTS = async ({
     console.warn(error);
 
     // set NFTS failed to load
-    dispatch(nftsActions.setFailedToLoadNFTS(error.message));
+    dispatch(errorActions.setErrorMessage(error.message));
+  }
+};
+
+export const fetchNFTDetails = async ({
+  dispatch,
+  id,
+}: FetchNFTDetailsProps) => {
+  try {
+    // eslint-disable-next-line object-curly-newline
+    const payload = {};
+
+    const response = await axios.get(
+      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${id}`,
+    );
+
+    if (response.status !== 200) {
+      throw Error(response.statusText);
+    }
+
+    const responseData = response.data;
+
+    const nftDetails = {
+      // TODO: update price, lastOffer & traits values
+      // TODO: Finalize object format after validating mock and kyasshu data
+      id: responseData.index,
+      name: 'Cap Crowns',
+      price: '',
+      lastOffer: '',
+      // TODO: update nft thumbnail
+      preview: '',
+      location: responseData?.url,
+      rendered: true,
+      traits: {
+        base: responseData?.metadata?.base?.value?.TextContent,
+        biggem: responseData?.metadata?.biggem?.value?.TextContent,
+        rim: responseData?.metadata?.rim?.value?.TextContent,
+        smallgem:
+          responseData?.metadata?.smallgem?.value?.TextContent,
+      },
+    };
+
+    // update store with loaded NFT details
+    dispatch(nftsActions.setLoadedNFTDetails(nftDetails));
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.warn(error);
+    dispatch(errorActions.setErrorMessage(error.message));
   }
 };
 
@@ -102,7 +157,7 @@ export const fetchNFTS = async ({
 
     const response = await axios.post(
       // eslint-disable-next-line max-len
-      `http://localhost:3000/dev/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`,
+      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`,
       // eslint-disable-next-line object-curly-newline
       payload,
     );
@@ -122,7 +177,10 @@ export const fetchNFTS = async ({
         name: 'Cap Crowns',
         price: nft.lastSalePrice,
         lastOffer: nft.lastSalePrice,
-        preview: false,
+        preview: nft.url.replace(
+          /\/(\w+)\.\w+/g,
+          '/thumbnails/$1.png',
+        ),
         location: nft?.url,
         traits: {
           base: nft?.metadata?.base?.value?.TextContent,
@@ -154,7 +212,7 @@ export const fetchNFTS = async ({
 
 export const fetchFilterTraits = async ({ dispatch } : FetchFilterTraitsProps) => {
   try {
-    const response = await axios.get(`http://localhost:3000/dev/marketplace/${config.collectionId}/traits`);
+    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`);
 
     if (response.status !== 200) {
       throw Error(response.statusText);

@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { useAppDispatch, useFilterStore, usePlugStore } from '../../store';
-import { fetchNFTS } from './utils';
+import { fetchNFTS, fetchNFTDetails } from './utils';
 
 // eslint-disable-next-line object-curly-newline
 export default {};
@@ -28,14 +29,31 @@ export const useNFTSFetcher = () => {
     };
   }
 
+  const { sortBy } = useFilterStore();
+
   useEffect(() => {
     fetchNFTS({
       payload,
       dispatch,
-      sort: 'lastModified',
+      sort: sortBy,
       order: 'd',
       page: 0,
       count: '25',
     });
-  }, [dispatch, traits, isMyNfts, priceValues]);
+  }, [dispatch, traits, isMyNfts, priceValues, sortBy]);
+};
+
+export const useNFTDetailsFetcher = () => {
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+
+  useEffect(() => {
+    // TODO: handle the error gracefully when there is no id
+    if (!id) return;
+
+    fetchNFTDetails({
+      dispatch,
+      id,
+    });
+  }, [dispatch, id]);
 };

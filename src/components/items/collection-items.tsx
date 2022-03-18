@@ -14,7 +14,7 @@ import { NftSkeletonList } from '../nft-skeleton-list';
 import {
   FilteredCountChip,
   FilteredTraitsChip,
-  PriceFilterDropdown,
+  SortByFilterDropdown,
 } from '../core';
 import {
   Container,
@@ -32,14 +32,6 @@ export const CollectionItems = () => {
 
   const { loadingNFTs } = useNFTSStore();
 
-  const dropDownContent = [
-    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
-    `${t('translation:dropdown.priceFilter.recentlySold')}`,
-    `${t('translation:dropdown.priceFilter.lowToHigh')}`,
-    `${t('translation:dropdown.priceFilter.highToHigh')}`,
-    `${t('translation:dropdown.priceFilter.highestLastSale')}`,
-  ];
-
   useNFTSFetcher();
 
   useEffect(() => {
@@ -50,6 +42,7 @@ export const CollectionItems = () => {
 
   // TODO: move applied filters to seperate component
   const handleRemoveFilter = (appliedFilter: any) => {
+    // TODO: apply sorting to fetch kyasshu API
     // eslint-disable-next-line no-console
     if (appliedFilter.filterCategory === 'Price Range') {
       dispatch(
@@ -58,6 +51,7 @@ export const CollectionItems = () => {
       dispatch(settingsActions.setPriceApplyButton(false));
     } else {
       dispatch(filterActions.removeFilter(appliedFilter.filterName));
+      dispatch(filterActions.removeTraitsFilter(appliedFilter.filterName));
     }
   };
 
@@ -97,12 +91,7 @@ export const CollectionItems = () => {
               />
             </ContentFlex>
             <ContentFlex>
-              <PriceFilterDropdown
-                defaultValue={`${t(
-                  'translation:dropdown.priceFilter.lowToHigh',
-                )}`}
-                options={dropDownContent}
-              />
+              <SortByFilterDropdown />
             </ContentFlex>
           </Flex>
           <Flex>
