@@ -83,7 +83,7 @@ export const fetchNFTS = async ({
     console.warn(error);
 
     // set NFTS failed to load
-    dispatch(nftsActions.setFailedToLoadNFTS(error.message));
+    dispatch(errorActions.setErrorMessage(error.message));
   }
 };
 

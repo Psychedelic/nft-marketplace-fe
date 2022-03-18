@@ -44,7 +44,11 @@ export const nftsSlice = createSlice({
     setLoadedNFTS: (state, action: PayloadAction<loadedNFTData>) => {
       const { loadedNFTList, totalPages, nextPage } = action.payload;
       state.loadingNFTs = false;
-      state.loadedNFTS.push(...loadedNFTList);
+      if (nextPage === 1) {
+        state.loadedNFTS = loadedNFTList;
+      } else {
+        state.loadedNFTS.push(...loadedNFTList);
+      }
       if (nextPage < totalPages) {
         state.hasMoreNFTs = true;
         state.nextPageNo = nextPage;

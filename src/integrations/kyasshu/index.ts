@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useFilterStore } from '../../store';
 import { fetchNFTS, fetchNFTDetails } from './utils';
 
 // eslint-disable-next-line object-curly-newline
@@ -10,15 +10,17 @@ export default {};
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
 
+  const { sortBy } = useFilterStore();
+
   useEffect(() => {
     fetchNFTS({
       dispatch,
-      sort: 'lastModified',
+      sort: sortBy,
       order: 'd',
       page: 0,
       count: '25',
     });
-  }, [dispatch]);
+  }, [dispatch, sortBy]);
 };
 
 export const useNFTDetailsFetcher = () => {

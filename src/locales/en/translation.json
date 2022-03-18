@@ -43,7 +43,8 @@
       "highToHigh": "Price: High to High",
       "highestLastSale": "Highest Last Sale",
       "recentlySold": "Recently Sold",
-      "recentlyListed": "Recently Listed"
+      "recentlyListed": "Recently Listed",
+      "highestLastOffer": "Highest Last Offer"
     },
     "moreOptions": {
       "copyLink": "Copy Link"

@@ -2,26 +2,75 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
 
-export interface FilterState {
+export interface CheckboxDataState {
+  traitsTitle: string;
+  traitsValue: string;
+}
+
+export interface ButtonFilterState {
   filterName: any;
   filterCategory: string;
 }
 
-const initialState: FilterState[] = [];
+export interface FilterState {
+  defaultFilters: ButtonFilterState[];
+  traitsFilters: CheckboxDataState[];
+  sortBy: string;
+}
+
+const initialState: FilterState = {
+  defaultFilters: [],
+  traitsFilters: [],
+  sortBy: 'lastModified',
+};
 
 export const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    applyFilter: (state, action: PayloadAction<FilterState>) => {
-      state.push(action.payload);
+    applyFilter: (
+      state,
+      action: PayloadAction<ButtonFilterState>,
+    ) => {
+      state.defaultFilters.push(action.payload);
     },
-    updateFilter: (state, action: PayloadAction<FilterState>) => {
-      const filterIndex = state.findIndex((appliedFilter) => appliedFilter.filterCategory === action.payload.filterCategory);
-      state[filterIndex].filterName = action.payload.filterName;
+    updateFilter: (
+      state,
+      action: PayloadAction<ButtonFilterState>,
+    ) => {
+      const filterIndex = state.defaultFilters.findIndex((appliedFilter) => appliedFilter.filterCategory === action.payload.filterCategory);
+      state.defaultFilters[filterIndex].filterName = action.payload.filterName;
     },
-    removeFilter: (state, action: PayloadAction<string>) => state.filter((appliedFilter) => appliedFilter.filterName !== action.payload),
-    removePriceFilter: (state, action: PayloadAction<string>) => state.filter((appliedFilter) => appliedFilter.filterCategory !== action.payload),
+    applytraitsFilters: (
+      state,
+      action: PayloadAction<CheckboxDataState>,
+    ) => {
+      state.traitsFilters.push(action.payload);
+      state.defaultFilters.push({
+        filterName: action.payload.traitsValue,
+        filterCategory: action.payload.traitsTitle,
+      });
+    },
+    removeFilter: (state, action: PayloadAction<string>) => {
+      const removedFilter = state.defaultFilters.filter((appliedFilter) => appliedFilter.filterName !== action.payload);
+      state.defaultFilters = removedFilter;
+    },
+    removePriceFilter: (state, action: PayloadAction<string>) => {
+      const removedPriceFilter = state.defaultFilters.filter((appliedFilter) => appliedFilter.filterCategory !== action.payload);
+      state.defaultFilters = removedPriceFilter;
+    },
+    removeCheckboxFilter: (state, action: PayloadAction<string>) => {
+      const removedPriceFilter = state.traitsFilters.filter((appliedFilter) => appliedFilter.traitsValue !== action.payload);
+      state.traitsFilters = removedPriceFilter;
+    },
+    // eslint-disable-next-line
+    clearAllFilters: (state) => {
+      state.defaultFilters = [];
+      state.traitsFilters = [];
+    },
+    setSortingFilter: (state, action: PayloadAction<string>) => {
+      state.sortBy = action.payload;
+    },
   },
 });
 

@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import * as Accordion from '@radix-ui/react-accordion';
-import {
-  useThemeStore,
-} from '../../../store';
+import { useFilterStore, useThemeStore } from '../../../store';
 import { Checkbox } from '../checkbox/checkbox';
-import { checkboxDummyData } from '../../mock-data/accordion-data';
 import {
   AccordionStyle,
   AccordionTrigger,
@@ -14,20 +11,21 @@ import arrowdown from '../../../assets/arrowdown.svg';
 import arrowdownDark from '../../../assets/arrowdown-dark.svg';
 
 export type CheckboxFilterAccordionProps = {
-  title: string;
   id: string;
+  checkboxData: any;
 };
 
 export const CheckboxFilterAccordion = ({
-  title,
   id = 'item-1',
+  checkboxData,
 }: CheckboxFilterAccordionProps) => {
   const { theme } = useThemeStore();
+  const { traitsFilters } = useFilterStore();
   const isLightTheme = theme === 'lightTheme';
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-  const [selectedFilters, setSelectedFilters] = useState<
-    Array<string>
-  >([]);
+
+  /* Check if id matches, we need a conditional */
+  const traitsFiltersCount = traitsFilters.filter((selectedTrait) => selectedTrait.traitsTitle === checkboxData.title).length;
 
   return (
     <AccordionStyle
@@ -45,28 +43,27 @@ export const CheckboxFilterAccordion = ({
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <p>
-            {title}
+            {checkboxData.title}
             &nbsp;
             <span>
-              {selectedFilters.length > 0
-                ? `(${selectedFilters.length})`
-                : ''}
+              {traitsFiltersCount > 0 && traitsFiltersCount}
             </span>
           </p>
-          <img src={isLightTheme ? arrowdown : arrowdownDark} alt="arrow-down" />
+          <img
+            src={isLightTheme ? arrowdown : arrowdownDark}
+            alt="arrow-down"
+          />
         </AccordionTrigger>
         <AccordionContent padding="small">
           <form>
-            {checkboxDummyData.map((data) => (
-            // call apply filter
-            // eslint-disable-next-line
+            {checkboxData.values.map((data) => (
+              // call apply filter
+              // eslint-disable-next-line
               <Checkbox
-                title={title}
-                key={data.value}
-                value={data.value}
+                title={checkboxData.title}
+                key={data.name}
+                value={data.name}
                 percentage={data.percentage}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
               />
             ))}
           </form>

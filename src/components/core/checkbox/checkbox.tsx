@@ -1,5 +1,5 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
+import React from 'react';
 import {
   useFilterStore,
   filterActions,
@@ -11,8 +11,6 @@ export type CheckboxProps = {
   title: string;
   value: string; // Red
   percentage: string; // 1291 (12.9%)
-  selectedFilters: Array<string>;
-  setSelectedFilters: (value: any) => void;
 };
 
 export const Checkbox = ({
@@ -22,24 +20,29 @@ export const Checkbox = ({
 }: CheckboxProps) => {
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
-  const filterNameExists = (filterName: string) => appliedFilters.some((appliedFilter) => appliedFilter.filterName === filterName);
+  const filterNameExists = (traitsValue: string) => appliedFilters.traitsFilters.some((appliedFilter) => appliedFilter.traitsValue === traitsValue);
 
   const handleSelectedFilters = (e: any) => {
     // sets value
     const selectedFilterValue = e.target.value;
-    const checkFilterNameExists = filterNameExists(selectedFilterValue);
+    const checkFilterNameExists = filterNameExists(
+      selectedFilterValue,
+    );
 
     // checks if value doesn't already exists
     if (!checkFilterNameExists) {
       // if it doesn't, add value to array
       dispatch(
-        filterActions.applyFilter({
-          filterName: selectedFilterValue,
-          filterCategory: title,
+        filterActions.applytraitsFilters({
+          traitsTitle: title,
+          traitsValue: value,
         }),
       );
     } else {
       // if it does, remove value from the array
+      dispatch(
+        filterActions.removeCheckboxFilter(selectedFilterValue),
+      );
       dispatch(filterActions.removeFilter(selectedFilterValue));
     }
   };

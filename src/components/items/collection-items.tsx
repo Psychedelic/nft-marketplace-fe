@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
   filterActions,
   useAppDispatch,
   useNFTSStore,
+  settingsActions,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
@@ -12,7 +13,7 @@ import { NftSkeletonList } from '../nft-skeleton-list';
 import {
   FilteredCountChip,
   FilteredTraitsChip,
-  PriceFilterDropdown,
+  SortByFilterDropdown,
 } from '../core';
 import {
   Container,
@@ -30,24 +31,19 @@ export const CollectionItems = () => {
 
   const { loadingNFTs } = useNFTSStore();
 
-  const dropDownContent = [
-    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
-    `${t('translation:dropdown.priceFilter.recentlySold')}`,
-    `${t('translation:dropdown.priceFilter.lowToHigh')}`,
-    `${t('translation:dropdown.priceFilter.highToHigh')}`,
-    `${t('translation:dropdown.priceFilter.highestLastSale')}`,
-  ];
-
   useNFTSFetcher();
   // TODO: move applied filters to seperate component
   const handleRemoveFilter = (appliedFilter: object) => {
+    // TODO: apply sorting to fetch kyasshu API
     // eslint-disable-next-line no-console
     if (appliedFilter.filterCategory === 'Price Range') {
       dispatch(
         filterActions.removePriceFilter(appliedFilter.filterCategory),
       );
+      dispatch(settingsActions.setPriceApplyButton(false));
     } else {
       dispatch(filterActions.removeFilter(appliedFilter.filterName));
+      dispatch(filterActions.removeCheckboxFilter(appliedFilter.filterName));
     }
   };
 
@@ -74,19 +70,14 @@ export const CollectionItems = () => {
               />
             </ContentFlex>
             <ContentFlex>
-              <PriceFilterDropdown
-                defaultValue={`${t(
-                  'translation:dropdown.priceFilter.lowToHigh',
-                )}`}
-                options={dropDownContent}
-              />
+              <SortByFilterDropdown />
             </ContentFlex>
           </Flex>
           <Flex>
             <ContentFlex>
               {/* Create state to control display for these chips */}
               {/* We need an array to store the selected filters */}
-              {appliedFilters.map((appliedFilter) => (
+              {appliedFilters.defaultFilters.map((appliedFilter) => (
                 <FilteredTraitsChip
                   name={
                     appliedFilter.filterCategory !== 'Price Range'
