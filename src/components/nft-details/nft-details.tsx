@@ -19,6 +19,8 @@ import {
 import { useNFTSStore } from '../../store';
 import { NFTMetadata } from '../../declarations/nft';
 
+import { useNFTDetailsFetcher } from '../../integrations/kyasshu';
+
 export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
@@ -27,6 +29,8 @@ export const NftDetails = () => {
     () => loadedNFTS.find((nft) => nft.id === id),
     [loadedNFTS, id],
   );
+
+  useNFTDetailsFetcher();
 
   return (
     <Container>
