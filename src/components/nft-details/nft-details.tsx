@@ -40,7 +40,7 @@ export const NftDetails = () => {
               muted
               preload="metadata"
               controls={false}
-              poster="/assets/random-crown.png"
+              poster={nftDetails.preview}
             >
               <source src={nftDetails.location} type="video/mp4" />
             </Video>
