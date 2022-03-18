@@ -33,19 +33,15 @@ import {
   CheckboxFilters,
   FilterButtonWrapper,
 } from './styles';
-import { refinedCheckboxDummyData } from '../mock-data/accordion-data';
 
 /* --------------------------------------------------------------------------
  * Filters Component
  * --------------------------------------------------------------------------*/
 
-// check if category has been selected with different filter name = update filter name
-// check if category and filter name has been selected = removed chip
-
 export const Filters = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const appliedFilters = useFilterStore();
+  const { defaultFilters, loadedFiltersList } = useFilterStore();
   const { theme } = useThemeStore();
   const { collapsed, displayPriceApplyButton } = useSettingsStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -63,12 +59,12 @@ export const Filters = () => {
     ? openFiltersIcon
     : openFiltersIconDark;
 
-  const filterExists = (filterName: string) => appliedFilters.defaultFilters.some((appliedFilter) => appliedFilter.filterName === filterName);
+  const filterExists = (filterName: string) => defaultFilters.some((appliedFilter) => appliedFilter.filterName === filterName);
 
   const applyFilter = (filterCategory: string, filterName: any) => {
-    const filterCategoryExists = appliedFilters.defaultFilters.some((appliedFilter) => appliedFilter.filterCategory === filterCategory);
+    const filterCategoryExists = defaultFilters.some((appliedFilter) => appliedFilter.filterCategory === filterCategory);
 
-    const filterNameExists = appliedFilters.defaultFilters.some(
+    const filterNameExists = defaultFilters.some(
       (appliedFilter) => appliedFilter.filterName === filterName,
     );
 
@@ -126,6 +122,7 @@ export const Filters = () => {
               <ClearButton
                 onClick={() => {
                   dispatch(filterActions.clearAllFilters());
+                  dispatch(settingsActions.setPriceApplyButton(false));
                 }}
               >
                 Clear All
@@ -146,6 +143,7 @@ export const Filters = () => {
                       text={t('translation:buttons.action.allNfts')}
                       handleClick={() => {
                         dispatch(filterActions.removeFilter(myNfts));
+                        dispatch(filterActions.setMyNfts(false));
                       }}
                     />
                   </FilterButtonWrapper>
@@ -160,6 +158,7 @@ export const Filters = () => {
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
                         applyFilter('Display', myNfts);
+                        dispatch(filterActions.setMyNfts(true));
                       }}
                     />
                   </FilterButtonWrapper>
@@ -269,15 +268,16 @@ export const Filters = () => {
             <Heading>Traits</Heading>
             <FilterSection>
               <CheckboxFilters>
-                {refinedCheckboxDummyData.map((checkboxData) => (
-                  <CheckboxFilterAccordion
-                    // we need the type of gem it is
-                    // we need the values selected
-                    // call apply filter
-                    checkboxData={checkboxData}
-                    id="small-gem"
-                  />
-                ))}
+                {/* TO-DO: Refactor */}
+                {loadedFiltersList[0]?.map((checkboxData) => {
+                  console.log('will be used for debugging');
+                  return (
+                    <CheckboxFilterAccordion
+                      checkboxData={checkboxData}
+                      id="small-gem"
+                    />
+                  );
+                })}
               </CheckboxFilters>
             </FilterSection>
           </FiltersWrapper>

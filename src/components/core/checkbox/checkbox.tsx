@@ -1,67 +1,34 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import React from 'react';
-import {
-  useFilterStore,
-  filterActions,
-  useAppDispatch,
-} from '../../../store';
 import { Wrapper } from './styles';
 
 export type CheckboxProps = {
   title: string;
   value: string; // Red
   percentage: string; // 1291 (12.9%)
+  filterValueExists: (value: string) => boolean;
+  handleSelectedFilters: (value: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
 };
 
 export const Checkbox = ({
-  title,
   value,
   percentage,
-}: CheckboxProps) => {
-  const dispatch = useAppDispatch();
-  const appliedFilters = useFilterStore();
-  const filterNameExists = (traitsValue: string) => appliedFilters.traitsFilters.some((appliedFilter) => appliedFilter.traitsValue === traitsValue);
-
-  const handleSelectedFilters = (e: any) => {
-    // sets value
-    const selectedFilterValue = e.target.value;
-    const checkFilterNameExists = filterNameExists(
-      selectedFilterValue,
-    );
-
-    // checks if value doesn't already exists
-    if (!checkFilterNameExists) {
-      // if it doesn't, add value to array
-      dispatch(
-        filterActions.applytraitsFilters({
-          traitsTitle: title,
-          traitsValue: value,
-        }),
-      );
-    } else {
-      // if it does, remove value from the array
-      dispatch(
-        filterActions.removeCheckboxFilter(selectedFilterValue),
-      );
-      dispatch(filterActions.removeFilter(selectedFilterValue));
-    }
-  };
-
-  return (
-    <Wrapper>
-      <label htmlFor={value}>
-        <input
-          type="checkbox"
-          id={value}
-          name={value}
-          value={value}
-          onClick={handleSelectedFilters}
-          // checks if value exists in array and sets checked to true
-          checked={filterNameExists(value) && true}
-        />
-        {value}
-      </label>
-      <span>{percentage}</span>
-    </Wrapper>
-  );
-};
+  filterValueExists,
+  handleSelectedFilters,
+}: CheckboxProps) => (
+  <Wrapper>
+    <label htmlFor={value}>
+      <input
+        type="checkbox"
+        id={value}
+        name={value}
+        value={value}
+        onClick={(e) => handleSelectedFilters(e)}
+        // checks if value exists in array and sets checked to true
+        checked={filterValueExists(value) && true}
+      />
+      {value}
+    </label>
+    <span>{percentage}</span>
+  </Wrapper>
+);
