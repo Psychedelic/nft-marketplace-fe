@@ -34,7 +34,7 @@ export const fetchNFTS = async ({
 
     const response = await axios.post(
       // eslint-disable-next-line max-len
-      `http://localhost:3000/dev/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`,
+      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`,
       payload,
     );
 
@@ -92,7 +92,7 @@ export const fetchNFTDetails = async ({
     const payload = {};
 
     const response = await axios.get(
-      `http://localhost:3000/dev/marketplace/${config.collectionId}/nft/${id}`,
+      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${id}`,
     );
 
     if (response.status !== 200) {

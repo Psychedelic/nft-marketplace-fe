@@ -26,6 +26,7 @@ export const useNFTDetailsFetcher = () => {
   const { id } = useParams();
 
   useEffect(() => {
+    // TODO: handle the error gracefully when there is no id
     if (!id) return;
 
     fetchNFTDetails({
