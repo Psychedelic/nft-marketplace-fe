@@ -25,7 +25,9 @@ export const SortByFilterDropdown = React.memo(() => {
   );
   const { theme } = useThemeStore();
   const isLightTheme = theme === 'lightTheme';
+  const currTheme = theme === 'darkTheme' ? 'dark' : 'light';
 
+  // TODO: move all the keys to constant variable file
   const sortOptions = [
     {
       key: 'lastModified',
@@ -66,10 +68,8 @@ export const SortByFilterDropdown = React.memo(() => {
         />
       </DropdownStyle>
 
-      <DropdownContent
-        background={theme === 'darkTheme' ? 'dark' : 'light'}
-      >
-        <DropdownRadioGroup onValueChange={(e) => setSortBy(e)}>
+      <DropdownContent background={currTheme}>
+        <DropdownRadioGroup onValueChange={setSortBy}>
           {sortOptions.map((item) => (
             <>
               <DropdownRadioMenuItem
