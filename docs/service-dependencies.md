@@ -56,6 +56,36 @@ Bare in mind, that there might be need to troubleshoot when the process is not s
 
 👏 That's it, at this point you should have all the necessary Services running in your local replica!
 
+### Crowns Canister
+
+The [Crowns](https://github.com/Psychedelic/crowns) Canister is a [DIP-721](https://github.com/Psychedelic/dip721) Token Contract, that has 10k tokens. Traversing 10k items with a on-chain solution is not performant, so we have the on-chain canister endpoints, but also an off-chain through [Kyasshu API](https://github.com/Psychedelic/kyasshu), which provides a solution to help get the Crowns data.
+
+Since the off-chain is mirroring the data on-chain which it depends you'll have to make sure that when generating the mock data locally, the data is mirrored between the Crowns Canister and the Kyasshu Marketplace API, e.g. if you want to generate 40 Tokens starting from Token index 1 then the token range should exist in both Crowns Canister and Kyasshu. This is because you want the performance of the off-chain solution but ultimately, interact with the on-chain Crowns Canister.
+
+Here's an example of how to generate 9 crown tokens in the on-chain Crowns Canister of your local replica:
+
+```sh
+yarn mock:generate-tokens $(cd ./nft-marketplace/crowns && dfx canister id crowns) 9
+```
+
+Similarily, you'd cache 50 crown tokens in the off-chain Kyasshu Marketplace API
+
+```sh
+yarn kyasshu:mock 50
+```
+
+💡 Kyasshu caches 50 at the time, so if we attempt to cache 9 items it'd get 50 minimal.
+
+These scripts are offered for your own convinience check the source repositories for more.
+
+In some cases you might want to reset the redis database:
+
+```sh
+yarn kyasshu:redis-flush-all
+```
+
+🤞 If you find issues, refer to the [troubleshooting](/docs/troubleshooting.md) document for help.
+
 ### Running Kyasshu as off-chain API
 
 We'll need the Kyasshu repository, as such you'll have to run the Service initialisation, as explained earlier. So, make sure that the `kyasshu` directory is populated.
@@ -147,6 +177,8 @@ You should get a similar output to:
 At this point you should have the Kyasshu services running!
 
 Check the topic of how to get data in your local Kyasshu to learn more.
+
+🤞 If you find issues, refer to the [troubleshooting](/docs/troubleshooting.md) document for help.
 
 ### Get data in the local Kyasshu
 
