@@ -57,6 +57,7 @@
     "kyasshu:redis-flush-all": "redis-cli flushall",
     "kyasshu:start": "cd ./kyasshu && yarn dev",
     "kyasshu:mock": ".scripts/mock/kyasshu-cache-tokens.sh",
+    "kyasshu:reset": "pkill java",
     "mock:generate-tokens": "cd ./nft-marketplace && yarn mock:generate-tokens"
   },
   "browserslist": {
