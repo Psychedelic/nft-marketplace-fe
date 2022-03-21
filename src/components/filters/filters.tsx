@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { fetchFilterTraits } from '../../integrations/kyasshu/utils';
 import {
   useFilterStore,
   useThemeStore,
@@ -33,7 +34,6 @@ import {
   CheckboxFilters,
   FilterButtonWrapper,
 } from './styles';
-import { refinedCheckboxDummyData } from '../mock-data/accordion-data';
 
 /* --------------------------------------------------------------------------
  * Filters Component
@@ -59,6 +59,12 @@ export const Filters = () => {
   const openFiltersIconTheme = isLightTheme
     ? openFiltersIcon
     : openFiltersIconDark;
+
+  useEffect(() => {
+    fetchFilterTraits({
+      dispatch,
+    });
+  }, []);
 
   const filterExists = (filterName: string) => defaultFilters.some((appliedFilter) => appliedFilter.filterName === filterName);
 

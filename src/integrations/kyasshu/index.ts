@@ -2,19 +2,17 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAppDispatch, useFilterStore, usePlugStore } from '../../store';
-import { fetchNFTS, fetchNFTDetails } from './utils';
+import { fetchNFTS, fetchNFTDetails, useTraitsPayload, usePriceValues } from './utils';
 
 // eslint-disable-next-line object-curly-newline
 export default {};
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
-  const { traits, isMyNfts, defaultFilters } = useFilterStore();
+  const { traits, isMyNfts } = useFilterStore();
   const { principalId } = usePlugStore();
-  const traitsPayload = traits.filter(
-    (trait) => trait?.values?.length,
-  );
-  const priceValues = defaultFilters.find(({ filterCategory }) => filterCategory === 'Price Range')?.filterName;
+  const traitsPayload = useTraitsPayload();
+  const priceValues = usePriceValues();
   // eslint-disable-next-line object-curly-newline
   let payload = {};
   if (traitsPayload.length || isMyNfts || (priceValues && Object.keys(priceValues).length)) {

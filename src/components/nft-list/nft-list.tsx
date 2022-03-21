@@ -9,21 +9,17 @@ import {
   useAppDispatch,
   usePlugStore,
 } from '../../store';
-import { fetchMoreNFTS } from '../../integrations/kyasshu/utils';
+import { fetchNFTS, usePriceValues, useTraitsPayload } from '../../integrations/kyasshu/utils';
 
 export const NftList = () => {
   // eslint-disable-next-line
   const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } =
     useNFTSStore();
   const dispatch = useAppDispatch();
-  const { traits, isMyNfts, defaultFilters } = useFilterStore();
+  const { isMyNfts } = useFilterStore();
   const { principalId } = usePlugStore();
-  const traitsPayload = traits.filter(
-    (trait) => trait?.values?.length,
-  );
-  const priceValues = defaultFilters.find(
-    ({ filterCategory }) => filterCategory === 'Price Range',
-  )?.filterName;
+  const traitsPayload = useTraitsPayload();
+  const priceValues = usePriceValues();
   // eslint-disable-next-line object-curly-newline
   let payload = {};
   if (
@@ -47,7 +43,7 @@ export const NftList = () => {
   const loadMoreNFTS = () => {
     if (loadingNFTs || !hasMoreNFTs) return;
 
-    fetchMoreNFTS({
+    fetchNFTS({
       payload,
       dispatch,
       sort: sortBy,

@@ -8,7 +8,6 @@ import {
   settingsActions,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
-import { fetchFilterTraits } from '../../integrations/kyasshu/utils';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import {
@@ -33,12 +32,6 @@ export const CollectionItems = () => {
   const { loadingNFTs } = useNFTSStore();
 
   useNFTSFetcher();
-
-  useEffect(() => {
-    fetchFilterTraits({
-      dispatch,
-    });
-  }, []);
 
   // TODO: move applied filters to seperate component
   const handleRemoveFilter = (appliedFilter: any) => {
@@ -99,7 +92,7 @@ export const CollectionItems = () => {
               {appliedFilters.defaultFilters.map((appliedFilter) => {
                 if (Array.isArray(appliedFilter.filterName)) {
                   return appliedFilter.filterName.map((value) => {
-                    console.log(appliedFilter);
+                    console.log('');
                     return (
                       <FilteredTraitsChip
                         name={value}
