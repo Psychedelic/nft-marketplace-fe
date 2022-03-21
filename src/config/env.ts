@@ -14,6 +14,7 @@ type ConfigParams = {
   canisterId: string;
   host: string;
   collectionId: string;
+  kyasshuMarketplaceAPI: string;
 };
 type Config = {
   production: ConfigParams;
@@ -27,19 +28,19 @@ const config: Config = {
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
     collectionId: NFT_CROWNS_CANISTER_ID,
-    kyasshuMarketplaceAPI: 'http://localhost:3000/dev',
+    kyasshuMarketplaceAPI: 'http://localhost:3000/local',
   },
   staging: {
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
     collectionId: NFT_CROWNS_CANISTER_ID,
-    kyasshuMarketplaceAPI: 'http://localhost:3000/dev',
+    kyasshuMarketplaceAPI: 'http://localhost:3000/local',
   },
   development: {
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
     collectionId: NFT_CROWNS_CANISTER_ID,
-    kyasshuMarketplaceAPI: 'http://localhost:3000/dev',
+    kyasshuMarketplaceAPI: 'http://localhost:3000/local',
   },
   test: {
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
