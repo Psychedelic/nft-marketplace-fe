@@ -33,19 +33,7 @@ export const CheckboxFilterAccordion = ({
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const filterValueExists = (traitsValue: string) => traits.some((trait) => trait.values.includes(traitsValue));
   const traitsCount = traits.find((trait) => trait.name === checkboxData.name)?.values?.length;
-
-  const modifyName = (name: string) => {
-    if (name === 'smallgem') {
-      return 'Small Gem';
-      // eslint-disable-next-line no-else-return
-    } else if (name === 'biggem') {
-      return 'Big Gem';
-      // eslint-disable-next-line no-else-return
-    } else if (name === 'base') {
-      return 'Base';
-    }
-    return 'Rim';
-  };
+  const traitsName = traits.find((trait) => trait.name === checkboxData.name);
 
   const handleSelectedFilters = (e: any) => {
     const checkFilterValueExists = filterValueExists(e.target.value);
@@ -53,6 +41,7 @@ export const CheckboxFilterAccordion = ({
     if (!checkFilterValueExists) {
       dispatch(
         filterActions.applytraits({
+          key: checkboxData.key,
           name: checkboxData.name,
           values: e.target.value,
         }),
@@ -78,7 +67,7 @@ export const CheckboxFilterAccordion = ({
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <p>
-            {modifyName(checkboxData.name)}
+            {checkboxData.key}
             &nbsp;
             <span>{traitsCount && traitsCount > 0 ? `(${traitsCount})` : ''}</span>
           </p>
@@ -91,7 +80,7 @@ export const CheckboxFilterAccordion = ({
           <form>
             {checkboxData.values.map((data) => (
               <Checkbox
-                title={checkboxData.name}
+                traitsName={traitsName}
                 key={data}
                 value={data}
                 percentage={data.percentage}

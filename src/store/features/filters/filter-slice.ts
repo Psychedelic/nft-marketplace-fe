@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
 
 export interface TraitsDataState {
+  key: string,
   name: string;
   values: Array<string>;
 }
@@ -61,18 +62,19 @@ export const filterSlice = createSlice({
 
       if (traitsNameExists) {
         state.traits[traitsFilterIndex].values.push(action.payload.values);
-        const traitName = state.traits[traitsFilterIndex].name;
+        const traitName = state.traits[traitsFilterIndex].key;
         const defaultFiltersIndex = state.defaultFilters.findIndex((filter) => filter.filterCategory === traitName);
         // eslint-disable-next-line
         Array.isArray(state.defaultFilters[defaultFiltersIndex].filterName) && state.defaultFilters[defaultFiltersIndex].filterName.push(action.payload.values);
       } else {
         state.traits.push({
+          key: action.payload.key,
           name: action.payload.name,
           values: [action.payload.values],
         });
         state.defaultFilters.push({
           filterName: [action.payload.values],
-          filterCategory: action.payload.name,
+          filterCategory: action.payload.key,
         });
       }
     },

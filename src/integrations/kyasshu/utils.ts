@@ -147,7 +147,35 @@ export const fetchFilterTraits = async ({ dispatch } : FetchFilterTraitsProps) =
       throw Error(response.statusText);
     }
 
-    dispatch(filterActions.getAllFilters(response.data));
+    const responseData = response.data.map((res) => {
+      let key;
+      switch (res.name) {
+        case 'smallgem':
+          key = 'Small Gem';
+          break;
+        case 'biggem':
+          key = 'Big Gem';
+          break;
+        case 'base':
+          key = 'Base';
+          break;
+        case 'rim':
+          key = 'Rim';
+          break;
+        default:
+          console.log('');
+      }
+
+      const data = {
+        key,
+        name: res.name,
+        values: [...res.values],
+      };
+
+      return data;
+    });
+
+    dispatch(filterActions.getAllFilters(responseData));
   } catch (error) {
     console.log(error);
   }

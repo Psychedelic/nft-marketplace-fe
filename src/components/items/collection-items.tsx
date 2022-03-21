@@ -48,19 +48,6 @@ export const CollectionItems = () => {
     }
   };
 
-  const modifyName = (name: string) => {
-    if (name === 'smallgem') {
-      return 'Small Gem';
-      // eslint-disable-next-line no-else-return
-    } else if (name === 'biggem') {
-      return 'Big Gem';
-      // eslint-disable-next-line no-else-return
-    } else if (name === 'base') {
-      return 'Base';
-    }
-    return 'Rim';
-  };
-
   return (
     <Container>
       <FilteredContainer>
@@ -96,7 +83,7 @@ export const CollectionItems = () => {
                     return (
                       <FilteredTraitsChip
                         name={value}
-                        rim={modifyName(`${appliedFilter.filterCategory}`)}
+                        rim={`${appliedFilter.filterCategory}`}
                         appliedFilterValue={appliedFilter}
                         removeFilter={() => {
                           dispatch(

@@ -3,7 +3,8 @@ import React from 'react';
 import { Wrapper } from './styles';
 
 export type CheckboxProps = {
-  title: string;
+  title: string,
+  traitsName: boolean;
   value: string; // Red
   percentage: string; // 1291 (12.9%)
   filterValueExists: (value: string) => boolean;
@@ -11,6 +12,7 @@ export type CheckboxProps = {
 };
 
 export const Checkbox = ({
+  traitsName,
   value,
   percentage,
   filterValueExists,
@@ -25,7 +27,7 @@ export const Checkbox = ({
         value={value}
         onClick={(e) => handleSelectedFilters(e)}
         // checks if value exists in array and sets checked to true
-        checked={filterValueExists(value) && true}
+        checked={(filterValueExists(value) && traitsName) && true}
       />
       {value}
     </label>
