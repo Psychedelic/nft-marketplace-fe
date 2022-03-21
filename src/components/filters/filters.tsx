@@ -42,7 +42,7 @@ import {
 export const Filters = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { defaultFilters, loadedFiltersList } = useFilterStore();
+  const { defaultFilters, loadedFiltersList, status } = useFilterStore();
   const { theme } = useThemeStore();
   const { collapsed, displayPriceApplyButton } = useSettingsStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -190,6 +190,11 @@ export const Filters = () => {
                           'Status',
                           `${t('translation:buttons.action.buyNow')}`,
                         );
+                        if (status !== 'unlisted') {
+                          dispatch(filterActions.setStatusFilter('unlisted'));
+                        } else {
+                          dispatch(filterActions.setStatusFilter(''));
+                        }
                       }}
                     />
                   </FilterButtonWrapper>
@@ -216,6 +221,11 @@ export const Filters = () => {
                             'translation:buttons.action.hasOffers',
                           )}`,
                         );
+                        if (status !== 'listed') {
+                          dispatch(filterActions.setStatusFilter('listed'));
+                        } else {
+                          dispatch(filterActions.setStatusFilter(''));
+                        }
                       }}
                     />
                   </FilterButtonWrapper>
@@ -277,7 +287,7 @@ export const Filters = () => {
               <CheckboxFilters>
                 {/* TO-DO: Refactor */}
                 {loadedFiltersList[0]?.map((checkboxData) => {
-                  console.log('will be used for debugging');
+                  console.log('');
                   return (
                     <CheckboxFilterAccordion
                       checkboxData={checkboxData}

@@ -16,18 +16,18 @@ export const NftList = () => {
   const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } =
     useNFTSStore();
   const dispatch = useAppDispatch();
-  const { isMyNfts } = useFilterStore();
+  const { isMyNfts, status } = useFilterStore();
   const { principalId } = usePlugStore();
   const traitsPayload = useTraitsPayload();
   const priceValues = usePriceValues();
   // eslint-disable-next-line object-curly-newline
   let payload = {};
   if (
-    traitsPayload.length || isMyNfts || (priceValues && Object.keys(priceValues).length)) {
+    traitsPayload.length || isMyNfts || (priceValues && Object.keys(priceValues).length) || status !== '') {
     payload = {
       traits: traitsPayload.length ? traitsPayload : undefined,
       principal: isMyNfts ? principalId : undefined,
-      status: 'unlisted', // TO-DO: add to conditional statement
+      status: status !== '' ? status : undefined,
       price:
         priceValues && Object.keys(priceValues).length
           ? {

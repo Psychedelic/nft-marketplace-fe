@@ -9,17 +9,17 @@ export default {};
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
-  const { traits, isMyNfts } = useFilterStore();
+  const { traits, isMyNfts, status } = useFilterStore();
   const { principalId } = usePlugStore();
   const traitsPayload = useTraitsPayload();
   const priceValues = usePriceValues();
   // eslint-disable-next-line object-curly-newline
   let payload = {};
-  if (traitsPayload.length || isMyNfts || (priceValues && Object.keys(priceValues).length)) {
+  if (traitsPayload.length || isMyNfts || (priceValues && Object.keys(priceValues).length) || status !== '') {
     payload = {
       traits: traitsPayload.length ? traitsPayload : undefined,
       principal: isMyNfts ? principalId : undefined,
-      status: 'unlisted', // TO-DO: add to conditional statement
+      status: status !== '' ? status : undefined,
       price: priceValues && Object.keys(priceValues).length ? {
         min: priceValues?.min,
         max: priceValues?.max,
@@ -38,7 +38,9 @@ export const useNFTSFetcher = () => {
       page: 0,
       count: '25',
     });
-  }, [dispatch, traits, isMyNfts, priceValues, sortBy]);
+
+    console.log(payload);
+  }, [dispatch, traits, isMyNfts, priceValues, sortBy, status]);
 };
 
 export const useNFTDetailsFetcher = () => {
