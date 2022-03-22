@@ -1,13 +1,39 @@
 import fetch from 'cross-fetch';
 import { Actor, Agent, HttpAgent } from '@dfinity/agent';
 import { Secp256k1KeyIdentity } from '@dfinity/identity';
+import { Principal } from '@dfinity/principal';
+import nftIdlFactory from '../../declarations/nft.did';
+import NFTIdlService from '../../declarations/nft';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
 import MarketplaceIdlService from '../../declarations/marketplace';
 import config from '../../config/env';
 
-export const createActor = async () => {
-  console.log('[debug] createActor: config.host:', config.host);
+enum ServiceName {
+  marketplace,
+  crowns,
+}
 
+// export const createActor = async ({
+//   serviceName = ServiceName.marketplace,
+// }: {
+//   serviceName?: ServiceName;
+// })
+
+const actorProvider = <T>({
+  canisterId,
+  agent,
+  idlFactory,
+}: {
+  canisterId: string | Principal;
+  agent: Agent;
+  idlFactory: any;
+}) =>
+  Actor.createActor<T>(idlFactory, {
+    canisterId,
+    agent,
+  });
+
+export const createActor = async () => {
   const httpAgent = new HttpAgent({
     host: config.host,
     fetch,
@@ -36,11 +62,9 @@ export const createActor = async () => {
     }
   }
 
-  return Actor.createActor<MarketplaceIdlService>(
-    marketplaceIdlFactory,
-    {
-      canisterId,
-      agent,
-    },
-  );
+  return actorProvider<MarketplaceIdlService>({
+    canisterId,
+    agent,
+    idlFactory: marketplaceIdlFactory,
+  });
 };
