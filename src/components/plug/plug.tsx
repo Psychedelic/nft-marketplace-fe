@@ -94,13 +94,23 @@ export const Plug = () => {
   }, [isConnected, dispatch]);
 
   const handleConnectToPlug = async () => {
+    // List of canisters to whitelist
+    // this should be provided from the env conf file
+    const marketplaceCanisterId = 'renrk-eyaaa-aaaaa-aaada-cai';
+    const wICPCanisterId = 'qjdve-lqaaa-aaaaa-aaaeq-cai';
+    const crownsCanisterId = 'rkp4c-7iaaa-aaaaa-aaaca-cai';
+
     try {
       // verifying plug connection
       dispatch(
         plugActions.setConnectionStatus(PLUG_STATUS_CODES.Connecting),
       );
 
-      const whitelist = [CANISTER_ID];
+      const whitelist = [
+        crownsCanisterId,
+        marketplaceCanisterId,
+        wICPCanisterId,
+      ];
       const host = NETWORK;
 
       // request app to connect with plug
