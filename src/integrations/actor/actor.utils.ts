@@ -1,23 +1,21 @@
 import fetch from 'cross-fetch';
-import { Actor, Agent, HttpAgent } from '@dfinity/agent';
+import {
+  Actor,
+  Agent,
+  HttpAgent,
+  ActorSubclass,
+} from '@dfinity/agent';
 import { Secp256k1KeyIdentity } from '@dfinity/identity';
 import { Principal } from '@dfinity/principal';
-import nftIdlFactory from '../../declarations/nft.did';
-import NFTIdlService from '../../declarations/nft';
+import crownsIdlFactory from '../../declarations/nft.did';
+import crownsIdlService from '../../declarations/nft';
+import wicpIdlFactory from '../../declarations/wicp.did';
+import wicpIdlService from '../../declarations/wicp';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
-import MarketplaceIdlService from '../../declarations/marketplace';
+import marketplaceIdlService from '../../declarations/marketplace';
 import config from '../../config/env';
 
-enum ServiceName {
-  marketplace,
-  crowns,
-}
-
-// export const createActor = async ({
-//   serviceName = ServiceName.marketplace,
-// }: {
-//   serviceName?: ServiceName;
-// })
+type ServiceName = 'marketplace' | 'crowns' | 'wicp';
 
 const actorProvider = <T>({
   canisterId,
@@ -27,13 +25,19 @@ const actorProvider = <T>({
   canisterId: string | Principal;
   agent: Agent;
   idlFactory: any;
-}) =>
+}): ActorSubclass<T> =>
   Actor.createActor<T>(idlFactory, {
     canisterId,
     agent,
   });
 
-export const createActor = async () => {
+export const createActor = async <T>({
+  serviceName = 'marketplace',
+}: {
+  serviceName?: ServiceName;
+}) => {
+  console.log('[debug] createActor: serviceName:', serviceName);
+
   const httpAgent = new HttpAgent({
     host: config.host,
     fetch,
@@ -62,7 +66,23 @@ export const createActor = async () => {
     }
   }
 
-  return actorProvider<MarketplaceIdlService>({
+  if (serviceName === 'crowns') {
+    return actorProvider<crownsIdlService>({
+      canisterId,
+      agent,
+      idlFactory: crownsIdlFactory,
+    });
+  }
+
+  if (serviceName === 'wicp') {
+    return actorProvider<wicpIdlService>({
+      canisterId,
+      agent,
+      idlFactory: wicpIdlFactory,
+    });
+  }
+
+  return actorProvider<marketplaceIdlService>({
     canisterId,
     agent,
     idlFactory: marketplaceIdlFactory,

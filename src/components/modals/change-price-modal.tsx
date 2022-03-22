@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { Principal } from '@dfinity/principal';
+import { ActorSubclass } from '@dfinity/agent';
 import { createActor } from '../../integrations/actor';
+import marketplaceIdlService from '../../declarations/marketplace';
 import config from '../../config/env';
 import {
   ActionButton,
@@ -50,7 +52,9 @@ export const ChangePriceModal = () => {
     );
     const userOwnedTokenId = BigInt(0);
     const userListForPrice = BigInt(123);
-    const actor = await createActor();
+    const actor = (await createActor<marketplaceIdlService>({
+      serviceName: 'marketplace',
+    })) as ActorSubclass<marketplaceIdlService>;
     const responseListForSale = await actor.listForSale(
       nonFungibleContractAddress,
       userOwnedTokenId,
