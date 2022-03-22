@@ -55,11 +55,13 @@ export const ChangePriceModal = () => {
     const actor = (await createActor<marketplaceIdlService>({
       serviceName: 'marketplace',
     })) as ActorSubclass<marketplaceIdlService>;
+
     const responseListForSale = await actor.listForSale(
       nonFungibleContractAddress,
       userOwnedTokenId,
       userListForPrice,
     );
+
     console.log('[debug] responseListForSale', responseListForSale);
   };
 

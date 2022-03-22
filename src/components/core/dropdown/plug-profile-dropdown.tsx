@@ -6,6 +6,9 @@ import { ConnectToPlug, PlugFlex } from './styles';
 import offers from '../../../assets/offers.svg';
 import disconnect from '../../../assets/disconnect.svg';
 
+// TODO: What is this for? Since there's another Plug component
+// located in `src/components/plug/plug.tsx`, this causes confusion
+// so make sure there's a single component for Plug
 export const PlugProfileDropdown = () => (
   <HoverCard.Root openDelay={300}>
     <HoverCard.Trigger>
