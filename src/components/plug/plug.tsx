@@ -18,6 +18,7 @@ import {
   PLUG_STATUS_CODES,
 } from '../../constants';
 import { CANISTER_ID, NETWORK } from '../../config';
+import config from '../../config/env';
 
 export const Plug = () => {
   const { t } = useTranslation();
@@ -94,17 +95,17 @@ export const Plug = () => {
   }, [isConnected, dispatch]);
 
   const handleConnectToPlug = async () => {
-    // List of canisters to whitelist
-    // this should be provided from the env conf file
-    const marketplaceCanisterId = 'renrk-eyaaa-aaaaa-aaada-cai';
-    const wICPCanisterId = 'qjdve-lqaaa-aaaaa-aaaeq-cai';
-    const crownsCanisterId = 'rkp4c-7iaaa-aaaaa-aaaca-cai';
-
     try {
       // verifying plug connection
       dispatch(
         plugActions.setConnectionStatus(PLUG_STATUS_CODES.Connecting),
       );
+
+      const {
+        crownsCanisterId,
+        marketplaceCanisterId,
+        wICPCanisterId,
+      } = config;
 
       const whitelist = [
         crownsCanisterId,

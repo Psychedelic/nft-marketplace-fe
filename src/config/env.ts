@@ -15,6 +15,9 @@ type ConfigParams = {
   host: string;
   collectionId: string;
   kyasshuMarketplaceAPI: string;
+  crownsCanisterId: string;
+  marketplaceCanisterId: string;
+  wICPCanisterId: string;
 };
 type Config = {
   production: ConfigParams;
@@ -29,23 +32,36 @@ const config: Config = {
     host: 'http://127.0.0.1:8000',
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
+    marketplaceCanisterId: 'renrk-eyaaa-aaaaa-aaada-cai',
+    wICPCanisterId: 'qjdve-lqaaa-aaaaa-aaaeq-cai',
   },
   staging: {
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
+    marketplaceCanisterId: 'renrk-eyaaa-aaaaa-aaada-cai',
+    wICPCanisterId: 'qjdve-lqaaa-aaaaa-aaaeq-cai',
   },
   development: {
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
+    marketplaceCanisterId: 'renrk-eyaaa-aaaaa-aaada-cai',
+    wICPCanisterId: 'qjdve-lqaaa-aaaaa-aaaeq-cai',
   },
   test: {
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
     collectionId: NFT_CROWNS_CANISTER_ID,
+    kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
+    marketplaceCanisterId: 'renrk-eyaaa-aaaaa-aaada-cai',
+    wICPCanisterId: 'qjdve-lqaaa-aaaaa-aaaeq-cai',
   },
 };
 
