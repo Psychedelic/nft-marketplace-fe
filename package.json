@@ -55,7 +55,7 @@
     "services:reset": "cd ./nft-marketplace && dfx stop && npm run reset",
     "kyasshu:redis": "redis-server /usr/local/etc/redis.conf",
     "kyasshu:redis-flush-all": "redis-cli flushall",
-    "kyasshu:start": "yarn kyasshu:reset && cd ./kyasshu && yarn dev",
+    "kyasshu:start": "cd ./kyasshu && yarn dev",
     "kyasshu:mock": ".scripts/mock/kyasshu-cache-tokens.sh",
     "kyasshu:reset": "pkill java",
     "mock:generate-tokens": "cd ./nft-marketplace && yarn mock:generate-tokens"
