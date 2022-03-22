@@ -8,7 +8,6 @@ printf "🤖 Add collection to the Marketplace\n"
 
 
   ownerPrincipalId=$(dfx identity get-principal)
-  wallet=$(dfx identity get-wallet)
   marketplaceId=$(dfx canister id marketplace)
   fee=1
   creationTime=0
@@ -17,14 +16,13 @@ printf "🤖 Add collection to the Marketplace\n"
   fungibleContractAddress=$(cd wicp && dfx canister id wicp)
 
   echo "ownerPrincipalId > $ownerPrincipalId"
-  echo "wallet > $wallet"
   echo "marketplaceId > $marketplaceId"
   echo "fee > $fee"
   echo "creationTime > $creationTime"
   echo "nonFungibleContractAddress > $nonFungibleContractAddress"
   echo "fungibleContractAddress > $fungibleContractAddress"
 
-  dfx canister --wallet "$wallet" \
+  dfx canister \
     call --update "$marketplaceId" \
     addCollection "(
         principal \"$ownerPrincipalId\",

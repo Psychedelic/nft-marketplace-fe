@@ -6,12 +6,11 @@ printf "🤖 Mint Crowns\n"
   cd "$(dirname $BASH_SOURCE)"
   cd ../nft-marketplace
 
-  wallet=$(dfx identity get-wallet)
   mint_for=$(dfx identity get-principal)
   tokenId=0
   nonFungibleContractAddress=$(cd crowns && dfx canister id crowns)
 
-  dfx canister --wallet "$wallet" \
+  dfx canister \
     call --update "$nonFungibleContractAddress" \
     mint "(
       principal \"$mint_for\",
