@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { Principal } from '@dfinity/principal';
+import { createActor } from '../../integrations/actor';
+import config from '../../config/env';
 import {
   ActionButton,
   ModalInput,
@@ -38,9 +41,22 @@ export const ChangePriceModal = () => {
   // ChangePrice modal steps: listingInfo/pending/confirmed
   const [modalStep, setModalStep] = useState<string>('listingInfo');
 
-  const handleModalOpen = (status: boolean) => {
+  const handleModalOpen = async (status: boolean) => {
     setModalOpened(status);
     setModalStep('listingInfo');
+
+    const nonFungibleContractAddress = Principal.fromText(
+      config.crownsCanisterId,
+    );
+    const userOwnedTokenId = BigInt(0);
+    const userListForPrice = BigInt(123);
+    const actor = await createActor();
+    const responseListForSale = await actor.listForSale(
+      nonFungibleContractAddress,
+      userOwnedTokenId,
+      userListForPrice,
+    );
+    console.log('[debug] responseListForSale', responseListForSale);
   };
 
   const handleModalClose = () => {
