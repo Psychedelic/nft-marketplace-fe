@@ -104,10 +104,13 @@ export const CollectionItems = () => {
                     rim={`${appliedFilter.filterCategory}`}
                     appliedFilterValue={appliedFilter}
                     removeFilter={() => {
-                      handleRemoveFilter(appliedFilter);
                       if (appliedFilter.filterName === `${t('translation:buttons.action.myNfts')}`) {
                         dispatch(filterActions.setMyNfts(false));
-                      }
+                      } else if (appliedFilter.filterName === `${t('translation:buttons.action.buyNow')}`) {
+                        dispatch(filterActions.setStatusFilter(''));
+                      } else if (appliedFilter.filterName === `${t('translation:buttons.action.hasOffers')}`) {
+                        dispatch(filterActions.setStatusFilter(''));
+                      } handleRemoveFilter(appliedFilter);
                     }}
                   />
                 );
