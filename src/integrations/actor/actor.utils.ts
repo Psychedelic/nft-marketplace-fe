@@ -1,11 +1,13 @@
 import fetch from 'cross-fetch';
-import { Actor, HttpAgent } from '@dfinity/agent';
+import { Actor, Agent, HttpAgent } from '@dfinity/agent';
 import { Secp256k1KeyIdentity } from '@dfinity/identity';
-import nftIdlFactory from '../../declarations/nft.did';
-import NFTIdlService from '../../declarations/nft';
+import marketplaceIdlFactory from '../../declarations/marketplace.did';
+import MarketplaceIdlService from '../../declarations/marketplace';
 import config from '../../config/env';
 
 export const createActor = async () => {
+  console.log('[debug] createActor: config.host:', config.host);
+
   const httpAgent = new HttpAgent({
     host: config.host,
     fetch,
@@ -17,6 +19,8 @@ export const createActor = async () => {
     identity,
     source: httpAgent,
   });
+
+  const canisterId = config.marketplaceCanisterId;
 
   // Fetch root key for certificate validation during development
   if (process.env.NODE_ENV !== 'production') {
@@ -32,10 +36,11 @@ export const createActor = async () => {
     }
   }
 
-  // Creates an actor by using NFTIdlService, nftIdlFactory and the HttpAgent
-  return Actor.createActor<NFTIdlService>(nftIdlFactory, {
-    // Change to the actual nft canister id
-    canisterId: config.canisterId,
-    agent,
-  });
+  return Actor.createActor<MarketplaceIdlService>(
+    marketplaceIdlFactory,
+    {
+      canisterId,
+      agent,
+    },
+  );
 };
