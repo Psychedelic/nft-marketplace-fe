@@ -20,7 +20,7 @@
   "rules": {
     "no-use-before-define": "off",
     "no-param-reassign": 0,
-    "react/no-unused-prop-types": false,
+    "react/no-unused-prop-types": 0,
     "@typescript-eslint/no-use-before-define": ["error"],
     "react/jsx-filename-extension": [
       "warn",
