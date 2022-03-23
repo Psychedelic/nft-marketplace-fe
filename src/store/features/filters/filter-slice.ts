@@ -62,7 +62,7 @@ export const filterSlice = createSlice({
       const traitsNameExists = state.traits.some((trait) => trait.name.includes(action.payload.name));
       const traitsFilterIndex = state.traits.findIndex((trait) => trait.name === action.payload.name);
 
-     if (!traitsNameExists) {
+      if (!traitsNameExists) {
         state.traits.push({
           key: action.payload.key,
           name: action.payload.name,
