@@ -7,6 +7,7 @@ import {
   useNFTSStore,
   useAppDispatch,
   useFilterStore,
+  usePlugStore,
 } from '../../store';
 import { fetchNFTS } from '../../integrations/kyasshu/utils';
 
@@ -14,6 +15,8 @@ export const NftList = () => {
   // eslint-disable-next-line
   const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } =
     useNFTSStore();
+  const { isConnected } = usePlugStore();
+  const {  } = useFilterStore();
 
   const dispatch = useAppDispatch();
 
@@ -42,7 +45,7 @@ export const NftList = () => {
       threshold={250 * 5}
       className="infinite-loader"
     >
-      {loadedNFTS?.map((nft) => (
+      {isConnected && loadedNFTS?.map((nft) => (
         <NftCard data={nft} key={nft.id} />
       ))}
     </InfiniteScrollWrapper>

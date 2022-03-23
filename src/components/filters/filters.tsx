@@ -39,9 +39,6 @@ import { refinedCheckboxDummyData } from '../mock-data/accordion-data';
  * Filters Component
  * --------------------------------------------------------------------------*/
 
-// check if category has been selected with different filter name = update filter name
-// check if category and filter name has been selected = removed chip
-
 export const Filters = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
