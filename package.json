@@ -53,7 +53,7 @@
     "services:start": "cd ./nft-marketplace && npm run services:start",
     "services:reset": "cd ./nft-marketplace && dfx stop && npm run reset",
     "kyasshu:redis": "redis-server /usr/local/etc/redis.conf",
-    "kyasshu:start": "cd ./kyasshu && yarn dev",
+    "kyasshu:start": "cd ./kyasshu && CAP_ID=$(cd ../nft-marketplace/cap && dfx canister id ic-history-router) yarn dev",
     "mock:generate-tokens": "cd ./nft-marketplace && yarn mock:generate-tokens"
   },
   "browserslist": {
