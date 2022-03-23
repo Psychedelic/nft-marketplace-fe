@@ -33,7 +33,6 @@ export const CheckboxFilterAccordion = ({
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const filterValueExists = (traitsValue: string) => traits.some((trait) => trait.values.includes(traitsValue));
   const traitsCount = traits.find((trait) => trait.name === checkboxData.name)?.values?.length;
-  const traitsName = traits.find((trait) => trait.name === checkboxData.name);
 
   const handleSelectedFilters = (e: any) => {
     const checkFilterValueExists = filterValueExists(e.target.value);
@@ -83,7 +82,6 @@ export const CheckboxFilterAccordion = ({
           <form>
             {checkboxData.values.map((data) => (
               <Checkbox
-                traitsName={traitsName}
                 key={data}
                 value={data}
                 percentage={data.percentage}
