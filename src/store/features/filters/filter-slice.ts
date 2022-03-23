@@ -62,13 +62,7 @@ export const filterSlice = createSlice({
       const traitsNameExists = state.traits.some((trait) => trait.name.includes(action.payload.name));
       const traitsFilterIndex = state.traits.findIndex((trait) => trait.name === action.payload.name);
 
-      if (traitsNameExists) {
-        state.traits[traitsFilterIndex].values.push(action.payload.values);
-        const traitName = state.traits[traitsFilterIndex].key;
-        const defaultFiltersIndex = state.defaultFilters.findIndex((filter) => filter.filterCategory === traitName);
-        // eslint-disable-next-line
-        Array.isArray(state.defaultFilters[defaultFiltersIndex].filterName) && state.defaultFilters[defaultFiltersIndex].filterName.push(action.payload.values);
-      } else {
+     if (!traitsNameExists) {
         state.traits.push({
           key: action.payload.key,
           name: action.payload.name,
@@ -78,7 +72,15 @@ export const filterSlice = createSlice({
           filterName: [action.payload.values],
           filterCategory: action.payload.key,
         });
+
+        return;
       }
+
+      state.traits[traitsFilterIndex].values.push(action.payload.values);
+      const traitName = state.traits[traitsFilterIndex].key;
+      const defaultFiltersIndex = state.defaultFilters.findIndex((filter) => filter.filterCategory === traitName);
+      // eslint-disable-next-line
+      Array.isArray(state.defaultFilters[defaultFiltersIndex].filterName) && state.defaultFilters[defaultFiltersIndex].filterName.push(action.payload.values);
     },
     setMyNfts: (state, action: PayloadAction<boolean>) => {
       state.isMyNfts = action.payload;
