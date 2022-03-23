@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import {
   useFilterStore,
@@ -25,7 +24,6 @@ export const CheckboxFilterAccordion = ({
   id = 'item-1',
   checkboxData,
 }: CheckboxFilterAccordionProps) => {
-  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
   const { traits } = useFilterStore();
