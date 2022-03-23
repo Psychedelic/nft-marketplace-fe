@@ -33,6 +33,7 @@ export const EmptyState = ({
             role="button"
             onClick={() => {
               dispatch(filterActions.removeFilter(`${t('translation:buttons.action.myNfts')}`));
+              dispatch(filterActions.setMyNfts(false));
             }}
           >
             <Plug />

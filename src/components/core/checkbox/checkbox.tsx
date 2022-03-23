@@ -17,20 +17,24 @@ export const Checkbox = ({
   percentage,
   filterValueExists,
   handleSelectedFilters,
-}: CheckboxProps) => (
-  <Wrapper>
-    <label htmlFor={value}>
-      <input
-        type="checkbox"
-        id={value}
-        name={value}
-        value={value}
-        onClick={handleSelectedFilters}
-        // checks if value exists in array and sets checked to true
-        checked={(filterValueExists(value) && traitsName)}
-      />
-      {value}
-    </label>
-    <span>{percentage}</span>
-  </Wrapper>
-);
+}: CheckboxProps) => {
+  console.log(traitsName);
+
+  return (
+    <Wrapper>
+      <label htmlFor={value}>
+        <input
+          type="checkbox"
+          id={value}
+          name={value}
+          value={value}
+          onClick={handleSelectedFilters}
+          // checks if value exists in array and sets checked to true
+          checked={(filterValueExists(value) && traitsName)}
+        />
+        {value}
+      </label>
+      <span>{percentage}</span>
+    </Wrapper>
+  );
+};

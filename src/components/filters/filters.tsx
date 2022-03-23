@@ -142,7 +142,7 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        !isMyNfts
+                        !filterExists(myNfts)
                           ? 'outline'
                           : 'secondary'
                       }
@@ -159,7 +159,7 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        isMyNfts ? 'outline' : 'secondary'
+                        filterExists(myNfts) ? 'outline' : 'secondary'
                       }
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
