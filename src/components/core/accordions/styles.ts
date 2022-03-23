@@ -184,7 +184,7 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
     color: '$mainTextColor',
 
     '& span': {
-      margin: '0',
+      margin: '0 0 0 10px',
       fontStyle: 'normal',
       fontWeight: '800',
       fontSize: '16px',

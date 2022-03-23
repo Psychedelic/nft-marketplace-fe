@@ -37,7 +37,7 @@ export const CollectionItems = () => {
   const handleRemoveFilter = (appliedFilter: any) => {
     // TODO: apply sorting to fetch kyasshu API
     // eslint-disable-next-line no-console
-    if (appliedFilter.filterCategory === 'Price Range') {
+    if (appliedFilter.filterCategory === `${t('translation:filters.priceRange')}`) {
       dispatch(
         filterActions.removePriceFilter(appliedFilter.filterCategory),
       );
@@ -97,7 +97,7 @@ export const CollectionItems = () => {
                 return (
                   <FilteredTraitsChip
                     name={
-                      appliedFilter.filterCategory !== 'Price Range'
+                      appliedFilter.filterCategory !== `${t('translation:filters.priceRange')}`
                         ? appliedFilter.filterName
                         : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`
                     }

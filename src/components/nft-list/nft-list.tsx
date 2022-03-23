@@ -27,7 +27,7 @@ export const NftList = () => {
     payload = {
       traits: traitsPayload.length ? traitsPayload : undefined,
       principal: isMyNfts ? principalId : undefined,
-      status: status !== '' ? status : undefined,
+      status,
       price:
         priceValues && Object.keys(priceValues).length
           ? {

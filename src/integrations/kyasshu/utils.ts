@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { filterActions, nftsActions, errorActions, useFilterStore } from '../../store';
 import config from '../../config/env';
+import { FILTER_CONSTANTS } from '../../constants';
 
 export type FetchNFTProps = {
   payload?: object;
@@ -151,19 +152,18 @@ export const fetchFilterTraits = async ({ dispatch } : FetchFilterTraitsProps) =
       let key;
       switch (res.name) {
         case 'smallgem':
-          key = 'Small Gem';
+          key = FILTER_CONSTANTS.smallGem;
           break;
         case 'biggem':
-          key = 'Big Gem';
+          key = FILTER_CONSTANTS.bigGem;
           break;
         case 'base':
-          key = 'Base';
+          key = FILTER_CONSTANTS.base;
           break;
         case 'rim':
-          key = 'Rim';
+          key = FILTER_CONSTANTS.rim;
           break;
         default:
-          console.log('');
       }
 
       const data = {

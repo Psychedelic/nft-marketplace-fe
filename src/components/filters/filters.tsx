@@ -134,7 +134,6 @@ export const Filters = () => {
               >
                 Clear All
               </ClearButton>
-              {/* should remove all filters on click */}
             </Flex>
             <FilterSection>
               <FilterGroup>
@@ -190,8 +189,8 @@ export const Filters = () => {
                           'Status',
                           `${t('translation:buttons.action.buyNow')}`,
                         );
-                        if (status !== 'unlisted') {
-                          dispatch(filterActions.setStatusFilter('unlisted'));
+                        if (status !== `${t('translation:filters.listed')}`) {
+                          dispatch(filterActions.setStatusFilter(`${t('translation:filters.listed')}`));
                         } else {
                           dispatch(filterActions.setStatusFilter(''));
                         }
@@ -221,8 +220,8 @@ export const Filters = () => {
                             'translation:buttons.action.hasOffers',
                           )}`,
                         );
-                        if (status !== 'listed') {
-                          dispatch(filterActions.setStatusFilter('listed'));
+                        if (status !== `${t('translation:filters.unlisted')}`) {
+                          dispatch(filterActions.setStatusFilter(`${t('translation:filters.unlisted')}`));
                         } else {
                           dispatch(filterActions.setStatusFilter(''));
                         }
@@ -271,7 +270,7 @@ export const Filters = () => {
                     text="Apply"
                     handleClick={() => {
                       if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
-                        applyFilter('Price Range', priceFilterValue);
+                        applyFilter(`${t('translation:filters.priceRange')}`, priceFilterValue);
                       }
                       setPriceFilterValue({
                         min: '',
@@ -286,15 +285,12 @@ export const Filters = () => {
             <FilterSection>
               <CheckboxFilters>
                 {/* TO-DO: Refactor */}
-                {loadedFiltersList[0]?.map((checkboxData) => {
-                  console.log('');
-                  return (
-                    <CheckboxFilterAccordion
-                      checkboxData={checkboxData}
-                      id="small-gem"
-                    />
-                  );
-                })}
+                {loadedFiltersList[0]?.map((checkboxData) => (
+                  <CheckboxFilterAccordion
+                    checkboxData={checkboxData}
+                    id={checkboxData.name}
+                  />
+                ))}
               </CheckboxFilters>
             </FilterSection>
           </FiltersWrapper>

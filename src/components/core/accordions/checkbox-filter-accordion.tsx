@@ -38,17 +38,18 @@ export const CheckboxFilterAccordion = ({
   const handleSelectedFilters = (e: any) => {
     const checkFilterValueExists = filterValueExists(e.target.value);
 
-    if (!checkFilterValueExists) {
-      dispatch(
-        filterActions.applytraits({
-          key: checkboxData.key,
-          name: checkboxData.name,
-          values: e.target.value,
-        }),
-      );
-    } else {
+    if (checkFilterValueExists) {
       dispatch(filterActions.removeTraitsFilter(e.target.value));
+      return;
     }
+
+    dispatch(
+      filterActions.applytraits({
+        key: checkboxData.key,
+        name: checkboxData.name,
+        values: e.target.value,
+      }),
+    );
   };
 
   return (
@@ -68,8 +69,10 @@ export const CheckboxFilterAccordion = ({
         >
           <p>
             {checkboxData.key}
-            &nbsp;
-            <span>{traitsCount && traitsCount > 0 ? `(${traitsCount})` : ''}</span>
+            {
+              traitsCount
+              && <span>{`(${traitsCount})`}</span>
+            }
           </p>
           <img
             src={isLightTheme ? arrowdown : arrowdownDark}

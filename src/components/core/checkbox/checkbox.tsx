@@ -25,9 +25,9 @@ export const Checkbox = ({
         id={value}
         name={value}
         value={value}
-        onClick={(e) => handleSelectedFilters(e)}
+        onClick={handleSelectedFilters}
         // checks if value exists in array and sets checked to true
-        checked={(filterValueExists(value) && traitsName) && true}
+        checked={(filterValueExists(value) && traitsName)}
       />
       {value}
     </label>

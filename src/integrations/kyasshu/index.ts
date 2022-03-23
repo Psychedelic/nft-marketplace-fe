@@ -19,7 +19,7 @@ export const useNFTSFetcher = () => {
     payload = {
       traits: traitsPayload.length ? traitsPayload : undefined,
       principal: isMyNfts ? principalId : undefined,
-      status: status !== '' ? status : undefined,
+      status,
       price: priceValues && Object.keys(priceValues).length ? {
         min: priceValues?.min,
         max: priceValues?.max,
