@@ -5,17 +5,38 @@ import { InfiniteScrollWrapper } from './styles';
 
 import {
   useNFTSStore,
-  useAppDispatch,
   useFilterStore,
+  useAppDispatch,
+  usePlugStore,
 } from '../../store';
-import { fetchNFTS } from '../../integrations/kyasshu/utils';
+import { fetchNFTS, usePriceValues, useTraitsPayload } from '../../integrations/kyasshu/utils';
 
 export const NftList = () => {
   // eslint-disable-next-line
   const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } =
     useNFTSStore();
-
   const dispatch = useAppDispatch();
+  const { isMyNfts, status } = useFilterStore();
+  const { principalId } = usePlugStore();
+  const traitsPayload = useTraitsPayload();
+  const priceValues = usePriceValues();
+  // eslint-disable-next-line object-curly-newline
+  let payload = {};
+  if (
+    traitsPayload.length || isMyNfts || (priceValues && Object.keys(priceValues).length) || status !== '') {
+    payload = {
+      traits: traitsPayload.length ? traitsPayload : undefined,
+      principal: isMyNfts ? principalId : undefined,
+      status,
+      price:
+        priceValues && Object.keys(priceValues).length
+          ? {
+            min: priceValues?.min,
+            max: priceValues?.max,
+          }
+          : undefined,
+    };
+  }
 
   const { sortBy } = useFilterStore();
 
@@ -23,6 +44,7 @@ export const NftList = () => {
     if (loadingNFTs || !hasMoreNFTs) return;
 
     fetchNFTS({
+      payload,
       dispatch,
       sort: sortBy,
       order: 'd',

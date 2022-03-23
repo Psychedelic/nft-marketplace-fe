@@ -210,5 +210,10 @@
   "tabs": {
     "items": "Items",
     "activity": "Activity"
+  },
+  "filters": {
+    "priceRange": "Price Range",
+    "listed": "listed",
+    "unlisted": "unlisted"
   }
 }

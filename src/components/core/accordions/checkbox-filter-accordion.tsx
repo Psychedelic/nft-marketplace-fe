@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import * as Accordion from '@radix-ui/react-accordion';
-import { useFilterStore, useThemeStore } from '../../../store';
+import {
+  useFilterStore,
+  useThemeStore,
+  useAppDispatch,
+  filterActions,
+} from '../../../store';
 import { Checkbox } from '../checkbox/checkbox';
 import {
   AccordionStyle,
@@ -19,13 +24,30 @@ export const CheckboxFilterAccordion = ({
   id = 'item-1',
   checkboxData,
 }: CheckboxFilterAccordionProps) => {
+  const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
-  const { traitsFilters } = useFilterStore();
+  const { traits } = useFilterStore();
   const isLightTheme = theme === 'lightTheme';
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+  const filterValueExists = (traitsValue: string) => traits.some((trait) => trait.values.includes(traitsValue));
+  const traitsCount = traits.find((trait) => trait.name === checkboxData.name)?.values?.length;
 
-  /* Check if id matches, we need a conditional */
-  const traitsFiltersCount = traitsFilters.filter((selectedTrait) => selectedTrait.traitsTitle === checkboxData.title).length;
+  const handleSelectedFilters = (e: any) => {
+    const checkFilterValueExists = filterValueExists(e.target.value);
+
+    if (checkFilterValueExists) {
+      dispatch(filterActions.removeTraitsFilter(e.target.value));
+      return;
+    }
+
+    dispatch(
+      filterActions.applytraits({
+        key: checkboxData.key,
+        name: checkboxData.name,
+        values: e.target.value,
+      }),
+    );
+  };
 
   return (
     <AccordionStyle
@@ -43,11 +65,11 @@ export const CheckboxFilterAccordion = ({
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <p>
-            {checkboxData.title}
-            &nbsp;
-            <span>
-              {traitsFiltersCount > 0 && traitsFiltersCount}
-            </span>
+            {checkboxData.key}
+            {
+              traitsCount
+              && <span>{`(${traitsCount})`}</span>
+            }
           </p>
           <img
             src={isLightTheme ? arrowdown : arrowdownDark}
@@ -57,13 +79,12 @@ export const CheckboxFilterAccordion = ({
         <AccordionContent padding="small">
           <form>
             {checkboxData.values.map((data) => (
-              // call apply filter
-              // eslint-disable-next-line
               <Checkbox
-                title={checkboxData.title}
-                key={data.name}
-                value={data.name}
+                key={data}
+                value={data}
                 percentage={data.percentage}
+                handleSelectedFilters={handleSelectedFilters}
+                filterValueExists={filterValueExists}
               />
             ))}
           </form>

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { fetchFilterTraits } from '../../integrations/kyasshu/utils';
 import {
   useFilterStore,
   useThemeStore,
@@ -33,19 +34,15 @@ import {
   CheckboxFilters,
   FilterButtonWrapper,
 } from './styles';
-import { refinedCheckboxDummyData } from '../mock-data/accordion-data';
 
 /* --------------------------------------------------------------------------
  * Filters Component
  * --------------------------------------------------------------------------*/
 
-// check if category has been selected with different filter name = update filter name
-// check if category and filter name has been selected = removed chip
-
 export const Filters = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const appliedFilters = useFilterStore();
+  const { defaultFilters, loadedFiltersList, status } = useFilterStore();
   const { theme } = useThemeStore();
   const { collapsed, displayPriceApplyButton } = useSettingsStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -63,12 +60,18 @@ export const Filters = () => {
     ? openFiltersIcon
     : openFiltersIconDark;
 
-  const filterExists = (filterName: string) => appliedFilters.defaultFilters.some((appliedFilter) => appliedFilter.filterName === filterName);
+  useEffect(() => {
+    fetchFilterTraits({
+      dispatch,
+    });
+  }, []);
+
+  const filterExists = (filterName: string) => defaultFilters.some((appliedFilter) => appliedFilter.filterName === filterName);
 
   const applyFilter = (filterCategory: string, filterName: any) => {
-    const filterCategoryExists = appliedFilters.defaultFilters.some((appliedFilter) => appliedFilter.filterCategory === filterCategory);
+    const filterCategoryExists = defaultFilters.some((appliedFilter) => appliedFilter.filterCategory === filterCategory);
 
-    const filterNameExists = appliedFilters.defaultFilters.some(
+    const filterNameExists = defaultFilters.some(
       (appliedFilter) => appliedFilter.filterName === filterName,
     );
 
@@ -126,11 +129,11 @@ export const Filters = () => {
               <ClearButton
                 onClick={() => {
                   dispatch(filterActions.clearAllFilters());
+                  dispatch(settingsActions.setPriceApplyButton(false));
                 }}
               >
                 Clear All
               </ClearButton>
-              {/* should remove all filters on click */}
             </Flex>
             <FilterSection>
               <FilterGroup>
@@ -146,6 +149,7 @@ export const Filters = () => {
                       text={t('translation:buttons.action.allNfts')}
                       handleClick={() => {
                         dispatch(filterActions.removeFilter(myNfts));
+                        dispatch(filterActions.setMyNfts(false));
                       }}
                     />
                   </FilterButtonWrapper>
@@ -160,6 +164,7 @@ export const Filters = () => {
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
                         applyFilter('Display', myNfts);
+                        dispatch(filterActions.setMyNfts(true));
                       }}
                     />
                   </FilterButtonWrapper>
@@ -184,6 +189,11 @@ export const Filters = () => {
                           'Status',
                           `${t('translation:buttons.action.buyNow')}`,
                         );
+                        if (status !== `${t('translation:filters.listed')}`) {
+                          dispatch(filterActions.setStatusFilter(`${t('translation:filters.listed')}`));
+                        } else {
+                          dispatch(filterActions.setStatusFilter(''));
+                        }
                       }}
                     />
                   </FilterButtonWrapper>
@@ -210,6 +220,11 @@ export const Filters = () => {
                             'translation:buttons.action.hasOffers',
                           )}`,
                         );
+                        if (status !== `${t('translation:filters.unlisted')}`) {
+                          dispatch(filterActions.setStatusFilter(`${t('translation:filters.unlisted')}`));
+                        } else {
+                          dispatch(filterActions.setStatusFilter(''));
+                        }
                       }}
                     />
                   </FilterButtonWrapper>
@@ -255,7 +270,7 @@ export const Filters = () => {
                     text="Apply"
                     handleClick={() => {
                       if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
-                        applyFilter('Price Range', priceFilterValue);
+                        applyFilter(`${t('translation:filters.priceRange')}`, priceFilterValue);
                       }
                       setPriceFilterValue({
                         min: '',
@@ -269,13 +284,11 @@ export const Filters = () => {
             <Heading>Traits</Heading>
             <FilterSection>
               <CheckboxFilters>
-                {refinedCheckboxDummyData.map((checkboxData) => (
+                {/* TO-DO: Refactor */}
+                {loadedFiltersList[0]?.map((checkboxData) => (
                   <CheckboxFilterAccordion
-                    // we need the type of gem it is
-                    // we need the values selected
-                    // call apply filter
                     checkboxData={checkboxData}
-                    id="small-gem"
+                    id={checkboxData.name}
                   />
                 ))}
               </CheckboxFilters>

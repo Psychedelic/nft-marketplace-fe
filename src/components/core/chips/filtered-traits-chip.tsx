@@ -35,7 +35,7 @@ export const FilteredTraitsChip = ({
 
   return (
     <TraitChipContainer type="filtered">
-      {appliedFilterValue.filterCategory === 'Price Range' && <Image src={miniDfinity} alt="mini-dfinity" />}
+      {appliedFilterValue.filterCategory === `${t('translation:filters.priceRange')}` && <Image src={miniDfinity} alt="mini-dfinity" />}
       <TraitSpecsContainer>
         <TraitName>{name}</TraitName>
         <TraitRim>{rim}</TraitRim>
