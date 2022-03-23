@@ -1,14 +1,20 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import axios from 'axios';
-import { nftsActions, errorActions } from '../../store';
+import { filterActions, nftsActions, errorActions, useFilterStore } from '../../store';
 import config from '../../config/env';
+import { FILTER_CONSTANTS } from '../../constants';
 
 export type FetchNFTProps = {
+  payload?: object;
   dispatch: any;
   sort: string;
   order: string;
   page: number;
   count: string;
+};
+
+export type FetchFilterTraitsProps = {
+  dispatch: any;
 };
 
 export type FetchNFTDetailsProps = {
@@ -17,6 +23,7 @@ export type FetchNFTDetailsProps = {
 };
 
 export const fetchNFTS = async ({
+  payload,
   dispatch,
   sort,
   order,
@@ -30,7 +37,6 @@ export const fetchNFTS = async ({
 
   try {
     // eslint-disable-next-line object-curly-newline
-    const payload = {};
 
     const response = await axios.post(
       // eslint-disable-next-line max-len
@@ -112,6 +118,7 @@ export const fetchNFTDetails = async ({
       name: 'Cap Crowns',
       price: '',
       lastOffer: '',
+      // TODO: update nft thumbnail
       preview: '',
       location: responseData?.url,
       rendered: true,
@@ -131,4 +138,61 @@ export const fetchNFTDetails = async ({
     console.warn(error);
     dispatch(errorActions.setErrorMessage(error.message));
   }
+};
+
+export const fetchFilterTraits = async ({ dispatch } : FetchFilterTraitsProps) => {
+  try {
+    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`);
+
+    if (response.status !== 200) {
+      throw Error(response.statusText);
+    }
+
+    const responseData = response.data.map((res) => {
+      let key;
+      switch (res.name) {
+        case 'smallgem':
+          key = FILTER_CONSTANTS.smallGem;
+          break;
+        case 'biggem':
+          key = FILTER_CONSTANTS.bigGem;
+          break;
+        case 'base':
+          key = FILTER_CONSTANTS.base;
+          break;
+        case 'rim':
+          key = FILTER_CONSTANTS.rim;
+          break;
+        default:
+      }
+
+      const data = {
+        key,
+        name: res.name,
+        values: [...res.values],
+      };
+
+      return data;
+    });
+
+    dispatch(filterActions.getAllFilters(responseData));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const useTraitsPayload = () => {
+  const { traits } = useFilterStore();
+
+  return traits.filter(
+    (trait) => trait?.values?.length,
+  );
+};
+
+export const usePriceValues = () => {
+  const { defaultFilters } = useFilterStore();
+
+  return defaultFilters.find(
+    ({ filterCategory }) => filterCategory === 'Price Range',
+  )?.filterName;
 };
