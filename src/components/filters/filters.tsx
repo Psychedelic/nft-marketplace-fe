@@ -42,7 +42,7 @@ import {
 export const Filters = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { defaultFilters, loadedFiltersList, status } = useFilterStore();
+  const { defaultFilters, loadedFiltersList, status, isMyNfts } = useFilterStore();
   const { theme } = useThemeStore();
   const { collapsed, displayPriceApplyButton } = useSettingsStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -142,7 +142,7 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        !filterExists(myNfts)
+                        !isMyNfts
                           ? 'outline'
                           : 'secondary'
                       }
@@ -159,12 +159,12 @@ export const Filters = () => {
                   <FilterButtonWrapper>
                     <ActionButton
                       type={
-                        filterExists(myNfts) ? 'outline' : 'secondary'
+                        isMyNfts ? 'outline' : 'secondary'
                       }
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
                         applyFilter('Display', myNfts);
-                        dispatch(filterActions.setMyNfts(true));
+                        dispatch(filterActions.setMyNfts(!isMyNfts));
                       }}
                     />
                   </FilterButtonWrapper>
