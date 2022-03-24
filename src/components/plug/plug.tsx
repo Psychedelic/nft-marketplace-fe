@@ -9,6 +9,7 @@ import {
 import {
   isPlugInstalled,
   requestConnectToPlug,
+  createPlugAgent,
   checkIsConnected,
   getPrincipal,
   formatAddress,
@@ -121,6 +122,15 @@ export const Plug = () => {
 
       if (!connected) {
         throw Error('Oops! Failed to connect to plug.');
+      }
+
+      const agentCreated = await createPlugAgent({
+        whitelist,
+        host,
+      });
+
+      if (!agentCreated) {
+        throw Error('Oops! Failed to create plug agent.');
       }
 
       // connected to plug
