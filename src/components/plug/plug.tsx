@@ -9,6 +9,7 @@ import {
 import {
   isPlugInstalled,
   requestConnectToPlug,
+  hasPlugAgent,
   createPlugAgent,
   checkIsConnected,
   getPrincipal,
@@ -19,6 +20,19 @@ import {
   PLUG_STATUS_CODES,
 } from '../../constants';
 import config from '../../config/env';
+
+const {
+  crownsCanisterId,
+  marketplaceCanisterId,
+  wICPCanisterId,
+  host,
+} = config;
+
+const whitelist = [
+  crownsCanisterId,
+  marketplaceCanisterId,
+  wICPCanisterId,
+];
 
 export const Plug = () => {
   const { t } = useTranslation();
@@ -64,6 +78,13 @@ export const Plug = () => {
         return;
       }
 
+      if (!hasPlugAgent()) {
+        await createPlugAgent({
+          whitelist,
+          host,
+        });
+      }
+
       // update connection status to connected
       dispatch(plugActions.setIsConnected(connected));
     };
@@ -100,19 +121,6 @@ export const Plug = () => {
       dispatch(
         plugActions.setConnectionStatus(PLUG_STATUS_CODES.Connecting),
       );
-
-      const {
-        crownsCanisterId,
-        marketplaceCanisterId,
-        wICPCanisterId,
-        host,
-      } = config;
-
-      const whitelist = [
-        crownsCanisterId,
-        marketplaceCanisterId,
-        wICPCanisterId,
-      ];
 
       // request app to connect with plug
       const connected = await requestConnectToPlug({

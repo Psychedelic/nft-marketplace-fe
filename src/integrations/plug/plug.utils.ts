@@ -26,3 +26,5 @@ export const formatAddress = (address: string) => {
     address.length,
   )}`;
 };
+
+export const hasPlugAgent = () => window.ic?.plug?.agent;
