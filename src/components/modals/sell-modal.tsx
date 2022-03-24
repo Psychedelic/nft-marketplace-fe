@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { useSelector } from 'react-redux';
 import {
   ActionButton,
   ModalInput,
@@ -41,9 +40,6 @@ export const SellModal = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  useSelector((state) => {
-    console.log('[debug] sell-moda > state >', state);
-  });
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Sell modal steps: listingInfo/pending/confirmed
