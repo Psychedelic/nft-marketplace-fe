@@ -1,27 +1,20 @@
-import fetch from 'cross-fetch';
-import { Actor, HttpAgent } from '@dfinity/agent';
-import { Secp256k1KeyIdentity } from '@dfinity/identity';
-import nftIdlFactory from '../../declarations/nft.did';
-import NFTIdlService from '../../declarations/nft';
+/* eslint-disable */
+import crownsIdlFactory from '../../declarations/nft.did';
+import wicpIdlFactory from '../../declarations/wicp.did';
+import marketplaceIdlFactory from '../../declarations/marketplace.did';
 import config from '../../config/env';
 
-export const createActor = async () => {
-  const httpAgent = new HttpAgent({
-    host: config.host,
-    fetch,
-  });
-  const identity = Secp256k1KeyIdentity.generate();
+type ServiceName = 'marketplace' | 'crowns' | 'wicp';
 
-  const agent = new HttpAgent({
-    fetch,
-    identity,
-    source: httpAgent,
-  });
-
+export const createActor = async <T>({
+  serviceName = 'marketplace',
+}: {
+  serviceName?: ServiceName;
+}) => {
   // Fetch root key for certificate validation during development
   if (process.env.NODE_ENV !== 'production') {
     try {
-      await agent.fetchRootKey();
+      await (window as any)?.ic?.plug?.agent.fetchRootKey();
     } catch (err) {
       // eslint-disable-next-line no-console
       console.warn(
@@ -32,10 +25,22 @@ export const createActor = async () => {
     }
   }
 
-  // Creates an actor by using NFTIdlService, nftIdlFactory and the HttpAgent
-  return Actor.createActor<NFTIdlService>(nftIdlFactory, {
-    // Change to the actual nft canister id
-    canisterId: config.canisterId,
-    agent,
+  if (serviceName === 'crowns') {
+    return await (window as any)?.ic?.plug?.createActor({
+      canisterId: config.crownsCanisterId,
+      interfaceFactory: crownsIdlFactory,
+    });
+  }
+
+  if (serviceName === 'wicp') {
+    return await (window as any)?.ic?.plug?.createActor({
+      canisterId: config.wICPCanisterId,
+      interfaceFactory: wicpIdlFactory,
+    });
+  }
+
+  return await (window as any)?.ic?.plug?.createActor({
+    canisterId: config.marketplaceCanisterId,
+    interfaceFactory: marketplaceIdlFactory,
   });
 };

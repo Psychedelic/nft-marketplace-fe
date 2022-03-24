@@ -8,6 +8,7 @@ export type ActionButtonProps = {
   danger?: boolean;
   size?: any;
   text: string;
+  disabled?: boolean;
   handleClick: () => void;
 };
 
@@ -16,6 +17,7 @@ export const ActionButton = ({
   size, // size - small/default
   danger = false, // danger - true/false
   text,
+  disabled = false,
   handleClick,
 }: ActionButtonProps) => (
   <Button
@@ -23,6 +25,7 @@ export const ActionButton = ({
     type={type}
     size={size}
     danger={danger}
+    disabled={disabled}
   >
     {text}
   </Button>

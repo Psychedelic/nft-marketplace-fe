@@ -17,7 +17,6 @@ import {
   NFTMetaData,
   SortByFilterDropdown,
   CardOptionsDropdown,
-  PlugProfileDropdown,
   FilteredCountChip,
   FilteredTraitsChip,
   NFTTraitsChip,
@@ -152,10 +151,6 @@ const DevelopedComponents = () => {
         />
         <br />
         <CardOptionsDropdown />
-      </ComponentWrapper>
-      <ComponentWrapper>
-        <ComponentTitle>Plug Dropdown Button</ComponentTitle>
-        <PlugProfileDropdown />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Accordions</ComponentTitle>

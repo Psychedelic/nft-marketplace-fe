@@ -132,6 +132,13 @@ export const fetchNFTDetails = async ({
       },
     };
 
+    // TODO: If user connected to plug
+    // Should verify the owner of current token id
+    // e.g. if opted to verify on-chain the method is "ownerOf"
+    // Should verify whether token is listed or not only if owner
+    nftDetails.isOwner = true;
+    nftDetails.isListed = false;
+
     // update store with loaded NFT details
     dispatch(nftsActions.setLoadedNFTDetails(nftDetails));
   } catch (error) {
