@@ -17,7 +17,6 @@ import {
   PLUG_WALLET_WEBSITE_URL,
   PLUG_STATUS_CODES,
 } from '../../constants';
-import { CANISTER_ID, NETWORK } from '../../config';
 import config from '../../config/env';
 
 export const Plug = () => {
@@ -105,6 +104,7 @@ export const Plug = () => {
         crownsCanisterId,
         marketplaceCanisterId,
         wICPCanisterId,
+        host,
       } = config;
 
       const whitelist = [
@@ -112,7 +112,6 @@ export const Plug = () => {
         marketplaceCanisterId,
         wICPCanisterId,
       ];
-      const host = NETWORK;
 
       // request app to connect with plug
       const connected = await requestConnectToPlug({
