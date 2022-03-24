@@ -176,18 +176,26 @@ You should get a similar output to:
 
 At this point you should have the Kyasshu services running!
 
+By default, in the serverless environment, Kyasshu will use the local services for crowns and cap canisters.
+
 Check the topic of how to get data in your local Kyasshu to learn more.
 
 🤞 If you find issues, refer to the [troubleshooting](/docs/troubleshooting.md) document for help.
 
 ### Get data in the local Kyasshu
 
-Following, is a command to make a HTTP GET request to the `marketplace` endpoint.
+To cache your generated tokens, you can use the following command.
 
-We're going to pass the `mainnet` Crowns Canister ID (vlhm2-4iaaa-aaaam-qaatq-cai) and request a total of `25` tokens - keep the number as short as possible for your needs, otherwise it might be time consuming e.g. for 10k would take a considerable amount of time to handle.
+The cache script will automatically use the local crowns canister, and request a total of `25` tokens. The caching is pretty performant, but keep in mind caching a large amount may take some time (eg; 10,000 tokens takes about ~5mins)
 
 ```sh
-curl -X GET http://localhost:3000/dev/marketplace/vlhm2-4iaaa-aaaam-qaatq-cai/cache/25
+yarn kyasshu:cache 25
+```
+
+You may also include an index to start from (which token to start fetching metadata from), to cache additional tokens with
+
+```sh
+yarn kyasshu:cache 25 25
 ```
 
 To learn more about the Marketplace endpoints, check the [Kyasshu documentation](https://github.com/Psychedelic/kyasshu).
