@@ -3,17 +3,19 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CardOptionsDropdown } from '../../dropdown';
 import {
+  CardContainer,
   CardWrapper,
+  OuterFlex,
   Flex,
   OwnedCardText,
-  NftName,
-  NftId,
+  NftText,
   LastOffer,
   Dfinity,
   PreviewDetails,
   VideoPlayer,
   PreviewImage,
   VideoLoader,
+  ActionText,
 } from './styles';
 
 import { NFTMetadata } from '../../../../declarations/nft';
@@ -33,37 +35,49 @@ export const NftCard = React.memo(
 
     return (
       <RouterLink to={`/nft/${data.id}`}>
-        <CardWrapper>
-          <Flex>
-            <OwnedCardText>
-              {owned ? `${t('translation:nftCard.owned')}` : ''}
-            </OwnedCardText>
-            <CardOptionsDropdown />
-          </Flex>
-          <VideoPlayer
-            videoSrc={data.location}
-            pausedOverlay={
-              // eslint-disable-next-line react/jsx-wrap-multilines
-              <PreviewDetails>
-                <PreviewImage src={data?.preview} alt="nft-card" />
-              </PreviewDetails>
-            }
-            loadingOverlay={<VideoLoader />}
-          />
-          <Flex>
-            <NftName>{data?.name}</NftName>
-            {notForSale ? (
-              ''
-            ) : (
-              <Dfinity>
-                {data?.price}
-                <img src={wicpLogo} alt="" />
-              </Dfinity>
-            )}
-          </Flex>
-
-          <Flex>
-            <NftId>{data?.id}</NftId>
+        <CardContainer>
+          <CardWrapper>
+            <Flex>
+              <OwnedCardText>
+                {owned ? `${t('translation:nftCard.owned')}` : ''}
+              </OwnedCardText>
+              <CardOptionsDropdown />
+            </Flex>
+            <VideoPlayer
+              videoSrc={data.location}
+              pausedOverlay={
+                // eslint-disable-next-line react/jsx-wrap-multilines
+                <PreviewDetails>
+                  <PreviewImage src={data?.preview} alt="nft-card" />
+                </PreviewDetails>
+              }
+              loadingOverlay={<VideoLoader />}
+            />
+            <Flex>
+              <NftText>{data?.name}</NftText>
+              <NftText>Price</NftText>
+            </Flex>
+            <Flex>
+              {notForSale ? (
+                ''
+              ) : (
+                <LastOffer>
+                  {forSaleAndOffer ? 'Offer for ' : 'Last '}
+                  <b>{data?.lastOffer}</b>
+                </LastOffer>
+              )}
+              {notForSale ? (
+                ''
+              ) : (
+                <Dfinity>
+                  <img src={wicpLogo} alt="" />
+                  {data?.price}
+                </Dfinity>
+              )}
+            </Flex>
+          </CardWrapper>
+          <OuterFlex>
+            <ActionText>Buy Now</ActionText>
             {notForSale ? (
               ''
             ) : (
@@ -72,8 +86,8 @@ export const NftCard = React.memo(
                 <b>{data?.lastOffer}</b>
               </LastOffer>
             )}
-          </Flex>
-        </CardWrapper>
+          </OuterFlex>
+        </CardContainer>
       </RouterLink>
     );
   },
