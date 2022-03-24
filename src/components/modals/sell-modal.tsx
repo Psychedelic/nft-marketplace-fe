@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
@@ -27,12 +28,17 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+import { useAppDispatch } from '../../store';
+import { listForSale } from '../../integrations/marketplace';
+
 /* --------------------------------------------------------------------------
  * Sell Modal Component
  * --------------------------------------------------------------------------*/
 
 export const SellModal = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Sell modal steps: listingInfo/pending/confirmed
@@ -49,22 +55,22 @@ export const SellModal = () => {
     setModalOpened(false);
   };
 
-  const handleListing = () => {
-    // TODO: use on-chain method listForSale for listing NFT
-    console.log(amount, 'amount');
-    setModalStep('pending');
-  };
+  const handleListing = async () => {
+    if (!id) return;
 
-  useEffect(() => {
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    let timer: any;
-    if (modalStep === 'pending') {
-      timer = setTimeout(() => {
+    setModalStep('pending');
+    await listForSale({
+      dispatch,
+      id,
+      amount,
+      onSuccess: () => {
         setModalStep('confirmed');
-      }, 1000);
-    }
-    return () => clearTimeout(timer);
-  }, [modalStep]);
+      },
+      onFailure: () => {
+        setModalStep('listingInfo');
+      },
+    });
+  };
 
   return (
     <DialogPrimitive.Root
