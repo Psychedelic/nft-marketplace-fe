@@ -1,17 +1,7 @@
-import fetch from 'cross-fetch';
-import {
-  Actor,
-  Agent,
-  HttpAgent,
-  ActorSubclass,
-} from '@dfinity/agent';
-import { Principal } from '@dfinity/principal';
+/* eslint-disable */
 import crownsIdlFactory from '../../declarations/nft.did';
-import crownsIdlService from '../../declarations/nft';
 import wicpIdlFactory from '../../declarations/wicp.did';
-import wicpIdlService from '../../declarations/wicp';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
-import marketplaceIdlService from '../../declarations/marketplace';
 import config from '../../config/env';
 
 type ServiceName = 'marketplace' | 'crowns' | 'wicp';

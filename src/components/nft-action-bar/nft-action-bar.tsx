@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { CancelListingModal, ChangePriceModal } from '../modals';
+import {
+  CancelListingModal,
+  ChangePriceModal,
+  SellModal,
+} from '../modals';
 
 import {
   Container,
@@ -14,19 +18,33 @@ import back from '../../assets/back.svg';
 
 import { usePlugStore } from '../../store';
 
-const OnConnected = () => (
-  // TODO: A user might be connected
-  // but not own the current token id
-  // as such, the view should display the correct view
+export type NftActionBarProps = {
+  isOwner?: boolean;
+  isListed?: boolean;
+};
+
+export type ConnectedProps = {
+  isListed?: boolean;
+};
+
+const OnConnected = ({ isListed }: ConnectedProps) => (
   <>
-    <ButtonListWrapper>
-      <ButtonWrapper>
-        <CancelListingModal />
-      </ButtonWrapper>
-      <ButtonWrapper>
-        <ChangePriceModal />
-      </ButtonWrapper>
-    </ButtonListWrapper>
+    {isListed ? (
+      <ButtonListWrapper>
+        <ButtonWrapper>
+          <CancelListingModal />
+        </ButtonWrapper>
+        <ButtonWrapper>
+          <ChangePriceModal />
+        </ButtonWrapper>
+      </ButtonListWrapper>
+    ) : (
+      <ButtonListWrapper>
+        <ButtonWrapper>
+          <SellModal />
+        </ButtonWrapper>
+      </ButtonListWrapper>
+    )}
   </>
 );
 
@@ -34,14 +52,15 @@ const OnConnected = () => (
 // also, for the users which are not "ownersOf"
 const OnDisconnected = () => null;
 
-export const NftActionBar = () => {
+export const NftActionBar = ({
+  isOwner,
+  isListed,
+}: NftActionBarProps) => {
   const { t } = useTranslation();
 
   const { isConnected } = usePlugStore();
 
-  // TODO: Should verify if owner of current token id
-  // as early as possible
-  // e.g. if opted to verify on-chain the method is "ownerOf"
+  const isConnectedOwner = isConnected && isOwner;
 
   return (
     <Container>
@@ -52,7 +71,9 @@ export const NftActionBar = () => {
             {t('translation:buttons.action.backToResults')}
           </ActionText>
         </RouterLink>
-        {(isConnected && <OnConnected />) || <OnDisconnected />}
+        {(isConnectedOwner && (
+          <OnConnected isListed={isListed} />
+        )) || <OnDisconnected />}
       </NftActionBarWrapper>
     </Container>
   );

@@ -34,7 +34,10 @@ export const NftDetails = () => {
 
   return (
     <Container>
-      <NftActionBar />
+      <NftActionBar
+        isOwner={nftDetails?.isOwner}
+        isListed={nftDetails?.isListed}
+      />
       {nftDetails ? (
         <Wrapper>
           <PreviewContainer>

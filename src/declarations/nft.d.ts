@@ -16,6 +16,19 @@ export type GenericValue =
   | { BlobContent: Array<number> }
   | { Principal: Principal }
   | { TextContent: string };
+
+export type NFTMetadata = {
+  id: string;
+  name: string;
+  traits: Record<string, any>;
+  rendered: boolean;
+  preview: string;
+  location: string;
+  price: string;
+  lastOffer: string;
+  isOwner: boolean;
+  isListed: boolean;
+};
 export interface InitArgs {
   owners: [] | [Array<Principal>];
   logo: [] | [string];
