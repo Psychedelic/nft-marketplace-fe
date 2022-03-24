@@ -55,8 +55,8 @@
     "services:reset": "cd ./nft-marketplace && dfx stop && npm run reset",
     "kyasshu:redis": "redis-server /usr/local/etc/redis.conf",
     "kyasshu:redis-flush-all": "redis-cli flushall",
-    "kyasshu:start": "cd ./kyasshu && CAP_ID=$(cd ../nft-marketplace/cap && dfx canister id ic-history-router) NFT_CANISTER_ID=$(cd ../nft-marketplace/crowns && dfx canister id crowns) NFT_CANISTER_STANDARD=DIP721v2 yarn dev",
-    "kyasshu:mock": ".scripts/mock/kyasshu-cache-tokens.sh",
+    "kyasshu:start": ".scripts/kyasshu/start.sh",
+    "kyasshu:mock": ".scripts/kyasshu/cache-tokens.sh",
     "kyasshu:reset": "pkill java",
     "mock:generate-tokens": "cd ./nft-marketplace && yarn mock:generate-tokens"
   },
