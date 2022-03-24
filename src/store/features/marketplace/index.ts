@@ -6,8 +6,7 @@ import {
 import { ActorSubclass } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import marketplaceIdlService from '../../../declarations/marketplace';
-// import { createActor } from '../../../integrations/actor';
-import { actorInstanceHandler } from '../../../utils/actor';
+import { actorInstanceHandler } from '../../../integrations/actor';
 import config from '../../../config/env';
 import { errorActions } from '../../';
 import { RootState } from '../../store';
