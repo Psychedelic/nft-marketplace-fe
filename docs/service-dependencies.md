@@ -65,13 +65,13 @@ Since the off-chain is mirroring the data on-chain which it depends you'll have 
 Here's an example of how to generate 9 crown tokens in the on-chain Crowns Canister of your local replica:
 
 ```sh
-yarn mock:generate-tokens $(cd ./nft-marketplace/crowns && dfx canister id crowns) 9
+yarn mock:generate-tokens 25
 ```
 
-Similarily, you'd cache 50 crown tokens in the off-chain Kyasshu Marketplace API
+Similarily, you'd cache 25 crown tokens in the off-chain Kyasshu Marketplace API (only once the token generation has completed!)
 
 ```sh
-yarn kyasshu:mock 50
+yarn kyasshu:cache 25
 ```
 
 💡 Kyasshu caches 50 at the time, so if we attempt to cache 9 items it'd get 50 minimal.
@@ -190,12 +190,6 @@ The cache script will automatically use the local crowns canister, and request a
 
 ```sh
 yarn kyasshu:cache 25
-```
-
-You may also include an index to start from (which token to start fetching metadata from), to cache additional tokens with
-
-```sh
-yarn kyasshu:cache 25 25
 ```
 
 To learn more about the Marketplace endpoints, check the [Kyasshu documentation](https://github.com/Psychedelic/kyasshu).
