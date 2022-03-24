@@ -52,6 +52,8 @@ export const SellModal = () => {
 
     if (status || !id || modalStep !== 'confirmed') return;
 
+    // Update NFT listed for sale in store
+    // on successful listing and closing the modal
     dispatch(nftsActions.setNFTForSale(id));
   };
 
@@ -274,7 +276,7 @@ export const SellModal = () => {
                 <ActionButton
                   type="primary"
                   text={t('translation:modals.buttons.viewListing')}
-                  handleClick={handleModalClose}
+                  handleClick={() => handleModalOpen(false)}
                 />
               </ModalButtonWrapper>
             </ModalButtonsList>
