@@ -77,6 +77,16 @@ export const nftsSlice = createSlice({
 
       state.loadedNFTS.push(action.payload);
     },
+    setNFTForSale: (state, action: PayloadAction<string>) => {
+      const id = action.payload;
+      const index = state.loadedNFTS.findIndex(
+        (nft) => nft.id === id,
+      );
+
+      if (index < 0) return;
+
+      state.loadedNFTS[index].isListed = true;
+    },
   },
 });
 
