@@ -3,9 +3,9 @@
 host=$1
 
 if [[ "$host" == "local" ]]; then
-  CAP_ID=$(cd nft-marketplace/cap && dfx canister id ic-history-router)
-  NFT_CANISTER_ID=$(cd nft-marketplace/crowns && dfx canister id crowns)
-  NFT_CANISTER_STANDARD='DIP721v2'
+  export CAP_ID=$(cd nft-marketplace/cap && dfx canister id ic-history-router)
+  export NFT_CANISTER_ID=$(cd nft-marketplace/crowns && dfx canister id crowns)
+  export NFT_CANISTER_STANDARD='DIP721v2'
 elif [[ "$host" != 'mainnet' ]]; then
   printf "usage: yarn kyasshu:start [service cluster: local | mainnet]\n"
   exit 1

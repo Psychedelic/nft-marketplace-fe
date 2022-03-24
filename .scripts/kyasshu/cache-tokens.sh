@@ -3,7 +3,7 @@
 # At time of writing we're pulling data from the Crowns test canister
 # that has the id "iqvo2-7qaaa-aaaam-qacxa-cai"
 # https://github.com/Psychedelic/crowns/blob/main/canister_ids.json
-_crownsCanisterId="iqvo2-7qaaa-aaaam-qacxa-cai"
+_crownsCanisterId=$(cd nft-marketplace/crowns && dfx canister id crowns)
 _count=$1
 
 printf "🤖 Kyasshu Cache tokens\n"
