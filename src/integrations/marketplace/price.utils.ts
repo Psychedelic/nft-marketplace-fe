@@ -9,7 +9,7 @@ const api = axios.create({
 });
 
 type CoinGeckoResponsePrice = { usd: number };
-type Currencies = 'usd';
+type Currencies = 'USD';
 
 export const getICPPrice = async (): Promise<
   CoinGeckoResponsePrice | undefined
@@ -18,7 +18,7 @@ export const getICPPrice = async (): Promise<
     const { data } = await api.get('/simple/price', {
       params: {
         ids: COINGECKO_ICP_ID,
-        vs_currencies: 'usd',
+        vs_currencies: 'USD',
       },
     });
 
@@ -31,26 +31,34 @@ export const getICPPrice = async (): Promise<
 };
 
 export const getCurrentMarketPrice = async ({
-  currency = 'usd',
+  currency = 'USD',
   currentListForSalePrice,
 }: {
   currency?: Currencies;
   currentListForSalePrice: number;
 }) => {
-  if (currency !== 'usd' || !currentListForSalePrice)
-    return COINGECKO_PRICE_UNAVAILABLE;
+  try {
+    if (currency !== 'USD' || !currentListForSalePrice)
+      return COINGECKO_PRICE_UNAVAILABLE;
 
-  const res = await getICPPrice();
+    const res = await getICPPrice();
 
-  if (!res || !res?.usd) return;
+    if (!res || !res?.usd) return;
 
-  const currencyMarketPrice = res?.usd;
+    const currencyMarketPrice = res?.usd;
 
-  const computed = currencyMarketPrice * currentListForSalePrice;
+    const computed = currencyMarketPrice * currentListForSalePrice;
 
-  // TODO: Use a price formatter lib here
-  // at the moment using basic placeholder which does the job
-  const formatted = `$${computed}`;
+    // TODO: Use a price formatter lib here
+    // at the moment using basic placeholder which does the job
+    const locale = navigator.language || 'en-US';
+    const formatted = new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency: 'USD' as Currencies,
+    }).format(computed);
 
-  return formatted;
+    return formatted;
+  } catch (err) {
+    console.error(err);
+  }
 };

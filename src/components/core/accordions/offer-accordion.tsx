@@ -66,7 +66,7 @@ export const OfferAccordion = () => {
                   'translation:accordions.offer.header.currentPrice',
                 )}
               </span>
-              <h4>21.12 WICP</h4>
+              <h4>{`${currentListForSalePrice} WICP`}</h4>
             </div>
           </FlexRight>
           <h3>{marketPrice}</h3>
