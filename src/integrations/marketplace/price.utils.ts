@@ -5,7 +5,7 @@ const api = axios.create({
   timeout: 15000,
 });
 
-export default async () =>
+export const getICPPrice = async () =>
   api.get('/simple/price', {
     params: {
       ids: 'internet-computer',
