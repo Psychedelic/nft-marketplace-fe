@@ -28,7 +28,7 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, nftsActions } from '../../store';
 import { listForSale } from '../../integrations/marketplace';
 
 /* --------------------------------------------------------------------------
@@ -49,6 +49,10 @@ export const SellModal = () => {
     setModalOpened(status);
     setAmount('');
     setModalStep('listingInfo');
+
+    if (status || !id || modalStep !== 'confirmed') return;
+
+    dispatch(nftsActions.setNFTForSale(id));
   };
 
   const handleModalClose = () => {
