@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { Principal } from '@dfinity/principal';
-import { ActorSubclass } from '@dfinity/agent';
-import { createActor } from '../../integrations/actor';
-import marketplaceIdlService from '../../declarations/marketplace';
-import config from '../../config/env';
 import {
   ActionButton,
   ModalInput,
@@ -43,26 +38,9 @@ export const ChangePriceModal = () => {
   // ChangePrice modal steps: listingInfo/pending/confirmed
   const [modalStep, setModalStep] = useState<string>('listingInfo');
 
-  const handleModalOpen = async (status: boolean) => {
+  const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
     setModalStep('listingInfo');
-
-    const nonFungibleContractAddress = Principal.fromText(
-      config.crownsCanisterId,
-    );
-    const userOwnedTokenId = BigInt(0);
-    const userListForPrice = BigInt(123);
-    const actor = (await createActor<marketplaceIdlService>({
-      serviceName: 'marketplace',
-    })) as ActorSubclass<marketplaceIdlService>;
-
-    const responseListForSale = await actor.listForSale(
-      nonFungibleContractAddress,
-      userOwnedTokenId,
-      userListForPrice,
-    );
-
-    console.log('[debug] responseListForSale', responseListForSale);
   };
 
   const handleModalClose = () => {
