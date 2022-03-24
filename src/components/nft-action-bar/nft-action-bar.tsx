@@ -28,9 +28,6 @@ export type ConnectedProps = {
 };
 
 const OnConnected = ({ isListed }: ConnectedProps) => (
-  // TODO: A user might be connected
-  // but not own the current token id
-  // as such, the view should display the correct view
   <>
     {isListed ? (
       <ButtonListWrapper>
