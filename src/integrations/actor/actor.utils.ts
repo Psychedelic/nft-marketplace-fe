@@ -4,7 +4,7 @@ import wicpIdlFactory from '../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
 import config from '../../config/env';
 
-type ServiceName = 'marketplace' | 'crowns' | 'wicp';
+export type ServiceName = 'marketplace' | 'crowns' | 'wicp';
 
 export const createActor = async <T>({
   serviceName = 'marketplace',
