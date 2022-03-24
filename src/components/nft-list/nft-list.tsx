@@ -1,23 +1,25 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { NftCard } from '../core/cards/nft-card';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import { InfiniteScrollWrapper } from './styles';
-
 import {
   useNFTSStore,
   useFilterStore,
   useAppDispatch,
   usePlugStore,
+  filterActions,
 } from '../../store';
 import { fetchNFTS, usePriceValues, useTraitsPayload } from '../../integrations/kyasshu/utils';
+import { EmptyState } from '../core';
 
 export const NftList = () => {
+  const { t } = useTranslation();
   // eslint-disable-next-line
-  const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } =
-    useNFTSStore();
   const dispatch = useAppDispatch();
+  const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } = useNFTSStore();
   const { isMyNfts, status } = useFilterStore();
-  const { principalId } = usePlugStore();
+  const { principalId, isConnected } = usePlugStore();
   const traitsPayload = useTraitsPayload();
   const priceValues = usePriceValues();
   // eslint-disable-next-line object-curly-newline
@@ -52,6 +54,14 @@ export const NftList = () => {
       count: '25',
     });
   };
+
+  if (isMyNfts && !isConnected) {
+    return <EmptyState message={`${t('translation:emptyStates.connectMessage')}`} buttonType="plug" />;
+  }
+
+  if (isMyNfts && isConnected && !loadedNFTS.length) {
+    return <EmptyState message={`${t('translation:emptyStates.noNfts')}`} buttonText={`${t('translation:emptyStates.noNftsAction')}`} />;
+  }
 
   return (
     <InfiniteScrollWrapper
