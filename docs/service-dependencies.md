@@ -62,10 +62,18 @@ The [Crowns](https://github.com/Psychedelic/crowns) Canister is a [DIP-721](http
 
 Since the off-chain is mirroring the data on-chain which it depends you'll have to make sure that when generating the mock data locally, the data is mirrored between the Crowns Canister and the Kyasshu Marketplace API, e.g. if you want to generate 40 Tokens starting from Token index 1 then the token range should exist in both Crowns Canister and Kyasshu. This is because you want the performance of the off-chain solution but ultimately, interact with the on-chain Crowns Canister.
 
-Here's an example of how to generate 9 crown tokens in the on-chain Crowns Canister of your local replica:
+Here's an example of how to generate 9 crown nfts in the on-chain Crowns Canister of your local replica:
 
 ```sh
 yarn mock:generate-tokens 25
+```
+
+You can also specify which token to start indexing from, to generate additional tokens
+
+Here's an example of how to generate 25 more crown nfts
+
+```sh
+yarn mock:generate-tokens 25 25
 ```
 
 Similarily, you'd cache 25 crown tokens in the off-chain Kyasshu Marketplace API (only once the token generation has completed!)
