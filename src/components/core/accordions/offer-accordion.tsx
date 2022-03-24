@@ -20,13 +20,18 @@ import arrowup from '../../../assets/accordions/arrow-up.svg';
 import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import { OffersTable } from '../../tables';
 import { Plug } from '../../plug';
-import { getICPPrice } from '../../../integrations/marketplace/price.utils';
+import {
+  getICPPrice,
+  getCurrentMarketPrice,
+} from '../../../integrations/marketplace/price.utils';
 
 export const OfferAccordion = () => {
+  // TODO: Get the current price from endpoint/service
+  const currentListForSalePrice = 100;
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-  const [priceOfICPInUSD, setPriceOfICPInUSD] = useState<
-    number | undefined
+  const [marketPrice, setMarketPrice] = useState<
+    string | undefined
   >();
   const { theme } = useThemeStore();
   const isLightTheme = theme === 'lightTheme';
@@ -38,11 +43,14 @@ export const OfferAccordion = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await getICPPrice();
+      // TODO: On loading and awaiting for coin gecko response
+      // should display a small loader in the place of price
 
-      if (!res || !res?.usd) return;
+      const formattedPrice = await getCurrentMarketPrice({
+        currentListForSalePrice,
+      });
 
-      setPriceOfICPInUSD(res?.usd);
+      setMarketPrice(formattedPrice);
     })();
   }, []);
 
@@ -61,7 +69,7 @@ export const OfferAccordion = () => {
               <h4>21.12 WICP</h4>
             </div>
           </FlexRight>
-          <h3>{`$${priceOfICPInUSD}`}</h3>
+          <h3>{marketPrice}</h3>
         </AccordionHeadContent>
         {!isConnected && (
           <PlugButtonWrapper>
