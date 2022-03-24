@@ -77,7 +77,11 @@ export const NftCard = React.memo(
             </Flex>
           </CardWrapper>
           <OuterFlex>
-            <ActionText>Buy Now</ActionText>
+            {data.status === 'forSale' ? (
+              <ActionText>{`${t('translation:nftCard.forSale')}`}</ActionText>
+            ) : (
+              <ActionText>{`${t('translation:nftCard.forOffer')}`}</ActionText>
+            )}
             {notForSale ? (
               ''
             ) : (
