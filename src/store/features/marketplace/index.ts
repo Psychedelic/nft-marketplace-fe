@@ -6,7 +6,8 @@ import {
 import { ActorSubclass } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import marketplaceIdlService from '../../../declarations/marketplace';
-import { createActor } from '../../../integrations/actor';
+// import { createActor } from '../../../integrations/actor';
+import { actorInstanceHandler } from '../../../utils/actor';
 import config from '../../../config/env';
 import { errorActions } from '../../';
 import { RootState } from '../../store';
@@ -63,24 +64,11 @@ export const listForSale = createAsyncThunk<
   async (params: ListForSaleParams, thunkAPI) => {
     // Checks if an actor instance exists already
     // otherwise creates a new instance
-    const actorInstance = await (async () => {
-      const {
-        marketplace: { actor },
-      } = thunkAPI.getState();
-
-      if (!actor) {
-        const actor = (await createActor<marketplaceIdlService>({
-          serviceName: 'marketplace',
-        })) as ActorSubclass<marketplaceIdlService>;
-
-        // Set actor state
-        thunkAPI.dispatch(marketplaceSlice.actions.setActor(actor));
-
-        return actor;
-      }
-
-      return actor;
-    })();
+    const actorInstance = await actorInstanceHandler({
+      thunkAPI,
+      serviceName: 'marketplace',
+      slice: marketplaceSlice,
+    });
 
     try {
       const { id, amount, onSuccess, onFailure } = params;
