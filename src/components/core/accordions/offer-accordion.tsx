@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
-import {
-  useThemeStore,
-  usePlugStore,
-} from '../../../store';
+import { useThemeStore, usePlugStore } from '../../../store';
 import {
   AccordionStyle,
   AccordionTrigger,
@@ -23,10 +20,14 @@ import arrowup from '../../../assets/accordions/arrow-up.svg';
 import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import { OffersTable } from '../../tables';
 import { Plug } from '../../plug';
+import { getICPPrice } from '../../../integrations/marketplace/price.utils';
 
 export const OfferAccordion = () => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+  const [priceOfICPInUSD, setPriceOfICPInUSD] = useState<
+    number | undefined
+  >();
   const { theme } = useThemeStore();
   const isLightTheme = theme === 'lightTheme';
 
@@ -34,6 +35,16 @@ export const OfferAccordion = () => {
   const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
   const { isConnected } = usePlugStore();
+
+  useEffect(() => {
+    (async () => {
+      const res = await getICPPrice();
+
+      if (!res || !res?.usd) return;
+
+      setPriceOfICPInUSD(res?.usd);
+    })();
+  }, []);
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
@@ -50,7 +61,7 @@ export const OfferAccordion = () => {
               <h4>21.12 WICP</h4>
             </div>
           </FlexRight>
-          <h3>$1,283.12</h3>
+          <h3>{`$${priceOfICPInUSD}`}</h3>
         </AccordionHeadContent>
         {!isConnected && (
           <PlugButtonWrapper>
