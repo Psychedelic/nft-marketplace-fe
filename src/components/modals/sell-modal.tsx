@@ -37,14 +37,22 @@ export const SellModal = () => {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Sell modal steps: listingInfo/pending/confirmed
   const [modalStep, setModalStep] = useState<string>('listingInfo');
+  const [amount, setAmount] = useState<string>('');
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
+    setAmount('');
     setModalStep('listingInfo');
   };
 
   const handleModalClose = () => {
     setModalOpened(false);
+  };
+
+  const handleListing = () => {
+    // TODO: use on-chain method listForSale for listing NFT
+    console.log(amount, 'amount');
+    setModalStep('pending');
   };
 
   useEffect(() => {
@@ -122,6 +130,7 @@ export const SellModal = () => {
                 placeholder={t(
                   'translation:inputField.placeholder.amount',
                 )}
+                setValue={(value) => setAmount(value)}
               />
               <FeeContainer>
                 <FeeDetails>
@@ -171,9 +180,8 @@ export const SellModal = () => {
                   text={t(
                     'translation:modals.buttons.completeListing',
                   )}
-                  handleClick={() => {
-                    setModalStep('pending');
-                  }}
+                  handleClick={handleListing}
+                  disabled={!amount || false}
                 />
               </ModalButtonWrapper>
             </ModalButtonsList>
