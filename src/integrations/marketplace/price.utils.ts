@@ -61,4 +61,6 @@ export const getCurrentMarketPrice = async ({
   } catch (err) {
     console.error(err);
   }
+
+  return COINGECKO_PRICE_UNAVAILABLE;
 };
