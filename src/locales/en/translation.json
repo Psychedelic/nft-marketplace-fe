@@ -213,7 +213,7 @@
   },
   "filters": {
     "priceRange": "Price Range",
-    "listed": "listed",
-    "unlisted": "unlisted"
+    "forSale": "forSale",
+    "forOffer": "forOffer"
   }
 }
