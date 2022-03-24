@@ -1,5 +1,7 @@
 #!/bin/bash
 
+(cd "$(dirname $BASH_SOURCE)" && cd ../../) && (cd kyasshu) || exit 1
+
 host=$1
 
 if [[ -z $host || "$host" == "local" ]]; then

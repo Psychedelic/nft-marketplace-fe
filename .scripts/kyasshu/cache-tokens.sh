@@ -1,5 +1,7 @@
 #!/bin/sh
 
+(cd "$(dirname $BASH_SOURCE)" && cd ../../) && (cd nft-marketplace/crowns) || exit 1
+
 # At time of writing we're pulling data from the Crowns test canister
 # that has the id "iqvo2-7qaaa-aaaam-qacxa-cai"
 # https://github.com/Psychedelic/crowns/blob/main/canister_ids.json
