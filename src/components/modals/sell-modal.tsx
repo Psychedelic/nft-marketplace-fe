@@ -30,7 +30,7 @@ import {
 
 import { LISTING_STATUS_CODES } from '../../constants/listing';
 import { useAppDispatch, nftsActions } from '../../store';
-import { listForSale } from '../../integrations/marketplace';
+import { listForSale } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -70,17 +70,19 @@ export const SellModal = () => {
     if (!id) return;
 
     setModalStep(LISTING_STATUS_CODES.Pending);
-    await listForSale({
-      dispatch,
-      id,
-      amount,
-      onSuccess: () => {
-        setModalStep(LISTING_STATUS_CODES.Confirmed);
-      },
-      onFailure: () => {
-        setModalStep(LISTING_STATUS_CODES.ListingInfo);
-      },
-    });
+
+    dispatch(
+      listForSale({
+        id,
+        amount,
+        onSuccess: () => {
+          setModalStep(LISTING_STATUS_CODES.Confirmed);
+        },
+        onFailure: () => {
+          setModalStep(LISTING_STATUS_CODES.ListingInfo);
+        },
+      }),
+    );
   };
 
   return (
