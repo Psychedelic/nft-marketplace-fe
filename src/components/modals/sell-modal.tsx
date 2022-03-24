@@ -28,6 +28,7 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+import { LISTING_STATUS_CODES } from '../../constants/listing';
 import { useAppDispatch, nftsActions } from '../../store';
 import { listForSale } from '../../integrations/marketplace';
 
@@ -42,15 +43,19 @@ export const SellModal = () => {
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Sell modal steps: listingInfo/pending/confirmed
-  const [modalStep, setModalStep] = useState<string>('listingInfo');
+  const [modalStep, setModalStep] = useState<string>(
+    LISTING_STATUS_CODES.ListingInfo,
+  );
   const [amount, setAmount] = useState<string>('');
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
     setAmount('');
-    setModalStep('listingInfo');
+    setModalStep(LISTING_STATUS_CODES.ListingInfo);
 
-    if (status || !id || modalStep !== 'confirmed') return;
+    const notConfirmed = modalStep !== LISTING_STATUS_CODES.Confirmed;
+
+    if (status || !id || notConfirmed) return;
 
     // Update NFT listed for sale in store
     // on successful listing and closing the modal
@@ -64,16 +69,16 @@ export const SellModal = () => {
   const handleListing = async () => {
     if (!id) return;
 
-    setModalStep('pending');
+    setModalStep(LISTING_STATUS_CODES.Pending);
     await listForSale({
       dispatch,
       id,
       amount,
       onSuccess: () => {
-        setModalStep('confirmed');
+        setModalStep(LISTING_STATUS_CODES.Confirmed);
       },
       onFailure: () => {
-        setModalStep('listingInfo');
+        setModalStep(LISTING_STATUS_CODES.ListingInfo);
       },
     });
   };
@@ -117,7 +122,7 @@ export const SellModal = () => {
           Step: 1 -> listingInfo
           ---------------------------------
         */}
-        {modalStep === 'listingInfo' && (
+        {modalStep === LISTING_STATUS_CODES.ListingInfo && (
           <Container>
             {/*
               ---------------------------------
@@ -193,7 +198,7 @@ export const SellModal = () => {
                     'translation:modals.buttons.completeListing',
                   )}
                   handleClick={handleListing}
-                  disabled={!amount || false}
+                  disabled={!amount}
                 />
               </ModalButtonWrapper>
             </ModalButtonsList>
@@ -204,7 +209,7 @@ export const SellModal = () => {
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === 'pending' && (
+        {modalStep === LISTING_STATUS_CODES.Pending && (
           <Container>
             {/*
               ---------------------------------
@@ -233,7 +238,7 @@ export const SellModal = () => {
                   type="secondary"
                   text={t('translation:modals.buttons.cancel')}
                   handleClick={() => {
-                    setModalStep('listingInfo');
+                    setModalStep(LISTING_STATUS_CODES.ListingInfo);
                   }}
                 />
               </ModalButtonWrapper>
@@ -245,7 +250,7 @@ export const SellModal = () => {
           Step: 3 -> confirmed
           ---------------------------------
         */}
-        {modalStep === 'confirmed' && (
+        {modalStep === LISTING_STATUS_CODES.Confirmed && (
           <Container>
             {/*
               ---------------------------------

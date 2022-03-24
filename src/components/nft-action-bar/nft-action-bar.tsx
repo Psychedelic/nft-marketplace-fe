@@ -60,6 +60,8 @@ export const NftActionBar = ({
 
   const { isConnected } = usePlugStore();
 
+  const isConnectedOwner = isConnected && isOwner;
+
   return (
     <Container>
       <NftActionBarWrapper>
@@ -69,7 +71,7 @@ export const NftActionBar = ({
             {t('translation:buttons.action.backToResults')}
           </ActionText>
         </RouterLink>
-        {(isConnected && isOwner && (
+        {(isConnectedOwner && (
           <OnConnected isListed={isListed} />
         )) || <OnDisconnected />}
       </NftActionBarWrapper>
