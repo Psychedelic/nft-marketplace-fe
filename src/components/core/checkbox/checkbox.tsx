@@ -4,7 +4,6 @@ import { Wrapper } from './styles';
 
 export type CheckboxProps = {
   title: string,
-  traitsName: boolean;
   value: string; // Red
   percentage: string; // 1291 (12.9%)
   filterValueExists: (value: string) => boolean;
@@ -12,29 +11,24 @@ export type CheckboxProps = {
 };
 
 export const Checkbox = ({
-  traitsName,
   value,
   percentage,
   filterValueExists,
   handleSelectedFilters,
-}: CheckboxProps) => {
-  console.log(traitsName);
-
-  return (
-    <Wrapper>
-      <label htmlFor={value}>
-        <input
-          type="checkbox"
-          id={value}
-          name={value}
-          value={value}
-          onClick={handleSelectedFilters}
-          // checks if value exists in array and sets checked to true
-          checked={(filterValueExists(value) && traitsName)}
-        />
-        {value}
-      </label>
-      <span>{percentage}</span>
-    </Wrapper>
-  );
-};
+}: CheckboxProps) => (
+  <Wrapper>
+    <label htmlFor={value}>
+      <input
+        type="checkbox"
+        id={value}
+        name={value}
+        value={value}
+        onClick={handleSelectedFilters}
+        // checks if value exists in array and sets checked to true
+        checked={(filterValueExists(value))}
+      />
+      {value}
+    </label>
+    <span>{percentage}</span>
+  </Wrapper>
+);

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import {
   useFilterStore,
@@ -25,7 +24,6 @@ export const CheckboxFilterAccordion = ({
   id = 'item-1',
   checkboxData,
 }: CheckboxFilterAccordionProps) => {
-  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
   const { traits } = useFilterStore();
@@ -33,7 +31,6 @@ export const CheckboxFilterAccordion = ({
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const filterValueExists = (traitsValue: string) => traits.some((trait) => trait.values.includes(traitsValue));
   const traitsCount = traits.find((trait) => trait.name === checkboxData.name)?.values?.length;
-  const traitsName = traits.find((trait) => trait.name === checkboxData.name);
 
   const handleSelectedFilters = (e: any) => {
     const checkFilterValueExists = filterValueExists(e.target.value);
@@ -83,7 +80,6 @@ export const CheckboxFilterAccordion = ({
           <form>
             {checkboxData.values.map((data) => (
               <Checkbox
-                traitsName={traitsName}
                 key={data}
                 value={data}
                 percentage={data.percentage}

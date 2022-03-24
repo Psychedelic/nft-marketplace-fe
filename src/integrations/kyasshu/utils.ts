@@ -1,5 +1,6 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { filterActions, nftsActions, errorActions, useFilterStore } from '../../store';
 import config from '../../config/env';
 import { FILTER_CONSTANTS } from '../../constants';
@@ -190,9 +191,10 @@ export const useTraitsPayload = () => {
 };
 
 export const usePriceValues = () => {
+  const { t } = useTranslation();
   const { defaultFilters } = useFilterStore();
 
   return defaultFilters.find(
-    ({ filterCategory }) => filterCategory === 'Price Range',
+    ({ filterCategory }) => filterCategory === `${t('translation:filters.priceRange')}`,
   )?.filterName;
 };

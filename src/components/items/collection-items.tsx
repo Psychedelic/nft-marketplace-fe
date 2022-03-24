@@ -44,7 +44,9 @@ export const CollectionItems = () => {
       dispatch(settingsActions.setPriceApplyButton(false));
     } else {
       dispatch(filterActions.removeFilter(appliedFilter.filterName));
-      dispatch(filterActions.removeTraitsFilter(appliedFilter.filterName));
+      dispatch(
+        filterActions.removeTraitsFilter(appliedFilter.filterName),
+      );
     }
   };
 
@@ -77,43 +79,47 @@ export const CollectionItems = () => {
           <Flex>
             <ContentFlex>
               {appliedFilters.defaultFilters.map((appliedFilter) => {
-                if (Array.isArray(appliedFilter.filterName)) {
-                  return appliedFilter.filterName.map((value) => {
-                    console.log('');
-                    return (
-                      <FilteredTraitsChip
-                        name={value}
-                        rim={`${appliedFilter.filterCategory}`}
-                        appliedFilterValue={appliedFilter}
-                        removeFilter={() => {
-                          dispatch(
-                            filterActions.removeTraitsFilter(value),
-                          );
-                        }}
-                      />
-                    );
-                  });
+                if (!Array.isArray(appliedFilter.filterName)) {
+                  return (
+                    <FilteredTraitsChip
+                      name={
+                        appliedFilter.filterCategory !== `${t('translation:filters.priceRange')}`
+                          ? appliedFilter.filterName
+                          : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`
+                      }
+                      rim={`${appliedFilter.filterCategory}`}
+                      appliedFilterValue={appliedFilter}
+                      removeFilter={() => {
+                        if (
+                          appliedFilter.filterName === `${t('translation:buttons.action.myNfts')}`
+                        ) {
+                          dispatch(filterActions.setMyNfts(false));
+                        } else if (
+                          appliedFilter.filterName === `${t('translation:buttons.action.buyNow')}`
+                        ) {
+                          dispatch(filterActions.setStatusFilter(''));
+                        } else if (
+                          appliedFilter.filterName === `${t('translation:buttons.action.hasOffers')}`
+                        ) {
+                          dispatch(filterActions.setStatusFilter(''));
+                        }
+                        handleRemoveFilter(appliedFilter);
+                      }}
+                    />
+                  );
                 }
-                return (
+                return appliedFilter.filterName.map((value) => (
                   <FilteredTraitsChip
-                    name={
-                      appliedFilter.filterCategory !== `${t('translation:filters.priceRange')}`
-                        ? appliedFilter.filterName
-                        : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`
-                    }
+                    name={value}
                     rim={`${appliedFilter.filterCategory}`}
                     appliedFilterValue={appliedFilter}
                     removeFilter={() => {
-                      if (appliedFilter.filterName === `${t('translation:buttons.action.myNfts')}`) {
-                        dispatch(filterActions.setMyNfts(false));
-                      } else if (appliedFilter.filterName === `${t('translation:buttons.action.buyNow')}`) {
-                        dispatch(filterActions.setStatusFilter(''));
-                      } else if (appliedFilter.filterName === `${t('translation:buttons.action.hasOffers')}`) {
-                        dispatch(filterActions.setStatusFilter(''));
-                      } handleRemoveFilter(appliedFilter);
+                      dispatch(
+                        filterActions.removeTraitsFilter(value),
+                      );
                     }}
                   />
-                );
+                ));
               })}
             </ContentFlex>
           </Flex>
