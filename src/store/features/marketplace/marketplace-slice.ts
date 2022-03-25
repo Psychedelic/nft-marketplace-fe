@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   createAsyncThunk,
   createSlice,
@@ -8,7 +9,7 @@ import { Principal } from '@dfinity/principal';
 import marketplaceIdlService from '../../../declarations/marketplace';
 import { actorInstanceHandler } from '../../../integrations/actor';
 import config from '../../../config/env';
-import { errorActions } from '../../';
+import { errorActions } from '../errors';
 import { RootState } from '../../store';
 
 interface ListForSaleParams extends ListForSale {
