@@ -1,5 +1,10 @@
 import React from 'react';
-import { PlugButtonContainer, PlugButtonText } from './styles';
+import { useThemeStore } from '../../../store';
+import { PlugButtonContainer, PlugButtonText, PlugIcon, PlugArrowDownIcon } from './styles';
+import plugIcon from '../../../assets/plug-icon.svg';
+import plugIconDark from '../../../assets/plug-icon-dark.svg';
+import arrowdown from '../../../assets/arrowdown.svg';
+import arrowdownDark from '../../../assets/arrowdown-dark.svg';
 
 export type PlugButtonProps = {
   handleClick: () => void;
@@ -13,8 +18,17 @@ export type PlugButtonProps = {
 export const PlugButton = ({
   handleClick,
   text,
-}: PlugButtonProps) => (
-  <PlugButtonContainer onClick={handleClick} className="plug-button">
-    <PlugButtonText>{text}</PlugButtonText>
-  </PlugButtonContainer>
-);
+}: PlugButtonProps) => {
+  const { theme } = useThemeStore();
+  const isLightTheme = theme === 'lightTheme';
+
+  return (
+    <PlugButtonContainer onClick={handleClick} className="plug-button">
+      <PlugButtonText>
+        <PlugIcon src={isLightTheme ? plugIcon : plugIconDark} />
+        {text}
+        <PlugArrowDownIcon src={isLightTheme ? arrowdown : arrowdownDark} />
+      </PlugButtonText>
+    </PlugButtonContainer>
+  );
+};

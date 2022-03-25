@@ -34,7 +34,10 @@ export const NftDetails = () => {
 
   return (
     <Container>
-      <NftActionBar />
+      <NftActionBar
+        owner={nftDetails?.owner}
+        isListed={nftDetails?.isListed}
+      />
       {nftDetails ? (
         <Wrapper>
           <PreviewContainer>
@@ -73,7 +76,10 @@ export const NftDetails = () => {
           </PreviewContainer>
           <DetailsContainer>
             <NFTMetaData id={nftDetails.id} />
-            <OfferAccordion />
+            <OfferAccordion
+              lastSalePrice={nftDetails?.price}
+              isListed={nftDetails?.isListed}
+            />
             <AboutAccordion owned />
           </DetailsContainer>
         </Wrapper>

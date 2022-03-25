@@ -23,6 +23,12 @@ export type FetchNFTDetailsProps = {
   id: string;
 };
 
+export type CheckNFTOwnerParams = {
+  isConnected: boolean;
+  owner?: string;
+  principalId?: string;
+};
+
 export const fetchNFTS = async ({
   payload,
   dispatch,
@@ -73,6 +79,7 @@ export const fetchNFTS = async ({
           smallgem: nft?.metadata?.smallgem?.value?.TextContent,
         },
         status: nft?.status,
+        owner: nft?.owner,
       };
       return metadata;
     });
@@ -118,8 +125,8 @@ export const fetchNFTDetails = async ({
       // TODO: Finalize object format after validating mock and kyasshu data
       id: responseData.index,
       name: 'Cap Crowns',
-      price: '',
-      lastOffer: '',
+      price: responseData?.lastSalePrice,
+      lastOffer: responseData?.lastOfferPrice,
       // TODO: update nft thumbnail
       preview: '',
       location: responseData?.url,
@@ -131,7 +138,14 @@ export const fetchNFTDetails = async ({
         smallgem:
           responseData?.metadata?.smallgem?.value?.TextContent,
       },
+      owner: responseData?.owner,
     };
+
+    // TODO: If user connected to plug
+    // Should verify the owner of current token id
+    // e.g. if opted to verify on-chain the method is "ownerOf"
+    // Should verify whether token is listed or not only if owner
+    nftDetails.isListed = false;
 
     // update store with loaded NFT details
     dispatch(nftsActions.setLoadedNFTDetails(nftDetails));
@@ -198,4 +212,18 @@ export const usePriceValues = () => {
   return defaultFilters.find(
     ({ filterCategory }) => filterCategory === `${t('translation:filters.priceRange')}`,
   )?.filterName;
+};
+
+export const isNFTOwner = (params: CheckNFTOwnerParams) => {
+  const { isConnected, owner, principalId } = params;
+
+  if (!isConnected) return false;
+
+  if (!owner) return false;
+
+  if (!principalId) return false;
+
+  if (owner !== principalId) return false;
+
+  return true;
 };

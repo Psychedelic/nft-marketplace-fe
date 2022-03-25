@@ -62,16 +62,24 @@ The [Crowns](https://github.com/Psychedelic/crowns) Canister is a [DIP-721](http
 
 Since the off-chain is mirroring the data on-chain which it depends you'll have to make sure that when generating the mock data locally, the data is mirrored between the Crowns Canister and the Kyasshu Marketplace API, e.g. if you want to generate 40 Tokens starting from Token index 1 then the token range should exist in both Crowns Canister and Kyasshu. This is because you want the performance of the off-chain solution but ultimately, interact with the on-chain Crowns Canister.
 
-Here's an example of how to generate 9 crown tokens in the on-chain Crowns Canister of your local replica:
+Here's an example of how to generate 9 crown nfts in the on-chain Crowns Canister of your local replica:
 
 ```sh
-yarn mock:generate-tokens $(cd ./nft-marketplace/crowns && dfx canister id crowns) 9
+yarn mock:generate-tokens 25
 ```
 
-Similarily, you'd cache 50 crown tokens in the off-chain Kyasshu Marketplace API
+You can also specify which token to start indexing from, to generate additional tokens
+
+Here's an example of how to generate 25 more crown nfts
 
 ```sh
-yarn kyasshu:mock 50
+yarn mock:generate-tokens 25 25
+```
+
+Similarily, you'd cache 25 crown tokens in the off-chain Kyasshu Marketplace API (only once the token generation has completed!)
+
+```sh
+yarn kyasshu:cache 25
 ```
 
 💡 Kyasshu caches 50 at the time, so if we attempt to cache 9 items it'd get 50 minimal.
@@ -176,18 +184,20 @@ You should get a similar output to:
 
 At this point you should have the Kyasshu services running!
 
+By default, in the serverless environment, Kyasshu will use the local services for crowns and cap canisters.
+
 Check the topic of how to get data in your local Kyasshu to learn more.
 
 🤞 If you find issues, refer to the [troubleshooting](/docs/troubleshooting.md) document for help.
 
 ### Get data in the local Kyasshu
 
-Following, is a command to make a HTTP GET request to the `marketplace` endpoint.
+To cache your generated tokens, you can use the following command.
 
-We're going to pass the `mainnet` Crowns Canister ID (vlhm2-4iaaa-aaaam-qaatq-cai) and request a total of `25` tokens - keep the number as short as possible for your needs, otherwise it might be time consuming e.g. for 10k would take a considerable amount of time to handle.
+The cache script will automatically use the local crowns canister, and request a total of `25` tokens. The caching is pretty performant, but keep in mind caching a large amount may take some time (eg; 10,000 tokens takes about ~5mins)
 
 ```sh
-curl -X GET http://localhost:3000/dev/marketplace/vlhm2-4iaaa-aaaam-qaatq-cai/cache/25
+yarn kyasshu:cache 25
 ```
 
 To learn more about the Marketplace endpoints, check the [Kyasshu documentation](https://github.com/Psychedelic/kyasshu).

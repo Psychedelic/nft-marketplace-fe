@@ -80,8 +80,8 @@ export const Flex = styled('div', {
 
 export const OwnedCardText = styled('p', {
   fontStyle: 'normal',
-  fontWeight: '600',
-  fontSize: '11px',
+  fontWeight: '500',
+  fontSize: '12px',
   lineHeight: '15px',
   color: '#777E90',
   margin: '0',
