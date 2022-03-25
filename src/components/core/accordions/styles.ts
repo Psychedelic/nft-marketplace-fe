@@ -274,3 +274,8 @@ export const PlugButtonWrapper = styled('div', {
     marginLeft: '0px',
   },
 });
+
+export const UndefinedPrice = styled('span', {
+  fontSize: '32px',
+  color: '#767D8E',
+});
