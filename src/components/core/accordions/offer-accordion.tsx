@@ -71,7 +71,9 @@ export const OfferAccordion = ({
                   'translation:accordions.offer.header.currentPrice',
                 )}
               </span>
-              <h4>{`${lastSalePrice} WICP`}</h4>
+              <h4>
+                {(lastSalePrice && `${lastSalePrice} WICP`) || '--'}
+              </h4>
             </div>
           </FlexRight>
           <h3>{marketPrice}</h3>
