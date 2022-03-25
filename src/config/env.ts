@@ -35,6 +35,8 @@ const config: Config = {
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
     // TODO: See <Important-1>
+    // TODO: This is causing confusion, as we have a fieldname for crowns canister id
+    // can we get rid of collectionId?
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
     crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
@@ -44,19 +46,23 @@ const config: Config = {
   staging: {
     // TODO: this should be removed or have a none ambiguous name
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
-    host: 'http://127.0.0.1:8000',
+    host: 'https://testnet.psychedelic.ooo',
     // TODO: See <Important-1>
-    collectionId: NFT_CROWNS_CANISTER_ID,
-    kyasshuMarketplaceAPI: 'http://localhost:3000/local',
-    crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
-    marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
-    wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
+    // TODO: This is causing confusion, as we have a fieldname for crowns canister id
+    // can we get rid of collectionId?
+    collectionId: '5hzni-qqaaa-aaaaa-aaboq-cai',
+    kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
+    crownsCanisterId: '5hzni-qqaaa-aaaaa-aaboq-cai',
+    marketplaceCanisterId: 'yva2f-aiaaa-aaaaa-aabqa-cai',
+    wICPCanisterId: 'y4drz-waaaa-aaaaa-aabrq-cai',
   },
   development: {
     // TODO: this should be removed or have a none ambiguous name
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
     // TODO: See <Important-1>
+    // TODO: This is causing confusion, as we have a fieldname for crowns canister id
+    // can we get rid of collectionId?
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
     crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
@@ -68,6 +74,8 @@ const config: Config = {
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
     // TODO: See <Important-1>
+    // TODO: This is causing confusion, as we have a fieldname for crowns canister id
+    // can we get rid of collectionId?
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
     crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
