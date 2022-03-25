@@ -76,7 +76,10 @@ export const NftDetails = () => {
           </PreviewContainer>
           <DetailsContainer>
             <NFTMetaData id={nftDetails.id} />
-            <OfferAccordion />
+            <OfferAccordion
+              lastSalePrice={nftDetails?.price}
+              isListed={nftDetails?.isListed}
+            />
             <AboutAccordion owned />
           </DetailsContainer>
         </Wrapper>

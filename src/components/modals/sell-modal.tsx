@@ -59,7 +59,12 @@ export const SellModal = () => {
 
     // Update NFT listed for sale in store
     // on successful listing and closing the modal
-    dispatch(nftsActions.setNFTForSale(id));
+    dispatch(
+      nftsActions.setNFTForSale({
+        id,
+        amount,
+      }),
+    );
   };
 
   const handleModalClose = () => {
