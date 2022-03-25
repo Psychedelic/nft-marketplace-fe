@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { filterActions, nftsActions, errorActions, useFilterStore } from '../../store';
 import config from '../../config/env';
 import { FILTER_CONSTANTS } from '../../constants';
+import { tableActions } from '../../store/features/tables';
 
 export type FetchNFTProps = {
   payload?: object;
@@ -27,6 +28,10 @@ export type CheckNFTOwnerParams = {
   isConnected: boolean;
   owner?: string;
   principalId?: string;
+};
+
+export type FetchCAPActivityProps = {
+  dispatch: any;
 };
 
 export const fetchNFTS = async ({
@@ -227,11 +232,11 @@ export const isNFTOwner = (params: CheckNFTOwnerParams) => {
   return true;
 };
 
-export const fetchCAPActivity = async () => {
+export const fetchCAPActivity = async ({ dispatch }: FetchCAPActivityProps) => {
   try {
     const response = await axios.get(`${config.kyasshuMarketplaceAPI}/cap/txns/q3fc5-haaaa-aaaaa-aaahq-cai`);
 
-    console.log(response);
+    dispatch(tableActions.setCapActivityTable(response.data.Items));
   } catch (error) {
     console.log(error);
   }

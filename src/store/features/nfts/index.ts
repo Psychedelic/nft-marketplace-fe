@@ -1,2 +1,2 @@
-export * from './nfts-slice';
-export * from './use-nfts-store';
+export { nftsActions, nftsSlice, selectNFTSState } from './nfts-slice';
+export { useNFTSStore } from './use-nfts-store';

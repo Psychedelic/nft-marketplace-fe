@@ -11,7 +11,7 @@ const env: NodeEnv =
 // TODO: bear in mind that this is used for the kyasshu marketplace api
 // as such, we have a temporary staging environment "iqvo2-7qaaa-aaaam-qacxa-cai"
 // which is different from mainnet and the local <Important-1>
-const NFT_CROWNS_CANISTER_ID = 'iqvo2-7qaaa-aaaam-qacxa-cai';
+const NFT_CROWNS_CANISTER_ID = 'rkp4c-7iaaa-aaaaa-aaaca-cai';
 
 type ConfigParams = {
   canisterId: string;

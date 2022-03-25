@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../../store';
+import { useThemeStore, useAppDispatch, useTableStore } from '../../store';
 import {
   ItemDetailsCell,
   TypeDetailsCell,
@@ -11,6 +11,7 @@ import {
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
 import { Container } from './styles';
+import { fetchCAPActivity } from '../../integrations/kyasshu/utils';
 
 export interface rowProps {
   item: {
@@ -28,6 +29,16 @@ export interface rowProps {
 export const ActivityTable = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const { loadedCapActivityTableData } = useTableStore();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    fetchCAPActivity({
+      dispatch,
+    });
+  }, []);
+
+  console.log(loadedCapActivityTableData);
 
   const columns = useMemo(
     () => [
