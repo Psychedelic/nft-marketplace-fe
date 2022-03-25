@@ -137,6 +137,7 @@ export const fetchNFTDetails = async ({
         smallgem:
           responseData?.metadata?.smallgem?.value?.TextContent,
       },
+      owner: responseData?.owner,
     };
 
     // TODO: If user connected to plug
