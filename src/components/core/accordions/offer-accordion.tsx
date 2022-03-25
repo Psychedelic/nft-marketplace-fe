@@ -10,6 +10,7 @@ import {
   AccordionHeadContent,
   FlexRight,
   PlugButtonWrapper,
+  UndefinedPrice,
 } from './styles';
 import offer from '../../../assets/accordions/offer.svg';
 import offerDark from '../../../assets/accordions/offer-dark.svg';
@@ -46,7 +47,7 @@ export const OfferAccordion = ({
 
   useEffect(() => {
     (async () => {
-      if (!lastSalePrice) return;
+      if (!lastSalePrice || !isListed) return;
 
       // TODO: On loading and awaiting for coin gecko response
       // should display a small loader in the place of price
@@ -58,6 +59,8 @@ export const OfferAccordion = ({
       setMarketPrice(formattedPrice);
     })();
   }, [lastSalePrice]);
+
+  const isListedWithPrice = isListed && lastSalePrice;
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
@@ -72,7 +75,9 @@ export const OfferAccordion = ({
                 )}
               </span>
               <h4>
-                {(lastSalePrice && `${lastSalePrice} WICP`) || '--'}
+                {(isListedWithPrice && `${lastSalePrice} WICP`) || (
+                  <UndefinedPrice>--</UndefinedPrice>
+                )}
               </h4>
             </div>
           </FlexRight>
