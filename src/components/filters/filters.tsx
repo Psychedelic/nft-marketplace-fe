@@ -189,8 +189,8 @@ export const Filters = () => {
                           'Status',
                           `${t('translation:buttons.action.buyNow')}`,
                         );
-                        if (status !== `${t('translation:filters.listed')}`) {
-                          dispatch(filterActions.setStatusFilter(`${t('translation:filters.listed')}`));
+                        if (status !== `${t('translation:filters.forSale')}`) {
+                          dispatch(filterActions.setStatusFilter(`${t('translation:filters.forSale')}`));
                         } else {
                           dispatch(filterActions.setStatusFilter(''));
                         }
@@ -220,8 +220,8 @@ export const Filters = () => {
                             'translation:buttons.action.hasOffers',
                           )}`,
                         );
-                        if (status !== `${t('translation:filters.unlisted')}`) {
-                          dispatch(filterActions.setStatusFilter(`${t('translation:filters.unlisted')}`));
+                        if (status !== `${t('translation:filters.forOffer')}`) {
+                          dispatch(filterActions.setStatusFilter(`${t('translation:filters.forOffer')}`));
                         } else {
                           dispatch(filterActions.setStatusFilter(''));
                         }

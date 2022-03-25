@@ -83,6 +83,7 @@ export const fetchNFTS = async ({
           rim: nft?.metadata?.rim?.value?.TextContent,
           smallgem: nft?.metadata?.smallgem?.value?.TextContent,
         },
+        status: nft?.status,
         owner: nft?.owner,
       };
       return metadata;
