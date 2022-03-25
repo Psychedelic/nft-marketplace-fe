@@ -207,7 +207,9 @@
   "nftCard": {
     "owned": "Owned",
     "forSale": "Buy Now",
-    "forOffer": "Make Offer"
+    "forOffer": "Make Offer",
+    "offerFor": "Offer for",
+    "last": "Last"
   },
   "tabs": {
     "items": "Items",
