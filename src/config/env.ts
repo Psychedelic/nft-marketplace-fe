@@ -8,6 +8,9 @@ const env: NodeEnv =
 // https://github.com/Psychedelic/crowns/blob/main/canister_ids.json
 // Where Mainnet crowns is "vlhm2-4iaaa-aaaam-qaatq-cai"
 // and Crowns test is "iqvo2-7qaaa-aaaam-qacxa-cai"
+// TODO: bear in mind that this is used for the kyasshu marketplace api
+// as such, we have a temporary staging environment "iqvo2-7qaaa-aaaam-qacxa-cai"
+// which is different from mainnet and the local <Important-1>
 const NFT_CROWNS_CANISTER_ID = 'iqvo2-7qaaa-aaaam-qacxa-cai';
 
 type ConfigParams = {
@@ -15,6 +18,9 @@ type ConfigParams = {
   host: string;
   collectionId: string;
   kyasshuMarketplaceAPI: string;
+  crownsCanisterId: string;
+  marketplaceCanisterId: string;
+  wICPCanisterId: string;
 };
 type Config = {
   production: ConfigParams;
@@ -25,27 +31,48 @@ type Config = {
 
 const config: Config = {
   production: {
+    // TODO: this should be removed or have a none ambiguous name
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
+    // TODO: See <Important-1>
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
+    marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
+    wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
   },
   staging: {
+    // TODO: this should be removed or have a none ambiguous name
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
+    // TODO: See <Important-1>
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
+    marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
+    wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
   },
   development: {
+    // TODO: this should be removed or have a none ambiguous name
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
+    // TODO: See <Important-1>
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
+    marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
+    wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
   },
   test: {
+    // TODO: this should be removed or have a none ambiguous name
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     host: 'http://127.0.0.1:8000',
+    // TODO: See <Important-1>
     collectionId: NFT_CROWNS_CANISTER_ID,
+    kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
+    marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
+    wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
   },
 };
 

@@ -9,6 +9,8 @@ import {
 import {
   isPlugInstalled,
   requestConnectToPlug,
+  hasPlugAgent,
+  createPlugAgent,
   checkIsConnected,
   getPrincipal,
   formatAddress,
@@ -17,7 +19,20 @@ import {
   PLUG_WALLET_WEBSITE_URL,
   PLUG_STATUS_CODES,
 } from '../../constants';
-import { CANISTER_ID, NETWORK } from '../../config';
+import config from '../../config/env';
+
+const {
+  crownsCanisterId,
+  marketplaceCanisterId,
+  wICPCanisterId,
+  host,
+} = config;
+
+const whitelist = [
+  crownsCanisterId,
+  marketplaceCanisterId,
+  wICPCanisterId,
+];
 
 export const Plug = () => {
   const { t } = useTranslation();
@@ -63,6 +78,13 @@ export const Plug = () => {
         return;
       }
 
+      if (!hasPlugAgent()) {
+        await createPlugAgent({
+          whitelist,
+          host,
+        });
+      }
+
       // update connection status to connected
       dispatch(plugActions.setIsConnected(connected));
     };
@@ -100,9 +122,6 @@ export const Plug = () => {
         plugActions.setConnectionStatus(PLUG_STATUS_CODES.Connecting),
       );
 
-      const whitelist = [CANISTER_ID];
-      const host = NETWORK;
-
       // request app to connect with plug
       const connected = await requestConnectToPlug({
         whitelist,
@@ -111,6 +130,15 @@ export const Plug = () => {
 
       if (!connected) {
         throw Error('Oops! Failed to connect to plug.');
+      }
+
+      const agentCreated = await createPlugAgent({
+        whitelist,
+        host,
+      });
+
+      if (!agentCreated) {
+        throw Error('Oops! Failed to create plug agent.');
       }
 
       // connected to plug

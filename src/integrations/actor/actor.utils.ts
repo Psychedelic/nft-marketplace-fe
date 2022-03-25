@@ -1,27 +1,21 @@
-import fetch from 'cross-fetch';
-import { Actor, HttpAgent } from '@dfinity/agent';
-import { Secp256k1KeyIdentity } from '@dfinity/identity';
-import nftIdlFactory from '../../declarations/nft.did';
-import NFTIdlService from '../../declarations/nft';
+/* eslint-disable */
+import { ActorSubclass } from '@dfinity/agent';
+import crownsIdlFactory from '../../declarations/nft.did';
+import wicpIdlFactory from '../../declarations/wicp.did';
+import marketplaceIdlFactory from '../../declarations/marketplace.did';
 import config from '../../config/env';
 
-export const createActor = async () => {
-  const httpAgent = new HttpAgent({
-    host: config.host,
-    fetch,
-  });
-  const identity = Secp256k1KeyIdentity.generate();
+export type ServiceName = 'marketplace' | 'crowns' | 'wicp';
 
-  const agent = new HttpAgent({
-    fetch,
-    identity,
-    source: httpAgent,
-  });
-
+export const createActor = async <T>({
+  serviceName = 'marketplace',
+}: {
+  serviceName?: ServiceName;
+}) => {
   // Fetch root key for certificate validation during development
   if (process.env.NODE_ENV !== 'production') {
     try {
-      await agent.fetchRootKey();
+      await (window as any)?.ic?.plug?.agent.fetchRootKey();
     } catch (err) {
       // eslint-disable-next-line no-console
       console.warn(
@@ -32,10 +26,53 @@ export const createActor = async () => {
     }
   }
 
-  // Creates an actor by using NFTIdlService, nftIdlFactory and the HttpAgent
-  return Actor.createActor<NFTIdlService>(nftIdlFactory, {
-    // Change to the actual nft canister id
-    canisterId: config.canisterId,
-    agent,
+  if (serviceName === 'crowns') {
+    return await (window as any)?.ic?.plug?.createActor({
+      canisterId: config.crownsCanisterId,
+      interfaceFactory: crownsIdlFactory,
+    });
+  }
+
+  if (serviceName === 'wicp') {
+    return await (window as any)?.ic?.plug?.createActor({
+      canisterId: config.wICPCanisterId,
+      interfaceFactory: wicpIdlFactory,
+    });
+  }
+
+  return await (window as any)?.ic?.plug?.createActor({
+    canisterId: config.marketplaceCanisterId,
+    interfaceFactory: marketplaceIdlFactory,
   });
+};
+
+// Checks if an actor instance exists already
+// otherwise creates a new instance
+export const actorInstanceHandler = async <T>({
+  thunkAPI,
+  serviceName,
+  slice,
+}: {
+  // TODO: Where is GetThunkAPI typedef?
+  thunkAPI: any;
+  serviceName: ServiceName;
+  // Slice should have a `setActor` action
+  slice: any;
+}) => {
+  const {
+    marketplace: { actor },
+  } = thunkAPI.getState();
+
+  if (!actor) {
+    const actor = (await createActor<T>({
+      serviceName,
+    })) as ActorSubclass<T>;
+
+    // Set actor state
+    thunkAPI.dispatch(slice.actions.setActor(actor));
+
+    return actor;
+  }
+
+  return actor;
 };

@@ -142,3 +142,12 @@ export const IconButtonStyles = styled('div', {
     marginRight: '0px',
   },
 });
+
+export const PlugIcon = styled('img', {
+  marginRight: '10px',
+  width: '12px',
+});
+
+export const PlugArrowDownIcon = styled('img', {
+  marginLeft: '10px',
+});
