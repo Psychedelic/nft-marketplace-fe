@@ -275,7 +275,7 @@ export const PlugButtonWrapper = styled('div', {
   },
 });
 
-export const UndefinedPrice = styled('span', {
+export const UndefinedPrice = styled('div', {
   fontSize: '32px',
   color: '#767D8E',
 });
