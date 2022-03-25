@@ -28,6 +28,7 @@ export type NFTMetadata = {
   lastOffer: string;
   isOwner: boolean;
   isListed: boolean;
+  owner: string;
 };
 export interface InitArgs {
   owners: [] | [Array<Principal>];
