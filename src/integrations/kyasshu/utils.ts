@@ -23,6 +23,12 @@ export type FetchNFTDetailsProps = {
   id: string;
 };
 
+export type CheckNFTOwnerParams = {
+  isConnected: boolean;
+  owner?: string;
+  principalId?: string;
+};
+
 export const fetchNFTS = async ({
   payload,
   dispatch,
@@ -72,6 +78,7 @@ export const fetchNFTS = async ({
           rim: nft?.metadata?.rim?.value?.TextContent,
           smallgem: nft?.metadata?.smallgem?.value?.TextContent,
         },
+        owner: nft?.owner,
       };
       return metadata;
     });
@@ -204,4 +211,18 @@ export const usePriceValues = () => {
   return defaultFilters.find(
     ({ filterCategory }) => filterCategory === `${t('translation:filters.priceRange')}`,
   )?.filterName;
+};
+
+export const isNFTOwner = (params: CheckNFTOwnerParams) => {
+  const { isConnected, owner, principalId } = params;
+
+  if (!isConnected) return false;
+
+  if (!owner) return false;
+
+  if (!principalId) return false;
+
+  if (owner !== principalId) return false;
+
+  return true;
 };
