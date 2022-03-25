@@ -226,3 +226,13 @@ export const isNFTOwner = (params: CheckNFTOwnerParams) => {
 
   return true;
 };
+
+export const fetchCAPActivity = async () => {
+  try {
+    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/cap/txns/q3fc5-haaaa-aaaaa-aaahq-cai`);
+
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};

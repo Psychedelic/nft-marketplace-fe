@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NftCard } from '../core/cards/nft-card';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import { InfiniteScrollWrapper } from './styles';
@@ -9,7 +9,7 @@ import {
   useAppDispatch,
   usePlugStore,
 } from '../../store';
-import { fetchNFTS, usePriceValues, useTraitsPayload, isNFTOwner } from '../../integrations/kyasshu/utils';
+import { fetchNFTS, usePriceValues, useTraitsPayload, isNFTOwner, fetchCAPActivity } from '../../integrations/kyasshu/utils';
 
 export const NftList = () => {
   // eslint-disable-next-line
@@ -39,6 +39,10 @@ export const NftList = () => {
   }
 
   const { sortBy } = useFilterStore();
+
+  useEffect(() => {
+    fetchCAPActivity();
+  }, []);
 
   const loadMoreNFTS = () => {
     if (loadingNFTs || !hasMoreNFTs) return;
