@@ -117,8 +117,8 @@ export const fetchNFTDetails = async ({
       // TODO: Finalize object format after validating mock and kyasshu data
       id: responseData.index,
       name: 'Cap Crowns',
-      price: '',
-      lastOffer: '',
+      price: responseData?.lastSalePrice,
+      lastOffer: responseData?.lastOfferPrice,
       // TODO: update nft thumbnail
       preview: '',
       location: responseData?.url,
