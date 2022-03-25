@@ -49,9 +49,9 @@ export const OfferAccordion = ({
   const { isConnected } = usePlugStore();
 
   useEffect(() => {
-    (async () => {
-      if (!lastSalePrice || !isListed) return;
+    if (!lastSalePrice || !isListed) return;
 
+    (async () => {
       // TODO: On loading and awaiting for coin gecko response
       // should display a small loader in the place of price
 
@@ -61,7 +61,7 @@ export const OfferAccordion = ({
 
       setMarketPrice(formattedPrice);
     })();
-  }, [lastSalePrice]);
+  }, [lastSalePrice, isListed]);
 
   const isListedWithPrice = isListed && lastSalePrice;
 
