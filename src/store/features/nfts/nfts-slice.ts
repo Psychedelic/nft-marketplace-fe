@@ -30,6 +30,11 @@ interface loadedNFTData {
   nextPage: number;
 }
 
+interface listedNFTData {
+  id: string;
+  amount: string;
+}
+
 export const nftsSlice = createSlice({
   name: 'nfts',
   // `createSlice` will infer the state type from the `initialState` argument
@@ -77,8 +82,8 @@ export const nftsSlice = createSlice({
 
       state.loadedNFTS.push(action.payload);
     },
-    setNFTForSale: (state, action: PayloadAction<string>) => {
-      const id = action.payload;
+    setNFTForSale: (state, action: PayloadAction<listedNFTData>) => {
+      const { id, amount } = action.payload;
       const index = state.loadedNFTS.findIndex(
         (nft) => nft.id === id,
       );
@@ -86,6 +91,7 @@ export const nftsSlice = createSlice({
       if (index < 0) return;
 
       state.loadedNFTS[index].isListed = true;
+      state.loadedNFTS[index].price = amount;
     },
   },
 });
