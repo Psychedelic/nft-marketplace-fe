@@ -19,10 +19,6 @@ export const Button = styled('button', {
     cursor: 'pointer',
   },
 
-  '&:disabled': {
-    cursor: 'not-allowed',
-  },
-
   variants: {
     type: {
       primary: {
@@ -145,4 +141,13 @@ export const IconButtonStyles = styled('div', {
   '&:last-child': {
     marginRight: '0px',
   },
+});
+
+export const PlugIcon = styled('img', {
+  marginRight: '10px',
+  width: '12px',
+});
+
+export const PlugArrowDownIcon = styled('img', {
+  marginLeft: '10px',
 });

@@ -17,10 +17,11 @@ import {
 import back from '../../assets/back.svg';
 
 import { usePlugStore } from '../../store';
+import { isNFTOwner } from '../../integrations/kyasshu/utils';
 
 export type NftActionBarProps = {
-  isOwner?: boolean;
   isListed?: boolean;
+  owner?: string;
 };
 
 export type ConnectedProps = {
@@ -53,14 +54,18 @@ const OnConnected = ({ isListed }: ConnectedProps) => (
 const OnDisconnected = () => null;
 
 export const NftActionBar = ({
-  isOwner,
   isListed,
+  owner,
 }: NftActionBarProps) => {
   const { t } = useTranslation();
 
-  const { isConnected } = usePlugStore();
+  const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
-  const isConnectedOwner = isConnected && isOwner;
+  const isConnectedOwner = isNFTOwner({
+    isConnected,
+    owner,
+    principalId: plugPrincipal,
+  });
 
   return (
     <Container>

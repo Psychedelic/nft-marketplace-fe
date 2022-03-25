@@ -10,9 +10,9 @@ import {
   usePlugStore,
   filterActions,
 } from '../../store';
-import { fetchNFTS, usePriceValues, useTraitsPayload } from '../../integrations/kyasshu/utils';
 import { EmptyState } from '../core';
 import { BUTTON_TYPE } from '../../constants/empty-states';
+import { fetchNFTS, usePriceValues, useTraitsPayload, isNFTOwner } from '../../integrations/kyasshu/utils';
 
 export const NftList = () => {
   const { t } = useTranslation();
@@ -76,7 +76,17 @@ export const NftList = () => {
       className="infinite-loader"
     >
       {loadedNFTS?.map((nft) => (
-        <NftCard data={nft} key={nft.id} />
+        <NftCard
+          data={nft}
+          key={nft.id}
+          owned={
+            isNFTOwner({
+              isConnected,
+              owner: nft?.owner,
+              principalId,
+            })
+          }
+        />
       ))}
     </InfiniteScrollWrapper>
   );

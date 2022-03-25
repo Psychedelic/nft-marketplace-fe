@@ -108,7 +108,7 @@
     },
     "offer": {
       "header": {
-        "offer": "Offers (12)",
+        "offer": "Offers",
         "currentPrice": "Current Price"
       }
     }
@@ -205,7 +205,11 @@
     }
   },
   "nftCard": {
-    "owned": "Owned"
+    "owned": "Owned",
+    "forSale": "Buy Now",
+    "forOffer": "Make Offer",
+    "offerFor": "Offer for",
+    "last": "Last"
   },
   "tabs": {
     "items": "Items",
@@ -213,8 +217,8 @@
   },
   "filters": {
     "priceRange": "Price Range",
-    "listed": "listed",
-    "unlisted": "unlisted"
+    "forSale": "forSale",
+    "forOffer": "forOffer"
   },
   "emptyStates": {
     "connectMessage": "Connect to see your NFT’s",
