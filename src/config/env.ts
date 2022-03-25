@@ -2,7 +2,9 @@ type NodeEnv = 'development' | 'production' | 'test';
 
 // eslint-disable-next-line operator-linebreak
 const env: NodeEnv =
-  (process.env.NODE_ENV as unknown as NodeEnv) || 'development';
+  // eslint-disable-next-line operator-linebreak
+  (process.env.REACT_APP_NODE_ENV as unknown as NodeEnv) ||
+  'development';
 
 // The Crowns DIP-721 v2, canister ids are available in:
 // https://github.com/Psychedelic/crowns/blob/main/canister_ids.json
