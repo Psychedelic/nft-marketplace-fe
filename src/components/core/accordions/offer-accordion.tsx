@@ -20,14 +20,17 @@ import arrowup from '../../../assets/accordions/arrow-up.svg';
 import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import { OffersTable } from '../../tables';
 import { Plug } from '../../plug';
-import {
-  getICPPrice,
-  getCurrentMarketPrice,
-} from '../../../integrations/marketplace/price.utils';
+import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.utils';
 
-export const OfferAccordion = () => {
-  // TODO: Get the current price from endpoint/service
-  const currentListForSalePrice = 100;
+export type OfferAccordionProps = {
+  lastSalePrice?: string;
+  isListed?: boolean;
+};
+
+export const OfferAccordion = ({
+  lastSalePrice,
+  isListed,
+}: OfferAccordionProps) => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [marketPrice, setMarketPrice] = useState<
@@ -43,16 +46,18 @@ export const OfferAccordion = () => {
 
   useEffect(() => {
     (async () => {
+      if (!lastSalePrice) return;
+
       // TODO: On loading and awaiting for coin gecko response
       // should display a small loader in the place of price
 
       const formattedPrice = await getCurrentMarketPrice({
-        currentListForSalePrice,
+        currentListForSalePrice: Number(lastSalePrice),
       });
 
       setMarketPrice(formattedPrice);
     })();
-  }, []);
+  }, [lastSalePrice]);
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
@@ -66,7 +71,7 @@ export const OfferAccordion = () => {
                   'translation:accordions.offer.header.currentPrice',
                 )}
               </span>
-              <h4>{`${currentListForSalePrice} WICP`}</h4>
+              <h4>{`${lastSalePrice} WICP`}</h4>
             </div>
           </FlexRight>
           <h3>{marketPrice}</h3>
