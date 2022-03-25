@@ -11,6 +11,7 @@ import {
   FlexRight,
   PlugButtonWrapper,
   UndefinedPrice,
+  OffersCount,
 } from './styles';
 import offer from '../../../assets/accordions/offer.svg';
 import offerDark from '../../../assets/accordions/offer-dark.svg';
@@ -33,6 +34,8 @@ export const OfferAccordion = ({
   isListed,
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
+  // TODO: update offers count
+  const totalOffers = 5;
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [marketPrice, setMarketPrice] = useState<
     string | undefined
@@ -103,18 +106,23 @@ export const OfferAccordion = ({
             />
             <p>
               {`${t('translation:accordions.offer.header.offer')}`}
+              <OffersCount>
+                {`(${(isListed && totalOffers) || 0})`}
+              </OffersCount>
             </p>
           </div>
-          <img
-            src={!isAccordionOpen ? arrowupTheme : arrowdownTheme}
-            alt="arrow-down"
-          />
+          {isListed && (
+            <img
+              src={!isAccordionOpen ? arrowupTheme : arrowdownTheme}
+              alt="arrow-down"
+            />
+          )}
         </AccordionTrigger>
         <AccordionContent
           padding="none"
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
         >
-          <OffersTable />
+          {isListed && <OffersTable />}
         </AccordionContent>
       </Accordion.Item>
     </AccordionStyle>

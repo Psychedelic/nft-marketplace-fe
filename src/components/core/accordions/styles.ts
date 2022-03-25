@@ -279,3 +279,7 @@ export const UndefinedPrice = styled('div', {
   fontSize: '32px',
   color: '#767D8E',
 });
+
+export const OffersCount = styled('div', {
+  marginLeft: '5px',
+});
