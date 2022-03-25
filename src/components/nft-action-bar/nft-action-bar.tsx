@@ -59,12 +59,12 @@ export const NftActionBar = ({
 }: NftActionBarProps) => {
   const { t } = useTranslation();
 
-  const { isConnected, principalId } = usePlugStore();
+  const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
   const isConnectedOwner = isNFTOwner({
     isConnected,
     owner,
-    principalId,
+    principalId: plugPrincipal,
   });
 
   return (
