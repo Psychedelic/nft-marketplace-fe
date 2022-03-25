@@ -12,6 +12,7 @@ import {
 } from '../../store';
 import { fetchNFTS, usePriceValues, useTraitsPayload } from '../../integrations/kyasshu/utils';
 import { EmptyState } from '../core';
+import { BUTTON_TYPE } from '../../constants/empty-states';
 
 export const NftList = () => {
   const { t } = useTranslation();
@@ -56,7 +57,7 @@ export const NftList = () => {
   };
 
   if (isMyNfts && !isConnected) {
-    return <EmptyState message={`${t('translation:emptyStates.connectMessage')}`} buttonType="plug" />;
+    return <EmptyState message={`${t('translation:emptyStates.connectMessage')}`} buttonType={BUTTON_TYPE.plug} />;
   }
 
   if (isMyNfts && isConnected && !loadedNFTS.length) {
