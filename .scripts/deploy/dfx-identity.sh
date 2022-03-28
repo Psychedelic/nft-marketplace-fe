@@ -18,7 +18,7 @@ touch "$defaultIdentityDir"/"$pemFilename"
 
 printf "Create the PEM from environment secret\n"
 
-echo "$DFX_IDENTITY" > ~/.config/dfx/identity/default/"$pemFilename"
+echo "$DFX_IDENTITY" > "$defaultIdentityDir"/"$pemFilename"
 
 defaultIdentity=$(dfx identity get-principal)
 
