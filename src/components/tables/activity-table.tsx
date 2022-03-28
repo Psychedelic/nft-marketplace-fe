@@ -1,6 +1,10 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore, useAppDispatch, useTableStore } from '../../store';
+import {
+  useThemeStore,
+  useAppDispatch,
+  useTableStore,
+} from '../../store';
 import {
   ItemDetailsCell,
   TypeDetailsCell,
@@ -38,7 +42,23 @@ export const ActivityTable = () => {
     });
   }, []);
 
-  console.log(loadedCapActivityTableData);
+  // eslint-disable-next-line
+  let someArray: Array<any> = [];
+  let metadata;
+  const first = loadedCapActivityTableData.map((one) => one.event.details.map((two) => {
+    metadata = {
+      key: two[0],
+      value: two[1],
+    };
+    // eslint-disable-next-line
+    someArray.push(metadata && metadata);
+    return metadata;
+  }));
+
+  useEffect(() => {
+    // eslint-disable-next-line
+    console.log(loadedCapActivityTableData);
+  }, [loadedCapActivityTableData]);
 
   const columns = useMemo(
     () => [
@@ -59,16 +79,18 @@ export const ActivityTable = () => {
           />
         ),
       },
-      {
-        Header: t('translation:tables.titles.price'),
-        accessor: ({ price }: rowProps) => (
-          <PriceDetailsCell
-            wicp="5.12 WICP"
-            price={price}
-            tableType=""
-          />
-        ),
-      },
+      // {
+      //   Header: t('translation:tables.titles.price'),
+      //   accessor: ({ price }: rowProps) => (
+      //     // eslint-disable-next-line
+      //     second?.map((item) => (
+      //       <PriceDetailsCell
+      //         wicp="5.12 WICP"
+      //         price={price}
+      //         tableType=""
+      //       />
+      //     ))),
+      // },
       {
         Header: t('translation:tables.titles.quantity'),
         accessor: ({ quantity }: rowProps) => (

@@ -87,6 +87,7 @@ export const fetchNFTS = async ({
       };
       return metadata;
     });
+    console.log(extractedNFTSList);
 
     const actionPayload = {
       loadedNFTList: extractedNFTSList,
