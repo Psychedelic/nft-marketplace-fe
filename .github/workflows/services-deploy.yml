@@ -2,7 +2,8 @@ name: Services deploy
 
 on:
   pull_request:
-    types: [closed]
+    # TODO: This related to *1 (should be enabled after manual tests)
+    # types: [closed]
     branches:
       - staging
       # TODO: Remove temporary branch used during dev
@@ -18,7 +19,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/staging'
+    # TODO: This related to *1 (should be enabled after manual tests)
+    # if: github.ref == 'refs/heads/staging'
     env:
       CI: 1
       DEBUG: 0
