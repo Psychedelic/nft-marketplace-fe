@@ -22,5 +22,12 @@ echo "$DFX_IDENTITY" > "$defaultIdentityDir"/"$pemFilename"
 
 defaultIdentity=$(dfx identity get-principal)
 
+if [[ -z "$defaultIdentity" ]];
+then
+  printf "👺 Oops! Identity was not set.\n"
+
+  exit 1
+fi
+
 printf "Done 👍 DFX identity created!\n"
 printf "The identity is %s\n\n" "$defaultIdentity"
