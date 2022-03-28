@@ -8,16 +8,17 @@
 printf "🕵🏻‍♀️ Create the DFX Identity\n\n"
 
 defaultIdentityDir=~/.config/dfx/identity/default
+pemFilename=identity.pem
 
 printf "Create the default identity directory (%s)\n" "$defaultIdentityDir"
 
 mkdir -p "$defaultIdentityDir"
 
+touch "$defaultIdentityDir"/"$pemFilename"
+
 printf "Create the PEM from environment secret\n"
 
-echo "$DFX_IDENTITY" > ~/.config/dfx/identity/default/identity.pem
-
-sed -i 's/\\r\\n/\r\n/g' ~/.config/dfx/identity/default/identity.pem
+echo "$DFX_IDENTITY" > ~/.config/dfx/identity/default/"$pemFilename"
 
 defaultIdentity=$(dfx identity get-principal)
 
