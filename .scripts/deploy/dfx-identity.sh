@@ -19,4 +19,7 @@ echo "$DFX_IDENTITY" > ~/.config/dfx/identity/default/identity.pem
 
 sed -i 's/\\r\\n/\r\n/g' ~/.config/dfx/identity/default/identity.pem
 
-echo "Done 👍 DFX identity created!"
+defaultIdentity=$(dfx identity get-principal)
+
+printf "Done 👍 DFX identity created!\n"
+printf "The identity is %s\n\n" "$defaultIdentity"
