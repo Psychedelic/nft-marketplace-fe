@@ -5,9 +5,13 @@ on:
     types: [closed]
     branches:
       - staging
+      # TODO: Remove temporary branch used during dev
+      - chore/services-deployment-initial
   push:
     branches:
       - staging
+      # TODO: Remove temporary branch used during dev
+      - chore/services-deployment-initial
 
   workflow_dispatch:
 
