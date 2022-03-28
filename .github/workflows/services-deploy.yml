@@ -79,3 +79,5 @@ jobs:
       - name: Setup DFX Identity
         run: |
           .scripts/deploy/dfx-identity.sh
+        env:
+          DFX_IDENTITY: ${{ secrets.DFX_IDENTITY }}
