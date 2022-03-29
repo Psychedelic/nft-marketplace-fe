@@ -134,7 +134,7 @@ export const Filters = () => {
                       dispatch(settingsActions.setPriceApplyButton(false));
                     }}
                   >
-                    Clear All
+                    {`${t('translation:filters.clearAll')}`}
                   </ClearButton>
                 ) : ''}
             </Flex>

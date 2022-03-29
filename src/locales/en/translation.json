@@ -218,7 +218,8 @@
   "filters": {
     "priceRange": "Price Range",
     "forSale": "forSale",
-    "forOffer": "forOffer"
+    "forOffer": "forOffer",
+    "clearAll": "Clear All"
   },
   "emptyStates": {
     "connectMessage": "Connect to see your NFT’s",
