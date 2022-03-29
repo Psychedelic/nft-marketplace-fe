@@ -13,7 +13,6 @@ import {
   TextLinkCell,
 } from '../core';
 import { TableLayout } from './table-layout';
-import { mockTableData } from './mock-data';
 import { Container } from './styles';
 import crownsLogo from '../../assets/crowns-logo.svg';
 import { fetchCAPActivity } from '../../integrations/kyasshu/utils';
@@ -107,7 +106,6 @@ export const ActivityTable = () => {
             },
             type: tableData.operation,
             price: `$${tableData.list_price ?? tableData.price}`,
-            quantity: '1',
             from: 'rgblt...whfy',
             to: 'rgblt...whfy',
             time: tableData.time,

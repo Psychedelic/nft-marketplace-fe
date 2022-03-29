@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { filterActions, nftsActions, errorActions, useFilterStore } from '../../store';
 import config from '../../config/env';
-import { FILTER_CONSTANTS } from '../../constants';
+import { FILTER_CONSTANTS, OPERATION_CONSTANTS } from '../../constants';
 import { tableActions } from '../../store/features/tables';
 
 export type FetchNFTProps = {
@@ -233,7 +233,7 @@ export const isNFTOwner = (params: CheckNFTOwnerParams) => {
   return true;
 };
 
-export const timeAgo = (dateParam) => {
+export const parseTime = (dateParam: string) => {
   if (!dateParam) {
     return null;
   }
@@ -270,17 +270,17 @@ export const timeAgo = (dateParam) => {
   return '';
 };
 
-export const getOperation = (operationType) => {
+export const getOperation = (operationType: string) => {
   let operationValue;
   switch (operationType) {
     case 'makeSaleOffer':
-      operationValue = 'list';
+      operationValue = OPERATION_CONSTANTS.list;
       break;
     case 'acceptBuyOffer':
-      operationValue = 'sale';
+      operationValue = OPERATION_CONSTANTS.sale;
       break;
     case 'makeBuyOffer':
-      operationValue = 'offer';
+      operationValue = OPERATION_CONSTANTS.offer;
       break;
     default:
   }
@@ -293,21 +293,19 @@ export const fetchCAPActivity = async ({ dispatch }: FetchCAPActivityProps) => {
     const { Items } = response.data;
 
     const result = Items.map((item) => {
-      // eslint-disable-next-line object-curly-newline
-      const slim = {
+      const capData = {
         operation: getOperation(item.event.operation),
-        time: timeAgo(item.event.time),
+        time: parseTime(item.event.time),
       };
-      // eslint-disable-next-line object-curly-newline
       const { details } = item.event;
       details.forEach((detail) => {
         const [key, value] = detail;
-        slim[key] = value.U64 ?? value;
+        capData[key] = value.U64 ?? value;
       });
-      return slim;
+      return capData;
     });
 
-    console.log('result', result);                                                                                                                                                                                                              
+    console.log('result', result);
     dispatch(tableActions.setCapActivityTable(result));
   } catch (error) {
     console.log(error);
