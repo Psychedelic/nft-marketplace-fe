@@ -29,7 +29,6 @@ deployCap()
 
     dfx deploy --network "$network" \
       --argument '(null)' \
-      -m upgrade \
       ic-history-router
   )
 }
@@ -50,7 +49,6 @@ deployCrowns()
 
     dfx deploy --network "$network" \
       --argument '(null)' \
-      -m upgrade \
       crowns
   )
 }
@@ -74,7 +72,6 @@ deployMarketplace()
 
     dfx deploy --network "$network" \
       --argument '(null)' \
-      -m upgrade \
       marketplace
   )
 }
@@ -95,7 +92,6 @@ deployWICP()
 
     dfx deploy --network "$network" \
       --argument '(null)' \
-      -m upgrade \
       wicp
   )
 }
