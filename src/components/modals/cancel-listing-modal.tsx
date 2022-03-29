@@ -15,6 +15,7 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+import { LISTING_STATUS_CODES } from '../../constants/listing';
 import { useAppDispatch, nftsActions } from '../../store';
 import { cancelListingBySeller } from '../../store/features/marketplace';
 
