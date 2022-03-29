@@ -24,6 +24,7 @@ type ListForSale = {
 
 interface CancelListingParams extends CancelListing {
   onSuccess?: () => void;
+  onFailure?: () => void;
 }
 
 type CancelListing = {
@@ -137,7 +138,7 @@ export const cancelListingBySeller = createAsyncThunk<
     });
 
     try {
-      const { id, onSuccess } = params;
+      const { id, onSuccess, onFailure } = params;
       const nonFungibleContractAddress = Principal.fromText(
         config.crownsCanisterId,
       );
@@ -149,9 +150,13 @@ export const cancelListingBySeller = createAsyncThunk<
       );
 
       if (!('Ok' in result)) {
+        if (typeof onFailure !== 'function') return;
+
+        onFailure();
+
         console.error(result);
 
-        throw Error('Oops! Failed to list for sale');
+        throw Error('Oops! Failed to cancel listing');
       }
 
       if (typeof onSuccess !== 'function') return;
