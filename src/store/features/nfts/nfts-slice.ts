@@ -34,6 +34,9 @@ interface listedNFTData {
   id: string;
   amount: string;
 }
+interface cancelNFTFromListingData {
+  id: string;
+}
 
 export const nftsSlice = createSlice({
   name: 'nfts',
@@ -92,6 +95,19 @@ export const nftsSlice = createSlice({
 
       state.loadedNFTS[index].isListed = true;
       state.loadedNFTS[index].price = amount;
+    },
+    cancelNFTFromListing: (
+      state,
+      action: PayloadAction<cancelNFTFromListingData>,
+    ) => {
+      const { id } = action.payload;
+      const index = state.loadedNFTS.findIndex(
+        (nft) => nft.id === id,
+      );
+
+      if (index < 0) return;
+
+      state.loadedNFTS[index].isListed = false;
     },
   },
 });
