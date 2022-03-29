@@ -126,7 +126,7 @@ export const cancelListingBySeller = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >(
-  'marketplace/listForSale',
+  'marketplace/cancelListingBySeller',
   async (params: CancelListingParams, thunkAPI) => {
     // Checks if an actor instance exists already
     // otherwise creates a new instance
@@ -143,7 +143,7 @@ export const cancelListingBySeller = createAsyncThunk<
       );
       const userOwnedTokenId = BigInt(id);
 
-      const result = await actorInstance.listForSale(
+      const result = await actorInstance.cancelListingBySeller(
         nonFungibleContractAddress,
         userOwnedTokenId,
       );
