@@ -22,6 +22,15 @@ type ListForSale = {
   amount: string;
 };
 
+interface CancelListingParams extends CancelListing {
+  onSuccess?: () => void;
+  onFailure?: () => void;
+}
+
+type CancelListing = {
+  id: string;
+};
+
 type RecentyListedForSale = ListForSale[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
@@ -106,6 +115,64 @@ export const listForSale = createAsyncThunk<
       };
     } catch (err) {
       thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
+    }
+  },
+);
+
+export const cancelListingBySeller = createAsyncThunk<
+  // Return type of the payload creator
+  CancelListing | undefined,
+  // First argument to the payload creator
+  CancelListingParams,
+  // Optional fields for defining the thunk api
+  { state: RootState }
+>(
+  'marketplace/cancelListingBySeller',
+  async (params: CancelListingParams, thunkAPI) => {
+    // Checks if an actor instance exists already
+    // otherwise creates a new instance
+    const actorInstance = await actorInstanceHandler({
+      thunkAPI,
+      serviceName: 'marketplace',
+      slice: marketplaceSlice,
+    });
+
+    const { id, onSuccess, onFailure } = params;
+
+    try {
+      const nonFungibleContractAddress = Principal.fromText(
+        config.crownsCanisterId,
+      );
+      const userOwnedTokenId = BigInt(id);
+
+      const result = await actorInstance.cancelListingBySeller(
+        nonFungibleContractAddress,
+        userOwnedTokenId,
+      );
+
+      if (!('Ok' in result)) {
+        if (typeof onFailure !== 'function') return;
+
+        onFailure();
+
+        console.error(result);
+
+        throw Error('Oops! Failed to cancel listing');
+      }
+
+      if (typeof onSuccess !== 'function') return;
+
+      console.info(result);
+
+      onSuccess();
+
+      return {
+        id,
+      };
+    } catch (err) {
+      thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
+      if (typeof onFailure !== 'function') return;
+      onFailure();
     }
   },
 );
