@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton } from '../core';
+import { ActionButton, Pending } from '../core';
 import {
   CancelListingModalTrigger,
   ModalOverlay,
@@ -29,9 +29,14 @@ export const CancelListingModal = () => {
   const { id } = useParams();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
+  // Cancel listing modal steps: cancelList/pending
+  const [modalStep, setModalStep] = useState<string>(
+    LISTING_STATUS_CODES.CancelList,
+  );
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
+    setModalStep(LISTING_STATUS_CODES.CancelList);
   };
 
   const handleModalClose = () => {
@@ -40,6 +45,8 @@ export const CancelListingModal = () => {
 
   const handleCancelListing = async () => {
     if (!id) return;
+
+    setModalStep(LISTING_STATUS_CODES.Pending);
 
     dispatch(
       cancelListingBySeller({
@@ -50,9 +57,10 @@ export const CancelListingModal = () => {
               id,
             }),
           );
+          setModalOpened(false);
         },
         onFailure: () => {
-          console.log('failed');
+          setModalStep(LISTING_STATUS_CODES.CancelList);
         },
       }),
     );
@@ -92,43 +100,75 @@ export const CancelListingModal = () => {
         ---------------------------------
       */}
       <ModalContent>
-        <Container>
-          {/*
+        {/*
+          ---------------------------------
+          Step: 1 -> cancelList
+          ---------------------------------
+        */}
+        {modalStep === LISTING_STATUS_CODES.CancelList && (
+          <Container>
+            {/*
+              ---------------------------------
+              Listing Header
+              ---------------------------------
+            */}
+            <ModalHeader>
+              <ModalTitle>
+                {t('translation:modals.title.cancelListing')}
+              </ModalTitle>
+              <ModalDescription>
+                {t('translation:modals.description.cancelListing')}
+              </ModalDescription>
+            </ModalHeader>
+            {/*
+              ---------------------------------
+              Listing Action Buttons
+              ---------------------------------
+            */}
+            <ModalButtonsList>
+              <ModalButtonWrapper>
+                <ActionButton
+                  type="secondary"
+                  text={t('translation:modals.buttons.cancel')}
+                  handleClick={handleModalClose}
+                />
+              </ModalButtonWrapper>
+              <ModalButtonWrapper>
+                <ActionButton
+                  type="primary"
+                  text={t('translation:modals.buttons.cancelListing')}
+                  handleClick={handleCancelListing}
+                  danger
+                />
+              </ModalButtonWrapper>
+            </ModalButtonsList>
+          </Container>
+        )}
+        {/*
+          ---------------------------------
+          Step: 2 -> pending
+          ---------------------------------
+        */}
+        {modalStep === LISTING_STATUS_CODES.Pending && (
+          <Container>
+            {/*
             ---------------------------------
-            Listing Header
+            Pending Header
             ---------------------------------
           */}
-          <ModalHeader>
-            <ModalTitle>
-              {t('translation:modals.title.cancelListing')}
-            </ModalTitle>
-            <ModalDescription>
-              {t('translation:modals.description.cancelListing')}
-            </ModalDescription>
-          </ModalHeader>
-          {/*
+            <ModalHeader>
+              <ModalTitle>
+                {t('translation:modals.title.pendingConfirmation')}
+              </ModalTitle>
+            </ModalHeader>
+            {/*
             ---------------------------------
-            Listing Action Buttons
+            Pending details
             ---------------------------------
           */}
-          <ModalButtonsList>
-            <ModalButtonWrapper>
-              <ActionButton
-                type="secondary"
-                text={t('translation:modals.buttons.cancel')}
-                handleClick={handleModalClose}
-              />
-            </ModalButtonWrapper>
-            <ModalButtonWrapper>
-              <ActionButton
-                type="primary"
-                text={t('translation:modals.buttons.cancelListing')}
-                handleClick={handleCancelListing}
-                danger
-              />
-            </ModalButtonWrapper>
-          </ModalButtonsList>
-        </Container>
+            <Pending />
+          </Container>
+        )}
       </ModalContent>
     </DialogPrimitive.Root>
   );
