@@ -33,6 +33,10 @@ export const CancelListingModal = () => {
     setModalOpened(false);
   };
 
+  const handleCancelListing = async () => {
+    if (!id) return;
+  };
+
   return (
     <DialogPrimitive.Root
       open={modalOpened}
@@ -98,7 +102,7 @@ export const CancelListingModal = () => {
               <ActionButton
                 type="primary"
                 text={t('translation:modals.buttons.cancelListing')}
-                handleClick={handleModalClose}
+                handleClick={handleCancelListing}
                 danger
               />
             </ModalButtonWrapper>
