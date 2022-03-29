@@ -137,10 +137,9 @@ export const cancelListingBySeller = createAsyncThunk<
       slice: marketplaceSlice,
     });
 
-    const { onFailure } = params;
+    const { id, onSuccess, onFailure } = params;
 
     try {
-      const { id, onSuccess } = params;
       const nonFungibleContractAddress = Principal.fromText(
         config.crownsCanisterId,
       );

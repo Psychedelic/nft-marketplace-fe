@@ -38,6 +38,21 @@ interface cancelNFTFromListingData {
   id: string;
 }
 
+interface findNFTIndexData {
+  nftList: NFTMetadata[];
+  idToFind: string;
+}
+
+const findNFTIndex = ({ nftList, idToFind }: findNFTIndexData) => {
+  if (!nftList || !idToFind) {
+    return -1;
+  }
+
+  const index = nftList.findIndex((nft) => nft.id === idToFind);
+
+  return index;
+};
+
 export const nftsSlice = createSlice({
   name: 'nfts',
   // `createSlice` will infer the state type from the `initialState` argument
@@ -101,9 +116,10 @@ export const nftsSlice = createSlice({
       action: PayloadAction<cancelNFTFromListingData>,
     ) => {
       const { id } = action.payload;
-      const index = state.loadedNFTS.findIndex(
-        (nft) => nft.id === id,
-      );
+      const index = findNFTIndex({
+        nftList: state.loadedNFTS,
+        idToFind: id,
+      });
 
       if (index < 0) return;
 
