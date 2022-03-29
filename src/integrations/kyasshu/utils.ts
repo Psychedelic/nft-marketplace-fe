@@ -5,6 +5,7 @@ import { filterActions, nftsActions, errorActions, useFilterStore } from '../../
 import config from '../../config/env';
 import { FILTER_CONSTANTS, OPERATION_CONSTANTS } from '../../constants';
 import { tableActions } from '../../store/features/tables';
+import { dateRelative } from '../functions/date';
 
 export type FetchNFTProps = {
   payload?: object;
@@ -233,43 +234,6 @@ export const isNFTOwner = (params: CheckNFTOwnerParams) => {
   return true;
 };
 
-export const parseTime = (dateParam: string) => {
-  if (!dateParam) {
-    return null;
-  }
-
-  const date = typeof dateParam === 'object' ? dateParam : new Date(dateParam);
-  const today = new Date();
-  const seconds = Math.round((today - date) / 1000);
-  const minutes = Math.round(seconds / 60);
-  const hours = Math.round(minutes / 60);
-  const days = Math.round(hours / 24);
-  const weeks = Math.round(days / 7);
-  const months = Math.round(weeks / 4);
-  const years = Math.round(months / 12);
-
-  if (seconds < 5) {
-    return 'now';
-    // eslint-disable-next-line no-else-return
-  } else if (months > 11) {
-    return `${years} ${years === 1 ? 'year' : 'years'} ago`;
-  } else if (weeks > 4) {
-    return `${months} ${months === 1 ? 'month' : 'months'} ago`;
-  } else if (days > 6) {
-    return `${weeks} ${weeks === 1 ? 'week' : 'weeks'} ago`;
-  } else if (hours > 23) {
-    return `${days} ${days === 1 ? 'day' : 'days'} ago`;
-  } else if (minutes > 60) {
-    return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
-  } else if (minutes < 60) {
-    return `${minutes} minutes ago`;
-  } else if (seconds < 60) {
-    return `${seconds} seconds ago`;
-  }
-
-  return '';
-};
-
 export const getOperation = (operationType: string) => {
   let operationValue;
   switch (operationType) {
@@ -289,13 +253,13 @@ export const getOperation = (operationType: string) => {
 
 export const fetchCAPActivity = async ({ dispatch }: FetchCAPActivityProps) => {
   try {
-    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/cap/txns/q3fc5-haaaa-aaaaa-aaahq-cai`);
+    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/cap/contract/txns/${config.marketplaceCanisterId}`);
     const { Items } = response.data;
 
     const result = Items.map((item) => {
       const capData = {
         operation: getOperation(item.event.operation),
-        time: parseTime(item.event.time),
+        time: dateRelative(item.event.time),
       };
       const { details } = item.event;
       details.forEach((detail) => {
