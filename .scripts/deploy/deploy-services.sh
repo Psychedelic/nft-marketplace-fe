@@ -1,6 +1,14 @@
 #!/bin/bash
 
+set -x
+
 (cd "$(dirname $BASH_SOURCE)" && cd ../../nft-marketplace) || exit 1
+
+pwd
+
+ls -la
+
+exit 0
 
 printf "🤖 Deploy Services for env (%s)\n\n" "$DEPLOY_TARGET"
 
