@@ -15,7 +15,7 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, nftsActions } from '../../store';
 import { cancelListingBySeller } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
@@ -44,7 +44,14 @@ export const CancelListingModal = () => {
       cancelListingBySeller({
         id,
         onSuccess: () => {
-          console.log('success');
+          dispatch(
+            nftsActions.cancelNFTFromListing({
+              id,
+            }),
+          );
+        },
+        onFailure: () => {
+          console.log('failed');
         },
       }),
     );
