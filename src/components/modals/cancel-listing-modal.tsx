@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton } from '../core';
@@ -20,6 +21,7 @@ import {
 
 export const CancelListingModal = () => {
   const { t } = useTranslation();
+  const { id } = useParams();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
 
