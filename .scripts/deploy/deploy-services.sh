@@ -20,12 +20,17 @@ deployCap()
   (
     cd ./cap || exit 1
 
-    dfx canister --network "$network" create ic-history-router
+    # dfx canister --network "$network" create ic-history-router
 
-    dfx canister --network "$network" \
-        install ic-history-router \
-        --argument '(null)' \
-        -m upgrade
+    # dfx canister --network "$network" \
+    #     install ic-history-router \
+    #     --argument '(null)' \
+    #     -m upgrade
+
+    dfx deploy --network "$network" \
+      --argument '(null)' \
+      -m upgrade \
+      ic-history-router
   )
 }
 
@@ -36,12 +41,17 @@ deployCrowns()
   (
     cd ./crowns || exit 1
     
-    dfx canister --network "$network" create crowns
+    # dfx canister --network "$network" create crowns
 
-    dfx canister --network "$network" \
-        install crowns \
-        --argument '(null)' \
-        -m upgrade
+    # dfx canister --network "$network" \
+    #     install crowns \
+    #     --argument '(null)' \
+    #     -m upgrade
+
+    dfx deploy --network "$network" \
+      --argument '(null)' \
+      -m upgrade \
+      crowns
   )
 }
 
@@ -55,12 +65,17 @@ deployMarketplace()
   printf "🤖 Deploy Marketplace\n"
 
   (
-    dfx canister --network "$network" create crowns
+    # dfx canister --network "$network" create crowns
 
-    dfx canister --network "$network" \
-        install marketplace \
-        --argument '(null)' \
-        -m upgrade
+    # dfx canister --network "$network" \
+    #     install marketplace \
+    #     --argument '(null)' \
+    #     -m upgrade
+
+    dfx deploy --network "$network" \
+      --argument '(null)' \
+      -m upgrade \
+      marketplace
   )
 }
 
@@ -71,13 +86,17 @@ deployWICP()
   (
     cd ./wicp || exit 1
     
-    dfx canister --network "$network" create wicp
+    # dfx canister --network "$network" create wicp
 
-    dfx canister --network fleek-testnet \
-        install wicp \
-        --argument '(null)' \
-        -m upgrade
+    # dfx canister --network fleek-testnet \
+    #     install wicp \
+    #     --argument '(null)' \
+    #     -m upgrade
 
+    dfx deploy --network "$network" \
+      --argument '(null)' \
+      -m upgrade \
+      wicp
   )
 }
 
