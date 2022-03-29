@@ -104,7 +104,7 @@ export const Dfinity = styled('p', {
 
 export const NftText = styled('p', {
   fontStyle: 'normal',
-  fontWeight: '600',
+  fontWeight: '500',
   fontSize: '16px',
   lineHeight: '20px',
   color: '$nftCardName',

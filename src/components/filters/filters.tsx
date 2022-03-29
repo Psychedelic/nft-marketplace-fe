@@ -126,14 +126,17 @@ export const Filters = () => {
           <FiltersWrapper>
             <Flex>
               <Heading>Filters</Heading>
-              <ClearButton
-                onClick={() => {
-                  dispatch(filterActions.clearAllFilters());
-                  dispatch(settingsActions.setPriceApplyButton(false));
-                }}
-              >
-                Clear All
-              </ClearButton>
+              {defaultFilters.length
+                ? (
+                  <ClearButton
+                    onClick={() => {
+                      dispatch(filterActions.clearAllFilters());
+                      dispatch(settingsActions.setPriceApplyButton(false));
+                    }}
+                  >
+                    Clear All
+                  </ClearButton>
+                ) : ''}
             </Flex>
             <FilterSection>
               <FilterGroup>
@@ -272,10 +275,6 @@ export const Filters = () => {
                       if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
                         applyFilter(`${t('translation:filters.priceRange')}`, priceFilterValue);
                       }
-                      setPriceFilterValue({
-                        min: '',
-                        max: '',
-                      });
                     }}
                   />
                 )}

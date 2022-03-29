@@ -11,6 +11,7 @@ import {
   AccordionStyle,
   AccordionTrigger,
   AccordionContent,
+  Form,
 } from './styles';
 import arrowdown from '../../../assets/arrowdown.svg';
 import arrowdownDark from '../../../assets/arrowdown-dark.svg';
@@ -77,7 +78,7 @@ export const CheckboxFilterAccordion = ({
           />
         </AccordionTrigger>
         <AccordionContent padding="small">
-          <form>
+          <Form>
             {checkboxData.values.map((data) => (
               <Checkbox
                 key={data}
@@ -87,7 +88,7 @@ export const CheckboxFilterAccordion = ({
                 filterValueExists={filterValueExists}
               />
             ))}
-          </form>
+          </Form>
         </AccordionContent>
       </Accordion.Item>
     </AccordionStyle>
