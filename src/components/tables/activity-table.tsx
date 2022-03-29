@@ -15,6 +15,7 @@ import {
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
 import { Container } from './styles';
+import crownsLogo from '../../assets/crowns-logo.svg';
 import { fetchCAPActivity } from '../../integrations/kyasshu/utils';
 
 export interface rowProps {
@@ -42,24 +43,6 @@ export const ActivityTable = () => {
     });
   }, []);
 
-  // eslint-disable-next-line
-  let someArray: Array<any> = [];
-  let metadata;
-  const first = loadedCapActivityTableData.map((one) => one.event.details.map((two) => {
-    metadata = {
-      key: two[0],
-      value: two[1],
-    };
-    // eslint-disable-next-line
-    someArray.push(metadata && metadata);
-    return metadata;
-  }));
-
-  useEffect(() => {
-    // eslint-disable-next-line
-    console.log(loadedCapActivityTableData);
-  }, [loadedCapActivityTableData]);
-
   const columns = useMemo(
     () => [
       {
@@ -79,22 +62,14 @@ export const ActivityTable = () => {
           />
         ),
       },
-      // {
-      //   Header: t('translation:tables.titles.price'),
-      //   accessor: ({ price }: rowProps) => (
-      //     // eslint-disable-next-line
-      //     second?.map((item) => (
-      //       <PriceDetailsCell
-      //         wicp="5.12 WICP"
-      //         price={price}
-      //         tableType=""
-      //       />
-      //     ))),
-      // },
       {
-        Header: t('translation:tables.titles.quantity'),
-        accessor: ({ quantity }: rowProps) => (
-          <TextCell text={quantity} type="" />
+        Header: t('translation:tables.titles.price'),
+        accessor: ({ price }: rowProps) => (
+          <PriceDetailsCell
+            wicp="5.12 WICP"
+            price={price}
+            tableType=""
+          />
         ),
       },
       {
@@ -123,7 +98,24 @@ export const ActivityTable = () => {
     <Container>
       <TableLayout
         columns={columns}
-        data={mockTableData}
+        data={loadedCapActivityTableData.map((tableData) => {
+          console.log('.');
+          return {
+            item: {
+              name: `CAP Crowns #${tableData.token_id}`,
+              logo: crownsLogo,
+            },
+            type: tableData.operation,
+            price: `$${tableData.list_price ?? tableData.price}`,
+            quantity: '1',
+            from: 'rgblt...whfy',
+            to: 'rgblt...whfy',
+            time: tableData.time,
+            floorDifference: '12.42% above',
+            expiration: '2 days ago',
+            offerFrom: 'Prasanth',
+          };
+        })}
         tableType="activity"
       />
     </Container>
