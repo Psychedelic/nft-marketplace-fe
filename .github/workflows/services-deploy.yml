@@ -28,6 +28,7 @@ jobs:
       DFX_WARNING: -version_check
       NODE_ENV: ci
       DFX_CANDID_RELEASE: 2022-01-06
+      DEPLOY_TARGET: staging
 
     steps:
       - uses: actions/checkout@v2
@@ -81,3 +82,7 @@ jobs:
           .scripts/deploy/dfx-identity.sh
         env:
           DFX_IDENTITY: ${{ secrets.DFX_IDENTITY }}
+
+      - name: Deploy Services
+        run: |
+          .scripts/deploy/deploy-services.sh
