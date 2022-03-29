@@ -18,7 +18,11 @@ deployCap()
   printf "🤖 Deploy Cap\n"
 
   (
-    cd ./cap && dfx canister --network "$network" \
+    cd ./cap || exit 1
+
+    dfx canister --network "$network" create ic-history-router
+
+    dfx canister --network "$network" \
         install ic-history-router \
         --argument '(null)' \
         -m upgrade
@@ -30,7 +34,11 @@ deployCrowns()
   printf "🤖 Deploy Crowns\n"
 
   (
-    cd ./crowns && dfx canister --network "$network" \
+    cd ./crowns || exit 1
+    
+    dfx canister --network "$network" create crowns
+
+    dfx canister --network "$network" \
         install crowns \
         --argument '(null)' \
         -m upgrade
@@ -47,7 +55,9 @@ deployMarketplace()
   printf "🤖 Deploy Marketplace\n"
 
   (
-    dfx canister --network fleek-testnet \
+    dfx canister --network "$network" create crowns
+
+    dfx canister --network "$network" \
         install marketplace \
         --argument '(null)' \
         -m upgrade
@@ -59,7 +69,11 @@ deployWICP()
   printf "🤖 Deploy wICP\n"
 
   (
-    cd ./wicp && dfx canister --network fleek-testnet \
+    cd ./wicp || exit 1
+    
+    dfx canister --network "$network" create wicp
+
+    dfx canister --network fleek-testnet \
         install wicp \
         --argument '(null)' \
         -m upgrade
