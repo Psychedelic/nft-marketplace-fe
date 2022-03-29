@@ -15,12 +15,16 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+import { useAppDispatch } from '../../store';
+import { cancelListingBySeller } from '../../store/features/marketplace';
+
 /* --------------------------------------------------------------------------
  * Cancel Listing Modal Component
  * --------------------------------------------------------------------------*/
 
 export const CancelListingModal = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const { id } = useParams();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
@@ -35,6 +39,15 @@ export const CancelListingModal = () => {
 
   const handleCancelListing = async () => {
     if (!id) return;
+
+    dispatch(
+      cancelListingBySeller({
+        id,
+        onSuccess: () => {
+          console.log('success');
+        },
+      }),
+    );
   };
 
   return (
