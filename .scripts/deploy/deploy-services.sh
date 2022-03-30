@@ -121,6 +121,7 @@ deployWICP()
     amount=1000000000000
 
     dfx deploy \
+      --network "$network" \
       wicp --argument="(
         \"data:image/jpeg;base64,$(base64 ../.repo/images/logo-of-wicp.png)\",
         \"wicp\",
