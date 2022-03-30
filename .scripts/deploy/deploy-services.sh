@@ -18,6 +18,7 @@ wallet="rwe3y-7aaaa-aaaal-qaudq-cai"
 # accountId="3144d2e5b883dc5492f7ee809cce710da3decd68ee071beb76e03d64c2645231"
 accountId=$(dfx ledger account-id)
 
+# TODO: trigger a new build after top up cycles
 echo "[debug] wallet $wallet"
 echo "[debug] accountId $accountId"
 
