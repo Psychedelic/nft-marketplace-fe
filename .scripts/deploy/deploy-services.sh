@@ -11,7 +11,7 @@ crowns="5hzni-qqaaa-aaaaa-aaboq-cai"
 marketplace="yva2f-aiaaa-aaaaa-aabqa-cai"
 wicp="y4drz-waaaa-aaaaa-aabrq-cai"
 owner="ffuck-kxghi-gyvia-r5htr-246cy-acq5u-2tdgd-avtvf-jyqbt-xtmf7-cae"
-network="fleek-testnet"
+network="ic"
 
 deployCap()
 {
@@ -99,7 +99,7 @@ deployWICP()
 if [[ "$DEPLOY_TARGET" == "staging" ]];
 then
   deployCap
-  deployDab
-  deployMarketplace
-  deployWICP
+  # deployDab
+  # deployMarketplace
+  # deployWICP
 fi;
