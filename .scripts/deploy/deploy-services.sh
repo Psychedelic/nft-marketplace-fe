@@ -6,8 +6,12 @@ cd "$(dirname $BASH_SOURCE)" && cd ../../nft-marketplace || exit 1
 
 printf "🤖 Deploy Services for env (%s)\n\n" "$DEPLOY_TARGET"
 
-# Cap staging
-cap="q4lzc-5qaaa-aaaal-qaueq-cai"
+# Cap staging (deployed for nft-marketplace-fe)
+# cap="q4lzc-5qaaa-aaaal-qaueq-cai"
+# Cap staging (pinned in the cap-ooo discord channel)
+# pending request on controllers update
+# https://discord.com/channels/837010835423494144/887363387909079062/958771177755672606
+cap="e22n6-waaaa-aaaah-qcd2q-cai"
 # Crowns staging
 crowns="iqvo2-7qaaa-aaaam-qacxa-cai"
 marketplace="yva2f-aiaaa-aaaaa-aabqa-cai"
