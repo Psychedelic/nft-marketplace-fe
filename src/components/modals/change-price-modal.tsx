@@ -69,6 +69,12 @@ export const ChangePriceModal = () => {
     setModalOpened(false);
   };
 
+  const handleListing = async () => {
+    if (!id) return;
+
+    setModalStep(LISTING_STATUS_CODES.Pending);
+  };
+
   useEffect(() => {
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     let timer: any;
@@ -195,9 +201,7 @@ export const ChangePriceModal = () => {
                   text={t(
                     'translation:modals.buttons.completeListing',
                   )}
-                  handleClick={() => {
-                    setModalStep(LISTING_STATUS_CODES.Pending);
-                  }}
+                  handleClick={handleListing}
                   disabled={!amount}
                 />
               </ModalButtonWrapper>
