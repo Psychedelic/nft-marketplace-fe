@@ -97,7 +97,7 @@ deployMarketplace()
 
     dfx deploy --network "$network" \
       --argument "(
-        principal \"$crowns\",
+        principal \"$cap\",
         principal \"$owner\"
       )" \
       marketplace
@@ -126,7 +126,7 @@ deployWICP()
 
 if [[ "$DEPLOY_TARGET" == "staging" ]];
 then
-  deployCap
+  # deployCap
   # deployCrowns
   # deployDab
   deployMarketplace
