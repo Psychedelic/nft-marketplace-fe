@@ -14,15 +14,14 @@ marketplace="yva2f-aiaaa-aaaaa-aabqa-cai"
 wicp="y4drz-waaaa-aaaaa-aabrq-cai"
 owner=$(dfx identity get-principal)
 network="ic"
-# wallet="rwe3y-7aaaa-aaaal-qaudq-cai"
+wallet="rwe3y-7aaaa-aaaal-qaudq-cai"
 # accountId="3144d2e5b883dc5492f7ee809cce710da3decd68ee071beb76e03d64c2645231"
-# wallet=$(dfx identity get-wallet)
 accountId=$(dfx ledger account-id)
 
-# echo "[debug] wallet $wallet"
+echo "[debug] wallet $wallet"
 echo "[debug] accountId $accountId"
 
-# dfx identity --network ic set-wallet "$wallet"
+dfx identity --network ic set-wallet "$wallet"
 
 deployCap()
 {
