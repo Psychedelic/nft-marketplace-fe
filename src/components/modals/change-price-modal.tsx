@@ -27,6 +27,8 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+import { LISTING_STATUS_CODES } from '../../constants/listing';
+
 /* --------------------------------------------------------------------------
  * Edit Listing Modal Component
  * --------------------------------------------------------------------------*/
@@ -36,11 +38,13 @@ export const ChangePriceModal = () => {
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // ChangePrice modal steps: listingInfo/pending/confirmed
-  const [modalStep, setModalStep] = useState<string>('listingInfo');
+  const [modalStep, setModalStep] = useState<string>(
+    LISTING_STATUS_CODES.ListingInfo,
+  );
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
-    setModalStep('listingInfo');
+    setModalStep(LISTING_STATUS_CODES.ListingInfo);
   };
 
   const handleModalClose = () => {
@@ -50,9 +54,9 @@ export const ChangePriceModal = () => {
   useEffect(() => {
     // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     let timer: any;
-    if (modalStep === 'pending') {
+    if (modalStep === LISTING_STATUS_CODES.Pending) {
       timer = setTimeout(() => {
-        setModalStep('confirmed');
+        setModalStep(LISTING_STATUS_CODES.Confirmed);
       }, 1000);
     }
     return () => clearTimeout(timer);
@@ -97,7 +101,7 @@ export const ChangePriceModal = () => {
           Step: 1 -> listingInfo
           ---------------------------------
         */}
-        {modalStep === 'listingInfo' && (
+        {modalStep === LISTING_STATUS_CODES.ListingInfo && (
           <Container>
             {/*
               ---------------------------------
@@ -172,7 +176,7 @@ export const ChangePriceModal = () => {
                     'translation:modals.buttons.completeListing',
                   )}
                   handleClick={() => {
-                    setModalStep('pending');
+                    setModalStep(LISTING_STATUS_CODES.Pending);
                   }}
                 />
               </ModalButtonWrapper>
@@ -184,7 +188,7 @@ export const ChangePriceModal = () => {
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === 'pending' && (
+        {modalStep === LISTING_STATUS_CODES.Pending && (
           <Container>
             {/*
               ---------------------------------
@@ -218,7 +222,7 @@ export const ChangePriceModal = () => {
                   type="secondary"
                   text={t('translation:modals.buttons.cancel')}
                   handleClick={() => {
-                    setModalStep('listingInfo');
+                    setModalStep(LISTING_STATUS_CODES.ListingInfo);
                   }}
                 />
               </ModalButtonWrapper>
@@ -230,7 +234,7 @@ export const ChangePriceModal = () => {
           Step: 3 -> confirmed
           ---------------------------------
         */}
-        {modalStep === 'confirmed' && (
+        {modalStep === LISTING_STATUS_CODES.Confirmed && (
           <Container>
             {/*
               ---------------------------------
