@@ -14,17 +14,11 @@ printf "🤖 Deploy Services for env (%s)\n\n" "$DEPLOY_TARGET"
 cap="e22n6-waaaa-aaaah-qcd2q-cai"
 # Crowns staging
 crowns="iqvo2-7qaaa-aaaam-qacxa-cai"
-marketplace="qapdt-kqaaa-aaaal-qaugq-cai"
-wicp="y4drz-waaaa-aaaaa-aabrq-cai"
+marketplace="surgh-pqaaa-aaaal-qauiq-cai"
+wicp="s5sn3-zyaaa-aaaal-qauja-cai"
 owner=$(dfx identity get-principal)
 network="ic"
 wallet="rwe3y-7aaaa-aaaal-qaudq-cai"
-# accountId="3144d2e5b883dc5492f7ee809cce710da3decd68ee071beb76e03d64c2645231"
-accountId=$(dfx ledger account-id)
-
-# TODO: trigger a new build after top up cycles
-echo "[debug] wallet $wallet"
-echo "[debug] accountId $accountId"
 
 dfx identity --network ic set-wallet "$wallet"
 
@@ -34,13 +28,6 @@ deployCap()
 
   (
     cd ./cap || exit 1
-
-    # dfx canister --network "$network" create ic-history-router
-
-    # dfx canister --network "$network" \
-    #     install ic-history-router \
-    #     --argument '(null)' \
-    #     -m upgrade
 
     dfx deploy --network "$network" \
       --argument '(null)' \
@@ -55,13 +42,6 @@ deployCrowns()
   (
     cd ./crowns || exit 1
     
-    # dfx canister --network "$network" create crowns
-
-    # dfx canister --network "$network" \
-    #     install crowns \
-    #     --argument '(null)' \
-    #     -m upgrade
-
     tokenName="Crowns"
     tokenSymbol="CRW"
 
@@ -88,13 +68,6 @@ deployMarketplace()
   printf "🤖 Deploy Marketplace\n"
 
   (
-    # dfx canister --network "$network" create crowns
-
-    # dfx canister --network "$network" \
-    #     install marketplace \
-    #     --argument '(null)' \
-    #     -m upgrade
-
     dfx deploy --network "$network" \
       --argument "(
         principal \"$cap\",
@@ -110,13 +83,6 @@ deployWICP()
 
   (
     cd ./wicp || exit 1
-    
-    # dfx canister --network "$network" create wicp
-
-    # dfx canister --network fleek-testnet \
-    #     install wicp \
-    #     --argument '(null)' \
-    #     -m upgrade
 
     amount=1000000000000
 
