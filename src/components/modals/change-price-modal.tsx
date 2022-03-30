@@ -198,6 +198,7 @@ export const ChangePriceModal = () => {
                   handleClick={() => {
                     setModalStep(LISTING_STATUS_CODES.Pending);
                   }}
+                  disabled={!amount}
                 />
               </ModalButtonWrapper>
             </ModalButtonsList>
