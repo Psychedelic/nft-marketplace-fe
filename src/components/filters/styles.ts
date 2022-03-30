@@ -62,7 +62,7 @@ export const FilterSection = styled('div', {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  margin: '35px 0px 35px',
+  margin: '35px 0px 0px',
 });
 
 export const FilterGroup = styled('div', {
@@ -149,4 +149,8 @@ export const CheckboxFilters = styled('div', {
 export const FilterButtonWrapper = styled('div', {
   width: '135px',
   height: '44px',
+
+  button: {
+    fontWeight: '500',
+  },
 });

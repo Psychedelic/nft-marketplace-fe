@@ -2,9 +2,9 @@ import { styled } from '../../../stitches.config';
 
 export const Wrapper = styled('div', {
   padding: '8px 0',
-  cursor: 'pointer',
   display: 'flex',
   justifyContent: 'space-between',
+  width: '100%',
 
   '&:last-child': {
     paddingBottom: '15px',
@@ -18,6 +18,8 @@ export const Wrapper = styled('div', {
     fontSize: '16px',
     lineHeight: '20px',
     color: '$mainTextColor',
+    width: '100%',
+    cursor: 'pointer',
 
     '& input[type="checkbox"]': {
       marginRight: '8px',
