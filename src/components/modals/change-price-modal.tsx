@@ -55,10 +55,10 @@ export const ChangePriceModal = () => {
   );
 
   useEffect(() => {
-    if (!nftDetails?.price) return;
+    if (!nftDetails?.price || !modalOpened) return;
 
     setAmount(nftDetails.price);
-  }, [nftDetails]);
+  }, [nftDetails, modalOpened]);
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -144,6 +144,8 @@ export const ChangePriceModal = () => {
                 placeholder={t(
                   'translation:inputField.placeholder.amount',
                 )}
+                setValue={(value) => setAmount(value)}
+                defaultValue={amount}
               />
               <FeeContainer>
                 <FeeDetails>
