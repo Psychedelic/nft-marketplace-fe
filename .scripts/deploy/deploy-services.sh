@@ -6,12 +6,17 @@ cd "$(dirname $BASH_SOURCE)" && cd ../../nft-marketplace || exit 1
 
 printf "🤖 Deploy Services for env (%s)\n\n" "$DEPLOY_TARGET"
 
-cap="5s64f-ryaaa-aaaaa-aabna-cai"
-crowns="5hzni-qqaaa-aaaaa-aaboq-cai"
+# Cap staging
+cap="q4lzc-5qaaa-aaaal-qaueq-cai"
+# Crowns staging
+crowns="iqvo2-7qaaa-aaaam-qacxa-cai"
 marketplace="yva2f-aiaaa-aaaaa-aabqa-cai"
 wicp="y4drz-waaaa-aaaaa-aabrq-cai"
-owner="ffuck-kxghi-gyvia-r5htr-246cy-acq5u-2tdgd-avtvf-jyqbt-xtmf7-cae"
+owner=$(dfx identity get-principal)
 network="ic"
+wallet="rwe3y-7aaaa-aaaal-qaudq-cai"
+
+dfx identity --network ic set-wallet "$wallet"
 
 deployCap()
 {
@@ -81,7 +86,10 @@ deployMarketplace()
     #     -m upgrade
 
     dfx deploy --network "$network" \
-      --argument '(null)' \
+      --argument "(
+        principal \"$crowns\",
+        principal \"$owner\"
+      )" \
       marketplace
   )
 }
@@ -109,8 +117,8 @@ deployWICP()
 if [[ "$DEPLOY_TARGET" == "staging" ]];
 then
   deployCap
-  deployCrowns
+  # deployCrowns
   # deployDab
-  # deployMarketplace
+  deployMarketplace
   # deployWICP
 fi;
