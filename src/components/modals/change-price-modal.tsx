@@ -31,6 +31,8 @@ import {
 import { LISTING_STATUS_CODES } from '../../constants/listing';
 import { useNFTSStore } from '../../store';
 import { NFTMetadata } from '../../declarations/nft';
+import { useAppDispatch } from '../../store';
+import { listForSale } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * Edit Listing Modal Component
@@ -38,6 +40,9 @@ import { NFTMetadata } from '../../declarations/nft';
 
 export const ChangePriceModal = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const { loadedNFTS } = useNFTSStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // ChangePrice modal steps: listingInfo/pending/confirmed
@@ -45,9 +50,6 @@ export const ChangePriceModal = () => {
     LISTING_STATUS_CODES.ListingInfo,
   );
   const [amount, setAmount] = useState<string>('');
-
-  const { loadedNFTS } = useNFTSStore();
-  const { id } = useParams();
 
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
@@ -73,18 +75,20 @@ export const ChangePriceModal = () => {
     if (!id) return;
 
     setModalStep(LISTING_STATUS_CODES.Pending);
-  };
 
-  useEffect(() => {
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    let timer: any;
-    if (modalStep === LISTING_STATUS_CODES.Pending) {
-      timer = setTimeout(() => {
-        setModalStep(LISTING_STATUS_CODES.Confirmed);
-      }, 1000);
-    }
-    return () => clearTimeout(timer);
-  }, [modalStep]);
+    dispatch(
+      listForSale({
+        id,
+        amount,
+        onSuccess: () => {
+          setModalStep(LISTING_STATUS_CODES.Confirmed);
+        },
+        onFailure: () => {
+          setModalStep(LISTING_STATUS_CODES.ListingInfo);
+        },
+      }),
+    );
+  };
 
   return (
     <DialogPrimitive.Root
