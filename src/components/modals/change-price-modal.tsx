@@ -44,6 +44,7 @@ export const ChangePriceModal = () => {
   const [modalStep, setModalStep] = useState<string>(
     LISTING_STATUS_CODES.ListingInfo,
   );
+  const [amount, setAmount] = useState<string>('');
 
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
@@ -52,6 +53,12 @@ export const ChangePriceModal = () => {
     () => loadedNFTS.find((nft) => nft.id === id),
     [loadedNFTS, id],
   );
+
+  useEffect(() => {
+    if (!nftDetails?.price) return;
+
+    setAmount(nftDetails.price);
+  }, [nftDetails]);
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
