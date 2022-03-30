@@ -29,9 +29,12 @@ import {
 } from './styles';
 
 import { LISTING_STATUS_CODES } from '../../constants/listing';
-import { useNFTSStore } from '../../store';
+import {
+  useNFTSStore,
+  useAppDispatch,
+  nftsActions,
+} from '../../store';
 import { NFTMetadata } from '../../declarations/nft';
-import { useAppDispatch } from '../../store';
 import { listForSale } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
@@ -65,6 +68,19 @@ export const ChangePriceModal = () => {
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
     setModalStep(LISTING_STATUS_CODES.ListingInfo);
+
+    const notConfirmed = modalStep !== LISTING_STATUS_CODES.Confirmed;
+
+    if (status || !id || notConfirmed) return;
+
+    // Update NFT listed for sale in store
+    // on successful listing and closing the modal
+    dispatch(
+      nftsActions.setNFTForSale({
+        id,
+        amount,
+      }),
+    );
   };
 
   const handleModalClose = () => {
