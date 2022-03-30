@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
@@ -27,36 +28,83 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+import { LISTING_STATUS_CODES } from '../../constants/listing';
+import {
+  useNFTSStore,
+  useAppDispatch,
+  nftsActions,
+} from '../../store';
+import { NFTMetadata } from '../../declarations/nft';
+import { listForSale } from '../../store/features/marketplace';
+
 /* --------------------------------------------------------------------------
  * Edit Listing Modal Component
  * --------------------------------------------------------------------------*/
 
 export const ChangePriceModal = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const { loadedNFTS } = useNFTSStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // ChangePrice modal steps: listingInfo/pending/confirmed
-  const [modalStep, setModalStep] = useState<string>('listingInfo');
+  const [modalStep, setModalStep] = useState<string>(
+    LISTING_STATUS_CODES.ListingInfo,
+  );
+  const [amount, setAmount] = useState<string>('');
 
-  const handleModalOpen = (status: boolean) => {
-    setModalOpened(status);
-    setModalStep('listingInfo');
+  const nftDetails: NFTMetadata | undefined = useMemo(
+    () => loadedNFTS.find((nft) => nft.id === id),
+    [loadedNFTS, id],
+  );
+
+  useEffect(() => {
+    if (!nftDetails?.price || !modalOpened) return;
+
+    setAmount(nftDetails.price);
+  }, [nftDetails, modalOpened]);
+
+  const handleModalOpen = (modalOpenedStatus: boolean) => {
+    setModalOpened(modalOpenedStatus);
+    setModalStep(LISTING_STATUS_CODES.ListingInfo);
+
+    const isConfirmed = modalStep === LISTING_STATUS_CODES.Confirmed;
+
+    if (modalOpenedStatus || !id || !isConfirmed) return;
+
+    // Update NFT listed for sale in store
+    // on successful listing and closing the modal
+    dispatch(
+      nftsActions.setNFTForSale({
+        id,
+        amount,
+      }),
+    );
   };
 
   const handleModalClose = () => {
     setModalOpened(false);
   };
 
-  useEffect(() => {
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    let timer: any;
-    if (modalStep === 'pending') {
-      timer = setTimeout(() => {
-        setModalStep('confirmed');
-      }, 1000);
-    }
-    return () => clearTimeout(timer);
-  }, [modalStep]);
+  const handleListing = async () => {
+    if (!id) return;
+
+    setModalStep(LISTING_STATUS_CODES.Pending);
+
+    dispatch(
+      listForSale({
+        id,
+        amount,
+        onSuccess: () => {
+          setModalStep(LISTING_STATUS_CODES.Confirmed);
+        },
+        onFailure: () => {
+          setModalStep(LISTING_STATUS_CODES.ListingInfo);
+        },
+      }),
+    );
+  };
 
   return (
     <DialogPrimitive.Root
@@ -97,7 +145,7 @@ export const ChangePriceModal = () => {
           Step: 1 -> listingInfo
           ---------------------------------
         */}
-        {modalStep === 'listingInfo' && (
+        {modalStep === LISTING_STATUS_CODES.ListingInfo && (
           <Container>
             {/*
               ---------------------------------
@@ -122,6 +170,8 @@ export const ChangePriceModal = () => {
                 placeholder={t(
                   'translation:inputField.placeholder.amount',
                 )}
+                setValue={(value) => setAmount(value)}
+                defaultValue={amount}
               />
               <FeeContainer>
                 <FeeDetails>
@@ -171,9 +221,8 @@ export const ChangePriceModal = () => {
                   text={t(
                     'translation:modals.buttons.completeListing',
                   )}
-                  handleClick={() => {
-                    setModalStep('pending');
-                  }}
+                  handleClick={handleListing}
+                  disabled={!amount}
                 />
               </ModalButtonWrapper>
             </ModalButtonsList>
@@ -184,7 +233,7 @@ export const ChangePriceModal = () => {
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === 'pending' && (
+        {modalStep === LISTING_STATUS_CODES.Pending && (
           <Container>
             {/*
               ---------------------------------
@@ -195,11 +244,6 @@ export const ChangePriceModal = () => {
               <ModalTitle>
                 {t('translation:modals.title.pendingConfirmation')}
               </ModalTitle>
-              <ModalDescription>
-                {t(
-                  'translation:modals.description.pendingConfirmation',
-                )}
-              </ModalDescription>
             </ModalHeader>
             {/*
               ---------------------------------
@@ -218,7 +262,7 @@ export const ChangePriceModal = () => {
                   type="secondary"
                   text={t('translation:modals.buttons.cancel')}
                   handleClick={() => {
-                    setModalStep('listingInfo');
+                    setModalStep(LISTING_STATUS_CODES.ListingInfo);
                   }}
                 />
               </ModalButtonWrapper>
@@ -230,7 +274,7 @@ export const ChangePriceModal = () => {
           Step: 3 -> confirmed
           ---------------------------------
         */}
-        {modalStep === 'confirmed' && (
+        {modalStep === LISTING_STATUS_CODES.Confirmed && (
           <Container>
             {/*
               ---------------------------------
@@ -261,7 +305,7 @@ export const ChangePriceModal = () => {
                 <ActionButton
                   type="primary"
                   text={t('translation:modals.buttons.viewListing')}
-                  handleClick={handleModalClose}
+                  handleClick={() => handleModalOpen(false)}
                 />
               </ModalButtonWrapper>
             </ModalButtonsList>

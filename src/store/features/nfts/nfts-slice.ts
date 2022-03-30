@@ -102,9 +102,10 @@ export const nftsSlice = createSlice({
     },
     setNFTForSale: (state, action: PayloadAction<listedNFTData>) => {
       const { id, amount } = action.payload;
-      const index = state.loadedNFTS.findIndex(
-        (nft) => nft.id === id,
-      );
+      const index = findNFTIndex({
+        nftList: state.loadedNFTS,
+        idToFind: id,
+      });
 
       if (index < 0) return;
 

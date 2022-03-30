@@ -79,8 +79,9 @@ export const listForSale = createAsyncThunk<
       slice: marketplaceSlice,
     });
 
+    const { id, amount, onSuccess, onFailure } = params;
+
     try {
-      const { id, amount, onSuccess, onFailure } = params;
       const nonFungibleContractAddress = Principal.fromText(
         config.crownsCanisterId,
       );
@@ -115,6 +116,8 @@ export const listForSale = createAsyncThunk<
       };
     } catch (err) {
       thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
+      if (typeof onFailure !== 'function') return;
+      onFailure();
     }
   },
 );
