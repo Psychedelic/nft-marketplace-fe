@@ -14,7 +14,7 @@ printf "🤖 Deploy Services for env (%s)\n\n" "$DEPLOY_TARGET"
 cap="e22n6-waaaa-aaaah-qcd2q-cai"
 # Crowns staging
 crowns="iqvo2-7qaaa-aaaam-qacxa-cai"
-marketplace="yva2f-aiaaa-aaaaa-aabqa-cai"
+marketplace="qapdt-kqaaa-aaaal-qaugq-cai"
 wicp="y4drz-waaaa-aaaaa-aabrq-cai"
 owner=$(dfx identity get-principal)
 network="ic"
@@ -118,9 +118,20 @@ deployWICP()
     #     --argument '(null)' \
     #     -m upgrade
 
-    dfx deploy --network "$network" \
-      --argument '(null)' \
-      wicp
+    amount=1000000000000
+
+    dfx deploy \
+      wicp --argument="(
+        \"data:image/jpeg;base64,$(base64 ../.repo/images/logo-of-wicp.png)\",
+        \"wicp\",
+        \"WICP\",
+        8:nat8,
+        $amount:nat,
+        principal \"$owner\", 
+        0, 
+        principal \"$owner\", 
+        principal \"$cap\"
+      )"
   )
 }
 
@@ -130,5 +141,5 @@ then
   # deployCrowns
   # deployDab
   deployMarketplace
-  # deployWICP
+  deployWICP
 fi;
