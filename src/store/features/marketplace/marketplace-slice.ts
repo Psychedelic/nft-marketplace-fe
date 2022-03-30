@@ -114,6 +114,7 @@ export const listForSale = createAsyncThunk<
         amount,
       };
     } catch (err) {
+      thunkAPI.
       thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
     }
   },
