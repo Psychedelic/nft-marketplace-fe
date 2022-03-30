@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
@@ -28,6 +29,8 @@ import {
 } from './styles';
 
 import { LISTING_STATUS_CODES } from '../../constants/listing';
+import { useNFTSStore } from '../../store';
+import { NFTMetadata } from '../../declarations/nft';
 
 /* --------------------------------------------------------------------------
  * Edit Listing Modal Component
@@ -40,6 +43,14 @@ export const ChangePriceModal = () => {
   // ChangePrice modal steps: listingInfo/pending/confirmed
   const [modalStep, setModalStep] = useState<string>(
     LISTING_STATUS_CODES.ListingInfo,
+  );
+
+  const { loadedNFTS } = useNFTSStore();
+  const { id } = useParams();
+
+  const nftDetails: NFTMetadata | undefined = useMemo(
+    () => loadedNFTS.find((nft) => nft.id === id),
+    [loadedNFTS, id],
   );
 
   const handleModalOpen = (status: boolean) => {
