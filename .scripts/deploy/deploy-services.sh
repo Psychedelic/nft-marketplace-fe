@@ -47,8 +47,18 @@ deployCrowns()
     #     --argument '(null)' \
     #     -m upgrade
 
+    tokenName="Crowns"
+    tokenSymbol="CRW"
+
     dfx deploy --network "$network" \
-      --argument '(null)' \
+      --argument "(
+          opt record {
+            name = opt \"$tokenName\";
+            logo = opt \"data:image/jpeg;base64,...\";
+            symbol = opt \"$tokenSymbol\";
+            owners = opt vec { principal \"$owner\" };
+          }
+      )" \
       crowns
   )
 }
@@ -99,6 +109,7 @@ deployWICP()
 if [[ "$DEPLOY_TARGET" == "staging" ]];
 then
   deployCap
+  deployCrowns
   # deployDab
   # deployMarketplace
   # deployWICP
