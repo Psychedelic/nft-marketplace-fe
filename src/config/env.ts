@@ -47,16 +47,17 @@ const config: Config = {
   },
   staging: {
     // TODO: this should be removed or have a none ambiguous name
-    canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
-    host: 'https://testnet.psychedelic.ooo',
+    canisterId: 'iqvo2-7qaaa-aaaam-qacxa-cai',
+    host: 'https://mainnet.dfinity.network',
+    // host: 'ic0.app',
     // TODO: See <Important-1>
     // TODO: This is causing confusion, as we have a fieldname for crowns canister id
     // can we get rid of collectionId?
-    collectionId: '5hzni-qqaaa-aaaaa-aaboq-cai',
+    collectionId: 'iqvo2-7qaaa-aaaam-qacxa-cai',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
-    crownsCanisterId: '5hzni-qqaaa-aaaaa-aaboq-cai',
-    marketplaceCanisterId: 'yva2f-aiaaa-aaaaa-aabqa-cai',
-    wICPCanisterId: 'y4drz-waaaa-aaaaa-aabrq-cai',
+    crownsCanisterId: 'iqvo2-7qaaa-aaaam-qacxa-cai',
+    marketplaceCanisterId: 'surgh-pqaaa-aaaal-qauiq-cai',
+    wICPCanisterId: 's5sn3-zyaaa-aaaal-qauja-cai',
   },
   development: {
     // TODO: this should be removed or have a none ambiguous name
