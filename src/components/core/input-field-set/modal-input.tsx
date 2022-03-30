@@ -25,9 +25,10 @@ export const ModalInput = forwardRef<
     event: ChangeEvent<HTMLInputElement>,
   ) => {
     const value = event?.target?.value;
-    if (setValue) {
-      setValue(value);
-    }
+
+    if (typeof setValue !== 'function') return;
+
+    setValue(value);
   };
 
   return (

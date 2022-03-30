@@ -65,13 +65,13 @@ export const ChangePriceModal = () => {
     setAmount(nftDetails.price);
   }, [nftDetails, modalOpened]);
 
-  const handleModalOpen = (status: boolean) => {
-    setModalOpened(status);
+  const handleModalOpen = (modalOpenedStatus: boolean) => {
+    setModalOpened(modalOpenedStatus);
     setModalStep(LISTING_STATUS_CODES.ListingInfo);
 
-    const notConfirmed = modalStep !== LISTING_STATUS_CODES.Confirmed;
+    const isConfirmed = modalStep === LISTING_STATUS_CODES.Confirmed;
 
-    if (status || !id || notConfirmed) return;
+    if (modalOpenedStatus || !id || !isConfirmed) return;
 
     // Update NFT listed for sale in store
     // on successful listing and closing the modal
@@ -305,7 +305,7 @@ export const ChangePriceModal = () => {
                 <ActionButton
                   type="primary"
                   text={t('translation:modals.buttons.viewListing')}
-                  handleClick={handleModalClose}
+                  handleClick={() => handleModalOpen(false)}
                 />
               </ModalButtonWrapper>
             </ModalButtonsList>
