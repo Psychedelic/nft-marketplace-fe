@@ -22,6 +22,8 @@ import {
 } from './styles';
 
 import { LISTING_STATUS_CODES } from '../../constants/listing';
+import { useAppDispatch } from '../../store';
+import { makeOffer } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
@@ -29,6 +31,7 @@ import { LISTING_STATUS_CODES } from '../../constants/listing';
 
 export const MakeOfferModal = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const { id } = useParams();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
@@ -52,6 +55,19 @@ export const MakeOfferModal = () => {
     if (!id) return;
 
     setModalStep(LISTING_STATUS_CODES.Pending);
+
+    dispatch(
+      makeOffer({
+        id,
+        amount,
+        onSuccess: () => {
+          setModalStep(LISTING_STATUS_CODES.Submitted);
+        },
+        onFailure: () => {
+          setModalStep(LISTING_STATUS_CODES.ListingInfo);
+        },
+      }),
+    );
   };
 
   return (
