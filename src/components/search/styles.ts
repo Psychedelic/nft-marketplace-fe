@@ -29,7 +29,7 @@ export const SearchModalTrigger = styled('div', {
 });
 
 export const ModalOverlay = styled(DialogPrimitive.Overlay, {
-  backgroundColor: 'rgba(250, 251, 253, 0.9)',
+  backgroundColor: '$modalOverlay',
   position: 'fixed',
   inset: 0,
   '@media (prefers-reduced-motion: no-preference)': {
@@ -40,7 +40,7 @@ export const ModalOverlay = styled(DialogPrimitive.Overlay, {
 export const ModalContent = styled(DialogPrimitive.Content, {
   minHeight: '200px',
   maxHeight: '600px',
-  backgroundColor: 'white',
+  backgroundColor: '$backgroundColor',
   borderRadius: '30px',
   border: '1.5px solid $borderColor',
   boxShadow: '0px 4px 24px rgba(0, 0, 0, 0.25)',
@@ -94,7 +94,7 @@ export const ItemDetailsWrapper = styled('div', {
   justifyContent: 'space-between',
   padding: '32px 20px',
   border: '1.5px solid $borderColor',
-  background: 'rgb(244, 245, 246)',
+  background: '$chipsBackgroundColor',
   borderRadius: '14px',
   margin: '5px 0px',
 
@@ -112,7 +112,7 @@ export const ItemDetailsWrapper = styled('div', {
 
   '&:hover': {
     cursor: 'pointer',
-    background: '#FFF',
+    background: '$backgroundColor',
   },
 });
 
@@ -132,7 +132,7 @@ export const ItemName = styled('div', {
   fontSize: '16px',
   fontWeight: '600',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$mainTextColor',
 });
 
 export const PriceDetails = styled('div', {
@@ -165,7 +165,7 @@ export const WICPText = styled('div', {
   fontSize: '16px',
   fontWeight: '600',
   lineHeight: '20px',
-  color: '#23262F',
+  color: '$mainTextColor',
 
   // variants
   variants: {
