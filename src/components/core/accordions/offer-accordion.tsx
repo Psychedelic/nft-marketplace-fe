@@ -31,11 +31,13 @@ import { BuyNowModal, MakeOfferModal } from '../../modals';
 export type OfferAccordionProps = {
   lastSalePrice?: string;
   isListed?: boolean;
+  owner?: string;
 };
 
 export const OfferAccordion = ({
   lastSalePrice,
   isListed,
+  owner,
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
   // TODO: update offers count
