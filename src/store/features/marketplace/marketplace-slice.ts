@@ -31,6 +31,16 @@ type CancelListing = {
   id: string;
 };
 
+interface MakeOfferParams extends MakeOffer {
+  onSuccess?: () => void;
+  onFailure?: () => void;
+}
+
+type MakeOffer = {
+  id: string;
+  amount: string;
+};
+
 type RecentyListedForSale = ListForSale[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
@@ -171,6 +181,67 @@ export const cancelListingBySeller = createAsyncThunk<
 
       return {
         id,
+      };
+    } catch (err) {
+      thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
+      if (typeof onFailure !== 'function') return;
+      onFailure();
+    }
+  },
+);
+
+export const makeOffer = createAsyncThunk<
+  // Return type of the payload creator
+  MakeOffer | undefined,
+  // First argument to the payload creator
+  MakeOfferParams,
+  // Optional fields for defining the thunk api
+  { state: RootState }
+>(
+  'marketplace/makeOffer',
+  async (params: MakeOfferParams, thunkAPI) => {
+    // Checks if an actor instance exists already
+    // otherwise creates a new instance
+    const actorInstance = await actorInstanceHandler({
+      thunkAPI,
+      serviceName: 'marketplace',
+      slice: marketplaceSlice,
+    });
+
+    const { id, amount, onSuccess, onFailure } = params;
+
+    try {
+      const nonFungibleContractAddress = Principal.fromText(
+        config.crownsCanisterId,
+      );
+      const userOwnedTokenId = BigInt(id);
+      const userOfferInPrice = BigInt(amount);
+
+      const result = await actorInstance.makeOffer(
+        nonFungibleContractAddress,
+        userOwnedTokenId,
+        userOfferInPrice,
+      );
+
+      if (!('Ok' in result)) {
+        if (typeof onFailure !== 'function') return;
+
+        onFailure();
+
+        console.error(result);
+
+        throw Error('Oops! Failed to make offer');
+      }
+
+      if (typeof onSuccess !== 'function') return;
+
+      console.info(result);
+
+      onSuccess();
+
+      return {
+        id,
+        amount,
       };
     } catch (err) {
       thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
