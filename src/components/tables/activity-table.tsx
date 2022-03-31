@@ -13,7 +13,7 @@ import {
   TextLinkCell,
 } from '../core';
 import { TableLayout } from './table-layout';
-import { Container } from './styles';
+import { Container, InfiniteScrollWrapper } from './styles';
 import crownsLogo from '../../assets/crowns-logo.svg';
 import { fetchCAPActivity } from '../../integrations/kyasshu/utils';
 
@@ -41,6 +41,12 @@ export const ActivityTable = () => {
       dispatch,
     });
   }, []);
+
+  const loadMoreData = () => {
+    fetchCAPActivity({
+      dispatch,
+    });
+  };
 
   const columns = useMemo(
     () => [
@@ -95,27 +101,39 @@ export const ActivityTable = () => {
 
   return (
     <Container>
-      <TableLayout
-        columns={columns}
-        data={loadedCapActivityTableData.map((tableData) => {
-          console.log('.');
-          return {
-            item: {
-              name: `CAP Crowns #${tableData.token_id}`,
-              logo: crownsLogo,
-            },
-            type: tableData.operation,
-            price: `$${tableData.list_price ?? tableData.price}`,
-            from: 'rgblt...whfy',
-            to: 'rgblt...whfy',
-            time: tableData.time,
-            floorDifference: '12.42% above',
-            expiration: '2 days ago',
-            offerFrom: 'Prasanth',
-          };
-        })}
-        tableType="activity"
-      />
+      <InfiniteScrollWrapper
+        pageStart={0}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        loadMore={loadedCapActivityTableData.length > 25 ? loadMoreData : () => {}}
+        // hasMore={hasMoreNFTs}
+        // to-do: add loader for table
+        loader="Loading"
+        useWindow={true || false}
+        threshold={250 * 5}
+        className="infinite-loader"
+      >
+        <TableLayout
+          columns={columns}
+          data={loadedCapActivityTableData.map((tableData) => {
+            console.log('.');
+            return {
+              item: {
+                name: `CAP Crowns #${tableData.token_id}`,
+                logo: crownsLogo,
+              },
+              type: tableData.operation,
+              price: `$${tableData.list_price ?? tableData.price}`,
+              from: 'rgblt...whfy',
+              to: 'rgblt...whfy',
+              time: tableData.time,
+              floorDifference: '12.42% above',
+              expiration: '2 days ago',
+              offerFrom: 'Prasanth',
+            };
+          })}
+          tableType="activity"
+        />
+      </InfiniteScrollWrapper>
     </Container>
   );
 };
