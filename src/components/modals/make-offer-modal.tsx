@@ -43,6 +43,12 @@ export const MakeOfferModal = () => {
     setModalOpened(false);
   };
 
+  const handleSubmitOffer = async () => {
+    if (!id) return;
+
+    setModalStep(LISTING_STATUS_CODES.Pending);
+  };
+
   return (
     <DialogPrimitive.Root
       open={modalOpened}
@@ -127,9 +133,7 @@ export const MakeOfferModal = () => {
                 <ActionButton
                   type="primary"
                   text={t('translation:modals.buttons.submitOffer')}
-                  handleClick={() => {
-                    setModalStep(LISTING_STATUS_CODES.Submitted);
-                  }}
+                  handleClick={handleSubmitOffer}
                   disabled={!amount}
                 />
               </ModalButtonWrapper>
