@@ -34,6 +34,40 @@ export type OfferAccordionProps = {
   owner?: string;
 };
 
+export type ConnectedProps = {
+  isListed?: boolean;
+  isOwner?: boolean;
+};
+
+export type DisConnectedProps = {
+  isListed?: boolean;
+};
+
+const OnConnected = ({ isListed, isOwner }: ConnectedProps) => (
+  <>
+    {isListed && (
+      <ButtonListWrapper>
+        <ButtonDetailsWrapper>
+          <BuyNowModal />
+        </ButtonDetailsWrapper>
+        <ButtonDetailsWrapper>
+          <MakeOfferModal />
+        </ButtonDetailsWrapper>
+      </ButtonListWrapper>
+    )}
+  </>
+);
+
+const OnDisconnected = ({ isListed }: DisConnectedProps) => (
+  <>
+    {isListed && (
+      <PlugButtonWrapper>
+        <Plug />
+      </PlugButtonWrapper>
+    )}
+  </>
+);
+
 export const OfferAccordion = ({
   lastSalePrice,
   isListed,
