@@ -29,9 +29,11 @@ export const MakeOfferModal = () => {
   const [modalStep, setModalStep] = useState<string>(
     LISTING_STATUS_CODES.ListingInfo,
   );
+  const [amount, setAmount] = useState<string>('');
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
+    setAmount('');
     setModalStep(LISTING_STATUS_CODES.ListingInfo);
   };
 
@@ -103,6 +105,7 @@ export const MakeOfferModal = () => {
                 placeholder={t(
                   'translation:inputField.placeholder.amount',
                 )}
+                setValue={(value) => setAmount(value)}
               />
             </SaleContentWrapper>
             {/*
@@ -125,6 +128,7 @@ export const MakeOfferModal = () => {
                   handleClick={() => {
                     setModalStep(LISTING_STATUS_CODES.Submitted);
                   }}
+                  disabled={!amount}
                 />
               </ModalButtonWrapper>
             </ModalButtonsList>
