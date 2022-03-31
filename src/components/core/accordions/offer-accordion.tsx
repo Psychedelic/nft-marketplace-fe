@@ -12,6 +12,8 @@ import {
   PlugButtonWrapper,
   UndefinedPrice,
   OffersCount,
+  ButtonListWrapper,
+  ButtonDetailsWrapper,
 } from './styles';
 import offer from '../../../assets/accordions/offer.svg';
 import offerDark from '../../../assets/accordions/offer-dark.svg';
@@ -23,6 +25,8 @@ import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import { OffersTable } from '../../tables';
 import { Plug } from '../../plug';
 import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.utils';
+
+import { BuyNowModal, MakeOfferModal } from '../../modals';
 
 export type OfferAccordionProps = {
   lastSalePrice?: string;
@@ -90,6 +94,16 @@ export const OfferAccordion = ({
           <PlugButtonWrapper>
             <Plug />
           </PlugButtonWrapper>
+        )}
+        {isConnected && (
+          <ButtonListWrapper>
+            <ButtonDetailsWrapper>
+              <BuyNowModal />
+            </ButtonDetailsWrapper>
+            <ButtonDetailsWrapper>
+              <MakeOfferModal />
+            </ButtonDetailsWrapper>
+          </ButtonListWrapper>
         )}
       </AccordionHead>
       <Accordion.Item value="item-1">
