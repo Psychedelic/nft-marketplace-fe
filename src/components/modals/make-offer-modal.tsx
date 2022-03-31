@@ -15,6 +15,8 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+import { LISTING_STATUS_CODES } from '../../constants/listing';
+
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
  * --------------------------------------------------------------------------*/
@@ -24,11 +26,13 @@ export const MakeOfferModal = () => {
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // MakeOffer modal steps: listingInfo/submitted
-  const [modalStep, setModalStep] = useState<string>('listingInfo');
+  const [modalStep, setModalStep] = useState<string>(
+    LISTING_STATUS_CODES.ListingInfo,
+  );
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
-    setModalStep('listingInfo');
+    setModalStep(LISTING_STATUS_CODES.ListingInfo);
   };
 
   const handleModalClose = () => {
@@ -74,7 +78,7 @@ export const MakeOfferModal = () => {
           Step: 1 -> listingInfo
           ---------------------------------
         */}
-        {modalStep === 'listingInfo' && (
+        {modalStep === LISTING_STATUS_CODES.ListingInfo && (
           <Container>
             {/*
               ---------------------------------
@@ -119,7 +123,7 @@ export const MakeOfferModal = () => {
                   type="primary"
                   text={t('translation:modals.buttons.submitOffer')}
                   handleClick={() => {
-                    setModalStep('submitted');
+                    setModalStep(LISTING_STATUS_CODES.Submitted);
                   }}
                 />
               </ModalButtonWrapper>
@@ -131,7 +135,7 @@ export const MakeOfferModal = () => {
           Step: 2 -> submitted
           ---------------------------------
         */}
-        {modalStep === 'submitted' && (
+        {modalStep === LISTING_STATUS_CODES.Submitted && (
           <Container>
             {/*
               ---------------------------------
