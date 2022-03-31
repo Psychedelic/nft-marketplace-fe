@@ -269,7 +269,6 @@ export const fetchCAPActivity = async ({ dispatch }: FetchCAPActivityProps) => {
       return capData;
     });
 
-    console.log('result', result);
     dispatch(tableActions.setCapActivityTable(result));
   } catch (error) {
     console.log(error);
