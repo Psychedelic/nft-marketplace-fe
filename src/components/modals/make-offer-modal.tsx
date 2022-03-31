@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, ModalInput, Completed } from '../core';
@@ -23,6 +24,7 @@ import { LISTING_STATUS_CODES } from '../../constants/listing';
 
 export const MakeOfferModal = () => {
   const { t } = useTranslation();
+  const { id } = useParams();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // MakeOffer modal steps: listingInfo/submitted
