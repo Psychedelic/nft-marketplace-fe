@@ -45,7 +45,7 @@ export type DisConnectedProps = {
 
 const OnConnected = ({ isListed, isOwner }: ConnectedProps) => (
   <>
-    {isListed && (
+    {isListed && !isOwner && (
       <ButtonListWrapper>
         <ButtonDetailsWrapper>
           <BuyNowModal />
@@ -126,21 +126,9 @@ export const OfferAccordion = ({
           </FlexRight>
           <h3>{marketPrice}</h3>
         </AccordionHeadContent>
-        {!isConnected && (
-          <PlugButtonWrapper>
-            <Plug />
-          </PlugButtonWrapper>
-        )}
-        {isConnected && (
-          <ButtonListWrapper>
-            <ButtonDetailsWrapper>
-              <BuyNowModal />
-            </ButtonDetailsWrapper>
-            <ButtonDetailsWrapper>
-              <MakeOfferModal />
-            </ButtonDetailsWrapper>
-          </ButtonListWrapper>
-        )}
+        {(isConnected && (
+          <OnConnected isListed={isListed} isOwner={false} />
+        )) || <OnDisconnected isListed={isListed} />}
       </AccordionHead>
       <Accordion.Item value="item-1">
         <AccordionTrigger
