@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton, ModalInput, Completed } from '../core';
+import {
+  ActionButton,
+  ModalInput,
+  Completed,
+  Pending,
+} from '../core';
 import {
   MakeOfferModalTrigger,
   ModalOverlay,
@@ -142,7 +147,48 @@ export const MakeOfferModal = () => {
         )}
         {/*
           ---------------------------------
-          Step: 2 -> submitted
+          Step: 2 -> pending
+          ---------------------------------
+        */}
+        {modalStep === LISTING_STATUS_CODES.Pending && (
+          <Container>
+            {/*
+              ---------------------------------
+              Pending Header
+              ---------------------------------
+            */}
+            <ModalHeader>
+              <ModalTitle>
+                {t('translation:modals.title.pendingConfirmation')}
+              </ModalTitle>
+            </ModalHeader>
+            {/*
+              ---------------------------------
+              Pending details
+              ---------------------------------
+            */}
+            <Pending />
+            {/*
+              ---------------------------------
+              Pending Action Buttons
+              ---------------------------------
+            */}
+            <ModalButtonsList>
+              <ModalButtonWrapper fullWidth>
+                <ActionButton
+                  type="secondary"
+                  text={t('translation:modals.buttons.cancel')}
+                  handleClick={() => {
+                    setModalStep(LISTING_STATUS_CODES.ListingInfo);
+                  }}
+                />
+              </ModalButtonWrapper>
+            </ModalButtonsList>
+          </Container>
+        )}
+        {/*
+          ---------------------------------
+          Step: 3 -> submitted
           ---------------------------------
         */}
         {modalStep === LISTING_STATUS_CODES.Submitted && (
