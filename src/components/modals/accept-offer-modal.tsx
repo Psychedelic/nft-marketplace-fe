@@ -33,6 +33,8 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+// TODO: Update accept offer modal with dynamic data
+
 /* --------------------------------------------------------------------------
  * Accept Offer Modal Component
  * --------------------------------------------------------------------------*/

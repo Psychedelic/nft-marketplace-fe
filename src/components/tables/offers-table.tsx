@@ -15,6 +15,10 @@ export interface rowProps {
   expiration: string;
 }
 
+// TODO: Update offers table data and add
+// logic to show accept offer button based on
+// connection status and owner details
+
 export const OffersTable = () => {
   const { t } = useTranslation();
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
