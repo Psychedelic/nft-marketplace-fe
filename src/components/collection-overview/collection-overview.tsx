@@ -47,7 +47,7 @@ export const CollectionOverview = () => {
               <img src={verified} alt="verified" />
             </Heading>
             <Subtext>
-              Crowns are a collection of 10,000 uniquely generated
+              Crowns are a collection of 10,000 generated
               NFTs on the Internet Computer. With a mix of traditional
               and psychedelic materials.
             </Subtext>
