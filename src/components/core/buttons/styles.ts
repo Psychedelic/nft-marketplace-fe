@@ -29,7 +29,7 @@ export const Button = styled('button', {
       secondary: {
         backgroundColor: 'transparent',
         color: '$mainTextColor',
-        border: '1.5px solid $borderColor',
+        border: '1.5px solid $buttonsBorderColor',
       },
       outline: {
         backgroundColor: 'transparent',
@@ -58,7 +58,7 @@ export const Button = styled('button', {
 
 export const LinkButtonStyles = styled('a', {
   // base styles
-  border: '2px solid #E5E8EB',
+  border: '2px solid $buttonsBorderColor',
   backgroundColor: '$backgroundColor',
   fontWeight: '500',
   color: '$mainTextColor',
@@ -124,7 +124,7 @@ export const PlugButtonText = styled('div', {
 
 export const IconButtonStyles = styled('div', {
   // base styles
-  border: '2px solid $borderColor',
+  border: '2px solid $buttonsBorderColor',
   backgroundColor: '$buttonBackgroundColor',
   fontWeight: '500',
   color: '#23262F',
