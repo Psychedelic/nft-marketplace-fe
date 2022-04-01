@@ -287,3 +287,13 @@ export const UndefinedPrice = styled('div', {
 export const OffersCount = styled('div', {
   marginLeft: '5px',
 });
+
+export const ButtonListWrapper = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  paddingTop: '30px',
+});
+
+export const ButtonDetailsWrapper = styled('div', {
+  marginRight: '10px',
+});

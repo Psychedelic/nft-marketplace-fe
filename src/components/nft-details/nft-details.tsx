@@ -79,6 +79,7 @@ export const NftDetails = () => {
             <OfferAccordion
               lastSalePrice={nftDetails?.price}
               isListed={nftDetails?.isListed}
+              owner={nftDetails?.owner}
             />
             <AboutAccordion owned />
           </DetailsContainer>

@@ -12,6 +12,8 @@ import {
   PlugButtonWrapper,
   UndefinedPrice,
   OffersCount,
+  ButtonListWrapper,
+  ButtonDetailsWrapper,
 } from './styles';
 import offer from '../../../assets/accordions/offer.svg';
 import offerDark from '../../../assets/accordions/offer-dark.svg';
@@ -24,14 +26,53 @@ import { OffersTable } from '../../tables';
 import { Plug } from '../../plug';
 import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.utils';
 
+import { BuyNowModal, MakeOfferModal } from '../../modals';
+import { isNFTOwner } from '../../../integrations/kyasshu/utils';
+
 export type OfferAccordionProps = {
   lastSalePrice?: string;
   isListed?: boolean;
+  owner?: string;
 };
+
+export type ConnectedProps = {
+  isListed?: boolean;
+  isOwner?: boolean;
+};
+
+export type DisConnectedProps = {
+  isListed?: boolean;
+};
+
+const OnConnected = ({ isListed, isOwner }: ConnectedProps) => (
+  <>
+    {isListed && !isOwner && (
+      <ButtonListWrapper>
+        <ButtonDetailsWrapper>
+          <BuyNowModal />
+        </ButtonDetailsWrapper>
+        <ButtonDetailsWrapper>
+          <MakeOfferModal />
+        </ButtonDetailsWrapper>
+      </ButtonListWrapper>
+    )}
+  </>
+);
+
+const OnDisconnected = ({ isListed }: DisConnectedProps) => (
+  <>
+    {isListed && (
+      <PlugButtonWrapper>
+        <Plug />
+      </PlugButtonWrapper>
+    )}
+  </>
+);
 
 export const OfferAccordion = ({
   lastSalePrice,
   isListed,
+  owner,
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
   // TODO: update offers count
@@ -46,7 +87,7 @@ export const OfferAccordion = ({
   const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
   const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
-  const { isConnected } = usePlugStore();
+  const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
   useEffect(() => {
     if (!lastSalePrice || !isListed) return;
@@ -64,6 +105,12 @@ export const OfferAccordion = ({
   }, [lastSalePrice, isListed]);
 
   const isListedWithPrice = isListed && lastSalePrice;
+
+  const isOwner = isNFTOwner({
+    isConnected,
+    owner,
+    principalId: plugPrincipal,
+  });
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
@@ -86,11 +133,9 @@ export const OfferAccordion = ({
           </FlexRight>
           <h3>{marketPrice}</h3>
         </AccordionHeadContent>
-        {!isConnected && (
-          <PlugButtonWrapper>
-            <Plug />
-          </PlugButtonWrapper>
-        )}
+        {(isConnected && (
+          <OnConnected isListed={isListed} isOwner={isOwner} />
+        )) || <OnDisconnected isListed={isListed} />}
       </AccordionHead>
       <Accordion.Item value="item-1">
         <AccordionTrigger
