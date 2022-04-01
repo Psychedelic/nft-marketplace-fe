@@ -17,7 +17,6 @@ import {
   VideoLoader,
   ActionText,
 } from './styles';
-
 import { NFTMetadata } from '../../../../declarations/nft';
 import wicpLogo from '../../../../assets/wicpIcon.png';
 
@@ -34,15 +33,17 @@ export const NftCard = React.memo(
     const { t } = useTranslation();
 
     return (
-      <RouterLink to={`/nft/${data.id}`}>
-        <CardContainer>
-          <CardWrapper>
-            <Flex>
-              <OwnedCardText>
-                {owned ? `${t('translation:nftCard.owned')}` : ''}
-              </OwnedCardText>
-              <CardOptionsDropdown />
-            </Flex>
+      <CardContainer>
+        <CardWrapper>
+          <Flex>
+            <OwnedCardText>
+              {owned
+                ? `${t('translation:nftCard.owned')}`
+                : ''}
+            </OwnedCardText>
+            <CardOptionsDropdown data={data} />
+          </Flex>
+          <RouterLink to={`/nft/${data.id}`}>
             <VideoPlayer
               videoSrc={data.location}
               pausedOverlay={
@@ -62,7 +63,9 @@ export const NftCard = React.memo(
                 ''
               ) : (
                 <LastOffer>
-                  {forSaleAndOffer ? `${t('translation:nftCard.offerFor')} ` : `${t('translation:nftCard.last')} `}
+                  {forSaleAndOffer
+                    ? `${t('translation:nftCard.offerFor')} `
+                    : `${t('translation:nftCard.last')} `}
                   <b>{data?.lastOffer}</b>
                 </LastOffer>
               )}
@@ -75,24 +78,26 @@ export const NftCard = React.memo(
                 </Dfinity>
               )}
             </Flex>
-          </CardWrapper>
-          <OuterFlex>
-            {data.status === 'forSale' ? (
-              <ActionText>{`${t('translation:nftCard.forSale')}`}</ActionText>
-            ) : (
-              <ActionText>{`${t('translation:nftCard.forOffer')}`}</ActionText>
-            )}
-            {notForSale ? (
-              ''
-            ) : (
-              <LastOffer>
-                {forSaleAndOffer ? `${t('translation:nftCard.offerFor')} ` : `${t('translation:nftCard.last')} `}
-                <b>{data?.lastOffer}</b>
-              </LastOffer>
-            )}
-          </OuterFlex>
-        </CardContainer>
-      </RouterLink>
+          </RouterLink>
+        </CardWrapper>
+        <OuterFlex>
+          {data.status === 'forSale' ? (
+            <ActionText>{`${t('translation:nftCard.forSale')}`}</ActionText>
+          ) : (
+            <ActionText>{`${t('translation:nftCard.forOffer')}`}</ActionText>
+          )}
+          {notForSale ? (
+            ''
+          ) : (
+            <LastOffer>
+              {forSaleAndOffer
+                ? `${t('translation:nftCard.offerFor')} `
+                : `${t('translation:nftCard.last')} `}
+              <b>{data?.lastOffer}</b>
+            </LastOffer>
+          )}
+        </OuterFlex>
+      </CardContainer>
     );
   },
 );

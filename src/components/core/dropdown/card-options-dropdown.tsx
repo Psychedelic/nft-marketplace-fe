@@ -1,10 +1,10 @@
 import React from 'react';
+import copyToClipboard from 'copy-to-clipboard';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useTranslation } from 'react-i18next';
 import {
   useThemeStore,
 } from '../../../store';
-
 import {
   Flex,
   DropdownContent,
@@ -14,11 +14,20 @@ import {
 import moreoptions from '../../../assets/moreoptions.svg';
 import copy from '../../../assets/copy.svg';
 import copyDark from '../../../assets/copy-dark.svg';
+import { NFTMetadata } from '../../../declarations/nft';
 
-export const CardOptionsDropdown = () => {
+export type CardOptionsDropdownProps = {
+  data: NFTMetadata,
+}
+
+export const CardOptionsDropdown = ({ data }: CardOptionsDropdownProps) => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
   const isLightTheme = theme === 'lightTheme';
+
+  const handleCopy = () => {
+    copyToClipboard(`${window.location.href}nft/${data.id}`);
+  };
 
   return (
     <DropdownMenu.Root>
@@ -34,6 +43,7 @@ export const CardOptionsDropdown = () => {
       <DropdownContent
         width="small"
         background={theme === 'darkTheme' ? 'dark' : 'light'}
+        onClick={() => handleCopy()}
       >
         <DropdownGroup>
           <DropdownMenuItem>
