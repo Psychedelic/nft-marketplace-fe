@@ -17,7 +17,6 @@ import {
   VideoLoader,
   ActionText,
 } from './styles';
-
 import { NFTMetadata } from '../../../../declarations/nft';
 import wicpLogo from '../../../../assets/wicpIcon.png';
 
@@ -41,7 +40,7 @@ export const NftCard = React.memo(
               <OwnedCardText>
                 {owned ? `${t('translation:nftCard.owned')}` : ''}
               </OwnedCardText>
-              <CardOptionsDropdown />
+              <CardOptionsDropdown data={data} />
             </Flex>
             <VideoPlayer
               videoSrc={data.location}
@@ -62,7 +61,9 @@ export const NftCard = React.memo(
                 ''
               ) : (
                 <LastOffer>
-                  {forSaleAndOffer ? `${t('translation:nftCard.offerFor')} ` : `${t('translation:nftCard.last')} `}
+                  {forSaleAndOffer
+                    ? `${t('translation:nftCard.offerFor')} `
+                    : `${t('translation:nftCard.last')} `}
                   <b>{data?.lastOffer}</b>
                 </LastOffer>
               )}
@@ -86,7 +87,9 @@ export const NftCard = React.memo(
               ''
             ) : (
               <LastOffer>
-                {forSaleAndOffer ? `${t('translation:nftCard.offerFor')} ` : `${t('translation:nftCard.last')} `}
+                {forSaleAndOffer
+                  ? `${t('translation:nftCard.offerFor')} `
+                  : `${t('translation:nftCard.last')} `}
                 <b>{data?.lastOffer}</b>
               </LastOffer>
             )}

@@ -27,7 +27,7 @@ export const CardWrapper = styled('div', {
   borderTopRightRadius: '14px',
   borderTopLeftRadius: '14px',
   width: '100%',
-  height: '100%',
+  // height: '100%',
   padding: '10px 10px 3px',
   cursor: 'pointer',
   transition: 'all 0.5s ease-in-out',
@@ -136,6 +136,7 @@ export const ActionText = styled('p', {
   fontSize: '14px',
   lineHeight: '20px',
   color: '#2253FF',
+  cursor: 'pointer',
 });
 
 export const OuterFlex = styled('div', {
