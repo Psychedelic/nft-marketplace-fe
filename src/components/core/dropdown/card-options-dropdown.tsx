@@ -25,7 +25,8 @@ export const CardOptionsDropdown = ({ data }: CardOptionsDropdownProps) => {
   const { theme } = useThemeStore();
   const isLightTheme = theme === 'lightTheme';
 
-  const handleCopy = () => {
+  const handleCopy = (e) => {
+    e.preventDefault();
     copyToClipboard(`${window.location.href}nft/${data.id}`);
   };
 
@@ -43,7 +44,7 @@ export const CardOptionsDropdown = ({ data }: CardOptionsDropdownProps) => {
       <DropdownContent
         width="small"
         background={theme === 'darkTheme' ? 'dark' : 'light'}
-        onClick={() => handleCopy()}
+        onClick={(e) => handleCopy(e)}
       >
         <DropdownGroup>
           <DropdownMenuItem>

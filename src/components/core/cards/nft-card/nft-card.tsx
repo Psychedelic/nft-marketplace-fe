@@ -33,17 +33,15 @@ export const NftCard = React.memo(
     const { t } = useTranslation();
 
     return (
-      <CardContainer>
-        <CardWrapper>
-          <Flex>
-            <OwnedCardText>
-              {owned
-                ? `${t('translation:nftCard.owned')}`
-                : ''}
-            </OwnedCardText>
-            <CardOptionsDropdown data={data} />
-          </Flex>
-          <RouterLink to={`/nft/${data.id}`}>
+      <RouterLink to={`/nft/${data.id}`}>
+        <CardContainer>
+          <CardWrapper>
+            <Flex>
+              <OwnedCardText>
+                {owned ? `${t('translation:nftCard.owned')}` : ''}
+              </OwnedCardText>
+              <CardOptionsDropdown data={data} />
+            </Flex>
             <VideoPlayer
               videoSrc={data.location}
               pausedOverlay={
@@ -78,26 +76,26 @@ export const NftCard = React.memo(
                 </Dfinity>
               )}
             </Flex>
-          </RouterLink>
-        </CardWrapper>
-        <OuterFlex>
-          {data.status === 'forSale' ? (
-            <ActionText>{`${t('translation:nftCard.forSale')}`}</ActionText>
-          ) : (
-            <ActionText>{`${t('translation:nftCard.forOffer')}`}</ActionText>
-          )}
-          {notForSale ? (
-            ''
-          ) : (
-            <LastOffer>
-              {forSaleAndOffer
-                ? `${t('translation:nftCard.offerFor')} `
-                : `${t('translation:nftCard.last')} `}
-              <b>{data?.lastOffer}</b>
-            </LastOffer>
-          )}
-        </OuterFlex>
-      </CardContainer>
+          </CardWrapper>
+          <OuterFlex>
+            {data.status === 'forSale' ? (
+              <ActionText>{`${t('translation:nftCard.forSale')}`}</ActionText>
+            ) : (
+              <ActionText>{`${t('translation:nftCard.forOffer')}`}</ActionText>
+            )}
+            {notForSale ? (
+              ''
+            ) : (
+              <LastOffer>
+                {forSaleAndOffer
+                  ? `${t('translation:nftCard.offerFor')} `
+                  : `${t('translation:nftCard.last')} `}
+                <b>{data?.lastOffer}</b>
+              </LastOffer>
+            )}
+          </OuterFlex>
+        </CardContainer>
+      </RouterLink>
     );
   },
 );
