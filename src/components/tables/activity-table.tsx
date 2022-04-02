@@ -14,7 +14,6 @@ import {
 } from '../core';
 import { TableLayout } from './table-layout';
 import { Container, InfiniteScrollWrapper } from './styles';
-import crownsLogo from '../../assets/crowns-logo.svg';
 import { fetchCAPActivity } from '../../integrations/kyasshu/utils';
 
 export interface rowProps {
@@ -71,7 +70,7 @@ export const ActivityTable = () => {
         Header: t('translation:tables.titles.price'),
         accessor: ({ price }: rowProps) => (
           <PriceDetailsCell
-            wicp="5.12 WICP"
+            wicp="undefined"
             price={price}
             tableType=""
           />
@@ -114,23 +113,7 @@ export const ActivityTable = () => {
       >
         <TableLayout
           columns={columns}
-          data={loadedCapActivityTableData.map((tableData) => {
-            console.log('.');
-            return {
-              item: {
-                name: `CAP Crowns #${tableData.token_id}`,
-                logo: crownsLogo,
-              },
-              type: tableData.operation,
-              price: `$${tableData.list_price ?? tableData.price}`,
-              from: 'rgblt...whfy',
-              to: 'rgblt...whfy',
-              time: tableData.time,
-              floorDifference: '12.42% above',
-              expiration: '2 days ago',
-              offerFrom: 'Prasanth',
-            };
-          })}
+          data={loadedCapActivityTableData}
           tableType="activity"
         />
       </InfiniteScrollWrapper>

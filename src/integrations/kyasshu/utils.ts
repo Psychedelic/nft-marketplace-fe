@@ -1,11 +1,13 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import axios from 'axios';
+import { Principal } from '@dfinity/principal';
 import { useTranslation } from 'react-i18next';
-import { filterActions, nftsActions, errorActions, useFilterStore } from '../../store';
+import { filterActions, nftsActions, errorActions, useFilterStore, usePlugStore } from '../../store';
 import config from '../../config/env';
 import { FILTER_CONSTANTS, OPERATION_CONSTANTS } from '../../constants';
 import { tableActions } from '../../store/features/tables';
 import { dateRelative } from '../functions/date';
+import crownsLogo from '../../assets/crowns-logo.svg';
 
 export type FetchNFTProps = {
   payload?: object;
@@ -256,20 +258,46 @@ export const fetchCAPActivity = async ({ dispatch }: FetchCAPActivityProps) => {
     const response = await axios.get(`${config.kyasshuMarketplaceAPI}/cap/contract/txns/${config.marketplaceCanisterId}`);
     const { Items } = response.data;
 
-    const result = Items.map((item) => {
+    const result = Items.map((item: any) => {
+      // eslint-disable-next-line no-underscore-dangle
+      const parsedArr = Uint8Array.from(item.event.caller._arr);
+      const principalId = Principal.fromUint8Array(parsedArr);
+      const niceString = principalId.toText();
+
       const capData = {
         operation: getOperation(item.event.operation),
         time: dateRelative(item.event.time),
+        caller: niceString,
       };
       const { details } = item.event;
       details.forEach((detail) => {
         const [key, value] = detail;
         capData[key] = value.U64 ?? value;
       });
+
       return capData;
     });
 
-    dispatch(tableActions.setCapActivityTable(result));
+    console.log(result);
+
+    const loadedCapActivityTableData = result.map((tableData: any) => {
+      const data = {
+        item: {
+          name: `CAP Crowns #${tableData.token_id}`,
+          logo: crownsLogo,
+        },
+        type: tableData.operation,
+        price: `$${tableData.list_price ?? tableData.price}`,
+        from: tableData.caller,
+        to: '-',
+        time: tableData.time,
+        offerFrom: 'Prasanth',
+      };
+
+      return data;
+    });
+
+    dispatch(tableActions.setCapActivityTable(loadedCapActivityTableData));
   } catch (error) {
     dispatch(errorActions.setErrorMessage(error));
   }
