@@ -8,6 +8,7 @@ import {
   useAppDispatch,
   settingsActions,
   useSettingsStore,
+  errorActions,
 } from '../../store';
 import {
   ActionButton,
@@ -272,8 +273,13 @@ export const Filters = () => {
                     type="secondary"
                     text="Apply"
                     handleClick={() => {
-                      if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
-                        applyFilter(`${t('translation:filters.priceRange')}`, priceFilterValue);
+                      if (priceFilterValue.min === '' && priceFilterValue.max === '') {
+                        dispatch(errorActions.setErrorMessage('Price fields cannot be empty'));
+                      } else {
+                        // eslint-disable-next-line no-lonely-if
+                        if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
+                          applyFilter(`${t('translation:filters.priceRange')}`, priceFilterValue);
+                        }
                       }
                     }}
                   />
