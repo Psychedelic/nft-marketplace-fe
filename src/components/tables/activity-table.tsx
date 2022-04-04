@@ -20,6 +20,7 @@ export interface rowProps {
   item: {
     name: string;
     logo: string;
+    token_id: string;
   };
   type: string;
   price: string;
@@ -32,19 +33,25 @@ export interface rowProps {
 export const ActivityTable = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
-  const { loadedCapActivityTableData } = useTableStore();
+  const { loadedCapActivityData, hasMoreData, loadingTableData, nextPageNo } = useTableStore();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     fetchCAPActivity({
       dispatch,
+      pageCount: 0,
     });
   }, []);
 
   const loadMoreData = () => {
+    if (loadingTableData || !hasMoreData) return;
+
     fetchCAPActivity({
       dispatch,
+      pageCount: nextPageNo,
     });
+
+    console.log('works');
   };
 
   const columns = useMemo(
@@ -52,7 +59,7 @@ export const ActivityTable = () => {
       {
         Header: t('translation:tables.titles.item'),
         accessor: ({ item }: rowProps) => (
-          <ItemDetailsCell name={item.name} logo={item.logo} />
+          <ItemDetailsCell name={item.name} id={item.token_id} logo={item.logo} />
         ),
       },
       {
@@ -99,24 +106,24 @@ export const ActivityTable = () => {
   );
 
   return (
-    <Container>
-      <InfiniteScrollWrapper
-        pageStart={0}
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        loadMore={loadedCapActivityTableData.length > 25 ? loadMoreData : () => {}}
-        // hasMore={hasMoreNFTs}
-        // to-do: add loader for table
-        loader="Loading"
-        useWindow={true || false}
-        threshold={250 * 5}
-        className="infinite-loader"
-      >
+    <InfiniteScrollWrapper
+      pageStart={0}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      loadMore={nextPageNo > 0 ? loadMoreData : () => {}}
+      hasMore={hasMoreData}
+      // to-do: add loader for table
+      loader="Loading"
+      useWindow={true || false}
+      threshold={250 * 5}
+      className="infinite-loader"
+    >
+      <Container>
         <TableLayout
           columns={columns}
-          data={loadedCapActivityTableData}
+          data={loadedCapActivityData}
           tableType="activity"
         />
-      </InfiniteScrollWrapper>
-    </Container>
+      </Container>
+    </InfiniteScrollWrapper>
   );
 };

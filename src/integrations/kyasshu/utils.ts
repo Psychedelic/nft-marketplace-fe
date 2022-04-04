@@ -35,6 +35,7 @@ export type CheckNFTOwnerParams = {
 
 export type FetchCAPActivityProps = {
   dispatch: any;
+  pageCount: number;
 };
 
 export const fetchNFTS = async ({
@@ -253,16 +254,22 @@ export const getOperation = (operationType: string) => {
   return operationValue;
 };
 
-export const fetchCAPActivity = async ({ dispatch }: FetchCAPActivityProps) => {
+export const fetchCAPActivity = async ({ dispatch, pageCount }: FetchCAPActivityProps) => {
+  if (pageCount === 0) {
+    dispatch(tableActions.setIsTableDataLoading(true));
+  }
+
   try {
-    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/cap/contract/txns/${config.marketplaceCanisterId}`);
-    const { Items } = response.data;
+    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/cap/contract/txns/${config.marketplaceCanisterId}/?page=${pageCount}`);
+    const { Items, Count } = response.data;
+    let pageNo;
 
     const result = Items.map((item: any) => {
       // eslint-disable-next-line no-underscore-dangle
       const parsedArr = Uint8Array.from(item.event.caller._arr);
       const principalId = Principal.fromUint8Array(parsedArr);
       const niceString = principalId.toText();
+      pageNo = item.page;
 
       const capData = {
         operation: getOperation(item.event.operation),
@@ -270,7 +277,7 @@ export const fetchCAPActivity = async ({ dispatch }: FetchCAPActivityProps) => {
         caller: niceString,
       };
       const { details } = item.event;
-      details.forEach((detail) => {
+      details.forEach((detail: any) => {
         const [key, value] = detail;
         capData[key] = value.U64 ?? value;
       });
@@ -278,13 +285,12 @@ export const fetchCAPActivity = async ({ dispatch }: FetchCAPActivityProps) => {
       return capData;
     });
 
-    console.log(result);
-
     const loadedCapActivityTableData = result.map((tableData: any) => {
       const data = {
         item: {
           name: `CAP Crowns #${tableData.token_id}`,
           logo: crownsLogo,
+          token_id: tableData.token_id,
         },
         type: tableData.operation,
         price: `$${tableData.list_price ?? tableData.price}`,
@@ -297,7 +303,14 @@ export const fetchCAPActivity = async ({ dispatch }: FetchCAPActivityProps) => {
       return data;
     });
 
-    dispatch(tableActions.setCapActivityTable(loadedCapActivityTableData));
+    const actionPayload = {
+      loadedCapActivityTableData,
+      totalPages: pageNo ? parseInt(pageNo, 10) : 0,
+      total: Count ? parseInt(Count, 10) : 0,
+      nextPage: pageCount + 1,
+    };
+
+    dispatch(tableActions.setCapActivityTable(actionPayload));
   } catch (error) {
     dispatch(errorActions.setErrorMessage(error));
   }

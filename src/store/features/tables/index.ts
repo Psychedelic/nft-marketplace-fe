@@ -1,2 +1,2 @@
-export { selectTableState, tableActions } from './table-slice';
-export * from './use-table-store';
+export { selectTableState, tableActions, tableSlice } from './table-slice';
+export { useTableStore } from './use-table-store';
