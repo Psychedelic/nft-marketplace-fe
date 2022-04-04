@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { ItemDetails, ItemLogo, ItemName } from './styles';
 
 export interface ItemDetailsCellProps {
@@ -10,8 +11,10 @@ export const ItemDetailsCell = ({
   name,
   logo,
 }: ItemDetailsCellProps) => (
-  <ItemDetails>
-    <ItemLogo src={logo} alt="crowns" />
-    <ItemName className="item-name">{name}</ItemName>
-  </ItemDetails>
+  <RouterLink to={`/nft/${name}`}>
+    <ItemDetails>
+      <ItemLogo src={logo} alt="crowns" />
+      <ItemName className="item-name">{name}</ItemName>
+    </ItemDetails>
+  </RouterLink>
 );
