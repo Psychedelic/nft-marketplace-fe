@@ -23,6 +23,7 @@ export const useNFTSFetcher = () => {
       price: priceValues && Object.keys(priceValues).length ? {
         min: priceValues?.min,
         max: priceValues?.max,
+        type: 'currentPrice',
       } : undefined,
     };
   }

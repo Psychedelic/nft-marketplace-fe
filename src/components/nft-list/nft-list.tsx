@@ -36,6 +36,7 @@ export const NftList = () => {
           ? {
             min: priceValues?.min,
             max: priceValues?.max,
+            type: 'currentPrice',
           }
           : undefined,
     };
