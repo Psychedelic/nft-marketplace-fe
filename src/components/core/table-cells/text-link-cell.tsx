@@ -13,7 +13,8 @@ export const TextLinkCell = ({
   url,
   type,
 }: TextLinkCellProps) => (
-  <TextLinkDetails type={type} href={url} target="_blank">
+  // TO-DO: Pass in correct route
+  <TextLinkDetails type={type} target="_blank">
     {text}
   </TextLinkDetails>
 );

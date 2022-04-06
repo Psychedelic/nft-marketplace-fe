@@ -179,6 +179,7 @@ export const TextLinkDetails = styled('a', {
   lineHeight: '20px',
   color: '#2253FF',
   textDecoration: 'none',
+  cursor: 'pointer',
 
   variants: {
     type: {
