@@ -32,6 +32,7 @@ export const AccordionHead = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   padding: '30px 25px',
+  flexWrap: 'wrap',
 
   // variants
   variants: {
@@ -45,6 +46,7 @@ export const AccordionHead = styled('div', {
 
 export const AccordionHeadContent = styled('div', {
   display: 'flex',
+  marginBottom: '10px',
 
   variants: {
     flexProperties: {
