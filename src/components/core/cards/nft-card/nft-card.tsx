@@ -16,6 +16,7 @@ import {
   PreviewImage,
   VideoLoader,
   ActionText,
+  NftId,
 } from './styles';
 import { NFTMetadata } from '../../../../declarations/nft';
 import wicpLogo from '../../../../assets/wicpIcon.png';
@@ -60,12 +61,9 @@ export const NftCard = React.memo(
               {notForSale ? (
                 ''
               ) : (
-                <LastOffer>
-                  {forSaleAndOffer
-                    ? `${t('translation:nftCard.offerFor')} `
-                    : `${t('translation:nftCard.last')} `}
-                  <b>{data?.lastOffer}</b>
-                </LastOffer>
+                <NftId>
+                  {data?.id}
+                </NftId>
               )}
               {notForSale ? (
                 ''
