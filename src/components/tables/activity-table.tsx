@@ -15,6 +15,7 @@ import {
 import { TableLayout } from './table-layout';
 import { Container, InfiniteScrollWrapper } from './styles';
 import { fetchCAPActivity } from '../../integrations/kyasshu/utils';
+import { NFTMetadata } from '../../declarations/nft';
 
 export interface rowProps {
   item: {
@@ -28,6 +29,7 @@ export interface rowProps {
   from: string;
   to: string;
   time: string;
+  data: NFTMetadata
 }
 
 export const ActivityTable = () => {
@@ -50,14 +52,13 @@ export const ActivityTable = () => {
       dispatch,
       pageCount: nextPageNo,
     });
-
-    console.log('works');
   };
 
   const columns = useMemo(
     () => [
       {
         Header: t('translation:tables.titles.item'),
+        // eslint-disable-next-line
         accessor: ({ item }: rowProps) => (
           <ItemDetailsCell name={item.name} id={item.token_id} logo={item.logo} />
         ),

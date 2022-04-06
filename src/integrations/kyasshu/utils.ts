@@ -8,6 +8,7 @@ import { FILTER_CONSTANTS, OPERATION_CONSTANTS } from '../../constants';
 import { tableActions } from '../../store/features/tables';
 import { dateRelative } from '../functions/date';
 import crownsLogo from '../../assets/crowns-logo.svg';
+import shortAddress from '../functions/short-address';
 
 export type FetchNFTProps = {
   payload?: object;
@@ -36,6 +37,11 @@ export type CheckNFTOwnerParams = {
 export type FetchCAPActivityProps = {
   dispatch: any;
   pageCount: number;
+};
+
+export type TokenMetadataProps = {
+  dispatch: any;
+  tokenId: any;
 };
 
 export const fetchNFTS = async ({
@@ -254,27 +260,38 @@ export const getOperation = (operationType: string) => {
   return operationValue;
 };
 
+export const getTokenMetadata = async ({ tokenId, dispatch }: TokenMetadataProps) => {
+  try {
+    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${tokenId}`);
+    console.log(response);
+
+    dispatch(tableActions.setTableMetadata(response.data.url));
+  } catch (error) {
+    // dispatch(errorActions.setErrorMessage(error));
+  }
+};
+
 export const fetchCAPActivity = async ({ dispatch, pageCount }: FetchCAPActivityProps) => {
   if (pageCount === 0) {
     dispatch(tableActions.setIsTableDataLoading(true));
   }
 
   try {
-    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/cap/contract/txns/${config.marketplaceCanisterId}/?page=${pageCount}`);
+    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/cap/txns/q3fc5-haaaa-aaaaa-aaahq-cai/?page=${pageCount}`);
     const { Items, Count } = response.data;
     let pageNo;
 
     const result = Items.map((item: any) => {
       // eslint-disable-next-line no-underscore-dangle
-      const parsedArr = Uint8Array.from(item.event.caller._arr);
+      const parsedArr = Uint8Array.from(Object.values(item.event.caller._arr));
       const principalId = Principal.fromUint8Array(parsedArr);
-      const niceString = principalId.toText();
+      const principalIdString = shortAddress(principalId.toText());
       pageNo = item.page;
 
       const capData = {
         operation: getOperation(item.event.operation),
         time: dateRelative(item.event.time),
-        caller: niceString,
+        caller: principalIdString,
       };
       const { details } = item.event;
       details.forEach((detail: any) => {
@@ -289,7 +306,7 @@ export const fetchCAPActivity = async ({ dispatch, pageCount }: FetchCAPActivity
       const data = {
         item: {
           name: `CAP Crowns #${tableData.token_id}`,
-          logo: crownsLogo,
+          // logo: crownsLogo,
           token_id: tableData.token_id,
         },
         type: tableData.operation,
@@ -307,8 +324,10 @@ export const fetchCAPActivity = async ({ dispatch, pageCount }: FetchCAPActivity
       loadedCapActivityTableData,
       totalPages: pageNo ? parseInt(pageNo, 10) : 0,
       total: Count ? parseInt(Count, 10) : 0,
-      nextPage: pageCount + 1,
+      nextPage: Count === 64 ? pageCount + 1 : 0,
     };
+
+    console.log(pageNo && parseInt(pageNo, 10));
 
     dispatch(tableActions.setCapActivityTable(actionPayload));
   } catch (error) {

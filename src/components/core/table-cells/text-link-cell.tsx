@@ -13,7 +13,8 @@ export const TextLinkCell = ({
   url,
   type,
 }: TextLinkCellProps) => (
-  <TextLinkDetails type={type} href={url} target="_blank">
+  // TO-DO: Make variable
+  <TextLinkDetails type={type} href={`https://dashboard.internetcomputer.org/account/${text}`} target="_blank">
     {text}
   </TextLinkDetails>
 );

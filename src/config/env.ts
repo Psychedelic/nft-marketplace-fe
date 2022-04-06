@@ -24,6 +24,7 @@ type ConfigParams = {
   marketplaceCanisterId: string;
   wICPCanisterId: string;
 };
+
 type Config = {
   production: ConfigParams;
   staging: ConfigParams;

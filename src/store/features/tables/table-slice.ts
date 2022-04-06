@@ -4,8 +4,13 @@ import {
 } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
 
+interface LoadedTableMetaData {
+  media: string;
+}
+
 interface TableState {
   loadedCapActivityData: Array<object>;
+  loadedTableMetaData: LoadedTableMetaData;
   loadingTableData: boolean;
   failedToLoadTableData: boolean;
   hasMoreData: boolean;
@@ -21,6 +26,9 @@ interface LoadedTableData {
 
 const initialState: TableState = {
   loadedCapActivityData: [],
+  loadedTableMetaData: {
+    media: '',
+  },
   loadingTableData: false,
   failedToLoadTableData: false,
   hasMoreData: false,
@@ -44,10 +52,8 @@ export const tableSlice = createSlice({
       const { nextPage, totalPages, loadedCapActivityTableData } = action.payload;
       state.loadingTableData = false;
       if (nextPage === 0) {
-        console.log('nextPage', 0);
         state.loadedCapActivityData = loadedCapActivityTableData;
       } else {
-        console.log('nextPage', nextPage);
         state.loadedCapActivityData.push(...loadedCapActivityTableData);
       }
       if (nextPage > totalPages) {
@@ -60,6 +66,9 @@ export const tableSlice = createSlice({
     setFailedToLoadTableData: (state, action: PayloadAction<boolean>) => {
       state.failedToLoadTableData = !action.payload;
       state.loadingTableData = action.payload;
+    },
+    setTableMetadata: (state, action: PayloadAction<string>) => {
+      state.loadedTableMetaData.media = action.payload;
     },
   },
 });
