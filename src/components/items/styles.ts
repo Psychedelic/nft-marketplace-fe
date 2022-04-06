@@ -43,6 +43,7 @@ export const Flex = styled('div', {
 export const ContentFlex = styled('div', {
   display: 'flex',
   alignItems: 'center',
+  flexWrap: 'wrap',
 });
 
 export const SkeletonListWrapper = styled('div', {
