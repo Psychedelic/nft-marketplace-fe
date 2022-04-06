@@ -2,8 +2,8 @@ import crc32 from 'buffer-crc32';
 import CryptoJS from 'crypto-js';
 import { Buffer } from 'buffer';
 import { Principal } from '@dfinity/principal';
+import config from '../../config/env';
 
-/* eslint-disable no-bitwise, no-prototype-builtins */
 /* eslint-disable no-bitwise, no-prototype-builtins */
 
 export const ACCOUNT_DOMAIN_SEPERATOR = '\x0Aaccount-id';
@@ -95,4 +95,4 @@ export const getAccountId = (
   return val;
 };
 
-export const getICAccountLink = (principalId: string): string => `https://dashboard.internetcomputer.org/account/${getAccountId(principalId)}`;
+export const getICAccountLink = (principalId: string): string => `${config.icExplorer}/account/${getAccountId(principalId)}`;

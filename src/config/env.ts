@@ -20,6 +20,7 @@ type ConfigParams = {
   host: string;
   collectionId: string;
   kyasshuMarketplaceAPI: string;
+  icExplorer: string;
   crownsCanisterId: string;
   marketplaceCanisterId: string;
   wICPCanisterId: string;
@@ -42,6 +43,7 @@ const config: Config = {
     // can we get rid of collectionId?
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    icExplorer: 'https://dashboard.internetcomputer.org',
     crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
@@ -55,6 +57,7 @@ const config: Config = {
     // can we get rid of collectionId?
     collectionId: '5hzni-qqaaa-aaaaa-aaboq-cai',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
+    icExplorer: 'https://dashboard.internetcomputer.org',
     crownsCanisterId: '5hzni-qqaaa-aaaaa-aaboq-cai',
     marketplaceCanisterId: 'yva2f-aiaaa-aaaaa-aabqa-cai',
     wICPCanisterId: 'y4drz-waaaa-aaaaa-aabrq-cai',
@@ -68,6 +71,7 @@ const config: Config = {
     // can we get rid of collectionId?
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    icExplorer: 'https://dashboard.internetcomputer.org',
     crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
@@ -81,6 +85,7 @@ const config: Config = {
     // can we get rid of collectionId?
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    icExplorer: 'https://dashboard.internetcomputer.org',
     crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',

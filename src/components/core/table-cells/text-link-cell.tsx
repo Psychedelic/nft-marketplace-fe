@@ -12,16 +12,12 @@ export const TextLinkCell = ({
   text,
   url,
   type,
-}: TextLinkCellProps) => {
-  console.log('.');
-  return (
-    // TO-DO: Make variable
-    <TextLinkDetails
-      type={type}
-      href={url}
-      target="_blank"
-    >
-      {text}
-    </TextLinkDetails>
-  );
-};
+}: TextLinkCellProps) => (
+  <TextLinkDetails
+    type={type}
+    href={url}
+    target="_blank"
+  >
+    {text}
+  </TextLinkDetails>
+);

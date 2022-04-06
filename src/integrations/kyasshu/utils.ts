@@ -263,9 +263,9 @@ export const getOperation = (operationType: string) => {
 export const getTokenMetadata = async ({ tokenId, dispatch }: TokenMetadataProps) => {
   try {
     const response = await axios.get(`${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${tokenId}`);
-    dispatch(tableActions.setTableMetadata(response.data.metadata.thumbnail.value.TextContent));
+    dispatch(tableActions.setTableMetadata(response?.data?.metadata?.thumbnail?.value?.TextContent));
   } catch (error) {
-    // dispatch(errorActions.setErrorMessage(error));
+    console.log(error);
   }
 };
 
@@ -280,11 +280,11 @@ export const fetchCAPActivity = async ({ dispatch, pageCount }: FetchCAPActivity
     let pageNo;
 
     const result = Items.map((item: any) => {
+      pageNo = item.page;
       // eslint-disable-next-line no-underscore-dangle
       const parsedArr = Uint8Array.from(Object.values(item.event.caller._arr));
       const callerPrincipalId = Principal.fromUint8Array(parsedArr);
       const callerPrincipalIdString = shortAddress(callerPrincipalId.toText());
-      pageNo = item.page;
 
       const capData = {
         operation: getOperation(item.event.operation),

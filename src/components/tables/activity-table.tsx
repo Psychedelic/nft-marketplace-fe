@@ -94,7 +94,7 @@ export const ActivityTable = () => {
       {
         Header: t('translation:tables.titles.to'),
         accessor: ({ to }: rowProps) => (
-          <TextLinkCell text={to} url="" type="" />
+          <TextLinkCell text={to} type="" />
         ),
       },
       {
