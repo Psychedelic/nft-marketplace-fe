@@ -132,6 +132,7 @@ export const Filters = () => {
                     onClick={() => {
                       dispatch(filterActions.clearAllFilters());
                       dispatch(settingsActions.setPriceApplyButton(false));
+                      dispatch(filterActions.setMyNfts(false));
                     }}
                   >
                     {`${t('translation:filters.clearAll')}`}
