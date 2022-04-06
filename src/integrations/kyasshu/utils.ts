@@ -2,13 +2,13 @@
 import axios from 'axios';
 import { Principal } from '@dfinity/principal';
 import { useTranslation } from 'react-i18next';
-import { filterActions, nftsActions, errorActions, useFilterStore, usePlugStore } from '../../store';
+import { filterActions, nftsActions, errorActions, useFilterStore } from '../../store';
 import config from '../../config/env';
 import { FILTER_CONSTANTS, OPERATION_CONSTANTS } from '../../constants';
 import { tableActions } from '../../store/features/tables';
 import { dateRelative } from '../functions/date';
-import crownsLogo from '../../assets/crowns-logo.svg';
 import shortAddress from '../functions/short-address';
+import { getICAccountLink } from '../functions/account-id';
 
 export type FetchNFTProps = {
   payload?: object;
@@ -263,9 +263,7 @@ export const getOperation = (operationType: string) => {
 export const getTokenMetadata = async ({ tokenId, dispatch }: TokenMetadataProps) => {
   try {
     const response = await axios.get(`${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${tokenId}`);
-    console.log(response);
-
-    dispatch(tableActions.setTableMetadata(response.data.url));
+    dispatch(tableActions.setTableMetadata(response.data.metadata.thumbnail.value.TextContent));
   } catch (error) {
     // dispatch(errorActions.setErrorMessage(error));
   }
@@ -284,14 +282,15 @@ export const fetchCAPActivity = async ({ dispatch, pageCount }: FetchCAPActivity
     const result = Items.map((item: any) => {
       // eslint-disable-next-line no-underscore-dangle
       const parsedArr = Uint8Array.from(Object.values(item.event.caller._arr));
-      const principalId = Principal.fromUint8Array(parsedArr);
-      const principalIdString = shortAddress(principalId.toText());
+      const callerPrincipalId = Principal.fromUint8Array(parsedArr);
+      const callerPrincipalIdString = shortAddress(callerPrincipalId.toText());
       pageNo = item.page;
 
       const capData = {
         operation: getOperation(item.event.operation),
         time: dateRelative(item.event.time),
-        caller: principalIdString,
+        caller: callerPrincipalIdString,
+        callerDfinityExplorerUrl: getICAccountLink(callerPrincipalId.toText()),
       };
       const { details } = item.event;
       details.forEach((detail: any) => {
@@ -306,7 +305,6 @@ export const fetchCAPActivity = async ({ dispatch, pageCount }: FetchCAPActivity
       const data = {
         item: {
           name: `CAP Crowns #${tableData.token_id}`,
-          // logo: crownsLogo,
           token_id: tableData.token_id,
         },
         type: tableData.operation,
@@ -315,6 +313,7 @@ export const fetchCAPActivity = async ({ dispatch, pageCount }: FetchCAPActivity
         to: '-',
         time: tableData.time,
         offerFrom: 'Prasanth',
+        callerDfinityExplorerUrl: tableData.callerDfinityExplorerUrl,
       };
 
       return data;
@@ -324,10 +323,8 @@ export const fetchCAPActivity = async ({ dispatch, pageCount }: FetchCAPActivity
       loadedCapActivityTableData,
       totalPages: pageNo ? parseInt(pageNo, 10) : 0,
       total: Count ? parseInt(Count, 10) : 0,
-      nextPage: Count === 64 ? pageCount + 1 : 0,
+      nextPage: Count === 64 ? pageCount + 1 : pageCount,
     };
-
-    console.log(pageNo && parseInt(pageNo, 10));
 
     dispatch(tableActions.setCapActivityTable(actionPayload));
   } catch (error) {

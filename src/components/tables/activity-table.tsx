@@ -30,6 +30,7 @@ export interface rowProps {
   to: string;
   time: string;
   data: NFTMetadata
+  callerDfinityExplorerUrl: string,
 }
 
 export const ActivityTable = () => {
@@ -86,8 +87,8 @@ export const ActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.from'),
-        accessor: ({ from }: rowProps) => (
-          <TextLinkCell text={from} url="" type="" />
+        accessor: ({ from, callerDfinityExplorerUrl }: rowProps) => (
+          <TextLinkCell text={from} url={callerDfinityExplorerUrl} type="" />
         ),
       },
       {

@@ -25,12 +25,10 @@ export const ItemDetailsCell = ({
     });
   }, []);
 
-  console.log(loadedTableMetaData.media);
-
   return (
     <RouterLink to={`/nft/${id}`}>
       <ItemDetails>
-        <ItemLogo src={loadedTableMetaData.media ? loadedTableMetaData.media : logo} alt="crowns" />
+        <ItemLogo src={loadedTableMetaData.media} alt="crowns" />
         <ItemName className="item-name">{name}</ItemName>
       </ItemDetails>
     </RouterLink>
