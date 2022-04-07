@@ -1,4 +1,5 @@
 import React from 'react';
+import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
 import {
   useThemeStore,
@@ -70,14 +71,12 @@ export const CollectionOverview = () => {
             />
           </LinkButton>
 
-          <Tooltip text={t('translation:common.comingSoon')}>
-            <LinkButton>
-              <img
-                src={isLightTheme ? back : backDark}
-                alt={t('translation:buttons.links.back')}
-              />
-            </LinkButton>
-          </Tooltip>
+          <LinkButton handleClick={() => copyToClipboard(window.location.href)}>
+            <img
+              src={isLightTheme ? back : backDark}
+              alt={t('translation:buttons.links.back')}
+            />
+          </LinkButton>
         </ButtonsWrapper>
       </NftMetadataContent>
     </NftMetadataWrapper>
