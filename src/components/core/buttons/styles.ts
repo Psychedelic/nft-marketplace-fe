@@ -88,38 +88,24 @@ export const LinkButtonStyles = styled('a', {
   },
 });
 
-export const PlugButtonContainer = styled('button', {
-  // base styles
-  padding: '2px',
+export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: '16px',
+  padding: '15px',
+  position: 'relative',
+  fontStyle: 'normal',
   fontWeight: '500',
+  fontSize: '16px',
   lineHeight: '19px',
-  borderRadius: '14px',
-  border: 'none',
-  marginLeft: '10px',
-  background:
-    // eslint-disable-next-line max-len
-    'linear-gradient(93.07deg, #FFD719 0.61%, #F754D4 33.98%, #1FD1EC 65.84%, #48FA6B 97.7%)',
+  cursor: 'pointer',
 
-  '&:hover': {
-    cursor: 'pointer',
+  '& img': {
+    marginRight: '15px',
   },
-});
 
-export const PlugButtonText = styled('div', {
-  // base styles
-  width: '136px',
-  height: '40px',
-  backgroundColor: '$buttonBackgroundColor',
-  color: '$mainTextColor',
-  borderRadius: '14px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontFamily: 'proxima-nova, sans-serif',
+  '& p': {
+    margin: '0px',
+  },
 });
 
 export const IconButtonStyles = styled('div', {
@@ -141,13 +127,4 @@ export const IconButtonStyles = styled('div', {
   '&:last-child': {
     marginRight: '0px',
   },
-});
-
-export const PlugIcon = styled('img', {
-  marginRight: '10px',
-  width: '12px',
-});
-
-export const PlugArrowDownIcon = styled('img', {
-  marginLeft: '10px',
 });
