@@ -1,6 +1,6 @@
 import React, { useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PlugButton } from '../core';
+import { PlugButton } from './plug-button';
 import {
   usePlugStore,
   plugActions,

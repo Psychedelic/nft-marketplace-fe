@@ -5,7 +5,7 @@ import {
   usePlugStore,
   useThemeStore,
   plugActions,
-} from '../../../store';
+} from '../../store';
 import {
   PlugButtonContainer,
   PlugButtonText,
@@ -14,12 +14,12 @@ import {
   ConnectToPlugButton,
   Flex,
 } from './styles';
-import plugIcon from '../../../assets/plug-icon.svg';
-import plugIconDark from '../../../assets/plug-icon-dark.svg';
-import arrowdown from '../../../assets/arrowdown.svg';
-import arrowdownDark from '../../../assets/arrowdown-dark.svg';
-import offers from '../../../assets/buttons/offers.svg';
-import disconnect from '../../../assets/buttons/disconnect.svg';
+import plugIcon from '../../assets/plug-icon.svg';
+import plugIconDark from '../../assets/plug-icon-dark.svg';
+import arrowdown from '../../assets/arrowdown.svg';
+import arrowdownDark from '../../assets/arrowdown-dark.svg';
+import offers from '../../assets/buttons/offers.svg';
+import disconnect from '../../assets/buttons/disconnect.svg';
 
 export type PlugButtonProps = {
   handleClick: () => void;
