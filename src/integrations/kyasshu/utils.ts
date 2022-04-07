@@ -8,7 +8,7 @@ import { FILTER_CONSTANTS, OPERATION_CONSTANTS } from '../../constants';
 import { tableActions } from '../../store/features/tables';
 import { dateRelative } from '../functions/date';
 import shortAddress from '../functions/short-address';
-import { getICAccountLink } from '../functions/account-id';
+import { getICAccountLink } from '../../utils/account-id';
 
 export type FetchNFTProps = {
   payload?: object;
