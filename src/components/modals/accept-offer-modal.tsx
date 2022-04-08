@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton, Completed } from '../core';
+import { ActionButton, Completed, Pending } from '../core';
 import infoLogo from '../../assets/info-icon.svg';
 import crownsLogo from '../../assets/crowns-logo.svg';
 import wicpIcon from '../../assets/wicpIcon.png';
@@ -57,7 +57,7 @@ export const AcceptOfferModal = ({
   const { loadedNFTS } = useNFTSStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  // Accept offer modal steps: offerInfo/accepted
+  // Accept offer modal steps: offerInfo/pending/accepted
   const [modalStep, setModalStep] = useState<string>(
     LISTING_STATUS_CODES.OfferInfo,
   );
@@ -74,6 +74,12 @@ export const AcceptOfferModal = ({
 
   const handleModalClose = () => {
     setModalOpened(false);
+  };
+
+  const handleAcceptOffer = async () => {
+    if (!id) return;
+
+    setModalStep(LISTING_STATUS_CODES.Pending);
   };
 
   const totalEarningsInWICP = totalPriceCalculator({
@@ -224,8 +230,47 @@ export const AcceptOfferModal = ({
                 <ActionButton
                   type="primary"
                   text={t('translation:modals.buttons.acceptOffer')}
+                  handleClick={handleAcceptOffer}
+                />
+              </ModalButtonWrapper>
+            </ModalButtonsList>
+          </Container>
+        )}
+        {/*
+          ---------------------------------
+          Step: 2 -> pending
+          ---------------------------------
+        */}
+        {modalStep === LISTING_STATUS_CODES.Pending && (
+          <Container>
+            {/*
+              ---------------------------------
+              Pending Header
+              ---------------------------------
+            */}
+            <ModalHeader>
+              <ModalTitle>
+                {t('translation:modals.title.pendingConfirmation')}
+              </ModalTitle>
+            </ModalHeader>
+            {/*
+              ---------------------------------
+              Pending details
+              ---------------------------------
+            */}
+            <Pending />
+            {/*
+              ---------------------------------
+              Pending Action Buttons
+              ---------------------------------
+            */}
+            <ModalButtonsList>
+              <ModalButtonWrapper fullWidth>
+                <ActionButton
+                  type="secondary"
+                  text={t('translation:modals.buttons.cancel')}
                   handleClick={() => {
-                    setModalStep(LISTING_STATUS_CODES.Accepted);
+                    setModalStep(LISTING_STATUS_CODES.OfferInfo);
                   }}
                 />
               </ModalButtonWrapper>
@@ -234,7 +279,7 @@ export const AcceptOfferModal = ({
         )}
         {/*
           ---------------------------------
-          Step: 2 -> accepted
+          Step: 3 -> accepted
           ---------------------------------
         */}
         {modalStep === LISTING_STATUS_CODES.Accepted && (
