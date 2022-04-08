@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Completed } from '../core';
@@ -49,7 +50,7 @@ export const AcceptOfferModal = ({
   formattedPrice,
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
-  console.log(price, 'price');
+  const { id } = useParams();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Accept offer modal steps: offerInfo/accepted
