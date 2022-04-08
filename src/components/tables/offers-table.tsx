@@ -62,13 +62,6 @@ export const OffersTable = () => {
         ),
       },
       {
-        id: 'expiration',
-        Header: t('translation:tables.titles.expiration'),
-        accessor: ({ expiration }: rowProps) => (
-          <TextCell text={expiration} type="offers" />
-        ),
-      },
-      {
         id: 'from',
         Header: t('translation:tables.titles.from'),
         accessor: ({ offerFrom }: rowProps) => (
