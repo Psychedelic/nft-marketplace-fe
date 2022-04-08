@@ -7,8 +7,6 @@ import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-offers-data';
 import { Container, ButtonWrapper } from './styles';
 
-import { usePlugStore } from '../../store';
-
 export type OffersTableProps = {
   isConnectedOwner?: boolean;
   lastSalePrice?: string;
@@ -21,9 +19,6 @@ export interface rowProps {
   formattedPrice: string;
 }
 
-// TODO: Add logic to show accept offer button based on
-// connection status and owner details
-
 export const OffersTable = ({
   isConnectedOwner,
   lastSalePrice,
@@ -32,8 +27,6 @@ export const OffersTable = ({
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
-
-  const { isConnected } = usePlugStore();
 
   useEffect(() => {
     if (!isConnectedOwner && !columnsToHide.includes('action')) {
@@ -47,7 +40,7 @@ export const OffersTable = ({
     );
 
     setColumnsToHide(newColumnsToHide);
-  }, [isConnected, isConnectedOwner]);
+  }, [isConnectedOwner]);
 
   const columns = useMemo(
     () => [
