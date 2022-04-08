@@ -131,7 +131,7 @@ export const OfferAccordion = ({
               </h4>
             </div>
           </FlexRight>
-          <h3>{marketPrice}</h3>
+          <h3>{isListedWithPrice && marketPrice}</h3>
         </AccordionHeadContent>
         {(isConnected && (
           <OnConnected isListed={isListed} isOwner={isOwner} />
