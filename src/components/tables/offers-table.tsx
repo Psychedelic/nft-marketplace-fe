@@ -9,6 +9,10 @@ import { Container, ButtonWrapper } from './styles';
 
 import { usePlugStore } from '../../store';
 
+export type OffersTableProps = {
+  isOwner?: boolean;
+};
+
 export interface rowProps {
   price: string;
   floorDifference: string;
@@ -19,7 +23,7 @@ export interface rowProps {
 // TODO: Add logic to show accept offer button based on
 // connection status and owner details
 
-export const OffersTable = () => {
+export const OffersTable = ({ isOwner }: OffersTableProps) => {
   const { t } = useTranslation();
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
