@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -35,6 +35,8 @@ import {
 } from './styles';
 
 import { totalPriceCalculator } from '../../integrations/marketplace/price.utils';
+import { useNFTSStore } from '../../store';
+import { NFTMetadata } from '../../declarations/nft';
 
 export interface AcceptOfferProps {
   price: string;
@@ -51,10 +53,16 @@ export const AcceptOfferModal = ({
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
+  const { loadedNFTS } = useNFTSStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Accept offer modal steps: offerInfo/accepted
   const [modalStep, setModalStep] = useState<string>('offerInfo');
+
+  const nftDetails: NFTMetadata | undefined = useMemo(
+    () => loadedNFTS.find((nft) => nft.id === id),
+    [loadedNFTS, id],
+  );
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -138,8 +146,8 @@ export const AcceptOfferModal = ({
             <SaleContentWrapper>
               <ItemDetailsWrapper>
                 <ItemDetails>
-                  <ItemLogo src={crownsLogo} alt="crowns" />
-                  <ItemName>CAP Crowns #2713</ItemName>
+                  <ItemLogo src={nftDetails?.preview} alt="crowns" />
+                  <ItemName>{`CAP Crowns #${nftDetails?.id}`}</ItemName>
                 </ItemDetails>
                 <PriceDetails>
                   <WICPContainer size="small">
