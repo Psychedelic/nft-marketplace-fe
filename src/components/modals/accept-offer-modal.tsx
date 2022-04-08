@@ -37,6 +37,7 @@ import {
 import { totalPriceCalculator } from '../../integrations/marketplace/price.utils';
 import { useNFTSStore } from '../../store';
 import { NFTMetadata } from '../../declarations/nft';
+import { LISTING_STATUS_CODES } from '../../constants/listing';
 
 export interface AcceptOfferProps {
   price: string;
@@ -57,16 +58,18 @@ export const AcceptOfferModal = ({
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Accept offer modal steps: offerInfo/accepted
-  const [modalStep, setModalStep] = useState<string>('offerInfo');
+  const [modalStep, setModalStep] = useState<string>(
+    LISTING_STATUS_CODES.OfferInfo,
+  );
 
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
     [loadedNFTS, id],
   );
 
-  const handleModalOpen = (status: boolean) => {
-    setModalOpened(status);
-    setModalStep('offerInfo');
+  const handleModalOpen = (modalOpenedStatus: boolean) => {
+    setModalOpened(modalOpenedStatus);
+    setModalStep(LISTING_STATUS_CODES.OfferInfo);
   };
 
   const handleModalClose = () => {
@@ -123,7 +126,7 @@ export const AcceptOfferModal = ({
           Step: 1 -> offerInfo
           ---------------------------------
         */}
-        {modalStep === 'offerInfo' && (
+        {modalStep === LISTING_STATUS_CODES.OfferInfo && (
           <Container>
             {/*
               ---------------------------------
@@ -222,7 +225,7 @@ export const AcceptOfferModal = ({
                   type="primary"
                   text={t('translation:modals.buttons.acceptOffer')}
                   handleClick={() => {
-                    setModalStep('accepted');
+                    setModalStep(LISTING_STATUS_CODES.Accepted);
                   }}
                 />
               </ModalButtonWrapper>
@@ -234,7 +237,7 @@ export const AcceptOfferModal = ({
           Step: 2 -> accepted
           ---------------------------------
         */}
-        {modalStep === 'accepted' && (
+        {modalStep === LISTING_STATUS_CODES.Accepted && (
           <Container>
             {/*
               ---------------------------------
@@ -265,7 +268,7 @@ export const AcceptOfferModal = ({
                 <ActionButton
                   type="primary"
                   text={t('translation:modals.buttons.done')}
-                  handleClick={handleModalClose}
+                  handleClick={() => handleModalOpen(false)}
                 />
               </ModalButtonWrapper>
             </ModalButtonsList>
