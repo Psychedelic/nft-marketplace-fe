@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Completed, Pending } from '../core';
 import infoLogo from '../../assets/info-icon.svg';
-import crownsLogo from '../../assets/crowns-logo.svg';
 import wicpIcon from '../../assets/wicpIcon.png';
 import {
   AcceptOfferModalTrigger,
@@ -42,6 +41,7 @@ import { LISTING_STATUS_CODES } from '../../constants/listing';
 export interface AcceptOfferProps {
   price: string;
   formattedPrice: string;
+  offerFrom: string;
 }
 
 /* --------------------------------------------------------------------------
@@ -51,6 +51,7 @@ export interface AcceptOfferProps {
 export const AcceptOfferModal = ({
   price,
   formattedPrice,
+  offerFrom,
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
   const { id } = useParams();

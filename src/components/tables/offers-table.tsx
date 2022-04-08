@@ -78,6 +78,7 @@ export const OffersTable = ({
             <AcceptOfferModal
               price={price}
               formattedPrice={formattedPrice}
+              offerFrom={offerFrom}
             />
           </ButtonWrapper>
         ),
