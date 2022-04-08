@@ -225,5 +225,8 @@
     "connectMessage": "Connect to see your NFT’s",
     "noNfts": "You don’t own any NFT’s yet",
     "noNftsAction": "Browse NFT’s for Sale"
+  },
+  "errorMessages": {
+    "priceEmptyField": "You need to fill in both values"
   }
 }

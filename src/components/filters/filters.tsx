@@ -106,6 +106,19 @@ export const Filters = () => {
     }
   };
 
+  const handlePriceFilter = () => {
+    if (priceFilterValue.min === '' && priceFilterValue.max === '') {
+      dispatch(filterActions.removePriceFilter(`${t('translation:filters.priceRange')}`));
+    } else if (priceFilterValue.min === '' || priceFilterValue.max === '') {
+      dispatch(errorActions.setErrorMessage(`${t('translation:errorMessages.priceEmptyField')}`));
+    } else {
+      // eslint-disable-next-line no-lonely-if
+      if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
+        applyFilter(`${t('translation:filters.priceRange')}`, priceFilterValue);
+      }
+    }
+  };
+
   return (
     <Container>
       <CloseFilterContainer opened={!collapsed}>
@@ -272,16 +285,7 @@ export const Filters = () => {
                   <ActionButton
                     type="secondary"
                     text="Apply"
-                    handleClick={() => {
-                      if (priceFilterValue.min === '' && priceFilterValue.max === '') {
-                        dispatch(errorActions.setErrorMessage('Price fields cannot be empty'));
-                      } else {
-                        // eslint-disable-next-line no-lonely-if
-                        if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
-                          applyFilter(`${t('translation:filters.priceRange')}`, priceFilterValue);
-                        }
-                      }
-                    }}
+                    handleClick={handlePriceFilter}
                   />
                 )}
               </FilterGroup>
