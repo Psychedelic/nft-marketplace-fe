@@ -8,6 +8,7 @@ import {
   useAppDispatch,
   settingsActions,
   useSettingsStore,
+  errorActions,
 } from '../../store';
 import {
   ActionButton,
@@ -102,6 +103,19 @@ export const Filters = () => {
   const applyPriceFilter = () => {
     if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
       dispatch(settingsActions.setPriceApplyButton(true));
+    }
+  };
+
+  const handlePriceFilter = () => {
+    if (priceFilterValue.min === '' && priceFilterValue.max === '') {
+      dispatch(filterActions.removePriceFilter(`${t('translation:filters.priceRange')}`));
+    } else if (priceFilterValue.min === '' || priceFilterValue.max === '') {
+      dispatch(errorActions.setErrorMessage(`${t('translation:errorMessages.priceEmptyField')}`));
+    } else {
+      // eslint-disable-next-line no-lonely-if
+      if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
+        applyFilter(`${t('translation:filters.priceRange')}`, priceFilterValue);
+      }
     }
   };
 
@@ -272,11 +286,7 @@ export const Filters = () => {
                   <ActionButton
                     type="secondary"
                     text="Apply"
-                    handleClick={() => {
-                      if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
-                        applyFilter(`${t('translation:filters.priceRange')}`, priceFilterValue);
-                      }
-                    }}
+                    handleClick={handlePriceFilter}
                   />
                 )}
               </FilterGroup>
