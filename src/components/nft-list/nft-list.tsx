@@ -62,7 +62,7 @@ export const NftList = () => {
   }
 
   if (isMyNfts && isConnected && defaultFilters.length && !loadedNFTS.length) {
-    return <EmptyState message="You don't own any NFTs with those filters" buttonText="Browse Other NFTs" />;
+    return <EmptyState message={`${t('translation:emptyStates.noOwnedFilteredNfts')}`} buttonText={`${t('translation:emptyStates.noFilteredNftsAction')}`} />;
   }
 
   if (isMyNfts && isConnected && !loadedNFTS.length) {
@@ -70,7 +70,7 @@ export const NftList = () => {
   }
 
   if (defaultFilters.length && !loadedNFTS.length) {
-    return <EmptyState message="We cannot find any NFTs with those filters" buttonText={`${t('translation:emptyStates.noNftsAction')}`} />;
+    return <EmptyState message={`${t('translation:emptyStates.noFilteredNfts')}`} buttonText={`${t('translation:emptyStates.noNftsAction')}`} />;
   }
 
   return (
