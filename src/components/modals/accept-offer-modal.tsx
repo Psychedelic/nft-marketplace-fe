@@ -33,14 +33,21 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
-// TODO: Update accept offer modal with dynamic data
+export interface AcceptOfferProps {
+  price: string;
+  formattedPrice: string;
+}
 
 /* --------------------------------------------------------------------------
  * Accept Offer Modal Component
  * --------------------------------------------------------------------------*/
 
-export const AcceptOfferModal = () => {
+export const AcceptOfferModal = ({
+  price,
+  formattedPrice,
+}: AcceptOfferProps) => {
   const { t } = useTranslation();
+  console.log(price, 'price');
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Accept offer modal steps: offerInfo/accepted
@@ -124,9 +131,9 @@ export const AcceptOfferModal = () => {
                 <PriceDetails>
                   <WICPContainer size="small">
                     <WICPLogo src={wicpIcon} alt="wicp" />
-                    <WICPText size="small">5.12 WICP</WICPText>
+                    <WICPText size="small">{`${price} WICP`}</WICPText>
                   </WICPContainer>
-                  <PriceText>$221.93</PriceText>
+                  <PriceText>{`$${formattedPrice}`}</PriceText>
                 </PriceDetails>
               </ItemDetailsWrapper>
               <FeeContainer>

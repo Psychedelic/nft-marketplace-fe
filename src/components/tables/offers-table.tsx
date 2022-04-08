@@ -73,9 +73,12 @@ export const OffersTable = ({
       {
         id: 'action',
         Header: t('translation:tables.titles.action'),
-        accessor: () => (
+        accessor: ({ price, formattedPrice }) => (
           <ButtonWrapper>
-            <AcceptOfferModal />
+            <AcceptOfferModal
+              price={price}
+              formattedPrice={formattedPrice}
+            />
           </ButtonWrapper>
         ),
       },
