@@ -14,6 +14,10 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+// TODO: Add marketplace integrations to buy NFT
+// TODO: Update store on successful purchase of NFT
+// TODO: Update modal steps by referring constant variables
+
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
  * --------------------------------------------------------------------------*/
