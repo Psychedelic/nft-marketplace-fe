@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton, Completed } from '../core';
+import { ActionButton, Completed, Pending } from '../core';
 import infoLogo from '../../assets/info-icon.svg';
-import crownsLogo from '../../assets/crowns-logo.svg';
 import wicpIcon from '../../assets/wicpIcon.png';
 import {
   AcceptOfferModalTrigger,
@@ -33,25 +33,97 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+import { totalPriceCalculator } from '../../integrations/marketplace/price.utils';
+import {
+  useNFTSStore,
+  useAppDispatch,
+  nftsActions,
+} from '../../store';
+import { NFTMetadata } from '../../declarations/nft';
+import { acceptOffer } from '../../store/features/marketplace';
+import { LISTING_STATUS_CODES } from '../../constants/listing';
+
+export interface AcceptOfferProps {
+  price: string;
+  formattedPrice: string;
+  offerFrom: string;
+}
+
 /* --------------------------------------------------------------------------
  * Accept Offer Modal Component
  * --------------------------------------------------------------------------*/
 
-export const AcceptOfferModal = () => {
+export const AcceptOfferModal = ({
+  price,
+  formattedPrice,
+  offerFrom,
+}: AcceptOfferProps) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const { loadedNFTS } = useNFTSStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  // Accept offer modal steps: offerInfo/accepted
-  const [modalStep, setModalStep] = useState<string>('offerInfo');
+  // Accept offer modal steps: offerInfo/pending/accepted
+  const [modalStep, setModalStep] = useState<string>(
+    LISTING_STATUS_CODES.OfferInfo,
+  );
 
-  const handleModalOpen = (status: boolean) => {
-    setModalOpened(status);
-    setModalStep('offerInfo');
+  const nftDetails: NFTMetadata | undefined = useMemo(
+    () => loadedNFTS.find((nft) => nft.id === id),
+    [loadedNFTS, id],
+  );
+
+  const handleModalOpen = (modalOpenedStatus: boolean) => {
+    setModalOpened(modalOpenedStatus);
+    setModalStep(LISTING_STATUS_CODES.OfferInfo);
+
+    const isAccepted = modalStep === LISTING_STATUS_CODES.Accepted;
+
+    if (modalOpenedStatus || !id || !isAccepted) return;
+
+    // Update NFT owner details in store
+    // on successful offer acceptance and closing the modal
+    dispatch(
+      nftsActions.acceptNFTOffer({
+        id,
+        buyerId: offerFrom,
+      }),
+    );
   };
 
   const handleModalClose = () => {
     setModalOpened(false);
   };
+
+  const handleAcceptOffer = async () => {
+    if (!id) return;
+
+    setModalStep(LISTING_STATUS_CODES.Pending);
+
+    dispatch(
+      acceptOffer({
+        id,
+        buyerPrincipalId: offerFrom,
+        onSuccess: () => {
+          setModalStep(LISTING_STATUS_CODES.Accepted);
+        },
+        onFailure: () => {
+          setModalStep(LISTING_STATUS_CODES.OfferInfo);
+        },
+      }),
+    );
+  };
+
+  const totalEarningsInWICP = totalPriceCalculator({
+    price,
+    feesInPercent: 5,
+  });
+
+  const totalEarningsInDollars = totalPriceCalculator({
+    price: formattedPrice,
+    feesInPercent: 5,
+  });
 
   return (
     <DialogPrimitive.Root
@@ -93,7 +165,7 @@ export const AcceptOfferModal = () => {
           Step: 1 -> offerInfo
           ---------------------------------
         */}
-        {modalStep === 'offerInfo' && (
+        {modalStep === LISTING_STATUS_CODES.OfferInfo && (
           <Container>
             {/*
               ---------------------------------
@@ -116,15 +188,15 @@ export const AcceptOfferModal = () => {
             <SaleContentWrapper>
               <ItemDetailsWrapper>
                 <ItemDetails>
-                  <ItemLogo src={crownsLogo} alt="crowns" />
-                  <ItemName>CAP Crowns #2713</ItemName>
+                  <ItemLogo src={nftDetails?.preview} alt="crowns" />
+                  <ItemName>{`CAP Crowns #${nftDetails?.id}`}</ItemName>
                 </ItemDetails>
                 <PriceDetails>
                   <WICPContainer size="small">
                     <WICPLogo src={wicpIcon} alt="wicp" />
-                    <WICPText size="small">5.12 WICP</WICPText>
+                    <WICPText size="small">{`${price} WICP`}</WICPText>
                   </WICPContainer>
-                  <PriceText>$221.93</PriceText>
+                  <PriceText>{`$${formattedPrice}`}</PriceText>
                 </PriceDetails>
               </ItemDetailsWrapper>
               <FeeContainer>
@@ -168,9 +240,9 @@ export const AcceptOfferModal = () => {
                       alt="wicp"
                       size="large"
                     />
-                    <WICPText size="large">5.01 WICP</WICPText>
+                    <WICPText size="large">{`${totalEarningsInWICP} WICP`}</WICPText>
                   </WICPContainer>
-                  <PriceText size="large">$202.12</PriceText>
+                  <PriceText size="large">{`$${totalEarningsInDollars}`}</PriceText>
                 </PriceDetails>
               </ItemDetailsWrapper>
             </SaleContentWrapper>
@@ -191,8 +263,47 @@ export const AcceptOfferModal = () => {
                 <ActionButton
                   type="primary"
                   text={t('translation:modals.buttons.acceptOffer')}
+                  handleClick={handleAcceptOffer}
+                />
+              </ModalButtonWrapper>
+            </ModalButtonsList>
+          </Container>
+        )}
+        {/*
+          ---------------------------------
+          Step: 2 -> pending
+          ---------------------------------
+        */}
+        {modalStep === LISTING_STATUS_CODES.Pending && (
+          <Container>
+            {/*
+              ---------------------------------
+              Pending Header
+              ---------------------------------
+            */}
+            <ModalHeader>
+              <ModalTitle>
+                {t('translation:modals.title.pendingConfirmation')}
+              </ModalTitle>
+            </ModalHeader>
+            {/*
+              ---------------------------------
+              Pending details
+              ---------------------------------
+            */}
+            <Pending />
+            {/*
+              ---------------------------------
+              Pending Action Buttons
+              ---------------------------------
+            */}
+            <ModalButtonsList>
+              <ModalButtonWrapper fullWidth>
+                <ActionButton
+                  type="secondary"
+                  text={t('translation:modals.buttons.cancel')}
                   handleClick={() => {
-                    setModalStep('accepted');
+                    setModalStep(LISTING_STATUS_CODES.OfferInfo);
                   }}
                 />
               </ModalButtonWrapper>
@@ -201,10 +312,10 @@ export const AcceptOfferModal = () => {
         )}
         {/*
           ---------------------------------
-          Step: 2 -> accepted
+          Step: 3 -> accepted
           ---------------------------------
         */}
-        {modalStep === 'accepted' && (
+        {modalStep === LISTING_STATUS_CODES.Accepted && (
           <Container>
             {/*
               ---------------------------------
@@ -235,7 +346,7 @@ export const AcceptOfferModal = () => {
                 <ActionButton
                   type="primary"
                   text={t('translation:modals.buttons.done')}
-                  handleClick={handleModalClose}
+                  handleClick={() => handleModalOpen(false)}
                 />
               </ModalButtonWrapper>
             </ModalButtonsList>

@@ -38,6 +38,11 @@ interface cancelNFTFromListingData {
   id: string;
 }
 
+interface acceptedNFTOfferData {
+  id: string;
+  buyerId: string;
+}
+
 interface findNFTIndexData {
   nftList: NFTMetadata[];
   idToFind: string;
@@ -125,6 +130,21 @@ export const nftsSlice = createSlice({
       if (index < 0) return;
 
       state.loadedNFTS[index].isListed = false;
+    },
+    acceptNFTOffer: (
+      state,
+      action: PayloadAction<acceptedNFTOfferData>,
+    ) => {
+      const { id, buyerId } = action.payload;
+      const index = findNFTIndex({
+        nftList: state.loadedNFTS,
+        idToFind: id,
+      });
+
+      if (index < 0) return;
+
+      state.loadedNFTS[index].isListed = false;
+      state.loadedNFTS[index].owner = buyerId;
     },
   },
 });
