@@ -48,8 +48,8 @@ export const OffersTable = () => {
         Header: t('translation:tables.titles.price'),
         accessor: ({ price }: rowProps) => (
           <PriceDetailsCell
-            wicp="5.12 WICP"
-            price={price}
+            wicp={`${price} WICP`}
+            price={`$${price}`}
             tableType="offers"
           />
         ),
