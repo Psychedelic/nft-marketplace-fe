@@ -76,7 +76,7 @@ export const OfferAccordion = ({
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
   // TODO: update offers count
-  const totalOffers = 5;
+  const totalOffers = 1;
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [marketPrice, setMarketPrice] = useState<
     string | undefined

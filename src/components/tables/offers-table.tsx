@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { PriceDetailsCell, TextCell, TextLinkCell } from '../core';
 import { AcceptOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
-import { mockTableData } from './mock-data';
+import { mockTableData } from './mock-offers-data';
 import { Container, ButtonWrapper } from './styles';
 
 import { usePlugStore } from '../../store';
