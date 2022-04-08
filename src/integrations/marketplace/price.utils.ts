@@ -65,3 +65,18 @@ export const getCurrentMarketPrice = async ({
 
   return COINGECKO_PRICE_UNAVAILABLE;
 };
+
+export const totalPriceCalculator = ({
+  price,
+  feesInPercent,
+}: {
+  price?: string;
+  feesInPercent?: number;
+}) => {
+  if (!price || !feesInPercent) return 'n/a';
+
+  const deductions = (Number(price) / 100) * feesInPercent;
+  const total = Number(price) - deductions;
+
+  return total;
+};
