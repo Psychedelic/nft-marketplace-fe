@@ -167,7 +167,12 @@ export const OfferAccordion = ({
           padding="none"
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
         >
-          {isListed && <OffersTable isOwner={isOwner} />}
+          {isListed && (
+            <OffersTable
+              isConnectedOwner={isOwner}
+              lastSalePrice={lastSalePrice}
+            />
+          )}
         </AccordionContent>
       </Accordion.Item>
     </AccordionStyle>

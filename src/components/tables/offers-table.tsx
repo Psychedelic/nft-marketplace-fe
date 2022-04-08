@@ -10,7 +10,8 @@ import { Container, ButtonWrapper } from './styles';
 import { usePlugStore } from '../../store';
 
 export type OffersTableProps = {
-  isOwner?: boolean;
+  isConnectedOwner?: boolean;
+  lastSalePrice?: string;
 };
 
 export interface rowProps {
@@ -23,7 +24,10 @@ export interface rowProps {
 // TODO: Add logic to show accept offer button based on
 // connection status and owner details
 
-export const OffersTable = ({ isOwner }: OffersTableProps) => {
+export const OffersTable = ({
+  isConnectedOwner,
+  lastSalePrice,
+}: OffersTableProps) => {
   const { t } = useTranslation();
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
@@ -32,7 +36,7 @@ export const OffersTable = ({ isOwner }: OffersTableProps) => {
   const { isConnected } = usePlugStore();
 
   useEffect(() => {
-    if (!isConnected && !columnsToHide.includes('action')) {
+    if (!isConnectedOwner && !columnsToHide.includes('action')) {
       setColumnsToHide((oldColumns) => [...oldColumns, 'action']);
 
       return;
@@ -43,7 +47,7 @@ export const OffersTable = ({ isOwner }: OffersTableProps) => {
     );
 
     setColumnsToHide(newColumnsToHide);
-  }, [isConnected]);
+  }, [isConnected, isConnectedOwner]);
 
   const columns = useMemo(
     () => [
@@ -61,6 +65,7 @@ export const OffersTable = ({ isOwner }: OffersTableProps) => {
       {
         id: 'floorDifference',
         Header: t('translation:tables.titles.floorDifference'),
+        // TODO: Use lastSalePrice to calculate floor difference
         accessor: ({ floorDifference }: rowProps) => (
           <TextCell text={floorDifference} type="offers" />
         ),
