@@ -34,8 +34,13 @@ import {
 } from './styles';
 
 import { totalPriceCalculator } from '../../integrations/marketplace/price.utils';
-import { useNFTSStore } from '../../store';
+import {
+  useNFTSStore,
+  useAppDispatch,
+  nftsActions,
+} from '../../store';
 import { NFTMetadata } from '../../declarations/nft';
+import { acceptOffer } from '../../store/features/marketplace';
 import { LISTING_STATUS_CODES } from '../../constants/listing';
 
 export interface AcceptOfferProps {
@@ -54,6 +59,7 @@ export const AcceptOfferModal = ({
   offerFrom,
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const { id } = useParams();
   const { loadedNFTS } = useNFTSStore();
 
@@ -71,6 +77,19 @@ export const AcceptOfferModal = ({
   const handleModalOpen = (modalOpenedStatus: boolean) => {
     setModalOpened(modalOpenedStatus);
     setModalStep(LISTING_STATUS_CODES.OfferInfo);
+
+    const isAccepted = modalStep === LISTING_STATUS_CODES.Accepted;
+
+    if (modalOpenedStatus || !id || !isAccepted) return;
+
+    // Update NFT owner details in store
+    // on successful offer acceptance and closing the modal
+    dispatch(
+      nftsActions.acceptNFTOffer({
+        id,
+        buyerId: offerFrom,
+      }),
+    );
   };
 
   const handleModalClose = () => {
@@ -81,6 +100,19 @@ export const AcceptOfferModal = ({
     if (!id) return;
 
     setModalStep(LISTING_STATUS_CODES.Pending);
+
+    dispatch(
+      acceptOffer({
+        id,
+        buyerPrincipalId: offerFrom,
+        onSuccess: () => {
+          setModalStep(LISTING_STATUS_CODES.Accepted);
+        },
+        onFailure: () => {
+          setModalStep(LISTING_STATUS_CODES.OfferInfo);
+        },
+      }),
+    );
   };
 
   const totalEarningsInWICP = totalPriceCalculator({
