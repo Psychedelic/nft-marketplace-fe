@@ -41,6 +41,16 @@ type MakeOffer = {
   amount: string;
 };
 
+interface AcceptOfferParams extends AcceptOffer {
+  onSuccess?: () => void;
+  onFailure?: () => void;
+}
+
+type AcceptOffer = {
+  id: string;
+  buyerPrincipalId: string;
+};
+
 type RecentyListedForSale = ListForSale[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
@@ -242,6 +252,66 @@ export const makeOffer = createAsyncThunk<
       return {
         id,
         amount,
+      };
+    } catch (err) {
+      thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
+      if (typeof onFailure !== 'function') return;
+      onFailure();
+    }
+  },
+);
+
+export const acceptOffer = createAsyncThunk<
+  // Return type of the payload creator
+  AcceptOffer | undefined,
+  // First argument to the payload creator
+  AcceptOfferParams,
+  // Optional fields for defining the thunk api
+  { state: RootState }
+>(
+  'marketplace/acceptOffer',
+  async (params: AcceptOfferParams, thunkAPI) => {
+    // Checks if an actor instance exists already
+    // otherwise creates a new instance
+    const actorInstance = await actorInstanceHandler({
+      thunkAPI,
+      serviceName: 'marketplace',
+      slice: marketplaceSlice,
+    });
+
+    const { id, buyerPrincipalId, onSuccess, onFailure } = params;
+
+    try {
+      const nonFungibleContractAddress = Principal.fromText(
+        config.crownsCanisterId,
+      );
+      const userOwnedTokenId = BigInt(id);
+
+      const result = await actorInstance.acceptOffer(
+        nonFungibleContractAddress,
+        userOwnedTokenId,
+        buyerPrincipalId,
+      );
+
+      if (!('Ok' in result)) {
+        if (typeof onFailure !== 'function') return;
+
+        onFailure();
+
+        console.error(result);
+
+        throw Error('Oops! Failed to accept offer');
+      }
+
+      if (typeof onSuccess !== 'function') return;
+
+      console.info(result);
+
+      onSuccess();
+
+      return {
+        id,
+        buyerPrincipalId,
       };
     } catch (err) {
       thunkAPI.dispatch(errorActions.setErrorMessage(err.message));

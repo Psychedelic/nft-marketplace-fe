@@ -4,6 +4,7 @@ export {
   listForSale,
   cancelListingBySeller,
   makeOffer,
+  acceptOffer,
 } from './marketplace-slice';
 
 export default marketplaceSlice.reducer;
