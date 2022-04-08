@@ -7,6 +7,8 @@ import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-offers-data';
 import { Container, ButtonWrapper } from './styles';
 
+import { formatAddress } from '../../integrations/plug';
+
 export type OffersTableProps = {
   isConnectedOwner?: boolean;
   lastSalePrice?: string;
@@ -67,13 +69,17 @@ export const OffersTable = ({
         id: 'from',
         Header: t('translation:tables.titles.from'),
         accessor: ({ offerFrom }: rowProps) => (
-          <TextLinkCell text={offerFrom} url="" type="offers" />
+          <TextLinkCell
+            text={formatAddress(offerFrom)}
+            url=""
+            type="offers"
+          />
         ),
       },
       {
         id: 'action',
         Header: t('translation:tables.titles.action'),
-        accessor: ({ price, formattedPrice }) => (
+        accessor: ({ price, formattedPrice, offerFrom }) => (
           <ButtonWrapper>
             <AcceptOfferModal
               price={price}
