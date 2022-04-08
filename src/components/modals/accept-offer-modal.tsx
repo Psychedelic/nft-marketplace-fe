@@ -33,6 +33,8 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
+import { totalPriceCalculator } from '../../integrations/marketplace/price.utils';
+
 export interface AcceptOfferProps {
   price: string;
   formattedPrice: string;
@@ -61,6 +63,16 @@ export const AcceptOfferModal = ({
   const handleModalClose = () => {
     setModalOpened(false);
   };
+
+  const totalEarningsInWICP = totalPriceCalculator({
+    price,
+    feesInPercent: 5,
+  });
+
+  const totalEarningsInDollars = totalPriceCalculator({
+    price: formattedPrice,
+    feesInPercent: 5,
+  });
 
   return (
     <DialogPrimitive.Root
@@ -177,9 +189,9 @@ export const AcceptOfferModal = ({
                       alt="wicp"
                       size="large"
                     />
-                    <WICPText size="large">5.01 WICP</WICPText>
+                    <WICPText size="large">{`${totalEarningsInWICP} WICP`}</WICPText>
                   </WICPContainer>
-                  <PriceText size="large">$202.12</PriceText>
+                  <PriceText size="large">{`$${totalEarningsInDollars}`}</PriceText>
                 </PriceDetails>
               </ItemDetailsWrapper>
             </SaleContentWrapper>
