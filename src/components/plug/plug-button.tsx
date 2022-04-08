@@ -20,6 +20,8 @@ import arrowdown from '../../assets/arrowdown.svg';
 import arrowdownDark from '../../assets/arrowdown-dark.svg';
 import offers from '../../assets/buttons/offers.svg';
 import disconnect from '../../assets/buttons/disconnect.svg';
+import offersDark from '../../assets/buttons/offers-dark.svg';
+import disconnectDark from '../../assets/buttons/disconnect-dark.svg';
 
 export type PlugButtonProps = {
   handleClick: () => void;
@@ -65,14 +67,14 @@ export const PlugButton = ({
       {isConnected && (
         <ConnectToPlugButton align="end" background={currTheme}>
           <Flex>
-            <img src={offers} alt="offers" />
+            <img src={isLightTheme ? offers : offersDark} alt="offers" />
             <p>My Offers</p>
           </Flex>
           <div />
           <Flex
             onClick={() => dispatch(plugActions.setIsConnected(false))}
           >
-            <img src={disconnect} alt="disconnect" />
+            <img src={isLightTheme ? disconnect : disconnectDark} alt="disconnect" />
             <p>Disconnect</p>
           </Flex>
         </ConnectToPlugButton>
