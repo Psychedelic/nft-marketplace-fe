@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { PriceDetailsCell, TextCell, TextLinkCell } from '../core';
 import { AcceptOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
+// TODO: Remove mock data after fetching offers table details
 import { mockTableData } from './mock-offers-data';
 import { Container, ButtonWrapper } from './styles';
 
@@ -12,11 +13,10 @@ export interface rowProps {
   price: string;
   floorDifference: string;
   offerFrom: string;
-  expiration: string;
+  formattedPrice: string;
 }
 
-// TODO: Update offers table data and add
-// logic to show accept offer button based on
+// TODO: Add logic to show accept offer button based on
 // connection status and owner details
 
 export const OffersTable = () => {
@@ -46,10 +46,10 @@ export const OffersTable = () => {
       {
         id: 'price',
         Header: t('translation:tables.titles.price'),
-        accessor: ({ price }: rowProps) => (
+        accessor: ({ price, formattedPrice }: rowProps) => (
           <PriceDetailsCell
             wicp={`${price} WICP`}
-            price={`$${price}`}
+            price={`$${formattedPrice}`}
             tableType="offers"
           />
         ),

@@ -1,6 +1,7 @@
 export const mockTableData = [
   {
-    price: '5',
+    price: '10',
+    formattedPrice: '194',
     floorDifference: '-',
     offerFrom: 'ffuck...cae',
   },
