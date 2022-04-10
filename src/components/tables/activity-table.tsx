@@ -40,19 +40,20 @@ export const ActivityTable = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchCAPActivity({
-      dispatch,
-      pageCount: 0,
-    });
+    dispatch(
+      fetchCAPActivity({
+        pageCount: 0,
+      }),
+    );
   }, []);
 
   const loadMoreData = () => {
     if (loadingTableData || !hasMoreData) return;
-
-    fetchCAPActivity({
-      dispatch,
-      pageCount: nextPageNo,
-    });
+    dispatch(
+      fetchCAPActivity({
+        pageCount: nextPageNo,
+      }),
+    );
   };
 
   const columns = useMemo(

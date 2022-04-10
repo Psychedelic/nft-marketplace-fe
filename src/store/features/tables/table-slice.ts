@@ -8,13 +8,17 @@ interface LoadedTableMetaData {
   media: string;
 }
 
-interface TableState {
+export interface TableState {
   loadedCapActivityData: Array<object>;
   loadedTableMetaData: LoadedTableMetaData;
   loadingTableData: boolean;
   failedToLoadTableData: boolean;
   hasMoreData: boolean;
   nextPageNo: number;
+}
+
+export interface CapActivityParams {
+  pageCount: number;
 }
 
 interface LoadedTableData {
