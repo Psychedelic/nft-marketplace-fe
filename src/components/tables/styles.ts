@@ -1,3 +1,4 @@
+import InfiniteScroll from 'react-infinite-scroller';
 import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
@@ -181,4 +182,10 @@ export const TableWrapper = styled('div', {
 export const ButtonWrapper = styled('div', {
   width: '98px',
   height: '33px',
+});
+
+export const InfiniteScrollWrapper = styled(InfiniteScroll, {
+  width: '100%',
+  height: '100%',
+  overflowX: 'auto',
 });

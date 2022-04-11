@@ -1,2 +1,2 @@
 export * from './nfts-slice';
-export * from './use-nfts-store';
+export { useNFTSStore } from './use-nfts-store';

@@ -27,7 +27,7 @@ export const TypeDetailsCell = ({
 
   return (
     <TypeDetails>
-      {type === 'transfer' && (
+      {type === 'offer' && (
         <TypeLogo
           src={isLightTheme ? transferLogo : transferLogoDark}
           alt="transfer"

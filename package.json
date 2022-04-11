@@ -30,6 +30,7 @@
     "axios": "^0.26.0",
     "copy-to-clipboard": "^3.3.1",
     "cross-fetch": "^3.1.5",
+    "dayjs": "^1.11.0",
     "i18next": "^21.6.6",
     "json-bigint": "^1.0.0",
     "react": "^17.0.2",
@@ -42,7 +43,9 @@
     "react-scripts": "5.0.0",
     "react-table": "^7.7.0",
     "typescript": "^4.5.4",
-    "web-vitals": "^2.1.2"
+    "web-vitals": "^2.1.2",
+    "buffer-crc32": "^0.2.13",
+    "crypto-js": "^4.1.1"
   },
   "scripts": {
     "start": "react-scripts start",

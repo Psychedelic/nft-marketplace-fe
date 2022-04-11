@@ -13,17 +13,19 @@ const env: NodeEnv =
 // TODO: bear in mind that this is used for the kyasshu marketplace api
 // as such, we have a temporary staging environment "iqvo2-7qaaa-aaaam-qacxa-cai"
 // which is different from mainnet and the local <Important-1>
-const NFT_CROWNS_CANISTER_ID = 'iqvo2-7qaaa-aaaam-qacxa-cai';
+const NFT_CROWNS_CANISTER_ID = 'rkp4c-7iaaa-aaaaa-aaaca-cai';
 
 type ConfigParams = {
   canisterId: string;
   host: string;
   collectionId: string;
   kyasshuMarketplaceAPI: string;
+  icExplorer: string;
   crownsCanisterId: string;
   marketplaceCanisterId: string;
   wICPCanisterId: string;
 };
+
 type Config = {
   production: ConfigParams;
   staging: ConfigParams;
@@ -41,6 +43,7 @@ const config: Config = {
     // can we get rid of collectionId?
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    icExplorer: 'https://dashboard.internetcomputer.org',
     crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
@@ -54,6 +57,7 @@ const config: Config = {
     // can we get rid of collectionId?
     collectionId: '5hzni-qqaaa-aaaaa-aaboq-cai',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
+    icExplorer: 'https://dashboard.internetcomputer.org',
     crownsCanisterId: '5hzni-qqaaa-aaaaa-aaboq-cai',
     marketplaceCanisterId: 'yva2f-aiaaa-aaaaa-aabqa-cai',
     wICPCanisterId: 'y4drz-waaaa-aaaaa-aabrq-cai',
@@ -67,6 +71,7 @@ const config: Config = {
     // can we get rid of collectionId?
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    icExplorer: 'https://dashboard.internetcomputer.org',
     crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
@@ -80,6 +85,7 @@ const config: Config = {
     // can we get rid of collectionId?
     collectionId: NFT_CROWNS_CANISTER_ID,
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    icExplorer: 'https://dashboard.internetcomputer.org',
     crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',

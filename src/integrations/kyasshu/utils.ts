@@ -1,9 +1,30 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { Principal } from '@dfinity/principal';
 import { useTranslation } from 'react-i18next';
-import { filterActions, nftsActions, errorActions, useFilterStore } from '../../store';
+import {
+  filterActions,
+  nftsActions,
+  errorActions,
+  useFilterStore,
+  RootState,
+} from '../../store';
 import config from '../../config/env';
-import { FILTER_CONSTANTS } from '../../constants';
+import {
+  FILTER_CONSTANTS,
+  OPERATION_CONSTANTS,
+} from '../../constants';
+import { tableActions } from '../../store/features/tables';
+import { dateRelative } from '../functions/date';
+import shortAddress from '../functions/short-address';
+import { getICAccountLink } from '../../utils/account-id';
+import {
+  TableState,
+  CapActivityParams,
+  tableSlice,
+} from '../../store/features/tables/table-slice';
+import { actorInstanceHandler } from '../actor';
 
 export type FetchNFTProps = {
   payload?: object;
@@ -27,6 +48,16 @@ export type CheckNFTOwnerParams = {
   isConnected: boolean;
   owner?: string;
   principalId?: string;
+};
+
+export type FetchCAPActivityProps = {
+  dispatch: any;
+  pageCount: number;
+};
+
+export type TokenMetadataProps = {
+  dispatch: any;
+  tokenId: any;
 };
 
 export const fetchNFTS = async ({
@@ -156,9 +187,11 @@ export const fetchNFTDetails = async ({
   }
 };
 
-export const fetchFilterTraits = async ({ dispatch } : FetchFilterTraitsProps) => {
+export const fetchFilterTraits = async ({ dispatch }: FetchFilterTraitsProps) => {
   try {
-    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`);
+    const response = await axios.get(
+      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`,
+    );
 
     if (response.status !== 200) {
       throw Error(response.statusText);
@@ -200,18 +233,14 @@ export const fetchFilterTraits = async ({ dispatch } : FetchFilterTraitsProps) =
 export const useTraitsPayload = () => {
   const { traits } = useFilterStore();
 
-  return traits.filter(
-    (trait) => trait?.values?.length,
-  );
+  return traits.filter((trait) => trait?.values?.length);
 };
 
 export const usePriceValues = () => {
   const { t } = useTranslation();
   const { defaultFilters } = useFilterStore();
 
-  return defaultFilters.find(
-    ({ filterCategory }) => filterCategory === `${t('translation:filters.priceRange')}`,
-  )?.filterName;
+  return defaultFilters.find(({ filterCategory }) => filterCategory === `${t('translation:filters.priceRange')}`)?.filterName;
 };
 
 export const isNFTOwner = (params: CheckNFTOwnerParams) => {
@@ -227,3 +256,114 @@ export const isNFTOwner = (params: CheckNFTOwnerParams) => {
 
   return true;
 };
+
+export const getOperation = (operationType: string) => {
+  let operationValue;
+  switch (operationType) {
+    case 'makeSaleOffer':
+      operationValue = OPERATION_CONSTANTS.list;
+      break;
+    case 'acceptBuyOffer':
+      operationValue = OPERATION_CONSTANTS.sale;
+      break;
+    case 'makeBuyOffer':
+      operationValue = OPERATION_CONSTANTS.offer;
+      break;
+    default:
+  }
+  return operationValue;
+};
+
+export const getTokenMetadata = async ({
+  tokenId,
+  dispatch,
+}: TokenMetadataProps) => {
+  try {
+    const response = await axios.get(
+      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${tokenId}`,
+    );
+    dispatch(
+      tableActions.setTableMetadata(
+        response?.data?.metadata?.thumbnail?.value?.TextContent,
+      ),
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchCAPActivity = createAsyncThunk(
+  'table/fetchCAPActivity',
+  async (params: CapActivityParams, thunkAPI) => {
+    const { pageCount } = params;
+    if (pageCount === 0) {
+      thunkAPI.dispatch(tableActions.setIsTableDataLoading(true));
+    }
+
+    try {
+      const response = await axios.get(
+        `${config.kyasshuMarketplaceAPI}/cap/txns/q3fc5-haaaa-aaaaa-aaahq-cai/?page=${pageCount}`,
+      );
+      const { Items, Count } = response.data;
+      let pageNo;
+
+      const result = Items.map((item: any) => {
+        pageNo = item.page;
+        // eslint-disable-next-line no-underscore-dangle
+        const parsedArr = Uint8Array.from(Object.values(item.event.caller._arr));
+        const callerPrincipalId = Principal.fromUint8Array(parsedArr);
+        const callerPrincipalIdString = shortAddress(
+          callerPrincipalId.toText(),
+        );
+
+        const capData = {
+          operation: getOperation(item.event.operation),
+          time: dateRelative(item.event.time),
+          caller: callerPrincipalIdString,
+          callerDfinityExplorerUrl: getICAccountLink(
+            callerPrincipalId.toText(),
+          ),
+        };
+        const { details } = item.event;
+        details.forEach((detail: any) => {
+          const [key, value] = detail;
+          capData[key] = value.U64 ?? value;
+        });
+
+        return capData;
+      });
+
+      const loadedCapActivityTableData = result.map(
+        (tableData: any) => {
+          const data = {
+            item: {
+              name: `CAP Crowns #${tableData.token_id}`,
+              token_id: tableData.token_id,
+            },
+            type: tableData.operation,
+            price: `$${tableData.list_price ?? tableData.price}`,
+            from: tableData.caller,
+            to: '-',
+            time: tableData.time,
+            offerFrom: 'Prasanth',
+            callerDfinityExplorerUrl:
+              tableData.callerDfinityExplorerUrl,
+          };
+
+          return data;
+        },
+      );
+
+      const actionPayload = {
+        loadedCapActivityTableData,
+        totalPages: pageNo ? parseInt(pageNo, 10) : 0,
+        total: Count ? parseInt(Count, 10) : 0,
+        nextPage: Count === 64 ? pageCount + 1 : pageCount,
+      };
+
+      thunkAPI.dispatch(tableActions.setCapActivityTable(actionPayload));
+    } catch (error) {
+      thunkAPI.dispatch(errorActions.setErrorMessage(error));
+    }
+  },
+);

@@ -39,8 +39,6 @@ export const useNFTSFetcher = () => {
       page: 0,
       count: '25',
     });
-
-    console.log(payload);
   }, [dispatch, traits, isMyNfts, priceValues, sortBy, status]);
 };
 

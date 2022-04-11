@@ -1,6 +1,10 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../../store';
+import {
+  useThemeStore,
+  useAppDispatch,
+  useTableStore,
+} from '../../store';
 import {
   ItemDetailsCell,
   TypeDetailsCell,
@@ -9,13 +13,15 @@ import {
   TextLinkCell,
 } from '../core';
 import { TableLayout } from './table-layout';
-import { mockTableData } from './mock-data';
-import { Container } from './styles';
+import { Container, InfiniteScrollWrapper } from './styles';
+import { fetchCAPActivity } from '../../integrations/kyasshu/utils';
+import { NFTMetadata } from '../../declarations/nft';
 
 export interface rowProps {
   item: {
     name: string;
     logo: string;
+    token_id: string;
   };
   type: string;
   price: string;
@@ -23,18 +29,40 @@ export interface rowProps {
   from: string;
   to: string;
   time: string;
+  data: NFTMetadata
+  callerDfinityExplorerUrl: string,
 }
 
 export const ActivityTable = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const { loadedCapActivityData, hasMoreData, loadingTableData, nextPageNo } = useTableStore();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(
+      fetchCAPActivity({
+        pageCount: 0,
+      }),
+    );
+  }, []);
+
+  const loadMoreData = () => {
+    if (loadingTableData || !hasMoreData) return;
+    dispatch(
+      fetchCAPActivity({
+        pageCount: nextPageNo,
+      }),
+    );
+  };
 
   const columns = useMemo(
     () => [
       {
         Header: t('translation:tables.titles.item'),
+        // eslint-disable-next-line
         accessor: ({ item }: rowProps) => (
-          <ItemDetailsCell name={item.name} logo={item.logo} />
+          <ItemDetailsCell name={item.name} id={item.token_id} logo={item.logo} />
         ),
       },
       {
@@ -52,28 +80,22 @@ export const ActivityTable = () => {
         Header: t('translation:tables.titles.price'),
         accessor: ({ price }: rowProps) => (
           <PriceDetailsCell
-            wicp="5.12 WICP"
+            wicp="undefined"
             price={price}
             tableType=""
           />
         ),
       },
       {
-        Header: t('translation:tables.titles.quantity'),
-        accessor: ({ quantity }: rowProps) => (
-          <TextCell text={quantity} type="" />
-        ),
-      },
-      {
         Header: t('translation:tables.titles.from'),
-        accessor: ({ from }: rowProps) => (
-          <TextLinkCell text={from} url="" type="" />
+        accessor: ({ from, callerDfinityExplorerUrl }: rowProps) => (
+          <TextLinkCell text={from} url={callerDfinityExplorerUrl} type="" />
         ),
       },
       {
         Header: t('translation:tables.titles.to'),
         accessor: ({ to }: rowProps) => (
-          <TextLinkCell text={to} url="" type="" />
+          <TextLinkCell text={to} type="" />
         ),
       },
       {
@@ -87,12 +109,24 @@ export const ActivityTable = () => {
   );
 
   return (
-    <Container>
-      <TableLayout
-        columns={columns}
-        data={mockTableData}
-        tableType="activity"
-      />
-    </Container>
+    <InfiniteScrollWrapper
+      pageStart={0}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      loadMore={nextPageNo > 0 ? loadMoreData : () => {}}
+      hasMore={hasMoreData}
+      // to-do: add loader for table
+      loader="Loading"
+      useWindow={true || false}
+      threshold={250 * 5}
+      className="infinite-loader"
+    >
+      <Container>
+        <TableLayout
+          columns={columns}
+          data={loadedCapActivityData}
+          tableType="activity"
+        />
+      </Container>
+    </InfiniteScrollWrapper>
   );
 };
