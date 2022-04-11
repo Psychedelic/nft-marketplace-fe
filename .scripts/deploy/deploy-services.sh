@@ -104,9 +104,12 @@ deployWICP()
 
 if [[ "$DEPLOY_TARGET" == "staging" ]];
 then
+  # TODO: Check the notes in https://github.com/Psychedelic/nft-marketplace-fe/pull/71
+  # Some canisters are already deployed like Cap or Crowns...
   # deployCap
   # deployCrowns
   # deployDab
+
   deployMarketplace
   deployWICP
 fi;
