@@ -19,7 +19,7 @@ export const NftList = () => {
   // eslint-disable-next-line
   const dispatch = useAppDispatch();
   const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } = useNFTSStore();
-  const { isMyNfts, status } = useFilterStore();
+  const { isMyNfts, status, defaultFilters } = useFilterStore();
   const { principalId, isConnected } = usePlugStore();
   const traitsPayload = useTraitsPayload();
   const priceValues = usePriceValues();
@@ -63,8 +63,16 @@ export const NftList = () => {
     return <EmptyState message={`${t('translation:emptyStates.connectMessage')}`} buttonType={BUTTON_TYPE.plug} />;
   }
 
+  if (isMyNfts && isConnected && defaultFilters.length && !loadedNFTS.length) {
+    return <EmptyState message={`${t('translation:emptyStates.noOwnedFilteredNfts')}`} buttonText={`${t('translation:emptyStates.noFilteredNftsAction')}`} />;
+  }
+
   if (isMyNfts && isConnected && !loadedNFTS.length) {
     return <EmptyState message={`${t('translation:emptyStates.noNfts')}`} buttonText={`${t('translation:emptyStates.noNftsAction')}`} />;
+  }
+
+  if (defaultFilters.length && !loadedNFTS.length) {
+    return <EmptyState message={`${t('translation:emptyStates.noFilteredNfts')}`} buttonText={`${t('translation:emptyStates.noNftsAction')}`} />;
   }
 
   return (

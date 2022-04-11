@@ -224,7 +224,10 @@
   "emptyStates": {
     "connectMessage": "Connect to see your NFT’s",
     "noNfts": "You don’t own any NFT’s yet",
-    "noNftsAction": "Browse NFT’s for Sale"
+    "noOwnedFilteredNfts": "You don't own any NFTs with those filters",
+    "noFilteredNfts": "We cannot find any NFTs with those filters",
+    "noNftsAction": "Browse NFT’s for Sale",
+    "noFilteredNftsAction": "Browse Other NFTs"
   },
   "errorMessages": {
     "priceEmptyField": "You need to fill in both values"

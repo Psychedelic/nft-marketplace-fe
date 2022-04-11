@@ -54,6 +54,7 @@ export const EmptyState = ({
                 ),
               );
               dispatch(filterActions.setMyNfts(false));
+              dispatch(filterActions.clearAllFilters());
             }}
           />
         )}
