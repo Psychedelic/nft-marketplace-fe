@@ -5,7 +5,7 @@ import marketplaceIdlService from '../../declarations/marketplace';
 import config from '../../config/env';
 import { errorActions } from '../../store';
 
-export type ListForSaleProps = {
+export type MakeListingProps = {
   dispatch: any;
   id: string;
   amount: string;
@@ -13,13 +13,13 @@ export type ListForSaleProps = {
   onFailure: any;
 };
 
-export const listForSale = async ({
+export const makeListing = async ({
   dispatch,
   id,
   amount,
   onSuccess,
   onFailure,
-}: ListForSaleProps) => {
+}: MakeListingProps) => {
   try {
     const directBuy = true;
     const nonFungibleContractAddress = Principal.fromText(
