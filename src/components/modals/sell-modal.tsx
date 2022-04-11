@@ -30,7 +30,7 @@ import {
 
 import { LISTING_STATUS_CODES } from '../../constants/listing';
 import { useAppDispatch, nftsActions } from '../../store';
-import { listForSale } from '../../store/features/marketplace';
+import { makeListing } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -77,7 +77,7 @@ export const SellModal = () => {
     setModalStep(LISTING_STATUS_CODES.Pending);
 
     dispatch(
-      listForSale({
+      makeListing({
         id,
         amount,
         onSuccess: () => {
@@ -138,10 +138,10 @@ export const SellModal = () => {
             */}
             <ModalHeader>
               <ModalTitle>
-                {t('translation:modals.title.listForSale')}
+                {t('translation:modals.title.makeListing')}
               </ModalTitle>
               <ModalDescription>
-                {t('translation:modals.description.listForsale')}
+                {t('translation:modals.description.makeListing')}
               </ModalDescription>
             </ModalHeader>
             {/*
