@@ -1,7 +1,7 @@
 import { marketplaceSlice } from './marketplace-slice';
 
 export {
-  listForSale,
+  makeListing,
   cancelListingBySeller,
   makeOffer,
   acceptOffer,
