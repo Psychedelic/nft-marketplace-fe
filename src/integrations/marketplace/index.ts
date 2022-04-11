@@ -21,6 +21,7 @@ export const listForSale = async ({
   onFailure,
 }: ListForSaleProps) => {
   try {
+    const directBuy = true;
     const nonFungibleContractAddress = Principal.fromText(
       config.crownsCanisterId,
     );
@@ -30,7 +31,8 @@ export const listForSale = async ({
       serviceName: 'marketplace',
     })) as ActorSubclass<marketplaceIdlService>;
 
-    await actor.listForSale(
+    await actor.makeListing(
+      directBuy,
       nonFungibleContractAddress,
       userOwnedTokenId,
       userListForPrice,
