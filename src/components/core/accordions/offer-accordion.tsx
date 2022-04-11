@@ -76,7 +76,7 @@ export const OfferAccordion = ({
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
   // TODO: update offers count
-  const totalOffers = 5;
+  const totalOffers = 1;
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [marketPrice, setMarketPrice] = useState<
     string | undefined
@@ -131,7 +131,7 @@ export const OfferAccordion = ({
               </h4>
             </div>
           </FlexRight>
-          <h3>{marketPrice}</h3>
+          <h3>{isListedWithPrice && marketPrice}</h3>
         </AccordionHeadContent>
         {(isConnected && (
           <OnConnected isListed={isListed} isOwner={isOwner} />
@@ -167,7 +167,12 @@ export const OfferAccordion = ({
           padding="none"
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
         >
-          {isListed && <OffersTable />}
+          {isListed && (
+            <OffersTable
+              isConnectedOwner={isOwner}
+              lastSalePrice={lastSalePrice}
+            />
+          )}
         </AccordionContent>
       </Accordion.Item>
     </AccordionStyle>

@@ -228,5 +228,8 @@
     "noFilteredNfts": "We cannot find any NFTs with those filters",
     "noNftsAction": "Browse NFT’s for Sale",
     "noFilteredNftsAction": "Browse Other NFTs"
+  },
+  "errorMessages": {
+    "priceEmptyField": "You need to fill in both values"
   }
 }
