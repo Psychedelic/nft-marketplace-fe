@@ -33,13 +33,13 @@ export const getICPPrice = async (): Promise<
 
 export const getCurrentMarketPrice = async ({
   currency = 'USD',
-  currentListForSalePrice,
+  currentMakeListingPrice,
 }: {
   currency?: Currencies;
-  currentListForSalePrice: number;
+  currentMakeListingPrice: number;
 }) => {
   try {
-    if (currency !== 'USD' || !currentListForSalePrice)
+    if (currency !== 'USD' || !currentMakeListingPrice)
       return COINGECKO_PRICE_UNAVAILABLE;
 
     const res = await getICPPrice();
@@ -48,7 +48,7 @@ export const getCurrentMarketPrice = async ({
 
     const currencyMarketPrice = res?.usd;
 
-    const computed = currencyMarketPrice * currentListForSalePrice;
+    const computed = currencyMarketPrice * currentMakeListingPrice;
 
     // TODO: Use a price formatter lib here
     // at the moment using basic placeholder which does the job
