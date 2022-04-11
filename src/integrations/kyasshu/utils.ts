@@ -187,7 +187,9 @@ export const fetchNFTDetails = async ({
   }
 };
 
-export const fetchFilterTraits = async ({ dispatch }: FetchFilterTraitsProps) => {
+export const fetchFilterTraits = async ({
+  dispatch,
+}: FetchFilterTraitsProps) => {
   try {
     const response = await axios.get(
       `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`,
@@ -240,7 +242,10 @@ export const usePriceValues = () => {
   const { t } = useTranslation();
   const { defaultFilters } = useFilterStore();
 
-  return defaultFilters.find(({ filterCategory }) => filterCategory === `${t('translation:filters.priceRange')}`)?.filterName;
+  return defaultFilters.find(
+    ({ filterCategory }) =>
+      filterCategory === `${t('translation:filters.priceRange')}`,
+  )?.filterName;
 };
 
 export const isNFTOwner = (params: CheckNFTOwnerParams) => {
@@ -266,7 +271,7 @@ export const getOperation = (operationType: string) => {
     case 'acceptBuyOffer':
       operationValue = OPERATION_CONSTANTS.sale;
       break;
-    case 'makeBuyOffer':
+    case 'makeOffer':
       operationValue = OPERATION_CONSTANTS.offer;
       break;
     default:
@@ -310,7 +315,9 @@ export const fetchCAPActivity = createAsyncThunk(
       const result = Items.map((item: any) => {
         pageNo = item.page;
         // eslint-disable-next-line no-underscore-dangle
-        const parsedArr = Uint8Array.from(Object.values(item.event.caller._arr));
+        const parsedArr = Uint8Array.from(
+          Object.values(item.event.caller._arr),
+        );
         const callerPrincipalId = Principal.fromUint8Array(parsedArr);
         const callerPrincipalIdString = shortAddress(
           callerPrincipalId.toText(),
@@ -361,7 +368,9 @@ export const fetchCAPActivity = createAsyncThunk(
         nextPage: Count === 64 ? pageCount + 1 : pageCount,
       };
 
-      thunkAPI.dispatch(tableActions.setCapActivityTable(actionPayload));
+      thunkAPI.dispatch(
+        tableActions.setCapActivityTable(actionPayload),
+      );
     } catch (error) {
       thunkAPI.dispatch(errorActions.setErrorMessage(error));
     }
