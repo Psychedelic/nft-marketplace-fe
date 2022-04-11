@@ -45,7 +45,10 @@ export const CollectionItems = () => {
     } else {
       dispatch(filterActions.removeFilter(appliedFilter.filterName));
       dispatch(
-        filterActions.removeTraitsFilter(appliedFilter.filterName),
+        filterActions.removeTraitsFilter({
+          value: appliedFilter.filterName,
+          key: appliedFilter.filterCategory,
+        }),
       );
     }
   };
@@ -115,7 +118,10 @@ export const CollectionItems = () => {
                     appliedFilterValue={appliedFilter}
                     removeFilter={() => {
                       dispatch(
-                        filterActions.removeTraitsFilter(value),
+                        filterActions.removeTraitsFilter({
+                          value,
+                          key: appliedFilter.filterCategory,
+                        }),
                       );
                     }}
                   />
