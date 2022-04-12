@@ -30,9 +30,8 @@ printf "🤖 Add collection to the Marketplace\n"
         ($creationTime:nat64),
         \"$collectionName\",
         principal \"$nonFungibleContractAddress\",
-        variant { DIP721 },
+        variant { DIP721v2 },
         principal \"$fungibleContractAddress\",
         variant { DIP20 }
       )"
-
 )
