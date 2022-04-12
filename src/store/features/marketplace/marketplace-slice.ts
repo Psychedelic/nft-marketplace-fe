@@ -109,6 +109,7 @@ export const makeListing = createAsyncThunk<
       const userListForPrice = BigInt(amount);
 
       const result = await actorInstance.makeListing(
+        false, // direct buy
         nonFungibleContractAddress,
         userOwnedTokenId,
         userListForPrice,
