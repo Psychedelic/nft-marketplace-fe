@@ -16,6 +16,7 @@ import { TableLayout } from './table-layout';
 import { Container, InfiniteScrollWrapper } from './styles';
 import { fetchCAPActivity } from '../../integrations/kyasshu/utils';
 import { NFTMetadata } from '../../declarations/nft';
+import TableSkeletons from './table-skeletons';
 
 export interface rowProps {
   item: {
@@ -29,14 +30,19 @@ export interface rowProps {
   from: string;
   to: string;
   time: string;
-  data: NFTMetadata
-  callerDfinityExplorerUrl: string,
+  data: NFTMetadata;
+  callerDfinityExplorerUrl: string;
 }
 
 export const ActivityTable = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
-  const { loadedCapActivityData, hasMoreData, loadingTableData, nextPageNo } = useTableStore();
+  const {
+    loadedCapActivityData,
+    hasMoreData,
+    loadingTableData,
+    nextPageNo,
+  } = useTableStore();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -62,7 +68,11 @@ export const ActivityTable = () => {
         Header: t('translation:tables.titles.item'),
         // eslint-disable-next-line
         accessor: ({ item }: rowProps) => (
-          <ItemDetailsCell name={item.name} id={item.token_id} logo={item.logo} />
+          <ItemDetailsCell
+            name={item.name}
+            id={item.token_id}
+            logo={item.logo}
+          />
         ),
       },
       {
@@ -89,7 +99,11 @@ export const ActivityTable = () => {
       {
         Header: t('translation:tables.titles.from'),
         accessor: ({ from, callerDfinityExplorerUrl }: rowProps) => (
-          <TextLinkCell text={from} url={callerDfinityExplorerUrl} type="" />
+          <TextLinkCell
+            text={from}
+            url={callerDfinityExplorerUrl}
+            type=""
+          />
         ),
       },
       {
@@ -114,8 +128,7 @@ export const ActivityTable = () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       loadMore={nextPageNo > 0 ? loadMoreData : () => {}}
       hasMore={hasMoreData}
-      // to-do: add loader for table
-      loader="Loading"
+      loader={<TableSkeletons />}
       useWindow={true || false}
       threshold={250 * 5}
       className="infinite-loader"

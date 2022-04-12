@@ -3,6 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { getTokenMetadata } from '../../../integrations/kyasshu/utils';
 import { useAppDispatch, useTableStore } from '../../../store';
 import { ItemDetails, ItemLogo, ItemName } from './styles';
+import { ImageSkeleton } from '../../tables/styles';
 
 export interface ItemDetailsCellProps {
   name?: string;
@@ -12,7 +13,6 @@ export interface ItemDetailsCellProps {
 
 export const ItemDetailsCell = ({
   name,
-  logo,
   id,
 }: ItemDetailsCellProps) => {
   const dispatch = useAppDispatch();
@@ -28,7 +28,11 @@ export const ItemDetailsCell = ({
   return (
     <RouterLink to={`/nft/${id}`}>
       <ItemDetails>
-        <ItemLogo src={loadedTableMetaData.media} alt="crowns" />
+        {!loadedTableMetaData.media ? (
+          <ImageSkeleton />
+        ) : (
+          <ItemLogo src={loadedTableMetaData.media} alt="crowns" />
+        )}
         <ItemName className="item-name">{name}</ItemName>
       </ItemDetails>
     </RouterLink>
