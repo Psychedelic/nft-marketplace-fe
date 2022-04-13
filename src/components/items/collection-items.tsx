@@ -31,13 +31,20 @@ export const CollectionItems = () => {
 
   const { loadingNFTs } = useNFTSStore();
 
-  useNFTSFetcher();
+  useEffect(() => {
+    if (loadingNFTs) return;
+
+    useNFTSFetcher();
+  }, []);
 
   // TODO: move applied filters to seperate component
   const handleRemoveFilter = (appliedFilter: any) => {
     // TODO: apply sorting to fetch kyasshu API
     // eslint-disable-next-line no-console
-    if (appliedFilter.filterCategory === `${t('translation:filters.priceRange')}`) {
+    if (
+      appliedFilter.filterCategory ===
+      `${t('translation:filters.priceRange')}`
+    ) {
       dispatch(
         filterActions.removePriceFilter(appliedFilter.filterCategory),
       );
@@ -86,7 +93,8 @@ export const CollectionItems = () => {
                   return (
                     <FilteredTraitsChip
                       name={
-                        appliedFilter.filterCategory !== `${t('translation:filters.priceRange')}`
+                        appliedFilter.filterCategory !==
+                        `${t('translation:filters.priceRange')}`
                           ? appliedFilter.filterName
                           : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`
                       }
@@ -94,15 +102,20 @@ export const CollectionItems = () => {
                       appliedFilterValue={appliedFilter}
                       removeFilter={() => {
                         if (
-                          appliedFilter.filterName === `${t('translation:buttons.action.myNfts')}`
+                          appliedFilter.filterName ===
+                          `${t('translation:buttons.action.myNfts')}`
                         ) {
                           dispatch(filterActions.setMyNfts(false));
                         } else if (
-                          appliedFilter.filterName === `${t('translation:buttons.action.buyNow')}`
+                          appliedFilter.filterName ===
+                          `${t('translation:buttons.action.buyNow')}`
                         ) {
                           dispatch(filterActions.setStatusFilter(''));
                         } else if (
-                          appliedFilter.filterName === `${t('translation:buttons.action.hasOffers')}`
+                          appliedFilter.filterName ===
+                          `${t(
+                            'translation:buttons.action.hasOffers',
+                          )}`
                         ) {
                           dispatch(filterActions.setStatusFilter(''));
                         }
