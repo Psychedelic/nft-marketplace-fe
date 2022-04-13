@@ -17,6 +17,7 @@ import {
   VideoLoader,
   ActionText,
   NftId,
+  MediaWrapper,
 } from './styles';
 import { NFTMetadata } from '../../../../declarations/nft';
 import wicpLogo from '../../../../assets/wicpIcon.png';
@@ -43,16 +44,18 @@ export const NftCard = React.memo(
               </OwnedCardText>
               <CardOptionsDropdown data={data} />
             </Flex>
-            <VideoPlayer
-              videoSrc={data.location}
-              pausedOverlay={
-                // eslint-disable-next-line react/jsx-wrap-multilines
-                <PreviewDetails>
-                  <PreviewImage src={data?.preview} alt="nft-card" />
-                </PreviewDetails>
-              }
-              loadingOverlay={<VideoLoader />}
-            />
+            <MediaWrapper>
+              <VideoPlayer
+                videoSrc={data.location}
+                pausedOverlay={
+                  // eslint-disable-next-line react/jsx-wrap-multilines
+                  <PreviewDetails>
+                    <PreviewImage src={data?.preview} alt="nft-card" />
+                  </PreviewDetails>
+                }
+                loadingOverlay={<VideoLoader />}
+              />
+            </MediaWrapper>
             <Flex>
               <NftText>{data?.name}</NftText>
               <NftText>Price</NftText>
