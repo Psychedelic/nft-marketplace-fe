@@ -15,15 +15,17 @@ export const useNFTSFetcher = () => {
       dispatch(nftsActions.setIsNFTSLoading(true));
 
       try {
-        const actor = await createActor();
-        const allNFTS = await actor.totalSupplyDip721();
+        const actor = await createActor({
+          serviceName: 'marketplace',
+        });
+        const allNFTS = await actor.totalSupply();
 
         // TODO: update promises with token
         const promises = [
           ...new Array(JsonBigInt.parse(allNFTS)),
         ].map((_, index) => {
           const tokenId = BigInt(index);
-          return actor.getMetadataDip721(tokenId);
+          return actor.getMetadata(tokenId);
         });
         const fetchedNFTS = await Promise.allSettled(promises);
         const nftsCount = 999;
