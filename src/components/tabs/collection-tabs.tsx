@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Tabs from '@radix-ui/react-tabs';
-import {
-  useThemeStore,
-} from '../../store';
+import { ActorSubclass } from '@dfinity/agent';
+import { createActor } from '../../integrations/actor';
+import { useThemeStore } from '../../store';
+import { parseAllListingResponse } from '../../utils/parser';
+import marketplaceIdlService from '../../declarations/marketplace';
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
 import { TabsRoot, TabsTrigger, TabsList } from './styles';
@@ -30,6 +32,26 @@ export const CollectionTabs = () => {
   const itemeActiveTheme = isLightTheme ? itemsActive : itemsActiveDark;
   const activityActiveTheme = isLightTheme ? activityActive : activityActiveDark;
 
+  useEffect(() => {
+    console.log('[debug] 1');
+    (async () => {
+      try {
+        console.log('[debug] 2');
+        const actor = (await createActor<marketplaceIdlService>({
+          serviceName: 'marketplace',
+        })) as ActorSubclass<marketplaceIdlService>;
+        console.log('[debug] 3');
+        const allListings = await actor.getAllListings();
+        console.log('[debug] 4');
+        console.log('[debug] allListings', allListings);
+        const parsed = parseAllListingResponse(allListings);
+        console.log('[debug] parsed', parsed);
+      } catch (err) {
+        console.warn(err);
+      }
+    })();
+  }, []);
+
   return (
     <TabsRoot defaultValue="items" value={currentTab}>
       <TabsList aria-label="Manage your account">
@@ -40,14 +62,7 @@ export const CollectionTabs = () => {
             setCurrentTab('items');
           }}
         >
-          <img
-            src={
-              itemIsActive === 'active'
-                ? itemeActiveTheme
-                : itemsInactive
-            }
-            alt="items-tab"
-          />
+          <img src={itemIsActive === 'active' ? itemeActiveTheme : itemsInactive} alt="items-tab" />
           {t('translation:tabs.items')}
         </TabsTrigger>
         <TabsTrigger
@@ -57,14 +72,7 @@ export const CollectionTabs = () => {
             setCurrentTab('activity');
           }}
         >
-          <img
-            src={
-              activityIsActive === 'active'
-                ? activityActiveTheme
-                : activityInactive
-            }
-            alt="activity-tab"
-          />
+          <img src={activityIsActive === 'active' ? activityActiveTheme : activityInactive} alt="activity-tab" />
           {t('translation:tabs.activity')}
         </TabsTrigger>
       </TabsList>
