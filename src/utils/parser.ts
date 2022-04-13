@@ -2,7 +2,7 @@ import { Principal } from '@dfinity/principal';
 import { Listing } from '../declarations/marketplace';
 
 type GetAllListingsDataResponse = Array<[[Principal, bigint], Listing]>;
-type GetAllListingsDataParsed = {
+export type GetAllListingsDataParsed = {
   tokenId: BigInt;
   listing: Listing;
 };

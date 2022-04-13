@@ -7,6 +7,7 @@ import { actorInstanceHandler } from '../../../integrations/actor';
 import config from '../../../config/env';
 import { errorActions } from '../errors';
 import { RootState } from '../../store';
+import { parseAllListingResponse, GetAllListingsDataParsed } from '../../../utils/parser';
 
 interface MakeListingParams extends MakeListing {
   onSuccess?: () => void;
@@ -53,11 +54,13 @@ type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
 
 type InitialState = {
   recentlyListedForSale: RecentyListedForSale;
+  allListings: GetAllListingsDataParsed[];
   actor?: MarketplaceActor;
 };
 
 const initialState: InitialState = {
   recentlyListedForSale: [],
+  allListings: [],
 };
 
 export const marketplaceSlice = createSlice({
@@ -74,7 +77,41 @@ export const marketplaceSlice = createSlice({
 
       state.recentlyListedForSale.push(action.payload);
     });
+
+    builder.addCase(getAllListings.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.allListings = action.payload;
+    });
   },
+});
+
+export const getAllListings = createAsyncThunk<
+  // Return type of the payload creator
+  GetAllListingsDataParsed[] | undefined,
+  // First argument to the payload creator
+  undefined,
+  // Optional fields for defining the thunk api
+  { state: RootState }
+>('marketplace/getAllListings', async (params: any, thunkAPI) => {
+  // Checks if an actor instance exists already
+  // otherwise creates a new instance
+  const actorInstance = await actorInstanceHandler({
+    thunkAPI,
+    serviceName: 'marketplace',
+    slice: marketplaceSlice,
+  });
+
+  try {
+    const allListings = await actorInstance.getAllListings();
+    const parsed = parseAllListingResponse(allListings);
+
+    console.log('[debug] parsed', parsed);
+
+    return parsed;
+  } catch (err) {
+    console.warn(err);
+  }
 });
 
 export const makeListing = createAsyncThunk<
