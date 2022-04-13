@@ -1,9 +1,7 @@
 import React from 'react';
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
-import {
-  useThemeStore,
-} from '../../store';
+import { useThemeStore } from '../../store';
 import { LinkButton, Tooltip } from '../core';
 import {
   NftMetadataWrapper,
@@ -37,10 +35,7 @@ export const CollectionOverview = () => {
       <NftMetadataContent>
         <NftMetadataContentWrapper>
           <NftProfilePictureWrapper>
-            <img
-              src={isLightTheme ? crown : crownDark}
-              alt="crown-pfp"
-            />
+            <img src={isLightTheme ? crown : crownDark} alt="crown-pfp" />
           </NftProfilePictureWrapper>
           <HeaderWrapper>
             <Heading>
@@ -48,9 +43,8 @@ export const CollectionOverview = () => {
               <img src={verified} alt="verified" />
             </Heading>
             <Subtext>
-              Crowns are a collection of 10,000 generated
-              NFTs on the Internet Computer. With a mix of traditional
-              and psychedelic materials.
+              Crowns are a collection of 10,000 generated NFTs on the Internet Computer. With a mix of traditional and
+              psychedelic materials.
             </Subtext>
           </HeaderWrapper>
         </NftMetadataContentWrapper>
@@ -59,23 +53,14 @@ export const CollectionOverview = () => {
             {t('translation:buttons.links.website')}
           </LinkButton>
           <LinkButton url="https://discord.gg/yVEcEzmrgm">
-            <img
-              src={isLightTheme ? discord : discordDark}
-              alt={t('translation:buttons.links.discord')}
-            />
+            <img src={isLightTheme ? discord : discordDark} alt={t('translation:buttons.links.discord')} />
           </LinkButton>
           <LinkButton url="https://twitter.com/cap_ois">
-            <img
-              src={isLightTheme ? twitter : twitterDark}
-              alt={t('translation:buttons.links.twitter')}
-            />
+            <img src={isLightTheme ? twitter : twitterDark} alt={t('translation:buttons.links.twitter')} />
           </LinkButton>
 
           <LinkButton handleClick={() => copyToClipboard(window.location.href)}>
-            <img
-              src={isLightTheme ? back : backDark}
-              alt={t('translation:buttons.links.back')}
-            />
+            <img src={isLightTheme ? back : backDark} alt={t('translation:buttons.links.back')} />
           </LinkButton>
         </ButtonsWrapper>
       </NftMetadataContent>
