@@ -10,7 +10,7 @@ export const TableWrapper = styled('div', {
   position: 'relative',
   // marginTop: '44px', // TODO: make variant
   width: '100%',
-  height: '100%',
+  height: '100vh',
   overflowX: 'auto',
 
   table: {
@@ -186,6 +186,71 @@ export const ButtonWrapper = styled('div', {
 
 export const InfiniteScrollWrapper = styled(InfiniteScroll, {
   width: '100%',
-  height: '100%',
+  height: '100vh',
   overflowX: 'auto',
+});
+
+export const TableSkeletonsWrapper = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '0 80px',
+
+  '&:nth-child(1)': {
+    paddingTop: '30px',
+    paddingBottom: '20px',
+  },
+});
+
+export const ImageSkeleton = styled('div', {
+  width: '48px',
+  height: '48px',
+  margin: '10px 0px',
+  borderRadius: '10px',
+  marginRight: '12px',
+  backgroundColor: 'rgba(0, 0, 0, 0.11)',
+  background: '$skeletonBackground',
+});
+
+export const NameSkeleton = styled('div', {
+  width: '300px',
+  height: '20px',
+  borderRadius: '10px',
+  backgroundColor: 'rgba(0, 0, 0, 0.11)',
+  background: '$skeletonBackground',
+});
+
+export const Flex = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+});
+
+export const TypeDetailsSkeleton = styled('div', {
+  width: '48px',
+  height: '48px',
+  margin: '10px 0px',
+  borderRadius: '10px',
+  marginRight: '12px',
+  backgroundColor: 'rgba(0, 0, 0, 0.11)',
+  background: '$skeletonBackground',
+});
+
+export const PriceSkeleton = styled('div', {
+  width: '100px',
+  height: '15px',
+  borderRadius: '10px',
+  backgroundColor: 'rgba(0, 0, 0, 0.11)',
+  background: '$skeletonBackground',
+
+  '&:nth-child(1)': {
+    marginBottom: '5px',
+  },
+});
+
+export const StringSkeleton = styled('div', {
+  width: '120px',
+  height: '15px',
+  borderRadius: '10px',
+  backgroundColor: 'rgba(0, 0, 0, 0.11)',
+  background: '$skeletonBackground',
 });
