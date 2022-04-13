@@ -11,3 +11,11 @@ export type NFTMetadata = {
   isListed: boolean;
   owner: string;
 };
+
+export interface MetadataPart {
+  data: Array<number>;
+  key_val_data: Array<MetadataKeyVal>;
+  purpose: MetadataPurpose;
+}
+
+export type MetadataDesc = Array<MetadataPart>;
