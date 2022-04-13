@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Tabs from '@radix-ui/react-tabs';
+import { useSelector } from 'react-redux';
 import { ActorSubclass } from '@dfinity/agent';
 import { createActor } from '../../integrations/actor';
-import { useThemeStore } from '../../store';
+import { useThemeStore, useAppDispatch } from '../../store';
 import { parseAllListingResponse } from '../../utils/parser';
 import marketplaceIdlService from '../../declarations/marketplace';
+import { getAllListings } from '../../store/features/marketplace';
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
 import { TabsRoot, TabsTrigger, TabsList } from './styles';
@@ -22,6 +24,8 @@ export const CollectionTabs = () => {
   const [currentTab, setCurrentTab] = useState('items');
   const { theme } = useThemeStore();
   const isLightTheme = theme === 'lightTheme';
+  const dispatch = useAppDispatch();
+  const allListings = useSelector((state: any) => state.marketplace.allListings);
 
   // state for active chips goes here
   // based on their text content we'd have the filters to be displayed
@@ -33,23 +37,7 @@ export const CollectionTabs = () => {
   const activityActiveTheme = isLightTheme ? activityActive : activityActiveDark;
 
   useEffect(() => {
-    console.log('[debug] 1');
-    (async () => {
-      try {
-        console.log('[debug] 2');
-        const actor = (await createActor<marketplaceIdlService>({
-          serviceName: 'marketplace',
-        })) as ActorSubclass<marketplaceIdlService>;
-        console.log('[debug] 3');
-        const allListings = await actor.getAllListings();
-        console.log('[debug] 4');
-        console.log('[debug] allListings', allListings);
-        const parsed = parseAllListingResponse(allListings);
-        console.log('[debug] parsed', parsed);
-      } catch (err) {
-        console.warn(err);
-      }
-    })();
+    dispatch(getAllListings());
   }, []);
 
   return (
