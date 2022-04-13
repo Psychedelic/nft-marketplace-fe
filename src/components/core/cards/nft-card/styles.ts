@@ -33,20 +33,35 @@ export const CardWrapper = styled('div', {
   transition: 'all 0.5s ease-in-out',
 });
 
+export const MediaWrapper = styled('div', {
+  minHeight: '175px',
+
+  '@lg': {
+    height: '270px',
+    width: '100%',
+    marginBottom: '10px',
+  },
+});
+
 export const PreviewDetails = styled('div', {
   minHeight: '175px',
+  width: '100%',
+  height: '100%',
 });
 
 export const PreviewImage = styled('img', {
   width: '100%',
+  height: '100%',
   objectFit: 'cover',
   borderRadius: '14px',
 });
 
 export const VideoPlayer = styled(HoverVideoPlayer, {
   marginBottom: '10px',
+  height: '100%',
+  width: '100%',
   video: {
-    minHeight: '175px',
+    height: '100%',
     borderRadius: '14px',
   },
 });
