@@ -14,11 +14,7 @@ export const CollectionItems = () => {
 
   const { loadingNFTs } = useNFTSStore();
 
-  useEffect(() => {
-    if (loadingNFTs) return;
-
-    useNFTSFetcher();
-  }, []);
+  useNFTSFetcher();
 
   // TODO: move applied filters to seperate component
   const handleRemoveFilter = (appliedFilter: any) => {
