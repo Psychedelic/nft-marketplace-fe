@@ -7,9 +7,9 @@ export type NFTMetadata = {
   location: string;
   price: string;
   lastOffer: string;
-  isOwner: boolean;
-  isListed: boolean;
-  owner: string;
+  isOwner?: boolean;
+  isListed?: boolean;
+  owner?: string;
 };
 
 export interface MetadataPart {
