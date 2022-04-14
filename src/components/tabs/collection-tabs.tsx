@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Tabs from '@radix-ui/react-tabs';
-import {
-  useThemeStore,
-} from '../../store';
+import { useThemeStore } from '../../store';
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
 import { TabsRoot, TabsTrigger, TabsList } from './styles';
@@ -40,14 +38,7 @@ export const CollectionTabs = () => {
             setCurrentTab('items');
           }}
         >
-          <img
-            src={
-              itemIsActive === 'active'
-                ? itemeActiveTheme
-                : itemsInactive
-            }
-            alt="items-tab"
-          />
+          <img src={itemIsActive === 'active' ? itemeActiveTheme : itemsInactive} alt="items-tab" />
           {t('translation:tabs.items')}
         </TabsTrigger>
         <TabsTrigger
@@ -57,14 +48,7 @@ export const CollectionTabs = () => {
             setCurrentTab('activity');
           }}
         >
-          <img
-            src={
-              activityIsActive === 'active'
-                ? activityActiveTheme
-                : activityInactive
-            }
-            alt="activity-tab"
-          />
+          <img src={activityIsActive === 'active' ? activityActiveTheme : activityInactive} alt="activity-tab" />
           {t('translation:tabs.activity')}
         </TabsTrigger>
       </TabsList>
