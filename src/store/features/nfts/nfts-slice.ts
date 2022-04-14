@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
-import { NFTMetadata } from '../../../declarations/nft';
+import { NFTMetadata } from '../../../declarations/legacy';
 
 // Define a type for the slice state
 interface NFTSState {
@@ -23,7 +23,7 @@ const initialState: NFTSState = {
   nextPageNo: 0,
 };
 
-interface loadedNFTData {
+export interface loadedNFTData {
   loadedNFTList: NFTMetadata[];
   totalPages: number;
   total: number;

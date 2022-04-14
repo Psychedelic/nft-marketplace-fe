@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default ({ IDL }: { IDL: any }) => {
   const TxError = IDL.Variant({
     InsufficientAllowance: IDL.Null,
@@ -10,9 +11,7 @@ export default ({ IDL }: { IDL: any }) => {
     BlockUsed: IDL.Null,
     AmountTooSmall: IDL.Null,
   });
-  const Result = IDL.Variant({
-    Ok: IDL.Nat, Err: TxError,
-  });
+  const Result = IDL.Variant({ Ok: IDL.Nat, Err: TxError });
   const Metadata = IDL.Record({
     fee: IDL.Nat,
     decimals: IDL.Nat8,

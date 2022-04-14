@@ -12,12 +12,12 @@ import config from '../../../config/env';
 import { errorActions } from '../errors';
 import { RootState } from '../../store';
 
-interface ListForSaleParams extends ListForSale {
+interface MakeListingParams extends MakeListing {
   onSuccess?: () => void;
   onFailure?: () => void;
 }
 
-type ListForSale = {
+type MakeListing = {
   id: string;
   amount: string;
 };
@@ -51,7 +51,7 @@ type AcceptOffer = {
   buyerPrincipalId: string;
 };
 
-type RecentyListedForSale = ListForSale[];
+type RecentyListedForSale = MakeListing[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
 
@@ -73,7 +73,7 @@ export const marketplaceSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(listForSale.fulfilled, (state, action) => {
+    builder.addCase(makeListing.fulfilled, (state, action) => {
       if (!action.payload) return;
 
       state.recentlyListedForSale.push(action.payload);
@@ -81,16 +81,16 @@ export const marketplaceSlice = createSlice({
   },
 });
 
-export const listForSale = createAsyncThunk<
+export const makeListing = createAsyncThunk<
   // Return type of the payload creator
-  ListForSale | undefined,
+  MakeListing | undefined,
   // First argument to the payload creator
-  ListForSaleParams,
+  MakeListingParams,
   // Optional fields for defining the thunk api
   { state: RootState }
 >(
-  'marketplace/listForSale',
-  async (params: ListForSaleParams, thunkAPI) => {
+  'marketplace/makeListing',
+  async (params: MakeListingParams, thunkAPI) => {
     // Checks if an actor instance exists already
     // otherwise creates a new instance
     const actorInstance = await actorInstanceHandler({
@@ -108,7 +108,8 @@ export const listForSale = createAsyncThunk<
       const userOwnedTokenId = BigInt(id);
       const userListForPrice = BigInt(amount);
 
-      const result = await actorInstance.listForSale(
+      const result = await actorInstance.makeListing(
+        false, // direct buy
         nonFungibleContractAddress,
         userOwnedTokenId,
         userListForPrice,

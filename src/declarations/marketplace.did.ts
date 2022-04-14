@@ -2,52 +2,60 @@
 export default ({ IDL }: { IDL: any }) => {
   const MPApiError = IDL.Variant({
     NonExistentCollection: IDL.Null,
-    InvalidSaleOfferStatus: IDL.Null,
+    NoDeposit: IDL.Null,
+    InvalidListingStatus: IDL.Null,
     InsufficientFungibleBalance: IDL.Null,
-    InvalidSaleOffer: IDL.Null,
-    InvalidBuyOfferStatus: IDL.Null,
+    InvalidListing: IDL.Null,
     TransferNonFungibleError: IDL.Null,
     Unauthorized: IDL.Null,
     TransferFungibleError: IDL.Null,
-    InvalidBuyOffer: IDL.Null,
-    Other: IDL.Null,
+    InvalidOffer: IDL.Null,
+    Other: IDL.Text,
     InsufficientNonFungibleBalance: IDL.Null,
+    InvalidOfferStatus: IDL.Null,
     CAPInsertionError: IDL.Null,
   });
   const Result = IDL.Variant({ Ok: IDL.Null, Err: MPApiError });
-  const NonFungibleTokenType = IDL.Variant({
+  const NFTStandard = IDL.Variant({
     EXT: IDL.Null,
-    DIP721: IDL.Null,
+    DIP721v2: IDL.Null,
   });
-  const FungibleTokenType = IDL.Variant({ DIP20: IDL.Null });
-  const BuyOfferStatus = IDL.Variant({
-    Bought: IDL.Null,
-    CancelledByBuyer: IDL.Null,
-    Uninitialized: IDL.Null,
-    Created: IDL.Null,
-    CancelledBySeller: IDL.Null,
+  const FungibleStandard = IDL.Variant({ DIP20: IDL.Null });
+  const FungibleBalance = IDL.Record({
+    locked: IDL.Nat,
+    amount: IDL.Nat,
   });
-  const BuyOffer = IDL.Record({
-    status: BuyOfferStatus,
-    non_fungible_contract_address: IDL.Principal,
-    token_id: IDL.Nat64,
-    price: IDL.Nat,
-    payment_address: IDL.Principal,
-  });
-  const SaleOfferStatus = IDL.Variant({
+  const ListingStatus = IDL.Variant({
     Selling: IDL.Null,
     Uninitialized: IDL.Null,
     Created: IDL.Null,
   });
-  const SaleOffer = IDL.Record({
-    status: SaleOfferStatus,
-    is_direct_buyable: IDL.Bool,
+  const Listing = IDL.Record({
+    status: ListingStatus,
+    direct_buy: IDL.Bool,
+    price: IDL.Nat,
     payment_address: IDL.Principal,
-    list_price: IDL.Nat,
   });
-  const Result_1 = IDL.Variant({ Ok: IDL.Nat64, Err: MPApiError });
+  const OfferStatus = IDL.Variant({
+    Bought: IDL.Null,
+    Uninitialized: IDL.Null,
+    Denied: IDL.Null,
+    Cancelled: IDL.Null,
+    Created: IDL.Null,
+  });
+  const Offer = IDL.Record({
+    status: OfferStatus,
+    token_id: IDL.Nat64,
+    price: IDL.Nat,
+    payment_address: IDL.Principal,
+    nft_canister_id: IDL.Principal,
+  });
   return IDL.Service({
-    acceptBuyOffer: IDL.Func([IDL.Nat64], [Result], []),
+    acceptOffer: IDL.Func(
+      [IDL.Principal, IDL.Nat64, IDL.Principal],
+      [Result],
+      [],
+    ),
     addCollection: IDL.Func(
       [
         IDL.Principal,
@@ -55,49 +63,81 @@ export default ({ IDL }: { IDL: any }) => {
         IDL.Nat64,
         IDL.Text,
         IDL.Principal,
-        NonFungibleTokenType,
+        NFTStandard,
         IDL.Principal,
-        FungibleTokenType,
+        FungibleStandard,
       ],
-      [],
-      [],
-    ),
-    cancelListingBySeller: IDL.Func(
-      [IDL.Principal, IDL.Nat64],
       [Result],
       [],
     ),
-    cancelOfferByBuyer: IDL.Func([IDL.Nat64], [Result], []),
-    cancelOfferBySeller: IDL.Func([IDL.Nat64], [Result], []),
-    directBuy: IDL.Func([IDL.Principal, IDL.Nat64], [Result], []),
-    getBuyOffers: IDL.Func(
-      [IDL.Nat64, IDL.Nat64],
-      [IDL.Vec(BuyOffer)],
+    balanceOf: IDL.Func(
+      [IDL.Principal],
+      [IDL.Vec(IDL.Tuple(IDL.Principal, FungibleBalance))],
       ['query'],
     ),
-    getSaleOffers: IDL.Func(
+    cancelListing: IDL.Func([IDL.Principal, IDL.Nat64], [Result], []),
+    cancelOffer: IDL.Func([IDL.Principal, IDL.Nat64], [Result], []),
+    denyOffer: IDL.Func([IDL.Nat64], [Result], []),
+    depositFungible: IDL.Func(
+      [IDL.Principal, FungibleStandard, IDL.Nat],
+      [Result],
+      [],
+    ),
+    depositNFT: IDL.Func([IDL.Principal, IDL.Nat64], [Result], []),
+    directBuy: IDL.Func([IDL.Principal, IDL.Nat64], [Result], []),
+    getAllBalances: IDL.Func(
       [],
       [
         IDL.Vec(
-          IDL.Tuple(IDL.Tuple(IDL.Principal, IDL.Nat64), SaleOffer),
+          IDL.Tuple(
+            IDL.Tuple(IDL.Principal, IDL.Principal),
+            FungibleBalance,
+          ),
         ),
       ],
       ['query'],
     ),
-    listForSale: IDL.Func(
-      [IDL.Principal, IDL.Nat64, IDL.Nat],
+    getAllListings: IDL.Func(
+      [],
+      [
+        IDL.Vec(
+          IDL.Tuple(IDL.Tuple(IDL.Principal, IDL.Nat64), Listing),
+        ),
+      ],
+      ['query'],
+    ),
+    getAllOffers: IDL.Func(
+      [],
+      [
+        IDL.Vec(
+          IDL.Tuple(
+            IDL.Principal,
+            IDL.Vec(
+              IDL.Tuple(
+                IDL.Nat64,
+                IDL.Vec(IDL.Tuple(IDL.Principal, Offer)),
+              ),
+            ),
+          ),
+        ),
+      ],
+      ['query'],
+    ),
+    makeListing: IDL.Func(
+      [IDL.Bool, IDL.Principal, IDL.Nat64, IDL.Nat],
       [Result],
       [],
     ),
-    makeBuyOffer: IDL.Func(
+    makeOffer: IDL.Func(
       [IDL.Principal, IDL.Nat64, IDL.Nat],
-      [Result_1],
+      [Result],
       [],
     ),
     withdrawFungible: IDL.Func(
-      [IDL.Principal, FungibleTokenType],
+      [IDL.Principal, FungibleStandard],
       [Result],
       [],
     ),
+    withdrawNFT: IDL.Func([IDL.Principal, IDL.Nat64], [Result], []),
   });
 };
