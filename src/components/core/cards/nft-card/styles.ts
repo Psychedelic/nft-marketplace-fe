@@ -93,13 +93,14 @@ export const Flex = styled('div', {
   },
 });
 
-export const OwnedCardText = styled('p', {
+export const OwnedCardText = styled('span', {
   fontStyle: 'normal',
   fontWeight: '500',
   fontSize: '12px',
   lineHeight: '15px',
   color: '#777E90',
   margin: '0',
+  height: '15px',
 });
 
 export const Dfinity = styled('p', {
