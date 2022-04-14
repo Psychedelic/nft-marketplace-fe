@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  NftActionBar,
-  NFTActivityTable,
-  NftDetails,
-} from '../../components';
+import { NftActionBar, NFTActivityTable, NftDetails } from '../../components';
 import { Container, NFTDetailsWrapper } from './styles';
 
 /* --------------------------------------------------------------------------
@@ -11,6 +7,7 @@ import { Container, NFTDetailsWrapper } from './styles';
  * --------------------------------------------------------------------------*/
 
 const NFTView = () => {
+  // TODO: Seems that this theme and setTheme should be removed
   const [theme, setTheme] = useState('lightTheme');
 
   useEffect(() => {
@@ -24,6 +21,7 @@ const NFTView = () => {
     <Container>
       <NFTDetailsWrapper>
         <NftDetails />
+        {/* TODO: What is this theme doing here? */}
         <NFTActivityTable theme={theme} />
       </NFTDetailsWrapper>
     </Container>
