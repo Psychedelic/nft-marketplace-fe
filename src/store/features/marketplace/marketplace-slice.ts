@@ -7,7 +7,12 @@ import { actorInstanceHandler } from '../../../integrations/actor';
 import config from '../../../config/env';
 import { errorActions } from '../errors';
 import { RootState } from '../../store';
-import { parseAllListingResponse, GetAllListingsDataParsed } from '../../../utils/parser';
+import {
+  parseAllListingResponse,
+  GetAllListingsDataParsed,
+  GetAllListingsDataParsedObj,
+  parseAllListingResponseAsObj,
+} from '../../../utils/parser';
 
 interface MakeListingParams extends MakeListing {
   onSuccess?: () => void;
@@ -54,7 +59,7 @@ type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
 
 type InitialState = {
   recentlyListedForSale: RecentyListedForSale;
-  allListings: GetAllListingsDataParsed[];
+  allListings: GetAllListingsDataParsedObj;
   actor?: MarketplaceActor;
 };
 
@@ -88,7 +93,7 @@ export const marketplaceSlice = createSlice({
 
 export const getAllListings = createAsyncThunk<
   // Return type of the payload creator
-  GetAllListingsDataParsed[] | undefined,
+  GetAllListingsDataParsedObj | undefined,
   // First argument to the payload creator
   undefined,
   // Optional fields for defining the thunk api
@@ -104,7 +109,7 @@ export const getAllListings = createAsyncThunk<
 
   try {
     const allListings = await actorInstance.getAllListings();
-    const parsed = parseAllListingResponse(allListings);
+    const parsed = parseAllListingResponseAsObj(allListings);
 
     console.log('[debug] parsed', parsed);
 

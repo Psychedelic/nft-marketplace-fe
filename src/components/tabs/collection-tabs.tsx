@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Tabs from '@radix-ui/react-tabs';
-import { useSelector } from 'react-redux';
-import { ActorSubclass } from '@dfinity/agent';
-import { createActor } from '../../integrations/actor';
-import { useThemeStore, useAppDispatch } from '../../store';
-import { parseAllListingResponse } from '../../utils/parser';
-import marketplaceIdlService from '../../declarations/marketplace';
-import { getAllListings } from '../../store/features/marketplace';
+import { useThemeStore } from '../../store';
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
 import { TabsRoot, TabsTrigger, TabsList } from './styles';
@@ -24,8 +18,6 @@ export const CollectionTabs = () => {
   const [currentTab, setCurrentTab] = useState('items');
   const { theme } = useThemeStore();
   const isLightTheme = theme === 'lightTheme';
-  const dispatch = useAppDispatch();
-  const allListings = useSelector((state: any) => state.marketplace.allListings);
 
   // state for active chips goes here
   // based on their text content we'd have the filters to be displayed
@@ -35,10 +27,6 @@ export const CollectionTabs = () => {
   const activityIsActive = currentTab === 'activity' ? 'active' : 'inactive';
   const itemeActiveTheme = isLightTheme ? itemsActive : itemsActiveDark;
   const activityActiveTheme = isLightTheme ? activityActive : activityActiveDark;
-
-  useEffect(() => {
-    dispatch(getAllListings());
-  }, []);
 
   return (
     <TabsRoot defaultValue="items" value={currentTab}>
