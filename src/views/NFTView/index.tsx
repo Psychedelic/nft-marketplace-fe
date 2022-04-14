@@ -14,6 +14,8 @@ const NFTView = () => {
   const [theme, setTheme] = useState('lightTheme');
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     const getTheme = localStorage.getItem('theme');
     if (getTheme) {
       setTheme(getTheme);
