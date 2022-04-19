@@ -7,7 +7,6 @@ import { directBuy, getAllListings } from '../../store/features/marketplace';
 import { useAppDispatch } from '../../store';
 import { DIRECT_BUY_STATUS_CODES } from '../../constants/direct-buy';
 import {
-  BuyNowModalTrigger,
   ModalOverlay,
   ModalContent,
   Container,
@@ -16,6 +15,7 @@ import {
   ModalDescription,
   ModalButtonsList,
   ModalButtonWrapper,
+  ActionText,
 } from './styles';
 
 /* --------------------------------------------------------------------------
@@ -75,9 +75,13 @@ export const BuyNowModal = () => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <BuyNowModalTrigger>
-          <ActionButton type="primary" text={t('translation:buttons.action.buyNow')} handleClick={handleDirectBuy} />
-        </BuyNowModalTrigger>
+        <ActionText onClick={() => {
+          // eslint-disable-next-line no-console
+          console.log('BuyNowModalTrigger opened');
+        }}
+        >
+          {`${t('translation:nftCard.forSale')}`}
+        </ActionText>
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------
