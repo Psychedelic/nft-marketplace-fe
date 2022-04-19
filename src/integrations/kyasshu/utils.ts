@@ -187,9 +187,9 @@ export const fetchNFTDetails = async ({
   }
 };
 
-export const fetchFilterTraits = async ({
-  dispatch,
-}: FetchFilterTraitsProps) => {
+export const fetchFilterTraits = async ({ dispatch }: FetchFilterTraitsProps) => {
+  dispatch(filterActions.setIsFilterTraitsLoading(true));
+
   try {
     const response = await axios.get(
       `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`,
@@ -227,6 +227,7 @@ export const fetchFilterTraits = async ({
     });
 
     dispatch(filterActions.getAllFilters(responseData));
+    dispatch(filterActions.setIsFilterTraitsLoading(false));
   } catch (error) {
     console.log(error);
   }
@@ -243,8 +244,7 @@ export const usePriceValues = () => {
   const { defaultFilters } = useFilterStore();
 
   return defaultFilters.find(
-    ({ filterCategory }) =>
-      filterCategory === `${t('translation:filters.priceRange')}`,
+    ({ filterCategory }) => filterCategory === `${t('translation:filters.priceRange')}`,
   )?.filterName;
 };
 
@@ -315,9 +315,7 @@ export const fetchCAPActivity = createAsyncThunk(
       const result = Items.map((item: any) => {
         pageNo = item.page;
         // eslint-disable-next-line no-underscore-dangle
-        const parsedArr = Uint8Array.from(
-          Object.values(item.event.caller._arr),
-        );
+        const parsedArr = Uint8Array.from(Object.values(item.event.caller._arr));
         const callerPrincipalId = Principal.fromUint8Array(parsedArr);
         const callerPrincipalIdString = shortAddress(
           callerPrincipalId.toText(),

@@ -299,3 +299,11 @@ export const ButtonListWrapper = styled('div', {
 export const ButtonDetailsWrapper = styled('div', {
   marginRight: '10px',
 });
+
+export const CheckboxSkeletonWrapper = styled('div', {
+  background: '$skeletonBackground',
+  borderRadius: '15px',
+  marginBottom: '25px',
+  padding: '0 15px',
+  height: '44px',
+});
