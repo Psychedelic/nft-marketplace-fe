@@ -3,10 +3,12 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import marketplaceIdlService from '../../../declarations/marketplace';
+import crownsIdlService from '../../../declarations/nft';
 import { actorInstanceHandler } from '../../../integrations/actor';
 import config from '../../../config/env';
 import { errorActions } from '../errors';
 import { RootState } from '../../store';
+import { crownsSlice } from '../crowns/crowns-slice';
 import {
   parseAllListingResponse,
   GetAllListingsDataParsed,
@@ -65,6 +67,8 @@ type AcceptOffer = {
 type RecentyListedForSale = MakeListing[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
+
+type CrownsActor = ActorSubclass<crownsIdlService>;
 
 type InitialState = {
   recentlyListedForSale: RecentyListedForSale;
@@ -136,41 +140,79 @@ export const makeListing = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >('marketplace/makeListing', async (params: MakeListingParams, thunkAPI) => {
+  console.log('[debug] marketplace-slice:makeListing:', 1);
   // Checks if an actor instance exists already
   // otherwise creates a new instance
-  const actorInstance = await actorInstanceHandler({
+  const actorInstanceMkp = await actorInstanceHandler({
     thunkAPI,
     serviceName: 'marketplace',
     slice: marketplaceSlice,
+  });
+  console.log('[debug] marketplace-slice:makeListing:', 2);
+  const actorInstanceCrowns = await actorInstanceHandler({
+    thunkAPI,
+    serviceName: 'crowns',
+    slice: crownsSlice,
+  });
+  console.log('[debug] marketplace-slice:makeListing:', {
+    actorInstanceCrowns,
+    actorInstanceMkp,
   });
 
   const { id, amount, onSuccess, onFailure } = params;
 
   try {
+    const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
+    const crownsCanisterId = Principal.fromText(config.crownsCanisterId);
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const userOwnedTokenId = BigInt(id);
     const userListForPrice = BigInt(amount);
 
-    const result = await actorInstance.makeListing(
-      false, // direct buy
+    const resultCrowns = await actorInstanceCrowns.approve(marketplaceCanisterId, userOwnedTokenId);
+
+    if (!('Ok' in resultCrowns)) {
+      if (typeof onFailure !== 'function') return;
+
+      onFailure();
+
+      console.error(resultCrowns);
+
+      throw Error('Oops! Failed to approve Marketplace Canister to control Crowns token');
+    }
+
+    const resultDepositNFT = await actorInstanceMkp.depositNFT(crownsCanisterId, userOwnedTokenId);
+
+    if (!('Ok' in resultDepositNFT)) {
+      if (typeof onFailure !== 'function') return;
+
+      onFailure();
+
+      console.error(resultDepositNFT);
+
+      throw Error('Oops! Failed to deposit the Crowns NFT');
+    }
+
+    const directBuy = true;
+    const resultMakeListing = await actorInstanceMkp.makeListing(
+      directBuy,
       nonFungibleContractAddress,
       userOwnedTokenId,
       userListForPrice,
     );
 
-    if (!('Ok' in result)) {
+    if (!('Ok' in resultMakeListing)) {
       if (typeof onFailure !== 'function') return;
 
       onFailure();
 
-      console.error(result);
+      console.error(resultMakeListing);
 
       throw Error('Oops! Failed to list for sale');
     }
 
     if (typeof onSuccess !== 'function') return;
 
-    console.info(result);
+    console.info(resultMakeListing);
 
     onSuccess();
 
@@ -179,7 +221,7 @@ export const makeListing = createAsyncThunk<
       amount,
     };
   } catch (err) {
-    thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
+    thunkAPI.dispatch(errorActions.setErrorMessage((err as { message: string }).message));
     if (typeof onFailure !== 'function') return;
     onFailure();
   }
@@ -207,6 +249,8 @@ export const directBuy = createAsyncThunk<
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
 
     const result = await actorInstance.directBuy(nonFungibleContractAddress, tokenId);
+
+    console.log('[debug] /marketplace/directBuy result', result);
 
     if (!('Ok' in result)) {
       if (typeof onFailure !== 'function') return;
