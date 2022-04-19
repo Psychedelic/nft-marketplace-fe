@@ -40,8 +40,6 @@ export const BuyNowModal = () => {
   };
 
   const handleDirectBuy = () => {
-    console.log('[debug] handleDirectBuy fn');
-
     if (!id) {
       console.warn('Oops! Missing id param');
 

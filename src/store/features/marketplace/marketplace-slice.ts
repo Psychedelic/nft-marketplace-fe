@@ -9,12 +9,7 @@ import config from '../../../config/env';
 import { errorActions } from '../errors';
 import { RootState } from '../../store';
 import { crownsSlice } from '../crowns/crowns-slice';
-import {
-  parseAllListingResponse,
-  GetAllListingsDataParsed,
-  GetAllListingsDataParsedObj,
-  parseAllListingResponseAsObj,
-} from '../../../utils/parser';
+import { GetAllListingsDataParsedObj, parseAllListingResponseAsObj } from '../../../utils/parser';
 
 interface MakeListingParams extends MakeListing {
   onSuccess?: () => void;
@@ -68,8 +63,6 @@ type RecentyListedForSale = MakeListing[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
 
-type CrownsActor = ActorSubclass<crownsIdlService>;
-
 type InitialState = {
   recentlyListedForSale: RecentyListedForSale;
   allListings: GetAllListingsDataParsedObj;
@@ -80,6 +73,8 @@ const initialState: InitialState = {
   recentlyListedForSale: [],
   allListings: [],
 };
+
+type CommonError = { message: string };
 
 export const marketplaceSlice = createSlice({
   name: 'marketplace',
@@ -140,7 +135,6 @@ export const makeListing = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >('marketplace/makeListing', async (params: MakeListingParams, thunkAPI) => {
-  console.log('[debug] marketplace-slice:makeListing:', 1);
   // Checks if an actor instance exists already
   // otherwise creates a new instance
   const actorInstanceMkp = await actorInstanceHandler({
@@ -148,15 +142,11 @@ export const makeListing = createAsyncThunk<
     serviceName: 'marketplace',
     slice: marketplaceSlice,
   });
-  console.log('[debug] marketplace-slice:makeListing:', 2);
+
   const actorInstanceCrowns = await actorInstanceHandler({
     thunkAPI,
     serviceName: 'crowns',
     slice: crownsSlice,
-  });
-  console.log('[debug] marketplace-slice:makeListing:', {
-    actorInstanceCrowns,
-    actorInstanceMkp,
   });
 
   const { id, amount, onSuccess, onFailure } = params;
@@ -221,7 +211,7 @@ export const makeListing = createAsyncThunk<
       amount,
     };
   } catch (err) {
-    thunkAPI.dispatch(errorActions.setErrorMessage((err as { message: string }).message));
+    thunkAPI.dispatch(errorActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
     onFailure();
   }
@@ -272,7 +262,7 @@ export const directBuy = createAsyncThunk<
       tokenId,
     };
   } catch (err) {
-    thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
+    thunkAPI.dispatch(errorActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
     onFailure();
   }
@@ -322,7 +312,7 @@ export const cancelListingBySeller = createAsyncThunk<
       id,
     };
   } catch (err) {
-    thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
+    thunkAPI.dispatch(errorActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
     onFailure();
   }
@@ -374,7 +364,7 @@ export const makeOffer = createAsyncThunk<
       amount,
     };
   } catch (err) {
-    thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
+    thunkAPI.dispatch(errorActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
     onFailure();
   }
@@ -425,7 +415,7 @@ export const acceptOffer = createAsyncThunk<
       buyerPrincipalId,
     };
   } catch (err) {
-    thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
+    thunkAPI.dispatch(errorActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
     onFailure();
   }
