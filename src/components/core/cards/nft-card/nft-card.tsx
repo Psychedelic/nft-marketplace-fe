@@ -15,11 +15,11 @@ import {
   VideoPlayer,
   PreviewImage,
   VideoLoader,
-  ActionText,
   NftId,
 } from './styles';
 import { NFTMetadata } from '../../../../declarations/nft';
 import wicpLogo from '../../../../assets/wicpIcon.png';
+import { BuyNowModal, MakeOfferModal } from '../../../modals';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -34,8 +34,8 @@ export const NftCard = React.memo(
     const { t } = useTranslation();
 
     return (
-      <RouterLink to={`/nft/${data.id}`}>
-        <CardContainer>
+      <CardContainer>
+        <RouterLink to={`/nft/${data.id}`}>
           <CardWrapper>
             <Flex>
               <OwnedCardText>
@@ -75,25 +75,21 @@ export const NftCard = React.memo(
               )}
             </Flex>
           </CardWrapper>
-          <OuterFlex>
-            {data.status === 'forSale' ? (
-              <ActionText>{`${t('translation:nftCard.forSale')}`}</ActionText>
-            ) : (
-              <ActionText>{`${t('translation:nftCard.forOffer')}`}</ActionText>
-            )}
-            {notForSale ? (
-              ''
-            ) : (
-              <LastOffer>
-                {forSaleAndOffer
-                  ? `${t('translation:nftCard.offerFor')} `
-                  : `${t('translation:nftCard.last')} `}
-                <b>{data?.lastOffer}</b>
-              </LastOffer>
-            )}
-          </OuterFlex>
-        </CardContainer>
-      </RouterLink>
+        </RouterLink>
+        <OuterFlex>
+          {data.status === 'forSale' ? <BuyNowModal /> : <MakeOfferModal />}
+          {notForSale ? (
+            ''
+          ) : (
+            <LastOffer>
+              {forSaleAndOffer
+                ? `${t('translation:nftCard.offerFor')} `
+                : `${t('translation:nftCard.last')} `}
+              <b>{data?.lastOffer}</b>
+            </LastOffer>
+          )}
+        </OuterFlex>
+      </CardContainer>
     );
   },
 );

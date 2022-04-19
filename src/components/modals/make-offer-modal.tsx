@@ -19,6 +19,7 @@ import {
   SaleContentWrapper,
   ModalButtonsList,
   ModalButtonWrapper,
+  ActionText,
 } from './styles';
 
 import { LISTING_STATUS_CODES } from '../../constants/listing';
@@ -81,16 +82,13 @@ export const MakeOfferModal = () => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <MakeOfferModalTrigger>
-          <ActionButton
-            type="secondary"
-            text={t('translation:buttons.action.makeOffer')}
-            handleClick={() => {
-              // eslint-disable-next-line no-console
-              console.log('makeOffer modal opened');
-            }}
-          />
-        </MakeOfferModalTrigger>
+        <ActionText onClick={() => {
+          // eslint-disable-next-line no-console
+          console.log('makeOffer modal opened');
+        }}
+        >
+          {`${t('translation:nftCard.forOffer')}`}
+        </ActionText>
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------

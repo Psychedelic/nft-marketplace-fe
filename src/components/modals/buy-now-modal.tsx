@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
 import {
-  BuyNowModalTrigger,
   ModalOverlay,
   ModalContent,
   Container,
@@ -12,6 +11,7 @@ import {
   ModalDescription,
   ModalButtonsList,
   ModalButtonWrapper,
+  ActionText,
 } from './styles';
 
 /* --------------------------------------------------------------------------
@@ -56,16 +56,13 @@ export const BuyNowModal = () => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <BuyNowModalTrigger>
-          <ActionButton
-            type="primary"
-            text={t('translation:buttons.action.buyNow')}
-            handleClick={() => {
-              // eslint-disable-next-line no-console
-              console.log('BuyNowModalTrigger opened');
-            }}
-          />
-        </BuyNowModalTrigger>
+        <ActionText onClick={() => {
+          // eslint-disable-next-line no-console
+          console.log('BuyNowModalTrigger opened');
+        }}
+        >
+          {`${t('translation:nftCard.forSale')}`}
+        </ActionText>
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------
