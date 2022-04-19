@@ -24,6 +24,15 @@ type MakeListing = {
   amount: string;
 };
 
+interface DirectBuyParams extends DirectBuy {
+  onSuccess?: () => void;
+  onFailure?: () => void;
+}
+
+type DirectBuy = {
+  tokenId: BigInt;
+};
+
 interface CancelListingParams extends CancelListing {
   onSuccess?: () => void;
   onFailure?: () => void;
@@ -168,6 +177,55 @@ export const makeListing = createAsyncThunk<
     return {
       id,
       amount,
+    };
+  } catch (err) {
+    thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
+    if (typeof onFailure !== 'function') return;
+    onFailure();
+  }
+});
+
+export const directBuy = createAsyncThunk<
+  // Return type of the payload creator
+  DirectBuy | undefined,
+  // First argument to the payload creator
+  DirectBuyParams,
+  // Optional fields for defining the thunk api
+  { state: RootState }
+>('marketplace/directBuy', async (params: DirectBuyParams, thunkAPI) => {
+  // Checks if an actor instance exists already
+  // otherwise creates a new instance
+  const actorInstance = await actorInstanceHandler({
+    thunkAPI,
+    serviceName: 'marketplace',
+    slice: marketplaceSlice,
+  });
+
+  const { tokenId, onSuccess, onFailure } = params;
+
+  try {
+    const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
+
+    const result = await actorInstance.directBuy(nonFungibleContractAddress, tokenId);
+
+    if (!('Ok' in result)) {
+      if (typeof onFailure !== 'function') return;
+
+      onFailure();
+
+      console.error(result);
+
+      throw Error('Oops! Failed to direct buy');
+    }
+
+    if (typeof onSuccess !== 'function') return;
+
+    console.info(result);
+
+    onSuccess();
+
+    return {
+      tokenId,
     };
   } catch (err) {
     thunkAPI.dispatch(errorActions.setErrorMessage(err.message));
@@ -330,3 +388,4 @@ export const acceptOffer = createAsyncThunk<
 });
 
 export default marketplaceSlice.reducer;
+
