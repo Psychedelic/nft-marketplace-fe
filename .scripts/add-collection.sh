@@ -26,7 +26,7 @@ printf "🤖 Add collection to the Marketplace\n"
     call --update "$marketplaceId" \
     addCollection "(
         principal \"$ownerPrincipalId\",
-        ($fee:nat16),
+        ($fee:nat),
         ($creationTime:nat64),
         \"$collectionName\",
         principal \"$nonFungibleContractAddress\",
