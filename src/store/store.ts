@@ -9,6 +9,7 @@ import errorsReducer from './features/errors/errors-slice';
 import settingsReducer from './features/settings/settings-slice';
 import marketplaceReducer from './features/marketplace';
 import crownsReducer from './features/crowns';
+import wicpReducer from './features/wicp';
 import tableReducer from './features/tables/table-slice';
 
 export const store = configureStore({
@@ -21,6 +22,7 @@ export const store = configureStore({
     settings: settingsReducer,
     marketplace: marketplaceReducer,
     crowns: crownsReducer,
+    wicp: wicpReducer,
     table: tableReducer,
   },
   middleware: (getDefaultMiddleware) =>
