@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CardOptionsDropdown } from '../../dropdown';
@@ -33,9 +33,10 @@ export type NftCardProps = {
 export const NftCard = React.memo(
   ({ owned, notForSale, forSaleAndOffer, data }: NftCardProps) => {
     const { t } = useTranslation();
+    const [modalOpen, setModalOpen] = useState(false);
 
     return (
-      <CardContainer>
+      <CardContainer type={modalOpen}>
         <RouterLink to={`/nft/${data.id}`}>
           <CardWrapper>
             <Flex>
@@ -80,7 +81,10 @@ export const NftCard = React.memo(
           </CardWrapper>
         </RouterLink>
         <OuterFlex>
-          {data.status === 'forSale' ? <BuyNowModal /> : <MakeOfferModal />}
+          {/* eslint-disable-next-line */}
+          <div onClick={() => setModalOpen(true)}>
+            {data.status === 'forSale' ? <BuyNowModal onClose={() => setModalOpen(false)} /> : <MakeOfferModal onClose={() => setModalOpen(false)} />}
+          </div>
           {notForSale ? (
             ''
           ) : (

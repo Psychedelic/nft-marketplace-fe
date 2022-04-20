@@ -22,7 +22,11 @@ import {
  * Buy Now Modal Component
  * --------------------------------------------------------------------------*/
 
-export const BuyNowModal = () => {
+export type BuyNowModalProps = {
+  onClose: () => void;
+}
+
+export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -37,6 +41,7 @@ export const BuyNowModal = () => {
 
   const handleModalClose = () => {
     setModalOpened(false);
+    onClose();
   };
 
   const handleDirectBuy = () => {
