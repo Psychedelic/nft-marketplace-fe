@@ -226,9 +226,6 @@ export const directBuy = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >('marketplace/directBuy', async (params: DirectBuyParams, thunkAPI) => {
-  console.log('[debug] marketplace-slice: directBuy', 1);
-  console.log('[debug] thunkAPI.getState()', thunkAPI.getState());
-
   // Checks if an actor instance exists already
   // otherwise creates a new instance
   const actorInstanceMkp = await actorInstanceHandler({
@@ -237,15 +234,11 @@ export const directBuy = createAsyncThunk<
     slice: marketplaceSlice,
   });
 
-  console.log('[debug] marketplace-slice: directBuy', 2);
-
   const actorInstanceWICP = await actorInstanceHandler({
     thunkAPI,
     serviceName: 'wicp',
     slice: wicpSlice,
   });
-
-  console.log('[debug] marketplace-slice: directBuy', 3);
 
   const { tokenId, onSuccess, onFailure } = params;
 
@@ -257,11 +250,7 @@ export const directBuy = createAsyncThunk<
     const wicpCanisterId = Principal.fromText(config.wICPCanisterId);
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
 
-    console.log('[debug] marketplace-slice: directBuy', 4);
-
     const resultApproveWicp = await actorInstanceWICP.approve(marketplaceCanisterId, wicpAmount);
-
-    console.log('[debug] resultApproveWicp', resultApproveWicp);
 
     if (!('Ok' in resultApproveWicp)) {
       if (typeof onFailure !== 'function') return;
@@ -273,15 +262,11 @@ export const directBuy = createAsyncThunk<
       throw Error('Oops! Failed to approve Marketplace to access WICP');
     }
 
-    console.log('[debug] marketplace-slice: directBuy', 5);
-
     const resultDepositFungibleMkp = await actorInstanceMkp.depositFungible(
       wicpCanisterId,
       { DIP20: null },
       wicpAmount,
     );
-
-    console.log('[debug] resultDepositFungibleMkp', resultDepositFungibleMkp);
 
     if (!('Ok' in resultApproveWicp)) {
       if (typeof onFailure !== 'function') return;
@@ -293,11 +278,7 @@ export const directBuy = createAsyncThunk<
       throw Error('Oops! Failed to deposit WICP');
     }
 
-    console.log('[debug] marketplace-slice: directBuy', 6);
-
     const resultDirectBuyMkp = await actorInstanceMkp.directBuy(nonFungibleContractAddress, tokenId);
-
-    console.log('[debug] /marketplace/directBuy resultDirectBuyMkp', resultDirectBuyMkp);
 
     if (!('Ok' in resultDirectBuyMkp)) {
       if (typeof onFailure !== 'function') return;
@@ -308,8 +289,6 @@ export const directBuy = createAsyncThunk<
 
       throw Error('Oops! Failed to direct buy');
     }
-
-    console.log('[debug] marketplace-slice: directBuy', 7);
 
     if (typeof onSuccess !== 'function') return;
 
