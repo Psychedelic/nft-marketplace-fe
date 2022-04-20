@@ -18,7 +18,11 @@ import {
  * Buy Now Modal Component
  * --------------------------------------------------------------------------*/
 
-export const BuyNowModal = () => {
+export type BuyNowModalProps = {
+  onClose: () => void;
+}
+
+export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
   const { t } = useTranslation();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
@@ -32,6 +36,7 @@ export const BuyNowModal = () => {
 
   const handleModalClose = () => {
     setModalOpened(false);
+    onClose();
   };
 
   useEffect(() => {

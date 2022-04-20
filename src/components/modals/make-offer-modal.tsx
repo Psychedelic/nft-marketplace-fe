@@ -30,7 +30,11 @@ import { makeOffer } from '../../store/features/marketplace';
  * Make Offer Modal Component
  * --------------------------------------------------------------------------*/
 
-export const MakeOfferModal = () => {
+export type MakeOfferModalProps = {
+  onClose: () => void;
+}
+
+export const MakeOfferModal = ({ onClose }: MakeOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -50,6 +54,7 @@ export const MakeOfferModal = () => {
 
   const handleModalClose = () => {
     setModalOpened(false);
+    onClose();
   };
 
   const handleSubmitOffer = async () => {

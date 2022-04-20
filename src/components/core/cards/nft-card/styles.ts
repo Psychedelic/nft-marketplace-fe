@@ -11,11 +11,22 @@ const overlaySpinner = keyframes({
 });
 
 export const CardContainer = styled('div', {
-  // '&:hover': {
-  //   boxShadow: '0px 0px 8px 3px $navBackgroundColor',
-  //   transition: 'transform 0.5s ease-in-out',
-  //   transform: 'scale(1.015)',
-  // },
+  variants: {
+    type: {
+      true: {
+        '&:hover': {
+          transform: 'unset',
+        },
+      },
+      false: {
+        '&:hover': {
+          boxShadow: '0px 0px 8px 3px $navBackgroundColor',
+          transition: 'transform 0.5s ease-in-out',
+          transform: 'scale(1.015)',
+        },
+      },
+    },
+  },
 });
 
 export const CardWrapper = styled('div', {
