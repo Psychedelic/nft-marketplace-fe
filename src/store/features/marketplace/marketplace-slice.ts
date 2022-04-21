@@ -122,8 +122,6 @@ export const getAllListings = createAsyncThunk<
     const allListings = await actorInstance.getAllListings();
     const parsed = parseAllListingResponseAsObj(allListings);
 
-    console.log('[debug] parsed', parsed);
-
     return parsed;
   } catch (err) {
     console.warn(err);

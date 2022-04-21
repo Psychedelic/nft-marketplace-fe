@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { OfferAccordion, AboutAccordion, NFTTraitsChip } from '../core';
@@ -11,12 +11,17 @@ import { NFTMetadata } from '../../declarations/legacy';
 
 import { useNFTDetailsFetcher } from '../../integrations/kyasshu';
 
+type CurrentListing = {
+  payment_address: string;
+  price: string;
+};
+
 export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const allListings = useSelector((state: any) => state.marketplace.allListings);
-  const currentListing = id ? allListings[id] : undefined;
+  const [currentListing, setCurrentListing] = useState<CurrentListing>();
 
   const nftDetails: NFTMetadata | undefined = useMemo(() => loadedNFTS.find((nft) => nft.id === id), [loadedNFTS, id]);
 
@@ -26,7 +31,13 @@ export const NftDetails = () => {
     // TODO: Get all listings is not scalable
     // we'll need to securily trigger an update via kyasshu or similar
     dispatch(getAllListings());
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!id || !allListings[id]) return;
+
+    setCurrentListing(allListings[id]);
+  }, [allListings, id]);
 
   return (
     <Container>
@@ -60,3 +71,4 @@ export const NftDetails = () => {
     </Container>
   );
 };
+

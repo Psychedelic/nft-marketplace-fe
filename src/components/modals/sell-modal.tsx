@@ -25,7 +25,7 @@ import {
 
 import { LISTING_STATUS_CODES } from '../../constants/listing';
 import { useAppDispatch, nftsActions } from '../../store';
-import { makeListing } from '../../store/features/marketplace';
+import { makeListing, getAllListings } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -76,6 +76,7 @@ export const SellModal = () => {
         id,
         amount,
         onSuccess: () => {
+          dispatch(getAllListings());
           setModalStep(LISTING_STATUS_CODES.Confirmed);
         },
         onFailure: () => {
