@@ -81,8 +81,9 @@ export const fetchNFTS = async ({ payload, dispatch, sort, order, page, count }:
         // TODO: Finalize object format after validating mock and kyasshu data
         id: nft.index,
         name: 'Cap Crowns',
-        price: nft.lastSalePrice,
-        lastOffer: nft.lastSalePrice,
+        price: nft.currentPrice,
+        lastOffer: nft.lastOfferPrice,
+        lastSale: nft.lastSalePrice,
         // TODO: update nft thumbnail
         preview: nft.url.replace(/\/(\w+)\.\w+/g, '/thumbnails/$1.png'),
         location: nft?.url,
@@ -134,8 +135,9 @@ export const fetchNFTDetails = async ({ dispatch, id }: FetchNFTDetailsProps) =>
       // TODO: Finalize object format after validating mock and kyasshu data
       id: responseData.index,
       name: 'Cap Crowns',
-      price: responseData?.lastSalePrice,
+      price: responseData?.currentPrice,
       lastOffer: responseData?.lastOfferPrice,
+      lastSale: responseData?.lastSalePrice,
       preview: responseData?.metadata?.thumbnail?.value?.TextContent,
       location: responseData?.url,
       rendered: true,
