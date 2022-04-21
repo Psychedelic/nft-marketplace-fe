@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
-import { directBuy } from '../../store/features/marketplace';
+import { directBuy, getAllListings } from '../../store/features/marketplace';
 import { useAppDispatch } from '../../store';
 import { DIRECT_BUY_STATUS_CODES } from '../../constants/direct-buy';
 import {
@@ -52,6 +52,7 @@ export const BuyNowModal = () => {
       directBuy({
         tokenId: BigInt(id),
         onSuccess: () => {
+          dispatch(getAllListings());
           setModalStep(DIRECT_BUY_STATUS_CODES.Confirmed);
         },
         onFailure: () => {
