@@ -231,5 +231,8 @@
   },
   "errorMessages": {
     "priceEmptyField": "You need to fill in both values"
+  },
+  "successMessages": {
+    "copyToClipboard": "Copied to clipboard!"
   }
 }

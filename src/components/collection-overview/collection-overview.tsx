@@ -1,7 +1,7 @@
 import React from 'react';
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../../store';
+import { notificationActions, useAppDispatch, useThemeStore } from '../../store';
 import { LinkButton, Tooltip } from '../core';
 import {
   NftMetadataWrapper,
@@ -27,6 +27,7 @@ import backDark from '../../assets/buttons/back-dark.svg';
 export const CollectionOverview = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const dispatch = useAppDispatch();
   const isLightTheme = theme === 'lightTheme';
 
   return (
@@ -59,7 +60,11 @@ export const CollectionOverview = () => {
             <img src={isLightTheme ? twitter : twitterDark} alt={t('translation:buttons.links.twitter')} />
           </LinkButton>
 
-          <LinkButton handleClick={() => copyToClipboard(window.location.href)}>
+          <LinkButton handleClick={() => {
+            copyToClipboard(window.location.href);
+            dispatch(notificationActions.setSuccessMessage(`${t('translation:successMessages.copyToClipboard')}`));
+          }}
+          >
             <img src={isLightTheme ? back : backDark} alt={t('translation:buttons.links.back')} />
           </LinkButton>
         </ButtonsWrapper>

@@ -8,7 +8,7 @@ import { actorInstanceHandler } from '../../../integrations/actor';
 import crownsIdlFactory from '../../../declarations/nft.did';
 import marketplaceIdlFactory from '../../../declarations/marketplace.did';
 import config from '../../../config/env';
-import { errorActions } from '../errors';
+import { notificationActions } from '../errors';
 import { RootState } from '../../store';
 import { crownsSlice } from '../crowns/crowns-slice';
 import { wicpSlice } from '../wicp/wicp-slice';
@@ -277,7 +277,7 @@ export const directBuy = createAsyncThunk<
       tokenId,
     };
   } catch (err) {
-    thunkAPI.dispatch(errorActions.setErrorMessage((err as CommonError).message));
+    thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
     onFailure();
   }
@@ -327,7 +327,7 @@ export const cancelListingBySeller = createAsyncThunk<
       id,
     };
   } catch (err) {
-    thunkAPI.dispatch(errorActions.setErrorMessage((err as CommonError).message));
+    thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
     onFailure();
   }
@@ -379,7 +379,7 @@ export const makeOffer = createAsyncThunk<
       amount,
     };
   } catch (err) {
-    thunkAPI.dispatch(errorActions.setErrorMessage((err as CommonError).message));
+    thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
     onFailure();
   }
@@ -430,7 +430,7 @@ export const acceptOffer = createAsyncThunk<
       buyerPrincipalId,
     };
   } catch (err) {
-    thunkAPI.dispatch(errorActions.setErrorMessage((err as CommonError).message));
+    thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
     onFailure();
   }

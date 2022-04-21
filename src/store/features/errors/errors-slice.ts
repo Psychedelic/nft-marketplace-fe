@@ -7,16 +7,23 @@ export type errorMessages = {
   id: number;
 };
 
-export interface ErrorState {
-  errorMessages: errorMessages[];
-}
-
-const initialState: ErrorState = {
-  errorMessages: [],
+export type sucessMessages = {
+  message: string;
+  id: number;
 };
 
-export const errorSlice = createSlice({
-  name: 'errors',
+export interface NotificationState {
+  errorMessages: errorMessages[];
+  sucessMessages: sucessMessages[];
+}
+
+const initialState: NotificationState = {
+  errorMessages: [],
+  sucessMessages: [],
+};
+
+export const notificationSlice = createSlice({
+  name: 'notification',
   initialState,
   reducers: {
     setErrorMessage: (state, action: PayloadAction<string>) => {
@@ -27,15 +34,23 @@ export const errorSlice = createSlice({
     },
     removeErrorMessage: (state, action: PayloadAction<number>) => {
       console.log(action.payload);
-      state.errorMessages = state.errorMessages.filter(
-        (error) => error.id !== action.payload,
-      );
+      state.errorMessages = state.errorMessages.filter((error) => error.id !== action.payload);
+    },
+    setSuccessMessage: (state, action: PayloadAction<string>) => {
+      state.sucessMessages.push({
+        message: action.payload,
+        id: Date.now(),
+      });
+    },
+    removeSuccessMessage: (state, action: PayloadAction<number>) => {
+      console.log(action.payload);
+      state.sucessMessages = state.sucessMessages.filter((successMessage) => successMessage.id !== action.payload);
     },
   },
 });
 
-export const errorActions = errorSlice.actions;
+export const notificationActions = notificationSlice.actions;
 
-export const selectErrorState = (state: RootState) => state.errors;
+export const selectNotificationState = (state: RootState) => state.notification;
 
-export default errorSlice.reducer;
+export default notificationSlice.reducer;

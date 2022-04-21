@@ -3,7 +3,7 @@ import { ActorSubclass } from '@dfinity/agent';
 import { createActor } from '../actor';
 import marketplaceIdlService from '../../declarations/marketplace';
 import config from '../../config/env';
-import { errorActions } from '../../store';
+import { notificationActions } from '../../store';
 
 export type MakeListingProps = {
   dispatch: any;
@@ -40,7 +40,7 @@ export const makeListing = async ({
 
     onSuccess();
   } catch (error) {
-    dispatch(errorActions.setErrorMessage(error.message));
+    dispatch(notificationActions.setErrorMessage(error.message));
     onFailure();
   }
 };

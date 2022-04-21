@@ -1,4 +1,4 @@
 import { useAppSelector } from '../../hooks';
-import { selectErrorState } from './errors-slice';
+import { selectNotificationState } from './errors-slice';
 
-export const useErrorsStore = () => useAppSelector(selectErrorState);
+export const useErrorsStore = () => useAppSelector(selectNotificationState);

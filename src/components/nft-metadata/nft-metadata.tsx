@@ -2,6 +2,8 @@ import React from 'react';
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
 import {
+  notificationActions,
+  useAppDispatch,
   useThemeStore,
 } from '../../store';
 import { LinkButton, Tooltip } from '../core';
@@ -22,6 +24,7 @@ export interface NFTMetaDataProps {
 export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const dispatch = useAppDispatch();
   const isLightTheme = theme === 'lightTheme';
 
   return (
@@ -33,7 +36,11 @@ export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
           <img src={verified} alt="verified" />
         </Subtext>
       </div>
-      <LinkButton handleClick={() => copyToClipboard(window.location.href)}>
+      <LinkButton handleClick={() => {
+        copyToClipboard(window.location.href);
+        dispatch(notificationActions.setSuccessMessage(`${t('translation:successMessages.copyToClipboard')}`));
+      }}
+      >
         <img
           src={isLightTheme ? back : backDark}
           alt={t('translation:buttons.links.back')}

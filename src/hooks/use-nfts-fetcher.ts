@@ -7,7 +7,7 @@ import { createActor } from '../integrations/actor';
 import {
   useAppDispatch,
   nftsActions,
-  errorActions,
+  notificationActions,
   loadedNFTData,
 } from '../store';
 
@@ -78,7 +78,7 @@ export const useNFTSFetcher = () => {
         console.warn(error);
 
         // set NFTS failed to load
-        dispatch(errorActions.setErrorMessage(error.message));
+        dispatch(notificationActions.setErrorMessage(error.message));
       }
     })();
   }, [dispatch]);
