@@ -8,34 +8,32 @@ import {
   ToastActionIcon,
   ToastProvider,
 } from './styles';
-import warning from '../../assets/error-icon.svg';
 import closeWarning from '../../assets/close-warning.svg';
 import { notificationActions, useAppDispatch, useErrorsStore } from '../../store';
 
-export const Error = () => {
+const SuccessHandling = () => {
   const [open, setOpen] = React.useState(false);
-  const { errorMessages } = useErrorsStore();
+  const { sucessMessages } = useErrorsStore();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (errorMessages) setOpen(true);
+    if (sucessMessages) setOpen(true);
   }, []);
 
   return (
     <>
       <ToastProvider swipeDirection="right">
-        {errorMessages.map((error) => (
+        {sucessMessages.map((sucessMessage) => (
           <Toast open={open} onOpenChange={setOpen} duration={500000000}>
-            <ToastDescription state="error" asChild>
+            <ToastDescription state="success" asChild>
               <div>
-                <ToastDescriptionIcon src={warning} alt="warning-icon" />
-                <ToastDescriptionText>{error.message}</ToastDescriptionText>
+                <ToastDescriptionText>{sucessMessage.message}</ToastDescriptionText>
               </div>
             </ToastDescription>
             <ToastActionIcon
               src={closeWarning}
               alt="close-warning"
-              onClick={() => dispatch(notificationActions.removeErrorMessage(error.id))}
+              onClick={() => dispatch(notificationActions.removeSuccessMessage(sucessMessage.id))}
             />
           </Toast>
         ))}
@@ -44,3 +42,5 @@ export const Error = () => {
     </>
   );
 };
+
+export default SuccessHandling;

@@ -8,7 +8,7 @@ import {
   useAppDispatch,
   settingsActions,
   useSettingsStore,
-  errorActions,
+  notificationActions,
 } from '../../store';
 import {
   ActionButton,
@@ -111,7 +111,7 @@ export const Filters = () => {
     if (priceFilterValue.min === '' && priceFilterValue.max === '') {
       dispatch(filterActions.removePriceFilter(`${t('translation:filters.priceRange')}`));
     } else if (priceFilterValue.min === '' || priceFilterValue.max === '') {
-      dispatch(errorActions.setErrorMessage(`${t('translation:errorMessages.priceEmptyField')}`));
+      dispatch(notificationActions.setErrorMessage(`${t('translation:errorMessages.priceEmptyField')}`));
     } else {
       // eslint-disable-next-line no-lonely-if
       if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {

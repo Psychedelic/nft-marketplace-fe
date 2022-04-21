@@ -3,7 +3,13 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Principal } from '@dfinity/principal';
 import { useTranslation } from 'react-i18next';
-import { filterActions, nftsActions, errorActions, useFilterStore, RootState } from '../../store';
+import {
+  filterActions,
+  nftsActions,
+  notificationActions,
+  useFilterStore,
+  RootState,
+} from '../../store';
 import config from '../../config/env';
 import { FILTER_CONSTANTS, OPERATION_CONSTANTS } from '../../constants';
 import { tableActions } from '../../store/features/tables';
@@ -106,7 +112,7 @@ export const fetchNFTS = async ({ payload, dispatch, sort, order, page, count }:
     console.warn(error);
 
     // set NFTS failed to load
-    dispatch(errorActions.setErrorMessage(error.message));
+    dispatch(notificationActions.setErrorMessage(error.message));
   }
 };
 
@@ -153,16 +159,15 @@ export const fetchNFTDetails = async ({ dispatch, id }: FetchNFTDetailsProps) =>
   } catch (error) {
     // eslint-disable-next-line no-console
     console.warn(error);
-    dispatch(errorActions.setErrorMessage(error.message));
+    dispatch(notificationActions.setErrorMessage(error.message));
   }
 };
 
 export const fetchFilterTraits = async ({ dispatch }: FetchFilterTraitsProps) => {
-  dispatch(filterActions.setIsFilterTraitsLoading(true));
-
   try {
-    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`);
-
+    const response = await axios.get(
+      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`,
+    );
     if (response.status !== 200) {
       throw Error(response.statusText);
     }
@@ -274,8 +279,10 @@ export const fetchCAPActivity = createAsyncThunk(
 
       const result = Items.map((item: any) => {
         pageNo = item.page;
-        // eslint-disable-next-line no-underscore-dangle
-        const parsedArr = Uint8Array.from(Object.values(item.event.caller._arr));
+        const parsedArr = Uint8Array.from(
+          // eslint-disable-next-line no-underscore-dangle
+          Object.values(item.event.caller._arr),
+        );
         const callerPrincipalId = Principal.fromUint8Array(parsedArr);
         const callerPrincipalIdString = shortAddress(callerPrincipalId.toText());
 
@@ -285,6 +292,7 @@ export const fetchCAPActivity = createAsyncThunk(
           caller: callerPrincipalIdString,
           callerDfinityExplorerUrl: getICAccountLink(callerPrincipalId.toText()),
         };
+
         const { details } = item.event;
         details.forEach((detail: any) => {
           const [key, value] = detail;
@@ -321,8 +329,7 @@ export const fetchCAPActivity = createAsyncThunk(
 
       thunkAPI.dispatch(tableActions.setCapActivityTable(actionPayload));
     } catch (error) {
-      thunkAPI.dispatch(errorActions.setErrorMessage(error));
+      thunkAPI.dispatch(notificationActions.setErrorMessage(error));
     }
   },
 );
-
