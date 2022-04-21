@@ -130,7 +130,7 @@ export const fetchNFTDetails = async ({ dispatch, id }: FetchNFTDetailsProps) =>
       name: 'Cap Crowns',
       price: responseData?.lastSalePrice,
       lastOffer: responseData?.lastOfferPrice,
-      preview: responseData?.metadata.thumbnail.value.TextContent,
+      preview: responseData?.metadata?.thumbnail?.value?.TextContent,
       location: responseData?.url,
       rendered: true,
       traits: {
@@ -325,3 +325,4 @@ export const fetchCAPActivity = createAsyncThunk(
     }
   },
 );
+
