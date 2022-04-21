@@ -35,6 +35,7 @@ import {
   CheckboxFilters,
   FilterButtonWrapper,
 } from './styles';
+import CheckboxAccordionSkeleton from '../core/accordions/checkbox-accordion-skeleton';
 
 /* --------------------------------------------------------------------------
  * Filters Component
@@ -43,7 +44,7 @@ import {
 export const Filters = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { defaultFilters, loadedFiltersList, status } = useFilterStore();
+  const { defaultFilters, loadedFiltersList, status, loadingFilterList } = useFilterStore();
   const { theme } = useThemeStore();
   const { collapsed, displayPriceApplyButton } = useSettingsStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -295,12 +296,16 @@ export const Filters = () => {
             <FilterSection>
               <CheckboxFilters>
                 {/* TO-DO: Refactor */}
-                {loadedFiltersList[0]?.map((checkboxData) => (
-                  <CheckboxFilterAccordion
-                    checkboxData={checkboxData}
-                    id={checkboxData.name}
-                  />
-                ))}
+                {loadingFilterList ? (
+                  <CheckboxAccordionSkeleton />
+                ) : (
+                  loadedFiltersList[0]?.map((checkboxData) => (
+                    <CheckboxFilterAccordion
+                      checkboxData={checkboxData}
+                      id={checkboxData.name}
+                    />
+                  ))
+                )}
               </CheckboxFilters>
             </FilterSection>
           </FiltersWrapper>

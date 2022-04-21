@@ -158,6 +158,8 @@ export const fetchNFTDetails = async ({ dispatch, id }: FetchNFTDetailsProps) =>
 };
 
 export const fetchFilterTraits = async ({ dispatch }: FetchFilterTraitsProps) => {
+  dispatch(filterActions.setIsFilterTraitsLoading(true));
+
   try {
     const response = await axios.get(`${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`);
 
@@ -193,6 +195,7 @@ export const fetchFilterTraits = async ({ dispatch }: FetchFilterTraitsProps) =>
     });
 
     dispatch(filterActions.getAllFilters(responseData));
+    dispatch(filterActions.setIsFilterTraitsLoading(false));
   } catch (error) {
     console.log(error);
   }

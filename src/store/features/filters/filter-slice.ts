@@ -26,6 +26,7 @@ export interface FilterState {
   defaultFilters: ButtonFilterState[];
   traits: TraitsDataState[];
   loadedFiltersList: FilterTraitsList[];
+  loadingFilterList: boolean;
   isMyNfts: boolean;
   sortBy: string;
   status: string;
@@ -35,6 +36,7 @@ const initialState: FilterState = {
   defaultFilters: [],
   traits: [],
   loadedFiltersList: [],
+  loadingFilterList: false,
   isMyNfts: false,
   sortBy: 'lastModified',
   status: '',
@@ -49,6 +51,9 @@ export const filterSlice = createSlice({
       action: PayloadAction<FilterTraitsList>,
     ) => {
       state.loadedFiltersList.push(action.payload);
+    },
+    setIsFilterTraitsLoading: (state, action: PayloadAction<boolean>) => {
+      state.loadingFilterList = action.payload;
     },
     applyFilter: (
       state,

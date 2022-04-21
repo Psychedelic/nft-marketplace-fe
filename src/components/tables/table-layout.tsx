@@ -42,6 +42,9 @@ export const TableLayout = ({
           <TableSkeletons />
           <TableSkeletons />
           <TableSkeletons />
+          <TableSkeletons />
+          <TableSkeletons />
+          <TableSkeletons />
         </>
       ) : (
         <TableWrapper type={tableType}>
