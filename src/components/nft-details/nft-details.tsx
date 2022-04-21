@@ -18,7 +18,7 @@ import {
 } from './styles';
 
 import { useNFTSStore, useAppDispatch } from '../../store';
-import { NFTMetadata } from '../../declarations/nft';
+import { NFTMetadata } from '../../declarations/legacy';
 
 import { useNFTDetailsFetcher } from '../../integrations/kyasshu';
 import { getAllListings } from '../../store/features/marketplace';
@@ -32,19 +32,19 @@ export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const [currentListing, setCurrentListing] =
-    useState<CurrentListing>();
+  const [currentListing, setCurrentListing] = useState<CurrentListing>();
   const allListings = useSelector(
     (state: any) => state.marketplace.allListings,
   );
-  const owner = currentListing?.payment_address.toString();
-  const lastSalePrice = currentListing?.price;
-  const isListed = !!currentListing;
-
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
     [loadedNFTS, id],
   );
+  // TODO: We have the currentList because cap-sync is not available yet
+  // which would fail to provide the data on update
+  const owner = currentListing?.payment_address.toString() || nftDetails?.owner;
+  const lastSalePrice = currentListing?.price || nftDetails?.price;
+  const isListed = !!currentListing || nftDetails?.isListed;
 
   useNFTDetailsFetcher();
 
@@ -115,4 +115,3 @@ export const NftDetails = () => {
     </Container>
   );
 };
-

@@ -214,73 +214,64 @@ export const directBuy = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >('marketplace/directBuy', async (params: DirectBuyParams, thunkAPI) => {
-  // Checks if an actor instance exists already
-  // otherwise creates a new instance
-  const actorInstanceMkp = await actorInstanceHandler({
-    thunkAPI,
-    serviceName: 'marketplace',
-    slice: marketplaceSlice,
-  });
-
-  const actorInstanceWICP = await actorInstanceHandler({
-    thunkAPI,
-    serviceName: 'wicp',
-    slice: wicpSlice,
-  });
-
   const { tokenId, onSuccess, onFailure } = params;
+
+  const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
+  const wicpCanisterId = Principal.fromText(config.wICPCanisterId);
+  const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
 
   // TODO: Get this from the user, UI
   const wicpAmount = 1_000;
 
   try {
-    const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
-    const wicpCanisterId = Principal.fromText(config.wICPCanisterId);
-    const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
+    const WICP_APPROVE = {
+      idl: crownsIdlFactory,
+      canisterId: config.wICPCanisterId,
+      methodName: 'approve',
+      args: [marketplaceCanisterId, wicpAmount],
+      onFail: (res: any) => {
+        console.warn('Oops! Failed to deposit WICP', res);
 
-    const resultApproveWicp = await actorInstanceWICP.approve(marketplaceCanisterId, wicpAmount);
+        typeof onFailure === 'function' && onFailure();
+      },
+    };
 
-    if (!('Ok' in resultApproveWicp)) {
-      if (typeof onFailure !== 'function') return;
+    const MKP_DEPOSIT_WICP = {
+      idl: marketplaceIdlFactory,
+      canisterId: config.marketplaceCanisterId,
+      methodName: 'depositFungible',
+      args: [wicpCanisterId, { DIP20: null }, wicpAmount],
+      onFail: (res: any) => {
+        console.warn('Oops! Failed to deposit WICP', res);
 
-      onFailure();
+        typeof onFailure === 'function' && onFailure();
+      },
+    };
 
-      console.error(resultApproveWicp);
+    const MKP_DIRECT_BUY = {
+      idl: marketplaceIdlFactory,
+      canisterId: config.marketplaceCanisterId,
+      methodName: 'directBuy',
+      args: [nonFungibleContractAddress, tokenId],
+      onFail: (res: any) => {
+        console.warn('Oops! Failed to direct buy', res);
 
-      throw Error('Oops! Failed to approve Marketplace to access WICP');
+        typeof onFailure === 'function' && onFailure();
+      },
+      onSuccess,
+    };
+
+    const batchTxRes = await (window as any)?.ic?.plug?.batchTransactions([
+      WICP_APPROVE,
+      MKP_DEPOSIT_WICP,
+      MKP_DIRECT_BUY,
+    ]);
+
+    if (!batchTxRes) {
+      typeof onFailure === 'function' && onFailure();
+
+      return;
     }
-
-    const resultDepositFungibleMkp = await actorInstanceMkp.depositFungible(
-      wicpCanisterId,
-      { DIP20: null },
-      wicpAmount,
-    );
-
-    if (!('Ok' in resultApproveWicp)) {
-      if (typeof onFailure !== 'function') return;
-
-      onFailure();
-
-      console.error(resultDepositFungibleMkp);
-
-      throw Error('Oops! Failed to deposit WICP');
-    }
-
-    const resultDirectBuyMkp = await actorInstanceMkp.directBuy(nonFungibleContractAddress, tokenId);
-
-    if (!('Ok' in resultDirectBuyMkp)) {
-      if (typeof onFailure !== 'function') return;
-
-      onFailure();
-
-      console.error(resultDirectBuyMkp);
-
-      throw Error('Oops! Failed to direct buy');
-    }
-
-    if (typeof onSuccess !== 'function') return;
-
-    onSuccess();
 
     return {
       tokenId,
