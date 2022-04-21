@@ -117,6 +117,11 @@ export const nftsSlice = createSlice({
       state.loadedNFTS[index].isListed = true;
       state.loadedNFTS[index].price = amount;
     },
+    // TODO: Do not change the state manually,
+    // if required query from the API and update the global state
+    // as ultimately you DO NOT WANT to manage state, which is difficult
+    // specially when you have two sources, the application state which
+    // is somehow detached from the API state, which is the source
     cancelNFTFromListing: (
       state,
       action: PayloadAction<cancelNFTFromListingData>,

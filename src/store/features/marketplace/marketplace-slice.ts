@@ -283,45 +283,42 @@ export const directBuy = createAsyncThunk<
   }
 });
 
-export const cancelListingBySeller = createAsyncThunk<
+export const cancelListing = createAsyncThunk<
   // Return type of the payload creator
   CancelListing | undefined,
   // First argument to the payload creator
   CancelListingParams,
   // Optional fields for defining the thunk api
   { state: RootState }
->('marketplace/cancelListingBySeller', async (params: CancelListingParams, thunkAPI) => {
-  // Checks if an actor instance exists already
-  // otherwise creates a new instance
-  const actorInstance = await actorInstanceHandler({
-    thunkAPI,
-    serviceName: 'marketplace',
-    slice: marketplaceSlice,
-  });
-
+>('marketplace/cancelListing', async (params: CancelListingParams, thunkAPI) => {
   const { id, onSuccess, onFailure } = params;
+  
+  const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
+  const userOwnedTokenId = BigInt(id);
 
   try {
-    const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
-    const userOwnedTokenId = BigInt(id);
+    const MKP_WITHDRAW_NFT = {
+      idl: marketplaceIdlFactory,
+      canisterId: config.marketplaceCanisterId,
+      methodName: 'withdrawNFT',
+      args: [nonFungibleContractAddress, userOwnedTokenId],
+      onFail: (res: any) => {
+        console.warn('Oops! Failed to withdraw NFT', res);
 
-    const result = await actorInstance.cancelListingBySeller(nonFungibleContractAddress, userOwnedTokenId);
+        typeof onFailure === 'function' && onFailure();
+      },
+      onSuccess,
+    };
 
-    if (!('Ok' in result)) {
-      if (typeof onFailure !== 'function') return;
+    const batchTxRes = await (window as any)?.ic?.plug?.batchTransactions([
+      MKP_WITHDRAW_NFT,
+    ]);
 
-      onFailure();
+    if (!batchTxRes) {
+      typeof onFailure === 'function' && onFailure();
 
-      console.error(result);
-
-      throw Error('Oops! Failed to cancel listing');
+      return;
     }
-
-    if (typeof onSuccess !== 'function') return;
-
-    console.info(result);
-
-    onSuccess();
 
     return {
       id,

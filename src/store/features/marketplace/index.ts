@@ -2,7 +2,7 @@ import { marketplaceSlice } from './marketplace-slice';
 
 export {
   makeListing,
-  cancelListingBySeller,
+  cancelListing,
   makeOffer,
   acceptOffer,
   getAllListings,
@@ -10,4 +10,3 @@ export {
 } from './marketplace-slice';
 
 export default marketplaceSlice.reducer;
-
