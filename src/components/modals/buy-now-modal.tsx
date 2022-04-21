@@ -52,8 +52,11 @@ export const BuyNowModal = () => {
       directBuy({
         tokenId: BigInt(id),
         onSuccess: () => {
-          // TODO: The owner state should be update to reflect
-          // the current owner
+          // TODO: the get all listings is used to get data from the canister
+          // as the current kyasshu version does not provide the price data
+          // on makelisting, etc, so we use this as a fallback
+          // although not scalable, if persists might add an endpoint for
+          // a single item instead of a list...
           dispatch(getAllListings());
           setModalStep(DIRECT_BUY_STATUS_CODES.Confirmed);
         },
@@ -170,4 +173,3 @@ export const BuyNowModal = () => {
     </DialogPrimitive.Root>
   );
 };
-

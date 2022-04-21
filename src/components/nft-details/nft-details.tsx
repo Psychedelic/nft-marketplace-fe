@@ -40,7 +40,7 @@ export const NftDetails = () => {
     () => loadedNFTS.find((nft) => nft.id === id),
     [loadedNFTS, id],
   );
-  // TODO: We have the currentList because cap-sync is not available yet
+  // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
   const owner = currentListing?.payment_address.toString() || nftDetails?.owner;
   const lastSalePrice = currentListing?.price || nftDetails?.price;
