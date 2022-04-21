@@ -59,10 +59,8 @@ export const actorInstanceHandler = async <T>({
   slice: any;
 }) => {
   const {
-    marketplace: { actor },
+    [serviceName]: { actor },
   } = thunkAPI.getState();
-
-  console.log('[debug] actorInstanceHandler:actor(1):', actor);
 
   if (!actor) {
     const actor = (await createActor<T>({
@@ -72,10 +70,9 @@ export const actorInstanceHandler = async <T>({
     // Set actor state
     thunkAPI.dispatch(slice.actions.setActor(actor));
 
-    console.log('[debug] actorInstanceHandler:actor(2):', actor);
-
     return actor;
   }
 
   return actor;
 };
+

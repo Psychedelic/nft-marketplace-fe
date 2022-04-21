@@ -8,6 +8,8 @@ import nftsReducer from './features/nfts/nfts-slice';
 import errorsReducer from './features/errors/errors-slice';
 import settingsReducer from './features/settings/settings-slice';
 import marketplaceReducer from './features/marketplace';
+import crownsReducer from './features/crowns';
+import wicpReducer from './features/wicp';
 import tableReducer from './features/tables/table-slice';
 
 export const store = configureStore({
@@ -19,6 +21,8 @@ export const store = configureStore({
     errors: errorsReducer,
     settings: settingsReducer,
     marketplace: marketplaceReducer,
+    crowns: crownsReducer,
+    wicp: wicpReducer,
     table: tableReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -30,3 +34,4 @@ export const store = configureStore({
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
