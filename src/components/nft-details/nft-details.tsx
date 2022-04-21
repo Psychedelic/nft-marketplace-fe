@@ -46,6 +46,13 @@ export const NftDetails = () => {
   const lastSalePrice = currentListing?.price || nftDetails?.price;
   const isListed = !!currentListing || nftDetails?.isListed;
 
+  console.log('[debug] nft-details.tsx: nftDetails:', nftDetails);
+  console.log('[debug] nft-details.tsx: {}:', {
+    owner,
+    lastSalePrice,
+    isListed,
+  });
+
   useNFTDetailsFetcher();
 
   useEffect(() => {

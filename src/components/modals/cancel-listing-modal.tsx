@@ -17,7 +17,7 @@ import {
 
 import { LISTING_STATUS_CODES } from '../../constants/listing';
 import { useAppDispatch, nftsActions } from '../../store';
-import { cancelListingBySeller } from '../../store/features/marketplace';
+import { cancelListing } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * Cancel Listing Modal Component
@@ -49,9 +49,16 @@ export const CancelListingModal = () => {
     setModalStep(LISTING_STATUS_CODES.Pending);
 
     dispatch(
-      cancelListingBySeller({
+      cancelListing({
         id,
         onSuccess: () => {
+          console.log('[debug] cancel-listing-modal.tsx: onSuccess call!');
+
+          // TODO: Do not change the state manually,
+          // if required query from the API and update the global state
+          // as ultimately you DO NOT WANT to manage state, which is difficult
+          // specially when you have two sources, the application state which
+          // is somehow detached from the API state, which is the source
           dispatch(
             nftsActions.cancelNFTFromListing({
               id,
