@@ -52,6 +52,8 @@ export const BuyNowModal = () => {
       directBuy({
         tokenId: BigInt(id),
         onSuccess: () => {
+          // TODO: The owner state should be update to reflect
+          // the current owner
           dispatch(getAllListings());
           setModalStep(DIRECT_BUY_STATUS_CODES.Confirmed);
         },
