@@ -138,20 +138,6 @@ export const makeListing = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >('marketplace/makeListing', async (params: MakeListingParams, thunkAPI) => {
-  // Checks if an actor instance exists already
-  // otherwise creates a new instance
-  // const actorInstanceMkp = await actorInstanceHandler({
-  //   thunkAPI,
-  //   serviceName: 'marketplace',
-  //   slice: marketplaceSlice,
-  // });
-
-  // const actorInstanceCrowns = await actorInstanceHandler({
-  //   thunkAPI,
-  //   serviceName: 'crowns',
-  //   slice: crownsSlice,
-  // });
-
   const { id, amount, onSuccess, onFailure } = params;
   const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
   const crownsCanisterId = Principal.fromText(config.crownsCanisterId);
@@ -161,26 +147,28 @@ export const makeListing = createAsyncThunk<
   const userListForPrice = BigInt(amount);
 
   try {
-    console.log('[debug] crownsIdlFactory', crownsIdlFactory);
-
     const CROWNS_APPROVE_MARKETPLACE = {
       idl: crownsIdlFactory,
       canisterId: config.crownsCanisterId,
       methodName: 'approve',
       args: [marketplaceCanisterId, userOwnedTokenId],
-      onSuccess: () => console.log('[debug] CROWNS_APPROVE_MARKETPLACE: onSuccess'),
-      onFail: (res: any) => console.log('[debug] CROWNS_APPROVE_MARKETPLACE: onFail', res),
-    };
+      onFail: (res: any) => {
+        console.warn(`Oops! Failed to approve Marketplace (${config.crownsCanisterId})`, res);
 
-    console.log('[debug] CROWNS_APPROVE_MARKETPLACE', CROWNS_APPROVE_MARKETPLACE, config.crownsCanisterId);
+        typeof onFailure === 'function' && onFailure();
+      },
+    };
 
     const MKP_DEPOSIT_NFT = {
       idl: marketplaceIdlFactory,
       canisterId: config.marketplaceCanisterId,
       methodName: 'depositNFT',
       args: [crownsCanisterId, userOwnedTokenId],
-      onSuccess: () => console.log('[debug] MKP_DEPOSIT_NFT: onSuccess'),
-      onFail: (res: any) => console.log('[debug] MKP_DEPOSIT_NFT: onFail', res),
+      onFail: (res: any) => {
+        console.warn(`Oops! Failed to deposit NFT (${crownsCanisterId}, ${userOwnedTokenId})`, res);
+
+        typeof onFailure === 'function' && onFailure();
+      },
     };
 
     const directBuy = true;
@@ -189,73 +177,25 @@ export const makeListing = createAsyncThunk<
       canisterId: config.marketplaceCanisterId,
       methodName: 'makeListing',
       args: [directBuy, nonFungibleContractAddress, userOwnedTokenId, userListForPrice],
-      onSuccess: () => console.log('[debug] MKP_MAKE_LISTING: onSuccess'),
-      onFail: (res: any) => console.log('[debug] MKP_MAKE_LISTING: onFail', res),
+      onSuccess,
+      onFail: (res: any) => {
+        console.warn('Oops! Failed to make listing', res);
+
+        typeof onFailure === 'function' && onFailure();
+      },
     };
 
-    console.log('[debug] window.ic.plug.agent._host', (window as any).ic?.plug?.agent?._host);
-
-    const res = await (window as any)?.ic?.plug?.batchTransactions([
+    const batchTxRes = await (window as any)?.ic?.plug?.batchTransactions([
       CROWNS_APPROVE_MARKETPLACE,
       MKP_DEPOSIT_NFT,
       MKP_MAKE_LISTING,
     ]);
 
-    console.log('[debug] batchTransactions:res:', res);
+    if (!batchTxRes) {
+      typeof onFailure === 'function' && onFailure();
 
-    // const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
-    // const crownsCanisterId = Principal.fromText(config.crownsCanisterId);
-    // const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
-    // const userOwnedTokenId = BigInt(id);
-    // const userListForPrice = BigInt(amount);
-
-    // const resultCrowns = await actorInstanceCrowns.approve(marketplaceCanisterId, userOwnedTokenId);
-
-    // if (!('Ok' in resultCrowns)) {
-    //   if (typeof onFailure !== 'function') return;
-
-    //   onFailure();
-
-    //   console.error(resultCrowns);
-
-    //   throw Error('Oops! Failed to approve Marketplace Canister to control Crowns token');
-    // }
-
-    // const resultDepositNFT = await actorInstanceMkp.depositNFT(crownsCanisterId, userOwnedTokenId);
-
-    // if (!('Ok' in resultDepositNFT)) {
-    //   if (typeof onFailure !== 'function') return;
-
-    //   onFailure();
-
-    //   console.error(resultDepositNFT);
-
-    //   throw Error('Oops! Failed to deposit the Crowns NFT');
-    // }
-
-    // const directBuy = true;
-    // const resultMakeListing = await actorInstanceMkp.makeListing(
-    //   directBuy,
-    //   nonFungibleContractAddress,
-    //   userOwnedTokenId,
-    //   userListForPrice,
-    // );
-
-    // if (!('Ok' in resultMakeListing)) {
-    //   if (typeof onFailure !== 'function') return;
-
-    //   onFailure();
-
-    //   console.error(resultMakeListing);
-
-    //   throw Error('Oops! Failed to list for sale');
-    // }
-
-    // if (typeof onSuccess !== 'function') return;
-
-    // console.info(resultMakeListing);
-
-    // onSuccess();
+      return;
+    }
 
     return {
       id,
