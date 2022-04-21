@@ -52,8 +52,6 @@ export const CancelListingModal = () => {
       cancelListing({
         id,
         onSuccess: () => {
-          console.log('[debug] cancel-listing-modal.tsx: onSuccess call!');
-
           // TODO: Do not change the state manually,
           // if required query from the API and update the global state
           // as ultimately you DO NOT WANT to manage state, which is difficult

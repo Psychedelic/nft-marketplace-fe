@@ -291,46 +291,12 @@ export const cancelListing = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >('marketplace/cancelListing', async (params: CancelListingParams, thunkAPI) => {
-  console.log('[debug] marketplace-slice.ts: marketplace/cancelListing', 1);
-
   const { id, onSuccess, onFailure } = params;
   
   const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
   const userOwnedTokenId = BigInt(id);
 
   try {
-
-    // const result = await actorInstance.cancelListing(nonFungibleContractAddress, userOwnedTokenId);
-
-    // if (!('Ok' in result)) {
-    //   if (typeof onFailure !== 'function') return;
-
-    //   onFailure();
-
-    //   console.error(result);
-
-    //   throw Error('Oops! Failed to cancel listing');
-    // }
-
-    // if (typeof onSuccess !== 'function') return;
-
-    // console.info(result);
-
-    // onSuccess();
-
-    // const MKP_CANCEL_LISTING = {
-    //   idl: marketplaceIdlFactory,
-    //   canisterId: config.marketplaceCanisterId,
-    //   methodName: 'cancelListing',
-    //   args: [nonFungibleContractAddress, userOwnedTokenId],
-    //   onFail: (res: any) => {
-    //     console.warn('Oops! Failed to cancel listing', res);
-
-    //     typeof onFailure === 'function' && onFailure();
-    //   },
-    //   onSuccess,
-    // };
-
     const MKP_WITHDRAW_NFT = {
       idl: marketplaceIdlFactory,
       canisterId: config.marketplaceCanisterId,
@@ -347,8 +313,6 @@ export const cancelListing = createAsyncThunk<
     const batchTxRes = await (window as any)?.ic?.plug?.batchTransactions([
       MKP_WITHDRAW_NFT,
     ]);
-    
-    console.log('[debug] marketplace-slice.ts: marketplace/cancelListing', 2);
 
     if (!batchTxRes) {
       typeof onFailure === 'function' && onFailure();
