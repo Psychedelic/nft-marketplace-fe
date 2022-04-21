@@ -62,7 +62,7 @@
     "kyasshu:start": ".scripts/kyasshu/start.sh",
     "kyasshu:cache": ".scripts/kyasshu/cache-tokens.sh",
     "kyasshu:reset": "pkill java",
-    "mock:generate-tokens": "cd ./nft-marketplace && yarn mock:generate-tokens && ../.scripts/add-collection.sh"
+    "mock:generate-tokens": "cd ./nft-marketplace && yarn mock:generate-tokens"
   },
   "browserslist": {
     "production": [
@@ -91,3 +91,4 @@
     "prettier": "^2.5.1"
   }
 }
+

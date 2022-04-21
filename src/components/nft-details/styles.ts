@@ -33,7 +33,7 @@ export const Video = styled('video', {
   borderRadius: '14px',
   maxWidth: '100%',
   maxHeight: '100%',
-  minHeight: '125px',
+  minHeight: '470px',
   marginBottom: '10px',
 });
 

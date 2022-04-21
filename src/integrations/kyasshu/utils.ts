@@ -3,27 +3,14 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Principal } from '@dfinity/principal';
 import { useTranslation } from 'react-i18next';
-import {
-  filterActions,
-  nftsActions,
-  errorActions,
-  useFilterStore,
-  RootState,
-} from '../../store';
+import { filterActions, nftsActions, errorActions, useFilterStore, RootState } from '../../store';
 import config from '../../config/env';
-import {
-  FILTER_CONSTANTS,
-  OPERATION_CONSTANTS,
-} from '../../constants';
+import { FILTER_CONSTANTS, OPERATION_CONSTANTS } from '../../constants';
 import { tableActions } from '../../store/features/tables';
 import { dateRelative } from '../functions/date';
 import shortAddress from '../functions/short-address';
 import { getICAccountLink } from '../../utils/account-id';
-import {
-  TableState,
-  CapActivityParams,
-  tableSlice,
-} from '../../store/features/tables/table-slice';
+import { TableState, CapActivityParams, tableSlice } from '../../store/features/tables/table-slice';
 import { actorInstanceHandler } from '../actor';
 
 export type FetchNFTProps = {
@@ -60,14 +47,7 @@ export type TokenMetadataProps = {
   tokenId: any;
 };
 
-export const fetchNFTS = async ({
-  payload,
-  dispatch,
-  sort,
-  order,
-  page,
-  count,
-}: FetchNFTProps) => {
+export const fetchNFTS = async ({ payload, dispatch, sort, order, page, count }: FetchNFTProps) => {
   // set loading NFTS state to true
   if (page === 0) {
     dispatch(nftsActions.setIsNFTSLoading(true));
@@ -98,10 +78,7 @@ export const fetchNFTS = async ({
         price: nft.lastSalePrice,
         lastOffer: nft.lastSalePrice,
         // TODO: update nft thumbnail
-        preview: nft.url.replace(
-          /\/(\w+)\.\w+/g,
-          '/thumbnails/$1.png',
-        ),
+        preview: nft.url.replace(/\/(\w+)\.\w+/g, '/thumbnails/$1.png'),
         location: nft?.url,
         traits: {
           base: nft?.metadata?.base?.value?.TextContent,
@@ -133,17 +110,12 @@ export const fetchNFTS = async ({
   }
 };
 
-export const fetchNFTDetails = async ({
-  dispatch,
-  id,
-}: FetchNFTDetailsProps) => {
+export const fetchNFTDetails = async ({ dispatch, id }: FetchNFTDetailsProps) => {
   try {
     // eslint-disable-next-line object-curly-newline
     const payload = {};
 
-    const response = await axios.get(
-      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${id}`,
-    );
+    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${id}`);
 
     if (response.status !== 200) {
       throw Error(response.statusText);
@@ -158,16 +130,14 @@ export const fetchNFTDetails = async ({
       name: 'Cap Crowns',
       price: responseData?.lastSalePrice,
       lastOffer: responseData?.lastOfferPrice,
-      // TODO: update nft thumbnail
-      preview: '',
+      preview: responseData?.metadata.thumbnail.value.TextContent,
       location: responseData?.url,
       rendered: true,
       traits: {
         base: responseData?.metadata?.base?.value?.TextContent,
         biggem: responseData?.metadata?.biggem?.value?.TextContent,
         rim: responseData?.metadata?.rim?.value?.TextContent,
-        smallgem:
-          responseData?.metadata?.smallgem?.value?.TextContent,
+        smallgem: responseData?.metadata?.smallgem?.value?.TextContent,
       },
       owner: responseData?.owner,
     };
@@ -191,9 +161,7 @@ export const fetchFilterTraits = async ({ dispatch }: FetchFilterTraitsProps) =>
   dispatch(filterActions.setIsFilterTraitsLoading(true));
 
   try {
-    const response = await axios.get(
-      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`,
-    );
+    const response = await axios.get(`${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`);
 
     if (response.status !== 200) {
       throw Error(response.statusText);
@@ -243,9 +211,8 @@ export const usePriceValues = () => {
   const { t } = useTranslation();
   const { defaultFilters } = useFilterStore();
 
-  return defaultFilters.find(
-    ({ filterCategory }) => filterCategory === `${t('translation:filters.priceRange')}`,
-  )?.filterName;
+  return defaultFilters.find(({ filterCategory }) => filterCategory === `${t('translation:filters.priceRange')}`)
+    ?.filterName;
 };
 
 export const isNFTOwner = (params: CheckNFTOwnerParams) => {
@@ -279,19 +246,12 @@ export const getOperation = (operationType: string) => {
   return operationValue;
 };
 
-export const getTokenMetadata = async ({
-  tokenId,
-  dispatch,
-}: TokenMetadataProps) => {
+export const getTokenMetadata = async ({ tokenId, dispatch }: TokenMetadataProps) => {
   try {
     const response = await axios.get(
       `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${tokenId}`,
     );
-    dispatch(
-      tableActions.setTableMetadata(
-        response?.data?.metadata?.thumbnail?.value?.TextContent,
-      ),
-    );
+    dispatch(tableActions.setTableMetadata(response?.data?.metadata?.thumbnail?.value?.TextContent));
   } catch (error) {
     console.log(error);
   }
@@ -317,17 +277,13 @@ export const fetchCAPActivity = createAsyncThunk(
         // eslint-disable-next-line no-underscore-dangle
         const parsedArr = Uint8Array.from(Object.values(item.event.caller._arr));
         const callerPrincipalId = Principal.fromUint8Array(parsedArr);
-        const callerPrincipalIdString = shortAddress(
-          callerPrincipalId.toText(),
-        );
+        const callerPrincipalIdString = shortAddress(callerPrincipalId.toText());
 
         const capData = {
           operation: getOperation(item.event.operation),
           time: dateRelative(item.event.time),
           caller: callerPrincipalIdString,
-          callerDfinityExplorerUrl: getICAccountLink(
-            callerPrincipalId.toText(),
-          ),
+          callerDfinityExplorerUrl: getICAccountLink(callerPrincipalId.toText()),
         };
         const { details } = item.event;
         details.forEach((detail: any) => {
@@ -338,26 +294,23 @@ export const fetchCAPActivity = createAsyncThunk(
         return capData;
       });
 
-      const loadedCapActivityTableData = result.map(
-        (tableData: any) => {
-          const data = {
-            item: {
-              name: `CAP Crowns #${tableData.token_id}`,
-              token_id: tableData.token_id,
-            },
-            type: tableData.operation,
-            price: `$${tableData.list_price ?? tableData.price}`,
-            from: tableData.caller,
-            to: '-',
-            time: tableData.time,
-            offerFrom: 'Prasanth',
-            callerDfinityExplorerUrl:
-              tableData.callerDfinityExplorerUrl,
-          };
+      const loadedCapActivityTableData = result.map((tableData: any) => {
+        const data = {
+          item: {
+            name: `CAP Crowns #${tableData.token_id}`,
+            token_id: tableData.token_id,
+          },
+          type: tableData.operation,
+          price: `$${tableData.list_price ?? tableData.price}`,
+          from: tableData.caller,
+          to: '-',
+          time: tableData.time,
+          offerFrom: 'Prasanth',
+          callerDfinityExplorerUrl: tableData.callerDfinityExplorerUrl,
+        };
 
-          return data;
-        },
-      );
+        return data;
+      });
 
       const actionPayload = {
         loadedCapActivityTableData,
@@ -366,9 +319,7 @@ export const fetchCAPActivity = createAsyncThunk(
         nextPage: Count === 64 ? pageCount + 1 : pageCount,
       };
 
-      thunkAPI.dispatch(
-        tableActions.setCapActivityTable(actionPayload),
-      );
+      thunkAPI.dispatch(tableActions.setCapActivityTable(actionPayload));
     } catch (error) {
       thunkAPI.dispatch(errorActions.setErrorMessage(error));
     }
