@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import debounce from 'lodash.debounce';
 import { SearchInput } from '../core';
 import wicpIcon from '../../assets/wicpIcon.png';
 import { mockNFTList } from './mock-data';
@@ -42,17 +41,10 @@ export const GlobalSearch = () => {
     setSearchText('');
   };
 
-  const handleSearch = () => {
-    const searchResultData = loadedNFTS.filter((nfts) => nfts.id.includes(searchText));
+  const handleSearch = (value: any) => {
+    const searchResultData = loadedNFTS.filter((nfts) => nfts.id.includes(value));
     setSearchResult(searchResultData);
-    console.log(searchText, searchResultData);
   };
-
-  const debounceInput = useCallback(
-    // eslint-disable-next-line
-    debounce(searchText => setSearchText(() => searchText), 1000),
-    [],
-  );
 
   return (
     <DialogPrimitive.Root
@@ -94,8 +86,7 @@ export const GlobalSearch = () => {
             placeholder={t(
               'translation:inputField.placeholder.searchCollection',
             )}
-            // setValue={(value) => setSearchText(value)}
-            debounceInput={debounceInput}
+            setValue={(value) => setSearchText(value)}
             handleSearch={handleSearch}
           />
         </SearchContainer>
