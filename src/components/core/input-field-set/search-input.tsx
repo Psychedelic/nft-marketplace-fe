@@ -6,7 +6,7 @@ export type SearchInputProps = {
   placeholder?: string;
   setValue?: (value: string) => void;
   handleClick?: () => void;
-  handleSearch?: (value: any) => void;
+  handleSearch?: (value: string) => void;
 };
 
 export const SearchInput = forwardRef<

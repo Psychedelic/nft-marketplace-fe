@@ -215,3 +215,9 @@ export const PriceText = styled('div', {
     },
   },
 });
+
+export const SubText = styled('span', {
+  '&:first-child': {
+    marginRight: '10px',
+  },
+});

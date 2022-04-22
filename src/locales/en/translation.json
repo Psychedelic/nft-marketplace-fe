@@ -227,7 +227,8 @@
     "noOwnedFilteredNfts": "You don't own any NFTs with those filters",
     "noFilteredNfts": "We cannot find any NFTs with those filters",
     "noNftsAction": "Browse NFT’s for Sale",
-    "noFilteredNftsAction": "Browse Other NFTs"
+    "noFilteredNftsAction": "Browse Other NFTs",
+    "noNFTId": "No NFT found with that ID"
   },
   "errorMessages": {
     "priceEmptyField": "You need to fill in both values"

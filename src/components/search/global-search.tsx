@@ -21,6 +21,7 @@ import {
   WICPText,
   WICPLogo,
   PriceText,
+  SubText,
 } from './styles';
 import { useNFTSStore } from '../../store';
 
@@ -41,10 +42,12 @@ export const GlobalSearch = () => {
     setSearchText('');
   };
 
-  const handleSearch = (value: any) => {
+  const handleSearch = (value: string) => {
     const searchResultData = loadedNFTS.filter((nfts) => nfts.id.includes(value));
     setSearchResult(searchResultData);
   };
+
+  const closeDropDown = () => handleModalOpen(false);
 
   return (
     <DialogPrimitive.Root
@@ -93,7 +96,7 @@ export const GlobalSearch = () => {
         {searchText && (searchResult.length ? (
           <ItemsListContainer>
             {searchResult?.slice(0, 5).map((nft) => (
-              <RouterLink to={`/nft/${nft.id}`} onClick={() => handleModalOpen(false)}>
+              <RouterLink to={`/nft/${nft.id}`} onClick={closeDropDown}>
                 <ItemDetailsWrapper key={nft.id}>
                   <ItemDetails>
                     <ItemLogo src={nft.preview} alt="crowns" />
@@ -108,8 +111,8 @@ export const GlobalSearch = () => {
                       </WICPText>
                     </WICPContainer>
                     <PriceText>
-                      $
-                      {`${nft.price ? nft.price : ' -'}`}
+                      <SubText>$</SubText>
+                      <SubText>{`${nft.price ? nft.price : '-'}`}</SubText>
                     </PriceText>
                   </PriceDetails>
                 </ItemDetailsWrapper>
@@ -118,7 +121,7 @@ export const GlobalSearch = () => {
           </ItemsListContainer>
         ) : (
           <ItemsEmptyContainer>
-            No NFT found with that ID
+            {t('translation:emptyStates.noNFTId')}
           </ItemsEmptyContainer>
         ))}
         {!searchText && (
