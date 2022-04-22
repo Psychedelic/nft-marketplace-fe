@@ -16,6 +16,7 @@ import {
   ModalButtonsList,
   ModalButtonWrapper,
   ActionText,
+  BuyNowModalTrigger,
 } from './styles';
 
 /* --------------------------------------------------------------------------
@@ -37,6 +38,15 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalP
   // BuyNow modal steps: pending/confirmed
   const [modalStep, setModalStep] = useState<string>('pending');
 
+  const tokenId: bigint | undefined = (() => {
+    const tid = id ?? actionTextId;
+
+    if (!tid) return;
+
+    // eslint-disable-next-line consistent-return
+    return BigInt(tid);
+  })();
+
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
   };
@@ -48,7 +58,12 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalP
   };
 
   const handleDirectBuy = () => {
-    if (!actionTextId && !id) {
+    console.log('[debug] handleDirectBuy', {
+      actionTextId,
+      id,
+    });
+
+    if (!tokenId) {
       console.warn('Oops! Missing id param');
 
       return;
@@ -58,7 +73,7 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalP
 
     dispatch(
       directBuy({
-        tokenId: actionTextId ? BigInt(actionTextId) : BigInt(id),
+        tokenId,
         onSuccess: () => {
           // TODO: the get all listings is used to get data from the canister
           // as the current kyasshu version does not provide the price data
@@ -84,7 +99,7 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalP
       */}
       <DialogPrimitive.Trigger asChild>
         {actionText ? (
-          <ActionText onClick={() => handleDirectBuy()}>
+          <ActionText onClick={handleDirectBuy}>
             {actionText}
           </ActionText>
         ) : (
