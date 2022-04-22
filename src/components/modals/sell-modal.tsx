@@ -50,8 +50,10 @@ export const SellModal = () => {
 
     if (status || !id || notConfirmed) return;
 
-    // TODO: This seems to need to be triggered
-    // in the onSuccess of makeListing
+    // TODO: Instead, call the API to get the latest price
+    // from the API state, should not mutate the state in the app
+    // as this should be sync with the backend so updating the
+    // state of the FE APP from the sync is preferred
     // Update NFT listed for sale in store
     // on successful listing and closing the modal
     dispatch(
@@ -265,4 +267,3 @@ export const SellModal = () => {
     </DialogPrimitive.Root>
   );
 };
-

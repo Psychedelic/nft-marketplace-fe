@@ -35,7 +35,7 @@ import {
   nftsActions,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
-import { makeListing } from '../../store/features/marketplace';
+import { makeListing, getAllListings } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * Edit Listing Modal Component
@@ -73,6 +73,10 @@ export const ChangePriceModal = () => {
 
     if (modalOpenedStatus || !id || !isConfirmed) return;
 
+    // TODO: Instead, call the API to get the latest price
+    // from the API state, should not mutate the state in the app
+    // as this should be sync with the backend so updating the
+    // state of the FE APP from the sync is preferred
     // Update NFT listed for sale in store
     // on successful listing and closing the modal
     dispatch(
@@ -97,6 +101,7 @@ export const ChangePriceModal = () => {
         id,
         amount,
         onSuccess: () => {
+          dispatch(getAllListings());
           setModalStep(LISTING_STATUS_CODES.Confirmed);
         },
         onFailure: () => {
