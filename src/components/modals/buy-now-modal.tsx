@@ -58,11 +58,6 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalP
   };
 
   const handleDirectBuy = () => {
-    console.log('[debug] handleDirectBuy', {
-      actionTextId,
-      id,
-    });
-
     if (!tokenId) {
       console.warn('Oops! Missing id param');
 

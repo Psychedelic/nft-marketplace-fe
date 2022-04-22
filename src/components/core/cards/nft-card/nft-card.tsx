@@ -42,8 +42,6 @@ export const NftCard = React.memo(
     const [modalOpen, setModalOpen] = useState(false);
     const showBuyerOptions = !owned;
 
-    console.log('[debug] nft-card.tsx: data:', data);
-
     return (
       <CardContainer type={modalOpen}>
         <RouterLink to={`/nft/${data.id}`}>
@@ -111,11 +109,20 @@ export const NftCard = React.memo(
           }
           <LastOffer>
             {
-              forSaleAndOffer
-                ? `${t('translation:nftCard.offerFor')} `
-                : `${t('translation:nftCard.last')} `
+              // TODO: Have put lastOffer verification
+              // because when not available the label text
+              // is shown without the corresponding value...
+              data?.lastOffer && (
+                <>
+                  {
+                    forSaleAndOffer
+                      ? `${t('translation:nftCard.offerFor')} `
+                      : `${t('translation:nftCard.last')} `
+                  }
+                  <b>{data?.lastOffer}</b>
+                </>
+              )
             }
-            <b>{data?.lastOffer}</b>
           </LastOffer>
         </BuyerOptions>
       </CardContainer>
