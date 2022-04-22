@@ -6,12 +6,14 @@ export type SearchInputProps = {
   placeholder?: string;
   setValue?: (value: string) => void;
   handleClick?: () => void;
+  handleSearch?: () => void;
+  debounceInput?: (value : any) => void;
 };
 
 export const SearchInput = forwardRef<
   HTMLInputElement,
   SearchInputProps
->(({ placeholder = '', setValue, handleClick }, ref) => {
+>(({ placeholder = '', setValue, handleClick, handleSearch, debounceInput }, ref) => {
   const handleValueChange = (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
@@ -19,6 +21,10 @@ export const SearchInput = forwardRef<
     if (setValue) {
       setValue(value);
     }
+    // eslint-disable-next-line
+    debounceInput && debounceInput(value);
+    // eslint-disable-next-line
+    handleSearch && handleSearch();
   };
 
   return (

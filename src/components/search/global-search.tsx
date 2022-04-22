@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import debounce from 'lodash.debounce';
 import { SearchInput } from '../core';
 import wicpIcon from '../../assets/wicpIcon.png';
 import { mockNFTList } from './mock-data';
@@ -21,6 +23,7 @@ import {
   WICPLogo,
   PriceText,
 } from './styles';
+import { useNFTSStore } from '../../store';
 
 /* --------------------------------------------------------------------------
  * Global Search Component
@@ -28,14 +31,28 @@ import {
 
 export const GlobalSearch = () => {
   const { t } = useTranslation();
+  const { loadedNFTS } = useNFTSStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  const [searchText, setSearchText] = useState<string>('');
+  const [searchText, setSearchText] = useState('');
+  const [searchResult, setSearchResult] = useState([]);
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
     setSearchText('');
   };
+
+  const handleSearch = () => {
+    const searchResultData = loadedNFTS.filter((nfts) => nfts.id.includes(searchText));
+    setSearchResult(searchResultData);
+    console.log(searchText, searchResultData);
+  };
+
+  const debounceInput = useCallback(
+    // eslint-disable-next-line
+    debounce(searchText => setSearchText(() => searchText), 1000),
+    [],
+  );
 
   return (
     <DialogPrimitive.Root
@@ -77,28 +94,42 @@ export const GlobalSearch = () => {
             placeholder={t(
               'translation:inputField.placeholder.searchCollection',
             )}
-            setValue={(value) => setSearchText(value)}
+            // setValue={(value) => setSearchText(value)}
+            debounceInput={debounceInput}
+            handleSearch={handleSearch}
           />
         </SearchContainer>
-        {searchText && (
+        {searchText && (searchResult.length ? (
           <ItemsListContainer>
-            {mockNFTList.map((nft) => (
-              <ItemDetailsWrapper key={nft.id}>
-                <ItemDetails>
-                  <ItemLogo src={nft.logo} alt="crowns" />
-                  <ItemName>{nft.name}</ItemName>
-                </ItemDetails>
-                <PriceDetails>
-                  <WICPContainer size="small">
-                    <WICPLogo src={wicpIcon} alt="wicp" />
-                    <WICPText size="small">{nft.wicp}</WICPText>
-                  </WICPContainer>
-                  <PriceText>{nft.price}</PriceText>
-                </PriceDetails>
-              </ItemDetailsWrapper>
+            {searchResult?.slice(0, 5).map((nft) => (
+              <RouterLink to={`/nft/${nft.id}`} onClick={() => handleModalOpen(false)}>
+                <ItemDetailsWrapper key={nft.id}>
+                  <ItemDetails>
+                    <ItemLogo src={nft.preview} alt="crowns" />
+                    <ItemName>{`${nft.name} ${nft.id}`}</ItemName>
+                  </ItemDetails>
+                  <PriceDetails>
+                    <WICPContainer size="small">
+                      <WICPLogo src={wicpIcon} alt="wicp" />
+                      <WICPText size="small">
+                        {nft.price ? nft.price : '- '}
+                        WICP
+                      </WICPText>
+                    </WICPContainer>
+                    <PriceText>
+                      $
+                      {`${nft.price ? nft.price : ' -'}`}
+                    </PriceText>
+                  </PriceDetails>
+                </ItemDetailsWrapper>
+              </RouterLink>
             ))}
           </ItemsListContainer>
-        )}
+        ) : (
+          <ItemsEmptyContainer>
+            No NFT found with that ID
+          </ItemsEmptyContainer>
+        ))}
         {!searchText && (
           <ItemsEmptyContainer>
             {t('translation:common.noRecentSearch')}

@@ -126,6 +126,7 @@ export const ItemLogo = styled('img', {
   width: '40px',
   height: '40px',
   marginRight: '12px',
+  borderRadius: '12px',
 });
 
 export const ItemName = styled('div', {
