@@ -31,10 +31,11 @@ import { makeOffer } from '../../store/features/marketplace';
  * --------------------------------------------------------------------------*/
 
 export type MakeOfferModalProps = {
-  onClose: () => void;
+  onClose?: () => void;
+  actionText?: string;
 }
 
-export const MakeOfferModal = ({ onClose }: MakeOfferModalProps) => {
+export const MakeOfferModal = ({ onClose, actionText }: MakeOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -54,7 +55,8 @@ export const MakeOfferModal = ({ onClose }: MakeOfferModalProps) => {
 
   const handleModalClose = () => {
     setModalOpened(false);
-    onClose();
+    // eslint-disable-next-line
+    onClose && onClose();
   };
 
   const handleSubmitOffer = async () => {
@@ -87,13 +89,19 @@ export const MakeOfferModal = ({ onClose }: MakeOfferModalProps) => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <ActionText onClick={() => {
-          // eslint-disable-next-line no-console
-          console.log('makeOffer modal opened');
-        }}
-        >
-          {`${t('translation:nftCard.forOffer')}`}
-        </ActionText>
+        {actionText ? (
+          <ActionText onClick={() => console.log('makeOffer modal opened')}>
+            {actionText}
+          </ActionText>
+        ) : (
+          <MakeOfferModalTrigger>
+            <ActionButton
+              type="primary"
+              text={t('translation:buttons.action.makeOffer')}
+              handleClick={() => console.log('makeOffer modal opened')}
+            />
+          </MakeOfferModalTrigger>
+        )}
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------

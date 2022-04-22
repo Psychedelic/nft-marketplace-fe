@@ -51,7 +51,10 @@ export const NftCard = React.memo(
                 pausedOverlay={
                   // eslint-disable-next-line react/jsx-wrap-multilines
                   <PreviewDetails>
-                    <PreviewImage src={data?.preview} alt="nft-card" />
+                    <PreviewImage
+                      src={data?.preview}
+                      alt="nft-card"
+                    />
                   </PreviewDetails>
                 }
                 loadingOverlay={<VideoLoader />}
@@ -62,13 +65,7 @@ export const NftCard = React.memo(
               <NftText>Price</NftText>
             </Flex>
             <Flex>
-              {notForSale ? (
-                ''
-              ) : (
-                <NftId>
-                  {data?.id}
-                </NftId>
-              )}
+              {notForSale ? '' : <NftId>{data?.id}</NftId>}
               {notForSale ? (
                 ''
               ) : (
@@ -83,7 +80,17 @@ export const NftCard = React.memo(
         <OuterFlex>
           {/* eslint-disable-next-line */}
           <div onClick={() => setModalOpen(true)}>
-            {data.status === 'forSale' ? <BuyNowModal onClose={() => setModalOpen(false)} /> : <MakeOfferModal onClose={() => setModalOpen(false)} />}
+            {data.status === 'forSale' ? (
+              <BuyNowModal
+                onClose={() => setModalOpen(false)}
+                actionText={`${t('translation:nftCard.forSale')}`}
+              />
+            ) : (
+              <MakeOfferModal
+                onClose={() => setModalOpen(false)}
+                actionText={`${t('translation:nftCard.forOffer')}`}
+              />
+            )}
           </div>
           {notForSale ? (
             ''

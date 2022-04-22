@@ -22,4 +22,3 @@ export const crownsSlice = createSlice({
 });
 
 export default crownsSlice.reducer;
-
