@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -18,22 +20,29 @@ import {
   NftId,
   MediaWrapper,
 } from './styles';
-import { NFTMetadata } from '../../../../declarations/nft';
 import wicpLogo from '../../../../assets/wicpIcon.png';
 import { BuyNowModal, MakeOfferModal } from '../../../modals';
+import { styled } from '../../../../stitches.config';
+
+const BuyerOptions = styled(OuterFlex, {
+  minHeight: '28px',
+});
 
 export type NftCardProps = {
   owned?: boolean;
-  notForSale?: boolean;
   forSaleAndOffer?: boolean;
   forSale?: boolean;
-  data: NFTMetadata;
+  // TODO: Data should have a well defined type def
+  data: any;
 };
 
 export const NftCard = React.memo(
-  ({ owned, notForSale, forSaleAndOffer, data }: NftCardProps) => {
+  ({ owned, forSale, forSaleAndOffer, data }: NftCardProps) => {
     const { t } = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
+    const showBuyerOptions = !owned;
+
+    console.log('[debug] nft-card.tsx: data:', data);
 
     return (
       <CardContainer type={modalOpen}>
@@ -65,45 +74,50 @@ export const NftCard = React.memo(
               <NftText>Price</NftText>
             </Flex>
             <Flex>
-              {notForSale ? '' : <NftId>{data?.id}</NftId>}
-              {notForSale ? (
-                ''
-              ) : (
-                <Dfinity>
-                  <img src={wicpLogo} alt="" />
-                  {data?.price}
-                </Dfinity>
-              )}
+              {
+                forSale && (
+                  <>
+                    <NftId>{data?.id}</NftId>
+                    <Dfinity>
+                      <img src={wicpLogo} alt="" />
+                      {data?.price}
+                    </Dfinity>
+                  </>
+                )
+              }
             </Flex>
           </CardWrapper>
         </RouterLink>
-        <OuterFlex>
-          {/* eslint-disable-next-line */}
-          <div onClick={() => setModalOpen(true)}>
-            {data.status === 'forSale' ? (
-              <BuyNowModal
-                onClose={() => setModalOpen(false)}
-                actionText={`${t('translation:nftCard.forSale')}`}
-                actionTextId={data.id}
-              />
-            ) : (
-              <MakeOfferModal
-                onClose={() => setModalOpen(false)}
-                actionText={`${t('translation:nftCard.forOffer')}`}
-              />
-            )}
-          </div>
-          {notForSale ? (
-            ''
-          ) : (
-            <LastOffer>
-              {forSaleAndOffer
+        <BuyerOptions>
+          {
+            (showBuyerOptions && (
+              <div onClick={() => setModalOpen(true)} role="dialog">
+                {
+                  data.status === 'forSale' ? (
+                    <BuyNowModal
+                      onClose={() => setModalOpen(false)}
+                      actionText={`${t('translation:nftCard.forSale')}`}
+                      actionTextId={Number(data.id)}
+                    />
+                  ) : (
+                    <MakeOfferModal
+                      onClose={() => setModalOpen(false)}
+                      actionText={`${t('translation:nftCard.forOffer')}`}
+                    />
+                  )
+                }
+              </div>
+            )) || <span hidden-buyer-options />
+          }
+          <LastOffer>
+            {
+              forSaleAndOffer
                 ? `${t('translation:nftCard.offerFor')} `
-                : `${t('translation:nftCard.last')} `}
-              <b>{data?.lastOffer}</b>
-            </LastOffer>
-          )}
-        </OuterFlex>
+                : `${t('translation:nftCard.last')} `
+            }
+            <b>{data?.lastOffer}</b>
+          </LastOffer>
+        </BuyerOptions>
       </CardContainer>
     );
   },
