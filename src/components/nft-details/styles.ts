@@ -23,8 +23,6 @@ export const Wrapper = styled('div', {
 export const PreviewContainer = styled('div', {
   width: '100%',
   maxWidth: '480px',
-  display: 'flex',
-  flexDirection: 'column',
 });
 
 export const Video = styled('video', {
