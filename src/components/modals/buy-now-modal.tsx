@@ -25,9 +25,10 @@ import {
 export type BuyNowModalProps = {
   onClose?: () => void;
   actionText?: string;
+  actionTextId?: number;
 }
 
-export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
+export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -47,7 +48,7 @@ export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
   };
 
   const handleDirectBuy = () => {
-    if (!id) {
+    if (!actionTextId && !id) {
       console.warn('Oops! Missing id param');
 
       return;
@@ -57,7 +58,7 @@ export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
 
     dispatch(
       directBuy({
-        tokenId: BigInt(id),
+        tokenId: actionTextId ? BigInt(actionTextId) : BigInt(id),
         onSuccess: () => {
           // TODO: the get all listings is used to get data from the canister
           // as the current kyasshu version does not provide the price data
