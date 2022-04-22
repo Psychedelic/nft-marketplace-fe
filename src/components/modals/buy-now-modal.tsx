@@ -23,7 +23,8 @@ import {
  * --------------------------------------------------------------------------*/
 
 export type BuyNowModalProps = {
-  onClose: () => void;
+  onClose?: () => void;
+  actionText?: string;
 }
 
 export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
@@ -41,7 +42,8 @@ export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
 
   const handleModalClose = () => {
     setModalOpened(false);
-    onClose();
+    // eslint-disable-next-line
+    onClose && onClose();
   };
 
   const handleDirectBuy = () => {
@@ -80,13 +82,15 @@ export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <ActionText onClick={() => {
-          // eslint-disable-next-line no-console
-          console.log('BuyNowModalTrigger opened');
-        }}
-        >
-          {`${t('translation:nftCard.forSale')}`}
-        </ActionText>
+        {actionText ? (
+          <ActionText onClick={() => handleDirectBuy()}>
+            {actionText}
+          </ActionText>
+        ) : (
+          <BuyNowModalTrigger>
+            <ActionButton type="primary" text={t('translation:buttons.action.buyNow')} handleClick={handleDirectBuy} />
+          </BuyNowModalTrigger>
+        )}
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------
