@@ -22,4 +22,3 @@ export const wicpSlice = createSlice({
 });
 
 export default wicpSlice.reducer;
-
