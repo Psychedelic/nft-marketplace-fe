@@ -28,19 +28,30 @@ const BuyerOptions = styled(OuterFlex, {
   minHeight: '28px',
 });
 
+const PriceBar = styled('div', {
+  minHeight: '28px',
+  padding: '0 5px',
+
+  '& > div:first-child': {
+    padding: 0,
+  },
+});
+
 export type NftCardProps = {
   owned?: boolean;
-  forSaleAndOffer?: boolean;
-  forSale?: boolean;
   // TODO: Data should have a well defined type def
   data: any;
 };
 
 export const NftCard = React.memo(
-  ({ owned, forSale, forSaleAndOffer, data }: NftCardProps) => {
+  ({ owned, data }: NftCardProps) => {
     const { t } = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
     const showBuyerOptions = !owned;
+    // TODO: Move any status code as constant
+    const isForSale = data.status === 'forSale';
+
+    console.log('[debug] data.status', data.status);
 
     return (
       <CardContainer type={modalOpen}>
@@ -67,23 +78,26 @@ export const NftCard = React.memo(
                 loadingOverlay={<VideoLoader />}
               />
             </MediaWrapper>
-            <Flex>
-              <NftText>{data?.name}</NftText>
-              <NftText>Price</NftText>
-            </Flex>
-            <Flex>
-              {
-                forSale && (
-                  <>
-                    <NftId>{data?.id}</NftId>
-                    <Dfinity>
-                      <img src={wicpLogo} alt="" />
-                      {data?.price}
-                    </Dfinity>
-                  </>
-                )
-              }
-            </Flex>
+            <PriceBar>
+              <Flex>
+                <NftText>{data?.name}</NftText>
+                {/* TODO: Price should be in the translations intl */}
+                <NftText>{isForSale && 'Price' }</NftText>
+              </Flex>
+              <Flex>
+                <NftId>{data?.id}</NftId>
+                <Dfinity>
+                  {
+                    isForSale && (
+                      <>
+                        <img src={wicpLogo} alt="" />
+                        { data?.price }
+                      </>
+                    )
+                  }
+                </Dfinity>
+              </Flex>
+            </PriceBar>
           </CardWrapper>
         </RouterLink>
         <BuyerOptions>
@@ -91,7 +105,7 @@ export const NftCard = React.memo(
             (showBuyerOptions && (
               <div onClick={() => setModalOpen(true)} role="dialog">
                 {
-                  data.status === 'forSale' ? (
+                  isForSale ? (
                     <BuyNowModal
                       onClose={() => setModalOpen(false)}
                       actionText={`${t('translation:nftCard.forSale')}`}
@@ -115,7 +129,7 @@ export const NftCard = React.memo(
               data?.lastOffer && (
                 <>
                   {
-                    forSaleAndOffer
+                    !isForSale
                       ? `${t('translation:nftCard.offerFor')} `
                       : `${t('translation:nftCard.last')} `
                   }
