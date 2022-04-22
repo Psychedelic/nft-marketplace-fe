@@ -30,14 +30,17 @@ export const CheckboxFilterAccordion = ({
   const { traits } = useFilterStore();
   const isLightTheme = theme === 'lightTheme';
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-  const filterValueExists = (traitsValue: string) => traits.some((trait) => trait.values.includes(traitsValue));
+  const filterValueExists = (traitsValue: string) => traits.some((trait) => trait.values.includes(traitsValue) && trait.key === checkboxData.key);
   const traitsCount = traits.find((trait) => trait.name === checkboxData.name)?.values?.length;
 
   const handleSelectedFilters = (e: any) => {
     const checkFilterValueExists = filterValueExists(e.target.value);
 
     if (checkFilterValueExists) {
-      dispatch(filterActions.removeTraitsFilter(e.target.value));
+      dispatch(filterActions.removeTraitsFilter({
+        value: e.target.value,
+        key: checkboxData.key,
+      }));
       return;
     }
 

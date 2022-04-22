@@ -1,84 +1,100 @@
+/* eslint-disable max-len */
 import type { Principal } from '@dfinity/principal';
 
-export interface BuyOffer {
-  status: BuyOfferStatus;
-  non_fungible_contract_address: Principal;
-  token_id: bigint;
+export interface BalanceMetadata {
+  owner: Principal;
+  details: Array<[string, GenericValue]>;
+  token_type: string;
+  standard: string;
+  contractId: Principal;
+}
+export interface FungibleBalance {
+  locked: bigint;
+  amount: bigint;
+}
+export type FungibleStandard = { DIP20: null };
+export type GenericValue =
+  | { Nat64Content: bigint }
+  | { Nat32Content: number }
+  | { BoolContent: boolean }
+  | { Nat8Content: number }
+  | { Int64Content: bigint }
+  | { IntContent: bigint }
+  | { NatContent: bigint }
+  | { Nat16Content: number }
+  | { Int32Content: number }
+  | { Int8Content: number }
+  | { FloatContent: number }
+  | { Int16Content: number }
+  | { BlobContent: Array<number> }
+  | { NestedContent: Array<[string, GenericValue]> }
+  | { Principal: Principal }
+  | { TextContent: string };
+export interface Listing {
+  status: ListingStatus;
+  direct_buy: boolean;
   price: bigint;
   payment_address: Principal;
 }
-export type BuyOfferStatus =
-  | { Bought: null }
-  | { CancelledByBuyer: null }
-  | { Uninitialized: null }
-  | { Created: null }
-  | { CancelledBySeller: null };
-export type FungibleTokenType = { DIP20: null };
+export type ListingStatus = { Selling: null } | { Uninitialized: null } | { Created: null };
 export type MPApiError =
   | { NonExistentCollection: null }
-  | { InvalidSaleOfferStatus: null }
+  | { NoDeposit: null }
+  | { InvalidListingStatus: null }
   | { InsufficientFungibleBalance: null }
-  | { InvalidSaleOffer: null }
-  | { InvalidBuyOfferStatus: null }
+  | { InvalidListing: null }
   | { TransferNonFungibleError: null }
   | { Unauthorized: null }
+  | { InsufficientFungibleAllowance: null }
   | { TransferFungibleError: null }
-  | { InvalidBuyOffer: null }
-  | { Other: null }
+  | { InvalidOffer: null }
+  | { Other: string }
   | { InsufficientNonFungibleBalance: null }
+  | { InvalidOfferStatus: null }
   | { CAPInsertionError: null };
-export type NonFungibleTokenType = { EXT: null } | { DIP721: null };
-export type Result = { Ok: null } | { Err: MPApiError };
-export type Result_1 = { Ok: bigint } | { Err: MPApiError };
-export interface SaleOffer {
-  status: SaleOfferStatus;
-  is_direct_buyable: boolean;
+export type NFTStandard = { EXT: null } | { DIP721v2: null };
+export interface Offer {
+  status: OfferStatus;
+  token_id: bigint;
+  price: bigint;
   payment_address: Principal;
-  list_price: bigint;
+  nft_canister_id: Principal;
 }
-export type SaleOfferStatus =
-  | { Selling: null }
+export type OfferStatus =
+  | { Bought: null }
   | { Uninitialized: null }
+  | { Denied: null }
+  | { Cancelled: null }
   | { Created: null };
-export default interface _SERVICE {
-  acceptBuyOffer: (arg_0: bigint) => Promise<Result>;
+export type Result = { Ok: null } | { Err: MPApiError };
+export interface _SERVICE {
+  acceptOffer: (arg_0: Principal, arg_1: bigint, arg_2: Principal) => Promise<Result>;
   addCollection: (
     arg_0: Principal,
-    arg_1: number,
+    arg_1: bigint,
     arg_2: bigint,
     arg_3: string,
     arg_4: Principal,
-    arg_5: NonFungibleTokenType,
+    arg_5: NFTStandard,
     arg_6: Principal,
-    arg_7: FungibleTokenType,
-  ) => Promise<undefined>;
-  cancelListingBySeller: (
-    arg_0: Principal,
-    arg_1: bigint,
+    arg_7: FungibleStandard,
   ) => Promise<Result>;
-  cancelOfferByBuyer: (arg_0: bigint) => Promise<Result>;
-  cancelOfferBySeller: (arg_0: bigint) => Promise<Result>;
+  balanceOf: (arg_0: Principal) => Promise<Array<[Principal, FungibleBalance]>>;
+  cancelListing: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
+  cancelOffer: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
+  denyOffer: (arg_0: bigint) => Promise<Result>;
+  depositFungible: (arg_0: Principal, arg_1: FungibleStandard, arg_2: bigint) => Promise<Result>;
+  depositNFT: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
   directBuy: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
-  getBuyOffers: (
-    arg_0: bigint,
-    arg_1: bigint,
-  ) => Promise<Array<BuyOffer>>;
-  getSaleOffers: () => Promise<
-    Array<[[Principal, bigint], SaleOffer]>
-  >;
-  listForSale: (
-    arg_0: Principal,
-    arg_1: bigint,
-    arg_2: bigint,
-  ) => Promise<Result>;
-  makeBuyOffer: (
-    arg_0: Principal,
-    arg_1: bigint,
-    arg_2: bigint,
-  ) => Promise<Result_1>;
-  withdrawFungible: (
-    arg_0: Principal,
-    arg_1: FungibleTokenType,
-  ) => Promise<Result>;
+  getAllBalances: () => Promise<Array<[[Principal, Principal], FungibleBalance]>>;
+  getAllListings: () => Promise<Array<[[Principal, bigint], Listing]>>;
+  getAllOffers: () => Promise<Array<[Principal, Array<[bigint, Array<[Principal, Offer]>]>]>>;
+  makeListing: (arg_0: boolean, arg_1: Principal, arg_2: bigint, arg_3: bigint) => Promise<Result>;
+  makeOffer: (arg_0: Principal, arg_1: bigint, arg_2: bigint) => Promise<Result>;
+  serviceBalanceOf: (arg_0: Principal) => Promise<Array<BalanceMetadata>>;
+  withdrawFungible: (arg_0: Principal, arg_1: FungibleStandard) => Promise<Result>;
+  withdrawNFT: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
 }
+
 export default _SERVICE;
+

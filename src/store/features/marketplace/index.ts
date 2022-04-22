@@ -1,10 +1,12 @@
 import { marketplaceSlice } from './marketplace-slice';
 
 export {
-  listForSale,
-  cancelListingBySeller,
+  makeListing,
+  cancelListing,
   makeOffer,
   acceptOffer,
+  getAllListings,
+  directBuy,
 } from './marketplace-slice';
 
 export default marketplaceSlice.reducer;

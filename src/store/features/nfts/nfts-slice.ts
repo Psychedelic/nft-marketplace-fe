@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
-import { NFTMetadata } from '../../../declarations/nft';
+import { NFTMetadata } from '../../../declarations/legacy';
 
 // Define a type for the slice state
 interface NFTSState {
@@ -23,7 +23,7 @@ const initialState: NFTSState = {
   nextPageNo: 0,
 };
 
-interface loadedNFTData {
+export interface loadedNFTData {
   loadedNFTList: NFTMetadata[];
   totalPages: number;
   total: number;
@@ -117,6 +117,11 @@ export const nftsSlice = createSlice({
       state.loadedNFTS[index].isListed = true;
       state.loadedNFTS[index].price = amount;
     },
+    // TODO: Do not change the state manually,
+    // if required query from the API and update the global state
+    // as ultimately you DO NOT WANT to manage state, which is difficult
+    // specially when you have two sources, the application state which
+    // is somehow detached from the API state, which is the source
     cancelNFTFromListing: (
       state,
       action: PayloadAction<cancelNFTFromListingData>,

@@ -86,10 +86,19 @@ export const ToastDescription = styled(ToastPrimitive.Description, {
   alignItems: 'baseline',
   margin: 0,
   fontWeight: 'bold',
-  color: '#FD5F51',
   fontSize: '16px',
   lineHeight: '22px',
   marginTop: '0',
+  variants: {
+    state: {
+      success: {
+        color: '#4bb543',
+      },
+      error: {
+        color: '#FD5F51',
+      },
+    },
+  },
 });
 
 export const ToastDescriptionText = styled('p', {

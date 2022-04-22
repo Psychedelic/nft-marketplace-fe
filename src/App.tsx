@@ -8,6 +8,7 @@ import { Error, NavBar } from './components';
 import CollectionView from './views/CollectionView';
 import NFTView from './views/NFTView';
 import DevelopedComponents from './views/DevelopedComponents';
+import SuccessHandling from './components/toast/success-handling';
 
 // eslint-disable-next-line
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
       <Error />
+      <SuccessHandling />
     </div>
   );
 };

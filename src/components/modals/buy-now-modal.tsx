@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
+import { directBuy, getAllListings } from '../../store/features/marketplace';
+import { useAppDispatch } from '../../store';
+import { DIRECT_BUY_STATUS_CODES } from '../../constants/direct-buy';
 import {
   ModalOverlay,
   ModalContent,
@@ -12,6 +16,7 @@ import {
   ModalButtonsList,
   ModalButtonWrapper,
   ActionText,
+  BuyNowModalTrigger,
 } from './styles';
 
 /* --------------------------------------------------------------------------
@@ -22,8 +27,10 @@ export type BuyNowModalProps = {
   onClose: () => void;
 }
 
-export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
+export const BuyNowModal = ({ onClose, actionText } : BuyNowModalProps) => {
   const { t } = useTranslation();
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // BuyNow modal steps: pending/confirmed
@@ -31,7 +38,6 @@ export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
-    setModalStep('pending');
   };
 
   const handleModalClose = () => {
@@ -39,35 +45,55 @@ export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
     onClose();
   };
 
-  useEffect(() => {
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    let timer: any;
-    if (modalStep === 'pending') {
-      timer = setTimeout(() => {
-        setModalStep('confirmed');
-      }, 1000);
+  const handleDirectBuy = () => {
+    if (!id) {
+      console.warn('Oops! Missing id param');
+
+      return;
     }
-    return () => clearTimeout(timer);
-  }, [modalStep]);
+
+    setModalStep(DIRECT_BUY_STATUS_CODES.Pending);
+
+    dispatch(
+      directBuy({
+        tokenId: BigInt(id),
+        onSuccess: () => {
+          // TODO: the get all listings is used to get data from the canister
+          // as the current kyasshu version does not provide the price data
+          // on makelisting, etc, so we use this as a fallback
+          // although not scalable, if persists might add an endpoint for
+          // a single item instead of a list...
+          dispatch(getAllListings());
+          setModalStep(DIRECT_BUY_STATUS_CODES.Confirmed);
+        },
+        onFailure: () => {
+          // TODO: trigger step failure
+        },
+      }),
+    );
+  };
 
   return (
-    <DialogPrimitive.Root
-      open={modalOpened}
-      onOpenChange={handleModalOpen}
-    >
+    <DialogPrimitive.Root open={modalOpened} onOpenChange={handleModalOpen}>
       {/*
         ---------------------------------
         Modal Trigger
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <ActionText onClick={() => {
-          // eslint-disable-next-line no-console
-          console.log('BuyNowModalTrigger opened');
-        }}
-        >
-          {`${t('translation:nftCard.forSale')}`}
-        </ActionText>
+        {actionText ? (
+          <ActionText onClick={() => {
+            // eslint-disable-next-line no-console
+            console.log('BuyNowModalTrigger opened');
+          }}
+          >
+            {`${t('translation:nftCard.forSale')}`}
+          </ActionText>
+        ) : (
+          <BuyNowModalTrigger>
+            <ActionButton type="primary" text={t('translation:buttons.action.buyNow')} handleClick={handleDirectBuy} />
+          </BuyNowModalTrigger>
+        )}
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------
@@ -94,14 +120,8 @@ export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
               ---------------------------------
             */}
             <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.pendingConfirmation')}
-              </ModalTitle>
-              <ModalDescription>
-                {t(
-                  'translation:modals.description.pendingConfirmation',
-                )}
-              </ModalDescription>
+              <ModalTitle>{t('translation:modals.title.pendingConfirmation')}</ModalTitle>
+              <ModalDescription>{t('translation:modals.description.pendingConfirmation')}</ModalDescription>
             </ModalHeader>
             {/*
               ---------------------------------
@@ -140,12 +160,8 @@ export const BuyNowModal = ({ onClose } : BuyNowModalProps) => {
               ---------------------------------
             */}
             <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.nftPurchased')}
-              </ModalTitle>
-              <ModalDescription>
-                {t('translation:modals.description.nftPurchased')}
-              </ModalDescription>
+              <ModalTitle>{t('translation:modals.title.nftPurchased')}</ModalTitle>
+              <ModalDescription>{t('translation:modals.description.nftPurchased')}</ModalDescription>
             </ModalHeader>
             {/*
               ---------------------------------

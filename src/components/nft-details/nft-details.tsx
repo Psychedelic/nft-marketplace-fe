@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   OfferAccordion,
   AboutAccordion,
@@ -16,28 +17,52 @@ import {
   Video,
 } from './styles';
 
-import { useNFTSStore } from '../../store';
-import { NFTMetadata } from '../../declarations/nft';
+import { useNFTSStore, useAppDispatch } from '../../store';
+import { NFTMetadata } from '../../declarations/legacy';
 
 import { useNFTDetailsFetcher } from '../../integrations/kyasshu';
+import { getAllListings } from '../../store/features/marketplace';
+
+type CurrentListing = {
+  payment_address: string;
+  price: string;
+};
 
 export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
-
+  const dispatch = useAppDispatch();
+  const [currentListing, setCurrentListing] = useState<CurrentListing>();
+  const allListings = useSelector(
+    (state: any) => state.marketplace.allListings,
+  );
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
     [loadedNFTS, id],
   );
+  // TODO: We have the currentList/getAllListings because cap-sync is not available yet
+  // which would fail to provide the data on update
+  const owner = currentListing?.payment_address.toString() || nftDetails?.owner;
+  const lastSalePrice = currentListing?.price || nftDetails?.price;
+  const isListed = !!currentListing || nftDetails?.isListed;
 
   useNFTDetailsFetcher();
 
+  useEffect(() => {
+    // TODO: Get all listings is not scalable
+    // we'll need to securily trigger an update via kyasshu or similar
+    dispatch(getAllListings());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!id || !allListings[id]) return;
+
+    setCurrentListing(allListings[id]);
+  }, [allListings, id]);
+
   return (
     <Container>
-      <NftActionBar
-        owner={nftDetails?.owner}
-        isListed={nftDetails?.isListed}
-      />
+      <NftActionBar owner={owner} isListed={isListed} />
       {nftDetails ? (
         <Wrapper>
           <PreviewContainer>
@@ -75,11 +100,11 @@ export const NftDetails = () => {
             </NFTTraitsContainer>
           </PreviewContainer>
           <DetailsContainer>
-            <NFTMetaData id={nftDetails.id} />
+            <NFTMetaData id={id} />
             <OfferAccordion
-              lastSalePrice={nftDetails?.price}
-              isListed={nftDetails?.isListed}
-              owner={nftDetails?.owner}
+              lastSalePrice={lastSalePrice}
+              isListed={isListed}
+              owner={owner}
             />
             <AboutAccordion owned />
           </DetailsContainer>

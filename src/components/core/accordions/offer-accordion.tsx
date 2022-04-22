@@ -97,7 +97,7 @@ export const OfferAccordion = ({
       // should display a small loader in the place of price
 
       const formattedPrice = await getCurrentMarketPrice({
-        currentListForSalePrice: Number(lastSalePrice),
+        currentMakeListingPrice: Number(lastSalePrice),
       });
 
       setMarketPrice(formattedPrice);

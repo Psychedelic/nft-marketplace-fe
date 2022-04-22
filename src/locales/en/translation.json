@@ -160,7 +160,7 @@
       "modal": "Modal Content"
     },
     "title": {
-      "listForSale": "List for Sale",
+      "makeListing": "List for Sale",
       "pendingConfirmation": "Pending Confirmation",
       "listingComplete": "Listing Complete",
       "editListing": "Edit Listing",
@@ -173,7 +173,7 @@
       "offerAccepted": "Offer Accepted!"
     },
     "description": {
-      "listForsale": "Enter the sale price you want for your NFT.",
+      "makeListing": "Enter the sale price you want for your NFT.",
       "pendingConfirmation": "Please confirm the transaction within Plug Wallet.",
       "listingComplete": "Congrats, your NFT is now listed for sale.",
       "editListing": "Enter the new sale price you want for your NFT.",
@@ -231,5 +231,8 @@
   },
   "errorMessages": {
     "priceEmptyField": "You need to fill in both values"
+  },
+  "successMessages": {
+    "copyToClipboard": "Copied to clipboard!"
   }
 }

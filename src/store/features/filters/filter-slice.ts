@@ -7,6 +7,11 @@ export interface TraitsDataState {
   values: Array<string>;
 }
 
+export interface TraitValue {
+  value: string;
+  key: string,
+}
+
 export interface FilterTraitsList {
   name: string;
   values: Array<string>;
@@ -21,6 +26,7 @@ export interface FilterState {
   defaultFilters: ButtonFilterState[];
   traits: TraitsDataState[];
   loadedFiltersList: FilterTraitsList[];
+  loadingFilterList: boolean;
   isMyNfts: boolean;
   sortBy: string;
   status: string;
@@ -30,6 +36,7 @@ const initialState: FilterState = {
   defaultFilters: [],
   traits: [],
   loadedFiltersList: [],
+  loadingFilterList: false,
   isMyNfts: false,
   sortBy: 'lastModified',
   status: '',
@@ -45,6 +52,9 @@ export const filterSlice = createSlice({
     ) => {
       state.loadedFiltersList.push(action.payload);
     },
+    setIsFilterTraitsLoading: (state, action: PayloadAction<boolean>) => {
+      state.loadingFilterList = action.payload;
+    },
     applyFilter: (
       state,
       action: PayloadAction<ButtonFilterState>,
@@ -59,8 +69,7 @@ export const filterSlice = createSlice({
       state.defaultFilters[filterIndex].filterName = action.payload.filterName;
     },
     applytraits: (state, action: PayloadAction<TraitsDataState>) => {
-      const traitsNameExists = state.traits.some((trait) => trait.name.includes(action.payload.name));
-      const traitsFilterIndex = state.traits.findIndex((trait) => trait.name === action.payload.name);
+      const traitsNameExists = state.traits.some((trait) => trait.name === action.payload.name && trait.key === action.payload.key);
 
       if (!traitsNameExists) {
         state.traits.push({
@@ -75,6 +84,8 @@ export const filterSlice = createSlice({
 
         return;
       }
+
+      const traitsFilterIndex = state.traits.findIndex((trait) => trait.name === action.payload.name && trait.key === action.payload.key);
 
       state.traits[traitsFilterIndex].values.push(action.payload.values);
       const traitName = state.traits[traitsFilterIndex].key;
@@ -93,20 +104,28 @@ export const filterSlice = createSlice({
       const removedPriceFilter = state.defaultFilters.filter((appliedFilter) => appliedFilter.filterCategory !== action.payload);
       state.defaultFilters = removedPriceFilter;
     },
-    removeTraitsFilter: (state, action: PayloadAction<string>) => {
+    removeTraitsFilter: (state, action: PayloadAction<TraitValue>) => {
       const removedTraitsFilter = state.traits.map((trait) => {
-        const filteredTraitsValues = trait.values.filter((t) => t !== action.payload);
-        return {
-          ...trait,
-          values: filteredTraitsValues,
-        };
+        if (trait.values.includes(action.payload.value) && trait.key === action.payload.key) {
+          const filteredTraitsValues = trait.values.filter((t) => t !== action.payload.value);
+          return {
+            ...trait,
+            values: filteredTraitsValues,
+          };
+        }
+        return trait;
       });
+
       const removedDefaultFilter = state.defaultFilters.map((filter) => {
-        const filteredNames = Array.isArray(filter.filterName) ? filter.filterName.filter((f) => f !== action.payload) : [];
-        return !Array.isArray(filter.filterName) ? filter : {
-          ...filter,
-          filterName: filteredNames,
-        };
+        if (filter.filterCategory === action.payload.key) {
+          const filteredNames = Array.isArray(filter.filterName) ? filter.filterName.filter((f) => f !== action.payload.value) : [];
+          return !Array.isArray(filter.filterName) ? filter : {
+            ...filter,
+            filterName: filteredNames,
+          };
+        }
+
+        return filter;
       });
       state.traits = removedTraitsFilter.filter((traits) => traits.values.length > 0);
       state.defaultFilters = removedDefaultFilter.filter((defaultFilter) => !Array.isArray(defaultFilter.filterName) || defaultFilter.filterName.length > 0);

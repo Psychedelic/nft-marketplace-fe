@@ -1,103 +1,119 @@
 /* eslint-disable */
 export default ({ IDL }: { IDL: any }) => {
+  const GenericValue = IDL.Rec();
   const MPApiError = IDL.Variant({
     NonExistentCollection: IDL.Null,
-    InvalidSaleOfferStatus: IDL.Null,
+    NoDeposit: IDL.Null,
+    InvalidListingStatus: IDL.Null,
     InsufficientFungibleBalance: IDL.Null,
-    InvalidSaleOffer: IDL.Null,
-    InvalidBuyOfferStatus: IDL.Null,
+    InvalidListing: IDL.Null,
     TransferNonFungibleError: IDL.Null,
     Unauthorized: IDL.Null,
+    InsufficientFungibleAllowance: IDL.Null,
     TransferFungibleError: IDL.Null,
-    InvalidBuyOffer: IDL.Null,
-    Other: IDL.Null,
+    InvalidOffer: IDL.Null,
+    Other: IDL.Text,
     InsufficientNonFungibleBalance: IDL.Null,
+    InvalidOfferStatus: IDL.Null,
     CAPInsertionError: IDL.Null,
   });
-  const Result = IDL.Variant({ Ok: IDL.Null, Err: MPApiError });
-  const NonFungibleTokenType = IDL.Variant({
+  const Result = IDL.Variant({
+    Ok: IDL.Null,
+    Err: MPApiError,
+  });
+  const NFTStandard = IDL.Variant({
     EXT: IDL.Null,
-    DIP721: IDL.Null,
+    DIP721v2: IDL.Null,
   });
-  const FungibleTokenType = IDL.Variant({ DIP20: IDL.Null });
-  const BuyOfferStatus = IDL.Variant({
-    Bought: IDL.Null,
-    CancelledByBuyer: IDL.Null,
-    Uninitialized: IDL.Null,
-    Created: IDL.Null,
-    CancelledBySeller: IDL.Null,
+  const FungibleStandard = IDL.Variant({
+    DIP20: IDL.Null,
   });
-  const BuyOffer = IDL.Record({
-    status: BuyOfferStatus,
-    non_fungible_contract_address: IDL.Principal,
-    token_id: IDL.Nat64,
-    price: IDL.Nat,
-    payment_address: IDL.Principal,
+  const FungibleBalance = IDL.Record({
+    locked: IDL.Nat,
+    amount: IDL.Nat,
   });
-  const SaleOfferStatus = IDL.Variant({
+  const ListingStatus = IDL.Variant({
     Selling: IDL.Null,
     Uninitialized: IDL.Null,
     Created: IDL.Null,
   });
-  const SaleOffer = IDL.Record({
-    status: SaleOfferStatus,
-    is_direct_buyable: IDL.Bool,
+  const Listing = IDL.Record({
+    status: ListingStatus,
+    direct_buy: IDL.Bool,
+    price: IDL.Nat,
     payment_address: IDL.Principal,
-    list_price: IDL.Nat,
   });
-  const Result_1 = IDL.Variant({ Ok: IDL.Nat64, Err: MPApiError });
+  const OfferStatus = IDL.Variant({
+    Bought: IDL.Null,
+    Uninitialized: IDL.Null,
+    Denied: IDL.Null,
+    Cancelled: IDL.Null,
+    Created: IDL.Null,
+  });
+  const Offer = IDL.Record({
+    status: OfferStatus,
+    token_id: IDL.Nat,
+    price: IDL.Nat,
+    payment_address: IDL.Principal,
+    nft_canister_id: IDL.Principal,
+  });
+  GenericValue.fill(
+    IDL.Variant({
+      Nat64Content: IDL.Nat64,
+      Nat32Content: IDL.Nat32,
+      BoolContent: IDL.Bool,
+      Nat8Content: IDL.Nat8,
+      Int64Content: IDL.Int64,
+      IntContent: IDL.Int,
+      NatContent: IDL.Nat,
+      Nat16Content: IDL.Nat16,
+      Int32Content: IDL.Int32,
+      Int8Content: IDL.Int8,
+      FloatContent: IDL.Float64,
+      Int16Content: IDL.Int16,
+      BlobContent: IDL.Vec(IDL.Nat8),
+      NestedContent: IDL.Vec(IDL.Tuple(IDL.Text, GenericValue)),
+      Principal: IDL.Principal,
+      TextContent: IDL.Text,
+    }),
+  );
+  const BalanceMetadata = IDL.Record({
+    owner: IDL.Principal,
+    details: IDL.Vec(IDL.Tuple(IDL.Text, GenericValue)),
+    token_type: IDL.Text,
+    standard: IDL.Text,
+    contractId: IDL.Principal,
+  });
   return IDL.Service({
-    acceptBuyOffer: IDL.Func([IDL.Nat64], [Result], []),
+    acceptOffer: IDL.Func([IDL.Principal, IDL.Nat, IDL.Principal], [Result], []),
     addCollection: IDL.Func(
-      [
-        IDL.Principal,
-        IDL.Nat16,
-        IDL.Nat64,
-        IDL.Text,
-        IDL.Principal,
-        NonFungibleTokenType,
-        IDL.Principal,
-        FungibleTokenType,
-      ],
-      [],
-      [],
-    ),
-    cancelListingBySeller: IDL.Func(
-      [IDL.Principal, IDL.Nat64],
+      [IDL.Principal, IDL.Nat, IDL.Nat64, IDL.Text, IDL.Principal, NFTStandard, IDL.Principal, FungibleStandard],
       [Result],
       [],
     ),
-    cancelOfferByBuyer: IDL.Func([IDL.Nat64], [Result], []),
-    cancelOfferBySeller: IDL.Func([IDL.Nat64], [Result], []),
-    directBuy: IDL.Func([IDL.Principal, IDL.Nat64], [Result], []),
-    getBuyOffers: IDL.Func(
-      [IDL.Nat64, IDL.Nat64],
-      [IDL.Vec(BuyOffer)],
+    balanceOf: IDL.Func([IDL.Principal], [IDL.Vec(IDL.Tuple(IDL.Principal, FungibleBalance))], ['query']),
+    cancelListing: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
+    cancelOffer: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
+    denyOffer: IDL.Func([IDL.Nat64], [Result], []),
+    depositFungible: IDL.Func([IDL.Principal, FungibleStandard, IDL.Nat], [Result], []),
+    depositNFT: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
+    directBuy: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
+    getAllBalances: IDL.Func(
+      [],
+      [IDL.Vec(IDL.Tuple(IDL.Tuple(IDL.Principal, IDL.Principal), FungibleBalance))],
       ['query'],
     ),
-    getSaleOffers: IDL.Func(
+    getAllListings: IDL.Func([], [IDL.Vec(IDL.Tuple(IDL.Tuple(IDL.Principal, IDL.Nat), Listing))], ['query']),
+    getAllOffers: IDL.Func(
       [],
-      [
-        IDL.Vec(
-          IDL.Tuple(IDL.Tuple(IDL.Principal, IDL.Nat64), SaleOffer),
-        ),
-      ],
+      [IDL.Vec(IDL.Tuple(IDL.Principal, IDL.Vec(IDL.Tuple(IDL.Nat, IDL.Vec(IDL.Tuple(IDL.Principal, Offer))))))],
       ['query'],
     ),
-    listForSale: IDL.Func(
-      [IDL.Principal, IDL.Nat64, IDL.Nat],
-      [Result],
-      [],
-    ),
-    makeBuyOffer: IDL.Func(
-      [IDL.Principal, IDL.Nat64, IDL.Nat],
-      [Result_1],
-      [],
-    ),
-    withdrawFungible: IDL.Func(
-      [IDL.Principal, FungibleTokenType],
-      [Result],
-      [],
-    ),
+    makeListing: IDL.Func([IDL.Bool, IDL.Principal, IDL.Nat, IDL.Nat], [Result], []),
+    makeOffer: IDL.Func([IDL.Principal, IDL.Nat, IDL.Nat], [Result], []),
+    serviceBalanceOf: IDL.Func([IDL.Principal], [IDL.Vec(BalanceMetadata)], ['query']),
+    withdrawFungible: IDL.Func([IDL.Principal, FungibleStandard], [Result], []),
+    withdrawNFT: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
   });
 };
+

@@ -7,20 +7,19 @@ import config from '../../config/env';
 
 export type ServiceName = 'marketplace' | 'crowns' | 'wicp';
 
-export const createActor = async <T>({
-  serviceName = 'marketplace',
-}: {
-  serviceName?: ServiceName;
-}) => {
+export const createActor = async <T>({ serviceName = 'marketplace' }: { serviceName?: ServiceName }) => {
   // Fetch root key for certificate validation during development
   if (process.env.NODE_ENV !== 'production') {
     try {
+      // The `delay` is required to prevent a false negative
+      // as the Plug wallet needs to be ready
+      // which is not the case on page refresh
+      // Otherwise, this cause `No Agent could be found`
+      await new Promise((resolve) => setTimeout(resolve, 1800));
       await (window as any)?.ic?.plug?.agent.fetchRootKey();
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.warn(
-        'Oops! Unable to fetch root key, is the local replica running?',
-      );
+      console.warn('Oops! Unable to fetch root key, is the local replica running?');
       // eslint-disable-next-line no-console
       console.error(err);
     }
@@ -60,7 +59,7 @@ export const actorInstanceHandler = async <T>({
   slice: any;
 }) => {
   const {
-    marketplace: { actor },
+    [serviceName]: { actor },
   } = thunkAPI.getState();
 
   if (!actor) {
@@ -76,3 +75,4 @@ export const actorInstanceHandler = async <T>({
 
   return actor;
 };
+

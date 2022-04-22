@@ -3,9 +3,9 @@ import { ActorSubclass } from '@dfinity/agent';
 import { createActor } from '../actor';
 import marketplaceIdlService from '../../declarations/marketplace';
 import config from '../../config/env';
-import { errorActions } from '../../store';
+import { notificationActions } from '../../store';
 
-export type ListForSaleProps = {
+export type MakeListingProps = {
   dispatch: any;
   id: string;
   amount: string;
@@ -13,14 +13,15 @@ export type ListForSaleProps = {
   onFailure: any;
 };
 
-export const listForSale = async ({
+export const makeListing = async ({
   dispatch,
   id,
   amount,
   onSuccess,
   onFailure,
-}: ListForSaleProps) => {
+}: MakeListingProps) => {
   try {
+    const directBuy = true;
     const nonFungibleContractAddress = Principal.fromText(
       config.crownsCanisterId,
     );
@@ -30,7 +31,8 @@ export const listForSale = async ({
       serviceName: 'marketplace',
     })) as ActorSubclass<marketplaceIdlService>;
 
-    await actor.listForSale(
+    await actor.makeListing(
+      directBuy,
       nonFungibleContractAddress,
       userOwnedTokenId,
       userListForPrice,
@@ -38,7 +40,7 @@ export const listForSale = async ({
 
     onSuccess();
   } catch (error) {
-    dispatch(errorActions.setErrorMessage(error.message));
+    dispatch(notificationActions.setErrorMessage(error.message));
     onFailure();
   }
 };

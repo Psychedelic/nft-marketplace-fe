@@ -8,7 +8,7 @@ import {
   useAppDispatch,
   settingsActions,
   useSettingsStore,
-  errorActions,
+  notificationActions,
 } from '../../store';
 import {
   ActionButton,
@@ -35,6 +35,7 @@ import {
   CheckboxFilters,
   FilterButtonWrapper,
 } from './styles';
+import CheckboxAccordionSkeleton from '../core/accordions/checkbox-accordion-skeleton';
 
 /* --------------------------------------------------------------------------
  * Filters Component
@@ -43,7 +44,7 @@ import {
 export const Filters = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { defaultFilters, loadedFiltersList, status } = useFilterStore();
+  const { defaultFilters, loadedFiltersList, status, loadingFilterList } = useFilterStore();
   const { theme } = useThemeStore();
   const { collapsed, displayPriceApplyButton } = useSettingsStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -110,7 +111,7 @@ export const Filters = () => {
     if (priceFilterValue.min === '' && priceFilterValue.max === '') {
       dispatch(filterActions.removePriceFilter(`${t('translation:filters.priceRange')}`));
     } else if (priceFilterValue.min === '' || priceFilterValue.max === '') {
-      dispatch(errorActions.setErrorMessage(`${t('translation:errorMessages.priceEmptyField')}`));
+      dispatch(notificationActions.setErrorMessage(`${t('translation:errorMessages.priceEmptyField')}`));
     } else {
       // eslint-disable-next-line no-lonely-if
       if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
@@ -295,12 +296,16 @@ export const Filters = () => {
             <FilterSection>
               <CheckboxFilters>
                 {/* TO-DO: Refactor */}
-                {loadedFiltersList[0]?.map((checkboxData) => (
-                  <CheckboxFilterAccordion
-                    checkboxData={checkboxData}
-                    id={checkboxData.name}
-                  />
-                ))}
+                {loadingFilterList ? (
+                  <CheckboxAccordionSkeleton />
+                ) : (
+                  loadedFiltersList[0]?.map((checkboxData) => (
+                    <CheckboxFilterAccordion
+                      checkboxData={checkboxData}
+                      id={checkboxData.name}
+                    />
+                  ))
+                )}
               </CheckboxFilters>
             </FilterSection>
           </FiltersWrapper>

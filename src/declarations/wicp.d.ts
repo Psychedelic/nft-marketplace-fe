@@ -74,4 +74,5 @@ export interface _SERVICE {
   ) => Promise<Result>;
   withdraw: (arg_0: bigint, arg_1: string) => Promise<Result>;
 }
+
 export default _SERVICE;

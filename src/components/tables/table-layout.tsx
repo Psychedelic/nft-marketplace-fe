@@ -2,7 +2,9 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { useTable } from 'react-table';
+import { useTableStore } from '../../store';
 import { TableWrapper } from './styles';
+import TableSkeletons from './table-skeletons';
 
 export interface TableLayoutProps {
   columns: any;
@@ -31,35 +33,50 @@ export const TableLayout = ({
     },
   });
 
+  const { loadingTableData } = useTableStore();
+
   return (
-    <TableWrapper type={tableType}>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>
-                  {column.render('Header')}
-                </th>
+    <>
+      {loadingTableData ? (
+        <>
+          <TableSkeletons />
+          <TableSkeletons />
+          <TableSkeletons />
+          <TableSkeletons />
+          <TableSkeletons />
+          <TableSkeletons />
+        </>
+      ) : (
+        <TableWrapper type={tableType}>
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th {...column.getHeaderProps()}>
+                      {column.render('Header')}
+                    </th>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </TableWrapper>
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => (
+                      <td {...cell.getCellProps()}>
+                        {cell.render('Cell')}
+                      </td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </TableWrapper>
+      )}
+    </>
   );
 };

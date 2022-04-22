@@ -3,6 +3,8 @@ import copyToClipboard from 'copy-to-clipboard';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useTranslation } from 'react-i18next';
 import {
+  notificationActions,
+  useAppDispatch,
   useThemeStore,
 } from '../../../store';
 import {
@@ -23,11 +25,13 @@ export type CardOptionsDropdownProps = {
 export const CardOptionsDropdown = ({ data }: CardOptionsDropdownProps) => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const dispatch = useAppDispatch();
   const isLightTheme = theme === 'lightTheme';
 
   const handleCopy = (e) => {
     e.preventDefault();
     copyToClipboard(`${window.location.href}nft/${data.id}`);
+    dispatch(notificationActions.setSuccessMessage(`${t('translation:successMessages.copyToClipboard')}`));
   };
 
   return (

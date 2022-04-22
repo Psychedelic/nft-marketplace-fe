@@ -2,9 +2,14 @@
 import { useEffect } from 'react';
 import JsonBigInt from 'json-bigint';
 
-import { MetadataDesc } from '../declarations/nft';
+import { MetadataDesc, NFTMetadata } from '../declarations/legacy';
 import { createActor } from '../integrations/actor';
-import { useAppDispatch, nftsActions, errorActions } from '../store';
+import {
+  useAppDispatch,
+  nftsActions,
+  notificationActions,
+  loadedNFTData,
+} from '../store';
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
@@ -15,21 +20,23 @@ export const useNFTSFetcher = () => {
       dispatch(nftsActions.setIsNFTSLoading(true));
 
       try {
-        const actor = await createActor();
-        const allNFTS = await actor.totalSupplyDip721();
+        const actor = await createActor({
+          serviceName: 'marketplace',
+        });
+        const allNFTS = await actor.totalSupply();
 
         // TODO: update promises with token
         const promises = [
           ...new Array(JsonBigInt.parse(allNFTS)),
         ].map((_, index) => {
           const tokenId = BigInt(index);
-          return actor.getMetadataDip721(tokenId);
+          return actor.getMetadata(tokenId);
         });
         const fetchedNFTS = await Promise.allSettled(promises);
         const nftsCount = 999;
 
-        const extractedNFTSList = fetchedNFTS.map((nft, index) => {
-          const { Ok } = nft.value;
+        const loadedNFTList = fetchedNFTS.map((nft, index) => {
+          const { Ok } = (nft as any).value;
           const metadataDesc = (Ok as MetadataDesc)?.pop();
           const traits = metadataDesc?.key_val_data.reduce(
             (acc: any, curr) => {
@@ -44,7 +51,7 @@ export const useNFTSFetcher = () => {
             {},
           );
 
-          const metadata = {
+          const metadata: NFTMetadata = {
             // TODO: update preview video URL, id, name, price
             id: `0${nftsCount - index}`,
             name: 'Cap Crowns',
@@ -60,14 +67,18 @@ export const useNFTSFetcher = () => {
           return metadata;
         });
 
+        const loadedNFTS: loadedNFTData = {
+          loadedNFTList,
+        };
+
         // update store with loaded NFTS details
-        dispatch(nftsActions.setLoadedNFTS(extractedNFTSList));
+        dispatch(nftsActions.setLoadedNFTS(loadedNFTS));
       } catch (error) {
         // eslint-disable-next-line no-console
         console.warn(error);
 
         // set NFTS failed to load
-        dispatch(errorActions.setErrorMessage(error.message));
+        dispatch(notificationActions.setErrorMessage(error.message));
       }
     })();
   }, [dispatch]);
