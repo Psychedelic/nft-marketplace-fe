@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useThemeStore } from '../../store';
 import {
@@ -7,7 +7,7 @@ import {
   TextCell,
   TextLinkCell,
 } from '../core';
-import { AcceptOfferModal } from '../modals';
+import { AcceptOfferModal, CancelOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
 import {
@@ -16,11 +16,15 @@ import {
   ButtonWrapper,
 } from './styles';
 import TableSkeletons from './table-skeletons';
+import { OFFER_TYPE_STATUS_CODES } from '../../constants/my-offers';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
  * --------------------------------------------------------------------------*/
 
+export type MyOffersTableProps = {
+  offersType?: string; // offers received / offers made
+};
 export interface rowProps {
   item: {
     name: string;
@@ -34,9 +38,40 @@ export interface rowProps {
   callerDfinityExplorerUrl: string;
 }
 
-export const MyOffersTable = () => {
+export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
+    [],
+  );
+
+  useEffect(() => {
+    // hide offersMadeAction if offersType = OffersReceived
+    if (
+      offersType === OFFER_TYPE_STATUS_CODES.OffersReceived &&
+      !columnsToHide.includes('offersMadeAction')
+    ) {
+      const newColumns = columnsToHide.filter(
+        (header) => header !== 'offersReceivedAction',
+      );
+      setColumnsToHide([...newColumns, 'offersMadeAction']);
+
+      return;
+    }
+
+    // hide offersReceivedAction if offersType = OffersMade
+    if (
+      offersType === OFFER_TYPE_STATUS_CODES.OffersMade &&
+      !columnsToHide.includes('offersReceivedAction')
+    ) {
+      const newColumns = columnsToHide.filter(
+        (header) => header !== 'offersMadeAction',
+      );
+      setColumnsToHide([...newColumns, 'offersReceivedAction']);
+
+      return;
+    }
+  }, [offersType]);
 
   // TODO: Update mockedetails configured below
   // with original details while doing integration
@@ -47,7 +82,9 @@ export const MyOffersTable = () => {
 
   useEffect(() => {
     // TODO: Add logic to fetch table data
-  }, []);
+    // TODO: Update loadedOffersReceivedData when there is
+    // a change in offersType
+  }, [offersType]);
 
   const loadMoreData = () => {
     if (loadingTableData || !hasMoreData) return;
@@ -101,7 +138,7 @@ export const MyOffersTable = () => {
         ),
       },
       {
-        id: 'action',
+        id: 'offersReceivedAction',
         Header: t('translation:tables.titles.action'),
         // TODO: Update formatted price and offerFrom with dynamic fields
         accessor: ({ price, from }: rowProps) => (
@@ -114,8 +151,18 @@ export const MyOffersTable = () => {
           </ButtonWrapper>
         ),
       },
+      {
+        id: 'offersMadeAction',
+        Header: t('translation:tables.titles.action'),
+        // TODO: Update cancel offer modal
+        accessor: () => (
+          <ButtonWrapper>
+            <CancelOfferModal />
+          </ButtonWrapper>
+        ),
+      },
     ],
-    [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
+    [t, theme, columnsToHide], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return (
@@ -134,6 +181,7 @@ export const MyOffersTable = () => {
           columns={columns}
           data={loadedOffersReceivedData}
           tableType="activity"
+          columnsToHide={columnsToHide}
         />
       </Container>
     </InfiniteScrollWrapper>

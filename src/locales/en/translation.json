@@ -3,8 +3,12 @@
     "title": "NFT Marketplace UI",
     "collectionName": "Crowns",
     "noRecentSearch": "No recent searches",
-    "comingSoon": "Coming soon!",
-    "myOffers": "My Offers"
+    "comingSoon": "Coming soon!"
+  },
+  "offers": {
+    "myOffers": "My Offers",
+    "offersReceived": "Offers Recevied",
+    "offersMade": "Offers Made"
   },
   "buttons": {
     "placeholder": {

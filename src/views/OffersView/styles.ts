@@ -17,3 +17,13 @@ export const Title = styled('h2', {
   color: '$mainTextColor',
   margin: '0px',
 });
+
+export const ButtonListWrapper = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+});
+
+export const ButtonDetailsWrapper = styled('div', {
+  height: '44px',
+  marginLeft: '15px',
+});
