@@ -28,18 +28,19 @@ export const CardWrapper = styled('div', {
   borderTopLeftRadius: '14px',
   width: '100%',
   // height: '100%',
-  padding: '10px 10px 3px',
+  padding: '10px 0 3px',
   cursor: 'pointer',
   transition: 'all 0.5s ease-in-out',
 });
 
 export const MediaWrapper = styled('div', {
   minHeight: '175px',
+  height: '175px',
+  marginBottom: '8px',
 
   '@lg': {
     height: '270px',
     width: '100%',
-    marginBottom: '10px',
   },
 });
 
@@ -53,16 +54,13 @@ export const PreviewImage = styled('img', {
   width: '100%',
   height: '100%',
   objectFit: 'cover',
-  borderRadius: '14px',
 });
 
 export const VideoPlayer = styled(HoverVideoPlayer, {
-  marginBottom: '10px',
   height: '100%',
   width: '100%',
   video: {
     height: '100%',
-    borderRadius: '14px',
   },
 });
 
@@ -83,9 +81,10 @@ export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  padding: '0 10px 0',
 
   '&:nth-child(1)': {
-    padding: '5px 0 10px',
+    padding: '5px 10px 10px',
   },
 
   '& p': {
