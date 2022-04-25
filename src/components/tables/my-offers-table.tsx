@@ -18,7 +18,7 @@ import {
 import TableSkeletons from './table-skeletons';
 
 /* --------------------------------------------------------------------------
- * Offers Received Table Component
+ * My Offers Table Component
  * --------------------------------------------------------------------------*/
 
 export interface rowProps {
@@ -34,7 +34,7 @@ export interface rowProps {
   callerDfinityExplorerUrl: string;
 }
 
-export const OffersReceivedTable = () => {
+export const MyOffersTable = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
 
