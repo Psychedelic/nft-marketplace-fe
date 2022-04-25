@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import throttle from 'lodash.throttle';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { SearchInput } from '../core';
@@ -24,6 +25,7 @@ import {
   SubText,
 } from './styles';
 import { useNFTSStore } from '../../store';
+import { NFTMetadata } from '../../declarations/legacy';
 
 /* --------------------------------------------------------------------------
  * Global Search Component
@@ -35,17 +37,17 @@ export const GlobalSearch = () => {
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState('');
-  const [searchResult, setSearchResult] = useState([]);
+  const [searchResult, setSearchResult] = useState<NFTMetadata[]>([]);
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
     setSearchText('');
   };
 
-  const handleSearch = (value: string) => {
-    const searchResultData = loadedNFTS.filter((nfts) => nfts.id.includes(value));
+  const handleSearch = useCallback(throttle((value: string) => {
+    const searchResultData = loadedNFTS.filter((nfts) => nfts.id.startsWith(value));
     setSearchResult(searchResultData);
-  };
+  }, 3000), [loadedNFTS]);
 
   const closeDropDown = () => handleModalOpen(false);
 
@@ -96,8 +98,8 @@ export const GlobalSearch = () => {
         {searchText && (searchResult.length ? (
           <ItemsListContainer>
             {searchResult?.slice(0, 5).map((nft) => (
-              <RouterLink to={`/nft/${nft.id}`} onClick={closeDropDown}>
-                <ItemDetailsWrapper key={nft.id}>
+              <RouterLink to={`/nft/${nft.id}`} onClick={closeDropDown} key={nft.id}>
+                <ItemDetailsWrapper>
                   <ItemDetails>
                     <ItemLogo src={nft.preview} alt="crowns" />
                     <ItemName>{`${nft.name} ${nft.id}`}</ItemName>
