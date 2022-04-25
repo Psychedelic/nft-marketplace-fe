@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActivityTable } from '../../components/tables';
+import { OffersReceivedTable } from '../../components/tables';
 import { Container, TitleWrapper, Title } from './styles';
 
 /* --------------------------------------------------------------------------
@@ -15,7 +15,7 @@ const OffersView = () => {
       <TitleWrapper>
         <Title>{t('translation:common.myOffers')}</Title>
       </TitleWrapper>
-      <ActivityTable />
+      <OffersReceivedTable />
     </Container>
   );
 };
