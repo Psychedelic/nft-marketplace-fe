@@ -16,7 +16,10 @@ import {
   ButtonWrapper,
 } from './styles';
 import TableSkeletons from './table-skeletons';
-import { OFFER_TYPE_STATUS_CODES } from '../../constants/my-offers';
+import {
+  OFFER_TYPE_STATUS_CODES,
+  OFFERS_TABLE_HEADERS,
+} from '../../constants/my-offers';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -49,12 +52,16 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     // hide offersMadeAction if offersType = OffersReceived
     if (
       offersType === OFFER_TYPE_STATUS_CODES.OffersReceived &&
-      !columnsToHide.includes('offersMadeAction')
+      !columnsToHide.includes(OFFERS_TABLE_HEADERS.OffersMadeAction)
     ) {
       const newColumns = columnsToHide.filter(
-        (header) => header !== 'offersReceivedAction',
+        (header) =>
+          header !== OFFERS_TABLE_HEADERS.OffersReceivedAction,
       );
-      setColumnsToHide([...newColumns, 'offersMadeAction']);
+      setColumnsToHide([
+        ...newColumns,
+        OFFERS_TABLE_HEADERS.OffersMadeAction,
+      ]);
 
       return;
     }
@@ -62,12 +69,17 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     // hide offersReceivedAction if offersType = OffersMade
     if (
       offersType === OFFER_TYPE_STATUS_CODES.OffersMade &&
-      !columnsToHide.includes('offersReceivedAction')
+      !columnsToHide.includes(
+        OFFERS_TABLE_HEADERS.OffersReceivedAction,
+      )
     ) {
       const newColumns = columnsToHide.filter(
-        (header) => header !== 'offersMadeAction',
+        (header) => header !== OFFERS_TABLE_HEADERS.OffersMadeAction,
       );
-      setColumnsToHide([...newColumns, 'offersReceivedAction']);
+      setColumnsToHide([
+        ...newColumns,
+        OFFERS_TABLE_HEADERS.OffersReceivedAction,
+      ]);
 
       return;
     }
@@ -138,7 +150,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         ),
       },
       {
-        id: 'offersReceivedAction',
+        id: OFFERS_TABLE_HEADERS.OffersReceivedAction,
         Header: t('translation:tables.titles.action'),
         // TODO: Update formatted price and offerFrom with dynamic fields
         accessor: ({ price, from }: rowProps) => (
@@ -152,7 +164,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         ),
       },
       {
-        id: 'offersMadeAction',
+        id: OFFERS_TABLE_HEADERS.OffersMadeAction,
         Header: t('translation:tables.titles.action'),
         // TODO: Update cancel offer modal
         accessor: () => (
