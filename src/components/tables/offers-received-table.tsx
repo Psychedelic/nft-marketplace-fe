@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useThemeStore } from '../../store';
 import {
@@ -44,6 +44,10 @@ export const OffersReceivedTable = () => {
   const hasMoreData = false;
   const loadingTableData = false;
   const nextPageNo = 0;
+
+  useEffect(() => {
+    // TODO: Add logic to fetch table data
+  }, []);
 
   const loadMoreData = () => {
     if (loadingTableData || !hasMoreData) return;
@@ -99,6 +103,7 @@ export const OffersReceivedTable = () => {
       {
         id: 'action',
         Header: t('translation:tables.titles.action'),
+        // TODO: Update formatted price and offerFrom with dynamic fields
         accessor: ({ price, from }: rowProps) => (
           <ButtonWrapper>
             <AcceptOfferModal
