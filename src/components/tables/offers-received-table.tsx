@@ -3,14 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { useThemeStore } from '../../store';
 import {
   ItemDetailsCell,
-  TypeDetailsCell,
   PriceDetailsCell,
   TextCell,
   TextLinkCell,
 } from '../core';
+import { AcceptOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
-import { Container, InfiniteScrollWrapper } from './styles';
+import {
+  Container,
+  InfiniteScrollWrapper,
+  ButtonWrapper,
+} from './styles';
 import TableSkeletons from './table-skeletons';
 
 /* --------------------------------------------------------------------------
@@ -24,6 +28,7 @@ export interface rowProps {
     token_id: string;
   };
   price: string;
+  floorDifference: string;
   from: string;
   time: string;
   callerDfinityExplorerUrl: string;
@@ -70,6 +75,12 @@ export const OffersReceivedTable = () => {
         ),
       },
       {
+        Header: t('translation:tables.titles.floorDifference'),
+        accessor: ({ floorDifference }: rowProps) => (
+          <TextCell text={floorDifference} type="offers" />
+        ),
+      },
+      {
         Header: t('translation:tables.titles.from'),
         accessor: ({ from, callerDfinityExplorerUrl }: rowProps) => (
           <TextLinkCell
@@ -83,6 +94,19 @@ export const OffersReceivedTable = () => {
         Header: t('translation:tables.titles.time'),
         accessor: ({ time }: rowProps) => (
           <TextCell text={time} type="activityTime" />
+        ),
+      },
+      {
+        id: 'action',
+        Header: t('translation:tables.titles.action'),
+        accessor: ({ price, from }: rowProps) => (
+          <ButtonWrapper>
+            <AcceptOfferModal
+              price={price}
+              formattedPrice={price}
+              offerFrom={from}
+            />
+          </ButtonWrapper>
         ),
       },
     ],
