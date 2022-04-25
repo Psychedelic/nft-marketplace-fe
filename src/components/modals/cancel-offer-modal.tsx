@@ -45,6 +45,7 @@ export const CancelOfferModal = () => {
         <CancelOfferModalTrigger>
           <ActionButton
             type="secondary"
+            size="small"
             text={t('translation:buttons.action.cancelOffer')}
             handleClick={() => {
               // eslint-disable-next-line no-console
