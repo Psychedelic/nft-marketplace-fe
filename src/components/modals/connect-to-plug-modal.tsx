@@ -66,11 +66,6 @@ export const ConnectToPlugModal = ({
       */}
       <ModalContent>
         <Container>
-          {/*
-            ---------------------------------
-            Offer Action Buttons
-            ---------------------------------
-          */}
           <PlugButtonContainer>
             <ModalButtonWrapper fullWidth>
               <Plug />
