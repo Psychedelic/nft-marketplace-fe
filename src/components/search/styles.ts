@@ -126,6 +126,7 @@ export const ItemLogo = styled('img', {
   width: '40px',
   height: '40px',
   marginRight: '12px',
+  borderRadius: '12px',
 });
 
 export const ItemName = styled('div', {
@@ -212,5 +213,11 @@ export const PriceText = styled('div', {
         fontSize: '20px',
       },
     },
+  },
+});
+
+export const SubText = styled('span', {
+  '&:first-child': {
+    marginRight: '10px',
   },
 });
