@@ -21,8 +21,9 @@ import {
   MediaWrapper,
 } from './styles';
 import wicpLogo from '../../../../assets/wicpIcon.png';
-import { BuyNowModal, MakeOfferModal } from '../../../modals';
+import { BuyNowModal, MakeOfferModal, ConnectToPlugModal } from '../../../modals';
 import { styled } from '../../../../stitches.config';
+import { usePlugStore } from '../../../../store';
 
 const BuyerOptions = styled(OuterFlex, {
   minHeight: '28px',
@@ -47,6 +48,7 @@ export const NftCard = React.memo(
   ({ owned, data }: NftCardProps) => {
     const { t } = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
+    const { isConnected } = usePlugStore();
     const showBuyerOptions = !owned;
     // TODO: Move any status code as constant
     const isForSale = data.status === 'forSale';
@@ -102,25 +104,43 @@ export const NftCard = React.memo(
         </RouterLink>
         <BuyerOptions>
           {
-            (showBuyerOptions && (
+            isConnected ?
+              <>
+                {
+                  (showBuyerOptions && (
+                    <div onClick={() => setModalOpen(true)} role="dialog">
+                      {
+                        isForSale ? (
+                          <BuyNowModal
+                            onClose={() => setModalOpen(false)}
+                            actionText={`${t('translation:nftCard.forSale')}`}
+                            actionTextId={Number(data.id)}
+                          />
+                        ) : (
+                          <MakeOfferModal
+                            onClose={() => setModalOpen(false)}
+                            actionText={`${t('translation:nftCard.forOffer')}`}
+                            nftTokenId={data.id}
+                          />
+                        )
+                      }
+                    </div>
+                  )) || <span hidden-buyer-options />
+                }
+              </> :
               <div onClick={() => setModalOpen(true)} role="dialog">
                 {
                   isForSale ? (
-                    <BuyNowModal
-                      onClose={() => setModalOpen(false)}
+                    <ConnectToPlugModal
                       actionText={`${t('translation:nftCard.forSale')}`}
-                      actionTextId={Number(data.id)}
                     />
                   ) : (
-                    <MakeOfferModal
-                      onClose={() => setModalOpen(false)}
+                    <ConnectToPlugModal
                       actionText={`${t('translation:nftCard.forOffer')}`}
-                      nftTokenId={data.id}
                     />
                   )
                 }
               </div>
-            )) || <span hidden-buyer-options />
           }
           <LastOffer>
             {
