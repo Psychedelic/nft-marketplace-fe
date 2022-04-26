@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton } from '../core';
 import {
   ModalOverlay,
   ModalContent,
@@ -11,33 +9,32 @@ import {
   PlugButtonContainer,
 } from './styles';
 import { Plug } from '../plug';
+import { usePlugStore } from '../../store';
 
 /* --------------------------------------------------------------------------
  * Connect to Plug Modal Component
  * --------------------------------------------------------------------------*/
 
 export type ConnectToPlugModalProps = {
-  onClose?: () => void;
   actionText?: string;
 };
 
 export const ConnectToPlugModal = ({
-  onClose,
   actionText,
 }: ConnectToPlugModalProps) => {
-  const { t } = useTranslation();
-
   const [modalOpened, setModalOpened] = useState<boolean>(false);
+
+  const { isConnected } = usePlugStore();
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
   };
 
-  const handleModalClose = () => {
+  useEffect(() => {
+    if (!isConnected) return;
+
     setModalOpened(false);
-    // eslint-disable-next-line
-    onClose && onClose();
-  };
+  }, [isConnected]);
 
   return (
     <DialogPrimitive.Root
@@ -76,7 +73,7 @@ export const ConnectToPlugModal = ({
           */}
           <PlugButtonContainer>
             <ModalButtonWrapper fullWidth>
-							<Plug />
+              <Plug />
             </ModalButtonWrapper>
           </PlugButtonContainer>
         </Container>
