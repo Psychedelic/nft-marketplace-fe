@@ -115,6 +115,7 @@ export const NftCard = React.memo(
                     <MakeOfferModal
                       onClose={() => setModalOpen(false)}
                       actionText={`${t('translation:nftCard.forOffer')}`}
+                      nftTokenId={data.id}
                     />
                   )
                 }
