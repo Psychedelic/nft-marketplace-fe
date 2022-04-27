@@ -1,5 +1,5 @@
-import React from 'react';
-import * as HoverCard from '@radix-ui/react-hover-card';
+import React, { useState } from 'react';
+import * as Dropdown from '@radix-ui/react-dropdown-menu';
 import {
   useAppDispatch,
   usePlugStore,
@@ -12,6 +12,7 @@ import {
   PlugIcon,
   PlugArrowDownIcon,
   ConnectToPlugButton,
+  DropdownTrigger,
   Flex,
 } from './styles';
 import plugIcon from '../../assets/plug-icon.svg';
@@ -39,14 +40,26 @@ export const PlugButton = ({
   const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
   const { isConnected } = usePlugStore();
+  const [openDropdown, setOpenDropdown] = useState(false);
   const isLightTheme = theme === 'lightTheme';
   const currTheme = theme === 'darkTheme' ? 'dark' : 'light';
 
   return (
-    <HoverCard.Root openDelay={300}>
-      <HoverCard.Trigger>
+    <Dropdown.Root
+      onOpenChange={() => {
+        setOpenDropdown(!openDropdown);
+      }}
+      open={openDropdown}
+    >
+      <DropdownTrigger asChild>
         <PlugButtonContainer
           onClick={handleClick}
+          onMouseEnter={() => {
+            setOpenDropdown(true);
+          }}
+          onMouseLeave={() => {
+            setTimeout(() => setOpenDropdown(false), 1500);
+          }}
           className="plug-button"
         >
           <PlugButtonText>
@@ -63,7 +76,7 @@ export const PlugButton = ({
             )}
           </PlugButtonText>
         </PlugButtonContainer>
-      </HoverCard.Trigger>
+      </DropdownTrigger>
       {isConnected && (
         <ConnectToPlugButton align="end" background={currTheme}>
           <Flex>
@@ -79,6 +92,6 @@ export const PlugButton = ({
           </Flex>
         </ConnectToPlugButton>
       )}
-    </HoverCard.Root>
+    </Dropdown.Root>
   );
 };

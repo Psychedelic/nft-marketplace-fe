@@ -91,7 +91,9 @@ export const NftCard = React.memo(
                 {forSaleAndOffer
                   ? `${t('translation:nftCard.offerFor')} `
                   : `${t('translation:nftCard.last')} `}
-                <b>{data?.lastOffer}</b>
+                {data?.lastOffer ? (
+                  <b>{data?.lastOffer}</b>
+                ) : <b>-</b>}
               </LastOffer>
             )}
           </OuterFlex>
