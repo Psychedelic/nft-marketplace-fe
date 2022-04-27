@@ -7,7 +7,6 @@ import { directBuy, getAllListings } from '../../store/features/marketplace';
 import { useAppDispatch } from '../../store';
 import { DIRECT_BUY_STATUS_CODES } from '../../constants/direct-buy';
 import {
-  BuyNowModalTrigger,
   ModalOverlay,
   ModalContent,
   Container,
@@ -16,13 +15,21 @@ import {
   ModalDescription,
   ModalButtonsList,
   ModalButtonWrapper,
+  ActionText,
+  BuyNowModalTrigger,
 } from './styles';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
  * --------------------------------------------------------------------------*/
 
-export const BuyNowModal = () => {
+export type BuyNowModalProps = {
+  onClose?: () => void;
+  actionText?: string;
+  actionTextId?: number;
+}
+
+export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -31,16 +38,27 @@ export const BuyNowModal = () => {
   // BuyNow modal steps: pending/confirmed
   const [modalStep, setModalStep] = useState<string>('pending');
 
+  const tokenId: bigint | undefined = (() => {
+    const tid = id ?? actionTextId;
+
+    if (!tid) return;
+
+    // eslint-disable-next-line consistent-return
+    return BigInt(tid);
+  })();
+
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
   };
 
   const handleModalClose = () => {
     setModalOpened(false);
+    // eslint-disable-next-line
+    onClose && onClose();
   };
 
   const handleDirectBuy = () => {
-    if (!id) {
+    if (!tokenId) {
       console.warn('Oops! Missing id param');
 
       return;
@@ -50,7 +68,7 @@ export const BuyNowModal = () => {
 
     dispatch(
       directBuy({
-        tokenId: BigInt(id),
+        tokenId,
         onSuccess: () => {
           // TODO: the get all listings is used to get data from the canister
           // as the current kyasshu version does not provide the price data
@@ -75,9 +93,15 @@ export const BuyNowModal = () => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <BuyNowModalTrigger>
-          <ActionButton type="primary" text={t('translation:buttons.action.buyNow')} handleClick={handleDirectBuy} />
-        </BuyNowModalTrigger>
+        {actionText ? (
+          <ActionText onClick={handleDirectBuy}>
+            {actionText}
+          </ActionText>
+        ) : (
+          <BuyNowModalTrigger>
+            <ActionButton type="primary" text={t('translation:buttons.action.buyNow')} handleClick={handleDirectBuy} />
+          </BuyNowModalTrigger>
+        )}
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------
