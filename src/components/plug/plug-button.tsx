@@ -49,7 +49,7 @@ export const PlugButton = ({
           onClick={handleClick}
           className="plug-button"
         >
-          <PlugButtonText>
+          <PlugButtonText className="plug-button-text">
             {isConnected && (
               <PlugIcon
                 src={isLightTheme ? plugIcon : plugIconDark}

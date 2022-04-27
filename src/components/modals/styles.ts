@@ -310,3 +310,20 @@ export const ActionText = styled('p', {
   color: '#2253FF',
   cursor: 'pointer',
 });
+
+export const PlugButtonContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+
+  '.plug-button': {
+    marginLeft: '0px',
+    width: '100%',
+    fontSize: '18px',
+    fontWeight: '700',
+  },
+
+  '.plug-button-text': {
+    width: '100%',
+    height: '50px',
+  },
+});
