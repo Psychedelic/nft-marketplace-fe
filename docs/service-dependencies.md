@@ -1,6 +1,6 @@
 # 👾 Service dependencies
 
-The following is a brief breakdown of the utility methods to help interact with the required Services for the Marketplace Service Canister. These are created for your own convinience and while it offers a good start, it does not attempt to replace the knowledge you can get by checking the original Service documentation (e.g. if you'd like to learn more about Cap, then you're advised to check the original repository [here](https://github.com/Psychedelic/cap) and so on for the remaining Services).
+The following is a brief breakdown of the utility methods to help interact with the required Services for the Marketplace Service Canister. These are created for your own convenience and while it offers a good start, it does not attempt to replace the knowledge you can get by checking the original Service documentation (e.g. if you'd like to learn more about Cap, then you're advised to check the original repository [here](https://github.com/Psychedelic/cap) and so on for the remaining Services).
 
 Before we start, you should know that the Marketplace interacts with [Cap](https://github.com/Psychedelic/cap), [Dab](https://github.com/Psychedelic/dab), [Crowns](https://github.com/Psychedelic/crowns) (a [DIP-721](https://github.com/Psychedelic/DIP721) token) and [wICP](https://github.com/Psychedelic/wicp) (a [DIP-20](https://github.com/Psychedelic/DIP20) token). If you haven't learn about these, learn more about them by clicking in the available links!
 
@@ -44,7 +44,7 @@ Start the Services [Cap](https://github.com/Psychedelic/cap), [Dab](https://gith
 yarn services:start
 ```
 
-👆 The command is a proxy for the process which is part of [Marketplace Service](https://github.com/Psychedelic/nft-marketplace). As such, you can use the [Marketplace Service](https://github.com/Psychedelic/nft-marketplace) on your own (e.g. `git clone` it separately or `cd nft-marketplace`), if that's your preference. Otherwise, use the command `Services start` to initialise the proxied services from the current [NFT Marketplace frontend](https://github.com/Psychedelic/nft-marketplace-fe).
+👆 The command is a proxy for the process which is part of [Marketplace Service](https://github.com/Psychedelic/nft-marketplace). As such, you can use the [Marketplace Service](https://github.com/Psychedelic/nft-marketplace) on your own (e.g. `git clone` it separately or `cd nft-marketplace`), if that's your preference. Otherwise, use the command `Services start` to initialize the proxied services from the current [NFT Marketplace frontend](https://github.com/Psychedelic/nft-marketplace-fe).
 
 In the cases where you want to reset the `local replica`
 
@@ -62,7 +62,7 @@ The [Crowns](https://github.com/Psychedelic/crowns) Canister is a [DIP-721](http
 
 Since the off-chain is mirroring the data on-chain which it depends you'll have to make sure that when generating the mock data locally, the data is mirrored between the Crowns Canister and the Kyasshu Marketplace API, e.g. if you want to generate 40 Tokens starting from Token index 1 then the token range should exist in both Crowns Canister and Kyasshu. This is because you want the performance of the off-chain solution but ultimately, interact with the on-chain Crowns Canister.
 
-Here's an example of how to generate 9 crown nfts in the on-chain Crowns Canister of your local replica:
+Here's an example of how to generate 25 crown nfts in the on-chain Crowns Canister of your local replica:
 
 ```sh
 yarn mock:generate-tokens 25
@@ -76,7 +76,7 @@ Here's an example of how to generate 25 more crown nfts
 yarn mock:generate-tokens 25 25
 ```
 
-Similarily, you'd cache 25 crown tokens in the off-chain Kyasshu Marketplace API (only once the token generation has completed!)
+Similarly, you'd cache 25 crown tokens in the off-chain Kyasshu Marketplace API (only once the token generation has completed!)
 
 ```sh
 yarn kyasshu:cache 25
@@ -84,7 +84,7 @@ yarn kyasshu:cache 25
 
 💡 Kyasshu caches 50 at the time, so if we attempt to cache 9 items it'd get 50 minimal.
 
-These scripts are offered for your own convinience check the source repositories for more.
+These scripts are offered for your own convenience check the source repositories for more.
 
 In some cases you might want to reset the redis database:
 
@@ -96,7 +96,7 @@ yarn kyasshu:redis-flush-all
 
 ### Running Kyasshu as off-chain API
 
-We'll need the Kyasshu repository, as such you'll have to run the Service initialisation, as explained earlier. So, make sure that the `kyasshu` directory is populated.
+We'll need the Kyasshu repository, as such you'll have to run the Service initialization, as explained earlier. So, make sure that the `kyasshu` directory is populated.
 
 Kyasshu is a [Serverless framework](https://www.serverless.com/) for developing [AWS Lambda](https://aws.amazon.com/lambda/) based services.
 
@@ -104,19 +104,25 @@ To run the stack locally, we'll need to ensure some dependencies are installed i
 
 One of the AWS features we'll use is [DynamoDb](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.html), which require us to [install Java > 6](https://java.com/en/download/). Visit the [download page](https://java.com/en/download/) and install it, please!
 
-Assuming that you have nodejs and npm installed, we'll install the pacakge [serverless](https://www.serverless.com/framework/docs/getting-started) which we depend on, as that's the framework in which [Kyasshu](https://github.com/Psychedelic/kyasshu) was developed.
+Assuming that you have nodejs and npm installed, we'll install the package [serverless](https://www.serverless.com/framework/docs/getting-started) which we depend on, as that's the framework in which [Kyasshu](https://github.com/Psychedelic/kyasshu) was developed.
 
 ```sh
 npm install -g serverless
 ```
 
-Once completed, we'll add the dynamodb addon to serverless. Start by opening the local project kyasshu repository:
+Once completed, we'll add the dynamodb addon to serverless. Start by opening the local project Kyasshu repository:
 
 ```sh
 cd kyasshu
 ```
 
-Then followed by the installation command of serverless
+Next we install the Kyasshu dependencies:
+
+```sh
+yarn install
+```
+
+Then followed by the installation command of serverless:
 
 ```sh
 sls dynamodb install
@@ -128,13 +134,15 @@ We'll include Redis, used as a first layer of cache for clients. If you are on m
 brew install redis
 ```
 
+Or if you are on Ubuntu:
+
+```sh
+sudo apt-get update && sudo apt-get install redis
+```
+
 Otherwise, if you much prefer to handle the installation process as recommended in the original [documentation](https://redis.io/topics/quickstart), follow the steps [here](https://redis.io/topics/quickstart).
 
 At this point we should have all the global and system dependencies that are required. Let's complete by installing the packages the project requires.
-
-```sh
-yarn install
-```
 
 From then on, follow the [Start the Kyasshu service](#start-the-kyasshu-service)
 
@@ -212,8 +220,9 @@ Let's say that there are new features in the Service repositories e.g. the `Cap`
 
 You'd start by looking into the Marketplace Canister Candid IDL (the interface description language file). Open the [Candid marketplace.did](https://github.com/Psychedelic/nft-marketplace/blob/develop/marketplace/marketplace.did) and read the `Service` field, which provides the endpoints you'll be interested in!
 
-### Why I'm getting unauthorised when I try to X or Y?
+### Why I'm getting unauthorized when I try to X or Y?
 
 The Services you're interacting with have restrictions, for example, the marketplace can't simply move a client balance; or transfer tokens to users without explicit approvals and verification. We won't go through the specifications for the approval/allowances in the business logic, as that's publicly available in the [nft-marketplace](https://github.com/Psychedelic/nft-marketplace) repository source-code, but you need to understand the basics.
 
 A practical example of how allowances are managed (approvals, ownership, controllers) is to check the [healtcheck](https://github.com/Psychedelic/nft-marketplace/blob/develop/healthcheck.sh), that while does not provide an example of all possible use-cases, gives you an idea of how it sets permissions.
+
