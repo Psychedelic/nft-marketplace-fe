@@ -11,8 +11,9 @@ import wicpIdlFactory from '../../../declarations/wicp.did';
 import config from '../../../config/env';
 import { notificationActions } from '../errors';
 import { RootState } from '../../store';
-import { crownsSlice } from '../crowns/crowns-slice';
-import { wicpSlice } from '../wicp/wicp-slice';
+import { OwnerTokenIdentifiers } from '../../features/crowns/crowns-slice';
+// import { crownsSlice } from '../crowns/crowns-slice';
+// import { wicpSlice } from '../wicp/wicp-slice';
 import { GetAllListingsDataParsedObj, parseAllListingResponseAsObj, parseGetTokenOffersresponse } from '../../../utils/parser';
 
 interface MakeListingParams extends MakeListing {
@@ -69,7 +70,7 @@ interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
 }
 
 type GetUserReceviedOffer = {
-  userTokenIds?: number[]
+  ownerTokenIdentifiers?: OwnerTokenIdentifiers,
 };
 
 type RecentyListedForSale = MakeListing[];
@@ -472,13 +473,13 @@ export const getTokenOffers = createAsyncThunk<
     slice: marketplaceSlice,
   });
 
-  const { userTokenIds, onSuccess, onFailure } = params;
+  const { ownerTokenIdentifiers, onSuccess, onFailure } = params;
 
   try {
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const result = await actorInstance.getTokenOffers(
       nonFungibleContractAddress,
-      userTokenIds,
+      ownerTokenIdentifiers,
       );
 
     const parsedTokenOffers = parseGetTokenOffersresponse(result);

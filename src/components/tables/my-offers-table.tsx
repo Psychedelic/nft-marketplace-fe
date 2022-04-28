@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore, useAppDispatch, usePlugStore } from '../../store';
+import { useSelector } from 'react-redux';
+import { useThemeStore, useAppDispatch, usePlugStore, RootState } from '../../store';
 import {
   ItemDetailsCell,
   PriceDetailsCell,
@@ -21,6 +22,7 @@ import {
   OFFERS_TABLE_HEADERS,
 } from '../../constants/my-offers';
 import { getTokenOffers } from '../../store/features/marketplace';
+import { getOwnerTokenIdentifiers } from '../../store/features/crowns';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -53,6 +55,9 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const [loadingTableData, setLoadingTableData] = useState<boolean>(true);
   // TODO: update loadedOffers state array record type
   const [loadedOffersReceivedData, setLoadedOffersReceivedData] = useState<any>([]);
+  const ownerTokenIdentifiers = useSelector(
+    (state: RootState) => state.crowns.ownerTokenIdentifiers,
+  );
 
   const { id: plugPrincipal } = useParams();
 
@@ -96,14 +101,25 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const nextPageNo = 0;
 
   useEffect(() => {
-    if (!isConnected) return;
+    if (!isConnected || !plugPrincipal) return;
+
+    dispatch(
+      getOwnerTokenIdentifiers({
+        plugPrincipal,
+      }),
+    );
+  }, [dispatch, offersType, isConnected]);
+
+  useEffect(() => {
+    if (!ownerTokenIdentifiers) return;
+
     // TODO: Add logic to fetch table data
     // TODO: Update loadedOffersReceivedData when there is
     // a change in offersType
     dispatch(
       getTokenOffers({
         // TODO: handle offers data gracefully
-        userTokenIds: [0, 1], // TODO: get the user token ids
+        ownerTokenIdentifiers,
         onSuccess: (offers) => {
           // TODO: handle success messages
           setLoadingTableData(false);
@@ -114,7 +130,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         },
       }),
     );
-  }, [dispatch, offersType, isConnected]);
+  }, [ownerTokenIdentifiers, dispatch]);
 
   const loadMoreData = () => {
     if (loadingTableData || !hasMoreData) return;

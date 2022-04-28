@@ -17,7 +17,7 @@ import {
   Video,
 } from './styles';
 
-import { useNFTSStore, useAppDispatch } from '../../store';
+import { useNFTSStore, useAppDispatch, RootState } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 
 import { useNFTDetailsFetcher } from '../../integrations/kyasshu';
@@ -34,7 +34,7 @@ export const NftDetails = () => {
   const dispatch = useAppDispatch();
   const [currentListing, setCurrentListing] = useState<CurrentListing>();
   const allListings = useSelector(
-    (state: any) => state.marketplace.allListings,
+    (state: RootState) => state.marketplace.allListings,
   );
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
