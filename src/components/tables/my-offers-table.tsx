@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore, useAppDispatch } from '../../store';
+import { useThemeStore, useAppDispatch, usePlugStore } from '../../store';
 import {
   ItemDetailsCell,
   PriceDetailsCell,
@@ -46,6 +46,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
+  const { isConnected } = usePlugStore();
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
@@ -98,6 +99,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const nextPageNo = 0;
 
   useEffect(() => {
+    if (!isConnected) return;
     // TODO: Add logic to fetch table data
     // TODO: Update loadedOffersReceivedData when there is
     // a change in offersType
@@ -114,7 +116,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         },
       }),
     );
-  }, [dispatch, offersType]);
+  }, [dispatch, offersType, isConnected]);
 
   const loadMoreData = () => {
     if (loadingTableData || !hasMoreData) return;
