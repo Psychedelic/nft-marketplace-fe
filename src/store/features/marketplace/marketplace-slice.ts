@@ -481,23 +481,13 @@ export const getTokenOffers = createAsyncThunk<
       userTokenIds,
       );
 
-    // const parsedTokenOffers = parseGetTokenOffersresponse(result);
+    const parsedTokenOffers = parseGetTokenOffersresponse(result);
 
-    console.log('[debug] marketplace-slice.ts: marketplace/getTokenOffers: result', result);
-
-    if (!('Ok' in result)) {
-      if (typeof onFailure !== 'function') return;
-
-      onFailure();
-
-      console.error(result);
-
-      throw Error('Oops! Failed to get user received offers');
-    }
+    if (!Array.isArray(result) || !result.length) return [];
 
     if (typeof onSuccess !== 'function') return;
 
-    // onSuccess(parsedTokenOffers);
+    onSuccess(parsedTokenOffers);
   } catch (err) {
     thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;

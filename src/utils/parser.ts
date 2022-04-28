@@ -1,5 +1,5 @@
 import { Principal } from '@dfinity/principal';
-import { Listing } from '../declarations/marketplace';
+import { Listing, Offer } from '../declarations/marketplace';
 
 type GetAllListingsDataResponse = Array<[[Principal, bigint], Listing]>;
 
@@ -30,7 +30,7 @@ export const parseAllListingResponse = (data: GetAllListingsDataResponse) => {
 };
 
 export const parseAllListingResponseAsObj = (data: GetAllListingsDataResponse) => {
-  console.log(data, 'listing data')
+  console.log(data, 'listing data');
   const parsed: GetAllListingsDataParsedObj = data.reduce((acc, curr) => {
     const tokenId = String(curr[0][1]);
     const listing = curr[1];
@@ -47,28 +47,58 @@ export const parseAllListingResponseAsObj = (data: GetAllListingsDataResponse) =
   return parsed;
 };
 
-export const parseGetTokenOffersresponse = (data: any) => {
-  // TODO: Update parser details
-  const parsed: any = data.reduce((acc, curr) => {
-    const offers = curr[1].map((offer: any) => {
-      const data = {
+interface OffersTableItem {
+  item: {
+    name: string,
+    tokenId: bigint,
+  },
+  price: bigint,
+  floorDifference: string,
+  from: string,
+  time: bigint,
+}
+
+type TokenOffers = Array<[bigint, Array<Offer>]>;
+
+type ParsedTokenOffers = OffersTableItem[];
+
+export const parseGetTokenOffersresponse = (data: TokenOffers) => {
+  const parsed = data.reduce((accParent, currParent) => {
+    const tokenOffers = currParent[1] as Offer[];
+    const parsedTokenOffers = tokenOffers.reduce((accChild, currChild) => {
+      const {
+        price,
+        token_id: tokenId,
+        payment_address: paymentAddress,
+        created,
+      } = currChild;
+
+      const offerTableItem: OffersTableItem = {
         item: {
-          name: `CAP Crowns #${offer.token_id}`,
-          token_id: Number(offer.token_id).toString(),
+          // TODO: formatter for name, as number should probably have leading 0's
+          // e.g. Cap Crowns #00001 ?!
+          name: `CAP Crowns #${tokenId}`,
+          tokenId,
         },
-        price: Number(offer.price).toString(),
-        floorDifference: '-',
-        from: Principal.fromUint8Array(offer.payment_address).toText(),
-        time: '-'
+        price,
+        // TODO: use the floor difference endpoint
+        floorDifference: 'n/a',
+        from: paymentAddress.toString(),
+        // TODO: use DayJs and have this computed to human friendly
+        time: created,
       };
+  
+      return [
+        ...accChild,
+        offerTableItem,
+      ];
+    }, [] as ParsedTokenOffers);
 
-      return data;
-    });
-
-    acc = offers;
-
-    return acc;
-  }, [] as any);
+    return [
+      ...accParent,
+      ...parsedTokenOffers,
+    ];
+  }, [] as ParsedTokenOffers);
 
   return parsed;
 };
