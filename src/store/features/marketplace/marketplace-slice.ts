@@ -69,7 +69,7 @@ interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
 }
 
 type GetUserReceviedOffer = {
-  plugPrincipalId: string;
+  plugPrincipalId?: string;
 };
 
 type RecentyListedForSale = MakeListing[];

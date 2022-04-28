@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../../store';
+import { useThemeStore, useAppDispatch } from '../../store';
 import {
   ItemDetailsCell,
   PriceDetailsCell,
@@ -20,6 +21,7 @@ import {
   OFFER_TYPE_STATUS_CODES,
   OFFERS_TABLE_HEADERS,
 } from '../../constants/my-offers';
+import { getUserReceivedOffers } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -43,10 +45,13 @@ export interface rowProps {
 
 export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
+
+  const { id: plugPrincipal } = useParams();
 
   useEffect(() => {
     // hide offersMadeAction if offersType = OffersReceived
@@ -96,7 +101,18 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     // TODO: Add logic to fetch table data
     // TODO: Update loadedOffersReceivedData when there is
     // a change in offersType
-  }, [offersType]);
+    dispatch(
+      getUserReceivedOffers({
+        plugPrincipalId: plugPrincipal,
+        onSuccess: () => {
+          // TODO: handle success messages
+        },
+        onFailure: () => {
+          // TODO: handle failure messages
+        },
+      }),
+    );
+  }, [dispatch, offersType]);
 
   const loadMoreData = () => {
     if (loadingTableData || !hasMoreData) return;
