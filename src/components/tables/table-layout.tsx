@@ -11,6 +11,7 @@ export interface TableLayoutProps {
   data: Array<object>;
   tableType: any;
   columnsToHide?: Array<string>;
+  loading: boolean;
 }
 
 export const TableLayout = ({
@@ -18,6 +19,7 @@ export const TableLayout = ({
   data,
   tableType,
   columnsToHide = [],
+  loading,
 }: TableLayoutProps) => {
   const {
     getTableProps,
@@ -33,11 +35,14 @@ export const TableLayout = ({
     },
   });
 
+  // TODO: We may need to remove loadingTableData fetching
+  // from store and replace with props, since this a common layout
+  // across all the tables
   const { loadingTableData } = useTableStore();
 
   return (
     <>
-      {loadingTableData ? (
+      {loadingTableData || loading ? (
         <>
           <TableSkeletons />
           <TableSkeletons />
