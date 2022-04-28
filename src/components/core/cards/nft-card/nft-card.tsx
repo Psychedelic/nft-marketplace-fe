@@ -21,11 +21,11 @@ import {
   MediaWrapper,
 } from './styles';
 import wicpLogo from '../../../../assets/wicpIcon.png';
-import { BuyNowModal, MakeOfferModal, ConnectToPlugModal } from '../../../modals';
+import { BuyNowModal, MakeOfferModal, ConnectToPlugModal, SellModal } from '../../../modals';
 import { styled } from '../../../../stitches.config';
 import { usePlugStore } from '../../../../store';
 
-const BuyerOptions = styled(OuterFlex, {
+const NFTCardOptions = styled(OuterFlex, {
   minHeight: '28px',
 });
 
@@ -59,9 +59,25 @@ export type DisConnectedProps = {
 const OnConnected = ({ owned, isForSale, tokenId, setModalStatus }: ConnectedProps) => {
   const { t } = useTranslation();
   const showBuyerOptions = !owned;
+  const showSellOptions = owned;
 
   return (
     <>
+      {
+        (showSellOptions && (
+          <div onClick={() => setModalStatus(true)} role="dialog">
+            {
+              (!isForSale && (
+                <SellModal
+                  onClose={() => setModalStatus(false)}
+                  actionText={`${t('translation:nftCard.sell')}`}
+                  nftTokenId={tokenId}
+                />
+              )) || <span hidden-seller-options />
+            }
+          </div>
+        ))
+      }
       {
         (showBuyerOptions && (
           <div onClick={() => setModalStatus(true)} role="dialog">
@@ -165,7 +181,7 @@ export const NftCard = React.memo(
             </PriceBar>
           </CardWrapper>
         </RouterLink>
-        <BuyerOptions>
+        <NFTCardOptions>
           {(isConnected && (
             <OnConnected
               owned={owned}
@@ -191,7 +207,7 @@ export const NftCard = React.memo(
               )
             }
           </LastOffer>
-        </BuyerOptions>
+        </NFTCardOptions>
       </CardContainer>
     );
   },

@@ -209,7 +209,8 @@
     "forSale": "Buy Now",
     "forOffer": "Make Offer",
     "offerFor": "Offer for",
-    "last": "Last"
+    "last": "Last",
+    "sell": "Sell"
   },
   "tabs": {
     "items": "Items",
