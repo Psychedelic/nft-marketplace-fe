@@ -31,13 +31,16 @@ import { getOwnerTokenIdentifiers } from '../../store/features/crowns';
 export type MyOffersTableProps = {
   offersType?: string; // offers received / offers made
 };
+
+// TODO: See parser.ts and refactor to use common type
+// the current is all string which is not correct
 export interface rowProps {
   item: {
     name: string;
     logo: string;
     token_id: string;
   };
-  price: string;
+  price: bigint;
   floorDifference: string;
   from: string;
   time: string;
@@ -155,8 +158,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         Header: t('translation:tables.titles.price'),
         accessor: ({ price }: rowProps) => (
           <PriceDetailsCell
-            wicp="undefined"
-            price={price}
+            wicp={price.toString()}
+            // price={}
             tableType=""
           />
         ),
