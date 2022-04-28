@@ -69,7 +69,7 @@ interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
 }
 
 type GetUserReceviedOffer = {
-  id: string;
+  plugPrincipalId: string;
 };
 
 type RecentyListedForSale = MakeListing[];
@@ -472,13 +472,13 @@ export const getUserReceivedOffers = createAsyncThunk<
     slice: marketplaceSlice,
   });
 
-  const { id, onSuccess, onFailure } = params;
+  const { plugPrincipalId, onSuccess, onFailure } = params;
 
   try {
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
-    const userOwnedTokenId = BigInt(id);
+    const userPrincipalAddress = Principal.fromText(plugPrincipalId);
 
-    const result = await actorInstance.getTokenOffers(nonFungibleContractAddress, userOwnedTokenId);
+    const result = await actorInstance.getTokenOffers(nonFungibleContractAddress, userPrincipalAddress);
 
     if (!('Ok' in result)) {
       if (typeof onFailure !== 'function') return;
