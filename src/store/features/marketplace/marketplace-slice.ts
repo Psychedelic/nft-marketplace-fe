@@ -455,8 +455,7 @@ export const acceptOffer = createAsyncThunk<
   }
 });
 
-
-export const getUserReceivedOffers = createAsyncThunk<
+export const getTokenOffers = createAsyncThunk<
   // Return type of the payload creator
   GetUserReceviedOffer | undefined,
   // First argument to the payload creator
@@ -475,6 +474,8 @@ export const getUserReceivedOffers = createAsyncThunk<
   const { plugPrincipalId, onSuccess, onFailure } = params;
 
   try {
+    if (!plugPrincipalId) throw Error('Oops! Missing Plug principal');
+
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const userPrincipalAddress = Principal.fromText(plugPrincipalId);
 

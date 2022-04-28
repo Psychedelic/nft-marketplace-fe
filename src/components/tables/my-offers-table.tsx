@@ -20,7 +20,7 @@ import {
   OFFER_TYPE_STATUS_CODES,
   OFFERS_TABLE_HEADERS,
 } from '../../constants/my-offers';
-import { getUserReceivedOffers } from '../../store/features/marketplace';
+import { getTokenOffers } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -59,12 +59,11 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   useEffect(() => {
     // hide offersMadeAction if offersType = OffersReceived
     if (
-      offersType === OFFER_TYPE_STATUS_CODES.OffersReceived &&
-      !columnsToHide.includes(OFFERS_TABLE_HEADERS.OffersMadeAction)
+      offersType === OFFER_TYPE_STATUS_CODES.OffersReceived
+      && !columnsToHide.includes(OFFERS_TABLE_HEADERS.OffersMadeAction)
     ) {
       const newColumns = columnsToHide.filter(
-        (header) =>
-          header !== OFFERS_TABLE_HEADERS.OffersReceivedAction,
+        (header) => header !== OFFERS_TABLE_HEADERS.OffersReceivedAction,
       );
       setColumnsToHide([
         ...newColumns,
@@ -76,8 +75,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
     // hide offersReceivedAction if offersType = OffersMade
     if (
-      offersType === OFFER_TYPE_STATUS_CODES.OffersMade &&
-      !columnsToHide.includes(
+      offersType === OFFER_TYPE_STATUS_CODES.OffersMade
+      && !columnsToHide.includes(
         OFFERS_TABLE_HEADERS.OffersReceivedAction,
       )
     ) {
@@ -88,8 +87,6 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         ...newColumns,
         OFFERS_TABLE_HEADERS.OffersReceivedAction,
       ]);
-
-      return;
     }
   }, [offersType]);
 
@@ -104,7 +101,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     // TODO: Update loadedOffersReceivedData when there is
     // a change in offersType
     dispatch(
-      getUserReceivedOffers({
+      getTokenOffers({
         plugPrincipalId: plugPrincipal,
         onSuccess: (offers: any) => {
           // TODO: handle offers data gracefully
