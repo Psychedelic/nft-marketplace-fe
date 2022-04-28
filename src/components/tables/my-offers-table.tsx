@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../../store';
+import { useSelector } from 'react-redux';
+import { useThemeStore, useAppDispatch, usePlugStore, RootState } from '../../store';
 import {
   ItemDetailsCell,
   PriceDetailsCell,
@@ -9,7 +11,6 @@ import {
 } from '../core';
 import { AcceptOfferModal, CancelOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
-import { mockTableData } from './mock-data';
 import {
   Container,
   InfiniteScrollWrapper,
@@ -20,6 +21,8 @@ import {
   OFFER_TYPE_STATUS_CODES,
   OFFERS_TABLE_HEADERS,
 } from '../../constants/my-offers';
+import { getTokenOffers } from '../../store/features/marketplace';
+import { getOwnerTokenIdentifiers } from '../../store/features/crowns';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -43,20 +46,29 @@ export interface rowProps {
 
 export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
+  const { isConnected } = usePlugStore();
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
+  const [loadingTableData, setLoadingTableData] = useState<boolean>(true);
+  // TODO: update loadedOffers state array record type
+  const [loadedOffersReceivedData, setLoadedOffersReceivedData] = useState<any>([]);
+  const ownerTokenIdentifiers = useSelector(
+    (state: RootState) => state.crowns.ownerTokenIdentifiers,
+  );
+
+  const { id: plugPrincipal } = useParams();
 
   useEffect(() => {
     // hide offersMadeAction if offersType = OffersReceived
     if (
-      offersType === OFFER_TYPE_STATUS_CODES.OffersReceived &&
-      !columnsToHide.includes(OFFERS_TABLE_HEADERS.OffersMadeAction)
+      offersType === OFFER_TYPE_STATUS_CODES.OffersReceived
+      && !columnsToHide.includes(OFFERS_TABLE_HEADERS.OffersMadeAction)
     ) {
       const newColumns = columnsToHide.filter(
-        (header) =>
-          header !== OFFERS_TABLE_HEADERS.OffersReceivedAction,
+        (header) => header !== OFFERS_TABLE_HEADERS.OffersReceivedAction,
       );
       setColumnsToHide([
         ...newColumns,
@@ -68,8 +80,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
     // hide offersReceivedAction if offersType = OffersMade
     if (
-      offersType === OFFER_TYPE_STATUS_CODES.OffersMade &&
-      !columnsToHide.includes(
+      offersType === OFFER_TYPE_STATUS_CODES.OffersMade
+      && !columnsToHide.includes(
         OFFERS_TABLE_HEADERS.OffersReceivedAction,
       )
     ) {
@@ -80,23 +92,45 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         ...newColumns,
         OFFERS_TABLE_HEADERS.OffersReceivedAction,
       ]);
-
-      return;
     }
   }, [offersType]);
 
   // TODO: Update mockedetails configured below
   // with original details while doing integration
-  const loadedOffersReceivedData = mockTableData;
   const hasMoreData = false;
-  const loadingTableData = false;
   const nextPageNo = 0;
 
   useEffect(() => {
+    if (!isConnected || !plugPrincipal) return;
+
+    dispatch(
+      getOwnerTokenIdentifiers({
+        plugPrincipal,
+      }),
+    );
+  }, [dispatch, offersType, isConnected]);
+
+  useEffect(() => {
+    if (!ownerTokenIdentifiers) return;
+
     // TODO: Add logic to fetch table data
     // TODO: Update loadedOffersReceivedData when there is
     // a change in offersType
-  }, [offersType]);
+    dispatch(
+      getTokenOffers({
+        // TODO: handle offers data gracefully
+        ownerTokenIdentifiers,
+        onSuccess: (offers) => {
+          // TODO: handle success messages
+          setLoadingTableData(false);
+          setLoadedOffersReceivedData(offers);
+        },
+        onFailure: () => {
+          // TODO: handle failure messages
+        },
+      }),
+    );
+  }, [ownerTokenIdentifiers, dispatch]);
 
   const loadMoreData = () => {
     if (loadingTableData || !hasMoreData) return;
@@ -153,12 +187,13 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         id: OFFERS_TABLE_HEADERS.OffersReceivedAction,
         Header: t('translation:tables.titles.action'),
         // TODO: Update formatted price and offerFrom with dynamic fields
-        accessor: ({ price, from }: rowProps) => (
+        accessor: ({ price, from, item }: rowProps) => (
           <ButtonWrapper>
             <AcceptOfferModal
               price={price}
               formattedPrice={price}
               offerFrom={from}
+              nftTokenId={item.token_id}
             />
           </ButtonWrapper>
         ),
@@ -194,6 +229,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
           data={loadedOffersReceivedData}
           tableType="activity"
           columnsToHide={columnsToHide}
+          loading={loadingTableData}
         />
       </Container>
     </InfiniteScrollWrapper>

@@ -47,6 +47,7 @@ export interface AcceptOfferProps {
   price: string;
   formattedPrice: string;
   offerFrom: string;
+  nftTokenId?: string;
 }
 
 /* --------------------------------------------------------------------------
@@ -57,6 +58,7 @@ export const AcceptOfferModal = ({
   price,
   formattedPrice,
   offerFrom,
+  nftTokenId,
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -69,9 +71,18 @@ export const AcceptOfferModal = ({
     LISTING_STATUS_CODES.OfferInfo,
   );
 
+  const tokenId: string | undefined = (() => {
+    const tid = nftTokenId ?? id;
+
+    if (!tid) return;
+
+    // eslint-disable-next-line consistent-return
+    return tid;
+  })();
+
   const nftDetails: NFTMetadata | undefined = useMemo(
-    () => loadedNFTS.find((nft) => nft.id === id),
-    [loadedNFTS, id],
+    () => loadedNFTS.find((nft) => nft.id === tokenId),
+    [loadedNFTS, tokenId],
   );
 
   const handleModalOpen = (modalOpenedStatus: boolean) => {
@@ -80,13 +91,13 @@ export const AcceptOfferModal = ({
 
     const isAccepted = modalStep === LISTING_STATUS_CODES.Accepted;
 
-    if (modalOpenedStatus || !id || !isAccepted) return;
+    if (modalOpenedStatus || !tokenId || !isAccepted) return;
 
     // Update NFT owner details in store
     // on successful offer acceptance and closing the modal
     dispatch(
       nftsActions.acceptNFTOffer({
-        id,
+        id: tokenId,
         buyerId: offerFrom,
       }),
     );
@@ -97,13 +108,13 @@ export const AcceptOfferModal = ({
   };
 
   const handleAcceptOffer = async () => {
-    if (!id) return;
+    if (!tokenId) return;
 
     setModalStep(LISTING_STATUS_CODES.Pending);
 
     dispatch(
       acceptOffer({
-        id,
+        id: tokenId,
         buyerPrincipalId: offerFrom,
         onSuccess: () => {
           setModalStep(LISTING_STATUS_CODES.Accepted);
@@ -188,8 +199,8 @@ export const AcceptOfferModal = ({
             <SaleContentWrapper>
               <ItemDetailsWrapper>
                 <ItemDetails>
-                  <ItemLogo src={nftDetails?.preview} alt="crowns" />
-                  <ItemName>{`CAP Crowns #${nftDetails?.id}`}</ItemName>
+                  {nftDetails?.preview && <ItemLogo src={nftDetails?.preview} alt="crowns" />}
+                  <ItemName>{`CAP Crowns #${nftTokenId ?? nftDetails?.id}`}</ItemName>
                 </ItemDetails>
                 <PriceDetails>
                   <WICPContainer size="small">
