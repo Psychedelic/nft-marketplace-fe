@@ -21,11 +21,11 @@ import {
   MediaWrapper,
 } from './styles';
 import wicpLogo from '../../../../assets/wicpIcon.png';
-import { BuyNowModal, MakeOfferModal, ConnectToPlugModal } from '../../../modals';
+import { BuyNowModal, MakeOfferModal, ConnectToPlugModal, SellModal } from '../../../modals';
 import { styled } from '../../../../stitches.config';
 import { usePlugStore } from '../../../../store';
 
-const BuyerOptions = styled(OuterFlex, {
+const NFTCardOptions = styled(OuterFlex, {
   minHeight: '28px',
 });
 
@@ -45,7 +45,7 @@ export type NftCardProps = {
 };
 
 export type ConnectedProps = {
-  showBuyerOptions?: boolean;
+  owned?: boolean;
   isForSale?: boolean;
   tokenId: string;
   setModalStatus: (status: boolean) => void;
@@ -56,10 +56,28 @@ export type DisConnectedProps = {
   setModalStatus: (status: boolean) => void;
 };
 
-const OnConnected = ({ showBuyerOptions, isForSale, tokenId, setModalStatus }: ConnectedProps) => {
+const OnConnected = ({ owned, isForSale, tokenId, setModalStatus }: ConnectedProps) => {
   const { t } = useTranslation();
+  const showBuyerOptions = !owned;
+  const showSellOptions = owned;
+
   return (
     <>
+      {
+        (showSellOptions && (
+          <div onClick={() => setModalStatus(true)} role="dialog">
+            {
+              (!isForSale && (
+                <SellModal
+                  onClose={() => setModalStatus(false)}
+                  actionText={`${t('translation:nftCard.sell')}`}
+                  nftTokenId={tokenId}
+                />
+              )) || <span hidden-seller-options />
+            }
+          </div>
+        ))
+      }
       {
         (showBuyerOptions && (
           <div onClick={() => setModalStatus(true)} role="dialog">
@@ -109,7 +127,6 @@ export const NftCard = React.memo(
     const { t } = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
     const { isConnected } = usePlugStore();
-    const showBuyerOptions = !owned;
     // TODO: Move any status code as constant
     const isForSale = data.status === 'forSale';
 
@@ -164,10 +181,10 @@ export const NftCard = React.memo(
             </PriceBar>
           </CardWrapper>
         </RouterLink>
-        <BuyerOptions>
+        <NFTCardOptions>
           {(isConnected && (
             <OnConnected
-              showBuyerOptions={showBuyerOptions}
+              owned={owned}
               isForSale={isForSale}
               tokenId={data.id}
               setModalStatus={setModalStatus}
@@ -190,7 +207,7 @@ export const NftCard = React.memo(
               )
             }
           </LastOffer>
-        </BuyerOptions>
+        </NFTCardOptions>
       </CardContainer>
     );
   },
