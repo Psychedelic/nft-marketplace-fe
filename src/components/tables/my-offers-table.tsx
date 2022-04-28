@@ -50,6 +50,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
+  const [loadingTableData, setLoadingTableData] = useState<boolean>(true);
 
   const { id: plugPrincipal } = useParams();
 
@@ -94,7 +95,6 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   // with original details while doing integration
   const loadedOffersReceivedData = mockTableData;
   const hasMoreData = false;
-  const loadingTableData = false;
   const nextPageNo = 0;
 
   useEffect(() => {
@@ -106,6 +106,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         plugPrincipalId: plugPrincipal,
         onSuccess: () => {
           // TODO: handle success messages
+          setLoadingTableData(false);
         },
         onFailure: () => {
           // TODO: handle failure messages
@@ -210,6 +211,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
           data={loadedOffersReceivedData}
           tableType="activity"
           columnsToHide={columnsToHide}
+          loading={loadingTableData}
         />
       </Container>
     </InfiniteScrollWrapper>
