@@ -292,7 +292,7 @@ export const cancelListing = createAsyncThunk<
   { state: RootState }
 >('marketplace/cancelListing', async (params: CancelListingParams, thunkAPI) => {
   const { id, onSuccess, onFailure } = params;
-  
+
   const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
   const userOwnedTokenId = BigInt(id);
 
@@ -346,29 +346,55 @@ export const makeOffer = createAsyncThunk<
     slice: marketplaceSlice,
   });
 
+  const wicpInstance = await actorInstanceHandler({
+    thunkAPI,
+    serviceName: 'wicp',
+    slice: wicpSlice,
+  });
+
   const { id, amount, onSuccess, onFailure } = params;
 
   try {
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
-    const userOwnedTokenId = BigInt(id);
-    const userOfferInPrice = BigInt(amount);
+    const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
 
-    const result = await actorInstance.makeOffer(nonFungibleContractAddress, userOwnedTokenId, userOfferInPrice);
+    const WICP_APPROVE = {
+      idl: crownsIdlFactory,
+      canisterId: config.wICPCanisterId,
+      methodName: 'approve',
+      args: [marketplaceCanisterId, BigInt(999999999999999999)],
+      onFail: (res: any) => {
+        console.warn('Oops! Failed to deposit WICP', res);
 
-    if (!('Ok' in result)) {
-      if (typeof onFailure !== 'function') return;
+        typeof onFailure === 'function' && onFailure();
+      },
+    };
 
-      onFailure();
+    const MKP_MAKE_OFFER = {
+      idl: marketplaceIdlFactory,
+      canisterId: config.marketplaceCanisterId,
+      methodName: 'makeOffer',
+      args: [nonFungibleContractAddress, BigInt(id), BigInt(amount)],
+      onFail: (res: any) => {
+        console.warn('Oops! Failed to make offer', res);
 
-      console.error(result);
+        typeof onFailure === 'function' && onFailure();
+      },
+      onSuccess,
+    };
+
+    const batchTxRes = await (window as any)?.ic?.plug?.batchTransactions([
+      WICP_APPROVE,
+      MKP_MAKE_OFFER,
+    ]);
+
+    if (!batchTxRes) {
+      typeof onFailure === 'function' && onFailure();
 
       throw Error('Oops! Failed to make offer');
     }
 
     if (typeof onSuccess !== 'function') return;
-
-    console.info(result);
-
     onSuccess();
 
     return {
