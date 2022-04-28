@@ -21,6 +21,7 @@ import {
   FeePercent,
   ModalButtonsList,
   ModalButtonWrapper,
+  ActionText,
 } from './styles';
 
 import { LISTING_STATUS_CODES } from '../../constants/listing';
@@ -117,16 +118,22 @@ export const SellModal = ({ onClose, actionText, nftTokenId }: SellModalProps) =
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <SellModalTrigger>
-          <ActionButton
-            type="primary"
-            text={t('translation:buttons.action.sell')}
-            handleClick={() => {
-              // eslint-disable-next-line no-console
-              console.log('Sell modal opened');
-            }}
-          />
-        </SellModalTrigger>
+        {actionText ? (
+          <ActionText onClick={() => console.log('sell modal opened')}>
+            {actionText}
+          </ActionText>
+        ) : (
+          <SellModalTrigger>
+            <ActionButton
+              type="primary"
+              text={t('translation:buttons.action.sell')}
+              handleClick={() => {
+                // eslint-disable-next-line no-console
+                console.log('Sell modal opened');
+              }}
+            />
+          </SellModalTrigger>
+        )}
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------
