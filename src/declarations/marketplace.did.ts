@@ -114,7 +114,11 @@ export default ({ IDL }: { IDL: any }) => {
     serviceBalanceOf: IDL.Func([IDL.Principal], [IDL.Vec(BalanceMetadata)], ['query']),
     withdrawFungible: IDL.Func([IDL.Principal, FungibleStandard], [Result], []),
     withdrawNFT: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
-    getTokenOffers: IDL.Func([IDL.Principal, IDL.Principal], [Result], []),
+    getTokenOffers: IDL.Func(
+      [IDL.Principal, IDL.Principal],
+      [IDL.Vec(IDL.Tuple(IDL.Principal, IDL.Vec(Offer)))],
+      ['query'],
+    ),
   });
 };
 

@@ -94,7 +94,7 @@ export interface _SERVICE {
   serviceBalanceOf: (arg_0: Principal) => Promise<Array<BalanceMetadata>>;
   withdrawFungible: (arg_0: Principal, arg_1: FungibleStandard) => Promise<Result>;
   withdrawNFT: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
-  getTokenOffers: () => (arg_0: Principal, arg_1: Principal) => Promise<Result>;
+  getTokenOffers: (arg_0: Principal, arg_1: Principal) => Promise<Array<[Principal, Array<[Offer]>]>>;
 }
 
 export default _SERVICE;
