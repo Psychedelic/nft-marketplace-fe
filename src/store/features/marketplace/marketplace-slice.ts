@@ -63,6 +63,15 @@ type AcceptOffer = {
   buyerPrincipalId: string;
 };
 
+interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
+  onSuccess?: () => void;
+  onFailure?: () => void;
+}
+
+type GetUserReceviedOffer = {
+  id: string;
+};
+
 type RecentyListedForSale = MakeListing[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
@@ -439,6 +448,55 @@ export const acceptOffer = createAsyncThunk<
       id,
       buyerPrincipalId,
     };
+  } catch (err) {
+    thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
+    if (typeof onFailure !== 'function') return;
+    onFailure();
+  }
+});
+
+
+export const getUserReceivedOffers = createAsyncThunk<
+  // Return type of the payload creator
+  GetUserReceviedOffer | undefined,
+  // First argument to the payload creator
+  GetUserReceviedOfferParams,
+  // Optional fields for defining the thunk api
+  { state: RootState }
+>('marketplace/getTokenOffers', async (params: GetUserReceviedOfferParams, thunkAPI) => {
+  // Checks if an actor instance exists already
+  // otherwise creates a new instance
+  const actorInstance = await actorInstanceHandler({
+    thunkAPI,
+    serviceName: 'marketplace',
+    slice: marketplaceSlice,
+  });
+
+  const { id, onSuccess, onFailure } = params;
+
+  try {
+    const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
+    const userOwnedTokenId = BigInt(id);
+
+    const result = await actorInstance.getTokenOffers(nonFungibleContractAddress, userOwnedTokenId);
+
+    if (!('Ok' in result)) {
+      if (typeof onFailure !== 'function') return;
+
+      onFailure();
+
+      console.error(result);
+
+      throw Error('Oops! Failed to get user received offers');
+    }
+
+    if (typeof onSuccess !== 'function') return;
+
+    console.info(result);
+
+    onSuccess();
+
+    return result;
   } catch (err) {
     thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
