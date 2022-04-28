@@ -1,5 +1,6 @@
 import { Principal } from '@dfinity/principal';
 import { Listing, Offer } from '../declarations/marketplace';
+import { formatAddress } from './formatters';
 
 type GetAllListingsDataResponse = Array<[[Principal, bigint], Listing]>;
 
@@ -73,6 +74,11 @@ export const parseGetTokenOffersresponse = (data: TokenOffers) => {
         created,
       } = currChild;
 
+      // TODO: What to do if payment address not valid principal?
+      const from = paymentAddress._isPrincipal
+        ? formatAddress(paymentAddress.toString())
+        : 'n/a';
+
       const offerTableItem: OffersTableItem = {
         item: {
           // TODO: formatter for name, as number should probably have leading 0's
@@ -83,7 +89,7 @@ export const parseGetTokenOffersresponse = (data: TokenOffers) => {
         price,
         // TODO: use the floor difference endpoint
         floorDifference: 'n/a',
-        from: paymentAddress.toString(),
+        from,
         // TODO: use DayJs and have this computed to human friendly
         time: created,
       };
