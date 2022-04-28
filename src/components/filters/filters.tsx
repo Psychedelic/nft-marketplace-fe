@@ -44,7 +44,7 @@ import CheckboxAccordionSkeleton from '../core/accordions/checkbox-accordion-ske
 export const Filters = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { defaultFilters, loadedFiltersList, status, loadingFilterList } = useFilterStore();
+  const { defaultFilters, loadedFiltersList, status, loadingFilterList, isMyNfts } = useFilterStore();
   const { theme } = useThemeStore();
   const { collapsed, displayPriceApplyButton } = useSettingsStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -183,7 +183,7 @@ export const Filters = () => {
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
                         applyFilter('Display', myNfts);
-                        dispatch(filterActions.setMyNfts(true));
+                        dispatch(filterActions.setMyNfts(!isMyNfts));
                       }}
                     />
                   </FilterButtonWrapper>
