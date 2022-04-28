@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as HoverCard from '@radix-ui/react-hover-card';
+import { useNavigate } from 'react-router-dom';
 import {
   useAppDispatch,
   usePlugStore,
@@ -42,6 +43,21 @@ export const PlugButton = ({
   const isLightTheme = theme === 'lightTheme';
   const currTheme = theme === 'darkTheme' ? 'dark' : 'light';
 
+  const [userPrincipal, setUserPrincipal] = useState();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // TODO: check if principal already available in the store
+    (async () => {
+      const principal = await (window as any).ic?.plug?.getPrincipal();
+
+      if (!principal) return;
+
+      setUserPrincipal(principal.toString());
+    })();
+  }, []);
+
   return (
     <HoverCard.Root openDelay={300}>
       <HoverCard.Trigger>
@@ -66,7 +82,7 @@ export const PlugButton = ({
       </HoverCard.Trigger>
       {isConnected && (
         <ConnectToPlugButton align="end" background={currTheme}>
-          <Flex>
+          <Flex onClick={() => navigate(`/offers/${userPrincipal}`)}>
             <img src={isLightTheme ? offers : offersDark} alt="offers" />
             <p>My Offers</p>
           </Flex>
