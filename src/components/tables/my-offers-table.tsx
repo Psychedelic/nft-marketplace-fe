@@ -102,9 +102,10 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     // a change in offersType
     dispatch(
       getTokenOffers({
-        plugPrincipalId: plugPrincipal,
-        onSuccess: (offers: any) => {
-          // TODO: handle offers data gracefully
+        // TODO: handle offers data gracefully
+        userTokenIds: [0, 1], // TODO: get the user token ids
+        onSuccess: (offers) => {
+          // TODO: handle success messages
           setLoadingTableData(false);
           setLoadedOffersReceivedData(offers);
         },

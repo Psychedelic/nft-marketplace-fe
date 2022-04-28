@@ -64,12 +64,12 @@ type AcceptOffer = {
 };
 
 interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
-  onSuccess?: () => void;
+  onSuccess?: (offers: any) => void;
   onFailure?: () => void;
 }
 
 type GetUserReceviedOffer = {
-  plugPrincipalId?: string;
+  userTokenIds?: number[]
 };
 
 type RecentyListedForSale = MakeListing[];
@@ -457,7 +457,8 @@ export const acceptOffer = createAsyncThunk<
 
 export const getTokenOffers = createAsyncThunk<
   // Return type of the payload creator
-  GetUserReceviedOffer | undefined,
+  // GetUserReceviedOffer | undefined,
+  any | undefined,
   // First argument to the payload creator
   GetUserReceviedOfferParams,
   // Optional fields for defining the thunk api
@@ -471,20 +472,32 @@ export const getTokenOffers = createAsyncThunk<
     slice: marketplaceSlice,
   });
 
-  const { plugPrincipalId, onSuccess, onFailure } = params;
+  const { userTokenIds, onSuccess, onFailure } = params;
 
   try {
-    if (!plugPrincipalId) throw Error('Oops! Missing Plug principal');
-
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
-    const userPrincipalAddress = Principal.fromText(plugPrincipalId);
+    const result = await actorInstance.getTokenOffers(
+      nonFungibleContractAddress,
+      userTokenIds,
+      );
 
-    const result = await actorInstance.getTokenOffers(nonFungibleContractAddress, userPrincipalAddress);
-    const parsedTokenOffers = parseGetTokenOffersresponse(result);
+    // const parsedTokenOffers = parseGetTokenOffersresponse(result);
+
+    console.log('[debug] marketplace-slice.ts: marketplace/getTokenOffers: result', result);
+
+    if (!('Ok' in result)) {
+      if (typeof onFailure !== 'function') return;
+
+      onFailure();
+
+      console.error(result);
+
+      throw Error('Oops! Failed to get user received offers');
+    }
 
     if (typeof onSuccess !== 'function') return;
 
-    onSuccess(parsedTokenOffers);
+    // onSuccess(parsedTokenOffers);
   } catch (err) {
     thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
