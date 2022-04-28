@@ -10,7 +10,6 @@ import {
 } from '../core';
 import { AcceptOfferModal, CancelOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
-import { mockTableData } from './mock-data';
 import {
   Container,
   InfiniteScrollWrapper,
@@ -51,6 +50,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     [],
   );
   const [loadingTableData, setLoadingTableData] = useState<boolean>(true);
+  // TODO: update loadedOffers state array record type
+  const [loadedOffersReceivedData, setLoadedOffersReceivedData] = useState<any>([]);
 
   const { id: plugPrincipal } = useParams();
 
@@ -93,7 +94,6 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
   // TODO: Update mockedetails configured below
   // with original details while doing integration
-  const loadedOffersReceivedData = mockTableData;
   const hasMoreData = false;
   const nextPageNo = 0;
 
@@ -104,9 +104,10 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     dispatch(
       getUserReceivedOffers({
         plugPrincipalId: plugPrincipal,
-        onSuccess: () => {
-          // TODO: handle success messages
+        onSuccess: (offers: any) => {
+          // TODO: handle offers data gracefully
           setLoadingTableData(false);
+          setLoadedOffersReceivedData(offers);
         },
         onFailure: () => {
           // TODO: handle failure messages

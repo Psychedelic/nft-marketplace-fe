@@ -13,7 +13,7 @@ import { notificationActions } from '../errors';
 import { RootState } from '../../store';
 import { crownsSlice } from '../crowns/crowns-slice';
 import { wicpSlice } from '../wicp/wicp-slice';
-import { GetAllListingsDataParsedObj, parseAllListingResponseAsObj } from '../../../utils/parser';
+import { GetAllListingsDataParsedObj, parseAllListingResponseAsObj, parseGetTokenOffersresponse } from '../../../utils/parser';
 
 interface MakeListingParams extends MakeListing {
   onSuccess?: () => void;
@@ -479,24 +479,11 @@ export const getUserReceivedOffers = createAsyncThunk<
     const userPrincipalAddress = Principal.fromText(plugPrincipalId);
 
     const result = await actorInstance.getTokenOffers(nonFungibleContractAddress, userPrincipalAddress);
-
-    if (!('Ok' in result)) {
-      if (typeof onFailure !== 'function') return;
-
-      onFailure();
-
-      console.error(result);
-
-      throw Error('Oops! Failed to get user received offers');
-    }
+    const parsedTokenOffers = parseGetTokenOffersresponse(result);
 
     if (typeof onSuccess !== 'function') return;
 
-    console.info(result);
-
-    onSuccess();
-
-    return result;
+    onSuccess(parsedTokenOffers);
   } catch (err) {
     thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
     if (typeof onFailure !== 'function') return;
