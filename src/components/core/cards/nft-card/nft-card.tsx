@@ -45,7 +45,7 @@ export type NftCardProps = {
 };
 
 export type ConnectedProps = {
-  showBuyerOptions?: boolean;
+  owned?: boolean;
   isForSale?: boolean;
   tokenId: string;
   setModalStatus: (status: boolean) => void;
@@ -56,8 +56,10 @@ export type DisConnectedProps = {
   setModalStatus: (status: boolean) => void;
 };
 
-const OnConnected = ({ showBuyerOptions, isForSale, tokenId, setModalStatus }: ConnectedProps) => {
+const OnConnected = ({ owned, isForSale, tokenId, setModalStatus }: ConnectedProps) => {
   const { t } = useTranslation();
+  const showBuyerOptions = !owned;
+
   return (
     <>
       {
@@ -109,7 +111,6 @@ export const NftCard = React.memo(
     const { t } = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
     const { isConnected } = usePlugStore();
-    const showBuyerOptions = !owned;
     // TODO: Move any status code as constant
     const isForSale = data.status === 'forSale';
 
@@ -167,7 +168,7 @@ export const NftCard = React.memo(
         <BuyerOptions>
           {(isConnected && (
             <OnConnected
-              showBuyerOptions={showBuyerOptions}
+              owned={owned}
               isForSale={isForSale}
               tokenId={data.id}
               setModalStatus={setModalStatus}
