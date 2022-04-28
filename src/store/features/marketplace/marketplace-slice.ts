@@ -11,8 +11,9 @@ import wicpIdlFactory from '../../../declarations/wicp.did';
 import config from '../../../config/env';
 import { notificationActions } from '../errors';
 import { RootState } from '../../store';
-import { crownsSlice } from '../crowns/crowns-slice';
-import { wicpSlice } from '../wicp/wicp-slice';
+import { OwnerTokenIdentifiers } from '../../features/crowns/crowns-slice';
+// import { crownsSlice } from '../crowns/crowns-slice';
+// import { wicpSlice } from '../wicp/wicp-slice';
 import { GetAllListingsDataParsedObj, parseAllListingResponseAsObj, parseGetTokenOffersresponse } from '../../../utils/parser';
 
 interface MakeListingParams extends MakeListing {
@@ -64,12 +65,12 @@ type AcceptOffer = {
 };
 
 interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
-  onSuccess?: () => void;
+  onSuccess?: (offers: any) => void;
   onFailure?: () => void;
 }
 
 type GetUserReceviedOffer = {
-  plugPrincipalId?: string;
+  ownerTokenIdentifiers?: OwnerTokenIdentifiers,
 };
 
 type RecentyListedForSale = MakeListing[];
@@ -455,10 +456,10 @@ export const acceptOffer = createAsyncThunk<
   }
 });
 
-
-export const getUserReceivedOffers = createAsyncThunk<
+export const getTokenOffers = createAsyncThunk<
   // Return type of the payload creator
-  GetUserReceviedOffer | undefined,
+  // GetUserReceviedOffer | undefined,
+  any | undefined,
   // First argument to the payload creator
   GetUserReceviedOfferParams,
   // Optional fields for defining the thunk api
@@ -472,14 +473,18 @@ export const getUserReceivedOffers = createAsyncThunk<
     slice: marketplaceSlice,
   });
 
-  const { plugPrincipalId, onSuccess, onFailure } = params;
+  const { ownerTokenIdentifiers, onSuccess, onFailure } = params;
 
   try {
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
-    const userPrincipalAddress = Principal.fromText(plugPrincipalId);
+    const result = await actorInstance.getTokenOffers(
+      nonFungibleContractAddress,
+      ownerTokenIdentifiers,
+      );
 
-    const result = await actorInstance.getTokenOffers(nonFungibleContractAddress, userPrincipalAddress);
     const parsedTokenOffers = parseGetTokenOffersresponse(result);
+
+    if (!Array.isArray(result) || !result.length) return [];
 
     if (typeof onSuccess !== 'function') return;
 
