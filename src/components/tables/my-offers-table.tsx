@@ -173,12 +173,13 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         id: OFFERS_TABLE_HEADERS.OffersReceivedAction,
         Header: t('translation:tables.titles.action'),
         // TODO: Update formatted price and offerFrom with dynamic fields
-        accessor: ({ price, from }: rowProps) => (
+        accessor: ({ price, from, item }: rowProps) => (
           <ButtonWrapper>
             <AcceptOfferModal
               price={price}
               formattedPrice={price}
               offerFrom={from}
+              nftTokenId={item.token_id}
             />
           </ButtonWrapper>
         ),
