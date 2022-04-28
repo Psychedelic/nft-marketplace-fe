@@ -1,4 +1,4 @@
-export enum LISTING_STATUS_CODES {
+export enum ListingStatusCodes {
   ListingInfo = 'listingInfo',
   Confirmed = 'confirmed',
   Pending = 'pending',

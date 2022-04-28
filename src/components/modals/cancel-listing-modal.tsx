@@ -15,7 +15,7 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
-import { LISTING_STATUS_CODES } from '../../constants/listing';
+import { ListingStatusCodes } from '../../constants/listing';
 import { useAppDispatch, nftsActions } from '../../store';
 import { cancelListing } from '../../store/features/marketplace';
 
@@ -31,12 +31,12 @@ export const CancelListingModal = () => {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Cancel listing modal steps: cancelList/pending
   const [modalStep, setModalStep] = useState<string>(
-    LISTING_STATUS_CODES.CancelList,
+    ListingStatusCodes.CancelList,
   );
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
-    setModalStep(LISTING_STATUS_CODES.CancelList);
+    setModalStep(ListingStatusCodes.CancelList);
   };
 
   const handleModalClose = () => {
@@ -46,7 +46,7 @@ export const CancelListingModal = () => {
   const handleCancelListing = async () => {
     if (!id) return;
 
-    setModalStep(LISTING_STATUS_CODES.Pending);
+    setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       cancelListing({
@@ -65,7 +65,7 @@ export const CancelListingModal = () => {
           setModalOpened(false);
         },
         onFailure: () => {
-          setModalStep(LISTING_STATUS_CODES.CancelList);
+          setModalStep(ListingStatusCodes.CancelList);
         },
       }),
     );
@@ -110,7 +110,7 @@ export const CancelListingModal = () => {
           Step: 1 -> cancelList
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.CancelList && (
+        {modalStep === ListingStatusCodes.CancelList && (
           <Container>
             {/*
               ---------------------------------
@@ -154,7 +154,7 @@ export const CancelListingModal = () => {
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.Pending && (
+        {modalStep === ListingStatusCodes.Pending && (
           <Container>
             {/*
             ---------------------------------

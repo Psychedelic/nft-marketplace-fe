@@ -24,9 +24,14 @@ export const CollectionTabs = () => {
   // if empty we'll display nothing
 
   const itemIsActive = currentTab === 'items' ? 'active' : 'inactive';
-  const activityIsActive = currentTab === 'activity' ? 'active' : 'inactive';
-  const itemeActiveTheme = isLightTheme ? itemsActive : itemsActiveDark;
-  const activityActiveTheme = isLightTheme ? activityActive : activityActiveDark;
+  const activityIsActive =
+    currentTab === 'activity' ? 'active' : 'inactive';
+  const itemeActiveTheme = isLightTheme
+    ? itemsActive
+    : itemsActiveDark;
+  const activityActiveTheme = isLightTheme
+    ? activityActive
+    : activityActiveDark;
 
   return (
     <TabsRoot defaultValue="items" value={currentTab}>
@@ -38,7 +43,14 @@ export const CollectionTabs = () => {
             setCurrentTab('items');
           }}
         >
-          <img src={itemIsActive === 'active' ? itemeActiveTheme : itemsInactive} alt="items-tab" />
+          <img
+            src={
+              itemIsActive === 'active'
+                ? itemeActiveTheme
+                : itemsInactive
+            }
+            alt="items-tab"
+          />
           {t('translation:tabs.items')}
         </TabsTrigger>
         <TabsTrigger
@@ -48,7 +60,14 @@ export const CollectionTabs = () => {
             setCurrentTab('activity');
           }}
         >
-          <img src={activityIsActive === 'active' ? activityActiveTheme : activityInactive} alt="activity-tab" />
+          <img
+            src={
+              activityIsActive === 'active'
+                ? activityActiveTheme
+                : activityInactive
+            }
+            alt="activity-tab"
+          />
           {t('translation:tabs.activity')}
         </TabsTrigger>
       </TabsList>

@@ -8,7 +8,7 @@ import {
   useAppDispatch,
   nftsActions,
   notificationActions,
-  loadedNFTData,
+  LoadedNFTData,
 } from '../store';
 
 export const useNFTSFetcher = () => {
@@ -67,7 +67,7 @@ export const useNFTSFetcher = () => {
           return metadata;
         });
 
-        const loadedNFTS: loadedNFTData = {
+        const loadedNFTS: LoadedNFTData = {
           loadedNFTList,
         };
 

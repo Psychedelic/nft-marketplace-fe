@@ -67,14 +67,22 @@ export const PlugButton = ({
       {isConnected && (
         <ConnectToPlugButton align="end" background={currTheme}>
           <Flex>
-            <img src={isLightTheme ? offers : offersDark} alt="offers" />
+            <img
+              src={isLightTheme ? offers : offersDark}
+              alt="offers"
+            />
             <p>My Offers</p>
           </Flex>
           <div />
           <Flex
-            onClick={() => dispatch(plugActions.setIsConnected(false))}
+            onClick={() =>
+              dispatch(plugActions.setIsConnected(false))
+            }
           >
-            <img src={isLightTheme ? disconnect : disconnectDark} alt="disconnect" />
+            <img
+              src={isLightTheme ? disconnect : disconnectDark}
+              alt="disconnect"
+            />
             <p>Disconnect</p>
           </Flex>
         </ConnectToPlugButton>

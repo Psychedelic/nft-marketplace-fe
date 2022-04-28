@@ -30,8 +30,7 @@ const swipeOut = keyframes({
   },
 });
 
-export const ToastProvider = styled(ToastPrimitive.Provider, {
-});
+export const ToastProvider = styled(ToastPrimitive.Provider, {});
 
 export const ToastViewport = styled(ToastPrimitive.Viewport, {
   position: 'fixed',

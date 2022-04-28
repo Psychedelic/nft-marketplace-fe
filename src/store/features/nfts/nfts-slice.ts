@@ -23,32 +23,32 @@ const initialState: NFTSState = {
   nextPageNo: 0,
 };
 
-export interface loadedNFTData {
+export interface LoadedNFTData {
   loadedNFTList: NFTMetadata[];
   totalPages: number;
   total: number;
   nextPage: number;
 }
 
-interface listedNFTData {
+interface ListedNFTData {
   id: string;
   amount: string;
 }
-interface cancelNFTFromListingData {
+interface CancelNFTFromListingData {
   id: string;
 }
 
-interface acceptedNFTOfferData {
+interface AcceptedNFTOfferData {
   id: string;
   buyerId: string;
 }
 
-interface findNFTIndexData {
+interface FindNFTIndexData {
   nftList: NFTMetadata[];
   idToFind: string;
 }
 
-const findNFTIndex = ({ nftList, idToFind }: findNFTIndexData) => {
+const findNFTIndex = ({ nftList, idToFind }: FindNFTIndexData) => {
   if (!nftList || !idToFind) {
     return -1;
   }
@@ -69,7 +69,7 @@ export const nftsSlice = createSlice({
         state.failedToLoadNFTS = false;
       }
     },
-    setLoadedNFTS: (state, action: PayloadAction<loadedNFTData>) => {
+    setLoadedNFTS: (state, action: PayloadAction<LoadedNFTData>) => {
       const { loadedNFTList, totalPages, nextPage } = action.payload;
       state.loadingNFTs = false;
       if (nextPage === 1) {
@@ -105,7 +105,7 @@ export const nftsSlice = createSlice({
 
       state.loadedNFTS.push(action.payload);
     },
-    setNFTForSale: (state, action: PayloadAction<listedNFTData>) => {
+    setNFTForSale: (state, action: PayloadAction<ListedNFTData>) => {
       const { id, amount } = action.payload;
       const index = findNFTIndex({
         nftList: state.loadedNFTS,
@@ -124,7 +124,7 @@ export const nftsSlice = createSlice({
     // is somehow detached from the API state, which is the source
     cancelNFTFromListing: (
       state,
-      action: PayloadAction<cancelNFTFromListingData>,
+      action: PayloadAction<CancelNFTFromListingData>,
     ) => {
       const { id } = action.payload;
       const index = findNFTIndex({
@@ -138,7 +138,7 @@ export const nftsSlice = createSlice({
     },
     acceptNFTOffer: (
       state,
-      action: PayloadAction<acceptedNFTOfferData>,
+      action: PayloadAction<AcceptedNFTOfferData>,
     ) => {
       const { id, buyerId } = action.payload;
       const index = findNFTIndex({

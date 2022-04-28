@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable @typescript-eslint/naming-convention */
 import type { Principal } from '@dfinity/principal';
 
 export type GenericValue =
@@ -33,7 +33,9 @@ export interface ManualReply {
   symbol: [] | [string];
 }
 export type ManualReply_1 = { Ok: Array<bigint> } | { Err: NftError };
-export type ManualReply_2 = { Ok: Array<TokenMetadata> } | { Err: NftError };
+export type ManualReply_2 =
+  | { Ok: Array<TokenMetadata> }
+  | { Err: NftError };
 export type ManualReply_3 = { Ok: TokenMetadata } | { Err: NftError };
 export type ManualReply_4 = { Ok: TxEvent } | { Err: NftError };
 export type NftError =
@@ -56,7 +58,10 @@ export interface Stats {
   total_unique_holders: bigint;
   total_supply: bigint;
 }
-export type SupportedInterface = { Mint: null } | { Approval: null } | { TransactionHistory: null };
+export type SupportedInterface =
+  | { Mint: null }
+  | { Approval: null }
+  | { TransactionHistory: null };
 export interface TokenMetadata {
   transferred_at: [] | [bigint];
   transferred_by: [] | [Principal];
@@ -106,18 +111,30 @@ export interface _SERVICE {
   balanceOf: (arg_0: Principal) => Promise<Result>;
   custodians: () => Promise<Array<Principal>>;
   cycles: () => Promise<bigint>;
-  isApprovedForAll: (arg_0: Principal, arg_1: Principal) => Promise<Result_1>;
+  isApprovedForAll: (
+    arg_0: Principal,
+    arg_1: Principal,
+  ) => Promise<Result_1>;
   logo: () => Promise<[] | [string]>;
   metadata: () => Promise<ManualReply>;
-  mint: (arg_0: Principal, arg_1: bigint, arg_2: Array<[string, GenericValue]>) => Promise<Result>;
+  mint: (
+    arg_0: Principal,
+    arg_1: bigint,
+    arg_2: Array<[string, GenericValue]>,
+  ) => Promise<Result>;
   name: () => Promise<[] | [string]>;
   operatorOf: (arg_0: bigint) => Promise<Result_2>;
-  operatorTokenIdentifiers: (arg_0: Principal) => Promise<ManualReply_1>;
+  operatorTokenIdentifiers: (
+    arg_0: Principal,
+  ) => Promise<ManualReply_1>;
   operatorTokenMetadata: (arg_0: Principal) => Promise<ManualReply_2>;
   ownerOf: (arg_0: bigint) => Promise<Result_2>;
   ownerTokenIdentifiers: (arg_0: Principal) => Promise<ManualReply_1>;
   ownerTokenMetadata: (arg_0: Principal) => Promise<ManualReply_2>;
-  setApprovalForAll: (arg_0: Principal, arg_1: boolean) => Promise<Result>;
+  setApprovalForAll: (
+    arg_0: Principal,
+    arg_1: boolean,
+  ) => Promise<Result>;
   setCustodians: (arg_0: Array<Principal>) => Promise<undefined>;
   setLogo: (arg_0: string) => Promise<undefined>;
   setName: (arg_0: string) => Promise<undefined>;
@@ -131,8 +148,11 @@ export interface _SERVICE {
   totalUniqueHolders: () => Promise<bigint>;
   transaction: (arg_0: bigint) => Promise<ManualReply_4>;
   transfer: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
-  transferFrom: (arg_0: Principal, arg_1: Principal, arg_2: bigint) => Promise<Result>;
+  transferFrom: (
+    arg_0: Principal,
+    arg_1: Principal,
+    arg_2: bigint,
+  ) => Promise<Result>;
 }
 
 export default _SERVICE;
-

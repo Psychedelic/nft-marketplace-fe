@@ -1,8 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  useThemeStore,
-} from '../../../store';
+import { useThemeStore } from '../../../store';
 import closeIcon from '../../../assets/closeIcon.svg';
 import closeIconDark from '../../../assets/closeIcon-dark.svg';
 import miniDfinity from '../../../assets/mini-dfinity.svg';
@@ -35,7 +33,10 @@ export const FilteredTraitsChip = ({
 
   return (
     <TraitChipContainer type="filtered">
-      {appliedFilterValue.filterCategory === `${t('translation:filters.priceRange')}` && <Image src={miniDfinity} alt="mini-dfinity" />}
+      {appliedFilterValue.filterCategory ===
+        `${t('translation:filters.priceRange')}` && (
+        <Image src={miniDfinity} alt="mini-dfinity" />
+      )}
       <TraitSpecsContainer>
         <TraitName>{name}</TraitName>
         <TraitRim>{rim}</TraitRim>

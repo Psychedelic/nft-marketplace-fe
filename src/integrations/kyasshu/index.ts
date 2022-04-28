@@ -1,11 +1,17 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAppDispatch, useFilterStore, usePlugStore } from '../../store';
-import { fetchNFTS, fetchNFTDetails, useTraitsPayload, usePriceValues } from './utils';
-
-// eslint-disable-next-line object-curly-newline
-export default {};
+import {
+  useAppDispatch,
+  useFilterStore,
+  usePlugStore,
+} from '../../store';
+import {
+  fetchNFTS,
+  fetchNFTDetails,
+  useTraitsPayload,
+  usePriceValues,
+} from './utils';
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
@@ -15,16 +21,24 @@ export const useNFTSFetcher = () => {
   const priceValues = usePriceValues();
   // eslint-disable-next-line object-curly-newline
   let payload = {};
-  if (traitsPayload.length || isMyNfts || (priceValues && Object.keys(priceValues).length) || status !== '') {
+  if (
+    traitsPayload.length ||
+    isMyNfts ||
+    (priceValues && Object.keys(priceValues).length) ||
+    status !== ''
+  ) {
     payload = {
       traits: traitsPayload.length ? traitsPayload : undefined,
       principal: isMyNfts ? principalId : undefined,
       status,
-      price: priceValues && Object.keys(priceValues).length ? {
-        min: priceValues?.min,
-        max: priceValues?.max,
-        type: 'currentPrice',
-      } : undefined,
+      price:
+        priceValues && Object.keys(priceValues).length
+          ? {
+              min: priceValues?.min,
+              max: priceValues?.max,
+              type: 'currentPrice',
+            }
+          : undefined,
     };
   }
 

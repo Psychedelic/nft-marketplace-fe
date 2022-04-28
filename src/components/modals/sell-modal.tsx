@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton, ModalInput, Pending, Completed } from '../core';
+import {
+  ActionButton,
+  ModalInput,
+  Pending,
+  Completed,
+} from '../core';
 import infoLogo from '../../assets/info-icon.svg';
 import {
   SellModalTrigger,
@@ -23,9 +28,12 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
-import { LISTING_STATUS_CODES } from '../../constants/listing';
+import { ListingStatusCodes } from '../../constants/listing';
 import { useAppDispatch, nftsActions } from '../../store';
-import { makeListing, getAllListings } from '../../store/features/marketplace';
+import {
+  makeListing,
+  getAllListings,
+} from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -38,15 +46,17 @@ export const SellModal = () => {
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Sell modal steps: listingInfo/pending/confirmed
-  const [modalStep, setModalStep] = useState<string>(LISTING_STATUS_CODES.ListingInfo);
+  const [modalStep, setModalStep] = useState<string>(
+    ListingStatusCodes.ListingInfo,
+  );
   const [amount, setAmount] = useState<string>('');
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
     setAmount('');
-    setModalStep(LISTING_STATUS_CODES.ListingInfo);
+    setModalStep(ListingStatusCodes.ListingInfo);
 
-    const notConfirmed = modalStep !== LISTING_STATUS_CODES.Confirmed;
+    const notConfirmed = modalStep !== ListingStatusCodes.Confirmed;
 
     if (status || !id || notConfirmed) return;
 
@@ -71,7 +81,7 @@ export const SellModal = () => {
   const handleListing = async () => {
     if (!id) return;
 
-    setModalStep(LISTING_STATUS_CODES.Pending);
+    setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       makeListing({
@@ -79,17 +89,20 @@ export const SellModal = () => {
         amount,
         onSuccess: () => {
           dispatch(getAllListings());
-          setModalStep(LISTING_STATUS_CODES.Confirmed);
+          setModalStep(ListingStatusCodes.Confirmed);
         },
         onFailure: () => {
-          setModalStep(LISTING_STATUS_CODES.ListingInfo);
+          setModalStep(ListingStatusCodes.ListingInfo);
         },
       }),
     );
   };
 
   return (
-    <DialogPrimitive.Root open={modalOpened} onOpenChange={handleModalOpen}>
+    <DialogPrimitive.Root
+      open={modalOpened}
+      onOpenChange={handleModalOpen}
+    >
       {/*
         ---------------------------------
         Modal Trigger
@@ -124,7 +137,7 @@ export const SellModal = () => {
           Step: 1 -> listingInfo
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.ListingInfo && (
+        {modalStep === ListingStatusCodes.ListingInfo && (
           <Container>
             {/*
               ---------------------------------
@@ -132,8 +145,12 @@ export const SellModal = () => {
               ---------------------------------
             */}
             <ModalHeader>
-              <ModalTitle>{t('translation:modals.title.makeListing')}</ModalTitle>
-              <ModalDescription>{t('translation:modals.description.makeListing')}</ModalDescription>
+              <ModalTitle>
+                {t('translation:modals.title.makeListing')}
+              </ModalTitle>
+              <ModalDescription>
+                {t('translation:modals.description.makeListing')}
+              </ModalDescription>
             </ModalHeader>
             {/*
               ---------------------------------
@@ -142,23 +159,37 @@ export const SellModal = () => {
             */}
             <SaleContentWrapper>
               <ModalInput
-                placeholder={t('translation:inputField.placeholder.amount')}
+                placeholder={t(
+                  'translation:inputField.placeholder.amount',
+                )}
                 setValue={(value) => setAmount(value)}
               />
               <FeeContainer>
                 <FeeDetails>
                   <FeeLabelContainer>
-                    <FeeLabel>{t('translation:modals.labels.listingFee')}</FeeLabel>
+                    <FeeLabel>
+                      {t('translation:modals.labels.listingFee')}
+                    </FeeLabel>
                     <InfoIcon src={infoLogo} alt="info" />
                   </FeeLabelContainer>
-                  <FeePercent>{t('translation:modals.labels.listingFeePercent')}</FeePercent>
+                  <FeePercent>
+                    {t('translation:modals.labels.listingFeePercent')}
+                  </FeePercent>
                 </FeeDetails>
                 <FeeDetails>
                   <FeeLabelContainer>
-                    <FeeLabel>{t('translation:modals.labels.creatorRoyalityFee')}</FeeLabel>
+                    <FeeLabel>
+                      {t(
+                        'translation:modals.labels.creatorRoyalityFee',
+                      )}
+                    </FeeLabel>
                     <InfoIcon src={infoLogo} alt="info" />
                   </FeeLabelContainer>
-                  <FeePercent>{t('translation:modals.labels.creatorRoyalityFeePercent')}</FeePercent>
+                  <FeePercent>
+                    {t(
+                      'translation:modals.labels.creatorRoyalityFeePercent',
+                    )}
+                  </FeePercent>
                 </FeeDetails>
               </FeeContainer>
             </SaleContentWrapper>
@@ -178,7 +209,9 @@ export const SellModal = () => {
               <ModalButtonWrapper>
                 <ActionButton
                   type="primary"
-                  text={t('translation:modals.buttons.completeListing')}
+                  text={t(
+                    'translation:modals.buttons.completeListing',
+                  )}
                   handleClick={handleListing}
                   disabled={!amount}
                 />
@@ -191,7 +224,7 @@ export const SellModal = () => {
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.Pending && (
+        {modalStep === ListingStatusCodes.Pending && (
           <Container>
             {/*
               ---------------------------------
@@ -199,7 +232,9 @@ export const SellModal = () => {
               ---------------------------------
             */}
             <ModalHeader>
-              <ModalTitle>{t('translation:modals.title.pendingConfirmation')}</ModalTitle>
+              <ModalTitle>
+                {t('translation:modals.title.pendingConfirmation')}
+              </ModalTitle>
             </ModalHeader>
             {/*
               ---------------------------------
@@ -218,7 +253,7 @@ export const SellModal = () => {
                   type="secondary"
                   text={t('translation:modals.buttons.cancel')}
                   handleClick={() => {
-                    setModalStep(LISTING_STATUS_CODES.ListingInfo);
+                    setModalStep(ListingStatusCodes.ListingInfo);
                   }}
                 />
               </ModalButtonWrapper>
@@ -230,7 +265,7 @@ export const SellModal = () => {
           Step: 3 -> confirmed
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.Confirmed && (
+        {modalStep === ListingStatusCodes.Confirmed && (
           <Container>
             {/*
               ---------------------------------
@@ -238,8 +273,12 @@ export const SellModal = () => {
               ---------------------------------
             */}
             <ModalHeader>
-              <ModalTitle>{t('translation:modals.title.listingComplete')}</ModalTitle>
-              <ModalDescription>{t('translation:modals.description.listingComplete')}</ModalDescription>
+              <ModalTitle>
+                {t('translation:modals.title.listingComplete')}
+              </ModalTitle>
+              <ModalDescription>
+                {t('translation:modals.description.listingComplete')}
+              </ModalDescription>
             </ModalHeader>
             {/*
               ---------------------------------

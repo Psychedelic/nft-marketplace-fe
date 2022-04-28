@@ -1,13 +1,14 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { Wrapper } from './styles';
 
 export type CheckboxProps = {
-  title: string,
+  title: string;
   value: string; // Red
   percentage: string; // 1291 (12.9%)
   filterValueExists: (value: string) => boolean;
-  handleSelectedFilters: (value: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
+  handleSelectedFilters: (
+    value: React.MouseEvent<HTMLInputElement, MouseEvent>,
+  ) => void;
 };
 
 export const Checkbox = ({
@@ -25,7 +26,7 @@ export const Checkbox = ({
         value={value}
         onClick={handleSelectedFilters}
         // checks if value exists in array and sets checked to true
-        checked={(filterValueExists(value))}
+        checked={filterValueExists(value)}
       />
       {value}
     </label>

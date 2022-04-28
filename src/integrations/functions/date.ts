@@ -6,7 +6,9 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 // Extensions
-[utc, timezone, relativeTime, customParseFormat].forEach((plugin) => dayjs.extend(plugin as any));
+[utc, timezone, relativeTime, customParseFormat].forEach((plugin) =>
+  dayjs.extend(plugin as any),
+);
 
 // Defaults
 dayjs.tz.setDefault('Europe/London');
@@ -19,7 +21,5 @@ const NOW = new Date(
   }),
 ).toISOString();
 
-export const dateRelative = (
-  timestamp: string,
-  now: string = NOW,
-) => dayjs.utc(timestamp).from(now);
+export const dateRelative = (timestamp: string, now: string = NOW) =>
+  dayjs.utc(timestamp).from(now);

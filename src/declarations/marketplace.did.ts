@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default ({ IDL }: { IDL: any }) => {
   const GenericValue = IDL.Rec();
   const MPApiError = IDL.Variant({
@@ -85,35 +84,98 @@ export default ({ IDL }: { IDL: any }) => {
     contractId: IDL.Principal,
   });
   return IDL.Service({
-    acceptOffer: IDL.Func([IDL.Principal, IDL.Nat, IDL.Principal], [Result], []),
-    addCollection: IDL.Func(
-      [IDL.Principal, IDL.Nat, IDL.Nat64, IDL.Text, IDL.Principal, NFTStandard, IDL.Principal, FungibleStandard],
+    acceptOffer: IDL.Func(
+      [IDL.Principal, IDL.Nat, IDL.Principal],
       [Result],
       [],
     ),
-    balanceOf: IDL.Func([IDL.Principal], [IDL.Vec(IDL.Tuple(IDL.Principal, FungibleBalance))], ['query']),
+    addCollection: IDL.Func(
+      [
+        IDL.Principal,
+        IDL.Nat,
+        IDL.Nat64,
+        IDL.Text,
+        IDL.Principal,
+        NFTStandard,
+        IDL.Principal,
+        FungibleStandard,
+      ],
+      [Result],
+      [],
+    ),
+    balanceOf: IDL.Func(
+      [IDL.Principal],
+      [IDL.Vec(IDL.Tuple(IDL.Principal, FungibleBalance))],
+      ['query'],
+    ),
     cancelListing: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
     cancelOffer: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
     denyOffer: IDL.Func([IDL.Nat64], [Result], []),
-    depositFungible: IDL.Func([IDL.Principal, FungibleStandard, IDL.Nat], [Result], []),
+    depositFungible: IDL.Func(
+      [IDL.Principal, FungibleStandard, IDL.Nat],
+      [Result],
+      [],
+    ),
     depositNFT: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
     directBuy: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
     getAllBalances: IDL.Func(
       [],
-      [IDL.Vec(IDL.Tuple(IDL.Tuple(IDL.Principal, IDL.Principal), FungibleBalance))],
+      [
+        IDL.Vec(
+          IDL.Tuple(
+            IDL.Tuple(IDL.Principal, IDL.Principal),
+            FungibleBalance,
+          ),
+        ),
+      ],
       ['query'],
     ),
-    getAllListings: IDL.Func([], [IDL.Vec(IDL.Tuple(IDL.Tuple(IDL.Principal, IDL.Nat), Listing))], ['query']),
+    getAllListings: IDL.Func(
+      [],
+      [
+        IDL.Vec(
+          IDL.Tuple(IDL.Tuple(IDL.Principal, IDL.Nat), Listing),
+        ),
+      ],
+      ['query'],
+    ),
     getAllOffers: IDL.Func(
       [],
-      [IDL.Vec(IDL.Tuple(IDL.Principal, IDL.Vec(IDL.Tuple(IDL.Nat, IDL.Vec(IDL.Tuple(IDL.Principal, Offer))))))],
+      [
+        IDL.Vec(
+          IDL.Tuple(
+            IDL.Principal,
+            IDL.Vec(
+              IDL.Tuple(
+                IDL.Nat,
+                IDL.Vec(IDL.Tuple(IDL.Principal, Offer)),
+              ),
+            ),
+          ),
+        ),
+      ],
       ['query'],
     ),
-    makeListing: IDL.Func([IDL.Bool, IDL.Principal, IDL.Nat, IDL.Nat], [Result], []),
-    makeOffer: IDL.Func([IDL.Principal, IDL.Nat, IDL.Nat], [Result], []),
-    serviceBalanceOf: IDL.Func([IDL.Principal], [IDL.Vec(BalanceMetadata)], ['query']),
-    withdrawFungible: IDL.Func([IDL.Principal, FungibleStandard], [Result], []),
+    makeListing: IDL.Func(
+      [IDL.Bool, IDL.Principal, IDL.Nat, IDL.Nat],
+      [Result],
+      [],
+    ),
+    makeOffer: IDL.Func(
+      [IDL.Principal, IDL.Nat, IDL.Nat],
+      [Result],
+      [],
+    ),
+    serviceBalanceOf: IDL.Func(
+      [IDL.Principal],
+      [IDL.Vec(BalanceMetadata)],
+      ['query'],
+    ),
+    withdrawFungible: IDL.Func(
+      [IDL.Principal, FungibleStandard],
+      [Result],
+      [],
+    ),
     withdrawNFT: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
   });
 };
-

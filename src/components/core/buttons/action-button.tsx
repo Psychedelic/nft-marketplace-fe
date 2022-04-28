@@ -1,5 +1,3 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-import React from 'react';
 import { Button } from './styles';
 
 export type ActionButtonProps = {
@@ -7,7 +5,7 @@ export type ActionButtonProps = {
   type: any;
   danger?: boolean;
   size?: any;
-  text: string;
+  text?: string;
   disabled?: boolean;
   handleClick: () => void;
 };

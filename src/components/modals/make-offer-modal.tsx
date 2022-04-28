@@ -22,7 +22,7 @@ import {
   ActionText,
 } from './styles';
 
-import { LISTING_STATUS_CODES } from '../../constants/listing';
+import { ListingStatusCodes } from '../../constants/listing';
 import { useAppDispatch } from '../../store';
 import { makeOffer } from '../../store/features/marketplace';
 
@@ -34,9 +34,13 @@ export type MakeOfferModalProps = {
   onClose?: () => void;
   actionText?: string;
   nftTokenId?: string;
-}
+};
 
-export const MakeOfferModal = ({ onClose, actionText, nftTokenId }: MakeOfferModalProps) => {
+export const MakeOfferModal = ({
+  onClose,
+  actionText,
+  nftTokenId,
+}: MakeOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -44,7 +48,7 @@ export const MakeOfferModal = ({ onClose, actionText, nftTokenId }: MakeOfferMod
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // MakeOffer modal steps: listingInfo/submitted
   const [modalStep, setModalStep] = useState<string>(
-    LISTING_STATUS_CODES.ListingInfo,
+    ListingStatusCodes.ListingInfo,
   );
   const [amount, setAmount] = useState<string>('');
 
@@ -60,7 +64,7 @@ export const MakeOfferModal = ({ onClose, actionText, nftTokenId }: MakeOfferMod
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
     setAmount('');
-    setModalStep(LISTING_STATUS_CODES.ListingInfo);
+    setModalStep(ListingStatusCodes.ListingInfo);
   };
 
   const handleModalClose = () => {
@@ -76,17 +80,17 @@ export const MakeOfferModal = ({ onClose, actionText, nftTokenId }: MakeOfferMod
       return;
     }
 
-    setModalStep(LISTING_STATUS_CODES.Pending);
+    setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       makeOffer({
         id: tokenId,
         amount,
         onSuccess: () => {
-          setModalStep(LISTING_STATUS_CODES.Submitted);
+          setModalStep(ListingStatusCodes.Submitted);
         },
         onFailure: () => {
-          setModalStep(LISTING_STATUS_CODES.ListingInfo);
+          setModalStep(ListingStatusCodes.ListingInfo);
         },
       }),
     );
@@ -104,7 +108,9 @@ export const MakeOfferModal = ({ onClose, actionText, nftTokenId }: MakeOfferMod
       */}
       <DialogPrimitive.Trigger asChild>
         {actionText ? (
-          <ActionText onClick={() => console.log('makeOffer modal opened')}>
+          <ActionText
+            onClick={() => console.log('makeOffer modal opened')}
+          >
             {actionText}
           </ActionText>
         ) : (
@@ -112,7 +118,9 @@ export const MakeOfferModal = ({ onClose, actionText, nftTokenId }: MakeOfferMod
             <ActionButton
               type="primary"
               text={t('translation:buttons.action.makeOffer')}
-              handleClick={() => console.log('makeOffer modal opened')}
+              handleClick={() =>
+                console.log('makeOffer modal opened')
+              }
             />
           </MakeOfferModalTrigger>
         )}
@@ -134,7 +142,7 @@ export const MakeOfferModal = ({ onClose, actionText, nftTokenId }: MakeOfferMod
           Step: 1 -> listingInfo
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.ListingInfo && (
+        {modalStep === ListingStatusCodes.ListingInfo && (
           <Container>
             {/*
               ---------------------------------
@@ -191,7 +199,7 @@ export const MakeOfferModal = ({ onClose, actionText, nftTokenId }: MakeOfferMod
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.Pending && (
+        {modalStep === ListingStatusCodes.Pending && (
           <Container>
             {/*
               ---------------------------------
@@ -220,7 +228,7 @@ export const MakeOfferModal = ({ onClose, actionText, nftTokenId }: MakeOfferMod
                   type="secondary"
                   text={t('translation:modals.buttons.cancel')}
                   handleClick={() => {
-                    setModalStep(LISTING_STATUS_CODES.ListingInfo);
+                    setModalStep(ListingStatusCodes.ListingInfo);
                   }}
                 />
               </ModalButtonWrapper>
@@ -232,7 +240,7 @@ export const MakeOfferModal = ({ onClose, actionText, nftTokenId }: MakeOfferMod
           Step: 3 -> submitted
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.Submitted && (
+        {modalStep === ListingStatusCodes.Submitted && (
           <Container>
             {/*
               ---------------------------------

@@ -28,9 +28,7 @@ export const PriceDetail = () => (
   </div>
 );
 
-export const TableStrings = () => (
-  <StringSkeleton />
-);
+export const TableStrings = () => <StringSkeleton />;
 
 const TableSkeletons = () => (
   <TableSkeletonsWrapper>

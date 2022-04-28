@@ -32,7 +32,8 @@ export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const [currentListing, setCurrentListing] = useState<CurrentListing>();
+  const [currentListing, setCurrentListing] =
+    useState<CurrentListing>();
   const allListings = useSelector(
     (state: any) => state.marketplace.allListings,
   );
@@ -42,7 +43,8 @@ export const NftDetails = () => {
   );
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
-  const owner = currentListing?.payment_address.toString() || nftDetails?.owner;
+  const owner =
+    currentListing?.payment_address.toString() || nftDetails?.owner;
   const lastSalePrice = currentListing?.price || nftDetails?.price;
   const isListed = !!currentListing || nftDetails?.isListed;
 

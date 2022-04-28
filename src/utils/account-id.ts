@@ -17,7 +17,10 @@ const byteArrayToWordArray = (
     wordArray[(i / 4) | 0] |= byteArray[i] << (24 - 8 * i);
   }
   // eslint-disable-next-line
-  const result = CryptoJS.lib.WordArray.create(wordArray, byteArray.length);
+  const result = CryptoJS.lib.WordArray.create(
+    wordArray,
+    byteArray.length,
+  );
   return result;
 };
 
@@ -32,9 +35,13 @@ const wordToByteArray = (word: number, length: number): number[] => {
   return byteArray;
 };
 
-const wordArrayToByteArray = (wordArray: any, length: number): Uint8Array => {
+const wordArrayToByteArray = (
+  wordArray: any,
+  length: number,
+): Uint8Array => {
   if (
-    wordArray.hasOwnProperty('sigBytes') && wordArray.hasOwnProperty('words')
+    wordArray.hasOwnProperty('sigBytes') &&
+    wordArray.hasOwnProperty('words')
   ) {
     length = wordArray.sigBytes;
     wordArray = wordArray.words;
@@ -53,7 +60,10 @@ const wordArrayToByteArray = (wordArray: any, length: number): Uint8Array => {
 };
 
 // eslint-disable-next-line
-const intToHex = (val: number): string => val < 0 ? (Number(val) >>> 0).toString(16) : Number(val).toString(16);
+const intToHex = (val: number): string =>
+  val < 0
+    ? (Number(val) >>> 0).toString(16)
+    : Number(val).toString(16);
 
 // We generate a CRC32 checksum, and trnasform it into a hexString
 const generateChecksum = (hash: Uint8Array): string => {
@@ -95,4 +105,5 @@ export const getAccountId = (
   return val;
 };
 
-export const getICAccountLink = (principalId: string): string => `${config.icExplorer}/account/${getAccountId(principalId)}`;
+export const getICAccountLink = (principalId: string): string =>
+  `${config.icExplorer}/account/${getAccountId(principalId)}`;

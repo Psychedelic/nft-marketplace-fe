@@ -41,7 +41,7 @@ import {
 } from '../../store';
 import { NFTMetadata } from '../../declarations/nft';
 import { acceptOffer } from '../../store/features/marketplace';
-import { LISTING_STATUS_CODES } from '../../constants/listing';
+import { ListingStatusCodes } from '../../constants/listing';
 
 export interface AcceptOfferProps {
   price: string;
@@ -66,7 +66,7 @@ export const AcceptOfferModal = ({
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Accept offer modal steps: offerInfo/pending/accepted
   const [modalStep, setModalStep] = useState<string>(
-    LISTING_STATUS_CODES.OfferInfo,
+    ListingStatusCodes.OfferInfo,
   );
 
   const nftDetails: NFTMetadata | undefined = useMemo(
@@ -76,9 +76,9 @@ export const AcceptOfferModal = ({
 
   const handleModalOpen = (modalOpenedStatus: boolean) => {
     setModalOpened(modalOpenedStatus);
-    setModalStep(LISTING_STATUS_CODES.OfferInfo);
+    setModalStep(ListingStatusCodes.OfferInfo);
 
-    const isAccepted = modalStep === LISTING_STATUS_CODES.Accepted;
+    const isAccepted = modalStep === ListingStatusCodes.Accepted;
 
     if (modalOpenedStatus || !id || !isAccepted) return;
 
@@ -99,17 +99,17 @@ export const AcceptOfferModal = ({
   const handleAcceptOffer = async () => {
     if (!id) return;
 
-    setModalStep(LISTING_STATUS_CODES.Pending);
+    setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       acceptOffer({
         id,
         buyerPrincipalId: offerFrom,
         onSuccess: () => {
-          setModalStep(LISTING_STATUS_CODES.Accepted);
+          setModalStep(ListingStatusCodes.Accepted);
         },
         onFailure: () => {
-          setModalStep(LISTING_STATUS_CODES.OfferInfo);
+          setModalStep(ListingStatusCodes.OfferInfo);
         },
       }),
     );
@@ -165,7 +165,7 @@ export const AcceptOfferModal = ({
           Step: 1 -> offerInfo
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.OfferInfo && (
+        {modalStep === ListingStatusCodes.OfferInfo && (
           <Container>
             {/*
               ---------------------------------
@@ -274,7 +274,7 @@ export const AcceptOfferModal = ({
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.Pending && (
+        {modalStep === ListingStatusCodes.Pending && (
           <Container>
             {/*
               ---------------------------------
@@ -303,7 +303,7 @@ export const AcceptOfferModal = ({
                   type="secondary"
                   text={t('translation:modals.buttons.cancel')}
                   handleClick={() => {
-                    setModalStep(LISTING_STATUS_CODES.OfferInfo);
+                    setModalStep(ListingStatusCodes.OfferInfo);
                   }}
                 />
               </ModalButtonWrapper>
@@ -315,7 +315,7 @@ export const AcceptOfferModal = ({
           Step: 3 -> accepted
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.Accepted && (
+        {modalStep === ListingStatusCodes.Accepted && (
           <Container>
             {/*
               ---------------------------------

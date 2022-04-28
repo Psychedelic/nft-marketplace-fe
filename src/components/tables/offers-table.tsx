@@ -14,7 +14,7 @@ export type OffersTableProps = {
   lastSalePrice?: string;
 };
 
-export interface rowProps {
+interface RowProps {
   price: string;
   floorDifference: string;
   offerFrom: string;
@@ -23,7 +23,6 @@ export interface rowProps {
 
 export const OffersTable = ({
   isConnectedOwner,
-  lastSalePrice,
 }: OffersTableProps) => {
   const { t } = useTranslation();
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
@@ -49,7 +48,7 @@ export const OffersTable = ({
       {
         id: 'price',
         Header: t('translation:tables.titles.price'),
-        accessor: ({ price, formattedPrice }: rowProps) => (
+        accessor: ({ price, formattedPrice }: RowProps) => (
           <PriceDetailsCell
             wicp={`${price} WICP`}
             price={`$${formattedPrice}`}
@@ -61,14 +60,14 @@ export const OffersTable = ({
         id: 'floorDifference',
         Header: t('translation:tables.titles.floorDifference'),
         // TODO: Use lastSalePrice to calculate floor difference
-        accessor: ({ floorDifference }: rowProps) => (
+        accessor: ({ floorDifference }: RowProps) => (
           <TextCell text={floorDifference} type="offers" />
         ),
       },
       {
         id: 'from',
         Header: t('translation:tables.titles.from'),
-        accessor: ({ offerFrom }: rowProps) => (
+        accessor: ({ offerFrom }: RowProps) => (
           <TextLinkCell
             text={formatAddress(offerFrom)}
             url=""

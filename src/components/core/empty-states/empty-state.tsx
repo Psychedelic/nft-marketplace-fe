@@ -1,7 +1,6 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { filterActions, useAppDispatch } from '../../../store';
-import { BUTTON_TYPE } from '../../../constants/empty-states';
+import { ButtonType } from '../../../constants/empty-states';
 import { Plug } from '../../plug';
 import { ActionButton } from '../buttons';
 import {
@@ -28,7 +27,7 @@ export const EmptyState = ({
     <EmptyStateWrapper>
       <EmptyStateMessage>{message}</EmptyStateMessage>
       <ButtonWrapper>
-        {buttonType === BUTTON_TYPE.plug ? (
+        {buttonType === ButtonType.plug ? (
           // eslint-disable-next-line
           <div
             role="button"

@@ -19,10 +19,12 @@ import copyDark from '../../../assets/copy-dark.svg';
 import { NFTMetadata } from '../../../declarations/nft';
 
 export type CardOptionsDropdownProps = {
-  data: NFTMetadata,
-}
+  data: NFTMetadata;
+};
 
-export const CardOptionsDropdown = ({ data }: CardOptionsDropdownProps) => {
+export const CardOptionsDropdown = ({
+  data,
+}: CardOptionsDropdownProps) => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
   const dispatch = useAppDispatch();
@@ -31,7 +33,11 @@ export const CardOptionsDropdown = ({ data }: CardOptionsDropdownProps) => {
   const handleCopy = (e) => {
     e.preventDefault();
     copyToClipboard(`${window.location.href}nft/${data.id}`);
-    dispatch(notificationActions.setSuccessMessage(`${t('translation:successMessages.copyToClipboard')}`));
+    dispatch(
+      notificationActions.setSuccessMessage(
+        `${t('translation:successMessages.copyToClipboard')}`,
+      ),
+    );
   };
 
   return (

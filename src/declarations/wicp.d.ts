@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import type { Principal } from '@dfinity/principal';
 
 export interface Metadata {

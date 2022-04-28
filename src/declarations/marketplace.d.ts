@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+/* eslint-disable @typescript-eslint/naming-convention */
 import type { Principal } from '@dfinity/principal';
 
 export interface BalanceMetadata {
@@ -36,7 +36,10 @@ export interface Listing {
   price: bigint;
   payment_address: Principal;
 }
-export type ListingStatus = { Selling: null } | { Uninitialized: null } | { Created: null };
+export type ListingStatus =
+  | { Selling: null }
+  | { Uninitialized: null }
+  | { Created: null };
 export type MPApiError =
   | { NonExistentCollection: null }
   | { NoDeposit: null }
@@ -68,7 +71,11 @@ export type OfferStatus =
   | { Created: null };
 export type Result = { Ok: null } | { Err: MPApiError };
 export interface _SERVICE {
-  acceptOffer: (arg_0: Principal, arg_1: bigint, arg_2: Principal) => Promise<Result>;
+  acceptOffer: (
+    arg_0: Principal,
+    arg_1: bigint,
+    arg_2: Principal,
+  ) => Promise<Result>;
   addCollection: (
     arg_0: Principal,
     arg_1: bigint,
@@ -79,22 +86,47 @@ export interface _SERVICE {
     arg_6: Principal,
     arg_7: FungibleStandard,
   ) => Promise<Result>;
-  balanceOf: (arg_0: Principal) => Promise<Array<[Principal, FungibleBalance]>>;
+  balanceOf: (
+    arg_0: Principal,
+  ) => Promise<Array<[Principal, FungibleBalance]>>;
   cancelListing: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
   cancelOffer: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
   denyOffer: (arg_0: bigint) => Promise<Result>;
-  depositFungible: (arg_0: Principal, arg_1: FungibleStandard, arg_2: bigint) => Promise<Result>;
+  depositFungible: (
+    arg_0: Principal,
+    arg_1: FungibleStandard,
+    arg_2: bigint,
+  ) => Promise<Result>;
   depositNFT: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
   directBuy: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
-  getAllBalances: () => Promise<Array<[[Principal, Principal], FungibleBalance]>>;
-  getAllListings: () => Promise<Array<[[Principal, bigint], Listing]>>;
-  getAllOffers: () => Promise<Array<[Principal, Array<[bigint, Array<[Principal, Offer]>]>]>>;
-  makeListing: (arg_0: boolean, arg_1: Principal, arg_2: bigint, arg_3: bigint) => Promise<Result>;
-  makeOffer: (arg_0: Principal, arg_1: bigint, arg_2: bigint) => Promise<Result>;
-  serviceBalanceOf: (arg_0: Principal) => Promise<Array<BalanceMetadata>>;
-  withdrawFungible: (arg_0: Principal, arg_1: FungibleStandard) => Promise<Result>;
+  getAllBalances: () => Promise<
+    Array<[[Principal, Principal], FungibleBalance]>
+  >;
+  getAllListings: () => Promise<
+    Array<[[Principal, bigint], Listing]>
+  >;
+  getAllOffers: () => Promise<
+    Array<[Principal, Array<[bigint, Array<[Principal, Offer]>]>]>
+  >;
+  makeListing: (
+    arg_0: boolean,
+    arg_1: Principal,
+    arg_2: bigint,
+    arg_3: bigint,
+  ) => Promise<Result>;
+  makeOffer: (
+    arg_0: Principal,
+    arg_1: bigint,
+    arg_2: bigint,
+  ) => Promise<Result>;
+  serviceBalanceOf: (
+    arg_0: Principal,
+  ) => Promise<Array<BalanceMetadata>>;
+  withdrawFungible: (
+    arg_0: Principal,
+    arg_1: FungibleStandard,
+  ) => Promise<Result>;
   withdrawNFT: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
 }
 
 export default _SERVICE;
-

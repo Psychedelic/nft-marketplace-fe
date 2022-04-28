@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useThemeStore,
@@ -15,10 +15,10 @@ import {
 import { TableLayout } from './table-layout';
 import { Container, InfiniteScrollWrapper } from './styles';
 import { fetchCAPActivity } from '../../integrations/kyasshu/utils';
-import { NFTMetadata } from '../../declarations/nft';
+import NFTMetadata from '../../declarations/nft';
 import TableSkeletons from './table-skeletons';
 
-export interface rowProps {
+interface RowProps {
   item: {
     name: string;
     logo: string;
@@ -67,7 +67,7 @@ export const ActivityTable = () => {
       {
         Header: t('translation:tables.titles.item'),
         // eslint-disable-next-line
-        accessor: ({ item }: rowProps) => (
+        accessor: ({ item }: RowProps) => (
           <ItemDetailsCell
             name={item.name}
             id={item.token_id}
@@ -77,7 +77,7 @@ export const ActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.type'),
-        accessor: ({ type }: rowProps) => (
+        accessor: ({ type }: RowProps) => (
           <TypeDetailsCell
             name={type}
             type={type}
@@ -88,7 +88,7 @@ export const ActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.price'),
-        accessor: ({ price }: rowProps) => (
+        accessor: ({ price }: RowProps) => (
           <PriceDetailsCell
             wicp="undefined"
             price={price}
@@ -98,7 +98,7 @@ export const ActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.from'),
-        accessor: ({ from, callerDfinityExplorerUrl }: rowProps) => (
+        accessor: ({ from, callerDfinityExplorerUrl }: RowProps) => (
           <TextLinkCell
             text={from}
             url={callerDfinityExplorerUrl}
@@ -108,13 +108,13 @@ export const ActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.to'),
-        accessor: ({ to }: rowProps) => (
+        accessor: ({ to }: RowProps) => (
           <TextLinkCell text={to} type="" />
         ),
       },
       {
         Header: t('translation:tables.titles.time'),
-        accessor: ({ time }: rowProps) => (
+        accessor: ({ time }: RowProps) => (
           <TextCell text={time} type="activityTime" />
         ),
       },

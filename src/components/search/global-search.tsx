@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { SearchInput } from '../core';
 import wicpIcon from '../../assets/wicpIcon.png';
-import { mockNFTList } from './mock-data';
 import {
   SearchModalTrigger,
   ModalOverlay,
@@ -44,10 +43,15 @@ export const GlobalSearch = () => {
     setSearchText('');
   };
 
-  const handleSearch = useCallback(throttle((value: string) => {
-    const searchResultData = loadedNFTS.filter((nfts) => nfts.id.startsWith(value));
-    setSearchResult(searchResultData);
-  }, 3000), [loadedNFTS]);
+  const handleSearch = useCallback(
+    throttle((value: string) => {
+      const searchResultData = loadedNFTS.filter((nfts) =>
+        nfts.id.startsWith(value),
+      );
+      setSearchResult(searchResultData);
+    }, 3000),
+    [loadedNFTS],
+  );
 
   const closeDropDown = () => handleModalOpen(false);
 
@@ -95,37 +99,44 @@ export const GlobalSearch = () => {
             handleSearch={handleSearch}
           />
         </SearchContainer>
-        {searchText && (searchResult.length ? (
-          <ItemsListContainer>
-            {searchResult?.slice(0, 5).map((nft) => (
-              <RouterLink to={`/nft/${nft.id}`} onClick={closeDropDown} key={nft.id}>
-                <ItemDetailsWrapper>
-                  <ItemDetails>
-                    <ItemLogo src={nft.preview} alt="crowns" />
-                    <ItemName>{`${nft.name} ${nft.id}`}</ItemName>
-                  </ItemDetails>
-                  <PriceDetails>
-                    <WICPContainer size="small">
-                      <WICPLogo src={wicpIcon} alt="wicp" />
-                      <WICPText size="small">
-                        {nft.price ? nft.price : '- '}
-                        WICP
-                      </WICPText>
-                    </WICPContainer>
-                    <PriceText>
-                      <SubText>$</SubText>
-                      <SubText>{`${nft.price ? nft.price : '-'}`}</SubText>
-                    </PriceText>
-                  </PriceDetails>
-                </ItemDetailsWrapper>
-              </RouterLink>
-            ))}
-          </ItemsListContainer>
-        ) : (
-          <ItemsEmptyContainer>
-            {t('translation:emptyStates.noNFTId')}
-          </ItemsEmptyContainer>
-        ))}
+        {searchText &&
+          (searchResult.length ? (
+            <ItemsListContainer>
+              {searchResult?.slice(0, 5).map((nft) => (
+                <RouterLink
+                  to={`/nft/${nft.id}`}
+                  onClick={closeDropDown}
+                  key={nft.id}
+                >
+                  <ItemDetailsWrapper>
+                    <ItemDetails>
+                      <ItemLogo src={nft.preview} alt="crowns" />
+                      <ItemName>{`${nft.name} ${nft.id}`}</ItemName>
+                    </ItemDetails>
+                    <PriceDetails>
+                      <WICPContainer size="small">
+                        <WICPLogo src={wicpIcon} alt="wicp" />
+                        <WICPText size="small">
+                          {nft.price ? nft.price : '- '}
+                          WICP
+                        </WICPText>
+                      </WICPContainer>
+                      <PriceText>
+                        <SubText>$</SubText>
+                        <SubText>{`${
+                          nft.price ? nft.price : '-'
+                        }`}</SubText>
+                      </PriceText>
+                    </PriceDetails>
+                  </ItemDetailsWrapper>
+                </RouterLink>
+              ))}
+            </ItemsListContainer>
+          ) : (
+            <ItemsEmptyContainer>
+              {t('translation:emptyStates.noNFTId')}
+            </ItemsEmptyContainer>
+          ))}
         {!searchText && (
           <ItemsEmptyContainer>
             {t('translation:common.noRecentSearch')}
