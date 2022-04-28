@@ -28,7 +28,7 @@ const SuccessHandling = () => {
           <Toast open={open} onOpenChange={setOpen} duration={500000000}>
             <ToastDescription state="success" asChild>
               <div>
-                <ToastDescriptionIcon src={success} alt="warning-icon" />
+                <ToastDescriptionIcon src={success} alt="success-icon" />
                 <ToastDescriptionText>{sucessMessage.message}</ToastDescriptionText>
               </div>
             </ToastDescription>
