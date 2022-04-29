@@ -478,7 +478,7 @@ export const getTokenOffers = createAsyncThunk<
   const { ownerTokenIdentifiers, onSuccess, onFailure } = params;
 
   try {
-    let floorDifference = 'n/a';
+    let floorDifferencePrice;
     let currencyMarketPrice = undefined;
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const result = await actorInstance.getTokenOffers(
@@ -489,7 +489,7 @@ export const getTokenOffers = createAsyncThunk<
     // Floor Difference calculation
     const floorDifferenceResponse = await actorInstance.getFloor(nonFungibleContractAddress);
     if (('Ok' in floorDifferenceResponse)) {
-      floorDifference = floorDifferenceResponse.Ok.toString();
+      floorDifferencePrice = floorDifferenceResponse.Ok.toString();
     }
 
     // Fetch ICP Price
@@ -500,7 +500,7 @@ export const getTokenOffers = createAsyncThunk<
 
     const parsedTokenOffers = parseGetTokenOffersresponse({
       data: result,
-      floorDifference,
+      floorDifferencePrice,
       currencyMarketPrice
     });
 

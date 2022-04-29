@@ -1,6 +1,6 @@
 import { Principal } from '@dfinity/principal';
 import { Listing, Offer } from '../declarations/marketplace';
-import { formatAddress } from './formatters';
+import { formatAddress, floorDiffPercentageCalculator } from './formatters';
 import { formatTimestamp } from '../integrations/functions/date';
 import { OffersTableItem } from '../declarations/legacy';
 
@@ -56,13 +56,13 @@ type ParsedTokenOffers = OffersTableItem[];
 
 interface ParseGetTokenOffersParams {
   data: TokenOffers,
-  floorDifference: string,
+  floorDifferencePrice?: string,
   currencyMarketPrice?: number,
 }
 
 export const parseGetTokenOffersresponse = ({
   data,
-  floorDifference,
+  floorDifferencePrice,
   currencyMarketPrice,
 }: ParseGetTokenOffersParams) => {
   const parsed = data.reduce((accParent, currParent) => {
@@ -96,7 +96,10 @@ export const parseGetTokenOffersresponse = ({
           tokenId,
         },
         price,
-        floorDifference,
+        floorDifference: floorDiffPercentageCalculator({
+          currentPrice: price,
+          floorDifferencePrice
+        }),
         fromDetails,
         time: formatTimestamp(created),
         computedCurrencyPrice,
