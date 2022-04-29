@@ -56,7 +56,10 @@ interface OffersTableItem {
   },
   price: bigint,
   floorDifference: string,
-  from: string,
+  fromDetails: {
+    formattedAddress: string,
+    address: string,
+  }
   time: string,
   computedCurrencyPrice: number | undefined,
 }
@@ -81,9 +84,14 @@ export const parseGetTokenOffersresponse = (
       } = currChild;
 
       // TODO: What to do if payment address not valid principal?
-      const from = paymentAddress._isPrincipal
+      const fromDetails = {
+        formattedAddress: paymentAddress._isPrincipal
         ? formatAddress(paymentAddress.toString())
-        : 'n/a';
+        : 'n/a',
+        address: paymentAddress._isPrincipal
+        ? paymentAddress.toString()
+        : 'n/a',
+      }
 
       let computedCurrencyPrice;
       if (currencyMarketPrice) {
@@ -99,7 +107,7 @@ export const parseGetTokenOffersresponse = (
         price,
         // TODO: use the floor difference endpoint
         floorDifference,
-        from,
+        fromDetails,
         time: formatTimestamp(created),
         computedCurrencyPrice,
       };

@@ -42,7 +42,10 @@ export interface rowProps {
   };
   price: bigint;
   floorDifference: string;
-  from: string;
+  fromDetails: {
+    formattedAddress: string,
+    address: string,
+  }
   time: string;
   callerDfinityExplorerUrl: string;
   computedCurrencyPrice: number | undefined;
@@ -173,9 +176,9 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       },
       {
         Header: t('translation:tables.titles.from'),
-        accessor: ({ from, callerDfinityExplorerUrl }: rowProps) => (
+        accessor: ({ fromDetails, callerDfinityExplorerUrl }: rowProps) => (
           <TextLinkCell
-            text={from}
+            text={fromDetails.formattedAddress}
             url={callerDfinityExplorerUrl}
             type=""
           />
@@ -191,12 +194,12 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         id: OFFERS_TABLE_HEADERS.OffersReceivedAction,
         Header: t('translation:tables.titles.action'),
         // TODO: Update formatted price and offerFrom with dynamic fields
-        accessor: ({ price, from, item, computedCurrencyPrice }: rowProps) => (
+        accessor: ({ price, fromDetails, item, computedCurrencyPrice }: rowProps) => (
           <ButtonWrapper>
             <AcceptOfferModal
               price={price.toString()}
               formattedPrice={computedCurrencyPrice && computedCurrencyPrice.toString() || ''}
-              offerFrom={from}
+              offerFrom={fromDetails.address}
               nftTokenId={item.tokenId.toString()}
             />
           </ButtonWrapper>
