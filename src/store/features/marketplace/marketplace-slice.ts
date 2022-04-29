@@ -105,39 +105,7 @@ export const marketplaceSlice = createSlice({
 
       state.recentlyListedForSale.push(action.payload);
     });
-
-    builder.addCase(getAllListings.fulfilled, (state, action) => {
-      if (!action.payload) return;
-
-      state.allListings = action.payload;
-    });
   },
-});
-
-export const getAllListings = createAsyncThunk<
-  // Return type of the payload creator
-  GetAllListingsDataParsedObj | undefined,
-  // First argument to the payload creator
-  undefined,
-  // Optional fields for defining the thunk api
-  { state: RootState }
->('marketplace/getAllListings', async (params: any, thunkAPI) => {
-  // Checks if an actor instance exists already
-  // otherwise creates a new instance
-  const actorInstance = await actorInstanceHandler({
-    thunkAPI,
-    serviceName: 'marketplace',
-    slice: marketplaceSlice,
-  });
-
-  try {
-    const allListings = await actorInstance.getAllListings();
-    const parsed = parseAllListingResponseAsObj(allListings);
-
-    return parsed;
-  } catch (err) {
-    console.warn(err);
-  }
 });
 
 export const makeListing = createAsyncThunk<
@@ -296,10 +264,10 @@ export const cancelListing = createAsyncThunk<
   const userOwnedTokenId = BigInt(id);
 
   try {
-    const MKP_WITHDRAW_NFT = {
+    const MKP_CANCEL_LISTING = {
       idl: marketplaceIdlFactory,
       canisterId: config.marketplaceCanisterId,
-      methodName: 'withdrawNFT',
+      methodName: 'canceListing',
       args: [nonFungibleContractAddress, userOwnedTokenId],
       onFail: (res: any) => {
         console.warn('Oops! Failed to withdraw NFT', res);
@@ -310,7 +278,7 @@ export const cancelListing = createAsyncThunk<
     };
 
     const batchTxRes = await (window as any)?.ic?.plug?.batchTransactions([
-      MKP_WITHDRAW_NFT,
+      MKP_CANCEL_LISTING,
     ]);
 
     if (!batchTxRes) {

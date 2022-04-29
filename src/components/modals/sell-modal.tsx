@@ -100,7 +100,9 @@ export const SellModal = ({ onClose, actionText, nftTokenId }: SellModalProps) =
         id: tokenId,
         amount,
         onSuccess: () => {
-          dispatch(getAllListings());
+          // TODO: update the app state after listing
+          // should pull from the API
+          // dispatch(getAllListings());
           setModalStep(LISTING_STATUS_CODES.Confirmed);
         },
         onFailure: () => {
