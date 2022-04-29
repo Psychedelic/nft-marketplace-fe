@@ -17,7 +17,7 @@ export const floorDiffPercentageCalculator = ({
   if (!currentPrice || !floorDifferencePrice) return 'n/a';
 
   const difference = (Number(currentPrice) - Number(floorDifferencePrice));
-  const floorDifference = (difference / Number(floorDifferencePrice)) * 100;
+  const floorDifference = ((difference / Number(floorDifferencePrice)) * 100).toFixed(2);
 
   return `${floorDifference}%`;
 };
