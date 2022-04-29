@@ -118,7 +118,6 @@ export const fetchNFTS = async ({ payload, dispatch, sort, order, page, count }:
 };
 
 export const fetchNFTDetails = async ({ dispatch, id }: FetchNFTDetailsProps) => {
-  console.log('[debug] fetchNFTDetails call');
   try {
     // eslint-disable-next-line object-curly-newline
     const payload = {};
