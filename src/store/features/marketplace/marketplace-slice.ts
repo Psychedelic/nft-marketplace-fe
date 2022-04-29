@@ -498,7 +498,11 @@ export const getTokenOffers = createAsyncThunk<
       currencyMarketPrice = icpPriceResponse.usd;
     }
 
-    const parsedTokenOffers = parseGetTokenOffersresponse(result, floorDifference, currencyMarketPrice);
+    const parsedTokenOffers = parseGetTokenOffersresponse({
+      data: result,
+      floorDifference,
+      currencyMarketPrice
+    });
 
     if (!Array.isArray(result) || !result.length) return [];
 

@@ -61,18 +61,24 @@ interface OffersTableItem {
     address: string,
   }
   time: string,
-  computedCurrencyPrice: number | undefined,
+  computedCurrencyPrice?: number,
 }
 
 type TokenOffers = Array<[bigint, Array<Offer>]>;
 
 type ParsedTokenOffers = OffersTableItem[];
 
-export const parseGetTokenOffersresponse = (
+interface ParseGetTokenOffersParams {
   data: TokenOffers,
   floorDifference: string,
-  currencyMarketPrice: number | undefined,
-) => {
+  currencyMarketPrice?: number,
+}
+
+export const parseGetTokenOffersresponse = ({
+  data,
+  floorDifference,
+  currencyMarketPrice,
+}: ParseGetTokenOffersParams) => {
   const parsed = data.reduce((accParent, currParent) => {
     const tokenOffers = currParent[1] as Offer[];
     const parsedTokenOffers = tokenOffers.reduce((accChild, currChild) => {
@@ -93,10 +99,9 @@ export const parseGetTokenOffersresponse = (
         : 'n/a',
       }
 
-      let computedCurrencyPrice;
-      if (currencyMarketPrice) {
-        computedCurrencyPrice = currencyMarketPrice * Number(price.toString())
-      }
+      const computedCurrencyPrice = currencyMarketPrice
+        && currencyMarketPrice * Number(price.toString());
+
       const offerTableItem: OffersTableItem = {
         item: {
           // TODO: formatter for name, as number should probably have leading 0's
@@ -105,7 +110,6 @@ export const parseGetTokenOffersresponse = (
           tokenId,
         },
         price,
-        // TODO: use the floor difference endpoint
         floorDifference,
         fromDetails,
         time: formatTimestamp(created),
