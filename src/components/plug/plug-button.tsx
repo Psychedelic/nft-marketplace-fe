@@ -7,6 +7,7 @@ import {
   useThemeStore,
   plugActions,
 } from '../../store';
+import { disconnectPlug } from '../../integrations/plug';
 import {
   PlugButtonContainer,
   PlugButtonText,
@@ -88,7 +89,10 @@ export const PlugButton = ({
           </Flex>
           <div />
           <Flex
-            onClick={() => dispatch(plugActions.setIsConnected(false))}
+            onClick={() => {
+              dispatch(plugActions.setIsConnected(false));
+              disconnectPlug();
+            }}
           >
             <img src={isLightTheme ? disconnect : disconnectDark} alt="disconnect" />
             <p>Disconnect</p>
