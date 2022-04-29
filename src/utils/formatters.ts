@@ -6,3 +6,18 @@ export const formatAddress = (address: string) => {
 
   return `${split[0]}...${split[split.length - 1]}`;
 };
+
+export const floorDiffPercentageCalculator = ({
+  currentPrice,
+  floorDifferencePrice,
+}: {
+  currentPrice?: bigint;
+  floorDifferencePrice?: string;
+}) => {
+  if (!currentPrice || !floorDifferencePrice) return 'n/a';
+
+  const difference = (Number(currentPrice) - Number(floorDifferencePrice));
+  const floorDifference = ((difference / Number(floorDifferencePrice)) * 100).toFixed(2);
+
+  return `${floorDifference}%`;
+};

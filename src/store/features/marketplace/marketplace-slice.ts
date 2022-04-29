@@ -15,6 +15,7 @@ import { OwnerTokenIdentifiers } from '../../features/crowns/crowns-slice';
 // import { crownsSlice } from '../crowns/crowns-slice';
 // import { wicpSlice } from '../wicp/wicp-slice';
 import { GetAllListingsDataParsedObj, parseAllListingResponseAsObj, parseGetTokenOffersresponse } from '../../../utils/parser';
+import { getICPPrice } from '../../../integrations/marketplace/price.utils';
 
 interface MakeListingParams extends MakeListing {
   onSuccess?: () => void;
@@ -413,8 +414,9 @@ export const acceptOffer = createAsyncThunk<
   try {
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const userOwnedTokenId = BigInt(id);
+    const buyerAddress = Principal.fromText(buyerPrincipalId);
 
-    const result = await actorInstance.acceptOffer(nonFungibleContractAddress, userOwnedTokenId, buyerPrincipalId);
+    const result = await actorInstance.acceptOffer(nonFungibleContractAddress, userOwnedTokenId, buyerAddress);
 
     if (!('Ok' in result)) {
       if (typeof onFailure !== 'function') return;
@@ -463,13 +465,31 @@ export const getTokenOffers = createAsyncThunk<
   const { ownerTokenIdentifiers, onSuccess, onFailure } = params;
 
   try {
+    let floorDifferencePrice;
+    let currencyMarketPrice = undefined;
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const result = await actorInstance.getTokenOffers(
       nonFungibleContractAddress,
       ownerTokenIdentifiers,
       );
 
-    const parsedTokenOffers = parseGetTokenOffersresponse(result);
+    // Floor Difference calculation
+    const floorDifferenceResponse = await actorInstance.getFloor(nonFungibleContractAddress);
+    if (('Ok' in floorDifferenceResponse)) {
+      floorDifferencePrice = floorDifferenceResponse.Ok.toString();
+    }
+
+    // Fetch ICP Price
+    const icpPriceResponse = await getICPPrice();
+    if (icpPriceResponse && icpPriceResponse.usd) {
+      currencyMarketPrice = icpPriceResponse.usd;
+    }
+
+    const parsedTokenOffers = parseGetTokenOffersresponse({
+      data: result,
+      floorDifferencePrice,
+      currencyMarketPrice
+    });
 
     if (!Array.isArray(result) || !result.length) return [];
 

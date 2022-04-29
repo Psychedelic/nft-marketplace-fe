@@ -1,6 +1,8 @@
 import { Principal } from '@dfinity/principal';
 import { Listing, Offer } from '../declarations/marketplace';
-import { formatAddress } from './formatters';
+import { formatAddress, floorDiffPercentageCalculator } from './formatters';
+import { formatTimestamp } from '../integrations/functions/date';
+import { OffersTableItem } from '../declarations/legacy';
 
 type GetAllListingsDataResponse = Array<[[Principal, bigint], Listing]>;
 
@@ -48,22 +50,21 @@ export const parseAllListingResponseAsObj = (data: GetAllListingsDataResponse) =
   return parsed;
 };
 
-interface OffersTableItem {
-  item: {
-    name: string,
-    tokenId: bigint,
-  },
-  price: bigint,
-  floorDifference: string,
-  from: string,
-  time: bigint,
-}
-
 type TokenOffers = Array<[bigint, Array<Offer>]>;
 
 type ParsedTokenOffers = OffersTableItem[];
 
-export const parseGetTokenOffersresponse = (data: TokenOffers) => {
+interface ParseGetTokenOffersParams {
+  data: TokenOffers,
+  floorDifferencePrice?: string,
+  currencyMarketPrice?: number,
+}
+
+export const parseGetTokenOffersresponse = ({
+  data,
+  floorDifferencePrice,
+  currencyMarketPrice,
+}: ParseGetTokenOffersParams) => {
   const parsed = data.reduce((accParent, currParent) => {
     const tokenOffers = currParent[1] as Offer[];
     const parsedTokenOffers = tokenOffers.reduce((accChild, currChild) => {
@@ -75,9 +76,17 @@ export const parseGetTokenOffersresponse = (data: TokenOffers) => {
       } = currChild;
 
       // TODO: What to do if payment address not valid principal?
-      const from = paymentAddress._isPrincipal
+      const fromDetails = {
+        formattedAddress: paymentAddress._isPrincipal
         ? formatAddress(paymentAddress.toString())
-        : 'n/a';
+        : 'n/a',
+        address: paymentAddress._isPrincipal
+        ? paymentAddress.toString()
+        : 'n/a',
+      }
+
+      const computedCurrencyPrice = currencyMarketPrice
+        && currencyMarketPrice * Number(price.toString());
 
       const offerTableItem: OffersTableItem = {
         item: {
@@ -87,11 +96,13 @@ export const parseGetTokenOffersresponse = (data: TokenOffers) => {
           tokenId,
         },
         price,
-        // TODO: use the floor difference endpoint
-        floorDifference: 'n/a',
-        from,
-        // TODO: use DayJs and have this computed to human friendly
-        time: created,
+        floorDifference: floorDiffPercentageCalculator({
+          currentPrice: price,
+          floorDifferencePrice
+        }),
+        fromDetails,
+        time: formatTimestamp(created),
+        computedCurrencyPrice,
       };
   
       return [
