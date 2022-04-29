@@ -14,7 +14,7 @@ import { RootState } from '../../store';
 import { OwnerTokenIdentifiers } from '../../features/crowns/crowns-slice';
 // import { crownsSlice } from '../crowns/crowns-slice';
 // import { wicpSlice } from '../wicp/wicp-slice';
-import { GetAllListingsDataParsedObj, parseAllListingResponseAsObj, parseGetTokenOffersresponse } from '../../../utils/parser';
+import { parseGetTokenOffersresponse } from '../../../utils/parser';
 import { getICPPrice } from '../../../integrations/marketplace/price.utils';
 
 interface MakeListingParams extends MakeListing {
@@ -80,13 +80,12 @@ type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
 
 type InitialState = {
   recentlyListedForSale: RecentyListedForSale;
-  allListings: GetAllListingsDataParsedObj;
   actor?: MarketplaceActor;
+  tokenListing?: any; // TODO: Missing type for tokenListing
 };
 
 const initialState: InitialState = {
   recentlyListedForSale: [],
-  allListings: [],
 };
 
 type CommonError = { message: string };
@@ -105,6 +104,12 @@ export const marketplaceSlice = createSlice({
 
       state.recentlyListedForSale.push(action.payload);
     });
+
+    builder.addCase(getTokenListing.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.tokenListing = action.payload;
+    });
   },
 });
 
@@ -118,7 +123,6 @@ export const makeListing = createAsyncThunk<
 >('marketplace/makeListing', async (params: MakeListingParams, thunkAPI) => {
   const { id, amount, onSuccess, onFailure } = params;
   const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
-  const crownsCanisterId = Principal.fromText(config.crownsCanisterId);
   const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
 
   const userOwnedTokenId = BigInt(id);
@@ -142,7 +146,7 @@ export const makeListing = createAsyncThunk<
       idl: marketplaceIdlFactory,
       canisterId: config.marketplaceCanisterId,
       methodName: 'makeListing',
-      args: [directBuy, nonFungibleContractAddress, userOwnedTokenId, userListForPrice],
+      args: [nonFungibleContractAddress, userOwnedTokenId, userListForPrice],
       onSuccess,
       onFail: (res: any) => {
         console.warn('Oops! Failed to make listing', res);
@@ -470,6 +474,51 @@ export const getTokenOffers = createAsyncThunk<
     onFailure();
   }
 });
+
+export const getTokenListing = createAsyncThunk<
+  // Return type of the payload creator
+  // GetUserReceviedOffer | undefined,
+  any | undefined,
+  // First argument to the payload creator
+  any,
+  // Optional fields for defining the thunk api
+  { state: RootState }
+>('marketplace/getTokenListing', async (params: any, thunkAPI) => {
+  // Checks if an actor instance exists already
+  // otherwise creates a new instance
+  const actorInstance = await actorInstanceHandler({
+    thunkAPI,
+    serviceName: 'marketplace',
+    slice: marketplaceSlice,
+  });
+
+  const { id: tokenId } = params;
+
+  console.log('[debug] getTokenListing: tokenId:', tokenId);
+
+  try {
+    const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
+    const result = await actorInstance.getTokenListing(
+      nonFungibleContractAddress,
+      BigInt(tokenId),
+    );
+
+    console.log('[debug] getTokenListing: result', result);
+
+    if (!('Ok' in result)) {
+      console.warn(`Oops! Failed to get token listing for id ${tokenId}`);
+      
+      return;
+    }
+
+    console.log('[debug] getTokenListing: result', result['Ok']);
+
+    return result['Ok'];
+  } catch (err) {
+    thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
+  }
+});
+
 
 export default marketplaceSlice.reducer;
 
