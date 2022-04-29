@@ -58,13 +58,18 @@ interface OffersTableItem {
   floorDifference: string,
   from: string,
   time: string,
+  computedCurrencyPrice: number | undefined,
 }
 
 type TokenOffers = Array<[bigint, Array<Offer>]>;
 
 type ParsedTokenOffers = OffersTableItem[];
 
-export const parseGetTokenOffersresponse = (data: TokenOffers, floorDifference: string) => {
+export const parseGetTokenOffersresponse = (
+  data: TokenOffers,
+  floorDifference: string,
+  currencyMarketPrice: number | undefined,
+) => {
   const parsed = data.reduce((accParent, currParent) => {
     const tokenOffers = currParent[1] as Offer[];
     const parsedTokenOffers = tokenOffers.reduce((accChild, currChild) => {
@@ -80,6 +85,10 @@ export const parseGetTokenOffersresponse = (data: TokenOffers, floorDifference: 
         ? formatAddress(paymentAddress.toString())
         : 'n/a';
 
+      let computedCurrencyPrice;
+      if (currencyMarketPrice) {
+        computedCurrencyPrice = currencyMarketPrice * Number(price.toString())
+      }
       const offerTableItem: OffersTableItem = {
         item: {
           // TODO: formatter for name, as number should probably have leading 0's
@@ -92,6 +101,7 @@ export const parseGetTokenOffersresponse = (data: TokenOffers, floorDifference: 
         floorDifference,
         from,
         time: formatTimestamp(created),
+        computedCurrencyPrice,
       };
   
       return [

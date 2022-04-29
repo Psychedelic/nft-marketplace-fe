@@ -15,6 +15,7 @@ import { OwnerTokenIdentifiers } from '../../features/crowns/crowns-slice';
 // import { crownsSlice } from '../crowns/crowns-slice';
 // import { wicpSlice } from '../wicp/wicp-slice';
 import { GetAllListingsDataParsedObj, parseAllListingResponseAsObj, parseGetTokenOffersresponse } from '../../../utils/parser';
+import { getICPPrice } from '../../../integrations/marketplace/price.utils';
 
 interface MakeListingParams extends MakeListing {
   onSuccess?: () => void;
@@ -477,18 +478,26 @@ export const getTokenOffers = createAsyncThunk<
 
   try {
     let floorDifference = 'n/a';
+    let currencyMarketPrice = undefined;
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const result = await actorInstance.getTokenOffers(
       nonFungibleContractAddress,
       ownerTokenIdentifiers,
       );
 
+    // Floor Difference calculation
     const floorDifferenceResponse = await actorInstance.getFloor(nonFungibleContractAddress);
     if (('Ok' in floorDifferenceResponse)) {
-      floorDifference = `${floorDifferenceResponse.Ok}`;
+      floorDifference = floorDifferenceResponse.Ok.toString();
     }
 
-    const parsedTokenOffers = parseGetTokenOffersresponse(result, floorDifference);
+    // Fetch ICP Price
+    const icpPriceResponse = await getICPPrice();
+    if (icpPriceResponse && icpPriceResponse.usd) {
+      currencyMarketPrice = icpPriceResponse.usd;
+    }
+
+    const parsedTokenOffers = parseGetTokenOffersresponse(result, floorDifference, currencyMarketPrice);
 
     if (!Array.isArray(result) || !result.length) return [];
 

@@ -45,6 +45,7 @@ export interface rowProps {
   from: string;
   time: string;
   callerDfinityExplorerUrl: string;
+  computedCurrencyPrice: number | undefined;
 }
 
 export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
@@ -156,10 +157,10 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       },
       {
         Header: t('translation:tables.titles.price'),
-        accessor: ({ price }: rowProps) => (
+        accessor: ({ price, computedCurrencyPrice }: rowProps) => (
           <PriceDetailsCell
             wicp={price.toString()}
-            // price={}
+            price={computedCurrencyPrice && `$${computedCurrencyPrice.toString()}` || ''}
             tableType=""
           />
         ),
