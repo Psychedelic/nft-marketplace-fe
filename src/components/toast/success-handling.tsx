@@ -9,6 +9,7 @@ import {
   ToastProvider,
 } from './styles';
 import closeWarning from '../../assets/close-warning.svg';
+import success from '../../assets/success-icon.svg';
 import { notificationActions, useAppDispatch, useErrorsStore } from '../../store';
 
 const SuccessHandling = () => {
@@ -27,6 +28,7 @@ const SuccessHandling = () => {
           <Toast open={open} onOpenChange={setOpen} duration={500000000}>
             <ToastDescription state="success" asChild>
               <div>
+                <ToastDescriptionIcon src={success} alt="success-icon" />
                 <ToastDescriptionText>{sucessMessage.message}</ToastDescriptionText>
               </div>
             </ToastDescription>
