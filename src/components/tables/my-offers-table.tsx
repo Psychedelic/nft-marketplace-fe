@@ -23,6 +23,7 @@ import {
 } from '../../constants/my-offers';
 import { getTokenOffers } from '../../store/features/marketplace';
 import { getOwnerTokenIdentifiers } from '../../store/features/crowns';
+import { OffersTableItem } from '../../declarations/legacy';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -34,22 +35,6 @@ export type MyOffersTableProps = {
 
 // TODO: See parser.ts and refactor to use common type
 // the current is all string which is not correct
-export interface rowProps {
-  item: {
-    name: string;
-    logo: string;
-    tokenId: bigint;
-  };
-  price: bigint;
-  floorDifference: string;
-  fromDetails: {
-    formattedAddress: string,
-    address: string,
-  }
-  time: string;
-  callerDfinityExplorerUrl: string;
-  computedCurrencyPrice: number | undefined;
-}
 
 export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const { t } = useTranslation();
@@ -150,7 +135,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       {
         Header: t('translation:tables.titles.item'),
         // eslint-disable-next-line
-        accessor: ({ item }: rowProps) => (
+        accessor: ({ item }: OffersTableItem) => (
           <ItemDetailsCell
             name={item.name}
             id={item.tokenId.toString()}
@@ -160,7 +145,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       },
       {
         Header: t('translation:tables.titles.price'),
-        accessor: ({ price, computedCurrencyPrice }: rowProps) => (
+        accessor: ({ price, computedCurrencyPrice }: OffersTableItem) => (
           <PriceDetailsCell
             wicp={price.toString()}
             price={computedCurrencyPrice && `$${computedCurrencyPrice.toString()}` || ''}
@@ -170,13 +155,13 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       },
       {
         Header: t('translation:tables.titles.floorDifference'),
-        accessor: ({ floorDifference }: rowProps) => (
+        accessor: ({ floorDifference }: OffersTableItem) => (
           <TextCell text={floorDifference} type="offers" />
         ),
       },
       {
         Header: t('translation:tables.titles.from'),
-        accessor: ({ fromDetails, callerDfinityExplorerUrl }: rowProps) => (
+        accessor: ({ fromDetails, callerDfinityExplorerUrl }: OffersTableItem) => (
           <TextLinkCell
             text={fromDetails.formattedAddress}
             url={callerDfinityExplorerUrl}
@@ -186,7 +171,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       },
       {
         Header: t('translation:tables.titles.time'),
-        accessor: ({ time }: rowProps) => (
+        accessor: ({ time }: OffersTableItem) => (
           <TextCell text={time} type="activityTime" />
         ),
       },
@@ -194,7 +179,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         id: OFFERS_TABLE_HEADERS.OffersReceivedAction,
         Header: t('translation:tables.titles.action'),
         // TODO: Update formatted price and offerFrom with dynamic fields
-        accessor: ({ price, fromDetails, item, computedCurrencyPrice }: rowProps) => (
+        accessor: ({ price, fromDetails, item, computedCurrencyPrice }: OffersTableItem) => (
           <ButtonWrapper>
             <AcceptOfferModal
               price={price.toString()}

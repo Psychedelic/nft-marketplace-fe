@@ -2,6 +2,7 @@ import { Principal } from '@dfinity/principal';
 import { Listing, Offer } from '../declarations/marketplace';
 import { formatAddress } from './formatters';
 import { formatTimestamp } from '../integrations/functions/date';
+import { OffersTableItem } from '../declarations/legacy';
 
 type GetAllListingsDataResponse = Array<[[Principal, bigint], Listing]>;
 
@@ -48,21 +49,6 @@ export const parseAllListingResponseAsObj = (data: GetAllListingsDataResponse) =
 
   return parsed;
 };
-
-interface OffersTableItem {
-  item: {
-    name: string,
-    tokenId: bigint,
-  },
-  price: bigint,
-  floorDifference: string,
-  fromDetails: {
-    formattedAddress: string,
-    address: string,
-  }
-  time: string,
-  computedCurrencyPrice?: number,
-}
 
 type TokenOffers = Array<[bigint, Array<Offer>]>;
 
