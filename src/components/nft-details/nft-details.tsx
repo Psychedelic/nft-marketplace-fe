@@ -48,9 +48,6 @@ export const NftDetails = () => {
   const isListed = tokenListing?.created || nftDetails?.isListed;
   const dispatch = useAppDispatch();
 
-  console.log('[debug] nft-list.tsx: tokenListing:', tokenListing);
-  console.log('[debug] recentlyListedForSale', recentlyListedForSale);
-
   // TODO: We need more control, plus the
   // kyasshu calls should be placed as a thunk/action
   // of the state management of your choice, which is redux toolkit

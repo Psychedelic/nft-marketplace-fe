@@ -494,8 +494,6 @@ export const getTokenListing = createAsyncThunk<
 
   const { id: tokenId } = params;
 
-  console.log('[debug] getTokenListing: tokenId:', tokenId);
-
   try {
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const result = await actorInstance.getTokenListing(
@@ -503,15 +501,11 @@ export const getTokenListing = createAsyncThunk<
       BigInt(tokenId),
     );
 
-    console.log('[debug] getTokenListing: result', result);
-
     if (!('Ok' in result)) {
       console.warn(`Oops! Failed to get token listing for id ${tokenId}`);
       
       return;
     }
-
-    console.log('[debug] getTokenListing: result', result['Ok']);
 
     return result['Ok'];
   } catch (err) {
