@@ -38,7 +38,7 @@ export interface rowProps {
   item: {
     name: string;
     logo: string;
-    token_id: string;
+    tokenId: bigint;
   };
   price: bigint;
   floorDifference: string;
@@ -150,7 +150,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         accessor: ({ item }: rowProps) => (
           <ItemDetailsCell
             name={item.name}
-            id={item.token_id}
+            id={item.tokenId.toString()}
             logo={item.logo}
           />
         ),
@@ -191,13 +191,13 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         id: OFFERS_TABLE_HEADERS.OffersReceivedAction,
         Header: t('translation:tables.titles.action'),
         // TODO: Update formatted price and offerFrom with dynamic fields
-        accessor: ({ price, from, item }: rowProps) => (
+        accessor: ({ price, from, item, computedCurrencyPrice }: rowProps) => (
           <ButtonWrapper>
             <AcceptOfferModal
-              price={price}
-              formattedPrice={price}
+              price={price.toString()}
+              formattedPrice={computedCurrencyPrice && computedCurrencyPrice.toString() || ''}
               offerFrom={from}
-              nftTokenId={item.token_id}
+              nftTokenId={item.tokenId.toString()}
             />
           </ButtonWrapper>
         ),
