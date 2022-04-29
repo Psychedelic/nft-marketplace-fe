@@ -30,7 +30,6 @@ type CurrentListing = {
 export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
-  const [currentListing, setCurrentListing] = useState<CurrentListing>();
   const recentlyListedForSale = useSelector(
     (state: RootState) => state.marketplace.recentlyListedForSale,
   );
@@ -39,21 +38,22 @@ export const NftDetails = () => {
   );
   const tokenListing = useSelector(
     (state: RootState) => {
-      const ls = state.marketplace.tokenListing;
-      // TODO: use the correct type def
-      const tokenListed = ls?.find((item: any) => item.tokenId === id);
-      return tokenListed;
+      if (!id || !(id in state.marketplace?.tokenListing)) return;
+
+      // eslint-disable-next-line consistent-return
+      return state.marketplace.tokenListing[id];
     },
   );
+
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
     [loadedNFTS, id],
   );
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
-  const owner = currentListing?.payment_address.toString() || nftDetails?.owner;
+  const owner = tokenListing?.payment_address?.toString() || nftDetails?.owner;
   const lastSalePrice = tokenListing?.price || nftDetails?.price;
-  const isListed = tokenListing?.created || nftDetails?.isListed;
+  const isListed = !!(tokenListing?.created || nftDetails?.isListed);
   const dispatch = useAppDispatch();
 
   // TODO: We need more control, plus the

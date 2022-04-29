@@ -7,6 +7,7 @@ import marketplaceIdlService from '../../../declarations/marketplace';
 import { actorInstanceHandler } from '../../../integrations/actor';
 import crownsIdlFactory from '../../../declarations/nft.did';
 import marketplaceIdlFactory from '../../../declarations/marketplace.did';
+import { Listing } from '../../../declarations/marketplace';
 import wicpIdlFactory from '../../../declarations/wicp.did';
 import config from '../../../config/env';
 import { notificationActions } from '../errors';
@@ -82,12 +83,13 @@ type InitialState = {
   recentlyListedForSale: RecentyListedForSale;
   recentlyCancelledItems: any,
   actor?: MarketplaceActor;
-  tokenListing?: []; // TODO: Missing type for tokenListing
+  tokenListing: Record<string, Listing>;
 };
 
 const initialState: InitialState = {
   recentlyListedForSale: [],
   recentlyCancelledItems: [],
+  tokenListing: {},
 };
 
 type CommonError = { message: string };
@@ -110,7 +112,10 @@ export const marketplaceSlice = createSlice({
     builder.addCase(getTokenListing.fulfilled, (state, action) => {
       if (!action.payload) return;
 
-      state.tokenListing?.push(action.payload);
+      state.tokenListing = {
+        ...state.tokenListing,
+        ...action.payload,
+      };
     });
 
     builder.addCase(cancelListing.fulfilled, (state, action) => {
@@ -512,12 +517,13 @@ export const getTokenListing = createAsyncThunk<
     if (!('Ok' in result)) {
       console.warn(`Oops! Failed to get token listing for id ${tokenId}`);
       
-      return;
+      return {
+        [tokenId]: {}
+      };
     }
 
     return {
-      tokenId,
-      ...result['Ok'],
+      [tokenId]: result['Ok'],
     };
   } catch (err) {
     thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
