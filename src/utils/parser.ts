@@ -1,6 +1,7 @@
 import { Principal } from '@dfinity/principal';
 import { Listing, Offer } from '../declarations/marketplace';
 import { formatAddress } from './formatters';
+import { formatTimestamp } from '../integrations/functions/date';
 
 type GetAllListingsDataResponse = Array<[[Principal, bigint], Listing]>;
 
@@ -56,7 +57,7 @@ interface OffersTableItem {
   price: bigint,
   floorDifference: string,
   from: string,
-  time: bigint,
+  time: string,
 }
 
 type TokenOffers = Array<[bigint, Array<Offer>]>;
@@ -90,8 +91,7 @@ export const parseGetTokenOffersresponse = (data: TokenOffers) => {
         // TODO: use the floor difference endpoint
         floorDifference: 'n/a',
         from,
-        // TODO: use DayJs and have this computed to human friendly
-        time: created,
+        time: formatTimestamp(created),
       };
   
       return [
