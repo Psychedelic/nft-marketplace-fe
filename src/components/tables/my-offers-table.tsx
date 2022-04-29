@@ -186,7 +186,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       {
         id: OFFERS_TABLE_HEADERS.OffersReceivedAction,
         Header: t('translation:tables.titles.action'),
-        // TODO: Update formatted price and offerFrom with dynamic fields
+        // TODO: update token id to enable accept offer feature
         accessor: ({ price, from, item }: rowProps) => (
           <ButtonWrapper>
             <AcceptOfferModal
