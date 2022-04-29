@@ -427,8 +427,9 @@ export const acceptOffer = createAsyncThunk<
   try {
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const userOwnedTokenId = BigInt(id);
+    const buyerAddress = Principal.fromText(buyerPrincipalId);
 
-    const result = await actorInstance.acceptOffer(nonFungibleContractAddress, userOwnedTokenId, buyerPrincipalId);
+    const result = await actorInstance.acceptOffer(nonFungibleContractAddress, userOwnedTokenId, buyerAddress);
 
     if (!('Ok' in result)) {
       if (typeof onFailure !== 'function') return;
