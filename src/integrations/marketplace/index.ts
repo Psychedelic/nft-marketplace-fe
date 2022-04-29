@@ -40,7 +40,7 @@ export const makeListing = async ({
 
     onSuccess();
   } catch (error) {
-    dispatch(notificationActions.setErrorMessage(error.message));
+    dispatch(notificationActions.setErrorMessage('Oops! Unable to make listing'));
     onFailure();
   }
 };

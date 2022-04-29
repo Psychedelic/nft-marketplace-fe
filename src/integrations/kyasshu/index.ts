@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAppDispatch, useFilterStore, usePlugStore } from '../../store';
+import { notificationActions, useAppDispatch, useFilterStore, usePlugStore } from '../../store';
 import { fetchNFTS, fetchNFTDetails, useTraitsPayload, usePriceValues } from './utils';
 
 // eslint-disable-next-line object-curly-newline
@@ -48,7 +48,7 @@ export const useNFTDetailsFetcher = () => {
 
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
-    if (!id) return;
+    if (!id) dispatch(notificationActions.setErrorMessage('Oops! Unable to fetch id'));
 
     fetchNFTDetails({
       dispatch,

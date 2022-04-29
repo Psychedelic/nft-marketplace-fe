@@ -113,7 +113,7 @@ export const fetchNFTS = async ({ payload, dispatch, sort, order, page, count }:
     console.warn(error);
 
     // set NFTS failed to load
-    dispatch(notificationActions.setErrorMessage(error.message));
+    dispatch(notificationActions.setErrorMessage('Oops! Unable to fetch NFTs'));
   }
 };
 
@@ -161,7 +161,7 @@ export const fetchNFTDetails = async ({ dispatch, id }: FetchNFTDetailsProps) =>
   } catch (error) {
     // eslint-disable-next-line no-console
     console.warn(error);
-    dispatch(notificationActions.setErrorMessage(error.message));
+    dispatch(notificationActions.setErrorMessage('Oops! Unable to fetch NFT detail'));
   }
 };
 
@@ -205,6 +205,7 @@ export const fetchFilterTraits = async ({ dispatch }: FetchFilterTraitsProps) =>
     dispatch(filterActions.setIsFilterTraitsLoading(false));
   } catch (error) {
     console.log(error);
+    dispatch(notificationActions.setErrorMessage('Oops! Unable to fetch traits'));
   }
 };
 
@@ -261,6 +262,7 @@ export const getTokenMetadata = async ({ tokenId, dispatch }: TokenMetadataProps
     dispatch(tableActions.setTableMetadata(response?.data?.metadata?.thumbnail?.value?.TextContent));
   } catch (error) {
     console.log(error);
+    dispatch(notificationActions.setErrorMessage('Oops! Unable to fetch images'));
   }
 };
 
@@ -331,7 +333,7 @@ export const fetchCAPActivity = createAsyncThunk(
 
       thunkAPI.dispatch(tableActions.setCapActivityTable(actionPayload));
     } catch (error) {
-      thunkAPI.dispatch(notificationActions.setErrorMessage(error));
+      thunkAPI.dispatch(notificationActions.setErrorMessage('Oops! Unable to fetch activity table data'));
     }
   },
 );

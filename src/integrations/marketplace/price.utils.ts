@@ -1,5 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
+import { notificationActions, useAppDispatch } from '../../store';
 
 const COINGECKO_ICP_ID = 'internet-computer';
 const COINGECKO_PRICE_UNAVAILABLE = 'n/a';
@@ -15,6 +16,7 @@ type Currencies = 'USD';
 export const getICPPrice = async (): Promise<
   CoinGeckoResponsePrice | undefined
 > => {
+  const dispatch = useAppDispatch();
   try {
     const { data } = await api.get('/simple/price', {
       params: {
@@ -27,7 +29,7 @@ export const getICPPrice = async (): Promise<
 
     return data[COINGECKO_ICP_ID];
   } catch (err) {
-    console.error('Oops! Current ICP price is unavailable');
+    dispatch(notificationActions.setErrorMessage('Oops! Current ICP price is unavailable'));
   }
 };
 
@@ -38,6 +40,8 @@ export const getCurrentMarketPrice = async ({
   currency?: Currencies;
   currentMakeListingPrice: number;
 }) => {
+  const dispatch = useAppDispatch();
+  
   try {
     if (currency !== 'USD' || !currentMakeListingPrice)
       return COINGECKO_PRICE_UNAVAILABLE;
@@ -61,6 +65,7 @@ export const getCurrentMarketPrice = async ({
     return formatted;
   } catch (err) {
     console.error(err);
+    dispatch(notificationActions.setErrorMessage('Oops! Current market price is unavailable'));
   }
 
   return COINGECKO_PRICE_UNAVAILABLE;

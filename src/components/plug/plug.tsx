@@ -5,6 +5,7 @@ import {
   usePlugStore,
   plugActions,
   useAppDispatch,
+  notificationActions,
 } from '../../store';
 import {
   isPlugInstalled,
@@ -147,6 +148,7 @@ export const Plug = () => {
       // eslint-disable-next-line no-console
       console.error(err);
       // failed to connect plug
+      dispatch(notificationActions.setErrorMessage('Oops! Unable to connect to plug'));
       dispatch(plugActions.setIsConnected(false));
     }
   };
