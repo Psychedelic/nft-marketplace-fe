@@ -168,18 +168,6 @@ export const makeListing = createAsyncThunk<
       },
     };
 
-    const MKP_DEPOSIT_NFT = {
-      idl: marketplaceIdlFactory,
-      canisterId: config.marketplaceCanisterId,
-      methodName: 'depositNFT',
-      args: [crownsCanisterId, userOwnedTokenId],
-      onFail: (res: any) => {
-        console.warn(`Oops! Failed to deposit NFT (${crownsCanisterId}, ${userOwnedTokenId})`, res);
-
-        typeof onFailure === 'function' && onFailure();
-      },
-    };
-
     const directBuy = true;
     const MKP_MAKE_LISTING = {
       idl: marketplaceIdlFactory,
@@ -196,7 +184,6 @@ export const makeListing = createAsyncThunk<
 
     const batchTxRes = await (window as any)?.ic?.plug?.batchTransactions([
       CROWNS_APPROVE_MARKETPLACE,
-      MKP_DEPOSIT_NFT,
       MKP_MAKE_LISTING,
     ]);
 
