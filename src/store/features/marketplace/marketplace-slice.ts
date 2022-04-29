@@ -476,13 +476,19 @@ export const getTokenOffers = createAsyncThunk<
   const { ownerTokenIdentifiers, onSuccess, onFailure } = params;
 
   try {
+    let floorDifference = 'n/a';
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const result = await actorInstance.getTokenOffers(
       nonFungibleContractAddress,
       ownerTokenIdentifiers,
       );
 
-    const parsedTokenOffers = parseGetTokenOffersresponse(result);
+    const floorDifferenceResponse = await actorInstance.getFloor(nonFungibleContractAddress);
+    if (('Ok' in floorDifferenceResponse)) {
+      floorDifference = `${floorDifferenceResponse.Ok}`;
+    }
+
+    const parsedTokenOffers = parseGetTokenOffersresponse(result, floorDifference);
 
     if (!Array.isArray(result) || !result.length) return [];
 

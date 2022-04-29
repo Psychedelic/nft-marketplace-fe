@@ -64,7 +64,7 @@ type TokenOffers = Array<[bigint, Array<Offer>]>;
 
 type ParsedTokenOffers = OffersTableItem[];
 
-export const parseGetTokenOffersresponse = (data: TokenOffers) => {
+export const parseGetTokenOffersresponse = (data: TokenOffers, floorDifference: string) => {
   const parsed = data.reduce((accParent, currParent) => {
     const tokenOffers = currParent[1] as Offer[];
     const parsedTokenOffers = tokenOffers.reduce((accChild, currChild) => {
@@ -89,7 +89,7 @@ export const parseGetTokenOffersresponse = (data: TokenOffers) => {
         },
         price,
         // TODO: use the floor difference endpoint
-        floorDifference: 'n/a',
+        floorDifference,
         from,
         time: formatTimestamp(created),
       };
