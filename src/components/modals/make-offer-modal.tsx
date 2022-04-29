@@ -19,6 +19,7 @@ import {
   SaleContentWrapper,
   ModalButtonsList,
   ModalButtonWrapper,
+  ActionText,
 } from './styles';
 
 import { LISTING_STATUS_CODES } from '../../constants/listing';
@@ -29,7 +30,13 @@ import { makeOffer } from '../../store/features/marketplace';
  * Make Offer Modal Component
  * --------------------------------------------------------------------------*/
 
-export const MakeOfferModal = () => {
+export type MakeOfferModalProps = {
+  onClose?: () => void;
+  actionText?: string;
+  nftTokenId?: string;
+}
+
+export const MakeOfferModal = ({ onClose, actionText, nftTokenId }: MakeOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -41,6 +48,15 @@ export const MakeOfferModal = () => {
   );
   const [amount, setAmount] = useState<string>('');
 
+  const tokenId: string | undefined = (() => {
+    const tid = id ?? nftTokenId;
+
+    if (!tid) return;
+
+    // eslint-disable-next-line consistent-return
+    return tid;
+  })();
+
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
     setAmount('');
@@ -49,16 +65,22 @@ export const MakeOfferModal = () => {
 
   const handleModalClose = () => {
     setModalOpened(false);
+    // eslint-disable-next-line
+    onClose && onClose();
   };
 
   const handleSubmitOffer = async () => {
-    if (!id) return;
+    if (!tokenId) {
+      console.warn('Oops! Missing NFT id param');
+
+      return;
+    }
 
     setModalStep(LISTING_STATUS_CODES.Pending);
 
     dispatch(
       makeOffer({
-        id,
+        id: tokenId,
         amount,
         onSuccess: () => {
           setModalStep(LISTING_STATUS_CODES.Submitted);
@@ -81,16 +103,19 @@ export const MakeOfferModal = () => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <MakeOfferModalTrigger>
-          <ActionButton
-            type="secondary"
-            text={t('translation:buttons.action.makeOffer')}
-            handleClick={() => {
-              // eslint-disable-next-line no-console
-              console.log('makeOffer modal opened');
-            }}
-          />
-        </MakeOfferModalTrigger>
+        {actionText ? (
+          <ActionText onClick={() => console.log('makeOffer modal opened')}>
+            {actionText}
+          </ActionText>
+        ) : (
+          <MakeOfferModalTrigger>
+            <ActionButton
+              type="primary"
+              text={t('translation:buttons.action.makeOffer')}
+              handleClick={() => console.log('makeOffer modal opened')}
+            />
+          </MakeOfferModalTrigger>
+        )}
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------

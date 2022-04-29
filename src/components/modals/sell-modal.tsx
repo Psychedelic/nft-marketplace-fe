@@ -21,6 +21,7 @@ import {
   FeePercent,
   ModalButtonsList,
   ModalButtonWrapper,
+  ActionText,
 } from './styles';
 
 import { LISTING_STATUS_CODES } from '../../constants/listing';
@@ -31,7 +32,13 @@ import { makeListing, getAllListings } from '../../store/features/marketplace';
  * Sell Modal Component
  * --------------------------------------------------------------------------*/
 
-export const SellModal = () => {
+export type SellModalProps = {
+  onClose?: () => void;
+  actionText?: string;
+  nftTokenId?: string;
+}
+
+export const SellModal = ({ onClose, actionText, nftTokenId }: SellModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -40,6 +47,15 @@ export const SellModal = () => {
   // Sell modal steps: listingInfo/pending/confirmed
   const [modalStep, setModalStep] = useState<string>(LISTING_STATUS_CODES.ListingInfo);
   const [amount, setAmount] = useState<string>('');
+
+  const tokenId: string | undefined = (() => {
+    const tid = id ?? nftTokenId;
+
+    if (!tid) return;
+
+    // eslint-disable-next-line consistent-return
+    return tid;
+  })();
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -66,16 +82,22 @@ export const SellModal = () => {
 
   const handleModalClose = () => {
     setModalOpened(false);
+    // eslint-disable-next-line
+    onClose && onClose();
   };
 
   const handleListing = async () => {
-    if (!id) return;
+    if (!tokenId) {
+      console.warn('Oops! Missing NFT id param');
+
+      return;
+    }
 
     setModalStep(LISTING_STATUS_CODES.Pending);
 
     dispatch(
       makeListing({
-        id,
+        id: tokenId,
         amount,
         onSuccess: () => {
           dispatch(getAllListings());
@@ -96,16 +118,22 @@ export const SellModal = () => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <SellModalTrigger>
-          <ActionButton
-            type="primary"
-            text={t('translation:buttons.action.sell')}
-            handleClick={() => {
-              // eslint-disable-next-line no-console
-              console.log('Sell modal opened');
-            }}
-          />
-        </SellModalTrigger>
+        {actionText ? (
+          <ActionText onClick={() => console.log('sell modal opened')}>
+            {actionText}
+          </ActionText>
+        ) : (
+          <SellModalTrigger>
+            <ActionButton
+              type="primary"
+              text={t('translation:buttons.action.sell')}
+              handleClick={() => {
+                // eslint-disable-next-line no-console
+                console.log('Sell modal opened');
+              }}
+            />
+          </SellModalTrigger>
+        )}
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------

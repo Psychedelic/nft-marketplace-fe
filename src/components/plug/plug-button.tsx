@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import * as Dropdown from '@radix-ui/react-dropdown-menu';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   useAppDispatch,
   usePlugStore,
@@ -44,6 +46,21 @@ export const PlugButton = ({
   const isLightTheme = theme === 'lightTheme';
   const currTheme = theme === 'darkTheme' ? 'dark' : 'light';
 
+  const [userPrincipal, setUserPrincipal] = useState();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // TODO: check if principal already available in the store
+    (async () => {
+      const principal = await (window as any).ic?.plug?.getPrincipal();
+
+      if (!principal) return;
+
+      setUserPrincipal(principal.toString());
+    })();
+  }, []);
+
   return (
     <Dropdown.Root
       onOpenChange={() => {
@@ -62,7 +79,7 @@ export const PlugButton = ({
           }}
           className="plug-button"
         >
-          <PlugButtonText>
+          <PlugButtonText className="plug-button-text">
             {isConnected && (
               <PlugIcon
                 src={isLightTheme ? plugIcon : plugIconDark}
@@ -79,7 +96,7 @@ export const PlugButton = ({
       </DropdownTrigger>
       {isConnected && (
         <ConnectToPlugButton align="end" background={currTheme}>
-          <Flex>
+          <Flex onClick={() => navigate(`/offers/${userPrincipal}`)}>
             <img src={isLightTheme ? offers : offersDark} alt="offers" />
             <p>My Offers</p>
           </Flex>

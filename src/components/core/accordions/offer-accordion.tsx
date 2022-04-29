@@ -46,11 +46,13 @@ export type DisConnectedProps = {
 
 const OnConnected = ({ isListed, isOwner }: ConnectedProps) => (
   <>
-    {isListed && !isOwner && (
+    { !isOwner && (
       <ButtonListWrapper>
-        <ButtonDetailsWrapper>
-          <BuyNowModal />
-        </ButtonDetailsWrapper>
+        { isListed && (
+          <ButtonDetailsWrapper>
+            <BuyNowModal />
+          </ButtonDetailsWrapper>
+        )}
         <ButtonDetailsWrapper>
           <MakeOfferModal />
         </ButtonDetailsWrapper>

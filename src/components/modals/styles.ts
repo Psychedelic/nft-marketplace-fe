@@ -47,8 +47,8 @@ export const CancelListingModalTrigger = styled('div', {
 });
 
 export const CancelOfferModalTrigger = styled('div', {
-  width: '155px',
-  height: '50px',
+  width: '98px',
+  height: '33px',
 });
 
 export const AcceptOfferModalTrigger = styled('div', {
@@ -60,7 +60,7 @@ export const ModalOverlay = styled(DialogPrimitive.Overlay, {
   backgroundColor: '$modalOverlay',
   position: 'fixed',
   inset: 0,
-  zIndex: 1,
+  zIndex: 2,
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
   },
@@ -76,7 +76,7 @@ export const ModalContent = styled(DialogPrimitive.Content, {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   padding: 45,
-  zIndex: 1,
+  zIndex: 2,
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
   },
@@ -299,5 +299,31 @@ export const ModalButtonWrapper = styled('div', {
         width: '430px',
       },
     },
+  },
+});
+
+export const ActionText = styled('p', {
+  fontStyle: 'normal',
+  fontWeight: '600',
+  fontSize: '14px',
+  lineHeight: '20px',
+  color: '#2253FF',
+  cursor: 'pointer',
+});
+
+export const PlugButtonContainer = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+
+  '.plug-button': {
+    marginLeft: '0px',
+    width: '100%',
+    fontSize: '18px',
+    fontWeight: '700',
+  },
+
+  '.plug-button-text': {
+    width: '100%',
+    height: '50px',
   },
 });

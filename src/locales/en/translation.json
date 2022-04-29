@@ -5,6 +5,11 @@
     "noRecentSearch": "No recent searches",
     "comingSoon": "Coming soon!"
   },
+  "offers": {
+    "myOffers": "My Offers",
+    "offersReceived": "Offers Recevied",
+    "offersMade": "Offers Made"
+  },
   "buttons": {
     "placeholder": {
       "primary": "Primary",
@@ -29,7 +34,7 @@
       "editListing": "Edit Listing",
       "backToResults": "Back to results",
       "sell": "Sell",
-      "cancelOffer": "Cancel Offer",
+      "cancelOffer": "Cancel",
       "acceptOffer": "Accept",
       "connectToPlug": "Connect to Plug",
       "installPlug": "Install Plug",
@@ -209,7 +214,8 @@
     "forSale": "Buy Now",
     "forOffer": "Make Offer",
     "offerFor": "Offer for",
-    "last": "Last"
+    "last": "Last",
+    "sell": "Sell"
   },
   "tabs": {
     "items": "Items",
@@ -227,7 +233,8 @@
     "noOwnedFilteredNfts": "You don't own any NFTs with those filters",
     "noFilteredNfts": "We cannot find any NFTs with those filters",
     "noNftsAction": "Browse NFT’s for Sale",
-    "noFilteredNftsAction": "Browse Other NFTs"
+    "noFilteredNftsAction": "Browse Other NFTs",
+    "noNFTId": "No NFT found with that ID"
   },
   "errorMessages": {
     "priceEmptyField": "You need to fill in both values"

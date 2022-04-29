@@ -7,11 +7,9 @@ export const Container = styled('div', {
 });
 
 export const TableWrapper = styled('div', {
-  position: 'relative',
   // marginTop: '44px', // TODO: make variant
   width: '100%',
   height: '100vh',
-  overflowX: 'auto',
 
   table: {
     borderSpacing: '0',
@@ -187,7 +185,6 @@ export const ButtonWrapper = styled('div', {
 export const InfiniteScrollWrapper = styled(InfiniteScroll, {
   width: '100%',
   height: '100vh',
-  overflowX: 'auto',
 });
 
 export const TableSkeletonsWrapper = styled('div', {

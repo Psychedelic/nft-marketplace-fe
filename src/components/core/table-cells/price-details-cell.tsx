@@ -9,7 +9,7 @@ import {
 } from './styles';
 
 export interface PriceDetailsCellProps {
-  wicp?: string;
+  wicp: string;
   price?: string;
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   tableType: any;
@@ -25,6 +25,8 @@ export const PriceDetailsCell = ({
       <WICPText tableType={tableType}>{wicp}</WICPText>
       <WICPLogo src={wicpIcon} alt="wicp" />
     </WICPContainer>
-    <PriceText tableType={tableType}>{price}</PriceText>
+    {
+      (price && <PriceText tableType={tableType}>{price}</PriceText>)
+    }
   </PriceDetails>
 );
