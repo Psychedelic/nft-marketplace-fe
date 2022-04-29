@@ -80,12 +80,14 @@ type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
 
 type InitialState = {
   recentlyListedForSale: RecentyListedForSale;
+  recentlyCancelledItems: any,
   actor?: MarketplaceActor;
-  tokenListing?: any; // TODO: Missing type for tokenListing
+  tokenListing?: []; // TODO: Missing type for tokenListing
 };
 
 const initialState: InitialState = {
   recentlyListedForSale: [],
+  recentlyCancelledItems: [],
 };
 
 type CommonError = { message: string };
@@ -108,7 +110,13 @@ export const marketplaceSlice = createSlice({
     builder.addCase(getTokenListing.fulfilled, (state, action) => {
       if (!action.payload) return;
 
-      state.tokenListing = action.payload;
+      state.tokenListing?.push(action.payload);
+    });
+
+    builder.addCase(cancelListing.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.recentlyCancelledItems.push(action.payload?.id);
     });
   },
 });
@@ -271,7 +279,7 @@ export const cancelListing = createAsyncThunk<
     const MKP_CANCEL_LISTING = {
       idl: marketplaceIdlFactory,
       canisterId: config.marketplaceCanisterId,
-      methodName: 'canceListing',
+      methodName: 'cancelListing',
       args: [nonFungibleContractAddress, userOwnedTokenId],
       onFail: (res: any) => {
         console.warn('Oops! Failed to withdraw NFT', res);
@@ -507,7 +515,10 @@ export const getTokenListing = createAsyncThunk<
       return;
     }
 
-    return result['Ok'];
+    return {
+      tokenId,
+      ...result['Ok'],
+    };
   } catch (err) {
     thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
   }

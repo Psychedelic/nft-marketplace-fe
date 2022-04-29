@@ -34,8 +34,16 @@ export const NftDetails = () => {
   const recentlyListedForSale = useSelector(
     (state: RootState) => state.marketplace.recentlyListedForSale,
   );
+  const recentlyCancelledItems = useSelector(
+    (state: RootState) => state.marketplace.recentlyCancelledItems,
+  );
   const tokenListing = useSelector(
-    (state: RootState) => state.marketplace.tokenListing,
+    (state: RootState) => {
+      const ls = state.marketplace.tokenListing;
+      // TODO: use the correct type def
+      const tokenListed = ls?.find((item: any) => item.tokenId === id);
+      return tokenListed;
+    },
   );
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
@@ -70,7 +78,7 @@ export const NftDetails = () => {
         id,
       }),
     );
-  }, [dispatch, id, recentlyListedForSale]);
+  }, [dispatch, id, recentlyListedForSale, recentlyCancelledItems]);
 
   return (
     <Container>
