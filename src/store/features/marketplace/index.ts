@@ -5,7 +5,6 @@ export {
   cancelListing,
   makeOffer,
   acceptOffer,
-  getAllListings,
   directBuy,
   getTokenOffers,
 } from './marketplace-slice';

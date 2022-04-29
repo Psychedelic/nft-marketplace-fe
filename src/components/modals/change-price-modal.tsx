@@ -35,7 +35,7 @@ import {
   nftsActions,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
-import { makeListing, getAllListings } from '../../store/features/marketplace';
+import { makeListing } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * Edit Listing Modal Component
@@ -101,7 +101,9 @@ export const ChangePriceModal = () => {
         id,
         amount,
         onSuccess: () => {
-          dispatch(getAllListings());
+          // TODO: should the app state change / update
+          // after a new make listing
+          // dispatch(getAllListings());
           setModalStep(LISTING_STATUS_CODES.Confirmed);
         },
         onFailure: () => {

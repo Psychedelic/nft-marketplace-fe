@@ -75,7 +75,7 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalP
           // on makelisting, etc, so we use this as a fallback
           // although not scalable, if persists might add an endpoint for
           // a single item instead of a list...
-          dispatch(getAllListings());
+          // dispatch(getAllListings());
           setModalStep(DIRECT_BUY_STATUS_CODES.Confirmed);
         },
         onFailure: () => {
