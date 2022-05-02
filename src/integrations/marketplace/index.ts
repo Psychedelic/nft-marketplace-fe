@@ -40,7 +40,9 @@ export const makeListing = async ({
 
     onSuccess();
   } catch (error) {
-    dispatch(notificationActions.setErrorMessage(error.message));
+    dispatch(
+      notificationActions.setErrorMessage((error as Error).message),
+    );
     onFailure();
   }
 };

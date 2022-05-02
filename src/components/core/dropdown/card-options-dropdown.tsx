@@ -16,7 +16,7 @@ import {
 import moreoptions from '../../../assets/moreoptions.svg';
 import copy from '../../../assets/copy.svg';
 import copyDark from '../../../assets/copy-dark.svg';
-import { NFTMetadata } from '../../../declarations/nft';
+import { NFTMetadata } from '../../../declarations/legacy';
 
 export type CardOptionsDropdownProps = {
   data: NFTMetadata;
@@ -30,7 +30,7 @@ export const CardOptionsDropdown = ({
   const dispatch = useAppDispatch();
   const isLightTheme = theme === 'lightTheme';
 
-  const handleCopy = (e) => {
+  const handleCopy = (e: any) => {
     e.preventDefault();
     copyToClipboard(`${window.location.href}nft/${data.id}`);
     dispatch(

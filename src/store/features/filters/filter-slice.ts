@@ -87,7 +87,7 @@ export const filterSlice = createSlice({
         state.traits.push({
           key: action.payload.key,
           name: action.payload.name,
-          values: [action.payload.values],
+          values: [...action.payload.values],
         });
         state.defaultFilters.push({
           filterName: [action.payload.values],
@@ -104,7 +104,7 @@ export const filterSlice = createSlice({
       );
 
       state.traits[traitsFilterIndex].values.push(
-        action.payload.values,
+        ...action.payload.values,
       );
       const traitName = state.traits[traitsFilterIndex].key;
       const defaultFiltersIndex = state.defaultFilters.findIndex(

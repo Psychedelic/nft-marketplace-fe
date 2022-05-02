@@ -39,7 +39,7 @@ import {
   useAppDispatch,
   nftsActions,
 } from '../../store';
-import { NFTMetadata } from '../../declarations/nft';
+import { NFTMetadata } from '../../declarations/legacy';
 import { acceptOffer } from '../../store/features/marketplace';
 import { ListingStatusCodes } from '../../constants/listing';
 

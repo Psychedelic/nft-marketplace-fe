@@ -26,7 +26,7 @@ import {
  * --------------------------------------------------------------------------*/
 
 export type NavbarProps = {
-  currentTheme: string | null;
+  currentTheme?: string | null;
 };
 
 export const NavBar = ({ currentTheme }: NavbarProps) => {

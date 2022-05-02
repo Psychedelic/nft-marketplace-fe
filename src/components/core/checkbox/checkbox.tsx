@@ -2,7 +2,7 @@ import React from 'react';
 import { Wrapper } from './styles';
 
 export type CheckboxProps = {
-  title: string;
+  title?: string;
   value: string; // Red
   percentage: string; // 1291 (12.9%)
   filterValueExists: (value: string) => boolean;

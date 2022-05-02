@@ -3,14 +3,14 @@ import { Container, Input } from './styles';
 
 export type FilterInputProps = {
   placeholder?: string;
-  inputValue: string;
+  inputValue?: string;
   setValue?: (value: string) => void;
 };
 
 export const FilterInput = forwardRef<
   HTMLInputElement,
   FilterInputProps
->(({ placeholder = '', setValue, inputValue }, ref) => {
+>(({ placeholder = '', setValue, inputValue = '' }, ref) => {
   const handleValueChange = (
     event: ChangeEvent<HTMLInputElement>,
   ) => {

@@ -15,7 +15,7 @@ import {
 import { TableLayout } from './table-layout';
 import { Container, InfiniteScrollWrapper } from './styles';
 import { fetchCAPActivity } from '../../integrations/kyasshu/utils';
-import NFTMetadata from '../../declarations/nft';
+import { NFTMetadata } from '../../declarations/legacy';
 import TableSkeletons from './table-skeletons';
 
 interface RowProps {

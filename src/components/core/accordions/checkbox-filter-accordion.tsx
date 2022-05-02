@@ -88,7 +88,7 @@ export const CheckboxFilterAccordion = ({
         </AccordionTrigger>
         <AccordionContent padding="small">
           <Form>
-            {checkboxData.values.map((data) => (
+            {checkboxData.values.map((data: any) => (
               <Checkbox
                 key={data}
                 value={data}

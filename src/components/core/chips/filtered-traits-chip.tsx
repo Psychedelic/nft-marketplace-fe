@@ -17,14 +17,14 @@ import {
 export interface FilteredTraitsChipProps {
   name?: string;
   rim?: string;
-  appliedFilterValue: object;
+  appliedFilterValue?: any;
   removeFilter: () => void;
 }
 
 export const FilteredTraitsChip = ({
   name,
   rim,
-  appliedFilterValue,
+  appliedFilterValue = {},
   removeFilter,
 }: FilteredTraitsChipProps) => {
   const { t } = useTranslation();

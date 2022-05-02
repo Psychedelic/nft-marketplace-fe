@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { NFTActivityTable, NftDetails } from '../../components';
 import { Container, NFTDetailsWrapper } from './styles';
 
@@ -7,24 +7,15 @@ import { Container, NFTDetailsWrapper } from './styles';
  * --------------------------------------------------------------------------*/
 
 const NFTView = () => {
-  // TODO: Seems that this theme and setTheme should be removed
-  const [theme, setTheme] = useState('lightTheme');
-
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    const getTheme = localStorage.getItem('theme');
-    if (getTheme) {
-      setTheme(getTheme);
-    }
   });
 
   return (
     <Container>
       <NFTDetailsWrapper>
         <NftDetails />
-        {/* TODO: What is this theme doing here? */}
-        <NFTActivityTable theme={theme} />
+        <NFTActivityTable />
       </NFTDetailsWrapper>
     </Container>
   );
