@@ -9,6 +9,12 @@ export class KyasshuUrl {
   }: KyasshuUrl.GetNFTsQueryParams): string {
     return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
   }
+
+  static getNFTDetails({
+    id,
+  }: KyasshuUrl.GetNFTDetailsQueryParams): string {
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${id}`;
+  }
 }
 
 export namespace KyasshuUrl {
@@ -17,5 +23,9 @@ export namespace KyasshuUrl {
     sort: string;
     order: string;
     count?: number;
+  };
+
+  export type GetNFTDetailsQueryParams = {
+    id: string;
   };
 }

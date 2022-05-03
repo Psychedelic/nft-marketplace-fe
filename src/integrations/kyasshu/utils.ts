@@ -4,7 +4,6 @@ import { Principal } from '@dfinity/principal';
 import { useTranslation } from 'react-i18next';
 import {
   filterActions,
-  nftsActions,
   notificationActions,
   useFilterStore,
 } from '../../store';
@@ -16,22 +15,8 @@ import shortAddress from '../functions/short-address';
 import { getICAccountLink } from '../../utils/account-id';
 import { CapActivityParams } from '../../store/features/tables/table-slice';
 
-export type FetchNFTProps = {
-  payload?: object;
-  dispatch: any;
-  sort: string;
-  order: string;
-  page: number;
-  count: string;
-};
-
 export type FetchFilterTraitsProps = {
   dispatch: any;
-};
-
-export type FetchNFTDetailsProps = {
-  dispatch: any;
-  id: string;
 };
 
 export type CheckNFTOwnerParams = {
@@ -48,135 +33,6 @@ export type FetchCAPActivityProps = {
 export type TokenMetadataProps = {
   dispatch: any;
   tokenId: any;
-};
-
-export const fetchNFTS = async ({
-  payload,
-  dispatch,
-  sort,
-  order,
-  page,
-  count,
-}: FetchNFTProps) => {
-  // set loading NFTS state to true
-  if (page === 0) {
-    dispatch(nftsActions.setIsNFTSLoading(true));
-  }
-
-  try {
-    // eslint-disable-next-line object-curly-newline
-
-    const response = await axios.post(
-      // eslint-disable-next-line max-len
-      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`,
-      payload,
-    );
-
-    if (response.status !== 200) {
-      throw Error(response.statusText);
-    }
-
-    const { data, pages, items } = response.data;
-
-    // TODO: Define nft field types
-    const extractedNFTSList = data.map((nft: any) => {
-      const metadata = {
-        // TODO: update price, lastOffer & traits values
-        // TODO: Finalize object format after validating mock and kyasshu data
-        id: nft.index,
-        name: 'Cap Crowns',
-        price: nft.currentPrice,
-        lastOffer: nft.lastOfferPrice,
-        lastSale: nft.lastSalePrice,
-        // TODO: update nft thumbnail
-        preview: nft.url.replace(
-          /\/(\w+)\.\w+/g,
-          '/thumbnails/$1.png',
-        ),
-        location: nft?.url,
-        traits: {
-          base: nft?.metadata?.base?.value?.TextContent,
-          biggem: nft?.metadata?.biggem?.value?.TextContent,
-          rim: nft?.metadata?.rim?.value?.TextContent,
-          smallgem: nft?.metadata?.smallgem?.value?.TextContent,
-        },
-        status: nft?.status,
-        owner: nft?.owner,
-      };
-      return metadata;
-    });
-
-    const actionPayload = {
-      loadedNFTList: extractedNFTSList,
-      totalPages: pages ? parseInt(pages, 10) : 0,
-      total: items ? parseInt(items, 10) : 0,
-      nextPage: page + 1,
-    };
-
-    // update store with loaded NFTS details
-    dispatch(nftsActions.setLoadedNFTS(actionPayload));
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.warn(error);
-
-    // set NFTS failed to load
-    dispatch(
-      notificationActions.setErrorMessage((error as Error).message),
-    );
-  }
-};
-
-export const fetchNFTDetails = async ({
-  dispatch,
-  id,
-}: FetchNFTDetailsProps) => {
-  try {
-    const response = await axios.get(
-      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${id}`,
-    );
-
-    if (response.status !== 200) {
-      throw Error(response.statusText);
-    }
-
-    const responseData = response.data;
-
-    const nftDetails = {
-      // TODO: update price, lastOffer & traits values
-      // TODO: Finalize object format after validating mock and kyasshu data
-      id: responseData.index,
-      name: 'Cap Crowns',
-      price: responseData?.currentPrice,
-      lastOffer: responseData?.lastOfferPrice,
-      lastSale: responseData?.lastSalePrice,
-      preview: responseData?.metadata?.thumbnail?.value?.TextContent,
-      location: responseData?.url,
-      rendered: true,
-      traits: {
-        base: responseData?.metadata?.base?.value?.TextContent,
-        biggem: responseData?.metadata?.biggem?.value?.TextContent,
-        rim: responseData?.metadata?.rim?.value?.TextContent,
-        smallgem:
-          responseData?.metadata?.smallgem?.value?.TextContent,
-      },
-      owner: responseData?.owner,
-    };
-
-    // TODO: If user connected to plug
-    // Should verify the owner of current token id
-    // e.g. if opted to verify on-chain the method is "ownerOf"
-    // Should verify whether token is listed or not only if owner
-    (nftDetails as any).isListed = false;
-
-    // update store with loaded NFT details
-    dispatch(nftsActions.setLoadedNFTDetails(nftDetails));
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.warn(error);
-    dispatch(
-      notificationActions.setErrorMessage((error as Error).message),
-    );
-  }
 };
 
 export const fetchFilterTraits = async ({

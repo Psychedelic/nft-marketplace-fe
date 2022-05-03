@@ -2,16 +2,12 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import {
-  getNFTs,
+  nftsActions,
   useAppDispatch,
   useFilterStore,
   usePlugStore,
 } from '../../store';
-import {
-  fetchNFTDetails,
-  useTraitsPayload,
-  usePriceValues,
-} from './utils';
+import { useTraitsPayload, usePriceValues } from './utils';
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
@@ -46,7 +42,7 @@ export const useNFTSFetcher = () => {
 
   useEffect(() => {
     dispatch(
-      getNFTs({
+      nftsActions.getNFTs({
         payload,
         sort: sortBy,
         order: 'd',
@@ -65,10 +61,7 @@ export const useNFTDetailsFetcher = () => {
     // TODO: handle the error gracefully when there is no id
     if (!id) return;
 
-    fetchNFTDetails({
-      dispatch,
-      id,
-    });
+    dispatch(nftsActions.getNFTDetails({ id }));
   }, [dispatch, id]);
 };
 

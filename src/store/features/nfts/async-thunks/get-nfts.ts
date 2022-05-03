@@ -8,12 +8,9 @@ export type GetNFTsProps = KyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
 };
 
-export const getNFTs = createAsyncThunk(
+export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
   'nfts/nfts',
-  async (
-    { payload, sort, order, page, count }: GetNFTsProps,
-    { dispatch },
-  ) => {
+  async ({ payload, sort, order, page, count }, { dispatch }) => {
     // set loading NFTS state to true
     if (page === 0) {
       dispatch(nftsActions.setIsNFTSLoading(true));

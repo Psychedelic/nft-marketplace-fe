@@ -8,7 +8,7 @@ import {
   useFilterStore,
   useAppDispatch,
   usePlugStore,
-  getNFTs,
+  nftsActions,
 } from '../../store';
 import { EmptyState } from '../core';
 import { ButtonType } from '../../constants/empty-states';
@@ -57,7 +57,7 @@ export const NftList = () => {
     if (loadingNFTs || !hasMoreNFTs) return;
 
     dispatch(
-      getNFTs({
+      nftsActions.getNFTs({
         payload,
         sort: sortBy,
         order: 'd',
