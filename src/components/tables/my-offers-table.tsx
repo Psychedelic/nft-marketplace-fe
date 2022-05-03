@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -98,6 +98,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         OffersTableHeaders.OffersReceivedAction,
       ]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offersType]);
 
   // TODO: Update mockedetails configured below
@@ -112,7 +113,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       dispatch(
         getBuyerOffers({
           userPrincipalId: plugPrincipal,
-          onSuccess: (offers: any) => {
+          onSuccess: (offers) => {
             // TODO: handle success messages
             setLoadingTableData(false);
             setLoadedOffersReceivedData(offers);
@@ -130,6 +131,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         plugPrincipal,
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, offersType, isConnected]);
 
   useEffect(() => {
