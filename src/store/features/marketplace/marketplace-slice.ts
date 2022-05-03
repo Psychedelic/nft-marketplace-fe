@@ -213,8 +213,6 @@ export const directBuy = createAsyncThunk<
   const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
   
   try {
-    if (!price) throw Error("Oops! Missing price");
-
     const wicpAmount = BigInt(price);
     const WICP_APPROVE = {
       idl: wicpIdlFactory,
