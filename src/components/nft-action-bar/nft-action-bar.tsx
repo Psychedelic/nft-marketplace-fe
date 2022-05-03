@@ -24,30 +24,27 @@ export type NftActionBarProps = {
   owner?: string;
 };
 
-export type ConnectedProps = {
+type ConnectedProps = {
   isListed?: boolean;
 };
 
-const OnConnected = ({ isListed }: ConnectedProps) => (
-  <>
-    {isListed ? (
-      <ButtonListWrapper>
-        <ButtonWrapper>
-          <CancelListingModal />
-        </ButtonWrapper>
-        <ButtonWrapper>
-          <ChangePriceModal />
-        </ButtonWrapper>
-      </ButtonListWrapper>
-    ) : (
-      <ButtonListWrapper>
-        <ButtonWrapper>
-          <SellModal />
-        </ButtonWrapper>
-      </ButtonListWrapper>
-    )}
-  </>
-);
+const OnConnected = ({ isListed }: ConnectedProps) =>
+  isListed ? (
+    <ButtonListWrapper>
+      <ButtonWrapper>
+        <CancelListingModal />
+      </ButtonWrapper>
+      <ButtonWrapper>
+        <ChangePriceModal />
+      </ButtonWrapper>
+    </ButtonListWrapper>
+  ) : (
+    <ButtonListWrapper>
+      <ButtonWrapper>
+        <SellModal />
+      </ButtonWrapper>
+    </ButtonListWrapper>
+  );
 
 // TODO: On disconnected users should display a particular state
 // also, for the users which are not "ownersOf"

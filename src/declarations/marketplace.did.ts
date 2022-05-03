@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable @typescript-eslint/naming-convention */
 export default ({ IDL }: { IDL: any }) => {
   const MPApiError = IDL.Variant({
     NonExistentCollection: IDL.Null,

@@ -30,17 +30,26 @@ export const CheckboxFilterAccordion = ({
   const { traits } = useFilterStore();
   const isLightTheme = theme === 'lightTheme';
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-  const filterValueExists = (traitsValue: string) => traits.some((trait) => trait.values.includes(traitsValue) && trait.key === checkboxData.key);
-  const traitsCount = traits.find((trait) => trait.name === checkboxData.name)?.values?.length;
+  const filterValueExists = (traitsValue: string) =>
+    traits.some(
+      (trait) =>
+        trait.values.includes(traitsValue) &&
+        trait.key === checkboxData.key,
+    );
+  const traitsCount = traits.find(
+    (trait) => trait.name === checkboxData.name,
+  )?.values?.length;
 
   const handleSelectedFilters = (e: any) => {
     const checkFilterValueExists = filterValueExists(e.target.value);
 
     if (checkFilterValueExists) {
-      dispatch(filterActions.removeTraitsFilter({
-        value: e.target.value,
-        key: checkboxData.key,
-      }));
+      dispatch(
+        filterActions.removeTraitsFilter({
+          value: e.target.value,
+          key: checkboxData.key,
+        }),
+      );
       return;
     }
 
@@ -70,10 +79,7 @@ export const CheckboxFilterAccordion = ({
         >
           <p>
             {checkboxData.key}
-            {
-              traitsCount
-              && <span>{`(${traitsCount})`}</span>
-            }
+            {traitsCount && <span>{`(${traitsCount})`}</span>}
           </p>
           <img
             src={isLightTheme ? arrowdown : arrowdownDark}
@@ -82,7 +88,7 @@ export const CheckboxFilterAccordion = ({
         </AccordionTrigger>
         <AccordionContent padding="small">
           <Form>
-            {checkboxData.values.map((data) => (
+            {checkboxData.values.map((data: any) => (
               <Checkbox
                 key={data}
                 value={data}

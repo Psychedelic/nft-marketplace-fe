@@ -2,24 +2,24 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
 
-export type errorMessages = {
+export type ErrorMessages = {
   message: string;
   id: number;
 };
 
-export type sucessMessages = {
+export type SuccessMessages = {
   message: string;
   id: number;
 };
 
 export interface NotificationState {
-  errorMessages: errorMessages[];
-  sucessMessages: sucessMessages[];
+  errorMessages: ErrorMessages[];
+  successMessages: SuccessMessages[];
 }
 
 const initialState: NotificationState = {
   errorMessages: [],
-  sucessMessages: [],
+  successMessages: [],
 };
 
 export const notificationSlice = createSlice({
@@ -34,23 +34,28 @@ export const notificationSlice = createSlice({
     },
     removeErrorMessage: (state, action: PayloadAction<number>) => {
       console.log(action.payload);
-      state.errorMessages = state.errorMessages.filter((error) => error.id !== action.payload);
+      state.errorMessages = state.errorMessages.filter(
+        (error) => error.id !== action.payload,
+      );
     },
     setSuccessMessage: (state, action: PayloadAction<string>) => {
-      state.sucessMessages.push({
+      state.successMessages.push({
         message: action.payload,
         id: Date.now(),
       });
     },
     removeSuccessMessage: (state, action: PayloadAction<number>) => {
       console.log(action.payload);
-      state.sucessMessages = state.sucessMessages.filter((successMessage) => successMessage.id !== action.payload);
+      state.successMessages = state.successMessages.filter(
+        (successMessage) => successMessage.id !== action.payload,
+      );
     },
   },
 });
 
 export const notificationActions = notificationSlice.actions;
 
-export const selectNotificationState = (state: RootState) => state.notification;
+export const selectNotificationState = (state: RootState) =>
+  state.notification;
 
 export default notificationSlice.reducer;

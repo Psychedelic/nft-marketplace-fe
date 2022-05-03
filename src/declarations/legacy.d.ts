@@ -22,17 +22,17 @@ export type MetadataDesc = Array<MetadataPart>;
 
 export interface OffersTableItem {
   item: {
-    name: string,
-    tokenId: bigint,
+    name: string;
+    tokenId: bigint;
     logo?: string;
-  },
-  price: bigint,
-  floorDifference: string,
+  };
+  price: bigint;
+  floorDifference: string;
   fromDetails: {
-    formattedAddress: string,
-    address: string,
-  }
-  time: string,
-  computedCurrencyPrice?: number,
-  callerDfinityExplorerUrl?: string,
+    formattedAddress: string;
+    address: string;
+  };
+  time: string;
+  computedCurrencyPrice?: number;
+  callerDfinityExplorerUrl?: string;
 }

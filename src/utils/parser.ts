@@ -1,10 +1,15 @@
 import { Principal } from '@dfinity/principal';
 import { Listing, Offer } from '../declarations/marketplace';
-import { formatAddress, floorDiffPercentageCalculator } from './formatters';
+import {
+  formatAddress,
+  floorDiffPercentageCalculator,
+} from './formatters';
 import { formatTimestamp } from '../integrations/functions/date';
 import { OffersTableItem } from '../declarations/legacy';
 
-type GetAllListingsDataResponse = Array<[[Principal, bigint], Listing]>;
+type GetAllListingsDataResponse = Array<
+  [[Principal, bigint], Listing]
+>;
 
 export type GetAllListingsDataParsed = {
   tokenId: BigInt;
@@ -13,39 +18,49 @@ export type GetAllListingsDataParsed = {
 
 export type GetAllListingsDataParsedObj = Record<number, Listing>;
 
-export const parseAllListingResponse = (data: GetAllListingsDataResponse) => {
-  const parsed: GetAllListingsDataParsed[] = data.reduce((acc, curr) => {
-    const tokenId = curr[0][1];
-    const listing = curr[1];
+export const parseAllListingResponse = (
+  data: GetAllListingsDataResponse,
+) => {
+  const parsed: GetAllListingsDataParsed[] = data.reduce(
+    (acc, curr) => {
+      const tokenId = curr[0][1];
+      const listing = curr[1];
 
-    acc = [
-      ...acc,
-      {
-        tokenId,
-        listing,
-      },
-    ];
+      acc = [
+        ...acc,
+        {
+          tokenId,
+          listing,
+        },
+      ];
 
-    return acc;
-  }, [] as GetAllListingsDataParsed[]);
+      return acc;
+    },
+    [] as GetAllListingsDataParsed[],
+  );
 
   return parsed;
 };
 
-export const parseAllListingResponseAsObj = (data: GetAllListingsDataResponse) => {
+export const parseAllListingResponseAsObj = (
+  data: GetAllListingsDataResponse,
+) => {
   console.log(data, 'listing data');
-  const parsed: GetAllListingsDataParsedObj = data.reduce((acc, curr) => {
-    const tokenId = String(curr[0][1]);
-    const listing = curr[1];
+  const parsed: GetAllListingsDataParsedObj = data.reduce(
+    (acc, curr) => {
+      const tokenId = String(curr[0][1]);
+      const listing = curr[1];
 
-    acc = {
-      ...acc,
-      [tokenId]: listing,
-    };
+      acc = {
+        ...acc,
+        [tokenId]: listing,
+      };
 
-    return acc;
-    /* eslint-disable */
-  }, {} as GetAllListingsDataParsedObj);
+      return acc;
+      /* eslint-disable */
+    },
+    {} as GetAllListingsDataParsedObj,
+  );
 
   return parsed;
 };
@@ -55,15 +70,15 @@ type TokenOffers = Array<[bigint, Array<Offer>]>;
 type ParsedTokenOffers = OffersTableItem[];
 
 interface ParseGetTokenOffersParams {
-  data: TokenOffers,
-  floorDifferencePrice?: string,
-  currencyMarketPrice?: number,
+  data: TokenOffers;
+  floorDifferencePrice?: string;
+  currencyMarketPrice?: number;
 }
 
 interface ParseOffersMadeParams {
-  data: Array<Offer>,
-  floorDifferencePrice?: string,
-  currencyMarketPrice?: number,
+  data: Array<Offer>;
+  floorDifferencePrice?: string;
+  currencyMarketPrice?: number;
 }
 
 export const parseGetTokenOffersresponse = ({
@@ -73,54 +88,52 @@ export const parseGetTokenOffersresponse = ({
 }: ParseGetTokenOffersParams) => {
   const parsed = data.reduce((accParent, currParent) => {
     const tokenOffers = currParent[1] as Offer[];
-    const parsedTokenOffers = tokenOffers.reduce((accChild, currChild) => {
-      const {
-        price,
-        token_id: tokenId,
-        payment_address: paymentAddress,
-        created,
-      } = currChild;
+    const parsedTokenOffers = tokenOffers.reduce(
+      (accChild, currChild) => {
+        const {
+          price,
+          token_id: tokenId,
+          payment_address: paymentAddress,
+          created,
+        } = currChild;
 
-      // TODO: What to do if payment address not valid principal?
-      const fromDetails = {
-        formattedAddress: paymentAddress._isPrincipal
-        ? formatAddress(paymentAddress.toString())
-        : 'n/a',
-        address: paymentAddress._isPrincipal
-        ? paymentAddress.toString()
-        : 'n/a',
-      }
+        // TODO: What to do if payment address not valid principal?
+        const fromDetails = {
+          formattedAddress: paymentAddress._isPrincipal
+            ? formatAddress(paymentAddress.toString())
+            : 'n/a',
+          address: paymentAddress._isPrincipal
+            ? paymentAddress.toString()
+            : 'n/a',
+        };
 
-      const computedCurrencyPrice = currencyMarketPrice
-        && currencyMarketPrice * Number(price.toString());
+        const computedCurrencyPrice =
+          currencyMarketPrice &&
+          currencyMarketPrice * Number(price.toString());
 
-      const offerTableItem: OffersTableItem = {
-        item: {
-          // TODO: formatter for name, as number should probably have leading 0's
-          // e.g. Cap Crowns #00001 ?!
-          name: `CAP Crowns #${tokenId}`,
-          tokenId,
-        },
-        price,
-        floorDifference: floorDiffPercentageCalculator({
-          currentPrice: price,
-          floorDifferencePrice
-        }),
-        fromDetails,
-        time: formatTimestamp(created),
-        computedCurrencyPrice,
-      };
-  
-      return [
-        ...accChild,
-        offerTableItem,
-      ];
-    }, [] as ParsedTokenOffers);
+        const offerTableItem: OffersTableItem = {
+          item: {
+            // TODO: formatter for name, as number should probably have leading 0's
+            // e.g. Cap Crowns #00001 ?!
+            name: `CAP Crowns #${tokenId}`,
+            tokenId,
+          },
+          price,
+          floorDifference: floorDiffPercentageCalculator({
+            currentPrice: price,
+            floorDifferencePrice,
+          }),
+          fromDetails,
+          time: formatTimestamp(created),
+          computedCurrencyPrice,
+        };
 
-    return [
-      ...accParent,
-      ...parsedTokenOffers,
-    ];
+        return [...accChild, offerTableItem];
+      },
+      [] as ParsedTokenOffers,
+    );
+
+    return [...accParent, ...parsedTokenOffers];
   }, [] as ParsedTokenOffers);
 
   return parsed;
@@ -142,15 +155,16 @@ export const parseOffersMaderesponse = ({
     // TODO: What to do if payment address not valid principal?
     const fromDetails = {
       formattedAddress: paymentAddress._isPrincipal
-      ? formatAddress(paymentAddress.toString())
-      : 'n/a',
+        ? formatAddress(paymentAddress.toString())
+        : 'n/a',
       address: paymentAddress._isPrincipal
-      ? paymentAddress.toString()
-      : 'n/a',
-    }
+        ? paymentAddress.toString()
+        : 'n/a',
+    };
 
-    const computedCurrencyPrice = currencyMarketPrice
-      && currencyMarketPrice * Number(price.toString());
+    const computedCurrencyPrice =
+      currencyMarketPrice &&
+      currencyMarketPrice * Number(price.toString());
 
     const offerTableItem: OffersTableItem = {
       item: {
@@ -162,7 +176,7 @@ export const parseOffersMaderesponse = ({
       price,
       floorDifference: floorDiffPercentageCalculator({
         currentPrice: price,
-        floorDifferencePrice
+        floorDifferencePrice,
       }),
       fromDetails,
       time: formatTimestamp(created),

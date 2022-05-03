@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default ({ IDL }: { IDL: any }) => {
   const TxError = IDL.Variant({
     InsufficientAllowance: IDL.Null,

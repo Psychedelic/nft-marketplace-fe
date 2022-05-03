@@ -50,13 +50,13 @@ const DevelopedComponents = () => {
   const { t } = useTranslation();
 
   // dropdown content
-  const dropDownContent = [
-    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
-    `${t('translation:dropdown.priceFilter.recentlySold')}`,
-    `${t('translation:dropdown.priceFilter.lowToHigh')}`,
-    `${t('translation:dropdown.priceFilter.highToHigh')}`,
-    `${t('translation:dropdown.priceFilter.highestLastSale')}`,
-  ];
+  // const dropDownContent = [
+  //   `${t('translation:dropdown.priceFilter.recentlyListed')}`,
+  //   `${t('translation:dropdown.priceFilter.recentlySold')}`,
+  //   `${t('translation:dropdown.priceFilter.lowToHigh')}`,
+  //   `${t('translation:dropdown.priceFilter.highToHigh')}`,
+  //   `${t('translation:dropdown.priceFilter.highestLastSale')}`,
+  // ];
 
   return (
     <Container>
@@ -144,17 +144,17 @@ const DevelopedComponents = () => {
       <ComponentWrapper>
         <ComponentTitle>Dropdown</ComponentTitle>
         <SortByFilterDropdown
-          defaultValue={`${t(
-            'translation:dropdown.priceFilter.lowToHigh',
-          )}`}
-          options={dropDownContent}
+        // defaultValue={`${t(
+        //   'translation:dropdown.priceFilter.lowToHigh',
+        // )}`}
+        // options={dropDownContent}
         />
         <br />
-        <CardOptionsDropdown />
+        <CardOptionsDropdown data={{ id: 'tokenId' } as any} />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Accordions</ComponentTitle>
-        <OfferAccordion owned />
+        <OfferAccordion />
         <br />
         <br />
         <AboutAccordion owned />
@@ -276,7 +276,7 @@ const DevelopedComponents = () => {
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Accept Offer Modal</ComponentTitle>
-        <AcceptOfferModal />
+        <AcceptOfferModal price="" formattedPrice="" offerFrom="" />
       </ComponentWrapper>
       <ComponentWrapper>
         <ComponentTitle>Nft Card/List</ComponentTitle>

@@ -1,10 +1,13 @@
-/* eslint-disable */
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
+import { Principal } from '@dfinity/principal';
 import crownsIdlService from '../../../declarations/nft';
 import { RootState } from '../../store';
 import { actorInstanceHandler } from '../../../integrations/actor';
-import { Principal } from '@dfinity/principal';
 
 type CrownsActor = ActorSubclass<crownsIdlService>;
 
@@ -18,10 +21,12 @@ type OwnerTokenIdentifier = bigint;
 export type OwnerTokenIdentifiers = OwnerTokenIdentifier[];
 
 type OwnerTokenIdentifiersParam = {
-  plugPrincipal: string,
+  plugPrincipal: string;
 };
 
-interface OwnerTokenIdentifiersParams extends CommonCallbacks, OwnerTokenIdentifiersParam {}
+interface OwnerTokenIdentifiersParams
+  extends CommonCallbacks,
+    OwnerTokenIdentifiersParam {}
 
 interface CommonCallbacks {
   onSuccess?: () => void;
@@ -41,13 +46,15 @@ export const crownsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getOwnerTokenIdentifiers.fulfilled, (state, action) => {
-      if (!action.payload) return;
+    builder.addCase(
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      getOwnerTokenIdentifiers.fulfilled,
+      (state, action) => {
+        if (!action.payload) return;
 
-      state.ownerTokenIdentifiers = [
-        ...action.payload,
-      ];
-    });
+        state.ownerTokenIdentifiers = [...action.payload];
+      },
+    );
   },
 });
 
@@ -58,37 +65,39 @@ export const getOwnerTokenIdentifiers = createAsyncThunk<
   OwnerTokenIdentifiersParams,
   // Optional fields for defining the thunk api
   { state: RootState }
->('crowns/ownerTokenIdentifiers', async (params: OwnerTokenIdentifiersParams, thunkAPI) => {
-  // Checks if an actor instance exists already
-  // otherwise creates a new instance
-  const actorInstance = await actorInstanceHandler({
-    thunkAPI,
-    serviceName: 'crowns',
-    slice: crownsSlice,
-  });
-  
-  const { plugPrincipal, onFailure } = params;
+>(
+  'crowns/ownerTokenIdentifiers',
+  async (params: OwnerTokenIdentifiersParams, thunkAPI) => {
+    // Checks if an actor instance exists already
+    // otherwise creates a new instance
+    const actorInstance = await actorInstanceHandler({
+      thunkAPI,
+      serviceName: 'crowns',
+      slice: crownsSlice,
+    });
 
-  try {
-    const result = await actorInstance.ownerTokenIdentifiers(
-      Principal.fromText(plugPrincipal)
-    );
+    const { plugPrincipal, onFailure } = params;
 
-    if (!('Ok' in result)) {
-      if (typeof onFailure !== 'function') return;
+    try {
+      const result = await actorInstance.ownerTokenIdentifiers(
+        Principal.fromText(plugPrincipal),
+      );
 
-      onFailure();
+      if (!('Ok' in result)) {
+        if (typeof onFailure !== 'function') return;
 
-      console.error(result);
+        onFailure();
 
-      throw Error('Oops! Failed to retrieve user tokens');
+        console.error(result);
+
+        throw Error('Oops! Failed to retrieve user tokens');
+      }
+
+      return result.Ok;
+    } catch (err) {
+      console.warn(err);
     }
-
-    return result['Ok'];
-  } catch (err) {
-    console.warn(err);
-  }
-});
-
+  },
+);
 
 export default crownsSlice.reducer;

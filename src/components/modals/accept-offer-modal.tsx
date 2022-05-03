@@ -39,9 +39,9 @@ import {
   useAppDispatch,
   nftsActions,
 } from '../../store';
-import { NFTMetadata } from '../../declarations/nft';
+import { NFTMetadata } from '../../declarations/legacy';
 import { acceptOffer } from '../../store/features/marketplace';
-import { LISTING_STATUS_CODES } from '../../constants/listing';
+import { ListingStatusCodes } from '../../constants/listing';
 import { formatPriceValue } from '../../utils/formatters';
 
 export interface AcceptOfferProps {
@@ -69,7 +69,7 @@ export const AcceptOfferModal = ({
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Accept offer modal steps: offerInfo/pending/accepted
   const [modalStep, setModalStep] = useState<string>(
-    LISTING_STATUS_CODES.OfferInfo,
+    ListingStatusCodes.OfferInfo,
   );
 
   const tokenId: string | undefined = (() => {
@@ -77,7 +77,6 @@ export const AcceptOfferModal = ({
 
     if (!tid) return;
 
-    // eslint-disable-next-line consistent-return
     return tid;
   })();
 
@@ -88,9 +87,9 @@ export const AcceptOfferModal = ({
 
   const handleModalOpen = (modalOpenedStatus: boolean) => {
     setModalOpened(modalOpenedStatus);
-    setModalStep(LISTING_STATUS_CODES.OfferInfo);
+    setModalStep(ListingStatusCodes.OfferInfo);
 
-    const isAccepted = modalStep === LISTING_STATUS_CODES.Accepted;
+    const isAccepted = modalStep === ListingStatusCodes.Accepted;
 
     if (modalOpenedStatus || !tokenId || !isAccepted) return;
 
@@ -111,7 +110,7 @@ export const AcceptOfferModal = ({
   const handleAcceptOffer = async () => {
     if (!tokenId) return;
 
-    setModalStep(LISTING_STATUS_CODES.Pending);
+    setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       acceptOffer({
@@ -119,10 +118,10 @@ export const AcceptOfferModal = ({
         buyerPrincipalId: offerFrom,
         offerPrice: price,
         onSuccess: () => {
-          setModalStep(LISTING_STATUS_CODES.Accepted);
+          setModalStep(ListingStatusCodes.Accepted);
         },
         onFailure: () => {
-          setModalStep(LISTING_STATUS_CODES.OfferInfo);
+          setModalStep(ListingStatusCodes.OfferInfo);
         },
       }),
     );
@@ -178,7 +177,7 @@ export const AcceptOfferModal = ({
           Step: 1 -> offerInfo
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.OfferInfo && (
+        {modalStep === ListingStatusCodes.OfferInfo && (
           <Container>
             {/*
               ---------------------------------
@@ -201,15 +200,24 @@ export const AcceptOfferModal = ({
             <SaleContentWrapper>
               <ItemDetailsWrapper>
                 <ItemDetails>
-                  {nftDetails?.preview && <ItemLogo src={nftDetails?.preview} alt="crowns" />}
-                  <ItemName>{`CAP Crowns #${nftTokenId ?? nftDetails?.id}`}</ItemName>
+                  {nftDetails?.preview && (
+                    <ItemLogo
+                      src={nftDetails?.preview}
+                      alt="crowns"
+                    />
+                  )}
+                  <ItemName>{`CAP Crowns #${
+                    nftTokenId ?? nftDetails?.id
+                  }`}</ItemName>
                 </ItemDetails>
                 <PriceDetails>
                   <WICPContainer size="small">
                     <WICPLogo src={wicpIcon} alt="wicp" />
                     <WICPText size="small">{`${price} WICP`}</WICPText>
                   </WICPContainer>
-                  <PriceText>{`$${formatPriceValue(formattedPrice)}`}</PriceText>
+                  <PriceText>{`$${formatPriceValue(
+                    formattedPrice,
+                  )}`}</PriceText>
                 </PriceDetails>
               </ItemDetailsWrapper>
               <FeeContainer>
@@ -253,9 +261,13 @@ export const AcceptOfferModal = ({
                       alt="wicp"
                       size="large"
                     />
-                    <WICPText size="large">{`${formatPriceValue(totalEarningsInWICP.toString())} WICP`}</WICPText>
+                    <WICPText size="large">{`${formatPriceValue(
+                      totalEarningsInWICP.toString(),
+                    )} WICP`}</WICPText>
                   </WICPContainer>
-                  <PriceText size="large">{`$${formatPriceValue(totalEarningsInDollars.toString())}`}</PriceText>
+                  <PriceText size="large">{`$${formatPriceValue(
+                    totalEarningsInDollars.toString(),
+                  )}`}</PriceText>
                 </PriceDetails>
               </ItemDetailsWrapper>
             </SaleContentWrapper>
@@ -287,7 +299,7 @@ export const AcceptOfferModal = ({
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.Pending && (
+        {modalStep === ListingStatusCodes.Pending && (
           <Container>
             {/*
               ---------------------------------
@@ -316,7 +328,7 @@ export const AcceptOfferModal = ({
                   type="secondary"
                   text={t('translation:modals.buttons.cancel')}
                   handleClick={() => {
-                    setModalStep(LISTING_STATUS_CODES.OfferInfo);
+                    setModalStep(ListingStatusCodes.OfferInfo);
                   }}
                 />
               </ModalButtonWrapper>
@@ -328,7 +340,7 @@ export const AcceptOfferModal = ({
           Step: 3 -> accepted
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.Accepted && (
+        {modalStep === ListingStatusCodes.Accepted && (
           <Container>
             {/*
               ---------------------------------

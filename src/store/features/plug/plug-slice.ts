@@ -1,20 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
-import { PLUG_STATUS_CODES } from '../../../constants';
+import { PlugStatusCodes } from '../../../constants';
 
 // Define a type for the slice state
 interface PlugState {
   isConnected: boolean;
   principalId?: string;
-  connectionStatus: PLUG_STATUS_CODES;
+  connectionStatus: PlugStatusCodes;
 }
 
 // Define the initial state using that type
 const initialState: PlugState = {
   isConnected: false,
   principalId: undefined,
-  connectionStatus: 'verifying' as PLUG_STATUS_CODES,
+  connectionStatus: 'verifying' as PlugStatusCodes,
 };
 
 export const plugSlice = createSlice({
@@ -26,9 +26,9 @@ export const plugSlice = createSlice({
       state.isConnected = action.payload;
       if (!action.payload) {
         state.principalId = undefined;
-        state.connectionStatus = PLUG_STATUS_CODES.FailedToConnect;
+        state.connectionStatus = PlugStatusCodes.FailedToConnect;
       } else {
-        state.connectionStatus = PLUG_STATUS_CODES.Connected;
+        state.connectionStatus = PlugStatusCodes.Connected;
       }
     },
     setPrincipalId: (state, action: PayloadAction<string>) => {
@@ -36,7 +36,7 @@ export const plugSlice = createSlice({
     },
     setConnectionStatus: (
       state,
-      action: PayloadAction<PLUG_STATUS_CODES>,
+      action: PayloadAction<PlugStatusCodes>,
     ) => {
       state.connectionStatus = action.payload;
     },

@@ -6,7 +6,7 @@ import {
   useAppDispatch,
   useThemeStore,
 } from '../../store';
-import { LinkButton, Tooltip } from '../core';
+import { LinkButton } from '../core';
 
 import {
   CollectionMetadataWrapper,
@@ -36,10 +36,15 @@ export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
           <img src={verified} alt="verified" />
         </Subtext>
       </div>
-      <LinkButton handleClick={() => {
-        copyToClipboard(window.location.href);
-        dispatch(notificationActions.setSuccessMessage(`${t('translation:successMessages.copyToClipboard')}`));
-      }}
+      <LinkButton
+        handleClick={() => {
+          copyToClipboard(window.location.href);
+          dispatch(
+            notificationActions.setSuccessMessage(
+              `${t('translation:successMessages.copyToClipboard')}`,
+            ),
+          );
+        }}
       >
         <img
           src={isLightTheme ? back : backDark}

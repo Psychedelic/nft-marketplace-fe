@@ -53,7 +53,9 @@ export const PlugButton = ({
   useEffect(() => {
     // TODO: check if principal already available in the store
     (async () => {
-      const principal = await (window as any).ic?.plug?.getPrincipal();
+      const principal = await (
+        window as any
+      ).ic?.plug?.getPrincipal();
 
       if (!principal) return;
 
@@ -97,7 +99,10 @@ export const PlugButton = ({
       {isConnected && (
         <ConnectToPlugButton align="end" background={currTheme}>
           <Flex onClick={() => navigate(`/offers/${userPrincipal}`)}>
-            <img src={isLightTheme ? offers : offersDark} alt="offers" />
+            <img
+              src={isLightTheme ? offers : offersDark}
+              alt="offers"
+            />
             <p>My Offers</p>
           </Flex>
           <div />
@@ -107,7 +112,10 @@ export const PlugButton = ({
               disconnectPlug();
             }}
           >
-            <img src={isLightTheme ? disconnect : disconnectDark} alt="disconnect" />
+            <img
+              src={isLightTheme ? disconnect : disconnectDark}
+              alt="disconnect"
+            />
             <p>Disconnect</p>
           </Flex>
         </ConnectToPlugButton>

@@ -28,7 +28,7 @@ import {
   ModalButtonWrapper,
 } from './styles';
 
-import { LISTING_STATUS_CODES } from '../../constants/listing';
+import { ListingStatusCodes } from '../../constants/listing';
 import {
   useNFTSStore,
   useAppDispatch,
@@ -50,7 +50,7 @@ export const ChangePriceModal = () => {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // ChangePrice modal steps: listingInfo/pending/confirmed
   const [modalStep, setModalStep] = useState<string>(
-    LISTING_STATUS_CODES.ListingInfo,
+    ListingStatusCodes.ListingInfo,
   );
   const [amount, setAmount] = useState<string>('');
 
@@ -67,9 +67,9 @@ export const ChangePriceModal = () => {
 
   const handleModalOpen = (modalOpenedStatus: boolean) => {
     setModalOpened(modalOpenedStatus);
-    setModalStep(LISTING_STATUS_CODES.ListingInfo);
+    setModalStep(ListingStatusCodes.ListingInfo);
 
-    const isConfirmed = modalStep === LISTING_STATUS_CODES.Confirmed;
+    const isConfirmed = modalStep === ListingStatusCodes.Confirmed;
 
     if (modalOpenedStatus || !id || !isConfirmed) return;
 
@@ -94,7 +94,7 @@ export const ChangePriceModal = () => {
   const handleListing = async () => {
     if (!id) return;
 
-    setModalStep(LISTING_STATUS_CODES.Pending);
+    setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       makeListing({
@@ -104,10 +104,10 @@ export const ChangePriceModal = () => {
           // TODO: should the app state change / update
           // after a new make listing
           // dispatch(getAllListings());
-          setModalStep(LISTING_STATUS_CODES.Confirmed);
+          setModalStep(ListingStatusCodes.Confirmed);
         },
         onFailure: () => {
-          setModalStep(LISTING_STATUS_CODES.ListingInfo);
+          setModalStep(ListingStatusCodes.ListingInfo);
         },
       }),
     );
@@ -152,7 +152,7 @@ export const ChangePriceModal = () => {
           Step: 1 -> listingInfo
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.ListingInfo && (
+        {modalStep === ListingStatusCodes.ListingInfo && (
           <Container>
             {/*
               ---------------------------------
@@ -240,7 +240,7 @@ export const ChangePriceModal = () => {
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.Pending && (
+        {modalStep === ListingStatusCodes.Pending && (
           <Container>
             {/*
               ---------------------------------
@@ -269,7 +269,7 @@ export const ChangePriceModal = () => {
                   type="secondary"
                   text={t('translation:modals.buttons.cancel')}
                   handleClick={() => {
-                    setModalStep(LISTING_STATUS_CODES.ListingInfo);
+                    setModalStep(ListingStatusCodes.ListingInfo);
                   }}
                 />
               </ModalButtonWrapper>
@@ -281,7 +281,7 @@ export const ChangePriceModal = () => {
           Step: 3 -> confirmed
           ---------------------------------
         */}
-        {modalStep === LISTING_STATUS_CODES.Confirmed && (
+        {modalStep === ListingStatusCodes.Confirmed && (
           <Container>
             {/*
               ---------------------------------

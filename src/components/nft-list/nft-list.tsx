@@ -8,17 +8,22 @@ import {
   useFilterStore,
   useAppDispatch,
   usePlugStore,
-  filterActions,
 } from '../../store';
 import { EmptyState } from '../core';
-import { BUTTON_TYPE } from '../../constants/empty-states';
-import { fetchNFTS, usePriceValues, useTraitsPayload, isNFTOwner } from '../../integrations/kyasshu/utils';
+import { ButtonType } from '../../constants/empty-states';
+import {
+  fetchNFTS,
+  usePriceValues,
+  useTraitsPayload,
+  isNFTOwner,
+} from '../../integrations/kyasshu/utils';
 
 export const NftList = () => {
   const { t } = useTranslation();
   // eslint-disable-next-line
   const dispatch = useAppDispatch();
-  const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } = useNFTSStore();
+  const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } =
+    useNFTSStore();
   const { isMyNfts, status, defaultFilters } = useFilterStore();
   const { principalId, isConnected } = usePlugStore();
   const traitsPayload = useTraitsPayload();
@@ -26,7 +31,11 @@ export const NftList = () => {
   // eslint-disable-next-line object-curly-newline
   let payload = {};
   if (
-    traitsPayload.length || isMyNfts || (priceValues && Object.keys(priceValues).length) || status !== '') {
+    traitsPayload.length ||
+    isMyNfts ||
+    (priceValues && Object.keys(priceValues).length) ||
+    status !== ''
+  ) {
     payload = {
       traits: traitsPayload.length ? traitsPayload : undefined,
       principal: isMyNfts ? principalId : undefined,
@@ -34,10 +43,10 @@ export const NftList = () => {
       price:
         priceValues && Object.keys(priceValues).length
           ? {
-            min: priceValues?.min,
-            max: priceValues?.max,
-            type: 'currentPrice',
-          }
+              min: priceValues?.min,
+              max: priceValues?.max,
+              type: 'currentPrice',
+            }
           : undefined,
     };
   }
@@ -60,19 +69,48 @@ export const NftList = () => {
   };
 
   if (isMyNfts && !isConnected) {
-    return <EmptyState message={`${t('translation:emptyStates.connectMessage')}`} buttonType={BUTTON_TYPE.plug} />;
+    return (
+      <EmptyState
+        message={`${t('translation:emptyStates.connectMessage')}`}
+        buttonType={ButtonType.plug}
+      />
+    );
   }
 
-  if (isMyNfts && isConnected && defaultFilters.length && !loadedNFTS.length) {
-    return <EmptyState message={`${t('translation:emptyStates.noOwnedFilteredNfts')}`} buttonText={`${t('translation:emptyStates.noFilteredNftsAction')}`} />;
+  if (
+    isMyNfts &&
+    isConnected &&
+    defaultFilters.length &&
+    !loadedNFTS.length
+  ) {
+    return (
+      <EmptyState
+        message={`${t(
+          'translation:emptyStates.noOwnedFilteredNfts',
+        )}`}
+        buttonText={`${t(
+          'translation:emptyStates.noFilteredNftsAction',
+        )}`}
+      />
+    );
   }
 
   if (isMyNfts && isConnected && !loadedNFTS.length) {
-    return <EmptyState message={`${t('translation:emptyStates.noNfts')}`} buttonText={`${t('translation:emptyStates.noNftsAction')}`} />;
+    return (
+      <EmptyState
+        message={`${t('translation:emptyStates.noNfts')}`}
+        buttonText={`${t('translation:emptyStates.noNftsAction')}`}
+      />
+    );
   }
 
   if (defaultFilters.length && !loadedNFTS.length) {
-    return <EmptyState message={`${t('translation:emptyStates.noFilteredNfts')}`} buttonText={`${t('translation:emptyStates.noNftsAction')}`} />;
+    return (
+      <EmptyState
+        message={`${t('translation:emptyStates.noFilteredNfts')}`}
+        buttonText={`${t('translation:emptyStates.noNftsAction')}`}
+      />
+    );
   }
 
   return (
@@ -90,13 +128,11 @@ export const NftList = () => {
         <NftCard
           data={nft}
           key={nft.id}
-          owned={
-            isNFTOwner({
-              isConnected,
-              owner: nft?.owner,
-              principalId,
-            })
-          }
+          owned={isNFTOwner({
+            isConnected,
+            owner: nft?.owner,
+            principalId,
+          })}
         />
       ))}
     </InfiniteScrollWrapper>

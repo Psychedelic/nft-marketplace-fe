@@ -1,4 +1,4 @@
-export enum DIRECT_BUY_STATUS_CODES {
+export enum DirectBuyStatusCodes {
   Confirmed = 'confirmed',
   Pending = 'pending',
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchFilterTraits } from '../../integrations/kyasshu/utils';
 import {
@@ -44,7 +44,13 @@ import CheckboxAccordionSkeleton from '../core/accordions/checkbox-accordion-ske
 export const Filters = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { defaultFilters, loadedFiltersList, status, loadingFilterList, isMyNfts } = useFilterStore();
+  const {
+    defaultFilters,
+    loadedFiltersList,
+    status,
+    loadingFilterList,
+    isMyNfts,
+  } = useFilterStore();
   const { theme } = useThemeStore();
   const { collapsed, displayPriceApplyButton } = useSettingsStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -68,10 +74,16 @@ export const Filters = () => {
     });
   }, []);
 
-  const filterExists = (filterName: string) => defaultFilters.some((appliedFilter) => appliedFilter.filterName === filterName);
+  const filterExists = (filterName: string) =>
+    defaultFilters.some(
+      (appliedFilter) => appliedFilter.filterName === filterName,
+    );
 
   const applyFilter = (filterCategory: string, filterName: any) => {
-    const filterCategoryExists = defaultFilters.some((appliedFilter) => appliedFilter.filterCategory === filterCategory);
+    const filterCategoryExists = defaultFilters.some(
+      (appliedFilter) =>
+        appliedFilter.filterCategory === filterCategory,
+    );
 
     const filterNameExists = defaultFilters.some(
       (appliedFilter) => appliedFilter.filterName === filterName,
@@ -102,20 +114,40 @@ export const Filters = () => {
   };
 
   const applyPriceFilter = () => {
-    if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
+    if (
+      priceFilterValue.min !== '0' &&
+      priceFilterValue.max !== '0'
+    ) {
       dispatch(settingsActions.setPriceApplyButton(true));
     }
   };
 
   const handlePriceFilter = () => {
     if (priceFilterValue.min === '' && priceFilterValue.max === '') {
-      dispatch(filterActions.removePriceFilter(`${t('translation:filters.priceRange')}`));
-    } else if (priceFilterValue.min === '' || priceFilterValue.max === '') {
-      dispatch(notificationActions.setErrorMessage(`${t('translation:errorMessages.priceEmptyField')}`));
+      dispatch(
+        filterActions.removePriceFilter(
+          `${t('translation:filters.priceRange')}`,
+        ),
+      );
+    } else if (
+      priceFilterValue.min === '' ||
+      priceFilterValue.max === ''
+    ) {
+      dispatch(
+        notificationActions.setErrorMessage(
+          `${t('translation:errorMessages.priceEmptyField')}`,
+        ),
+      );
     } else {
       // eslint-disable-next-line no-lonely-if
-      if (priceFilterValue.min !== '0' && priceFilterValue.max !== '0') {
-        applyFilter(`${t('translation:filters.priceRange')}`, priceFilterValue);
+      if (
+        priceFilterValue.min !== '0' &&
+        priceFilterValue.max !== '0'
+      ) {
+        applyFilter(
+          `${t('translation:filters.priceRange')}`,
+          priceFilterValue,
+        );
       }
     }
   };
@@ -141,18 +173,21 @@ export const Filters = () => {
           <FiltersWrapper>
             <Flex>
               <Heading>Filters</Heading>
-              {defaultFilters.length
-                ? (
-                  <ClearButton
-                    onClick={() => {
-                      dispatch(filterActions.clearAllFilters());
-                      dispatch(settingsActions.setPriceApplyButton(false));
-                      dispatch(filterActions.setMyNfts(false));
-                    }}
-                  >
-                    {`${t('translation:filters.clearAll')}`}
-                  </ClearButton>
-                ) : ''}
+              {defaultFilters.length ? (
+                <ClearButton
+                  onClick={() => {
+                    dispatch(filterActions.clearAllFilters());
+                    dispatch(
+                      settingsActions.setPriceApplyButton(false),
+                    );
+                    dispatch(filterActions.setMyNfts(false));
+                  }}
+                >
+                  {`${t('translation:filters.clearAll')}`}
+                </ClearButton>
+              ) : (
+                ''
+              )}
             </Flex>
             <FilterSection>
               <FilterGroup>
@@ -208,8 +243,15 @@ export const Filters = () => {
                           'Status',
                           `${t('translation:buttons.action.buyNow')}`,
                         );
-                        if (status !== `${t('translation:filters.forSale')}`) {
-                          dispatch(filterActions.setStatusFilter(`${t('translation:filters.forSale')}`));
+                        if (
+                          status !==
+                          `${t('translation:filters.forSale')}`
+                        ) {
+                          dispatch(
+                            filterActions.setStatusFilter(
+                              `${t('translation:filters.forSale')}`,
+                            ),
+                          );
                         } else {
                           dispatch(filterActions.setStatusFilter(''));
                         }
@@ -239,8 +281,15 @@ export const Filters = () => {
                             'translation:buttons.action.hasOffers',
                           )}`,
                         );
-                        if (status !== `${t('translation:filters.forOffer')}`) {
-                          dispatch(filterActions.setStatusFilter(`${t('translation:filters.forOffer')}`));
+                        if (
+                          status !==
+                          `${t('translation:filters.forOffer')}`
+                        ) {
+                          dispatch(
+                            filterActions.setStatusFilter(
+                              `${t('translation:filters.forOffer')}`,
+                            ),
+                          );
                         } else {
                           dispatch(filterActions.setStatusFilter(''));
                         }
@@ -299,12 +348,15 @@ export const Filters = () => {
                 {loadingFilterList ? (
                   <CheckboxAccordionSkeleton />
                 ) : (
-                  loadedFiltersList[0]?.map((checkboxData) => (
-                    <CheckboxFilterAccordion
-                      checkboxData={checkboxData}
-                      id={checkboxData.name}
-                    />
-                  ))
+                  (loadedFiltersList[0] as any)?.map(
+                    (checkboxData: any) => (
+                      <CheckboxFilterAccordion
+                        key={checkboxData.id}
+                        checkboxData={checkboxData}
+                        id={checkboxData.name}
+                      />
+                    ),
+                  )
                 )}
               </CheckboxFilters>
             </FilterSection>

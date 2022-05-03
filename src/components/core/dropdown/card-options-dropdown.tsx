@@ -16,22 +16,28 @@ import {
 import moreoptions from '../../../assets/moreoptions.svg';
 import copy from '../../../assets/copy.svg';
 import copyDark from '../../../assets/copy-dark.svg';
-import { NFTMetadata } from '../../../declarations/nft';
+import { NFTMetadata } from '../../../declarations/legacy';
 
 export type CardOptionsDropdownProps = {
-  data: NFTMetadata,
-}
+  data: NFTMetadata;
+};
 
-export const CardOptionsDropdown = ({ data }: CardOptionsDropdownProps) => {
+export const CardOptionsDropdown = ({
+  data,
+}: CardOptionsDropdownProps) => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
   const dispatch = useAppDispatch();
   const isLightTheme = theme === 'lightTheme';
 
-  const handleCopy = (e) => {
+  const handleCopy = (e: any) => {
     e.preventDefault();
     copyToClipboard(`${window.location.href}nft/${data.id}`);
-    dispatch(notificationActions.setSuccessMessage(`${t('translation:successMessages.copyToClipboard')}`));
+    dispatch(
+      notificationActions.setSuccessMessage(
+        `${t('translation:successMessages.copyToClipboard')}`,
+      ),
+    );
   };
 
   return (

@@ -8,7 +8,7 @@ import {
   useAppDispatch,
   nftsActions,
   notificationActions,
-  loadedNFTData,
+  LoadedNFTData,
 } from '../store';
 
 export const useNFTSFetcher = () => {
@@ -67,18 +67,24 @@ export const useNFTSFetcher = () => {
           return metadata;
         });
 
-        const loadedNFTS: loadedNFTData = {
+        const loadedNFTS = {
           loadedNFTList,
         };
 
         // update store with loaded NFTS details
-        dispatch(nftsActions.setLoadedNFTS(loadedNFTS));
+        dispatch(
+          nftsActions.setLoadedNFTS(loadedNFTS as LoadedNFTData),
+        );
       } catch (error) {
         // eslint-disable-next-line no-console
         console.warn(error);
 
         // set NFTS failed to load
-        dispatch(notificationActions.setErrorMessage(error.message));
+        dispatch(
+          notificationActions.setErrorMessage(
+            (error as Error).message,
+          ),
+        );
       }
     })();
   }, [dispatch]);

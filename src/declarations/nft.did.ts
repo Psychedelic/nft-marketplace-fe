@@ -1,4 +1,6 @@
-/* eslint-disable */
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 export default ({ IDL }: { IDL: any }) => {
   const Vec = IDL.Rec();
   const InitArgs = IDL.Record({

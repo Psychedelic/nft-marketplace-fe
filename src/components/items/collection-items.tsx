@@ -1,11 +1,27 @@
-import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useFilterStore, filterActions, useAppDispatch, useNFTSStore, settingsActions } from '../../store';
+import {
+  useFilterStore,
+  filterActions,
+  useAppDispatch,
+  useNFTSStore,
+  settingsActions,
+} from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
-import { FilteredCountChip, FilteredTraitsChip, SortByFilterDropdown } from '../core';
-import { Container, FilteredContainer, ContentWrapper, Flex, ContentFlex, SkeletonListWrapper } from './styles';
+import {
+  FilteredCountChip,
+  FilteredTraitsChip,
+  SortByFilterDropdown,
+} from '../core';
+import {
+  Container,
+  FilteredContainer,
+  ContentWrapper,
+  Flex,
+  ContentFlex,
+  SkeletonListWrapper,
+} from './styles';
 
 export const CollectionItems = () => {
   const { t } = useTranslation();
@@ -20,8 +36,13 @@ export const CollectionItems = () => {
   const handleRemoveFilter = (appliedFilter: any) => {
     // TODO: apply sorting to fetch kyasshu API
     // eslint-disable-next-line no-console
-    if (appliedFilter.filterCategory === `${t('translation:filters.priceRange')}`) {
-      dispatch(filterActions.removePriceFilter(appliedFilter.filterCategory));
+    if (
+      appliedFilter.filterCategory ===
+      `${t('translation:filters.priceRange')}`
+    ) {
+      dispatch(
+        filterActions.removePriceFilter(appliedFilter.filterCategory),
+      );
       dispatch(settingsActions.setPriceApplyButton(false));
     } else {
       dispatch(filterActions.removeFilter(appliedFilter.filterName));
@@ -40,9 +61,21 @@ export const CollectionItems = () => {
         <ContentWrapper>
           <Flex withMargin justifyContent>
             <ContentFlex>
-              <FilteredCountChip label={t('translation:chips.labels.itemsLabel')} count="10.0k" showLogo={false} />
-              <FilteredCountChip label={t('translation:chips.labels.OwnersLabel')} count="5.9k" showLogo={false} />
-              <FilteredCountChip label={t('translation:chips.labels.FloorPriceLabel')} count="22.12" showLogo />
+              <FilteredCountChip
+                label={t('translation:chips.labels.itemsLabel')}
+                count="10.0k"
+                showLogo={false}
+              />
+              <FilteredCountChip
+                label={t('translation:chips.labels.OwnersLabel')}
+                count="5.9k"
+                showLogo={false}
+              />
+              <FilteredCountChip
+                label={t('translation:chips.labels.FloorPriceLabel')}
+                count="22.12"
+                showLogo
+              />
             </ContentFlex>
             <ContentFlex>
               <SortByFilterDropdown />
@@ -55,18 +88,30 @@ export const CollectionItems = () => {
                   return (
                     <FilteredTraitsChip
                       name={
-                        appliedFilter.filterCategory !== `${t('translation:filters.priceRange')}`
+                        appliedFilter.filterCategory !==
+                        `${t('translation:filters.priceRange')}`
                           ? appliedFilter.filterName
                           : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`
                       }
                       rim={`${appliedFilter.filterCategory}`}
                       appliedFilterValue={appliedFilter}
                       removeFilter={() => {
-                        if (appliedFilter.filterName === `${t('translation:buttons.action.myNfts')}`) {
+                        if (
+                          appliedFilter.filterName ===
+                          `${t('translation:buttons.action.myNfts')}`
+                        ) {
                           dispatch(filterActions.setMyNfts(false));
-                        } else if (appliedFilter.filterName === `${t('translation:buttons.action.buyNow')}`) {
+                        } else if (
+                          appliedFilter.filterName ===
+                          `${t('translation:buttons.action.buyNow')}`
+                        ) {
                           dispatch(filterActions.setStatusFilter(''));
-                        } else if (appliedFilter.filterName === `${t('translation:buttons.action.hasOffers')}`) {
+                        } else if (
+                          appliedFilter.filterName ===
+                          `${t(
+                            'translation:buttons.action.hasOffers',
+                          )}`
+                        ) {
                           dispatch(filterActions.setStatusFilter(''));
                         }
                         handleRemoveFilter(appliedFilter);
@@ -76,6 +121,7 @@ export const CollectionItems = () => {
                 }
                 return appliedFilter.filterName.map((value) => (
                   <FilteredTraitsChip
+                    key={value}
                     name={value}
                     rim={`${appliedFilter.filterCategory}`}
                     appliedFilterValue={appliedFilter}

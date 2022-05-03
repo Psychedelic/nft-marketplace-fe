@@ -1,3 +1,3 @@
-export enum BUTTON_TYPE {
+export enum ButtonType {
   plug = 'plug',
 }

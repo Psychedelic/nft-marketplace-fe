@@ -1,4 +1,4 @@
-export enum FILTER_CONSTANTS {
+export enum FilterConstants {
   bigGem = 'Big Gem',
   smallGem = 'Small Gem',
   base = 'Base',

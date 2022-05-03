@@ -1,8 +1,13 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useThemeStore, useAppDispatch, usePlugStore, RootState } from '../../store';
+import {
+  useThemeStore,
+  useAppDispatch,
+  usePlugStore,
+  RootState,
+} from '../../store';
 import {
   ItemDetailsCell,
   PriceDetailsCell,
@@ -18,10 +23,13 @@ import {
 } from './styles';
 import TableSkeletons from './table-skeletons';
 import {
-  OFFER_TYPE_STATUS_CODES,
-  OFFERS_TABLE_HEADERS,
+  OfferTypeStatusCodes,
+  OffersTableHeaders,
 } from '../../constants/my-offers';
-import { getTokenOffers, getBuyerOffers } from '../../store/features/marketplace';
+import {
+  getTokenOffers,
+  getBuyerOffers,
+} from '../../store/features/marketplace';
 import { getOwnerTokenIdentifiers } from '../../store/features/crowns';
 import { OffersTableItem } from '../../declarations/legacy';
 import { formatPriceValue } from '../../utils/formatters';
@@ -45,9 +53,11 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
-  const [loadingTableData, setLoadingTableData] = useState<boolean>(true);
+  const [loadingTableData, setLoadingTableData] =
+    useState<boolean>(true);
   // TODO: update loadedOffers state array record type
-  const [loadedOffersReceivedData, setLoadedOffersReceivedData] = useState<any>([]);
+  const [loadedOffersReceivedData, setLoadedOffersReceivedData] =
+    useState<any>([]);
   const ownerTokenIdentifiers = useSelector(
     (state: RootState) => state.crowns.ownerTokenIdentifiers,
   );
@@ -60,15 +70,16 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   useEffect(() => {
     // hide offersMadeAction if offersType = OffersReceived
     if (
-      offersType === OFFER_TYPE_STATUS_CODES.OffersReceived
-      && !columnsToHide.includes(OFFERS_TABLE_HEADERS.OffersMadeAction)
+      offersType === OfferTypeStatusCodes.OffersReceived &&
+      !columnsToHide.includes(OffersTableHeaders.OffersMadeAction)
     ) {
       const newColumns = columnsToHide.filter(
-        (header) => header !== OFFERS_TABLE_HEADERS.OffersReceivedAction,
+        (header) =>
+          header !== OffersTableHeaders.OffersReceivedAction,
       );
       setColumnsToHide([
         ...newColumns,
-        OFFERS_TABLE_HEADERS.OffersMadeAction,
+        OffersTableHeaders.OffersMadeAction,
       ]);
 
       return;
@@ -76,19 +87,18 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
     // hide offersReceivedAction if offersType = OffersMade
     if (
-      offersType === OFFER_TYPE_STATUS_CODES.OffersMade
-      && !columnsToHide.includes(
-        OFFERS_TABLE_HEADERS.OffersReceivedAction,
-      )
+      offersType === OfferTypeStatusCodes.OffersMade &&
+      !columnsToHide.includes(OffersTableHeaders.OffersReceivedAction)
     ) {
       const newColumns = columnsToHide.filter(
-        (header) => header !== OFFERS_TABLE_HEADERS.OffersMadeAction,
+        (header) => header !== OffersTableHeaders.OffersMadeAction,
       );
       setColumnsToHide([
         ...newColumns,
-        OFFERS_TABLE_HEADERS.OffersReceivedAction,
+        OffersTableHeaders.OffersReceivedAction,
       ]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [offersType]);
 
   // TODO: Update mockedetails configured below
@@ -99,7 +109,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   useEffect(() => {
     if (!isConnected || !plugPrincipal) return;
 
-    if (offersType === OFFER_TYPE_STATUS_CODES.OffersMade) {
+    if (offersType === OfferTypeStatusCodes.OffersMade) {
       dispatch(
         getBuyerOffers({
           userPrincipalId: plugPrincipal,
@@ -121,6 +131,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         plugPrincipal,
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, offersType, isConnected]);
 
   useEffect(() => {
@@ -164,10 +175,19 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       },
       {
         Header: t('translation:tables.titles.price'),
-        accessor: ({ price, computedCurrencyPrice }: OffersTableItem) => (
+        accessor: ({
+          price,
+          computedCurrencyPrice,
+        }: OffersTableItem) => (
           <PriceDetailsCell
             wicp={price.toString()}
-            price={(computedCurrencyPrice && `$${formatPriceValue(computedCurrencyPrice.toString())}`) || ''}
+            price={
+              (computedCurrencyPrice &&
+                `$${formatPriceValue(
+                  computedCurrencyPrice.toString(),
+                )}`) ||
+              ''
+            }
             tableType=""
           />
         ),
@@ -180,7 +200,10 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       },
       {
         Header: t('translation:tables.titles.from'),
-        accessor: ({ fromDetails, callerDfinityExplorerUrl }: OffersTableItem) => (
+        accessor: ({
+          fromDetails,
+          callerDfinityExplorerUrl,
+        }: OffersTableItem) => (
           <TextLinkCell
             text={fromDetails.formattedAddress}
             url={callerDfinityExplorerUrl}
@@ -195,14 +218,23 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         ),
       },
       {
-        id: OFFERS_TABLE_HEADERS.OffersReceivedAction,
+        id: OffersTableHeaders.OffersReceivedAction,
         Header: t('translation:tables.titles.action'),
         // TODO: Update formatted price and offerFrom with dynamic fields
-        accessor: ({ price, fromDetails, item, computedCurrencyPrice }: OffersTableItem) => (
+        accessor: ({
+          price,
+          fromDetails,
+          item,
+          computedCurrencyPrice,
+        }: OffersTableItem) => (
           <ButtonWrapper>
             <AcceptOfferModal
               price={price.toString()}
-              formattedPrice={(computedCurrencyPrice && computedCurrencyPrice.toString()) || ''}
+              formattedPrice={
+                (computedCurrencyPrice &&
+                  computedCurrencyPrice.toString()) ||
+                ''
+              }
               offerFrom={fromDetails.address}
               nftTokenId={item.tokenId.toString()}
             />
@@ -210,7 +242,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         ),
       },
       {
-        id: OFFERS_TABLE_HEADERS.OffersMadeAction,
+        id: OffersTableHeaders.OffersMadeAction,
         Header: t('translation:tables.titles.action'),
         // TODO: Update cancel offer modal
         accessor: () => (

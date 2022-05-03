@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MyOffersTable } from '../../components/tables';
 import { ActionButton } from '../../components/core';
@@ -9,7 +9,7 @@ import {
   ButtonListWrapper,
   ButtonDetailsWrapper,
 } from './styles';
-import { OFFER_TYPE_STATUS_CODES } from '../../constants/my-offers';
+import { OfferTypeStatusCodes } from '../../constants/my-offers';
 
 /* --------------------------------------------------------------------------
  * Offers View Component
@@ -18,7 +18,7 @@ import { OFFER_TYPE_STATUS_CODES } from '../../constants/my-offers';
 const OffersView = () => {
   const { t } = useTranslation();
   const [offersType, setOffersType] = useState(
-    OFFER_TYPE_STATUS_CODES.OffersReceived,
+    OfferTypeStatusCodes.OffersReceived,
   );
 
   return (
@@ -29,26 +29,26 @@ const OffersView = () => {
           <ButtonDetailsWrapper>
             <ActionButton
               type={
-                offersType === OFFER_TYPE_STATUS_CODES.OffersReceived
+                offersType === OfferTypeStatusCodes.OffersReceived
                   ? 'outline'
                   : 'secondary'
               }
               text={t('translation:offers.offersReceived')}
               handleClick={() => {
-                setOffersType(OFFER_TYPE_STATUS_CODES.OffersReceived);
+                setOffersType(OfferTypeStatusCodes.OffersReceived);
               }}
             />
           </ButtonDetailsWrapper>
           <ButtonDetailsWrapper>
             <ActionButton
               type={
-                offersType === OFFER_TYPE_STATUS_CODES.OffersMade
+                offersType === OfferTypeStatusCodes.OffersMade
                   ? 'outline'
                   : 'secondary'
               }
               text={t('translation:offers.offersMade')}
               handleClick={() => {
-                setOffersType(OFFER_TYPE_STATUS_CODES.OffersMade);
+                setOffersType(OfferTypeStatusCodes.OffersMade);
               }}
             />
           </ButtonDetailsWrapper>

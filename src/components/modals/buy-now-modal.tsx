@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
-import { directBuy, getAllListings } from '../../store/features/marketplace';
+import { directBuy } from '../../store/features/marketplace';
 import { useAppDispatch } from '../../store';
-import { DIRECT_BUY_STATUS_CODES } from '../../constants/direct-buy';
+import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 import {
   ModalOverlay,
   ModalContent,
@@ -28,9 +28,14 @@ export type BuyNowModalProps = {
   actionText?: string;
   actionTextId?: number;
   price?: string;
-}
+};
 
-export const BuyNowModal = ({ onClose, actionText, actionTextId, price } : BuyNowModalProps) => {
+export const BuyNowModal = ({
+  onClose,
+  actionText,
+  actionTextId,
+  price = '',
+}: BuyNowModalProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -46,7 +51,6 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId, price } : BuyNo
       return;
     }
 
-    // eslint-disable-next-line consistent-return
     return BigInt(tid);
   })();
 
@@ -61,13 +65,16 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId, price } : BuyNo
   };
 
   const handleDirectBuy = () => {
-    if (typeof tokenId === 'undefined' || (!tokenId && Number(tokenId) !== 0)) {
+    if (
+      typeof tokenId === 'undefined' ||
+      (!tokenId && Number(tokenId) !== 0)
+    ) {
       console.warn('Oops! Missing id param');
 
       return;
     }
 
-    setModalStep(DIRECT_BUY_STATUS_CODES.Pending);
+    setModalStep(DirectBuyStatusCodes.Pending);
 
     dispatch(
       directBuy({
@@ -80,7 +87,7 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId, price } : BuyNo
           // although not scalable, if persists might add an endpoint for
           // a single item instead of a list...
           // dispatch(getAllListings());
-          setModalStep(DIRECT_BUY_STATUS_CODES.Confirmed);
+          setModalStep(DirectBuyStatusCodes.Confirmed);
         },
         onFailure: () => {
           // TODO: trigger step failure
@@ -90,7 +97,10 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId, price } : BuyNo
   };
 
   return (
-    <DialogPrimitive.Root open={modalOpened} onOpenChange={handleModalOpen}>
+    <DialogPrimitive.Root
+      open={modalOpened}
+      onOpenChange={handleModalOpen}
+    >
       {/*
         ---------------------------------
         Modal Trigger
@@ -103,7 +113,11 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId, price } : BuyNo
           </ActionText>
         ) : (
           <BuyNowModalTrigger>
-            <ActionButton type="primary" text={t('translation:buttons.action.buyNow')} handleClick={handleDirectBuy} />
+            <ActionButton
+              type="primary"
+              text={t('translation:buttons.action.buyNow')}
+              handleClick={handleDirectBuy}
+            />
           </BuyNowModalTrigger>
         )}
       </DialogPrimitive.Trigger>
@@ -132,8 +146,14 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId, price } : BuyNo
               ---------------------------------
             */}
             <ModalHeader>
-              <ModalTitle>{t('translation:modals.title.pendingConfirmation')}</ModalTitle>
-              <ModalDescription>{t('translation:modals.description.pendingConfirmation')}</ModalDescription>
+              <ModalTitle>
+                {t('translation:modals.title.pendingConfirmation')}
+              </ModalTitle>
+              <ModalDescription>
+                {t(
+                  'translation:modals.description.pendingConfirmation',
+                )}
+              </ModalDescription>
             </ModalHeader>
             {/*
               ---------------------------------
@@ -172,8 +192,12 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId, price } : BuyNo
               ---------------------------------
             */}
             <ModalHeader>
-              <ModalTitle>{t('translation:modals.title.nftPurchased')}</ModalTitle>
-              <ModalDescription>{t('translation:modals.description.nftPurchased')}</ModalDescription>
+              <ModalTitle>
+                {t('translation:modals.title.nftPurchased')}
+              </ModalTitle>
+              <ModalDescription>
+                {t('translation:modals.description.nftPurchased')}
+              </ModalDescription>
             </ModalHeader>
             {/*
               ---------------------------------

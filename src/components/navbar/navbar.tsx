@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -27,7 +26,7 @@ import {
  * --------------------------------------------------------------------------*/
 
 export type NavbarProps = {
-  currentTheme: string | null;
+  currentTheme?: string | null;
 };
 
 export const NavBar = ({ currentTheme }: NavbarProps) => {
@@ -35,7 +34,8 @@ export const NavBar = ({ currentTheme }: NavbarProps) => {
   const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
   const isLightTheme = theme === 'lightTheme';
-  const selectedTheme = currentTheme === 'darkTheme' ? 'lightTheme' : 'darkTheme';
+  const selectedTheme =
+    currentTheme === 'darkTheme' ? 'lightTheme' : 'darkTheme';
 
   return (
     <Container>
@@ -46,9 +46,7 @@ export const NavBar = ({ currentTheme }: NavbarProps) => {
             alt={t('translation:common.collectionName')}
           />
           <LogoName
-            src={
-              isLightTheme ? appName : appNameDark
-            }
+            src={isLightTheme ? appName : appNameDark}
             alt={t('translation:common.collectionName')}
           />
         </LogoContainer>
@@ -57,12 +55,11 @@ export const NavBar = ({ currentTheme }: NavbarProps) => {
       <ActionButtonsContainer>
         <Tooltip text={t('translation:common.comingSoon')}>
           <LinkButton
-            handleClick={() => dispatch(themeActions.setTheme(selectedTheme))}
+            handleClick={() =>
+              dispatch(themeActions.setTheme(selectedTheme))
+            }
           >
-            <img
-              src={isLightTheme ? moon : sun}
-              alt=""
-            />
+            <img src={isLightTheme ? moon : sun} alt="" />
           </LinkButton>
         </Tooltip>
         <Plug />

@@ -1,7 +1,4 @@
-import {
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
 
 interface LoadedTableMetaData {
@@ -43,7 +40,10 @@ export const tableSlice = createSlice({
   name: 'table',
   initialState,
   reducers: {
-    setIsTableDataLoading: (state, action: PayloadAction<boolean>) => {
+    setIsTableDataLoading: (
+      state,
+      action: PayloadAction<boolean>,
+    ) => {
       state.loadingTableData = action.payload;
       if (state.failedToLoadTableData) {
         state.failedToLoadTableData = false;
@@ -53,12 +53,15 @@ export const tableSlice = createSlice({
       state,
       action: PayloadAction<LoadedTableData>,
     ) => {
-      const { nextPage, totalPages, loadedCapActivityTableData } = action.payload;
+      const { nextPage, totalPages, loadedCapActivityTableData } =
+        action.payload;
       state.loadingTableData = false;
       if (nextPage === 0) {
         state.loadedCapActivityData = loadedCapActivityTableData;
       } else {
-        state.loadedCapActivityData.push(...loadedCapActivityTableData);
+        state.loadedCapActivityData.push(
+          ...loadedCapActivityTableData,
+        );
       }
       if (nextPage > totalPages) {
         state.hasMoreData = true;
@@ -67,7 +70,10 @@ export const tableSlice = createSlice({
         state.hasMoreData = false;
       }
     },
-    setFailedToLoadTableData: (state, action: PayloadAction<boolean>) => {
+    setFailedToLoadTableData: (
+      state,
+      action: PayloadAction<boolean>,
+    ) => {
       state.failedToLoadTableData = !action.payload;
       state.loadingTableData = action.payload;
     },

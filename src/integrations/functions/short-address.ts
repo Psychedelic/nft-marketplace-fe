@@ -2,10 +2,10 @@ const defaultConfig = {
   leftSize: 5,
   rightSize: 4,
   separator: '...',
-  replace: [[/-/g, '']],
+  replace: [[/-/g, '']] as [RegExp, string][],
 };
 
-const shortAddress = (address, config = defaultConfig) => {
+const shortAddress = (address: unknown, config = defaultConfig) => {
   if (!address) return '';
   if (typeof address !== 'string') return '';
 

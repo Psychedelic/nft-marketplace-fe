@@ -1,4 +1,4 @@
-export enum OPERATION_CONSTANTS {
+export enum OperationConstants {
   list = 'list',
   sale = 'sale',
   offer = 'offer',

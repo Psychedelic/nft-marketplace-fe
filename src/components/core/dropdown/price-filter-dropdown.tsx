@@ -73,7 +73,7 @@ export const SortByFilterDropdown = React.memo(() => {
           {sortOptions.map((item) => (
             <>
               <DropdownRadioMenuItem
-                value={item}
+                value={item.value}
                 textValue={item.value}
               >
                 {item.value}

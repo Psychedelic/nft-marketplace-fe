@@ -10,38 +10,57 @@ import {
 } from './styles';
 import closeWarning from '../../assets/close-warning.svg';
 import success from '../../assets/success-icon.svg';
-import { notificationActions, useAppDispatch, useErrorsStore } from '../../store';
+import {
+  notificationActions,
+  useAppDispatch,
+  useErrorsStore,
+} from '../../store';
 
 const SuccessHandling = () => {
   const [open, setOpen] = React.useState(false);
-  const { sucessMessages } = useErrorsStore();
+  const { successMessages } = useErrorsStore();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (sucessMessages) setOpen(true);
+    if (successMessages) setOpen(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <>
-      <ToastProvider swipeDirection="right">
-        {sucessMessages.map((sucessMessage) => (
-          <Toast open={open} onOpenChange={setOpen} duration={500000000}>
-            <ToastDescription state="success" asChild>
-              <div>
-                <ToastDescriptionIcon src={success} alt="success-icon" />
-                <ToastDescriptionText>{sucessMessage.message}</ToastDescriptionText>
-              </div>
-            </ToastDescription>
-            <ToastActionIcon
-              src={closeWarning}
-              alt="close-warning"
-              onClick={() => dispatch(notificationActions.removeSuccessMessage(sucessMessage.id))}
-            />
-          </Toast>
-        ))}
-        <ToastViewport />
-      </ToastProvider>
-    </>
+    <ToastProvider swipeDirection="right">
+      {successMessages.map((successMessage) => (
+        <Toast
+          key={successMessage.id}
+          open={open}
+          onOpenChange={setOpen}
+          duration={500000000}
+        >
+          <ToastDescription state="success" asChild>
+            <div>
+              <ToastDescriptionIcon
+                src={success}
+                alt="success-icon"
+              />
+              <ToastDescriptionText>
+                {successMessage.message}
+              </ToastDescriptionText>
+            </div>
+          </ToastDescription>
+          <ToastActionIcon
+            src={closeWarning}
+            alt="close-warning"
+            onClick={() =>
+              dispatch(
+                notificationActions.removeSuccessMessage(
+                  successMessage.id,
+                ),
+              )
+            }
+          />
+        </Toast>
+      ))}
+      <ToastViewport />
+    </ToastProvider>
   );
 };
 

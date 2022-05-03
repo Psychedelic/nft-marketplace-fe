@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
@@ -17,15 +17,20 @@ import {
   Video,
 } from './styles';
 
-import { useNFTSStore, RootState, useAppDispatch, getTokenListing } from '../../store';
+import {
+  useNFTSStore,
+  RootState,
+  useAppDispatch,
+  getTokenListing,
+} from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 
 import { fetchNFTDetails } from '../../integrations/kyasshu/utils';
 
-type CurrentListing = {
-  payment_address: string;
-  price: string;
-};
+// type CurrentListing = {
+//   payment_address: string;
+//   price: string;
+// };
 
 export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
@@ -36,14 +41,17 @@ export const NftDetails = () => {
   const recentlyCancelledItems = useSelector(
     (state: RootState) => state.marketplace.recentlyCancelledItems,
   );
-  const tokenListing = useSelector(
-    (state: RootState) => {
-      if (!id || !(id in state.marketplace?.tokenListing)) return;
+  const tokenListing = useSelector((state: RootState) => {
+    if (
+      !id ||
+      !state.marketplace?.tokenListing ||
+      !(id in state.marketplace.tokenListing)
+    )
+      return;
 
-      // eslint-disable-next-line consistent-return
-      return state.marketplace.tokenListing[id];
-    },
-  );
+    // eslint-disable-next-line consistent-return
+    return state.marketplace.tokenListing[id];
+  });
 
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
@@ -51,7 +59,8 @@ export const NftDetails = () => {
   );
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
-  const owner = tokenListing?.payment_address?.toString() || nftDetails?.owner;
+  const owner =
+    tokenListing?.payment_address?.toString() || nftDetails?.owner;
   const lastSalePrice = tokenListing?.price || nftDetails?.price;
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
   const dispatch = useAppDispatch();
@@ -122,7 +131,7 @@ export const NftDetails = () => {
           <DetailsContainer>
             <NFTMetaData id={id} />
             <OfferAccordion
-              lastSalePrice={lastSalePrice}
+              lastSalePrice={lastSalePrice?.toString()}
               isListed={isListed}
               owner={owner}
             />

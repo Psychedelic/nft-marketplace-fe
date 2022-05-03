@@ -11,7 +11,7 @@ import { TableLayout } from './table-layout';
 import { mockTableData } from './mock-data';
 import { Container } from './styles';
 
-export interface rowProps {
+interface RowProps {
   price: string;
   type: string;
   from: string;
@@ -27,7 +27,7 @@ export const NFTActivityTable = () => {
     () => [
       {
         Header: t('translation:tables.titles.event'),
-        accessor: ({ type }: rowProps) => (
+        accessor: ({ type }: RowProps) => (
           <TypeDetailsCell
             name={type}
             type={type}
@@ -38,7 +38,7 @@ export const NFTActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.price'),
-        accessor: ({ price }: rowProps) => (
+        accessor: ({ price }: RowProps) => (
           <PriceDetailsCell
             wicp="5.12 WICP"
             price={price}
@@ -48,19 +48,19 @@ export const NFTActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.from'),
-        accessor: ({ from }: rowProps) => (
+        accessor: ({ from }: RowProps) => (
           <TextLinkCell text={from} url="" type="nftActivity" />
         ),
       },
       {
         Header: t('translation:tables.titles.to'),
-        accessor: ({ to }: rowProps) => (
+        accessor: ({ to }: RowProps) => (
           <TextLinkCell text={to} url="" type="nftActivity" />
         ),
       },
       {
         Header: t('translation:tables.titles.date'),
-        accessor: ({ expiration }: rowProps) => (
+        accessor: ({ expiration }: RowProps) => (
           <TextCell text={expiration} type="nftActivityDate" />
         ),
       },

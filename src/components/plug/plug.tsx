@@ -17,7 +17,7 @@ import {
 } from '../../integrations/plug';
 import {
   PLUG_WALLET_WEBSITE_URL,
-  PLUG_STATUS_CODES,
+  PlugStatusCodes,
 } from '../../constants';
 import config from '../../config/env';
 
@@ -44,12 +44,12 @@ export const Plug = () => {
 
   // eslint-disable-next-line
   const isVerifying = useMemo(() => {
-    return connectionStatus === PLUG_STATUS_CODES.Verifying;
+    return connectionStatus === PlugStatusCodes.Verifying;
   }, [connectionStatus]);
 
   // eslint-disable-next-line
   const isConnecting = useMemo(() => {
-    return connectionStatus === PLUG_STATUS_CODES.Connecting;
+    return connectionStatus === PlugStatusCodes.Connecting;
   }, [connectionStatus]);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export const Plug = () => {
         // update connection status to not-installed
         dispatch(
           plugActions.setConnectionStatus(
-            PLUG_STATUS_CODES.NotInstalled,
+            PlugStatusCodes.NotInstalled,
           ),
         );
 
@@ -71,7 +71,7 @@ export const Plug = () => {
         // update connection status to installed
         dispatch(
           plugActions.setConnectionStatus(
-            PLUG_STATUS_CODES.FailedToConnect,
+            PlugStatusCodes.FailedToConnect,
           ),
         );
 
@@ -119,7 +119,7 @@ export const Plug = () => {
     try {
       // verifying plug connection
       dispatch(
-        plugActions.setConnectionStatus(PLUG_STATUS_CODES.Connecting),
+        plugActions.setConnectionStatus(PlugStatusCodes.Connecting),
       );
 
       // request app to connect with plug

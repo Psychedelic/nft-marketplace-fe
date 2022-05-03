@@ -12,28 +12,33 @@ export type SearchInputProps = {
 export const SearchInput = forwardRef<
   HTMLInputElement,
   SearchInputProps
->(({ placeholder = '', setValue, handleClick, handleSearch }, ref) => {
-  const handleValueChange = (
-    event: ChangeEvent<HTMLInputElement>,
+>(
+  (
+    { placeholder = '', setValue, handleClick, handleSearch },
+    ref,
   ) => {
-    const value = event?.target?.value;
-    if (setValue) {
-      setValue(value);
-    }
-    // eslint-disable-next-line
-    handleSearch && handleSearch(value);
-  };
+    const handleValueChange = (
+      event: ChangeEvent<HTMLInputElement>,
+    ) => {
+      const value = event?.target?.value;
+      if (setValue) {
+        setValue(value);
+      }
+      // eslint-disable-next-line
+      handleSearch && handleSearch(value);
+    };
 
-  return (
-    <Container name="searchInput" onClick={handleClick}>
-      <SearchIcon src={searchLogo} alt="search" />
-      <Input
-        ref={ref}
-        name="searchInput"
-        type="text"
-        placeholder={placeholder}
-        onChange={handleValueChange}
-      />
-    </Container>
-  );
-});
+    return (
+      <Container name="searchInput" onClick={handleClick}>
+        <SearchIcon src={searchLogo} alt="search" />
+        <Input
+          ref={ref}
+          name="searchInput"
+          type="text"
+          placeholder={placeholder}
+          onChange={handleValueChange}
+        />
+      </Container>
+    );
+  },
+);

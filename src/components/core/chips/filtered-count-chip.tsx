@@ -26,7 +26,10 @@ export const FilteredCountChip = ({
       <CountLabel>{label}</CountLabel>
       <CountInNumbers>{count}</CountInNumbers>
       {showLogo && (
-        <CountLogo src={miniDfinity} alt={t('translation:logoAlts.wicp')} />
+        <CountLogo
+          src={miniDfinity}
+          alt={t('translation:logoAlts.wicp')}
+        />
       )}
     </CountContainer>
   );

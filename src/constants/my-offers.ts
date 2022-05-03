@@ -1,9 +1,9 @@
-export enum OFFER_TYPE_STATUS_CODES {
+export enum OfferTypeStatusCodes {
   OffersReceived = 'offers received',
   OffersMade = 'offers made',
 }
 
-export enum OFFERS_TABLE_HEADERS {
+export enum OffersTableHeaders {
   OffersReceivedAction = 'offersReceivedAction',
   OffersMadeAction = 'offersMadeAction',
 }
