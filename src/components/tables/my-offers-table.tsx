@@ -99,8 +99,6 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   useEffect(() => {
     if (!isConnected || !plugPrincipal) return;
 
-    // TODO: call getBuyerOffers when offersType = OffersMade
-    // Update loadedOffersReceivedData on API successful
     if (offersType === OFFER_TYPE_STATUS_CODES.OffersMade) {
       dispatch(
         getBuyerOffers({
