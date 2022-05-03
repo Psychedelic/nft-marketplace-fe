@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
-import { getCAPActivity } from './async-thunks/get-cap-activity';
+import { getCAPActivity } from './async-thunks';
 
 interface LoadedTableMetaData {
   media: string;
