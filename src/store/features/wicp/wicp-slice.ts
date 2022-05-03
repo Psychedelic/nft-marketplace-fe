@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
 import wicpIdlService from '../../../declarations/wicp';

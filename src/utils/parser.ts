@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Principal } from '@dfinity/principal';
 import { Listing, Offer } from '../declarations/marketplace';
 import {
@@ -57,7 +58,6 @@ export const parseAllListingResponseAsObj = (
       };
 
       return acc;
-      /* eslint-disable */
     },
     {} as GetAllListingsDataParsedObj,
   );

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { createStitches } from '@stitches/react';
 
 export const {

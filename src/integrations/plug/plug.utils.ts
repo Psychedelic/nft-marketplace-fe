@@ -1,4 +1,3 @@
-/* eslint-disable */
 type RequestConnectArgs = {
   whitelist?: string[];
   host?: string;
