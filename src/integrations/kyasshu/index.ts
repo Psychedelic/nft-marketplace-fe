@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import {
+  getNFTs,
   useAppDispatch,
   useFilterStore,
   usePlugStore,
 } from '../../store';
 import {
-  fetchNFTS,
   fetchNFTDetails,
   useTraitsPayload,
   usePriceValues,
@@ -45,14 +45,15 @@ export const useNFTSFetcher = () => {
   const { sortBy } = useFilterStore();
 
   useEffect(() => {
-    fetchNFTS({
-      payload,
-      dispatch,
-      sort: sortBy,
-      order: 'd',
-      page: 0,
-      count: '25',
-    });
+    dispatch(
+      getNFTs({
+        payload,
+        sort: sortBy,
+        order: 'd',
+        page: 0,
+        count: 25,
+      }),
+    );
   }, [dispatch, traits, isMyNfts, priceValues, sortBy, status]);
 };
 
@@ -70,3 +71,5 @@ export const useNFTDetailsFetcher = () => {
     });
   }, [dispatch, id]);
 };
+
+export * from './kyasshu-urls';

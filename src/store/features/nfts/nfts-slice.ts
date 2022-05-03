@@ -152,6 +152,9 @@ export const nftsSlice = createSlice({
       state.loadedNFTS[index].owner = buyerId;
     },
   },
+  // extraReducers: (builder) => {
+
+  // },
 });
 
 export const nftsActions = nftsSlice.actions;

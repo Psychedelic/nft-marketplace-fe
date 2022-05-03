@@ -8,11 +8,11 @@ import {
   useFilterStore,
   useAppDispatch,
   usePlugStore,
+  getNFTs,
 } from '../../store';
 import { EmptyState } from '../core';
 import { ButtonType } from '../../constants/empty-states';
 import {
-  fetchNFTS,
   usePriceValues,
   useTraitsPayload,
   isNFTOwner,
@@ -56,14 +56,15 @@ export const NftList = () => {
   const loadMoreNFTS = () => {
     if (loadingNFTs || !hasMoreNFTs) return;
 
-    fetchNFTS({
-      payload,
-      dispatch,
-      sort: sortBy,
-      order: 'd',
-      page: nextPageNo,
-      count: '25',
-    });
+    dispatch(
+      getNFTs({
+        payload,
+        sort: sortBy,
+        order: 'd',
+        page: nextPageNo,
+        count: 25,
+      }),
+    );
 
     console.log('runs');
   };
