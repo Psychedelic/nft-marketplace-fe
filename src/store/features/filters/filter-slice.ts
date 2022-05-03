@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
+import { getFilterTraits } from './async-thunks';
 
 export interface TraitsDataState {
   key: string;
@@ -197,7 +198,10 @@ export const filterSlice = createSlice({
   },
 });
 
-export const filterActions = filterSlice.actions;
+export const filterActions = {
+  ...filterSlice.actions,
+  getFilterTraits,
+};
 
 export const selectFilterState = (state: RootState) => state.filter;
 

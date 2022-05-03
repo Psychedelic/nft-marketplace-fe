@@ -2,22 +2,14 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Principal } from '@dfinity/principal';
 import { useTranslation } from 'react-i18next';
-import {
-  filterActions,
-  notificationActions,
-  useFilterStore,
-} from '../../store';
+import { notificationActions, useFilterStore } from '../../store';
 import config from '../../config/env';
-import { FilterConstants, OperationConstants } from '../../constants';
+import { OperationConstants } from '../../constants';
 import { tableActions } from '../../store/features/tables';
 import { dateRelative } from '../functions/date';
 import shortAddress from '../functions/short-address';
 import { getICAccountLink } from '../../utils/account-id';
 import { CapActivityParams } from '../../store/features/tables/table-slice';
-
-export type FetchFilterTraitsProps = {
-  dispatch: any;
-};
 
 export type CheckNFTOwnerParams = {
   isConnected: boolean;
@@ -33,51 +25,6 @@ export type FetchCAPActivityProps = {
 export type TokenMetadataProps = {
   dispatch: any;
   tokenId: any;
-};
-
-export const fetchFilterTraits = async ({
-  dispatch,
-}: FetchFilterTraitsProps) => {
-  try {
-    const response = await axios.get(
-      `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`,
-    );
-    if (response.status !== 200) {
-      throw Error(response.statusText);
-    }
-
-    const responseData = response.data.map((res: any) => {
-      let key;
-      switch (res.name) {
-        case 'smallgem':
-          key = FilterConstants.smallGem;
-          break;
-        case 'biggem':
-          key = FilterConstants.bigGem;
-          break;
-        case 'base':
-          key = FilterConstants.base;
-          break;
-        case 'rim':
-          key = FilterConstants.rim;
-          break;
-        default:
-      }
-
-      const data = {
-        key,
-        name: res.name,
-        values: [...res.values],
-      };
-
-      return data;
-    });
-
-    dispatch(filterActions.getAllFilters(responseData));
-    dispatch(filterActions.setIsFilterTraitsLoading(false));
-  } catch (error) {
-    console.log(error);
-  }
 };
 
 export const useTraitsPayload = () => {

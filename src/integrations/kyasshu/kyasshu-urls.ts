@@ -15,6 +15,10 @@ export class KyasshuUrl {
   }: KyasshuUrl.GetNFTDetailsQueryParams): string {
     return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${id}`;
   }
+
+  static getFilterTraits(): string {
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`;
+  }
 }
 
 export namespace KyasshuUrl {
@@ -28,4 +32,6 @@ export namespace KyasshuUrl {
   export type GetNFTDetailsQueryParams = {
     id: string;
   };
+
+  export type GetFilterTraits = {};
 }
