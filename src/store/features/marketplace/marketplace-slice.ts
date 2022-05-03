@@ -493,23 +493,6 @@ export const acceptOffer = createAsyncThunk<
         },
       };
 
-      const MKP_MAKE_LISTING = {
-        idl: marketplaceIdlFactory,
-        canisterId: config.marketplaceCanisterId,
-        methodName: 'makeListing',
-        args: [
-          nonFungibleContractAddress,
-          userOwnedTokenId,
-          offerInPrice,
-        ],
-        onSuccess,
-        onFail: (res: any) => {
-          console.warn('Oops! Failed to make listing', res);
-
-          if (typeof onFailure === 'function') onFailure();
-        },
-      };
-
       const MKP_ACCEPT_OFFER = {
         idl: marketplaceIdlFactory,
         canisterId: config.marketplaceCanisterId,
@@ -531,7 +514,6 @@ export const acceptOffer = createAsyncThunk<
         window as any
       )?.ic?.plug?.batchTransactions([
         CROWNS_APPROVE_MARKETPLACE,
-        MKP_MAKE_LISTING,
         MKP_ACCEPT_OFFER,
       ]);
 
