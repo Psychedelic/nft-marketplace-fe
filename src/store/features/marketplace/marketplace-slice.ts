@@ -15,7 +15,7 @@ import { RootState } from '../../store';
 import { OwnerTokenIdentifiers } from '../../features/crowns/crowns-slice';
 // import { crownsSlice } from '../crowns/crowns-slice';
 // import { wicpSlice } from '../wicp/wicp-slice';
-import { parseGetTokenOffersresponse } from '../../../utils/parser';
+import { parseGetTokenOffersresponse, parseOffersMaderesponse } from '../../../utils/parser';
 import { getICPPrice } from '../../../integrations/marketplace/price.utils';
 
 interface MakeListingParams extends MakeListing {
@@ -560,7 +560,7 @@ export const getBuyerOffers = createAsyncThunk<
       currencyMarketPrice = icpPriceResponse.usd;
     }
 
-    const parsedTokenOffers = parseGetTokenOffersresponse({
+    const parsedTokenOffers = parseOffersMaderesponse({
       data: result,
       floorDifferencePrice,
       currencyMarketPrice

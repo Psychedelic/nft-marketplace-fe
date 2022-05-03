@@ -21,7 +21,7 @@ import {
   OFFER_TYPE_STATUS_CODES,
   OFFERS_TABLE_HEADERS,
 } from '../../constants/my-offers';
-import { getTokenOffers } from '../../store/features/marketplace';
+import { getTokenOffers, getBuyerOffers } from '../../store/features/marketplace';
 import { getOwnerTokenIdentifiers } from '../../store/features/crowns';
 import { OffersTableItem } from '../../declarations/legacy';
 import { formatPriceValue } from '../../utils/formatters';
@@ -101,6 +101,22 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
     // TODO: call getBuyerOffers when offersType = OffersMade
     // Update loadedOffersReceivedData on API successful
+    if (offersType === OFFER_TYPE_STATUS_CODES.OffersMade) {
+      dispatch(
+        getBuyerOffers({
+          userPrincipalId: plugPrincipal,
+          onSuccess: (offers) => {
+            // TODO: handle success messages
+            setLoadingTableData(false);
+            setLoadedOffersReceivedData(offers);
+          },
+          onFailure: () => {
+            // TODO: handle failure messages
+          },
+        }),
+      );
+      return;
+    }
 
     dispatch(
       getOwnerTokenIdentifiers({
