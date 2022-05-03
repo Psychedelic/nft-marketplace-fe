@@ -54,8 +54,6 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     (state: RootState) => state.marketplace.recentlyAcceptedOffers,
   );
 
-  console.log('[debug] my-offers-table.tsx: recentlyAcceptedOffers: ', recentlyAcceptedOffers);
-
   const { id: plugPrincipal } = useParams();
 
   useEffect(() => {
