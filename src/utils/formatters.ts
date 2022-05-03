@@ -21,3 +21,9 @@ export const floorDiffPercentageCalculator = ({
 
   return `${floorDifference}%`;
 };
+
+export const formatPriceValue = (price: string) => {
+  if (!price || price === 'n/a') return 'n/a';
+
+  return Number(price).toFixed(2);
+}
