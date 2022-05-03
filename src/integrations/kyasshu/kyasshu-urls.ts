@@ -19,6 +19,12 @@ export class KyasshuUrl {
   static getFilterTraits(): string {
     return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`;
   }
+
+  static getCAPActivity({
+    pageCount,
+  }: KyasshuUrl.GetCAPActivityQueryParams): string {
+    return `${config.kyasshuMarketplaceAPI}/cap/txns/q3fc5-haaaa-aaaaa-aaahq-cai/?page=${pageCount}`;
+  }
 }
 
 export namespace KyasshuUrl {
@@ -33,5 +39,9 @@ export namespace KyasshuUrl {
     id: string;
   };
 
-  export type GetFilterTraits = {};
+  export type GetFilterTraitsQueryParams = {};
+
+  export type GetCAPActivityQueryParams = {
+    pageCount: number;
+  };
 }

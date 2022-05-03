@@ -5,7 +5,7 @@ import { FilterConstants } from '../../../../constants';
 import { filterActions } from '..';
 
 export type GetFilterTraitsProps =
-  | KyasshuUrl.GetFilterTraits
+  | KyasshuUrl.GetFilterTraitsQueryParams
   | undefined;
 
 export const getFilterTraits = createAsyncThunk<

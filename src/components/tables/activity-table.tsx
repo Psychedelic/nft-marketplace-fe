@@ -1,9 +1,10 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useThemeStore,
   useAppDispatch,
   useTableStore,
+  tableActions,
 } from '../../store';
 import {
   ItemDetailsCell,
@@ -14,7 +15,6 @@ import {
 } from '../core';
 import { TableLayout } from './table-layout';
 import { Container, InfiniteScrollWrapper } from './styles';
-import { fetchCAPActivity } from '../../integrations/kyasshu/utils';
 import { NFTMetadata } from '../../declarations/legacy';
 import TableSkeletons from './table-skeletons';
 
@@ -46,21 +46,17 @@ export const ActivityTable = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(
-      fetchCAPActivity({
-        pageCount: 0,
-      }),
-    );
-  }, []);
+    dispatch(tableActions.getCAPActivity({ pageCount: 0 }));
+  }, [dispatch]);
 
-  const loadMoreData = () => {
+  const loadMoreData = useCallback(() => {
     if (loadingTableData || !hasMoreData) return;
     dispatch(
-      fetchCAPActivity({
+      tableActions.getCAPActivity({
         pageCount: nextPageNo,
       }),
     );
-  };
+  }, [dispatch, loadingTableData, hasMoreData, nextPageNo]);
 
   const columns = useMemo(
     () => [
