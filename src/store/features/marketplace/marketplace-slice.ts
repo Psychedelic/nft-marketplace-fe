@@ -217,22 +217,10 @@ export const directBuy = createAsyncThunk<
 
   try {
     const WICP_APPROVE = {
-      idl: crownsIdlFactory,
+      idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,
       methodName: 'approve',
       args: [marketplaceCanisterId, wicpAmount],
-      onFail: (res: any) => {
-        console.warn('Oops! Failed to deposit WICP', res);
-
-        typeof onFailure === 'function' && onFailure();
-      },
-    };
-
-    const MKP_DEPOSIT_WICP = {
-      idl: marketplaceIdlFactory,
-      canisterId: config.marketplaceCanisterId,
-      methodName: 'depositFungible',
-      args: [wicpCanisterId, { DIP20: null }, wicpAmount],
       onFail: (res: any) => {
         console.warn('Oops! Failed to deposit WICP', res);
 
@@ -255,7 +243,7 @@ export const directBuy = createAsyncThunk<
 
     const batchTxRes = await (window as any)?.ic?.plug?.batchTransactions([
       WICP_APPROVE,
-      MKP_DEPOSIT_WICP,
+      // MKP_DEPOSIT_WICP,
       MKP_DIRECT_BUY,
     ]);
 
@@ -333,7 +321,6 @@ export const makeOffer = createAsyncThunk<
   const { id, amount, onSuccess, onFailure } = params;
 
   const mkpContractAddress = Principal.fromText(config.marketplaceCanisterId);
-  const wicpContractAddress = Principal.fromText(config.wICPCanisterId);
   const crownsContractAddress = Principal.fromText(config.crownsCanisterId);
   const userOwnedTokenId = BigInt(id);
   const userOfferInPrice = BigInt(amount);
