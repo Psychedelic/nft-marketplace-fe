@@ -42,11 +42,13 @@ import {
 import { NFTMetadata } from '../../declarations/legacy';
 import { acceptOffer } from '../../store/features/marketplace';
 import { ListingStatusCodes } from '../../constants/listing';
+import { formatPriceValue } from '../../utils/formatters';
 
 export interface AcceptOfferProps {
   price: string;
   formattedPrice: string;
   offerFrom: string;
+  nftTokenId?: string;
 }
 
 /* --------------------------------------------------------------------------
@@ -57,6 +59,7 @@ export const AcceptOfferModal = ({
   price,
   formattedPrice,
   offerFrom,
+  nftTokenId,
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -69,9 +72,17 @@ export const AcceptOfferModal = ({
     ListingStatusCodes.OfferInfo,
   );
 
+  const tokenId: string | undefined = (() => {
+    const tid = nftTokenId ?? id;
+
+    if (!tid) return;
+
+    return tid;
+  })();
+
   const nftDetails: NFTMetadata | undefined = useMemo(
-    () => loadedNFTS.find((nft) => nft.id === id),
-    [loadedNFTS, id],
+    () => loadedNFTS.find((nft) => nft.id === tokenId),
+    [loadedNFTS, tokenId],
   );
 
   const handleModalOpen = (modalOpenedStatus: boolean) => {
@@ -80,13 +91,13 @@ export const AcceptOfferModal = ({
 
     const isAccepted = modalStep === ListingStatusCodes.Accepted;
 
-    if (modalOpenedStatus || !id || !isAccepted) return;
+    if (modalOpenedStatus || !tokenId || !isAccepted) return;
 
     // Update NFT owner details in store
     // on successful offer acceptance and closing the modal
     dispatch(
       nftsActions.acceptNFTOffer({
-        id,
+        id: tokenId,
         buyerId: offerFrom,
       }),
     );
@@ -97,14 +108,15 @@ export const AcceptOfferModal = ({
   };
 
   const handleAcceptOffer = async () => {
-    if (!id) return;
+    if (!tokenId) return;
 
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       acceptOffer({
-        id,
+        id: tokenId,
         buyerPrincipalId: offerFrom,
+        offerPrice: price,
         onSuccess: () => {
           setModalStep(ListingStatusCodes.Accepted);
         },
@@ -188,15 +200,24 @@ export const AcceptOfferModal = ({
             <SaleContentWrapper>
               <ItemDetailsWrapper>
                 <ItemDetails>
-                  <ItemLogo src={nftDetails?.preview} alt="crowns" />
-                  <ItemName>{`CAP Crowns #${nftDetails?.id}`}</ItemName>
+                  {nftDetails?.preview && (
+                    <ItemLogo
+                      src={nftDetails?.preview}
+                      alt="crowns"
+                    />
+                  )}
+                  <ItemName>{`CAP Crowns #${
+                    nftTokenId ?? nftDetails?.id
+                  }`}</ItemName>
                 </ItemDetails>
                 <PriceDetails>
                   <WICPContainer size="small">
                     <WICPLogo src={wicpIcon} alt="wicp" />
                     <WICPText size="small">{`${price} WICP`}</WICPText>
                   </WICPContainer>
-                  <PriceText>{`$${formattedPrice}`}</PriceText>
+                  <PriceText>{`$${formatPriceValue(
+                    formattedPrice,
+                  )}`}</PriceText>
                 </PriceDetails>
               </ItemDetailsWrapper>
               <FeeContainer>
@@ -240,9 +261,13 @@ export const AcceptOfferModal = ({
                       alt="wicp"
                       size="large"
                     />
-                    <WICPText size="large">{`${totalEarningsInWICP} WICP`}</WICPText>
+                    <WICPText size="large">{`${formatPriceValue(
+                      totalEarningsInWICP.toString(),
+                    )} WICP`}</WICPText>
                   </WICPContainer>
-                  <PriceText size="large">{`$${totalEarningsInDollars}`}</PriceText>
+                  <PriceText size="large">{`$${formatPriceValue(
+                    totalEarningsInDollars.toString(),
+                  )}`}</PriceText>
                 </PriceDetails>
               </ItemDetailsWrapper>
             </SaleContentWrapper>
@@ -356,3 +381,4 @@ export const AcceptOfferModal = ({
     </DialogPrimitive.Root>
   );
 };
+

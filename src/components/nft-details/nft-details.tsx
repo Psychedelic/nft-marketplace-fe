@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
@@ -17,26 +17,42 @@ import {
   Video,
 } from './styles';
 
-import { useNFTSStore, useAppDispatch } from '../../store';
+import {
+  useNFTSStore,
+  RootState,
+  useAppDispatch,
+  getTokenListing,
+} from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 
-import { useNFTDetailsFetcher } from '../../integrations/kyasshu';
-import { getAllListings } from '../../store/features/marketplace';
+import { fetchNFTDetails } from '../../integrations/kyasshu/utils';
 
-type CurrentListing = {
-  payment_address: string;
-  price: string;
-};
+// type CurrentListing = {
+//   payment_address: string;
+//   price: string;
+// };
 
 export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
-  const dispatch = useAppDispatch();
-  const [currentListing, setCurrentListing] =
-    useState<CurrentListing>();
-  const allListings = useSelector(
-    (state: any) => state.marketplace.allListings,
+  const recentlyListedForSale = useSelector(
+    (state: RootState) => state.marketplace.recentlyListedForSale,
   );
+  const recentlyCancelledItems = useSelector(
+    (state: RootState) => state.marketplace.recentlyCancelledItems,
+  );
+  const tokenListing = useSelector((state: RootState) => {
+    if (
+      !id ||
+      !state.marketplace?.tokenListing ||
+      !(id in state.marketplace.tokenListing)
+    )
+      return;
+
+    // eslint-disable-next-line consistent-return
+    return state.marketplace.tokenListing[id];
+  });
+
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
     [loadedNFTS, id],
@@ -44,23 +60,34 @@ export const NftDetails = () => {
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
   const owner =
-    currentListing?.payment_address.toString() || nftDetails?.owner;
-  const lastSalePrice = currentListing?.price || nftDetails?.price;
-  const isListed = !!currentListing || nftDetails?.isListed;
+    tokenListing?.payment_address?.toString() || nftDetails?.owner;
+  const lastSalePrice = tokenListing?.price || nftDetails?.price;
+  const isListed = !!(tokenListing?.created || nftDetails?.isListed);
+  const dispatch = useAppDispatch();
 
-  useNFTDetailsFetcher();
-
+  // TODO: We need more control, plus the
+  // kyasshu calls should be placed as a thunk/action
+  // of the state management of your choice, which is redux toolkit
+  // by encapsulating everying here, we lose control it seems
+  // of course you can pass parameters, but then why is it pulling id from useParams
+  // when you have it in the parent component?
+  // To have this work quickly, I've disabled it for now
+  // useNFTDetailsFetcher();
   useEffect(() => {
-    // TODO: Get all listings is not scalable
-    // we'll need to securily trigger an update via kyasshu or similar
-    dispatch(getAllListings());
-  }, [dispatch]);
+    // TODO: handle the error gracefully when there is no id
+    if (!id) return;
 
-  useEffect(() => {
-    if (!id || !allListings[id]) return;
+    fetchNFTDetails({
+      dispatch,
+      id,
+    });
 
-    setCurrentListing(allListings[id]);
-  }, [allListings, id]);
+    dispatch(
+      getTokenListing({
+        id,
+      }),
+    );
+  }, [dispatch, id, recentlyListedForSale, recentlyCancelledItems]);
 
   return (
     <Container>
@@ -104,7 +131,7 @@ export const NftDetails = () => {
           <DetailsContainer>
             <NFTMetaData id={id} />
             <OfferAccordion
-              lastSalePrice={lastSalePrice}
+              lastSalePrice={lastSalePrice?.toString()}
               isListed={isListed}
               owner={owner}
             />
@@ -117,3 +144,4 @@ export const NftDetails = () => {
     </Container>
   );
 };
+

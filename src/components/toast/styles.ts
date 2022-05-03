@@ -91,7 +91,7 @@ export const ToastDescription = styled(ToastPrimitive.Description, {
   variants: {
     state: {
       success: {
-        color: '#4bb543',
+        color: '#46D7AB',
       },
       error: {
         color: '#FD5F51',
@@ -117,3 +117,4 @@ export const ToastActionIcon = styled('img', {
   position: 'relative',
   top: '3px',
 });
+

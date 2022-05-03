@@ -1,4 +1,4 @@
-import * as HoverCard from '@radix-ui/react-hover-card';
+import * as Dropdown from '@radix-ui/react-dropdown-menu';
 import { styled } from '../../stitches.config';
 
 export const PlugButtonContainer = styled('button', {
@@ -35,7 +35,13 @@ export const PlugButtonText = styled('div', {
   fontFamily: 'proxima-nova, sans-serif',
 });
 
-export const ConnectToPlugButton = styled(HoverCard.Content, {
+export const DropdownTrigger = styled(Dropdown.Trigger, {
+  '&:focus': {
+    outline: 'none',
+  },
+});
+
+export const ConnectToPlugButton = styled(Dropdown.Content, {
   minWidth: '220px',
   border: '2px solid $buttonBorderColor',
   boxSizing: 'border-box',
@@ -97,3 +103,4 @@ export const PlugIcon = styled('img', {
 export const PlugArrowDownIcon = styled('img', {
   marginLeft: '10px',
 });
+

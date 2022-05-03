@@ -7,17 +7,19 @@ import {
 } from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
-import marketplaceIdlService from '../../../declarations/marketplace';
+import marketplaceIdlService, {
+  Listing,
+} from '../../../declarations/marketplace';
 import { actorInstanceHandler } from '../../../integrations/actor';
 import crownsIdlFactory from '../../../declarations/nft.did';
 import marketplaceIdlFactory from '../../../declarations/marketplace.did';
+import wicpIdlFactory from '../../../declarations/wicp.did';
 import config from '../../../config/env';
 import { notificationActions } from '../errors';
 import { RootState } from '../../store';
-import {
-  GetAllListingsDataParsedObj,
-  parseAllListingResponseAsObj,
-} from '../../../utils/parser';
+import { OwnerTokenIdentifiers } from '../crowns/crowns-slice';
+import { parseGetTokenOffersresponse } from '../../../utils/parser';
+import { getICPPrice } from '../../../integrations/marketplace/price.utils';
 
 interface MakeListingParams extends MakeListing {
   onSuccess?: () => void;
@@ -36,6 +38,7 @@ interface DirectBuyParams extends DirectBuy {
 
 type DirectBuy = {
   tokenId: BigInt;
+  price: string;
 };
 
 interface CancelListingParams extends CancelListing {
@@ -65,21 +68,35 @@ interface AcceptOfferParams extends AcceptOffer {
 type AcceptOffer = {
   id: string;
   buyerPrincipalId: string;
+  offerPrice: string;
 };
 
-type RecentListedForSale = MakeListing[];
+interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
+  onSuccess?: (offers: any) => void;
+  onFailure?: () => void;
+}
+
+type GetUserReceviedOffer = {
+  ownerTokenIdentifiers?: OwnerTokenIdentifiers;
+};
+
+type RecentyListedForSale = MakeListing[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
 
 type InitialState = {
-  recentlyListedForSale: RecentListedForSale;
-  allListings: GetAllListingsDataParsedObj;
+  recentlyListedForSale: RecentyListedForSale;
+  recentlyCancelledItems: any;
+  recentlyAcceptedOffers: any[];
   actor?: MarketplaceActor;
+  tokenListing: Record<string, Listing>;
 };
 
 const initialState: InitialState = {
   recentlyListedForSale: [],
-  allListings: [],
+  recentlyCancelledItems: [],
+  recentlyAcceptedOffers: [],
+  tokenListing: {},
 };
 
 type CommonError = { message: string };
@@ -99,38 +116,27 @@ export const marketplaceSlice = createSlice({
       state.recentlyListedForSale.push(action.payload);
     });
 
-    builder.addCase(getAllListings.fulfilled, (state, action) => {
+    builder.addCase(getTokenListing.fulfilled, (state, action) => {
       if (!action.payload) return;
 
-      state.allListings = action.payload;
+      state.tokenListing = {
+        ...state.tokenListing,
+        ...action.payload,
+      };
+    });
+
+    builder.addCase(cancelListing.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.recentlyCancelledItems.push(action.payload?.id);
+    });
+
+    builder.addCase(acceptOffer.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.recentlyAcceptedOffers.push(action.payload);
     });
   },
-});
-
-export const getAllListings = createAsyncThunk<
-  // Return type of the payload creator
-  GetAllListingsDataParsedObj | undefined,
-  // First argument to the payload creator
-  undefined,
-  // Optional fields for defining the thunk api
-  { state: RootState }
->('marketplace/getAllListings', async (params: any, thunkAPI) => {
-  // Checks if an actor instance exists already
-  // otherwise creates a new instance
-  const actorInstance = await actorInstanceHandler({
-    thunkAPI,
-    serviceName: 'marketplace',
-    slice: marketplaceSlice,
-  });
-
-  try {
-    const allListings = await actorInstance.getAllListings();
-    const parsed = parseAllListingResponseAsObj(allListings);
-
-    return parsed;
-  } catch (err) {
-    console.warn(err);
-  }
 });
 
 export const makeListing = createAsyncThunk<
@@ -146,9 +152,6 @@ export const makeListing = createAsyncThunk<
     const { id, amount, onSuccess, onFailure } = params;
     const marketplaceCanisterId = Principal.fromText(
       config.marketplaceCanisterId,
-    );
-    const crownsCanisterId = Principal.fromText(
-      config.crownsCanisterId,
     );
     const nonFungibleContractAddress = Principal.fromText(
       config.crownsCanisterId,
@@ -173,28 +176,11 @@ export const makeListing = createAsyncThunk<
         },
       };
 
-      const MKP_DEPOSIT_NFT = {
-        idl: marketplaceIdlFactory,
-        canisterId: config.marketplaceCanisterId,
-        methodName: 'depositNFT',
-        args: [crownsCanisterId, userOwnedTokenId],
-        onFail: (res: any) => {
-          console.warn(
-            `Oops! Failed to deposit NFT (${crownsCanisterId}, ${userOwnedTokenId})`,
-            res,
-          );
-
-          if (typeof onFailure === 'function') onFailure();
-        },
-      };
-
-      const directBuy = true;
       const MKP_MAKE_LISTING = {
         idl: marketplaceIdlFactory,
         canisterId: config.marketplaceCanisterId,
         methodName: 'makeListing',
         args: [
-          directBuy,
           nonFungibleContractAddress,
           userOwnedTokenId,
           userListForPrice,
@@ -211,12 +197,12 @@ export const makeListing = createAsyncThunk<
         window as any
       )?.ic?.plug?.batchTransactions([
         CROWNS_APPROVE_MARKETPLACE,
-        MKP_DEPOSIT_NFT,
         MKP_MAKE_LISTING,
       ]);
 
       if (!batchTxRes) {
         if (typeof onFailure === 'function') onFailure();
+
         return;
       }
 
@@ -246,37 +232,22 @@ export const directBuy = createAsyncThunk<
 >(
   'marketplace/directBuy',
   async (params: DirectBuyParams, thunkAPI) => {
-    const { tokenId, onSuccess, onFailure } = params;
+    const { tokenId, price, onSuccess, onFailure } = params;
 
     const marketplaceCanisterId = Principal.fromText(
       config.marketplaceCanisterId,
     );
-    const wicpCanisterId = Principal.fromText(config.wICPCanisterId);
     const nonFungibleContractAddress = Principal.fromText(
       config.crownsCanisterId,
     );
 
-    // TODO: Get this from the user, UI
-    const wicpAmount = 1_000;
-
     try {
+      const wicpAmount = BigInt(price);
       const WICP_APPROVE = {
-        idl: crownsIdlFactory,
+        idl: wicpIdlFactory,
         canisterId: config.wICPCanisterId,
         methodName: 'approve',
         args: [marketplaceCanisterId, wicpAmount],
-        onFail: (res: any) => {
-          console.warn('Oops! Failed to deposit WICP', res);
-
-          if (typeof onFailure === 'function') onFailure();
-        },
-      };
-
-      const MKP_DEPOSIT_WICP = {
-        idl: marketplaceIdlFactory,
-        canisterId: config.marketplaceCanisterId,
-        methodName: 'depositFungible',
-        args: [wicpCanisterId, { DIP20: null }, wicpAmount],
         onFail: (res: any) => {
           console.warn('Oops! Failed to deposit WICP', res);
 
@@ -301,17 +272,19 @@ export const directBuy = createAsyncThunk<
         window as any
       )?.ic?.plug?.batchTransactions([
         WICP_APPROVE,
-        MKP_DEPOSIT_WICP,
+        // MKP_DEPOSIT_WICP,
         MKP_DIRECT_BUY,
       ]);
 
       if (!batchTxRes) {
         if (typeof onFailure === 'function') onFailure();
+
         return;
       }
 
       return {
         tokenId,
+        price,
       };
     } catch (err) {
       thunkAPI.dispatch(
@@ -343,10 +316,10 @@ export const cancelListing = createAsyncThunk<
     const userOwnedTokenId = BigInt(id);
 
     try {
-      const MKP_WITHDRAW_NFT = {
+      const MKP_CANCEL_LISTING = {
         idl: marketplaceIdlFactory,
         canisterId: config.marketplaceCanisterId,
-        methodName: 'withdrawNFT',
+        methodName: 'cancelListing',
         args: [nonFungibleContractAddress, userOwnedTokenId],
         onFail: (res: any) => {
           console.warn('Oops! Failed to withdraw NFT', res);
@@ -358,7 +331,7 @@ export const cancelListing = createAsyncThunk<
 
       const batchTxRes = await (
         window as any
-      )?.ic?.plug?.batchTransactions([MKP_WITHDRAW_NFT]);
+      )?.ic?.plug?.batchTransactions([MKP_CANCEL_LISTING]);
 
       if (!batchTxRes) {
         if (typeof onFailure === 'function') onFailure();
@@ -391,44 +364,65 @@ export const makeOffer = createAsyncThunk<
 >(
   'marketplace/makeOffer',
   async (params: MakeOfferParams, thunkAPI) => {
-    // Checks if an actor instance exists already
-    // otherwise creates a new instance
-    const actorInstance = await actorInstanceHandler({
-      thunkAPI,
-      serviceName: 'marketplace',
-      slice: marketplaceSlice,
-    });
-
     const { id, amount, onSuccess, onFailure } = params;
 
+    const mkpContractAddress = Principal.fromText(
+      config.marketplaceCanisterId,
+    );
+    const crownsContractAddress = Principal.fromText(
+      config.crownsCanisterId,
+    );
+    const userOwnedTokenId = BigInt(id);
+    const userOfferInPrice = BigInt(amount);
+
     try {
-      const nonFungibleContractAddress = Principal.fromText(
-        config.crownsCanisterId,
-      );
-      const userOwnedTokenId = BigInt(id);
-      const userOfferInPrice = BigInt(amount);
+      const WICP_APPROVE_MARKETPLACE = {
+        idl: wicpIdlFactory,
+        canisterId: config.wICPCanisterId,
+        methodName: 'approve',
+        args: [mkpContractAddress, userOfferInPrice],
+        onFail: (res: any) => {
+          console.warn(
+            `Oops! Failed to approve Marketplace (${config.wICPCanisterId})`,
+            res,
+          );
 
-      const result = await actorInstance.makeOffer(
-        nonFungibleContractAddress,
-        userOwnedTokenId,
-        userOfferInPrice,
-      );
+          if (typeof onFailure === 'function') onFailure();
+        },
+      };
 
-      if (!('Ok' in result)) {
-        if (typeof onFailure !== 'function') return;
+      const MKP_MAKE_OFFER_WICP = {
+        idl: marketplaceIdlFactory,
+        canisterId: config.marketplaceCanisterId,
+        methodName: 'makeOffer',
+        args: [
+          crownsContractAddress,
+          userOwnedTokenId,
+          userOfferInPrice,
+        ],
+        onSuccess,
+        onFail: (res: any) => {
+          console.warn(
+            `Oops! Failed to make offer (${config.marketplaceCanisterId})`,
+            res,
+          );
 
-        onFailure();
+          if (typeof onFailure === 'function') onFailure();
+        },
+      };
 
-        console.error(result);
+      const batchTxRes = await (
+        window as any
+      )?.ic?.plug?.batchTransactions([
+        WICP_APPROVE_MARKETPLACE,
+        MKP_MAKE_OFFER_WICP,
+      ]);
 
-        throw Error('Oops! Failed to make offer');
+      if (!batchTxRes) {
+        if (typeof onFailure === 'function') onFailure();
+
+        return;
       }
-
-      if (typeof onSuccess !== 'function') return;
-
-      console.info(result);
-
-      onSuccess();
 
       return {
         id,
@@ -456,47 +450,88 @@ export const acceptOffer = createAsyncThunk<
 >(
   'marketplace/acceptOffer',
   async (params: AcceptOfferParams, thunkAPI) => {
-    // Checks if an actor instance exists already
-    // otherwise creates a new instance
-    const actorInstance = await actorInstanceHandler({
-      thunkAPI,
-      serviceName: 'marketplace',
-      slice: marketplaceSlice,
-    });
-
-    const { id, buyerPrincipalId, onSuccess, onFailure } = params;
+    const { id, buyerPrincipalId, offerPrice, onSuccess, onFailure } =
+      params;
 
     try {
+      const marketplaceCanisterId = Principal.fromText(
+        config.marketplaceCanisterId,
+      );
       const nonFungibleContractAddress = Principal.fromText(
         config.crownsCanisterId,
       );
       const userOwnedTokenId = BigInt(id);
+      const buyerAddress = Principal.fromText(buyerPrincipalId);
 
-      const result = await actorInstance.acceptOffer(
-        nonFungibleContractAddress,
-        userOwnedTokenId,
-        buyerPrincipalId,
-      );
+      const offerInPrice = BigInt(offerPrice);
 
-      if (!('Ok' in result)) {
-        if (typeof onFailure !== 'function') return;
+      const CROWNS_APPROVE_MARKETPLACE = {
+        idl: crownsIdlFactory,
+        canisterId: config.crownsCanisterId,
+        methodName: 'approve',
+        args: [marketplaceCanisterId, userOwnedTokenId],
+        onFail: (res: any) => {
+          console.warn(
+            `Oops! Failed to approve Marketplace (${config.crownsCanisterId})`,
+            res,
+          );
 
-        onFailure();
+          if (typeof onFailure === 'function') onFailure();
+        },
+      };
 
-        console.error(result);
+      const MKP_MAKE_LISTING = {
+        idl: marketplaceIdlFactory,
+        canisterId: config.marketplaceCanisterId,
+        methodName: 'makeListing',
+        args: [
+          nonFungibleContractAddress,
+          userOwnedTokenId,
+          offerInPrice,
+        ],
+        onSuccess,
+        onFail: (res: any) => {
+          console.warn('Oops! Failed to make listing', res);
 
-        throw Error('Oops! Failed to accept offer');
+          if (typeof onFailure === 'function') onFailure();
+        },
+      };
+
+      const MKP_ACCEPT_OFFER = {
+        idl: marketplaceIdlFactory,
+        canisterId: config.marketplaceCanisterId,
+        methodName: 'acceptOffer',
+        args: [
+          nonFungibleContractAddress,
+          userOwnedTokenId,
+          buyerAddress,
+        ],
+        onSuccess,
+        onFail: (res: any) => {
+          console.warn('Oops! Failed to accept offer', res);
+
+          if (typeof onFailure === 'function') onFailure();
+        },
+      };
+
+      const batchTxRes = await (
+        window as any
+      )?.ic?.plug?.batchTransactions([
+        CROWNS_APPROVE_MARKETPLACE,
+        MKP_MAKE_LISTING,
+        MKP_ACCEPT_OFFER,
+      ]);
+
+      if (!batchTxRes) {
+        if (typeof onFailure === 'function') onFailure();
+
+        return;
       }
-
-      if (typeof onSuccess !== 'function') return;
-
-      console.info(result);
-
-      onSuccess();
 
       return {
         id,
         buyerPrincipalId,
+        offerPrice,
       };
     } catch (err) {
       thunkAPI.dispatch(
@@ -510,4 +545,124 @@ export const acceptOffer = createAsyncThunk<
   },
 );
 
+export const getTokenOffers = createAsyncThunk<
+  // Return type of the payload creator
+  // GetUserReceviedOffer | undefined,
+  any | undefined,
+  // First argument to the payload creator
+  GetUserReceviedOfferParams,
+  // Optional fields for defining the thunk api
+  { state: RootState }
+>(
+  'marketplace/getTokenOffers',
+  async (params: GetUserReceviedOfferParams, thunkAPI) => {
+    // Checks if an actor instance exists already
+    // otherwise creates a new instance
+    const actorInstance = await actorInstanceHandler({
+      thunkAPI,
+      serviceName: 'marketplace',
+      slice: marketplaceSlice,
+    });
+
+    const { ownerTokenIdentifiers, onSuccess, onFailure } = params;
+
+    try {
+      let floorDifferencePrice;
+      let currencyMarketPrice;
+      const nonFungibleContractAddress = Principal.fromText(
+        config.crownsCanisterId,
+      );
+      const result = await actorInstance.getTokenOffers(
+        nonFungibleContractAddress,
+        ownerTokenIdentifiers,
+      );
+
+      // Floor Difference calculation
+      const floorDifferenceResponse = await actorInstance.getFloor(
+        nonFungibleContractAddress,
+      );
+      if ('Ok' in floorDifferenceResponse) {
+        floorDifferencePrice = floorDifferenceResponse.Ok.toString();
+      }
+
+      // Fetch ICP Price
+      const icpPriceResponse = await getICPPrice();
+      if (icpPriceResponse && icpPriceResponse.usd) {
+        currencyMarketPrice = icpPriceResponse.usd;
+      }
+
+      const parsedTokenOffers = parseGetTokenOffersresponse({
+        data: result,
+        floorDifferencePrice,
+        currencyMarketPrice,
+      });
+
+      if (!Array.isArray(result) || !result.length) return [];
+
+      if (typeof onSuccess !== 'function') return;
+
+      onSuccess(parsedTokenOffers);
+    } catch (err) {
+      thunkAPI.dispatch(
+        notificationActions.setErrorMessage(
+          (err as CommonError).message,
+        ),
+      );
+      if (typeof onFailure !== 'function') return;
+      onFailure();
+    }
+  },
+);
+
+export const getTokenListing = createAsyncThunk<
+  // Return type of the payload creator
+  // GetUserReceviedOffer | undefined,
+  any | undefined,
+  // First argument to the payload creator
+  any,
+  // Optional fields for defining the thunk api
+  { state: RootState }
+>('marketplace/getTokenListing', async (params: any, thunkAPI) => {
+  // Checks if an actor instance exists already
+  // otherwise creates a new instance
+  const actorInstance = await actorInstanceHandler({
+    thunkAPI,
+    serviceName: 'marketplace',
+    slice: marketplaceSlice,
+  });
+
+  const { id: tokenId } = params;
+
+  try {
+    const nonFungibleContractAddress = Principal.fromText(
+      config.crownsCanisterId,
+    );
+    const result = await actorInstance.getTokenListing(
+      nonFungibleContractAddress,
+      BigInt(tokenId),
+    );
+
+    if (!('Ok' in result)) {
+      console.warn(
+        `Oops! Failed to get token listing for id ${tokenId}`,
+      );
+
+      return {
+        [tokenId]: {},
+      };
+    }
+
+    return {
+      [tokenId]: result.Ok,
+    };
+  } catch (err) {
+    thunkAPI.dispatch(
+      notificationActions.setErrorMessage(
+        (err as CommonError).message,
+      ),
+    );
+  }
+});
+
 export default marketplaceSlice.reducer;
+

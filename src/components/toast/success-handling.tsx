@@ -4,10 +4,12 @@ import {
   Toast,
   ToastDescription,
   ToastDescriptionText,
+  ToastDescriptionIcon,
   ToastActionIcon,
   ToastProvider,
 } from './styles';
 import closeWarning from '../../assets/close-warning.svg';
+import success from '../../assets/success-icon.svg';
 import {
   notificationActions,
   useAppDispatch,
@@ -35,6 +37,10 @@ const SuccessHandling = () => {
         >
           <ToastDescription state="success" asChild>
             <div>
+              <ToastDescriptionIcon
+                src={success}
+                alt="success-icon"
+              />
               <ToastDescriptionText>
                 {successMessage.message}
               </ToastDescriptionText>

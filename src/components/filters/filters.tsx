@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchFilterTraits } from '../../integrations/kyasshu/utils';
 import {
@@ -49,6 +49,7 @@ export const Filters = () => {
     loadedFiltersList,
     status,
     loadingFilterList,
+    isMyNfts,
   } = useFilterStore();
   const { theme } = useThemeStore();
   const { collapsed, displayPriceApplyButton } = useSettingsStore();
@@ -217,7 +218,7 @@ export const Filters = () => {
                       text={t('translation:buttons.action.myNfts')}
                       handleClick={() => {
                         applyFilter('Display', myNfts);
-                        dispatch(filterActions.setMyNfts(true));
+                        dispatch(filterActions.setMyNfts(!isMyNfts));
                       }}
                     />
                   </FilterButtonWrapper>

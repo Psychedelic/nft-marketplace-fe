@@ -1,17 +1,20 @@
-import React from 'react';
-import * as HoverCard from '@radix-ui/react-hover-card';
+import React, { useEffect, useState } from 'react';
+import * as Dropdown from '@radix-ui/react-dropdown-menu';
+import { useNavigate } from 'react-router-dom';
 import {
   useAppDispatch,
   usePlugStore,
   useThemeStore,
   plugActions,
 } from '../../store';
+import { disconnectPlug } from '../../integrations/plug';
 import {
   PlugButtonContainer,
   PlugButtonText,
   PlugIcon,
   PlugArrowDownIcon,
   ConnectToPlugButton,
+  DropdownTrigger,
   Flex,
 } from './styles';
 import plugIcon from '../../assets/plug-icon.svg';
@@ -39,14 +42,43 @@ export const PlugButton = ({
   const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
   const { isConnected } = usePlugStore();
+  const [openDropdown, setOpenDropdown] = useState(false);
   const isLightTheme = theme === 'lightTheme';
   const currTheme = theme === 'darkTheme' ? 'dark' : 'light';
 
+  const [userPrincipal, setUserPrincipal] = useState();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // TODO: check if principal already available in the store
+    (async () => {
+      const principal = await (
+        window as any
+      ).ic?.plug?.getPrincipal();
+
+      if (!principal) return;
+
+      setUserPrincipal(principal.toString());
+    })();
+  }, []);
+
   return (
-    <HoverCard.Root openDelay={300}>
-      <HoverCard.Trigger>
+    <Dropdown.Root
+      onOpenChange={() => {
+        setOpenDropdown(!openDropdown);
+      }}
+      open={openDropdown}
+    >
+      <DropdownTrigger asChild>
         <PlugButtonContainer
           onClick={handleClick}
+          onMouseEnter={() => {
+            setOpenDropdown(true);
+          }}
+          onMouseLeave={() => {
+            setTimeout(() => setOpenDropdown(false), 1500);
+          }}
           className="plug-button"
         >
           <PlugButtonText className="plug-button-text">
@@ -63,10 +95,10 @@ export const PlugButton = ({
             )}
           </PlugButtonText>
         </PlugButtonContainer>
-      </HoverCard.Trigger>
+      </DropdownTrigger>
       {isConnected && (
         <ConnectToPlugButton align="end" background={currTheme}>
-          <Flex>
+          <Flex onClick={() => navigate(`/offers/${userPrincipal}`)}>
             <img
               src={isLightTheme ? offers : offersDark}
               alt="offers"
@@ -75,9 +107,10 @@ export const PlugButton = ({
           </Flex>
           <div />
           <Flex
-            onClick={() =>
-              dispatch(plugActions.setIsConnected(false))
-            }
+            onClick={() => {
+              dispatch(plugActions.setIsConnected(false));
+              disconnectPlug();
+            }}
           >
             <img
               src={isLightTheme ? disconnect : disconnectDark}
@@ -87,6 +120,7 @@ export const PlugButton = ({
           </Flex>
         </ConnectToPlugButton>
       )}
-    </HoverCard.Root>
+    </Dropdown.Root>
   );
 };
+

@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
-import {
-  directBuy,
-  getAllListings,
-} from '../../store/features/marketplace';
+import { directBuy } from '../../store/features/marketplace';
 import { useAppDispatch } from '../../store';
 import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 import {
@@ -30,12 +27,14 @@ export type BuyNowModalProps = {
   onClose?: () => void;
   actionText?: string;
   actionTextId?: number;
+  price?: string;
 };
 
 export const BuyNowModal = ({
   onClose,
   actionText,
   actionTextId,
+  price = '',
 }: BuyNowModalProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -46,11 +45,12 @@ export const BuyNowModal = ({
   const [modalStep, setModalStep] = useState<string>('pending');
 
   const tokenId: bigint | undefined = (() => {
-    const tid = id ?? actionTextId;
+    const tid = Number(id ?? actionTextId);
 
-    if (!tid) return;
+    if (!tid && tid !== 0) {
+      return;
+    }
 
-    // eslint-disable-next-line consistent-return
     return BigInt(tid);
   })();
 
@@ -65,7 +65,10 @@ export const BuyNowModal = ({
   };
 
   const handleDirectBuy = () => {
-    if (!tokenId) {
+    if (
+      typeof tokenId === 'undefined' ||
+      (!tokenId && Number(tokenId) !== 0)
+    ) {
       console.warn('Oops! Missing id param');
 
       return;
@@ -76,13 +79,14 @@ export const BuyNowModal = ({
     dispatch(
       directBuy({
         tokenId,
+        price,
         onSuccess: () => {
           // TODO: the get all listings is used to get data from the canister
           // as the current kyasshu version does not provide the price data
           // on makelisting, etc, so we use this as a fallback
           // although not scalable, if persists might add an endpoint for
           // a single item instead of a list...
-          dispatch(getAllListings());
+          // dispatch(getAllListings());
           setModalStep(DirectBuyStatusCodes.Confirmed);
         },
         onFailure: () => {

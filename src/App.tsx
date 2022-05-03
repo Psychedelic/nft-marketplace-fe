@@ -5,10 +5,10 @@ import { darkTheme, theme as defaultTheme } from './stitches.config';
 import { Error, NavBar } from './components';
 import CollectionView from './views/CollectionView';
 import NFTView from './views/NFTView';
+import OfferView from './views/OffersView';
 import DevelopedComponents from './views/DevelopedComponents';
 import SuccessHandling from './components/toast/success-handling';
 
-// eslint-disable-next-line
 const App = () => {
   const { theme } = useThemeStore();
 
@@ -19,6 +19,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<CollectionView />} />
           <Route path="/nft/:id" element={<NFTView />} />
+          <Route path="/offers/:id" element={<OfferView />} />
           <Route
             path="/components"
             element={<DevelopedComponents />}
@@ -32,3 +33,4 @@ const App = () => {
 };
 
 export default App;
+

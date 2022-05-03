@@ -1,38 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import type { Principal } from '@dfinity/principal';
+import type { ActorMethod } from '@dfinity/agent';
 
-export interface BalanceMetadata {
-  owner: Principal;
-  details: Array<[string, GenericValue]>;
-  token_type: string;
-  standard: string;
-  contractId: Principal;
-}
-export interface FungibleBalance {
-  locked: bigint;
-  amount: bigint;
-}
 export type FungibleStandard = { DIP20: null };
-export type GenericValue =
-  | { Nat64Content: bigint }
-  | { Nat32Content: number }
-  | { BoolContent: boolean }
-  | { Nat8Content: number }
-  | { Int64Content: bigint }
-  | { IntContent: bigint }
-  | { NatContent: bigint }
-  | { Nat16Content: number }
-  | { Int32Content: number }
-  | { Int8Content: number }
-  | { FloatContent: number }
-  | { Int16Content: number }
-  | { BlobContent: Array<number> }
-  | { NestedContent: Array<[string, GenericValue]> }
-  | { Principal: Principal }
-  | { TextContent: string };
 export interface Listing {
   status: ListingStatus;
-  direct_buy: boolean;
+  created: bigint;
   price: bigint;
   payment_address: Principal;
 }
@@ -54,10 +27,12 @@ export type MPApiError =
   | { Other: string }
   | { InsufficientNonFungibleBalance: null }
   | { InvalidOfferStatus: null }
+  | { InvalidOperator: null }
   | { CAPInsertionError: null };
 export type NFTStandard = { EXT: null } | { DIP721v2: null };
 export interface Offer {
   status: OfferStatus;
+  created: bigint;
   token_id: bigint;
   price: bigint;
   payment_address: Principal;
@@ -70,63 +45,45 @@ export type OfferStatus =
   | { Cancelled: null }
   | { Created: null };
 export type Result = { Ok: null } | { Err: MPApiError };
+export type Result_1 = { Ok: bigint } | { Err: MPApiError };
+export type Result_2 = { Ok: Listing } | { Err: MPApiError };
 export interface _SERVICE {
-  acceptOffer: (
-    arg_0: Principal,
-    arg_1: bigint,
-    arg_2: Principal,
-  ) => Promise<Result>;
-  addCollection: (
-    arg_0: Principal,
-    arg_1: bigint,
-    arg_2: bigint,
-    arg_3: string,
-    arg_4: Principal,
-    arg_5: NFTStandard,
-    arg_6: Principal,
-    arg_7: FungibleStandard,
-  ) => Promise<Result>;
-  balanceOf: (
-    arg_0: Principal,
-  ) => Promise<Array<[Principal, FungibleBalance]>>;
-  cancelListing: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
-  cancelOffer: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
-  denyOffer: (arg_0: bigint) => Promise<Result>;
-  depositFungible: (
-    arg_0: Principal,
-    arg_1: FungibleStandard,
-    arg_2: bigint,
-  ) => Promise<Result>;
-  depositNFT: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
-  directBuy: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
-  getAllBalances: () => Promise<
-    Array<[[Principal, Principal], FungibleBalance]>
+  acceptOffer: ActorMethod<[Principal, bigint, Principal], Result>;
+  addCollection: ActorMethod<
+    [
+      Principal,
+      bigint,
+      bigint,
+      string,
+      Principal,
+      NFTStandard,
+      Principal,
+      FungibleStandard,
+    ],
+    Result
   >;
-  getAllListings: () => Promise<
-    Array<[[Principal, bigint], Listing]>
+  balanceOf: ActorMethod<[Principal], Array<[Principal, bigint]>>;
+  cancelListing: ActorMethod<[Principal, bigint], Result>;
+  cancelOffer: ActorMethod<[Principal, bigint], Result>;
+  denyOffer: ActorMethod<[Principal, bigint, Principal], Result>;
+  directBuy: ActorMethod<[Principal, bigint], Result>;
+  getAllBalances: ActorMethod<
+    [],
+    Array<[[Principal, Principal], bigint]>
   >;
-  getAllOffers: () => Promise<
-    Array<[Principal, Array<[bigint, Array<[Principal, Offer]>]>]>
+  getBuyerOffers: ActorMethod<[Principal, Principal], Array<Offer>>;
+  getFloor: ActorMethod<[Principal], Result_1>;
+  getTokenListing: ActorMethod<[Principal, bigint], Result_2>;
+  getTokenOffers: ActorMethod<
+    [Principal, Array<bigint>],
+    Array<[bigint, Array<Offer>]>
   >;
-  makeListing: (
-    arg_0: boolean,
-    arg_1: Principal,
-    arg_2: bigint,
-    arg_3: bigint,
-  ) => Promise<Result>;
-  makeOffer: (
-    arg_0: Principal,
-    arg_1: bigint,
-    arg_2: bigint,
-  ) => Promise<Result>;
-  serviceBalanceOf: (
-    arg_0: Principal,
-  ) => Promise<Array<BalanceMetadata>>;
-  withdrawFungible: (
-    arg_0: Principal,
-    arg_1: FungibleStandard,
-  ) => Promise<Result>;
-  withdrawNFT: (arg_0: Principal, arg_1: bigint) => Promise<Result>;
+  makeListing: ActorMethod<[Principal, bigint, bigint], Result>;
+  makeOffer: ActorMethod<[Principal, bigint, bigint], Result>;
+  withdrawFungible: ActorMethod<
+    [Principal, FungibleStandard],
+    Result
+  >;
 }
 
 export default _SERVICE;

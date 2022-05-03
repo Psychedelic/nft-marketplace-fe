@@ -5,8 +5,10 @@ export {
   cancelListing,
   makeOffer,
   acceptOffer,
-  getAllListings,
   directBuy,
+  getTokenOffers,
+  getTokenListing,
 } from './marketplace-slice';
 
 export default marketplaceSlice.reducer;
+

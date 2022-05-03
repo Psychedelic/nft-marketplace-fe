@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton } from '../core';
@@ -45,6 +45,7 @@ export const CancelOfferModal = () => {
         <CancelOfferModalTrigger>
           <ActionButton
             type="secondary"
+            size="small"
             text={t('translation:buttons.action.cancelOffer')}
             handleClick={() => {
               // eslint-disable-next-line no-console
@@ -106,3 +107,4 @@ export const CancelOfferModal = () => {
     </DialogPrimitive.Root>
   );
 };
+

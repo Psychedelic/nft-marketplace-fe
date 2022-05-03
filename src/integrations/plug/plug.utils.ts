@@ -28,3 +28,6 @@ export const formatAddress = (address: string) => {
 };
 
 export const hasPlugAgent = () => window.ic?.plug?.agent;
+
+export const disconnectPlug = () => window.ic?.plug?.disconnect();
+

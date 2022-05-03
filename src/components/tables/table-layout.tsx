@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-import React from 'react';
 import { useTable } from 'react-table';
 import { useTableStore } from '../../store';
 import { TableWrapper } from './styles';
@@ -11,6 +8,7 @@ export interface TableLayoutProps {
   data: Array<object>;
   tableType: any;
   columnsToHide?: Array<string>;
+  loading?: boolean;
 }
 
 export const TableLayout = ({
@@ -18,6 +16,7 @@ export const TableLayout = ({
   data,
   tableType,
   columnsToHide = [],
+  loading,
 }: TableLayoutProps) => {
   const {
     getTableProps,
@@ -33,9 +32,12 @@ export const TableLayout = ({
     },
   });
 
+  // TODO: We may need to remove loadingTableData fetching
+  // from store and replace with props, since this a common layout
+  // across all the tables
   const { loadingTableData } = useTableStore();
 
-  return loadingTableData ? (
+  return loadingTableData || loading ? (
     <>
       <TableSkeletons />
       <TableSkeletons />
@@ -79,3 +81,4 @@ export const TableLayout = ({
     </TableWrapper>
   );
 };
+
