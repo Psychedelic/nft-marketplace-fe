@@ -82,6 +82,7 @@ type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
 type InitialState = {
   recentlyListedForSale: RecentyListedForSale;
   recentlyCancelledItems: any,
+  recentlyAcceptedOffers: any[],
   actor?: MarketplaceActor;
   tokenListing: Record<string, Listing>;
 };
@@ -89,6 +90,7 @@ type InitialState = {
 const initialState: InitialState = {
   recentlyListedForSale: [],
   recentlyCancelledItems: [],
+  recentlyAcceptedOffers: [],
   tokenListing: {},
 };
 
@@ -123,6 +125,12 @@ export const marketplaceSlice = createSlice({
 
       state.recentlyCancelledItems.push(action.payload?.id);
     });
+
+    builder.addCase(acceptOffer.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.recentlyAcceptedOffers.push(action.payload);
+    });  
   },
 });
 
@@ -209,22 +217,10 @@ export const directBuy = createAsyncThunk<
 
   try {
     const WICP_APPROVE = {
-      idl: crownsIdlFactory,
+      idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,
       methodName: 'approve',
       args: [marketplaceCanisterId, wicpAmount],
-      onFail: (res: any) => {
-        console.warn('Oops! Failed to deposit WICP', res);
-
-        typeof onFailure === 'function' && onFailure();
-      },
-    };
-
-    const MKP_DEPOSIT_WICP = {
-      idl: marketplaceIdlFactory,
-      canisterId: config.marketplaceCanisterId,
-      methodName: 'depositFungible',
-      args: [wicpCanisterId, { DIP20: null }, wicpAmount],
       onFail: (res: any) => {
         console.warn('Oops! Failed to deposit WICP', res);
 
@@ -247,7 +243,7 @@ export const directBuy = createAsyncThunk<
 
     const batchTxRes = await (window as any)?.ic?.plug?.batchTransactions([
       WICP_APPROVE,
-      MKP_DEPOSIT_WICP,
+      // MKP_DEPOSIT_WICP,
       MKP_DIRECT_BUY,
     ]);
 
@@ -325,7 +321,6 @@ export const makeOffer = createAsyncThunk<
   const { id, amount, onSuccess, onFailure } = params;
 
   const mkpContractAddress = Principal.fromText(config.marketplaceCanisterId);
-  const wicpContractAddress = Principal.fromText(config.wICPCanisterId);
   const crownsContractAddress = Principal.fromText(config.crownsCanisterId);
   const userOwnedTokenId = BigInt(id);
   const userOfferInPrice = BigInt(amount);
@@ -386,38 +381,70 @@ export const acceptOffer = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >('marketplace/acceptOffer', async (params: AcceptOfferParams, thunkAPI) => {
-  // Checks if an actor instance exists already
-  // otherwise creates a new instance
-  const actorInstance = await actorInstanceHandler({
-    thunkAPI,
-    serviceName: 'marketplace',
-    slice: marketplaceSlice,
-  });
-
   const { id, buyerPrincipalId, onSuccess, onFailure } = params;
 
   try {
+    const marketplace = Principal.fromText(config.marketplaceCanisterId);
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const userOwnedTokenId = BigInt(id);
     const buyerAddress = Principal.fromText(buyerPrincipalId);
 
-    const result = await actorInstance.acceptOffer(nonFungibleContractAddress, userOwnedTokenId, buyerAddress);
+    // TODO: Calculate amount from the offer
+    // using hard type now for speed up dev
+    const amount = 100000000;
 
-    if (!('Ok' in result)) {
-      if (typeof onFailure !== 'function') return;
+    const MKP_APPROVE_WICP = {
+      idl: marketplaceIdlFactory,
+      canisterId: config.marketplaceCanisterId,
+      methodName: 'makeOffer',
+      args: [marketplace, amount],
+      onSuccess,
+      onFail: (res: any) => {
+        console.warn(`Oops! Failed to make offer (${config.marketplaceCanisterId})`, res);
 
-      onFailure();
+        typeof onFailure === 'function' && onFailure();
+      },
+    };
+    
+    const MKP_ACCEPT_OFFER = {
+      idl: marketplaceIdlFactory,
+      canisterId: config.marketplaceCanisterId,
+      methodName: 'acceptOffer',
+      args: [nonFungibleContractAddress, userOwnedTokenId, buyerAddress],
+      onSuccess,
+      onFail: (res: any) => {
+        console.warn('Oops! Failed to accept offer', res);
 
-      console.error(result);
+        typeof onFailure === 'function' && onFailure();
+      },
+    };
 
-      throw Error('Oops! Failed to accept offer');
+    const batchTxRes = await (window as any)?.ic?.plug?.batchTransactions([
+      MKP_APPROVE_WICP,
+      MKP_ACCEPT_OFFER,
+    ]);
+
+    if (!batchTxRes) {
+      typeof onFailure === 'function' && onFailure();
+
+      return;
     }
 
-    if (typeof onSuccess !== 'function') return;
+    // if (!('Ok' in result)) {
+    //   if (typeof onFailure !== 'function') return;
 
-    console.info(result);
+    //   onFailure();
 
-    onSuccess();
+    //   console.error(result);
+
+    //   throw Error('Oops! Failed to accept offer');
+    // }
+
+    // if (typeof onSuccess !== 'function') return;
+
+    // console.info(result);
+
+    // onSuccess();
 
     return {
       id,

@@ -50,6 +50,9 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const ownerTokenIdentifiers = useSelector(
     (state: RootState) => state.crowns.ownerTokenIdentifiers,
   );
+  const recentlyAcceptedOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyAcceptedOffers,
+  );
 
   const { id: plugPrincipal } = useParams();
 
@@ -122,11 +125,9 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         },
       }),
     );
-  }, [ownerTokenIdentifiers, dispatch]);
+  }, [ownerTokenIdentifiers, dispatch, recentlyAcceptedOffers]);
 
   const loadMoreData = () => {
-    if (loadingTableData || !hasMoreData) return;
-
     // TODO: Add logic to load more data
   };
 
@@ -148,7 +149,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         accessor: ({ price, computedCurrencyPrice }: OffersTableItem) => (
           <PriceDetailsCell
             wicp={price.toString()}
-            price={computedCurrencyPrice && `$${computedCurrencyPrice.toString()}` || ''}
+            price={(computedCurrencyPrice && `$${computedCurrencyPrice.toString()}`) || ''}
             tableType=""
           />
         ),
@@ -183,7 +184,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
           <ButtonWrapper>
             <AcceptOfferModal
               price={price.toString()}
-              formattedPrice={computedCurrencyPrice && computedCurrencyPrice.toString() || ''}
+              formattedPrice={(computedCurrencyPrice && computedCurrencyPrice.toString()) || ''}
               offerFrom={fromDetails.address}
               nftTokenId={item.tokenId.toString()}
             />
