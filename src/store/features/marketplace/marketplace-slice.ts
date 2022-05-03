@@ -35,7 +35,7 @@ interface DirectBuyParams extends DirectBuy {
 
 type DirectBuy = {
   tokenId: BigInt;
-  price?: string;
+  price: string;
 };
 
 interface CancelListingParams extends CancelListing {
@@ -65,7 +65,7 @@ interface AcceptOfferParams extends AcceptOffer {
 type AcceptOffer = {
   id: string;
   buyerPrincipalId: string;
-  offerPrice?: string;
+  offerPrice: string;
 };
 
 interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
@@ -164,7 +164,6 @@ export const makeListing = createAsyncThunk<
       },
     };
 
-    const directBuy = true;
     const MKP_MAKE_LISTING = {
       idl: marketplaceIdlFactory,
       canisterId: config.marketplaceCanisterId,
@@ -211,7 +210,6 @@ export const directBuy = createAsyncThunk<
   const { tokenId, price, onSuccess, onFailure } = params;
 
   const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
-  const wicpCanisterId = Principal.fromText(config.wICPCanisterId);
   const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
   
   try {
@@ -257,6 +255,7 @@ export const directBuy = createAsyncThunk<
 
     return {
       tokenId,
+      price,
     };
   } catch (err) {
     thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
@@ -386,8 +385,6 @@ export const acceptOffer = createAsyncThunk<
   const { id, buyerPrincipalId, offerPrice, onSuccess, onFailure } = params;
 
   try {
-    if (!offerPrice) throw Error("Oops! Missing the offer amount");
-
     const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const userOwnedTokenId = BigInt(id);
@@ -448,6 +445,7 @@ export const acceptOffer = createAsyncThunk<
     return {
       id,
       buyerPrincipalId,
+      offerPrice,
     };
   } catch (err) {
     thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
