@@ -39,9 +39,11 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalP
   const [modalStep, setModalStep] = useState<string>('pending');
 
   const tokenId: bigint | undefined = (() => {
-    const tid = id ?? actionTextId;
+    const tid = Number(id ?? actionTextId);
 
-    if (!tid) return;
+    if (!tid && tid !== 0) {
+      return;
+    }
 
     // eslint-disable-next-line consistent-return
     return BigInt(tid);
@@ -58,7 +60,7 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalP
   };
 
   const handleDirectBuy = () => {
-    if (!tokenId) {
+    if (typeof tokenId === 'undefined' || (!tokenId && Number(tokenId) !== 0)) {
       console.warn('Oops! Missing id param');
 
       return;
