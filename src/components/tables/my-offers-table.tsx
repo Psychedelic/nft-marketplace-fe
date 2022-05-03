@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -26,7 +26,10 @@ import {
   OfferTypeStatusCodes,
   OffersTableHeaders,
 } from '../../constants/my-offers';
-import { getTokenOffers } from '../../store/features/marketplace';
+import {
+  getTokenOffers,
+  getBuyerOffers,
+} from '../../store/features/marketplace';
 import { getOwnerTokenIdentifiers } from '../../store/features/crowns';
 import { OffersTableItem } from '../../declarations/legacy';
 import { formatPriceValue } from '../../utils/formatters';
@@ -104,6 +107,23 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
   useEffect(() => {
     if (!isConnected || !plugPrincipal) return;
+
+    if (offersType === OfferTypeStatusCodes.OffersMade) {
+      dispatch(
+        getBuyerOffers({
+          userPrincipalId: plugPrincipal,
+          onSuccess: (offers: any) => {
+            // TODO: handle success messages
+            setLoadingTableData(false);
+            setLoadedOffersReceivedData(offers);
+          },
+          onFailure: () => {
+            // TODO: handle failure messages
+          },
+        }),
+      );
+      return;
+    }
 
     dispatch(
       getOwnerTokenIdentifiers({

@@ -75,6 +75,12 @@ interface ParseGetTokenOffersParams {
   currencyMarketPrice?: number;
 }
 
+interface ParseOffersMadeParams {
+  data: Array<Offer>;
+  floorDifferencePrice?: string;
+  currencyMarketPrice?: number;
+}
+
 export const parseGetTokenOffersresponse = ({
   data,
   floorDifferencePrice,
@@ -131,4 +137,54 @@ export const parseGetTokenOffersresponse = ({
   }, [] as ParsedTokenOffers);
 
   return parsed;
+};
+
+export const parseOffersMaderesponse = ({
+  data,
+  floorDifferencePrice,
+  currencyMarketPrice,
+}: ParseOffersMadeParams) => {
+  const parsedOffersMade = data.map((offerDetails) => {
+    const {
+      price,
+      token_id: tokenId,
+      payment_address: paymentAddress,
+      created,
+    } = offerDetails;
+
+    // TODO: What to do if payment address not valid principal?
+    const fromDetails = {
+      formattedAddress: paymentAddress._isPrincipal
+        ? formatAddress(paymentAddress.toString())
+        : 'n/a',
+      address: paymentAddress._isPrincipal
+        ? paymentAddress.toString()
+        : 'n/a',
+    };
+
+    const computedCurrencyPrice =
+      currencyMarketPrice &&
+      currencyMarketPrice * Number(price.toString());
+
+    const offerTableItem: OffersTableItem = {
+      item: {
+        // TODO: formatter for name, as number should probably have leading 0's
+        // e.g. Cap Crowns #00001 ?!
+        name: `CAP Crowns #${tokenId}`,
+        tokenId,
+      },
+      price,
+      floorDifference: floorDiffPercentageCalculator({
+        currentPrice: price,
+        floorDifferencePrice,
+      }),
+      fromDetails,
+      time: formatTimestamp(created),
+      computedCurrencyPrice,
+    };
+
+    return offerTableItem;
+  });
+
+  return parsedOffersMade;
 };

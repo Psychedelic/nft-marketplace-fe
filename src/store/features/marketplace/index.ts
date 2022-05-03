@@ -8,6 +8,7 @@ export {
   directBuy,
   getTokenOffers,
   getTokenListing,
+  getBuyerOffers,
 } from './marketplace-slice';
 
 export default marketplaceSlice.reducer;

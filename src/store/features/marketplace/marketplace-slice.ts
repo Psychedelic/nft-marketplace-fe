@@ -13,12 +13,16 @@ import marketplaceIdlService, {
 import { actorInstanceHandler } from '../../../integrations/actor';
 import crownsIdlFactory from '../../../declarations/nft.did';
 import marketplaceIdlFactory from '../../../declarations/marketplace.did';
+
 import wicpIdlFactory from '../../../declarations/wicp.did';
 import config from '../../../config/env';
 import { notificationActions } from '../errors';
 import { RootState } from '../../store';
 import { OwnerTokenIdentifiers } from '../crowns/crowns-slice';
-import { parseGetTokenOffersresponse } from '../../../utils/parser';
+import {
+  parseGetTokenOffersresponse,
+  parseOffersMaderesponse,
+} from '../../../utils/parser';
 import { getICPPrice } from '../../../integrations/marketplace/price.utils';
 
 interface MakeListingParams extends MakeListing {
@@ -78,6 +82,15 @@ interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
 
 type GetUserReceviedOffer = {
   ownerTokenIdentifiers?: OwnerTokenIdentifiers;
+};
+
+interface GetBuyerOffersParams extends GetBuyerOffers {
+  onSuccess?: (offers: any) => void;
+  onFailure?: () => void;
+}
+
+type GetBuyerOffers = {
+  userPrincipalId: string;
 };
 
 type RecentyListedForSale = MakeListing[];
@@ -592,6 +605,77 @@ export const getTokenOffers = createAsyncThunk<
       }
 
       const parsedTokenOffers = parseGetTokenOffersresponse({
+        data: result,
+        floorDifferencePrice,
+        currencyMarketPrice,
+      });
+
+      if (!Array.isArray(result) || !result.length) return [];
+
+      if (typeof onSuccess !== 'function') return;
+
+      onSuccess(parsedTokenOffers);
+    } catch (err) {
+      thunkAPI.dispatch(
+        notificationActions.setErrorMessage(
+          (err as CommonError).message,
+        ),
+      );
+      if (typeof onFailure !== 'function') return;
+      onFailure();
+    }
+  },
+);
+
+export const getBuyerOffers = createAsyncThunk<
+  // Return type of the payload creator
+  // GetBuyerOffers | undefined,
+  any | undefined,
+  // First argument to the payload creator
+  GetBuyerOffersParams,
+  // Optional fields for defining the thunk api
+  { state: RootState }
+>(
+  'marketplace/getBuyerOffers',
+  async (params: GetBuyerOffersParams, thunkAPI) => {
+    // Checks if an actor instance exists already
+    // otherwise creates a new instance
+    const actorInstance = await actorInstanceHandler({
+      thunkAPI,
+      serviceName: 'marketplace',
+      slice: marketplaceSlice,
+    });
+
+    const { userPrincipalId, onSuccess, onFailure } = params;
+
+    try {
+      let floorDifferencePrice;
+      let currencyMarketPrice;
+      const nonFungibleContractAddress = Principal.fromText(
+        config.crownsCanisterId,
+      );
+      const userPrincipalAddress =
+        Principal.fromText(userPrincipalId);
+      const result = await actorInstance.getBuyerOffers(
+        nonFungibleContractAddress,
+        userPrincipalAddress,
+      );
+
+      // Floor Difference calculation
+      const floorDifferenceResponse = await actorInstance.getFloor(
+        nonFungibleContractAddress,
+      );
+      if ('Ok' in floorDifferenceResponse) {
+        floorDifferencePrice = floorDifferenceResponse.Ok.toString();
+      }
+
+      // Fetch ICP Price
+      const icpPriceResponse = await getICPPrice();
+      if (icpPriceResponse && icpPriceResponse.usd) {
+        currencyMarketPrice = icpPriceResponse.usd;
+      }
+
+      const parsedTokenOffers = parseOffersMaderesponse({
         data: result,
         floorDifferencePrice,
         currencyMarketPrice,
