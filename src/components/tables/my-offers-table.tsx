@@ -30,9 +30,9 @@ import {
   getTokenOffers,
   getBuyerOffers,
 } from '../../store/features/marketplace';
-import { getOwnerTokenIdentifiers } from '../../store/features/crowns';
 import { OffersTableItem } from '../../declarations/legacy';
 import { formatPriceValue } from '../../utils/formatters';
+import { crownsActions } from '../../store/features/crowns/crowns-slice';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -127,7 +127,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     }
 
     dispatch(
-      getOwnerTokenIdentifiers({
+      crownsActions.getOwnerTokenIdentifiers({
         plugPrincipal,
       }),
     );
