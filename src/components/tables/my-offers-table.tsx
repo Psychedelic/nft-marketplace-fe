@@ -24,6 +24,7 @@ import {
 import { getTokenOffers } from '../../store/features/marketplace';
 import { getOwnerTokenIdentifiers } from '../../store/features/crowns';
 import { OffersTableItem } from '../../declarations/legacy';
+import { formatPriceValue } from '../../utils/formatters';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -149,7 +150,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         accessor: ({ price, computedCurrencyPrice }: OffersTableItem) => (
           <PriceDetailsCell
             wicp={price.toString()}
-            price={(computedCurrencyPrice && `$${computedCurrencyPrice.toString()}`) || ''}
+            price={(computedCurrencyPrice && `$${formatPriceValue(computedCurrencyPrice.toString())}`) || ''}
             tableType=""
           />
         ),

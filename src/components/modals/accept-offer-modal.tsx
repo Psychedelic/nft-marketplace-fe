@@ -42,6 +42,7 @@ import {
 import { NFTMetadata } from '../../declarations/nft';
 import { acceptOffer } from '../../store/features/marketplace';
 import { LISTING_STATUS_CODES } from '../../constants/listing';
+import { formatPriceValue } from '../../utils/formatters';
 
 export interface AcceptOfferProps {
   price: string;
@@ -208,7 +209,7 @@ export const AcceptOfferModal = ({
                     <WICPLogo src={wicpIcon} alt="wicp" />
                     <WICPText size="small">{`${price} WICP`}</WICPText>
                   </WICPContainer>
-                  <PriceText>{`$${formattedPrice}`}</PriceText>
+                  <PriceText>{`$${formatPriceValue(formattedPrice)}`}</PriceText>
                 </PriceDetails>
               </ItemDetailsWrapper>
               <FeeContainer>
@@ -252,9 +253,9 @@ export const AcceptOfferModal = ({
                       alt="wicp"
                       size="large"
                     />
-                    <WICPText size="large">{`${totalEarningsInWICP} WICP`}</WICPText>
+                    <WICPText size="large">{`${formatPriceValue(totalEarningsInWICP.toString())} WICP`}</WICPText>
                   </WICPContainer>
-                  <PriceText size="large">{`$${totalEarningsInDollars}`}</PriceText>
+                  <PriceText size="large">{`$${formatPriceValue(totalEarningsInDollars.toString())}`}</PriceText>
                 </PriceDetails>
               </ItemDetailsWrapper>
             </SaleContentWrapper>
