@@ -4,5 +4,6 @@ export * from './theme';
 export * from './nfts';
 export * from './errors';
 export * from './settings';
-export { makeListing, getTokenListing } from './marketplace';
 export * from './tables';
+export * from './marketplace';
+export * from './crowns';

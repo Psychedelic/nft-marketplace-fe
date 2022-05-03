@@ -7,8 +7,8 @@ import themeReducer from './features/theme/theme-slice';
 import nftsReducer from './features/nfts/nfts-slice';
 import notificationReducer from './features/errors/errors-slice';
 import settingsReducer from './features/settings/settings-slice';
-import marketplaceReducer from './features/marketplace';
-import crownsReducer from './features/crowns';
+import marketplaceReducer from './features/marketplace/marketplace-slice';
+import crownsReducer from './features/crowns/crowns-slice';
 import wicpReducer from './features/wicp';
 import tableReducer from './features/tables/table-slice';
 

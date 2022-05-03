@@ -81,7 +81,7 @@ interface ParseOffersMadeParams {
   currencyMarketPrice?: number;
 }
 
-export const parseGetTokenOffersresponse = ({
+export const parseGetTokenOffersResponse = ({
   data,
   floorDifferencePrice,
   currencyMarketPrice,
@@ -139,7 +139,7 @@ export const parseGetTokenOffersresponse = ({
   return parsed;
 };
 
-export const parseOffersMaderesponse = ({
+export const parseOffersMadeResponse = ({
   data,
   floorDifferencePrice,
   currencyMarketPrice,

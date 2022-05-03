@@ -7,6 +7,8 @@ import {
   useAppDispatch,
   usePlugStore,
   RootState,
+  marketplaceActions,
+  crownsActions,
 } from '../../store';
 import {
   ItemDetailsCell,
@@ -26,13 +28,8 @@ import {
   OfferTypeStatusCodes,
   OffersTableHeaders,
 } from '../../constants/my-offers';
-import {
-  getTokenOffers,
-  getBuyerOffers,
-} from '../../store/features/marketplace';
 import { OffersTableItem } from '../../declarations/legacy';
 import { formatPriceValue } from '../../utils/formatters';
-import { crownsActions } from '../../store/features/crowns/crowns-slice';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -111,7 +108,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
     if (offersType === OfferTypeStatusCodes.OffersMade) {
       dispatch(
-        getBuyerOffers({
+        marketplaceActions.getBuyerOffers({
           userPrincipalId: plugPrincipal,
           onSuccess: (offers) => {
             // TODO: handle success messages
@@ -141,7 +138,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     // TODO: Update loadedOffersReceivedData when there is
     // a change in offersType
     dispatch(
-      getTokenOffers({
+      marketplaceActions.getTokenOffers({
         // TODO: handle offers data gracefully
         ownerTokenIdentifiers,
         onSuccess: (offers) => {

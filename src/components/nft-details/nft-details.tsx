@@ -21,7 +21,7 @@ import {
   useNFTSStore,
   RootState,
   useAppDispatch,
-  getTokenListing,
+  marketplaceActions,
   nftsActions,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
@@ -79,7 +79,7 @@ export const NftDetails = () => {
     dispatch(nftsActions.getNFTDetails({ id }));
 
     dispatch(
-      getTokenListing({
+      marketplaceActions.getTokenListing({
         id,
       }),
     );

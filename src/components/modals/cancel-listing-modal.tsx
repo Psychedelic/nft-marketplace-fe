@@ -16,8 +16,11 @@ import {
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
-import { useAppDispatch, nftsActions } from '../../store';
-import { cancelListing } from '../../store/features/marketplace';
+import {
+  useAppDispatch,
+  nftsActions,
+  marketplaceActions,
+} from '../../store';
 
 /* --------------------------------------------------------------------------
  * Cancel Listing Modal Component
@@ -49,7 +52,7 @@ export const CancelListingModal = () => {
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
-      cancelListing({
+      marketplaceActions.cancelListing({
         id,
         onSuccess: () => {
           // TODO: Do not change the state manually,

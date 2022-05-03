@@ -3,17 +3,9 @@ import { Principal } from '@dfinity/principal';
 import { crownsSlice, OwnerTokenIdentifiers } from '../crowns-slice';
 import { actorInstanceHandler } from '../../../../integrations/actor';
 
-type OwnerTokenIdentifiersParam = {
+type OwnerTokenIdentifiersProps = DefaultCallbacks & {
   plugPrincipal: string;
 };
-
-type CommonCallbacks = {
-  onSuccess?: () => void;
-  onFailure?: () => void;
-};
-
-type OwnerTokenIdentifiersProps = CommonCallbacks &
-  OwnerTokenIdentifiersParam;
 
 export const getOwnerTokenIdentifiers = createAsyncThunk<
   OwnerTokenIdentifiers | undefined,

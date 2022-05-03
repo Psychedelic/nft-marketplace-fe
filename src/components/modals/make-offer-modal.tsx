@@ -23,8 +23,7 @@ import {
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
-import { useAppDispatch } from '../../store';
-import { makeOffer } from '../../store/features/marketplace';
+import { useAppDispatch, marketplaceActions } from '../../store';
 
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
@@ -83,7 +82,7 @@ export const MakeOfferModal = ({
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
-      makeOffer({
+      marketplaceActions.makeOffer({
         id: tokenId,
         amount,
         onSuccess: () => {

@@ -33,9 +33,9 @@ import {
   useNFTSStore,
   useAppDispatch,
   nftsActions,
+  marketplaceActions,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
-import { makeListing } from '../../store/features/marketplace';
 
 /* --------------------------------------------------------------------------
  * Edit Listing Modal Component
@@ -97,7 +97,7 @@ export const ChangePriceModal = () => {
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
-      makeListing({
+      marketplaceActions.makeListing({
         id,
         amount,
         onSuccess: () => {

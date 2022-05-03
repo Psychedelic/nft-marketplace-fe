@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
-import { directBuy } from '../../store/features/marketplace';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, marketplaceActions } from '../../store';
 import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 import {
   ModalOverlay,
@@ -77,7 +76,7 @@ export const BuyNowModal = ({
     setModalStep(DirectBuyStatusCodes.Pending);
 
     dispatch(
-      directBuy({
+      marketplaceActions.directBuy({
         tokenId,
         price,
         onSuccess: () => {
