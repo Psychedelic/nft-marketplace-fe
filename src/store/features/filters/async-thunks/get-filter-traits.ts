@@ -11,7 +11,7 @@ export type GetFilterTraitsProps =
 export const getFilterTraits = createAsyncThunk<
   void,
   GetFilterTraitsProps
->('nfts/nfts', async (_, { dispatch }) => {
+>('filters/getFilterTraits', async (_, { dispatch }) => {
   try {
     const response = await axios.get(KyasshuUrl.getFilterTraits());
     if (response.status !== 200) {

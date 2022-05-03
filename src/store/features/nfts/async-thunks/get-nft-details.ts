@@ -9,7 +9,7 @@ export type GetNFTDetailsProps = KyasshuUrl.GetNFTDetailsQueryParams;
 export const getNFTDetails = createAsyncThunk<
   void,
   GetNFTDetailsProps
->('nfts/nfts', async ({ id }, { dispatch }) => {
+>('nfts/getNFTDetails', async ({ id }, { dispatch }) => {
   try {
     const response = await axios.get(
       KyasshuUrl.getNFTDetails({ id }),
