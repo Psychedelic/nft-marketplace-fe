@@ -38,19 +38,20 @@ export type OfferAccordionProps = {
 export type ConnectedProps = {
   isListed?: boolean;
   isOwner?: boolean;
+  price?: string;
 };
 
 export type DisConnectedProps = {
   isListed?: boolean;
 };
 
-const OnConnected = ({ isListed, isOwner }: ConnectedProps) => (
+const OnConnected = ({ isListed, isOwner, price }: ConnectedProps) => (
   <>
     { !isOwner && (
       <ButtonListWrapper>
         { isListed && (
           <ButtonDetailsWrapper>
-            <BuyNowModal />
+            <BuyNowModal price={price?.toString()}  />
           </ButtonDetailsWrapper>
         )}
         <ButtonDetailsWrapper>
@@ -136,7 +137,7 @@ export const OfferAccordion = ({
           <h3>{isListedWithPrice && marketPrice}</h3>
         </AccordionHeadContent>
         {(isConnected && (
-          <OnConnected isListed={isListed} isOwner={isOwner} />
+          <OnConnected isListed={isListed} isOwner={isOwner} price={lastSalePrice} />
         )) || <OnDisconnected isListed={isListed} />}
       </AccordionHead>
       <Accordion.Item value="item-1">

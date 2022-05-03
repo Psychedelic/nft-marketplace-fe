@@ -27,9 +27,10 @@ export type BuyNowModalProps = {
   onClose?: () => void;
   actionText?: string;
   actionTextId?: number;
+  price?: string;
 }
 
-export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalProps) => {
+export const BuyNowModal = ({ onClose, actionText, actionTextId, price } : BuyNowModalProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -71,6 +72,7 @@ export const BuyNowModal = ({ onClose, actionText, actionTextId } : BuyNowModalP
     dispatch(
       directBuy({
         tokenId,
+        price,
         onSuccess: () => {
           // TODO: the get all listings is used to get data from the canister
           // as the current kyasshu version does not provide the price data

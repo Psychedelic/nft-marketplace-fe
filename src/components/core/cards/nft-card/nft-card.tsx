@@ -48,6 +48,7 @@ export type ConnectedProps = {
   owned?: boolean;
   isForSale?: boolean;
   tokenId: string;
+  price?: bigint;
   setModalStatus: (status: boolean) => void;
 };
 
@@ -56,7 +57,7 @@ export type DisConnectedProps = {
   setModalStatus: (status: boolean) => void;
 };
 
-const OnConnected = ({ owned, isForSale, tokenId, setModalStatus }: ConnectedProps) => {
+const OnConnected = ({ owned, isForSale, tokenId, price, setModalStatus }: ConnectedProps) => {
   const { t } = useTranslation();
   const showBuyerOptions = !owned;
   const showSellOptions = owned;
@@ -87,6 +88,7 @@ const OnConnected = ({ owned, isForSale, tokenId, setModalStatus }: ConnectedPro
                   onClose={() => setModalStatus(false)}
                   actionText={`${t('translation:nftCard.forSale')}`}
                   actionTextId={Number(tokenId)}
+                  price={price?.toString()}
                 />
               ) : (
                 <MakeOfferModal
@@ -188,6 +190,7 @@ export const NftCard = React.memo(
               isForSale={isForSale}
               tokenId={data.id}
               setModalStatus={setModalStatus}
+              price={data?.price}
             />
           )) || <OnDisconnected isForSale={isForSale} setModalStatus={setModalStatus} />}
           <LastOffer>

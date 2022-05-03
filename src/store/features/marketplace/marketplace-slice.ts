@@ -35,6 +35,7 @@ interface DirectBuyParams extends DirectBuy {
 
 type DirectBuy = {
   tokenId: BigInt;
+  price?: string;
 };
 
 interface CancelListingParams extends CancelListing {
@@ -64,6 +65,7 @@ interface AcceptOfferParams extends AcceptOffer {
 type AcceptOffer = {
   id: string;
   buyerPrincipalId: string;
+  offerPrice?: string;
 };
 
 interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
@@ -206,14 +208,12 @@ export const directBuy = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >('marketplace/directBuy', async (params: DirectBuyParams, thunkAPI) => {
-  const { tokenId, onSuccess, onFailure } = params;
+  const { tokenId, price, onSuccess, onFailure } = params;
 
   const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
   const wicpCanisterId = Principal.fromText(config.wICPCanisterId);
   const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
-
-  // TODO: Get this from the user, UI
-  const wicpAmount = 1_000;
+  const wicpAmount = BigInt(price);
 
   try {
     const WICP_APPROVE = {
@@ -381,7 +381,7 @@ export const acceptOffer = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >('marketplace/acceptOffer', async (params: AcceptOfferParams, thunkAPI) => {
-  const { id, buyerPrincipalId, onSuccess, onFailure } = params;
+  const { id, buyerPrincipalId, offerPrice, onSuccess, onFailure } = params;
 
   try {
     const marketplace = Principal.fromText(config.marketplaceCanisterId);
@@ -389,15 +389,13 @@ export const acceptOffer = createAsyncThunk<
     const userOwnedTokenId = BigInt(id);
     const buyerAddress = Principal.fromText(buyerPrincipalId);
 
-    // TODO: Calculate amount from the offer
-    // using hard type now for speed up dev
-    const amount = 100000000;
+    const offerInPrice = BigInt(offerPrice);
 
     const MKP_APPROVE_WICP = {
       idl: marketplaceIdlFactory,
       canisterId: config.marketplaceCanisterId,
       methodName: 'makeOffer',
-      args: [marketplace, amount],
+      args: [marketplace, offerInPrice],
       onSuccess,
       onFail: (res: any) => {
         console.warn(`Oops! Failed to make offer (${config.marketplaceCanisterId})`, res);
