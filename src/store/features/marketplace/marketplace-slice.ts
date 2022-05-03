@@ -35,7 +35,7 @@ interface DirectBuyParams extends DirectBuy {
 
 type DirectBuy = {
   tokenId: BigInt;
-  price?: string;
+  price: string;
 };
 
 interface CancelListingParams extends CancelListing {
@@ -65,7 +65,7 @@ interface AcceptOfferParams extends AcceptOffer {
 type AcceptOffer = {
   id: string;
   buyerPrincipalId: string;
-  offerPrice?: string;
+  offerPrice: string;
 };
 
 interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
@@ -164,7 +164,6 @@ export const makeListing = createAsyncThunk<
       },
     };
 
-    const directBuy = true;
     const MKP_MAKE_LISTING = {
       idl: marketplaceIdlFactory,
       canisterId: config.marketplaceCanisterId,
@@ -211,11 +210,10 @@ export const directBuy = createAsyncThunk<
   const { tokenId, price, onSuccess, onFailure } = params;
 
   const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
-  const wicpCanisterId = Principal.fromText(config.wICPCanisterId);
   const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
-  const wicpAmount = BigInt(price);
-
+  
   try {
+    const wicpAmount = BigInt(price);
     const WICP_APPROVE = {
       idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,
@@ -255,6 +253,7 @@ export const directBuy = createAsyncThunk<
 
     return {
       tokenId,
+      price,
     };
   } catch (err) {
     thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
@@ -384,21 +383,33 @@ export const acceptOffer = createAsyncThunk<
   const { id, buyerPrincipalId, offerPrice, onSuccess, onFailure } = params;
 
   try {
-    const marketplace = Principal.fromText(config.marketplaceCanisterId);
+    const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
     const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
     const userOwnedTokenId = BigInt(id);
     const buyerAddress = Principal.fromText(buyerPrincipalId);
 
     const offerInPrice = BigInt(offerPrice);
 
-    const MKP_APPROVE_WICP = {
+    const CROWNS_APPROVE_MARKETPLACE = {
+      idl: crownsIdlFactory,
+      canisterId: config.crownsCanisterId,
+      methodName: 'approve',
+      args: [marketplaceCanisterId, userOwnedTokenId],
+      onFail: (res: any) => {
+        console.warn(`Oops! Failed to approve Marketplace (${config.crownsCanisterId})`, res);
+
+        typeof onFailure === 'function' && onFailure();
+      },
+    };
+
+    const MKP_MAKE_LISTING = {
       idl: marketplaceIdlFactory,
       canisterId: config.marketplaceCanisterId,
-      methodName: 'makeOffer',
-      args: [marketplace, offerInPrice],
+      methodName: 'makeListing',
+      args: [nonFungibleContractAddress, userOwnedTokenId, offerInPrice],
       onSuccess,
       onFail: (res: any) => {
-        console.warn(`Oops! Failed to make offer (${config.marketplaceCanisterId})`, res);
+        console.warn('Oops! Failed to make listing', res);
 
         typeof onFailure === 'function' && onFailure();
       },
@@ -418,7 +429,8 @@ export const acceptOffer = createAsyncThunk<
     };
 
     const batchTxRes = await (window as any)?.ic?.plug?.batchTransactions([
-      MKP_APPROVE_WICP,
+      CROWNS_APPROVE_MARKETPLACE,
+      MKP_MAKE_LISTING,
       MKP_ACCEPT_OFFER,
     ]);
 
@@ -428,25 +440,10 @@ export const acceptOffer = createAsyncThunk<
       return;
     }
 
-    // if (!('Ok' in result)) {
-    //   if (typeof onFailure !== 'function') return;
-
-    //   onFailure();
-
-    //   console.error(result);
-
-    //   throw Error('Oops! Failed to accept offer');
-    // }
-
-    // if (typeof onSuccess !== 'function') return;
-
-    // console.info(result);
-
-    // onSuccess();
-
     return {
       id,
       buyerPrincipalId,
+      offerPrice,
     };
   } catch (err) {
     thunkAPI.dispatch(notificationActions.setErrorMessage((err as CommonError).message));
