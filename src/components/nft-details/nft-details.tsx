@@ -28,7 +28,7 @@ import { NFTMetadata } from '../../declarations/legacy';
 import { fetchNFTDetails } from '../../integrations/kyasshu/utils';
 
 // type CurrentListing = {
-//   payment_address: string;
+//   seller: string;
 //   price: string;
 // };
 
@@ -59,8 +59,7 @@ export const NftDetails = () => {
   );
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
-  const owner =
-    tokenListing?.payment_address?.toString() || nftDetails?.owner;
+  const owner = tokenListing?.seller?.toString() || nftDetails?.owner;
   const lastSalePrice = tokenListing?.price || nftDetails?.price;
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
   const dispatch = useAppDispatch();

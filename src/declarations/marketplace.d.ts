@@ -7,7 +7,7 @@ export interface Listing {
   status: ListingStatus;
   created: bigint;
   price: bigint;
-  payment_address: Principal;
+  seller: Principal;
 }
 export type ListingStatus =
   | { Selling: null }
@@ -35,7 +35,8 @@ export interface Offer {
   created: bigint;
   token_id: bigint;
   price: bigint;
-  payment_address: Principal;
+  buyer: Principal;
+  token_owner: Principal;
   nft_canister_id: Principal;
 }
 export type OfferStatus =

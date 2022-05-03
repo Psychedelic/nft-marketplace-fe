@@ -35,7 +35,8 @@ export default ({ IDL }: { IDL: any }) => {
     created: IDL.Nat64,
     token_id: IDL.Nat,
     price: IDL.Nat,
-    payment_address: IDL.Principal,
+    buyer: IDL.Principal,
+    token_owner: IDL.Principal,
     nft_canister_id: IDL.Principal,
   });
   const Result_1 = IDL.Variant({ Ok: IDL.Nat, Err: MPApiError });
@@ -48,7 +49,7 @@ export default ({ IDL }: { IDL: any }) => {
     status: ListingStatus,
     created: IDL.Nat64,
     price: IDL.Nat,
-    payment_address: IDL.Principal,
+    seller: IDL.Principal,
   });
   const Result_2 = IDL.Variant({ Ok: Listing, Err: MPApiError });
   return IDL.Service({
