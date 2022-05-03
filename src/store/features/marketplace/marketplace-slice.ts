@@ -35,6 +35,7 @@ interface DirectBuyParams extends DirectBuy {
 
 type DirectBuy = {
   tokenId: BigInt;
+  price?: string;
 };
 
 interface CancelListingParams extends CancelListing {
@@ -207,14 +208,12 @@ export const directBuy = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >('marketplace/directBuy', async (params: DirectBuyParams, thunkAPI) => {
-  const { tokenId, onSuccess, onFailure } = params;
+  const { tokenId, price, onSuccess, onFailure } = params;
 
   const marketplaceCanisterId = Principal.fromText(config.marketplaceCanisterId);
   const wicpCanisterId = Principal.fromText(config.wICPCanisterId);
   const nonFungibleContractAddress = Principal.fromText(config.crownsCanisterId);
-
-  // TODO: Get this from the user, UI
-  const wicpAmount = 1_000;
+  const wicpAmount = BigInt(price);
 
   try {
     const WICP_APPROVE = {
