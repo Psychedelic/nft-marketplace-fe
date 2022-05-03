@@ -215,4 +215,3 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
     </CardContainer>
   );
 });
-

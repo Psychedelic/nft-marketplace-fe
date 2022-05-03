@@ -7,4 +7,3 @@ export enum OffersTableHeaders {
   OffersReceivedAction = 'offersReceivedAction',
   OffersMadeAction = 'offersMadeAction',
 }
-

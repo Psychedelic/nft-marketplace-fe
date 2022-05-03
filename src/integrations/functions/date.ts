@@ -38,4 +38,3 @@ export const formatTimestamp = (timestamp: bigint) => {
   }
   return formattedTimestamp;
 };
-

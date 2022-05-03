@@ -7,4 +7,3 @@ export * from './settings';
 export { makeListing, getTokenListing } from './marketplace';
 export { getOwnerTokenIdentifiers } from './crowns';
 export * from './tables';
-

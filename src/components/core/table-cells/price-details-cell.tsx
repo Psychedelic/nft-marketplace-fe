@@ -26,4 +26,3 @@ export const PriceDetailsCell = ({
     {price && <PriceText tableType={tableType}>{price}</PriceText>}
   </PriceDetails>
 );
-

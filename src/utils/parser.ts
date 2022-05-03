@@ -132,4 +132,3 @@ export const parseGetTokenOffersresponse = ({
 
   return parsed;
 };
-

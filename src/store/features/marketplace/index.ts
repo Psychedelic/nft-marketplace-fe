@@ -11,4 +11,3 @@ export {
 } from './marketplace-slice';
 
 export default marketplaceSlice.reducer;
-

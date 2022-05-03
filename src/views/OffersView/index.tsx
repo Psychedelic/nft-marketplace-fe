@@ -60,4 +60,3 @@ const OffersView = () => {
 };
 
 export default OffersView;
-

@@ -36,4 +36,3 @@ export interface OffersTableItem {
   computedCurrencyPrice?: number;
   callerDfinityExplorerUrl?: string;
 }
-

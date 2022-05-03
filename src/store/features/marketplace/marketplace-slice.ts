@@ -665,4 +665,3 @@ export const getTokenListing = createAsyncThunk<
 });
 
 export default marketplaceSlice.reducer;
-

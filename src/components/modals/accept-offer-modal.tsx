@@ -381,4 +381,3 @@ export const AcceptOfferModal = ({
     </DialogPrimitive.Root>
   );
 };
-

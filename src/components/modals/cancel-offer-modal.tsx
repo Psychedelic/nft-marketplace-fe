@@ -107,4 +107,3 @@ export const CancelOfferModal = () => {
     </DialogPrimitive.Root>
   );
 };
-

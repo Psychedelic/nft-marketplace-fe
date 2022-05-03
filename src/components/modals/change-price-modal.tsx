@@ -322,4 +322,3 @@ export const ChangePriceModal = () => {
     </DialogPrimitive.Root>
   );
 };
-

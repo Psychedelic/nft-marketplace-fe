@@ -117,4 +117,3 @@ export const ToastActionIcon = styled('img', {
   position: 'relative',
   top: '3px',
 });
-

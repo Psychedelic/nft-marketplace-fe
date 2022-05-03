@@ -179,4 +179,3 @@ export const OfferAccordion = ({
     </AccordionStyle>
   );
 };
-

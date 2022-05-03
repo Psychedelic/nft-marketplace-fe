@@ -103,4 +103,3 @@ export const PlugIcon = styled('img', {
 export const PlugArrowDownIcon = styled('img', {
   marginLeft: '10px',
 });
-
