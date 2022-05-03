@@ -116,6 +116,7 @@ export const AcceptOfferModal = ({
       acceptOffer({
         id: tokenId,
         buyerPrincipalId: offerFrom,
+        offerPrice: price,
         onSuccess: () => {
           setModalStep(LISTING_STATUS_CODES.Accepted);
         },

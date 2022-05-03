@@ -64,6 +64,7 @@ interface AcceptOfferParams extends AcceptOffer {
 type AcceptOffer = {
   id: string;
   buyerPrincipalId: string;
+  offerPrice?: string;
 };
 
 interface GetUserReceviedOfferParams extends GetUserReceviedOffer {
@@ -381,7 +382,7 @@ export const acceptOffer = createAsyncThunk<
   // Optional fields for defining the thunk api
   { state: RootState }
 >('marketplace/acceptOffer', async (params: AcceptOfferParams, thunkAPI) => {
-  const { id, buyerPrincipalId, onSuccess, onFailure } = params;
+  const { id, buyerPrincipalId, offerPrice, onSuccess, onFailure } = params;
 
   try {
     const marketplace = Principal.fromText(config.marketplaceCanisterId);
@@ -389,15 +390,13 @@ export const acceptOffer = createAsyncThunk<
     const userOwnedTokenId = BigInt(id);
     const buyerAddress = Principal.fromText(buyerPrincipalId);
 
-    // TODO: Calculate amount from the offer
-    // using hard type now for speed up dev
-    const amount = 100000000;
+    const offerInPrice = BigInt(offerPrice);
 
     const MKP_APPROVE_WICP = {
       idl: marketplaceIdlFactory,
       canisterId: config.marketplaceCanisterId,
       methodName: 'makeOffer',
-      args: [marketplace, amount],
+      args: [marketplace, offerInPrice],
       onSuccess,
       onFail: (res: any) => {
         console.warn(`Oops! Failed to make offer (${config.marketplaceCanisterId})`, res);
