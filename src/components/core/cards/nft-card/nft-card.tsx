@@ -163,8 +163,9 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
           <PriceBar>
             <Flex>
               <NftText>{data?.name}</NftText>
-              {/* TODO: Price should be in the translations intl */}
-              <NftText>{isForSale && 'Price'}</NftText>
+              <NftText>
+                {isForSale ? `${t('translation:nftCard.price')}` : ''}
+              </NftText>
             </Flex>
             <Flex>
               <NftId>{data?.id}</NftId>
