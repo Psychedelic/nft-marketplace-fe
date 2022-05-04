@@ -11,7 +11,6 @@ import {
   FlexRight,
   PlugButtonWrapper,
   UndefinedPrice,
-  OffersCount,
   ButtonListWrapper,
   ButtonDetailsWrapper,
 } from './styles';
@@ -22,12 +21,13 @@ import arrowdown from '../../../assets/accordions/arrow-down.svg';
 import arrowdownDark from '../../../assets/accordions/arrow-down-dark.svg';
 import arrowup from '../../../assets/accordions/arrow-up.svg';
 import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
-import { OffersTable } from '../../tables';
+import { NFTOffersTable } from '../../tables';
 import { Plug } from '../../plug';
 import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.utils';
 
 import { BuyNowModal, MakeOfferModal } from '../../modals';
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
+import { PlugStatusCodes } from '../../../constants/plug';
 
 export type OfferAccordionProps = {
   lastSalePrice?: string;
@@ -42,7 +42,7 @@ type ConnectedProps = {
 };
 
 type DisconnectedProps = {
-  isListed?: boolean;
+  connectionStatus: string;
 };
 
 const OnConnected = ({ isListed, isOwner, price }: ConnectedProps) =>
@@ -59,8 +59,8 @@ const OnConnected = ({ isListed, isOwner, price }: ConnectedProps) =>
     </ButtonListWrapper>
   ) : null;
 
-const OnDisconnected = ({ isListed }: DisconnectedProps) =>
-  isListed ? (
+const OnDisconnected = ({ connectionStatus }: DisconnectedProps) =>
+  connectionStatus !== PlugStatusCodes.Verifying ? (
     <PlugButtonWrapper>
       <Plug />
     </PlugButtonWrapper>
@@ -84,7 +84,11 @@ export const OfferAccordion = ({
   const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
   const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
-  const { isConnected, principalId: plugPrincipal } = usePlugStore();
+  const {
+    isConnected,
+    principalId: plugPrincipal,
+    connectionStatus,
+  } = usePlugStore();
 
   useEffect(() => {
     if (!lastSalePrice || !isListed) return;
@@ -136,46 +140,38 @@ export const OfferAccordion = ({
             isOwner={isOwner}
             price={lastSalePrice}
           />
-        )) || <OnDisconnected isListed={isListed} />}
+        )) || <OnDisconnected connectionStatus={connectionStatus} />}
       </AccordionHead>
-      <Accordion.Item value="item-1">
-        <AccordionTrigger
-          padding="medium"
-          backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
-          borderTop="borderSet"
-          onClick={() => setIsAccordionOpen(!isAccordionOpen)}
-        >
-          <div>
-            <img
-              src={isLightTheme ? offer : offerDark}
-              alt="offer-collection"
-            />
-            <p>
-              {`${t('translation:accordions.offer.header.offer')}`}
-              <OffersCount>
-                {`(${(isListed && totalOffers) || 0})`}
-              </OffersCount>
-            </p>
-          </div>
-          {isListed && (
+      {isConnected && (
+        <Accordion.Item value="item-1">
+          <AccordionTrigger
+            padding="medium"
+            backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
+            borderTop="borderSet"
+            onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+          >
+            <div>
+              <img
+                src={isLightTheme ? offer : offerDark}
+                alt="offer-collection"
+              />
+              <p>
+                {`${t('translation:accordions.offer.header.offer')}`}
+              </p>
+            </div>
             <img
               src={!isAccordionOpen ? arrowupTheme : arrowdownTheme}
               alt="arrow-down"
             />
-          )}
-        </AccordionTrigger>
-        <AccordionContent
-          padding="none"
-          backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
-        >
-          {isListed && (
-            <OffersTable
-              isConnectedOwner={isOwner}
-              lastSalePrice={lastSalePrice}
-            />
-          )}
-        </AccordionContent>
-      </Accordion.Item>
+          </AccordionTrigger>
+          <AccordionContent
+            padding="none"
+            backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
+          >
+            <NFTOffersTable isConnectedOwner={isOwner} />
+          </AccordionContent>
+        </Accordion.Item>
+      )}
     </AccordionStyle>
   );
 };

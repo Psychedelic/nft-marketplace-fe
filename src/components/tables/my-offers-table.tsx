@@ -272,7 +272,14 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           loadMore={nextPageNo > 0 ? loadMoreData : () => {}}
           hasMore={hasMoreData}
-          loader={<TableSkeletons />}
+          loader={
+            <TableSkeletons
+              loaderDetails={{
+                showItemDetails: true,
+                showTypeDetails: true,
+              }}
+            />
+          }
           useWindow={true || false}
           threshold={250 * 5}
           className="infinite-loader"
@@ -284,12 +291,16 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
               tableType="activity"
               columnsToHide={columnsToHide}
               loading={loading}
+              loaderDetails={{
+                showItemDetails: true,
+                showTypeDetails: true,
+              }}
             />
           </Container>
         </InfiniteScrollWrapper>
       )}
       {!loading && loadedOffers.length === 0 && (
-        <EmptyStateMessage>
+        <EmptyStateMessage type="largeTable">
           {(offersType === OfferTypeStatusCodes.OffersReceived &&
             t('translation:emptyStates.noOffersYet')) ||
             (offersType === OfferTypeStatusCodes.OffersMade &&

@@ -9,6 +9,11 @@ export interface TableLayoutProps {
   tableType: any;
   columnsToHide?: Array<string>;
   loading?: boolean;
+  loaderDetails: {
+    showItemDetails?: boolean;
+    showTypeDetails?: boolean;
+    type?: string;
+  };
 }
 
 export const TableLayout = ({
@@ -17,6 +22,7 @@ export const TableLayout = ({
   tableType,
   columnsToHide = [],
   loading,
+  loaderDetails,
 }: TableLayoutProps) => {
   const {
     getTableProps,
@@ -37,14 +43,15 @@ export const TableLayout = ({
   // across all the tables
   const { loadingTableData } = useTableStore();
 
+  // TODO: Refactor Table skeleton loader
   return loadingTableData || loading ? (
     <>
-      <TableSkeletons />
-      <TableSkeletons />
-      <TableSkeletons />
-      <TableSkeletons />
-      <TableSkeletons />
-      <TableSkeletons />
+      <TableSkeletons loaderDetails={loaderDetails} />
+      <TableSkeletons loaderDetails={loaderDetails} />
+      <TableSkeletons loaderDetails={loaderDetails} />
+      <TableSkeletons loaderDetails={loaderDetails} />
+      <TableSkeletons loaderDetails={loaderDetails} />
+      <TableSkeletons loaderDetails={loaderDetails} />
     </>
   ) : (
     <TableWrapper type={tableType}>

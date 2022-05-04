@@ -74,6 +74,10 @@ export const NFTActivityTable = () => {
         columns={columns}
         data={mockTableData}
         tableType="nftActivity"
+        loaderDetails={{
+          showItemDetails: true,
+          showTypeDetails: true,
+        }}
       />
     </Container>
   );
