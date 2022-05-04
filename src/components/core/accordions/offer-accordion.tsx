@@ -41,10 +41,6 @@ type ConnectedProps = {
   price?: string;
 };
 
-type DisconnectedProps = {
-  isListed?: boolean;
-};
-
 const OnConnected = ({ isListed, isOwner, price }: ConnectedProps) =>
   !isOwner ? (
     <ButtonListWrapper>
@@ -59,12 +55,11 @@ const OnConnected = ({ isListed, isOwner, price }: ConnectedProps) =>
     </ButtonListWrapper>
   ) : null;
 
-const OnDisconnected = ({ isListed }: DisconnectedProps) =>
-  isListed ? (
-    <PlugButtonWrapper>
-      <Plug />
-    </PlugButtonWrapper>
-  ) : null;
+const OnDisconnected = () => (
+  <PlugButtonWrapper>
+    <Plug />
+  </PlugButtonWrapper>
+);
 
 export const OfferAccordion = ({
   lastSalePrice,
@@ -136,7 +131,7 @@ export const OfferAccordion = ({
             isOwner={isOwner}
             price={lastSalePrice}
           />
-        )) || <OnDisconnected isListed={isListed} />}
+        )) || <OnDisconnected />}
       </AccordionHead>
       <Accordion.Item value="item-1">
         <AccordionTrigger
