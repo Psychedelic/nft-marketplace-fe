@@ -10,6 +10,7 @@ import {
   getTokenListing,
   makeListing,
   cancelListing,
+  cancelOffer,
   directBuy,
   getTokenOffers,
   makeOffer,
@@ -58,7 +59,10 @@ type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
 
 type InitialState = {
   recentlyListedForSale: RecentyListedForSale;
+  // TODO: the recently* should be typed
+  // as we know which types it has
   recentlyCancelledItems: any;
+  recentlyCancelledOffers: any;
   recentlyAcceptedOffers: any[];
   actor?: MarketplaceActor;
   tokenListing: Record<string, Listing>;
@@ -67,6 +71,7 @@ type InitialState = {
 const initialState: InitialState = {
   recentlyListedForSale: [],
   recentlyCancelledItems: [],
+  recentlyCancelledOffers: [],
   recentlyAcceptedOffers: [],
   tokenListing: {},
 };
@@ -101,6 +106,12 @@ export const marketplaceSlice = createSlice({
       state.recentlyCancelledItems.push(action.payload?.id);
     });
 
+    builder.addCase(cancelOffer.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.recentlyCancelledOffers.push(action.payload?.id);
+    });
+
     builder.addCase(acceptOffer.fulfilled, (state, action) => {
       if (!action.payload) return;
 
@@ -113,6 +124,7 @@ export const marketplaceActions = {
   ...marketplaceSlice.actions,
   acceptOffer,
   cancelListing,
+  cancelOffer,
   directBuy,
   getBuyerOffers,
   getTokenListing,

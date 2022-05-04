@@ -3,6 +3,11 @@ import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton } from '../core';
 import {
+  marketplaceActions,
+  useAppDispatch,
+} from '../../store';
+import { OfferItem } from '../../declarations/legacy';
+import {
   CancelOfferModalTrigger,
   ModalOverlay,
   ModalContent,
@@ -18,8 +23,13 @@ import {
  * Cancel Offer Modal Component
  * --------------------------------------------------------------------------*/
 
-export const CancelOfferModal = () => {
+export const CancelOfferModal = ({
+  item,
+}: {
+  item: OfferItem,
+}) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
 
@@ -30,6 +40,24 @@ export const CancelOfferModal = () => {
   const handleModalClose = () => {
     setModalOpened(false);
   };
+
+  const handleCancelOffer = () => {
+    dispatch(
+      marketplaceActions.cancelOffer({
+        id: item?.tokenId.toString(),
+        onSuccess: () => {
+          setModalOpened(false);
+
+          console.log('TODO: handleCancelOffer: onSuccess');
+        },
+        onFailure: () => {
+          setModalOpened(false);
+
+          console.log('TODO: handleCancelOffer: onFailure');
+        },
+      }),
+    );
+  }
 
   return (
     <DialogPrimitive.Root
@@ -48,8 +76,7 @@ export const CancelOfferModal = () => {
             size="small"
             text={t('translation:buttons.action.cancelOffer')}
             handleClick={() => {
-              // eslint-disable-next-line no-console
-              console.log('cancelOffer modal opened');
+              console.log("Cancel offer modal opened");
             }}
           />
         </CancelOfferModalTrigger>
@@ -97,7 +124,7 @@ export const CancelOfferModal = () => {
               <ActionButton
                 type="primary"
                 text={t('translation:modals.buttons.cancelOffer')}
-                handleClick={handleModalClose}
+                handleClick={handleCancelOffer}
                 danger
               />
             </ModalButtonWrapper>

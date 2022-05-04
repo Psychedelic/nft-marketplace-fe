@@ -20,12 +20,14 @@ export interface MetadataPart {
 
 export type MetadataDesc = Array<MetadataPart>;
 
+export type OfferItem = {
+  name: string;
+  tokenId: bigint;
+  logo?: string;
+}
+
 export interface OffersTableItem {
-  item: {
-    name: string;
-    tokenId: bigint;
-    logo?: string;
-  };
+  item: OfferItem;
   price: bigint;
   floorDifference: string;
   fromDetails: {
