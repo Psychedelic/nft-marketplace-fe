@@ -93,7 +93,7 @@ export const parseGetTokenOffersResponse = ({
         const {
           price,
           token_id: tokenId,
-          payment_address: paymentAddress,
+          buyer: paymentAddress,
           created,
         } = currChild;
 
@@ -148,7 +148,7 @@ export const parseOffersMadeResponse = ({
     const {
       price,
       token_id: tokenId,
-      payment_address: paymentAddress,
+      buyer: paymentAddress,
       created,
     } = offerDetails;
 

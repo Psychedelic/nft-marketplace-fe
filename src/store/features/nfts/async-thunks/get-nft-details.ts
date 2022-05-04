@@ -54,7 +54,9 @@ export const getNFTDetails = createAsyncThunk<
     // eslint-disable-next-line no-console
     console.warn(error);
     dispatch(
-      notificationActions.setErrorMessage((error as Error).message),
+      notificationActions.setErrorMessage(
+        'Oops! Unable to fetch NFT details',
+      ),
     );
   }
 });

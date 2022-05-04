@@ -71,7 +71,9 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
 
       // set NFTS failed to load
       dispatch(
-        notificationActions.setErrorMessage((error as Error).message),
+        notificationActions.setErrorMessage(
+          'Oops! Unable to fetch NFTs',
+        ),
       );
     }
   },

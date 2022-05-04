@@ -102,8 +102,11 @@ export const getCAPActivity = createAsyncThunk<
 
     dispatch(tableActions.setCapActivityTable(actionPayload));
   } catch (error) {
+    console.warn(error);
     dispatch(
-      notificationActions.setErrorMessage((error as Error).message),
+      notificationActions.setErrorMessage(
+        'Oops! Unable to fetch activity table data',
+      ),
     );
   }
 });
