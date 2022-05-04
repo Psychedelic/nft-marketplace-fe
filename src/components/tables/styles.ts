@@ -77,6 +77,7 @@ export const TableWrapper = styled('div', {
   variants: {
     type: {
       offers: {
+        height: 'initial',
         table: {
           background: '$backgroundColor',
           thead: {
