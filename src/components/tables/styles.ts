@@ -272,11 +272,27 @@ export const EmptyStateMessage = styled('p', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  height: '100vh',
   fontStyle: 'normal',
-  fontWeight: '700',
-  fontSize: '32px',
-  lineHeight: '39px',
-  color: '$mainTextColor',
-  margin: '150px 50px',
+
+  // variants
+  variants: {
+    type: {
+      smallTable: {
+        fontWeight: '500',
+        fontSize: '16px',
+        lineHeight: '19px',
+        color: '$mainTextColor',
+        margin: '50px 25px',
+      },
+
+      largeTable: {
+        height: '100vh',
+        fontWeight: '700',
+        fontSize: '32px',
+        lineHeight: '39px',
+        color: '$mainTextColor',
+        margin: '150px 50px',
+      },
+    },
+  },
 });

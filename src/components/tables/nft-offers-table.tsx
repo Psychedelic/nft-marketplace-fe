@@ -171,7 +171,7 @@ export const NFTOffersTable = ({
         </Container>
       )}
       {!loading && loadedOffers.length === 0 && (
-        <EmptyStateMessage>
+        <EmptyStateMessage type="smallTable">
           {t('translation:emptyStates.noOffersYet')}
         </EmptyStateMessage>
       )}

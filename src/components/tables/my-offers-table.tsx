@@ -299,7 +299,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         </InfiniteScrollWrapper>
       )}
       {!loading && loadedOffers.length === 0 && (
-        <EmptyStateMessage>
+        <EmptyStateMessage type="largeTable">
           {(offersType === OfferTypeStatusCodes.OffersReceived &&
             t('translation:emptyStates.noOffersYet')) ||
             (offersType === OfferTypeStatusCodes.OffersMade &&
