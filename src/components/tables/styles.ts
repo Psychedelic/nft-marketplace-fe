@@ -254,10 +254,9 @@ export const StringSkeleton = styled('div', {
 
 export const EmptyStateMessage = styled('p', {
   display: 'flex',
-  justifyContent: 'center',
   flexDirection: 'column',
   alignItems: 'center',
-  height: '100%',
+  height: '100vh',
   fontStyle: 'normal',
   fontWeight: '700',
   fontSize: '32px',
