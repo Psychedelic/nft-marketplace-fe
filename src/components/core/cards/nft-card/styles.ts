@@ -19,9 +19,9 @@ export const CardContainer = styled('div', {
         },
       },
       false: {
+        transition: 'transform 0.5s ease-in-out',
         '&:hover': {
           boxShadow: '0px 0px 8px 3px $navBackgroundColor',
-          transition: 'transform 0.5s ease-in-out',
           transform: 'scale(1.015)',
         },
       },
