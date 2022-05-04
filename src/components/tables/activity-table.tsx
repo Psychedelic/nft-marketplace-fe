@@ -86,8 +86,7 @@ export const ActivityTable = () => {
         Header: t('translation:tables.titles.price'),
         accessor: ({ price }: RowProps) => (
           <PriceDetailsCell
-            wicp="undefined"
-            price={price}
+            wicp={price}
             tableType=""
           />
         ),
