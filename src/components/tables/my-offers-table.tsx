@@ -43,6 +43,11 @@ export type MyOffersTableProps = {
   offersType?: string; // offers received / offers made
 };
 
+export type TableDetails = {
+  loading: boolean;
+  loadedOffers: Array<any>;
+};
+
 // TODO: See parser.ts and refactor to use common type
 // the current is all string which is not correct
 
@@ -54,11 +59,11 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
-  const [loadingTableData, setLoadingTableData] =
-    useState<boolean>(true);
-  // TODO: update loadedOffers state array record type
-  const [loadedOffersReceivedData, setLoadedOffersReceivedData] =
-    useState<any>([]);
+  const [tableDetails, setTableDetails] = useState<TableDetails>({
+    loadedOffers: [],
+    loading: true,
+  });
+
   const ownerTokenIdentifiers = useSelector(
     (state: RootState) => state.crowns.ownerTokenIdentifiers,
   );
@@ -67,6 +72,13 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   );
 
   const { id: plugPrincipal } = useParams();
+
+  useEffect(() => {
+    setTableDetails({
+      loading: true,
+      loadedOffers: [],
+    });
+  }, [offersType]);
 
   useEffect(() => {
     // hide offersMadeAction if offersType = OffersReceived
@@ -115,9 +127,10 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         getBuyerOffers({
           userPrincipalId: plugPrincipal,
           onSuccess: (offers) => {
-            // TODO: handle success messages
-            setLoadingTableData(false);
-            setLoadedOffersReceivedData(offers);
+            setTableDetails({
+              loading: false,
+              loadedOffers: offers,
+            });
           },
           onFailure: () => {
             // TODO: handle failure messages
@@ -138,17 +151,15 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   useEffect(() => {
     if (!ownerTokenIdentifiers) return;
 
-    // TODO: Add logic to fetch table data
-    // TODO: Update loadedOffersReceivedData when there is
-    // a change in offersType
     dispatch(
       getTokenOffers({
         // TODO: handle offers data gracefully
         ownerTokenIdentifiers,
         onSuccess: (offers) => {
-          // TODO: handle success messages
-          setLoadingTableData(false);
-          setLoadedOffersReceivedData(offers);
+          setTableDetails({
+            loading: false,
+            loadedOffers: offers,
+          });
         },
         onFailure: () => {
           // TODO: handle failure messages
@@ -256,11 +267,11 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     [t, theme, columnsToHide], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  const { loading, loadedOffers } = tableDetails;
+
   return (
     <>
-      {(loadingTableData ||
-        (!loadingTableData &&
-          loadedOffersReceivedData.length > 0)) && (
+      {(loading || (!loading && loadedOffers.length > 0)) && (
         <InfiniteScrollWrapper
           pageStart={0}
           // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -274,15 +285,15 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
           <Container>
             <TableLayout
               columns={columns}
-              data={loadedOffersReceivedData}
+              data={loadedOffers}
               tableType="activity"
               columnsToHide={columnsToHide}
-              loading={loadingTableData}
+              loading={loading}
             />
           </Container>
         </InfiniteScrollWrapper>
       )}
-      {!loadingTableData && loadedOffersReceivedData.length === 0 && (
+      {!loading && loadedOffers.length === 0 && (
         <EmptyStateMessage>
           {(offersType === OfferTypeStatusCodes.OffersReceived &&
             t('translation:emptyStates.noOffersYet')) ||
