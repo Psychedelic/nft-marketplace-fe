@@ -40,6 +40,10 @@ export type AcceptOffer = {
   offerPrice: string;
 };
 
+export type CancelOffer = {
+  id: string;
+}
+
 export type GetUserReceivedOffer = {
   ownerTokenIdentifiers?: OwnerTokenIdentifiers;
 };
