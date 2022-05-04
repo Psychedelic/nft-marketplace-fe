@@ -191,11 +191,26 @@ export const TableSkeletonsWrapper = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '0 80px',
 
-  '&:nth-child(1)': {
-    paddingTop: '30px',
-    paddingBottom: '20px',
+  // variants
+  variants: {
+    type: {
+      small: {
+        padding: '10px 20px',
+
+        '&:nth-child(1)': {
+          paddingTop: '15px',
+        },
+      },
+
+      large: {
+        padding: '5px 80px',
+
+        '&:nth-child(1)': {
+          paddingTop: '30px',
+        },
+      },
+    },
   },
 });
 

@@ -8,6 +8,14 @@ import {
   StringSkeleton,
 } from './styles';
 
+export type TableSkeletonProps = {
+  loaderDetails: {
+    showItemDetails?: boolean;
+    showTypeDetails?: boolean;
+    type?: any;
+  };
+};
+
 export const ItemDetail = () => (
   <Flex>
     <ImageSkeleton />
@@ -30,10 +38,16 @@ export const PriceDetail = () => (
 
 export const TableStrings = () => <StringSkeleton />;
 
-const TableSkeletons = () => (
-  <TableSkeletonsWrapper>
-    <ItemDetail />
-    <TypeDetail />
+const TableSkeletons = ({
+  loaderDetails: {
+    showItemDetails = true,
+    showTypeDetails = true,
+    type = 'large',
+  },
+}: TableSkeletonProps) => (
+  <TableSkeletonsWrapper type={type}>
+    {showItemDetails && <ItemDetail />}
+    {showTypeDetails && <TypeDetail />}
     <PriceDetail />
     <TableStrings />
     <TableStrings />

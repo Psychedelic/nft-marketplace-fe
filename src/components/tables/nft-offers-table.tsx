@@ -162,6 +162,11 @@ export const NFTOffersTable = ({
             tableType="offers"
             columnsToHide={columnsToHide}
             loading={loading}
+            loaderDetails={{
+              showItemDetails: false,
+              showTypeDetails: false,
+              type: 'small',
+            }}
           />
         </Container>
       )}
