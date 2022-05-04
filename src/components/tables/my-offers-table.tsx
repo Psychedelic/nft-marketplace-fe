@@ -2,12 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import {
-  useThemeStore,
-  useAppDispatch,
-  usePlugStore,
-  RootState,
-} from '../../store';
+import { useAppDispatch, usePlugStore, RootState } from '../../store';
 import {
   ItemDetailsCell,
   PriceDetailsCell,
@@ -48,7 +43,6 @@ export type MyOffersTableProps = {
 export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { theme } = useThemeStore();
   const { isConnected } = usePlugStore();
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
@@ -252,7 +246,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         ),
       },
     ],
-    [t, theme, columnsToHide], // eslint-disable-line react-hooks/exhaustive-deps
+    [t, columnsToHide], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return (
