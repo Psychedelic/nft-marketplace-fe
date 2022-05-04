@@ -20,6 +20,7 @@ import {
   Container,
   InfiniteScrollWrapper,
   ButtonWrapper,
+  EmptyStateMessage,
 } from './styles';
 import TableSkeletons from './table-skeletons';
 import {
@@ -256,25 +257,39 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   );
 
   return (
-    <InfiniteScrollWrapper
-      pageStart={0}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      loadMore={nextPageNo > 0 ? loadMoreData : () => {}}
-      hasMore={hasMoreData}
-      loader={<TableSkeletons />}
-      useWindow={true || false}
-      threshold={250 * 5}
-      className="infinite-loader"
-    >
-      <Container>
-        <TableLayout
-          columns={columns}
-          data={loadedOffersReceivedData}
-          tableType="activity"
-          columnsToHide={columnsToHide}
-          loading={loadingTableData}
-        />
-      </Container>
-    </InfiniteScrollWrapper>
+    <>
+      {(loadingTableData ||
+        (!loadingTableData &&
+          loadedOffersReceivedData.length > 0)) && (
+        <InfiniteScrollWrapper
+          pageStart={0}
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          loadMore={nextPageNo > 0 ? loadMoreData : () => {}}
+          hasMore={hasMoreData}
+          loader={<TableSkeletons />}
+          useWindow={true || false}
+          threshold={250 * 5}
+          className="infinite-loader"
+        >
+          <Container>
+            <TableLayout
+              columns={columns}
+              data={loadedOffersReceivedData}
+              tableType="activity"
+              columnsToHide={columnsToHide}
+              loading={loadingTableData}
+            />
+          </Container>
+        </InfiniteScrollWrapper>
+      )}
+      {!loadingTableData && loadedOffersReceivedData.length === 0 && (
+        <EmptyStateMessage>
+          {(offersType === OfferTypeStatusCodes.OffersReceived &&
+            t('translation:emptyStates.noOffersYet')) ||
+            (offersType === OfferTypeStatusCodes.OffersMade &&
+              t('translation:emptyStates.noOffersMade'))}
+        </EmptyStateMessage>
+      )}
+    </>
   );
 };
