@@ -58,8 +58,6 @@ export const getBuyerOffers = createAsyncThunk<
       currencyMarketPrice,
     });
 
-    if (!Array.isArray(result) || !result.length) return [];
-
     if (typeof onSuccess !== 'function') return;
 
     onSuccess(parsedTokenOffers);
