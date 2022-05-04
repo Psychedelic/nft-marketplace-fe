@@ -158,10 +158,7 @@ export const OfferAccordion = ({
             padding="none"
             backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
           >
-            <NFTOffersTable
-              isConnectedOwner={isOwner}
-              lastSalePrice={lastSalePrice}
-            />
+            <NFTOffersTable isConnectedOwner={isOwner} />
           </AccordionContent>
         </Accordion.Item>
       )}

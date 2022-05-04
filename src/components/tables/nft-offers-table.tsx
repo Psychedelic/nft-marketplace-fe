@@ -1,13 +1,18 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useAppDispatch } from '../../store';
 import { PriceDetailsCell, TextCell, TextLinkCell } from '../core';
 import { AcceptOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
-// TODO: Remove mock data after fetching offers table details
-import { mockTableData } from './mock-offers-data';
-import { Container, ButtonWrapper } from './styles';
-
-import { formatAddress } from '../../integrations/plug';
+import {
+  Container,
+  ButtonWrapper,
+  EmptyStateMessage,
+} from './styles';
+import { getTokenOffers } from '../../store/features/marketplace';
+import { OffersTableItem } from '../../declarations/legacy';
+import { formatPriceValue } from '../../utils/formatters';
 
 /* --------------------------------------------------------------------------
  * NFT Offers Table Component
@@ -15,23 +20,27 @@ import { formatAddress } from '../../integrations/plug';
 
 export type NFTOffersTableProps = {
   isConnectedOwner?: boolean;
-  lastSalePrice?: string;
 };
 
-interface RowProps {
-  price: string;
-  floorDifference: string;
-  offerFrom: string;
-  formattedPrice: string;
-}
+export type NFTTableDetails = {
+  loading: boolean;
+  loadedOffers: Array<any>;
+};
 
 export const NFTOffersTable = ({
   isConnectedOwner,
 }: NFTOffersTableProps) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
+  const [tableDetails, setTableDetails] = useState<NFTTableDetails>({
+    loadedOffers: [],
+    loading: true,
+  });
+
+  const { id: tokenId } = useParams();
 
   useEffect(() => {
     if (!isConnectedOwner && !columnsToHide.includes('action')) {
@@ -47,63 +56,120 @@ export const NFTOffersTable = ({
     setColumnsToHide(newColumnsToHide);
   }, [isConnectedOwner]);
 
+  useEffect(() => {
+    if (!tokenId) return;
+
+    dispatch(
+      getTokenOffers({
+        // TODO: update ownerTokenIdentifiers naming convention
+        ownerTokenIdentifiers: [BigInt(tokenId)],
+        onSuccess: (offers) => {
+          setTableDetails({
+            loading: false,
+            loadedOffers: offers,
+          });
+        },
+        onFailure: () => {
+          // TODO: handle failure messages
+        },
+      }),
+    );
+  }, [dispatch]);
+
   const columns = useMemo(
     () => [
       {
-        id: 'price',
         Header: t('translation:tables.titles.price'),
-        accessor: ({ price, formattedPrice }: RowProps) => (
+        accessor: ({
+          price,
+          computedCurrencyPrice,
+        }: OffersTableItem) => (
           <PriceDetailsCell
-            wicp={`${price} WICP`}
-            price={`$${formattedPrice}`}
+            wicp={price.toString()}
+            price={
+              (computedCurrencyPrice &&
+                `$${formatPriceValue(
+                  computedCurrencyPrice.toString(),
+                )}`) ||
+              ''
+            }
             tableType="offers"
           />
         ),
       },
       {
-        id: 'floorDifference',
         Header: t('translation:tables.titles.floorDifference'),
-        // TODO: Use lastSalePrice to calculate floor difference
-        accessor: ({ floorDifference }: RowProps) => (
+        accessor: ({ floorDifference }: OffersTableItem) => (
           <TextCell text={floorDifference} type="offers" />
         ),
       },
       {
-        id: 'from',
         Header: t('translation:tables.titles.from'),
-        accessor: ({ offerFrom }: RowProps) => (
+        accessor: ({
+          fromDetails,
+          callerDfinityExplorerUrl,
+        }: OffersTableItem) => (
           <TextLinkCell
-            text={formatAddress(offerFrom)}
-            url=""
+            text={fromDetails.formattedAddress}
+            url={callerDfinityExplorerUrl}
             type="offers"
           />
         ),
       },
       {
+        Header: t('translation:tables.titles.time'),
+        accessor: ({ time }: OffersTableItem) => (
+          <TextCell text={time} type="activityTime" />
+        ),
+      },
+      {
         id: 'action',
         Header: t('translation:tables.titles.action'),
-        accessor: ({ price, formattedPrice, offerFrom }) => (
+        // TODO: Update formatted price and offerFrom with dynamic fields
+        accessor: ({
+          price,
+          fromDetails,
+          item,
+          computedCurrencyPrice,
+        }: OffersTableItem) => (
           <ButtonWrapper>
             <AcceptOfferModal
-              price={price}
-              formattedPrice={formattedPrice}
-              offerFrom={offerFrom}
+              price={price.toString()}
+              formattedPrice={
+                (computedCurrencyPrice &&
+                  computedCurrencyPrice.toString()) ||
+                ''
+              }
+              offerFrom={fromDetails.address}
+              nftTokenId={item.tokenId.toString()}
             />
           </ButtonWrapper>
         ),
       },
     ],
-    [columnsToHide], // eslint-disable-line react-hooks/exhaustive-deps
+    [t, columnsToHide], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  const { loading, loadedOffers } = tableDetails;
+
   return (
-    <Container>
-      <TableLayout
-        columns={columns}
-        data={mockTableData}
-        tableType="offers"
-        columnsToHide={columnsToHide}
-      />
-    </Container>
+    <>
+      {(loading || (!loading && loadedOffers.length > 0)) && (
+        <Container>
+          <TableLayout
+            columns={columns}
+            data={loadedOffers}
+            tableType="offers"
+            columnsToHide={columnsToHide}
+            loading={loading}
+          />
+        </Container>
+      )}
+      {!loading && loadedOffers.length === 0 && (
+        <EmptyStateMessage>
+          {t('translation:emptyStates.noOffersYet')}
+        </EmptyStateMessage>
+      )}
+    </>
   );
 };
