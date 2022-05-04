@@ -11,7 +11,6 @@ import {
   FlexRight,
   PlugButtonWrapper,
   UndefinedPrice,
-  OffersCount,
   ButtonListWrapper,
   ButtonDetailsWrapper,
 } from './styles';
@@ -133,44 +132,39 @@ export const OfferAccordion = ({
           />
         )) || <OnDisconnected />}
       </AccordionHead>
-      <Accordion.Item value="item-1">
-        <AccordionTrigger
-          padding="medium"
-          backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
-          borderTop="borderSet"
-          onClick={() => setIsAccordionOpen(!isAccordionOpen)}
-        >
-          <div>
-            <img
-              src={isLightTheme ? offer : offerDark}
-              alt="offer-collection"
-            />
-            <p>
-              {`${t('translation:accordions.offer.header.offer')}`}
-              <OffersCount>
-                {`(${(isListed && totalOffers) || 0})`}
-              </OffersCount>
-            </p>
-          </div>
-          {isListed && (
+      {isConnected && (
+        <Accordion.Item value="item-1">
+          <AccordionTrigger
+            padding="medium"
+            backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
+            borderTop="borderSet"
+            onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+          >
+            <div>
+              <img
+                src={isLightTheme ? offer : offerDark}
+                alt="offer-collection"
+              />
+              <p>
+                {`${t('translation:accordions.offer.header.offer')}`}
+              </p>
+            </div>
             <img
               src={!isAccordionOpen ? arrowupTheme : arrowdownTheme}
               alt="arrow-down"
             />
-          )}
-        </AccordionTrigger>
-        <AccordionContent
-          padding="none"
-          backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
-        >
-          {isListed && (
+          </AccordionTrigger>
+          <AccordionContent
+            padding="none"
+            backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
+          >
             <OffersTable
               isConnectedOwner={isOwner}
               lastSalePrice={lastSalePrice}
             />
-          )}
-        </AccordionContent>
-      </Accordion.Item>
+          </AccordionContent>
+        </Accordion.Item>
+      )}
     </AccordionStyle>
   );
 };
