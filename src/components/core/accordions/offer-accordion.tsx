@@ -21,7 +21,7 @@ import arrowdown from '../../../assets/accordions/arrow-down.svg';
 import arrowdownDark from '../../../assets/accordions/arrow-down-dark.svg';
 import arrowup from '../../../assets/accordions/arrow-up.svg';
 import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
-import { OffersTable } from '../../tables';
+import { NFTOffersTable } from '../../tables';
 import { Plug } from '../../plug';
 import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.utils';
 
@@ -158,7 +158,7 @@ export const OfferAccordion = ({
             padding="none"
             backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
           >
-            <OffersTable
+            <NFTOffersTable
               isConnectedOwner={isOwner}
               lastSalePrice={lastSalePrice}
             />
