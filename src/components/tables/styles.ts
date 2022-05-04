@@ -1,5 +1,14 @@
 import InfiniteScroll from 'react-infinite-scroller';
-import { styled } from '../../stitches.config';
+import { styled, keyframes } from '../../stitches.config';
+
+const pulse = keyframes({
+  '0%': {
+    opacity: '0.2',
+  },
+  '100%': {
+    opacity: '1',
+  },
+});
 
 export const Container = styled('div', {
   width: '100%',
@@ -223,6 +232,8 @@ export const ImageSkeleton = styled('div', {
   marginRight: '12px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
+  animation: `${pulse} 2s linear infinite`,
+  transitionTimingFunction: 'ease-in-out',
 });
 
 export const NameSkeleton = styled('div', {
@@ -231,6 +242,8 @@ export const NameSkeleton = styled('div', {
   borderRadius: '10px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
+  animation: `${pulse} 2s linear infinite`,
+  transitionTimingFunction: 'ease-in-out',
 });
 
 export const Flex = styled('div', {
@@ -246,6 +259,7 @@ export const TypeDetailsSkeleton = styled('div', {
   marginRight: '12px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
+  animation: `${pulse} 0.2s linear infinite`,
 });
 
 export const PriceSkeleton = styled('div', {
@@ -254,6 +268,8 @@ export const PriceSkeleton = styled('div', {
   borderRadius: '10px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
+  animation: `${pulse} 2s linear infinite`,
+  transitionTimingFunction: 'ease-in-out',
 
   '&:nth-child(1)': {
     marginBottom: '5px',
@@ -266,6 +282,8 @@ export const StringSkeleton = styled('div', {
   borderRadius: '10px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
+  animation: `${pulse} 2s linear infinite`,
+  transitionTimingFunction: 'ease-in-out',
 });
 
 export const EmptyStateMessage = styled('p', {
