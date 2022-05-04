@@ -1,7 +1,8 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch } from '../../store';
+import { useSelector } from 'react-redux';
+import { useAppDispatch, RootState } from '../../store';
 import { PriceDetailsCell, TextCell, TextLinkCell } from '../core';
 import { AcceptOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
@@ -40,6 +41,10 @@ export const NFTOffersTable = ({
     loading: true,
   });
 
+  const recentlyAcceptedOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyAcceptedOffers,
+  );
+
   const { id: tokenId } = useParams();
 
   useEffect(() => {
@@ -74,7 +79,7 @@ export const NFTOffersTable = ({
         },
       }),
     );
-  }, [dispatch]);
+  }, [dispatch, recentlyAcceptedOffers]);
 
   const columns = useMemo(
     () => [
