@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useAppDispatch, RootState } from '../../store';
+import { useAppDispatch, RootState, marketplaceActions } from '../../store';
 import { PriceDetailsCell, TextCell, TextLinkCell } from '../core';
 import { AcceptOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
@@ -11,7 +11,6 @@ import {
   ButtonWrapper,
   EmptyStateMessage,
 } from './styles';
-import { getTokenOffers } from '../../store/features/marketplace';
 import { OffersTableItem } from '../../declarations/legacy';
 import { formatPriceValue } from '../../utils/formatters';
 
@@ -65,10 +64,10 @@ export const NFTOffersTable = ({
     if (!tokenId) return;
 
     dispatch(
-      getTokenOffers({
+      marketplaceActions.getTokenOffers({
         // TODO: update ownerTokenIdentifiers naming convention
         ownerTokenIdentifiers: [BigInt(tokenId)],
-        onSuccess: (offers) => {
+        onSuccess: (offers: any) => {
           setTableDetails({
             loading: false,
             loadedOffers: offers,

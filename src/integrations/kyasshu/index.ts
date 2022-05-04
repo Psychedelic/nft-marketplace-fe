@@ -65,4 +65,4 @@ export const useNFTDetailsFetcher = () => {
   }, [dispatch, id]);
 };
 
-export * from './kyasshu-urls';
+export { KyasshuUrl, type NSKyasshuUrl } from './kyasshu-urls';
