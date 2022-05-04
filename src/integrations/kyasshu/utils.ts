@@ -121,7 +121,11 @@ export const fetchNFTS = async ({
 
     // set NFTS failed to load
     dispatch(
-      notificationActions.setErrorMessage((error as Error).message),
+      dispatch(
+        notificationActions.setErrorMessage(
+          'Oops! Unable to fetch NFTs',
+        ),
+      ),
     );
   }
 };
@@ -174,7 +178,11 @@ export const fetchNFTDetails = async ({
     // eslint-disable-next-line no-console
     console.warn(error);
     dispatch(
-      notificationActions.setErrorMessage((error as Error).message),
+      dispatch(
+        notificationActions.setErrorMessage(
+          'Oops! Unable to fetch NFT detail',
+        ),
+      ),
     );
   }
 };
@@ -221,6 +229,11 @@ export const fetchFilterTraits = async ({
     dispatch(filterActions.setIsFilterTraitsLoading(false));
   } catch (error) {
     console.log(error);
+    dispatch(
+      notificationActions.setErrorMessage(
+        'Oops! Unable to fetch traits',
+      ),
+    );
   }
 };
 
@@ -366,7 +379,9 @@ export const fetchCAPActivity = createAsyncThunk(
       );
     } catch (error) {
       thunkAPI.dispatch(
-        notificationActions.setErrorMessage((error as Error).message),
+        notificationActions.setErrorMessage(
+          'Oops! Unable to fetch activity table data',
+        ),
       );
     }
   },
