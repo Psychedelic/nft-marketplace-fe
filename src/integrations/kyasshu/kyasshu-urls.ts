@@ -6,13 +6,13 @@ export class KyasshuUrl {
     order,
     page,
     count,
-  }: NsKyasshuUrl.GetNFTsQueryParams): string {
+  }: KyasshuUrl.GetNFTsQueryParams): string {
     return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
   }
 
   static getNFTDetails({
     id,
-  }: NsKyasshuUrl.GetNFTDetailsQueryParams): string {
+  }: KyasshuUrl.GetNFTDetailsQueryParams): string {
     return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${id}`;
   }
 
@@ -22,12 +22,12 @@ export class KyasshuUrl {
 
   static getCAPActivity({
     pageCount,
-  }: NsKyasshuUrl.GetCAPActivityQueryParams): string {
+  }: KyasshuUrl.GetCAPActivityQueryParams): string {
     return `${config.kyasshuMarketplaceAPI}/cap/txns/q3fc5-haaaa-aaaaa-aaahq-cai/?page=${pageCount}`;
   }
 }
 
-export namespace NsKyasshuUrl {
+export namespace KyasshuUrl {
   export type GetNFTsQueryParams = {
     page: number;
     sort: string;

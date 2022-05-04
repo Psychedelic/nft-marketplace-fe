@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { nftsActions } from '../nfts-slice';
-import { KyasshuUrl, NsKyasshuUrl } from '../../../../integrations/kyasshu';
+import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../errors';
 
-export type GetNFTsProps = NsKyasshuUrl.GetNFTsQueryParams & {
+export type GetNFTsProps = KyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
 };
 

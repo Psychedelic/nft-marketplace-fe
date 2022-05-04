@@ -20,6 +20,7 @@
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-namespace": "off",
+    "import/export": "off",
 
     "no-param-reassign": "off",
     "consistent-return": "off",
