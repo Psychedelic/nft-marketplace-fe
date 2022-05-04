@@ -238,7 +238,8 @@
   },
   "errorMessages": {
     "priceEmptyField": "You need to fill in both values",
-    "unableToConnectToPlug": "Oops! Unable to connect to plug"
+    "unableToConnectToPlug": "Oops! Unable to connect to plug",
+    "unableToFetchNFTS": "Oops! Unable to fetch NFTs"
   },
   "successMessages": {
     "copyToClipboard": "Copied to clipboard!"
