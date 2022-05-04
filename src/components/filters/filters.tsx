@@ -178,6 +178,10 @@ export const Filters = () => {
                       settingsActions.setPriceApplyButton(false),
                     );
                     dispatch(filterActions.setMyNfts(false));
+                    setPriceFilterValue({
+                      min: '',
+                      max: '',
+                    });
                   }}
                 >
                   {`${t('translation:filters.clearAll')}`}
