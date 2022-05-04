@@ -153,7 +153,6 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
             <VideoPlayer
               videoSrc={data.location}
               pausedOverlay={
-                // eslint-disable-next-line react/jsx-wrap-multilines
                 <PreviewDetails>
                   <PreviewImage src={data?.preview} alt="nft-card" />
                 </PreviewDetails>
