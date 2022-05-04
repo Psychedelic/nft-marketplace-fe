@@ -27,6 +27,7 @@ import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.u
 
 import { BuyNowModal, MakeOfferModal } from '../../modals';
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
+import { PlugStatusCodes } from '../../../constants/plug';
 
 export type OfferAccordionProps = {
   lastSalePrice?: string;
@@ -38,6 +39,10 @@ type ConnectedProps = {
   isListed?: boolean;
   isOwner?: boolean;
   price?: string;
+};
+
+type DisconnectedProps = {
+  connectionStatus: string;
 };
 
 const OnConnected = ({ isListed, isOwner, price }: ConnectedProps) =>
@@ -54,11 +59,12 @@ const OnConnected = ({ isListed, isOwner, price }: ConnectedProps) =>
     </ButtonListWrapper>
   ) : null;
 
-const OnDisconnected = () => (
-  <PlugButtonWrapper>
-    <Plug />
-  </PlugButtonWrapper>
-);
+const OnDisconnected = ({ connectionStatus }: DisconnectedProps) =>
+  connectionStatus !== PlugStatusCodes.Verifying ? (
+    <PlugButtonWrapper>
+      <Plug />
+    </PlugButtonWrapper>
+  ) : null;
 
 export const OfferAccordion = ({
   lastSalePrice,
@@ -78,7 +84,11 @@ export const OfferAccordion = ({
   const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
   const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
-  const { isConnected, principalId: plugPrincipal } = usePlugStore();
+  const {
+    isConnected,
+    principalId: plugPrincipal,
+    connectionStatus,
+  } = usePlugStore();
 
   useEffect(() => {
     if (!lastSalePrice || !isListed) return;
@@ -130,7 +140,7 @@ export const OfferAccordion = ({
             isOwner={isOwner}
             price={lastSalePrice}
           />
-        )) || <OnDisconnected />}
+        )) || <OnDisconnected connectionStatus={connectionStatus} />}
       </AccordionHead>
       {isConnected && (
         <Accordion.Item value="item-1">
