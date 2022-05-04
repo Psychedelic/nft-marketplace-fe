@@ -122,10 +122,12 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         marketplaceActions.getBuyerOffers({
           userPrincipalId: plugPrincipal,
           onSuccess: (offers) => {
-            setTableDetails({
-              loading: false,
-              loadedOffers: offers,
-            });
+            if (offersType === OfferTypeStatusCodes.OffersMade) {
+              setTableDetails({
+                loading: false,
+                loadedOffers: offers,
+              });
+            }
           },
           onFailure: () => {
             // TODO: handle failure messages
@@ -151,10 +153,12 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         // TODO: handle offers data gracefully
         ownerTokenIdentifiers,
         onSuccess: (offers) => {
-          setTableDetails({
-            loading: false,
-            loadedOffers: offers,
-          });
+          if (offersType === OfferTypeStatusCodes.OffersReceived) {
+            setTableDetails({
+              loading: false,
+              loadedOffers: offers,
+            });
+          }
         },
         onFailure: () => {
           // TODO: handle failure messages
