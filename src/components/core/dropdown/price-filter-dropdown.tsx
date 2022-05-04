@@ -53,9 +53,17 @@ export const SortByFilterDropdown = React.memo(() => {
     },
   ];
 
-  const setSortBy = (e: any) => {
-    setSelectedValue(e.value);
-    dispatch(filterActions.setSortingFilter(e.key));
+  const setSortBy = (key: string) => {
+    const translated = sortOptions.find((item) => item.key === key)?.value;
+
+    if (!translated) {
+      console.warn(`Oops! Sort by key (${key}) translation does not exist`);
+
+      return;
+    }
+
+    setSelectedValue(translated);
+    dispatch(filterActions.setSortingFilter(key));
   };
 
   return (
@@ -73,8 +81,7 @@ export const SortByFilterDropdown = React.memo(() => {
           {sortOptions.map((item) => (
             <>
               <DropdownRadioMenuItem
-                value={item.value}
-                textValue={item.value}
+                value={item.key}
               >
                 {item.value}
               </DropdownRadioMenuItem>
