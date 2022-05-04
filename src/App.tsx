@@ -17,7 +17,9 @@ const App = () => {
       <BrowserRouter>
         <NavBar currentTheme={theme} />
         <Routes>
-          <Route path="/" element={<CollectionView />} />
+          <Route path="/" element={<CollectionView />}>
+            <Route path="/activity" />
+          </Route>
           <Route path="/nft/:id" element={<NFTView />} />
           <Route path="/offers/:id" element={<OfferView />} />
           <Route
