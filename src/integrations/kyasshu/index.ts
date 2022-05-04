@@ -2,16 +2,12 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import {
+  nftsActions,
   useAppDispatch,
   useFilterStore,
   usePlugStore,
 } from '../../store';
-import {
-  fetchNFTS,
-  fetchNFTDetails,
-  useTraitsPayload,
-  usePriceValues,
-} from './utils';
+import { useTraitsPayload, usePriceValues } from './utils';
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
@@ -45,14 +41,15 @@ export const useNFTSFetcher = () => {
   const { sortBy } = useFilterStore();
 
   useEffect(() => {
-    fetchNFTS({
-      payload,
-      dispatch,
-      sort: sortBy,
-      order: 'd',
-      page: 0,
-      count: '25',
-    });
+    dispatch(
+      nftsActions.getNFTs({
+        payload,
+        sort: sortBy,
+        order: 'd',
+        page: 0,
+        count: 25,
+      }),
+    );
   }, [dispatch, traits, isMyNfts, priceValues, sortBy, status]);
 };
 
@@ -64,9 +61,8 @@ export const useNFTDetailsFetcher = () => {
     // TODO: handle the error gracefully when there is no id
     if (!id) return;
 
-    fetchNFTDetails({
-      dispatch,
-      id,
-    });
+    dispatch(nftsActions.getNFTDetails({ id }));
   }, [dispatch, id]);
 };
+
+export * from './kyasshu-urls';

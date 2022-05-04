@@ -38,9 +38,9 @@ import {
   useNFTSStore,
   useAppDispatch,
   nftsActions,
+  marketplaceActions,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
-import { acceptOffer } from '../../store/features/marketplace';
 import { ListingStatusCodes } from '../../constants/listing';
 import { formatPriceValue } from '../../utils/formatters';
 
@@ -113,7 +113,7 @@ export const AcceptOfferModal = ({
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
-      acceptOffer({
+      marketplaceActions.acceptOffer({
         id: tokenId,
         buyerPrincipalId: offerFrom,
         offerPrice: price,

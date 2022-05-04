@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { fetchFilterTraits } from '../../integrations/kyasshu/utils';
 import {
   useFilterStore,
   useThemeStore,
@@ -69,10 +68,8 @@ export const Filters = () => {
     : openFiltersIconDark;
 
   useEffect(() => {
-    fetchFilterTraits({
-      dispatch,
-    });
-  }, []);
+    dispatch(filterActions.getFilterTraits());
+  }, [dispatch]);
 
   const filterExists = (filterName: string) =>
     defaultFilters.some(

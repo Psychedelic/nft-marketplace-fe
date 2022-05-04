@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
+import { getCAPActivity, getTokenMetadata } from './async-thunks';
 
 interface LoadedTableMetaData {
   media: string;
@@ -83,7 +84,11 @@ export const tableSlice = createSlice({
   },
 });
 
-export const tableActions = tableSlice.actions;
+export const tableActions = {
+  ...tableSlice.actions,
+  getCAPActivity,
+  getTokenMetadata,
+};
 
 export const selectTableState = (state: RootState) => state.table;
 

@@ -30,8 +30,11 @@ import {
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
-import { useAppDispatch, nftsActions } from '../../store';
-import { makeListing } from '../../store/features/marketplace';
+import {
+  useAppDispatch,
+  nftsActions,
+  marketplaceActions,
+} from '../../store';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -107,7 +110,7 @@ export const SellModal = ({
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
-      makeListing({
+      marketplaceActions.makeListing({
         id: tokenId,
         amount,
         onSuccess: () => {

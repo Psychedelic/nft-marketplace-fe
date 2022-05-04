@@ -2,7 +2,13 @@ import { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useAppDispatch, usePlugStore, RootState } from '../../store';
+import {
+  useAppDispatch,
+  usePlugStore,
+  RootState,
+  marketplaceActions,
+  crownsActions,
+} from '../../store';
 import {
   ItemDetailsCell,
   PriceDetailsCell,
@@ -22,11 +28,6 @@ import {
   OfferTypeStatusCodes,
   OffersTableHeaders,
 } from '../../constants/my-offers';
-import {
-  getTokenOffers,
-  getBuyerOffers,
-} from '../../store/features/marketplace';
-import { getOwnerTokenIdentifiers } from '../../store/features/crowns';
 import { OffersTableItem } from '../../declarations/legacy';
 import { formatPriceValue } from '../../utils/formatters';
 
@@ -118,7 +119,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
     if (offersType === OfferTypeStatusCodes.OffersMade) {
       dispatch(
-        getBuyerOffers({
+        marketplaceActions.getBuyerOffers({
           userPrincipalId: plugPrincipal,
           onSuccess: (offers) => {
             setTableDetails({
@@ -135,7 +136,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     }
 
     dispatch(
-      getOwnerTokenIdentifiers({
+      crownsActions.getOwnerTokenIdentifiers({
         plugPrincipal,
       }),
     );
@@ -146,7 +147,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     if (!ownerTokenIdentifiers) return;
 
     dispatch(
-      getTokenOffers({
+      marketplaceActions.getTokenOffers({
         // TODO: handle offers data gracefully
         ownerTokenIdentifiers,
         onSuccess: (offers) => {

@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { getTokenMetadata } from '../../../integrations/kyasshu/utils';
-import { useAppDispatch, useTableStore } from '../../../store';
+import {
+  tableActions,
+  useAppDispatch,
+  useTableStore,
+} from '../../../store';
 import { ItemDetails, ItemLogo, ItemName } from './styles';
 import { ImageSkeleton } from '../../tables/styles';
 
@@ -19,11 +22,9 @@ export const ItemDetailsCell = ({
   const { loadedTableMetaData } = useTableStore();
 
   useEffect(() => {
-    getTokenMetadata({
-      tokenId: id,
-      dispatch,
-    });
-  }, []);
+    if (!id) return;
+    dispatch(tableActions.getTokenMetadata({ id }));
+  }, [dispatch, id]);
 
   return (
     <RouterLink to={`/nft/${id}`}>

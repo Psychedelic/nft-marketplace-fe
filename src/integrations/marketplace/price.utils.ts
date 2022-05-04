@@ -1,4 +1,3 @@
-/* eslint-disable */
 import axios from 'axios';
 
 const COINGECKO_ICP_ID = 'internet-computer';

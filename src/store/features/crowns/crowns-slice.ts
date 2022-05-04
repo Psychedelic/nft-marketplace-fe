@@ -1,13 +1,7 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
-import { Principal } from '@dfinity/principal';
 import crownsIdlService from '../../../declarations/nft';
-import { RootState } from '../../store';
-import { actorInstanceHandler } from '../../../integrations/actor';
+import { getOwnerTokenIdentifiers } from './async-thunks';
 
 type CrownsActor = ActorSubclass<crownsIdlService>;
 
@@ -19,19 +13,6 @@ type InitialStateCrowns = {
 type OwnerTokenIdentifier = bigint;
 
 export type OwnerTokenIdentifiers = OwnerTokenIdentifier[];
-
-type OwnerTokenIdentifiersParam = {
-  plugPrincipal: string;
-};
-
-interface OwnerTokenIdentifiersParams
-  extends CommonCallbacks,
-    OwnerTokenIdentifiersParam {}
-
-interface CommonCallbacks {
-  onSuccess?: () => void;
-  onFailure?: () => void;
-}
 
 const initialState: InitialStateCrowns = {
   ownerTokenIdentifiers: [],
@@ -47,7 +28,6 @@ export const crownsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       getOwnerTokenIdentifiers.fulfilled,
       (state, action) => {
         if (!action.payload) return;
@@ -58,46 +38,9 @@ export const crownsSlice = createSlice({
   },
 });
 
-export const getOwnerTokenIdentifiers = createAsyncThunk<
-  // Return type of the payload creator
-  OwnerTokenIdentifiers | undefined,
-  // First argument to the payload creator
-  OwnerTokenIdentifiersParams,
-  // Optional fields for defining the thunk api
-  { state: RootState }
->(
-  'crowns/ownerTokenIdentifiers',
-  async (params: OwnerTokenIdentifiersParams, thunkAPI) => {
-    // Checks if an actor instance exists already
-    // otherwise creates a new instance
-    const actorInstance = await actorInstanceHandler({
-      thunkAPI,
-      serviceName: 'crowns',
-      slice: crownsSlice,
-    });
-
-    const { plugPrincipal, onFailure } = params;
-
-    try {
-      const result = await actorInstance.ownerTokenIdentifiers(
-        Principal.fromText(plugPrincipal),
-      );
-
-      if (!('Ok' in result)) {
-        if (typeof onFailure !== 'function') return;
-
-        onFailure();
-
-        console.error(result);
-
-        throw Error('Oops! Failed to retrieve user tokens');
-      }
-
-      return result.Ok;
-    } catch (err) {
-      console.warn(err);
-    }
-  },
-);
+export const crownsActions = {
+  ...crownsSlice.actions,
+  getOwnerTokenIdentifiers,
+};
 
 export default crownsSlice.reducer;

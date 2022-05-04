@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { Principal } from '@dfinity/principal';
 import { Listing, Offer } from '../declarations/marketplace';
 import {
@@ -57,7 +58,6 @@ export const parseAllListingResponseAsObj = (
       };
 
       return acc;
-      /* eslint-disable */
     },
     {} as GetAllListingsDataParsedObj,
   );
@@ -81,7 +81,7 @@ interface ParseOffersMadeParams {
   currencyMarketPrice?: number;
 }
 
-export const parseGetTokenOffersresponse = ({
+export const parseGetTokenOffersResponse = ({
   data,
   floorDifferencePrice,
   currencyMarketPrice,
@@ -139,7 +139,7 @@ export const parseGetTokenOffersresponse = ({
   return parsed;
 };
 
-export const parseOffersMaderesponse = ({
+export const parseOffersMadeResponse = ({
   data,
   floorDifferencePrice,
   currencyMarketPrice,

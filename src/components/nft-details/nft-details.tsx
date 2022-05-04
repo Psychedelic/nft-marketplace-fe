@@ -21,11 +21,10 @@ import {
   useNFTSStore,
   RootState,
   useAppDispatch,
-  getTokenListing,
+  marketplaceActions,
+  nftsActions,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
-
-import { fetchNFTDetails } from '../../integrations/kyasshu/utils';
 
 // type CurrentListing = {
 //   seller: string;
@@ -76,13 +75,10 @@ export const NftDetails = () => {
     // TODO: handle the error gracefully when there is no id
     if (!id) return;
 
-    fetchNFTDetails({
-      dispatch,
-      id,
-    });
+    dispatch(nftsActions.getNFTDetails({ id }));
 
     dispatch(
-      getTokenListing({
+      marketplaceActions.getTokenListing({
         id,
       }),
     );
