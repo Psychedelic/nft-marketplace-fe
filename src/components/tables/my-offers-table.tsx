@@ -15,6 +15,7 @@ import {
   Container,
   InfiniteScrollWrapper,
   ButtonWrapper,
+  EmptyStateMessage,
 } from './styles';
 import TableSkeletons from './table-skeletons';
 import {
@@ -37,6 +38,11 @@ export type MyOffersTableProps = {
   offersType?: string; // offers received / offers made
 };
 
+export type TableDetails = {
+  loading: boolean;
+  loadedOffers: Array<any>;
+};
+
 // TODO: See parser.ts and refactor to use common type
 // the current is all string which is not correct
 
@@ -47,11 +53,11 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
-  const [loadingTableData, setLoadingTableData] =
-    useState<boolean>(true);
-  // TODO: update loadedOffers state array record type
-  const [loadedOffersReceivedData, setLoadedOffersReceivedData] =
-    useState<any>([]);
+  const [tableDetails, setTableDetails] = useState<TableDetails>({
+    loadedOffers: [],
+    loading: true,
+  });
+
   const ownerTokenIdentifiers = useSelector(
     (state: RootState) => state.crowns.ownerTokenIdentifiers,
   );
@@ -60,6 +66,13 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   );
 
   const { id: plugPrincipal } = useParams();
+
+  useEffect(() => {
+    setTableDetails({
+      loading: true,
+      loadedOffers: [],
+    });
+  }, [offersType]);
 
   useEffect(() => {
     // hide offersMadeAction if offersType = OffersReceived
@@ -108,9 +121,10 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         getBuyerOffers({
           userPrincipalId: plugPrincipal,
           onSuccess: (offers) => {
-            // TODO: handle success messages
-            setLoadingTableData(false);
-            setLoadedOffersReceivedData(offers);
+            setTableDetails({
+              loading: false,
+              loadedOffers: offers,
+            });
           },
           onFailure: () => {
             // TODO: handle failure messages
@@ -131,17 +145,15 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   useEffect(() => {
     if (!ownerTokenIdentifiers) return;
 
-    // TODO: Add logic to fetch table data
-    // TODO: Update loadedOffersReceivedData when there is
-    // a change in offersType
     dispatch(
       getTokenOffers({
         // TODO: handle offers data gracefully
         ownerTokenIdentifiers,
         onSuccess: (offers) => {
-          // TODO: handle success messages
-          setLoadingTableData(false);
-          setLoadedOffersReceivedData(offers);
+          setTableDetails({
+            loading: false,
+            loadedOffers: offers,
+          });
         },
         onFailure: () => {
           // TODO: handle failure messages
@@ -249,26 +261,40 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     [t, columnsToHide], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  const { loading, loadedOffers } = tableDetails;
+
   return (
-    <InfiniteScrollWrapper
-      pageStart={0}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      loadMore={nextPageNo > 0 ? loadMoreData : () => {}}
-      hasMore={hasMoreData}
-      loader={<TableSkeletons />}
-      useWindow={true || false}
-      threshold={250 * 5}
-      className="infinite-loader"
-    >
-      <Container>
-        <TableLayout
-          columns={columns}
-          data={loadedOffersReceivedData}
-          tableType="activity"
-          columnsToHide={columnsToHide}
-          loading={loadingTableData}
-        />
-      </Container>
-    </InfiniteScrollWrapper>
+    <>
+      {(loading || (!loading && loadedOffers.length > 0)) && (
+        <InfiniteScrollWrapper
+          pageStart={0}
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          loadMore={nextPageNo > 0 ? loadMoreData : () => {}}
+          hasMore={hasMoreData}
+          loader={<TableSkeletons />}
+          useWindow={true || false}
+          threshold={250 * 5}
+          className="infinite-loader"
+        >
+          <Container>
+            <TableLayout
+              columns={columns}
+              data={loadedOffers}
+              tableType="activity"
+              columnsToHide={columnsToHide}
+              loading={loading}
+            />
+          </Container>
+        </InfiniteScrollWrapper>
+      )}
+      {!loading && loadedOffers.length === 0 && (
+        <EmptyStateMessage>
+          {(offersType === OfferTypeStatusCodes.OffersReceived &&
+            t('translation:emptyStates.noOffersYet')) ||
+            (offersType === OfferTypeStatusCodes.OffersMade &&
+              t('translation:emptyStates.noOffersMade'))}
+        </EmptyStateMessage>
+      )}
+    </>
   );
 };

@@ -1,5 +1,6 @@
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import JsonBigInt from 'json-bigint';
 
 import { MetadataDesc, NFTMetadata } from '../declarations/legacy';
@@ -13,6 +14,7 @@ import {
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     (async () => {
@@ -82,7 +84,7 @@ export const useNFTSFetcher = () => {
         // set NFTS failed to load
         dispatch(
           notificationActions.setErrorMessage(
-            (error as Error).message,
+            t('translation:errorMessages.unableToFetchNFTS'),
           ),
         );
       }

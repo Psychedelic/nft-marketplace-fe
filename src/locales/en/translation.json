@@ -234,10 +234,14 @@
     "noFilteredNfts": "We cannot find any NFTs with those filters",
     "noNftsAction": "Browse NFT’s for Sale",
     "noFilteredNftsAction": "Browse Other NFTs",
-    "noNFTId": "No NFT found with that ID"
+    "noNFTId": "No NFT found with that ID",
+    "noOffersYet": "No offers yet",
+    "noOffersMade": "No offers made"
   },
   "errorMessages": {
-    "priceEmptyField": "You need to fill in both values"
+    "priceEmptyField": "You need to fill in both values",
+    "unableToConnectToPlug": "Oops! Unable to connect to plug",
+    "unableToFetchNFTS": "Oops! Unable to fetch NFTs"
   },
   "successMessages": {
     "copyToClipboard": "Copied to clipboard!"

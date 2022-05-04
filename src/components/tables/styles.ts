@@ -251,3 +251,16 @@ export const StringSkeleton = styled('div', {
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
 });
+
+export const EmptyStateMessage = styled('p', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  height: '100vh',
+  fontStyle: 'normal',
+  fontWeight: '700',
+  fontSize: '32px',
+  lineHeight: '39px',
+  color: '$mainTextColor',
+  margin: '150px 50px',
+});
