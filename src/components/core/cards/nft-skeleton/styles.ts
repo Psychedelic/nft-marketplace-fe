@@ -6,18 +6,13 @@ export const CardWrapper = styled('div', {
   background: '$backgroundColor',
   border: '1.5px solid $borderColor',
   boxSizing: 'border-box',
-  boxShadow: '0px 0px 8px #E6E9EF',
+  boxShadow: '$default',
   borderRadius: '14px',
   width: '100%',
   height: '100%',
   padding: '10px',
   cursor: 'pointer',
   transition: 'all 0.5s ease-in-out',
-
-  '&:hover': {
-    boxShadow: '0px 0px 8px 3px #E6E9EF',
-    transform: 'scale(1.015)',
-  },
 });
 
 export const SkeletonLarge = styled('div', {
@@ -33,7 +28,7 @@ export const SkeletonSmall = styled('div', {
   height: '15px',
   width: '100%',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
-  borderRadius: '14px',
+  borderRadius: '24px',
   margin: '8px 0px 0px',
   background: '$skeletonBackground',
 });
