@@ -34,10 +34,10 @@ export const formatPriceValue = (price: string) => {
   return Number(price).toFixed(2);
 };
 
-export const parseAmountToE8S = (amount: number) => {
+export const parseAmountToE8S = (amount: string) => {
   if (!amount) return 0;
 
-  return amount * E8S_PER_ICP;
+  return Number(amount) * E8S_PER_ICP;
 };
 
 export const parseE8SAmountToWICP = (amount: bigint) => {
