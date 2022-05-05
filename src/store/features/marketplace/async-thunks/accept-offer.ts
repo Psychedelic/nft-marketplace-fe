@@ -5,6 +5,7 @@ import { AcceptOffer } from '../marketplace-slice';
 import config from '../../../../config/env';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import crownsIdlFactory from '../../../../declarations/nft.did';
+import { parseAmountToE8S } from '../../../../utils/formatters';
 
 export type AcceptOfferProps = DefaultCallbacks & AcceptOffer;
 
@@ -25,7 +26,8 @@ export const acceptOffer = createAsyncThunk<
     const userOwnedTokenId = BigInt(id);
     const buyerAddress = Principal.fromText(buyerPrincipalId);
 
-    const offerInPrice = BigInt(offerPrice);
+    const amountInE8S = parseAmountToE8S(offerPrice);
+    const offerInPrice = BigInt(amountInE8S);
 
     const CROWNS_APPROVE_MARKETPLACE = {
       idl: crownsIdlFactory,
