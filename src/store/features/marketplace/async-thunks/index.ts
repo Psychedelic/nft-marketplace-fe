@@ -1,6 +1,7 @@
 export * from './make-listing';
 export * from './direct-buy';
 export * from './cancel-listing';
+export * from './cancel-offer';
 export * from './make-offer';
 export * from './accept-offer';
 export * from './get-buyer-offers';

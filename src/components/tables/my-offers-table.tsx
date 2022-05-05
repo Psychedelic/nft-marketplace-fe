@@ -66,6 +66,10 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     (state: RootState) => state.marketplace.recentlyAcceptedOffers,
   );
 
+  const recentlyCancelledOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyCancelledOffers,
+  );
+
   const { id: plugPrincipal } = useParams();
 
   useEffect(() => {
@@ -143,7 +147,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, offersType, isConnected]);
+  }, [dispatch, offersType, isConnected, recentlyCancelledOffers]);
 
   useEffect(() => {
     if (!ownerTokenIdentifiers) return;
@@ -256,9 +260,9 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         id: OffersTableHeaders.OffersMadeAction,
         Header: t('translation:tables.titles.action'),
         // TODO: Update cancel offer modal
-        accessor: () => (
+        accessor: ({ item }: OffersTableItem) => (
           <ButtonWrapper>
-            <CancelOfferModal />
+            <CancelOfferModal item={item} />
           </ButtonWrapper>
         ),
       },
