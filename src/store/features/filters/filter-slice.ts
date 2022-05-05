@@ -5,7 +5,7 @@ import { getFilterTraits } from './async-thunks';
 export interface TraitsDataState {
   key: string;
   name: string;
-  values: Array<string>;
+  values: any;
 }
 
 export interface TraitValue {
@@ -88,7 +88,7 @@ export const filterSlice = createSlice({
         state.traits.push({
           key: action.payload.key,
           name: action.payload.name,
-          values: [...action.payload.values],
+          values: [action.payload.values],
         });
         state.defaultFilters.push({
           filterName: [action.payload.values],
@@ -104,9 +104,7 @@ export const filterSlice = createSlice({
           trait.key === action.payload.key,
       );
 
-      state.traits[traitsFilterIndex].values.push(
-        ...action.payload.values,
-      );
+      state.traits[traitsFilterIndex].values.push(action.payload.values);
       const traitName = state.traits[traitsFilterIndex].key;
       const defaultFiltersIndex = state.defaultFilters.findIndex(
         (filter) => filter.filterCategory === traitName,
@@ -146,7 +144,7 @@ export const filterSlice = createSlice({
           trait.key === action.payload.key
         ) {
           const filteredTraitsValues = trait.values.filter(
-            (t) => t !== action.payload.value,
+            (t: string) => t !== action.payload.value,
           );
           return {
             ...trait,
