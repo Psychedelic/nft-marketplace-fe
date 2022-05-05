@@ -9,11 +9,12 @@ import config from '../../../../config/env';
 import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
 import { notificationActions } from '../../errors';
 import { parseOffersMadeResponse } from '../../../../utils/parser';
+import { OffersTableItem } from '../../../../declarations/legacy';
 
 export type GetBuyerOffersProps = DefaultCallbacks & GetBuyerOffers;
 
 export const getBuyerOffers = createAsyncThunk<
-  ReturnType<typeof parseOffersMadeResponse> | undefined,
+  OffersTableItem[] | undefined,
   GetBuyerOffersProps
 >('marketplace/getBuyerOffers', async (params, thunkAPI) => {
   // Checks if an actor instance exists already
@@ -58,11 +59,11 @@ export const getBuyerOffers = createAsyncThunk<
       currencyMarketPrice,
     });
 
-    if (!Array.isArray(result) || !result.length) return [];
-
     if (typeof onSuccess !== 'function') return;
 
     onSuccess(parsedTokenOffers);
+
+    return parsedTokenOffers;
   } catch (err) {
     thunkAPI.dispatch(
       notificationActions.setErrorMessage((err as Error).message),

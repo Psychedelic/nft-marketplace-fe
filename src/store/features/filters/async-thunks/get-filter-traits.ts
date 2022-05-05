@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { KyasshuUrl } from '../../../../integrations/kyasshu';
+import { KyasshuUrl, NSKyasshuUrl } from '../../../../integrations/kyasshu';
 import { FilterConstants } from '../../../../constants';
 import { filterActions } from '..';
 import { notificationActions } from '../../errors';
 
 export type GetFilterTraitsProps =
-  | KyasshuUrl.GetFilterTraitsQueryParams
+  | NSKyasshuUrl.GetFilterTraitsQueryParams
   | undefined;
 
 export const getFilterTraits = createAsyncThunk<

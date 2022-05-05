@@ -188,6 +188,7 @@ export const filterSlice = createSlice({
     clearAllFilters: (state) => {
       state.defaultFilters = [];
       state.traits = [];
+      state.status = '';
     },
     setSortingFilter: (state, action: PayloadAction<string>) => {
       state.sortBy = action.payload;

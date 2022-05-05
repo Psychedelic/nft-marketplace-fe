@@ -77,6 +77,7 @@ export const TableWrapper = styled('div', {
   variants: {
     type: {
       offers: {
+        height: 'initial',
         table: {
           background: '$backgroundColor',
           thead: {
@@ -191,11 +192,26 @@ export const TableSkeletonsWrapper = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '0 80px',
 
-  '&:nth-child(1)': {
-    paddingTop: '30px',
-    paddingBottom: '20px',
+  // variants
+  variants: {
+    type: {
+      small: {
+        padding: '10px 20px',
+
+        '&:nth-child(1)': {
+          paddingTop: '15px',
+        },
+      },
+
+      large: {
+        padding: '5px 80px',
+
+        '&:nth-child(1)': {
+          paddingTop: '30px',
+        },
+      },
+    },
   },
 });
 
@@ -256,11 +272,27 @@ export const EmptyStateMessage = styled('p', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  height: '100vh',
   fontStyle: 'normal',
-  fontWeight: '700',
-  fontSize: '32px',
-  lineHeight: '39px',
-  color: '$mainTextColor',
-  margin: '150px 50px',
+
+  // variants
+  variants: {
+    type: {
+      smallTable: {
+        fontWeight: '500',
+        fontSize: '16px',
+        lineHeight: '19px',
+        color: '$mainTextColor',
+        margin: '50px 25px',
+      },
+
+      largeTable: {
+        height: '100vh',
+        fontWeight: '700',
+        fontSize: '32px',
+        lineHeight: '39px',
+        color: '$mainTextColor',
+        margin: '150px 50px',
+      },
+    },
+  },
 });
