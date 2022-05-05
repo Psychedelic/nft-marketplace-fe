@@ -83,7 +83,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
     },
     {
       subheading: isOwner
-        ? 'You'
+        ? `${t('translation:accordions.about.header.you')}`
         : (owner && formatAddress(owner)) || '',
       heading: 'Owner',
       image: plugIcon,
