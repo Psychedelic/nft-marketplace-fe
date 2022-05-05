@@ -7,6 +7,7 @@ import {
 } from './formatters';
 import { formatTimestamp } from '../integrations/functions/date';
 import { OffersTableItem } from '../declarations/legacy';
+import { parseE8SAmountToWICP } from '../utils/formatters';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
@@ -144,8 +145,8 @@ export const parseOffersMadeResponse = ({
   currencyMarketPrice,
 }: ParseOffersMadeParams) => {
   const parsedOffersMade = data.map((offerDetails) => {
+    const price = parseE8SAmountToWICP(offerDetails?.price);
     const {
-      price,
       token_id: tokenId,
       buyer: paymentAddress,
       created,
