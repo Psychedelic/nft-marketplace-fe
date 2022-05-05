@@ -23,7 +23,7 @@ export const makeOffer = createAsyncThunk<
     config.crownsCanisterId,
   );
   const userOwnedTokenId = BigInt(id);
-  const amountInE8S = parseAmountToE8S(Number(amount));
+  const amountInE8S = parseAmountToE8S(amount);
   const userOfferInPrice = BigInt(amountInE8S);
 
   try {
