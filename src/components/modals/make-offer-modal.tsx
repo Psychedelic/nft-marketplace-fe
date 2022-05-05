@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -45,20 +45,13 @@ export const MakeOfferModal = ({
   const { id } = useParams();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  // MakeOffer modal steps: listingInfo/submitted
-  const [modalStep, setModalStep] = useState<string>(
+  const [modalStep, setModalStep] = useState<ListingStatusCodes>(
     ListingStatusCodes.ListingInfo,
   );
-  const [amount, setAmount] = useState<string>('');
 
-  const tokenId: string | undefined = (() => {
-    const tid = id ?? nftTokenId;
+  const [amount, setAmount] = useState('');
 
-    if (!tid) return;
-
-    // eslint-disable-next-line consistent-return
-    return tid;
-  })();
+  const tokenId = useMemo(() => id || nftTokenId, [id, nftTokenId]);
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -68,8 +61,7 @@ export const MakeOfferModal = ({
 
   const handleModalClose = () => {
     setModalOpened(false);
-    // eslint-disable-next-line
-    onClose && onClose();
+    if (onClose) onClose();
   };
 
   const handleSubmitOffer = async () => {
@@ -171,7 +163,7 @@ export const MakeOfferModal = ({
               <ModalButtonWrapper>
                 <ActionButton
                   type="secondary"
-                  onChange={handleModalClose}
+                  onClick={handleModalClose}
                 >
                   {t('translation:modals.buttons.cancel')}
                 </ActionButton>
@@ -179,7 +171,7 @@ export const MakeOfferModal = ({
               <ModalButtonWrapper>
                 <ActionButton
                   type="primary"
-                  onChange={handleSubmitOffer}
+                  onClick={handleSubmitOffer}
                   disabled={!amount}
                 >
                   {t('translation:modals.buttons.submitOffer')}

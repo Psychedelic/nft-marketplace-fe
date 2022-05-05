@@ -34,9 +34,17 @@ export const Button = styled('button', {
       outline: {
         backgroundColor: 'transparent',
         color: '#2253FF',
-        border: '1.5px solid #2253FF',
+        border: '1.5px solid $borderColor',
       },
     },
+
+    disabled: {
+      true: {
+        opacity: 0.5,
+        pointerEvents: 'none',
+      },
+    },
+
     danger: {
       true: {
         backgroundColor: '#EF4444',
