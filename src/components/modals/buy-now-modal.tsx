@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -17,6 +17,7 @@ import {
   ActionText,
   BuyNowModalTrigger,
 } from './styles';
+import { AppLog } from '../../utils/log';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
@@ -43,7 +44,7 @@ export const BuyNowModal = ({
   // BuyNow modal steps: pending/confirmed
   const [modalStep, setModalStep] = useState<string>('pending');
 
-  const tokenId: bigint | undefined = (() => {
+  const tokenId = useMemo(() => {
     const tid = Number(id ?? actionTextId);
 
     if (!tid && tid !== 0) {
@@ -51,7 +52,7 @@ export const BuyNowModal = ({
     }
 
     return BigInt(tid);
-  })();
+  }, [id, actionTextId]);
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -59,8 +60,7 @@ export const BuyNowModal = ({
 
   const handleModalClose = () => {
     setModalOpened(false);
-    // eslint-disable-next-line
-    onClose && onClose();
+    if (onClose) onClose();
   };
 
   const handleDirectBuy = () => {
@@ -68,7 +68,7 @@ export const BuyNowModal = ({
       typeof tokenId === 'undefined' ||
       (!tokenId && Number(tokenId) !== 0)
     ) {
-      console.warn('Oops! Missing id param');
+      AppLog.warn('Oops! Missing id param');
 
       return;
     }
@@ -89,7 +89,7 @@ export const BuyNowModal = ({
           setModalStep(DirectBuyStatusCodes.Confirmed);
         },
         onFailure: () => {
-          // TODO: trigger step failure
+          setModalOpened(false);
         },
       }),
     );

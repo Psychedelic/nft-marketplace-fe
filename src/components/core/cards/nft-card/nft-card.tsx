@@ -68,7 +68,7 @@ const OnConnected = ({
               actionText={`${t('translation:nftCard.sell')}`}
               nftTokenId={tokenId}
             />
-          )) || <span hidden-seller-options />}
+          )) || <span />}
         </div>
       )}
       {(showBuyerOptions && (
@@ -88,7 +88,7 @@ const OnConnected = ({
             />
           )}
         </div>
-      )) || <span hidden-buyer-options />}
+      )) || <span />}
     </>
   );
 };
@@ -183,19 +183,14 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
             />
           )}
           <LastOffer>
-            {
-              // TODO: Have put lastOffer verification
-              // because when not available the label text
-              // is shown without the corresponding value...
-              data?.lastOffer && (
-                <>
-                  {!isForSale
-                    ? `${t('translation:nftCard.offerFor')} `
-                    : `${t('translation:nftCard.last')} `}
-                  <b>{data?.lastOffer}</b>
-                </>
-              )
-            }
+            {data?.lastOffer && (
+              <>
+                {!isForSale
+                  ? `${t('translation:nftCard.offerFor')} `
+                  : `${t('translation:nftCard.last')} `}
+                <b>{data?.lastOffer}</b>
+              </>
+            )}
           </LastOffer>
         </NFTCardOptions>
       </CardWrapper>

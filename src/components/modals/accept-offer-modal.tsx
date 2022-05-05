@@ -72,13 +72,7 @@ export const AcceptOfferModal = ({
     ListingStatusCodes.OfferInfo,
   );
 
-  const tokenId: string | undefined = (() => {
-    const tid = nftTokenId ?? id;
-
-    if (!tid) return;
-
-    return tid;
-  })();
+  const tokenId = useMemo(() => nftTokenId || id, [nftTokenId, id]);
 
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === tokenId),

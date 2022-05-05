@@ -4,6 +4,7 @@ import { actorInstanceHandler } from '../../../../integrations/actor';
 import { marketplaceSlice } from '../marketplace-slice';
 import { notificationActions } from '../../errors';
 import config from '../../../../config/env';
+import { AppLog } from '../../../../utils/log';
 
 export const getTokenListing = createAsyncThunk<any | undefined, any>(
   'marketplace/getTokenListing',
@@ -16,7 +17,7 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
       slice: marketplaceSlice,
     });
 
-    const { id: tokenId, onSuccess, onFailure } = params;
+    const { id: tokenId, onFailure, onSuccess } = params;
 
     try {
       const nonFungibleContractAddress = Principal.fromText(
@@ -27,33 +28,26 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
         BigInt(tokenId),
       );
 
-      if (typeof onSuccess !== 'function') return;
-
       if (!('Ok' in result)) {
-        console.warn(
-          `Oops! Failed to get token listing for id ${tokenId}`,
-        );
-
-        onSuccess();
-
-        return {
-          [tokenId]: {},
-        };
+        throw new Error('Invalid response');
       }
 
-      onSuccess();
-
-      return {
+      const resultObject = {
         [tokenId]: result.Ok,
       };
+
+      if (typeof onSuccess === 'function') onSuccess(resultObject);
+      return resultObject;
     } catch (err) {
+      AppLog.error(err);
       thunkAPI.dispatch(
         notificationActions.setErrorMessage(
           `Oops! Failed to get token listing for id ${tokenId}`,
         ),
       );
-      if (typeof onFailure !== 'function') return;
-      onFailure();
+      if (typeof onFailure === 'function') {
+        onFailure(err);
+      }
     }
   },
 );
