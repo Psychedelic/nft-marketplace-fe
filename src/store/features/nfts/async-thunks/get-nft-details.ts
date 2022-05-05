@@ -32,21 +32,9 @@ export const getNFTDetails = createAsyncThunk<
       // TODO: Finalize object format after validating mock and kyasshu data
       id: responseData.index,
       name: 'Cap Crowns',
-      price:
-        responseData?.currentPrice &&
-        parseE8SAmountToWICP(
-          BigInt(responseData.currentPrice),
-        ).toString(),
-      lastOffer:
-        responseData?.lastOfferPrice &&
-        parseE8SAmountToWICP(
-          BigInt(responseData.lastOfferPrice),
-        ).toString(),
-      lastSale:
-        responseData?.lastSalePrice &&
-        parseE8SAmountToWICP(
-          BigInt(responseData.lastSalePrice),
-        ).toString(),
+      price: responseData?.currentPrice,
+      lastOffer: responseData?.lastOfferPrice,
+      lastSale: responseData?.lastSalePrice,
       preview: responseData?.metadata?.thumbnail?.value?.TextContent,
       location: responseData?.url,
       rendered: true,
