@@ -34,13 +34,14 @@ export const CardWrapper = styled('div', {
   flexDirection: 'column',
   background: '$backgroundColor',
   border: '1.5px solid $borderColor',
+  borderBottom: 'unset',
   boxSizing: 'border-box',
   boxShadow: '0px 0px 8px $navBackgroundColor',
   borderTopRightRadius: '14px',
   borderTopLeftRadius: '14px',
   width: '100%',
   // height: '100%',
-  padding: '10px 0 3px',
+  padding: '0 0 3px',
   cursor: 'pointer',
   transition: 'all 0.5s ease-in-out',
 });
@@ -96,11 +97,16 @@ export const Flex = styled('div', {
   padding: '0 10px 0',
 
   '&:nth-child(1)': {
-    padding: '5px 10px 10px',
+    padding: '7px 10px',
+  },
+
+  '&:nth-child(2)': {
+    padding: 'unset',
+    marginBottom: '4px',
   },
 
   '& p': {
-    margin: '4px 0',
+    margin: '0',
   },
 });
 
@@ -131,15 +137,15 @@ export const Dfinity = styled('p', {
 
 export const NftText = styled('p', {
   fontStyle: 'normal',
-  fontWeight: '500',
-  fontSize: '16px',
+  fontWeight: '400',
+  fontSize: '14px',
   lineHeight: '20px',
-  color: '$nftCardName',
+  color: '#767D8E',
 });
 
 export const NftId = styled('p', {
   fontStyle: 'normal',
-  fontWeight: '500',
+  fontWeight: '600',
   fontSize: '16px',
   lineHeight: '20px',
   color: '$nftCardId',
@@ -179,6 +185,6 @@ export const OuterFlex = styled('div', {
   padding: '3px 10px',
 
   '& p': {
-    margin: '4px 0',
+    margin: '0',
   },
 });

@@ -59,7 +59,7 @@ export const darkTheme = createTheme({
     borderColor: '#353945',
     buttonsBorderColor: '#777E90',
     nftCardName: '#ffffff',
-    nftCardId: '#777E90',
+    nftCardId: '#ffffff',
     nftCardSubSection: '#202022',
     tableBackgroundColor: '#141416',
     tableTextColor: '#ffffff',
