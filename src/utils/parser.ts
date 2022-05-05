@@ -90,8 +90,8 @@ export const parseGetTokenOffersResponse = ({
     const tokenOffers = currParent[1] as Offer[];
     const parsedTokenOffers = tokenOffers.reduce(
       (accChild, currChild) => {
+        const price = parseE8SAmountToWICP(currChild?.price);
         const {
-          price,
           token_id: tokenId,
           buyer: paymentAddress,
           created,
