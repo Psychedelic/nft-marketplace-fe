@@ -33,7 +33,6 @@ export const CardWrapper = styled('div', {
   flexDirection: 'column',
   background: '$backgroundColor',
   border: '1.5px solid $borderColor',
-  borderBottom: 'unset',
   boxSizing: 'border-box',
   borderRadius: '14px',
   width: '100%',
