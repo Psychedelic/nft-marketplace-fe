@@ -1,7 +1,7 @@
 import InfiniteScroll from 'react-infinite-scroller';
 import { styled, keyframes } from '../../stitches.config';
 
-const pulse = keyframes({
+const fadeInOut = keyframes({
   '0%': {
     opacity: '0.2',
   },
@@ -232,7 +232,7 @@ export const ImageSkeleton = styled('div', {
   marginRight: '12px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
-  animation: `${pulse} 2s linear infinite`,
+  animation: `${fadeInOut} 2s linear infinite`,
   transitionTimingFunction: 'ease-in-out',
 });
 
@@ -242,7 +242,7 @@ export const NameSkeleton = styled('div', {
   borderRadius: '10px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
-  animation: `${pulse} 2s linear infinite`,
+  animation: `${fadeInOut} 2s linear infinite`,
   transitionTimingFunction: 'ease-in-out',
 });
 
@@ -259,7 +259,7 @@ export const TypeDetailsSkeleton = styled('div', {
   marginRight: '12px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
-  animation: `${pulse} 0.2s linear infinite`,
+  animation: `${fadeInOut} 0.2s linear infinite`,
 });
 
 export const PriceSkeleton = styled('div', {
@@ -268,7 +268,7 @@ export const PriceSkeleton = styled('div', {
   borderRadius: '10px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
-  animation: `${pulse} 2s linear infinite`,
+  animation: `${fadeInOut} 2s linear infinite`,
   transitionTimingFunction: 'ease-in-out',
 
   '&:nth-child(1)': {
@@ -282,7 +282,7 @@ export const StringSkeleton = styled('div', {
   borderRadius: '10px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
-  animation: `${pulse} 2s linear infinite`,
+  animation: `${fadeInOut} 2s linear infinite`,
   transitionTimingFunction: 'ease-in-out',
 });
 
