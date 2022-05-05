@@ -130,7 +130,7 @@ export const NftDetails = () => {
               isListed={isListed}
               owner={owner}
             />
-            <AboutAccordion owned />
+            <AboutAccordion owner={owner} />
           </DetailsContainer>
         </Wrapper>
       ) : (
