@@ -39,3 +39,11 @@ export const parseAmountToE8S = (amount: number) => {
 
   return amount * E8S_PER_ICP;
 };
+
+export const parseE8SAmountToWICP = (amount: bigint) => {
+  if (!amount) return BigInt(0);
+
+  const computedWICP = Number(amount.toString()) / E8S_PER_ICP;
+
+  return BigInt(computedWICP);
+};
