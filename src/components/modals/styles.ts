@@ -302,13 +302,17 @@ export const ModalButtonWrapper = styled('div', {
   },
 });
 
-export const ActionText = styled('p', {
+export const ActionText = styled('span', {
   fontStyle: 'normal',
-  fontWeight: '600',
+  fontWeight: '500',
   fontSize: '14px',
   lineHeight: '20px',
   color: '#2253FF',
   cursor: 'pointer',
+
+  '&:hover': {
+    textDecoration: 'underline',
+  },
 });
 
 export const PlugButtonContainer = styled('div', {

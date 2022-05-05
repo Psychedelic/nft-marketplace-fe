@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Tabs from '@radix-ui/react-tabs';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useThemeStore } from '../../store';
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
@@ -13,59 +14,77 @@ import itemsInactive from '../../assets/items-inactive.svg';
 import activityInactive from '../../assets/activity-inactive.svg';
 import { Filters } from '../filters';
 
+const TABS_ICONS = {
+  items: {
+    lightTheme: {
+      active: itemsActive,
+      inactive: itemsInactive,
+    },
+    darkTheme: {
+      active: itemsActiveDark,
+      inactive: itemsInactive,
+    },
+  },
+  activity: {
+    lightTheme: {
+      active: activityActive,
+      inactive: activityInactive,
+    },
+    darkTheme: {
+      active: activityActiveDark,
+      inactive: activityInactive,
+    },
+  },
+};
+
 export const CollectionTabs = () => {
   const { t } = useTranslation();
-  const [currentTab, setCurrentTab] = useState('items');
   const { theme } = useThemeStore();
-  const isLightTheme = theme === 'lightTheme';
 
-  // state for active chips goes here
-  // based on their text content we'd have the filters to be displayed
-  // if empty we'll display nothing
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const itemIsActive = currentTab === 'items' ? 'active' : 'inactive';
-  const activityIsActive =
-    currentTab === 'activity' ? 'active' : 'inactive';
-  const itemeActiveTheme = isLightTheme
-    ? itemsActive
-    : itemsActiveDark;
-  const activityActiveTheme = isLightTheme
-    ? activityActive
-    : activityActiveDark;
+  const selectedTab = useMemo(
+    () => location.pathname.split('/').pop() || 'items',
+    [location],
+  );
+
+  const [itemsStatus, activityStatus] = useMemo<
+    ('active' | 'inactive')[]
+  >(
+    () =>
+      ['items', 'activity'].map((tab) =>
+        selectedTab === tab ? 'active' : 'inactive',
+      ),
+    [selectedTab],
+  );
+
+  const selectedTheme = useMemo(
+    () => (theme !== 'darkTheme' ? 'lightTheme' : 'darkTheme'),
+    [theme],
+  );
 
   return (
-    <TabsRoot defaultValue="items" value={currentTab}>
+    <TabsRoot defaultValue="items" value={selectedTab}>
       <TabsList aria-label="Manage your account">
         <TabsTrigger
           value="items"
-          status={itemIsActive}
-          onClick={() => {
-            setCurrentTab('items');
-          }}
+          status={itemsStatus}
+          onClick={() => navigate('/', { replace: true })}
         >
           <img
-            src={
-              itemIsActive === 'active'
-                ? itemeActiveTheme
-                : itemsInactive
-            }
+            src={TABS_ICONS.items[selectedTheme][itemsStatus]}
             alt="items-tab"
           />
           {t('translation:tabs.items')}
         </TabsTrigger>
         <TabsTrigger
           value="activity"
-          status={activityIsActive}
-          onClick={() => {
-            setCurrentTab('activity');
-          }}
+          status={activityStatus}
+          onClick={() => navigate('/activity', { replace: true })}
         >
           <img
-            src={
-              activityIsActive === 'active'
-                ? activityActiveTheme
-                : activityInactive
-            }
+            src={TABS_ICONS.activity[selectedTheme][activityStatus]}
             alt="activity-tab"
           />
           {t('translation:tabs.activity')}

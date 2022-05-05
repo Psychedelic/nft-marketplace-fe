@@ -12,6 +12,7 @@ import {
   DropdownContent,
   DropdownMenuItem,
   DropdownGroup,
+  DropdownButtonContainer,
 } from './styles';
 import moreoptions from '../../../assets/moreoptions.svg';
 import copy from '../../../assets/copy.svg';
@@ -48,7 +49,9 @@ export const CardOptionsDropdown = ({
           cursor: 'pointer',
         }}
       >
-        <img src={moreoptions} alt="more-options" />
+        <DropdownButtonContainer>
+          <img src={moreoptions} alt="more-options" />
+        </DropdownButtonContainer>
       </DropdownMenu.Trigger>
 
       <DropdownContent

@@ -29,6 +29,16 @@ export const DropdownStyle = styled(DropdownMenu.Trigger, {
   },
 });
 
+export const DropdownButtonContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 10,
+  height: 10,
+  padding: '10px 15px',
+  margin: -10,
+});
+
 export const DropdownContent = styled(DropdownMenu.Content, {
   minWidth: '210px',
   boxSizing: 'border-box',

@@ -1,23 +1,22 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CardOptionsDropdown } from '../../dropdown';
 import {
   CardContainer,
   CardWrapper,
-  OuterFlex,
+  NFTCardOptions,
   Flex,
   OwnedCardText,
-  NftText,
+  NftDataHeader,
   LastOffer,
-  Dfinity,
+  NftDataText,
   PreviewDetails,
   VideoPlayer,
   PreviewImage,
   VideoLoader,
-  NftId,
   MediaWrapper,
 } from './styles';
 import wicpLogo from '../../../../assets/wicpIcon.png';
@@ -27,21 +26,7 @@ import {
   ConnectToPlugModal,
   SellModal,
 } from '../../../modals';
-import { styled } from '../../../../stitches.config';
 import { usePlugStore } from '../../../../store';
-
-const NFTCardOptions = styled(OuterFlex, {
-  minHeight: '28px',
-});
-
-const PriceBar = styled('div', {
-  minHeight: '28px',
-  padding: '0 5px',
-
-  '& > div:first-child': {
-    padding: 0,
-  },
-});
 
 export type NftCardProps = {
   owned?: boolean;
@@ -132,6 +117,8 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
   const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
   const { isConnected } = usePlugStore();
+  const containerRef = useRef<HTMLDivElement>(null);
+
   // TODO: Move any status code as constant
   const isForSale = data.status === 'forSale';
 
@@ -140,9 +127,9 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
   };
 
   return (
-    <CardContainer type={modalOpen}>
-      <RouterLink to={`/nft/${data.id}`}>
-        <CardWrapper>
+    <CardContainer type={modalOpen} ref={containerRef}>
+      <CardWrapper>
+        <RouterLink to={`/nft/${data.id}`}>
           <Flex>
             <OwnedCardText>
               {owned ? `${t('translation:nftCard.owned')}` : ''}
@@ -153,65 +140,65 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
             <VideoPlayer
               videoSrc={data.location}
               pausedOverlay={
-                // eslint-disable-next-line react/jsx-wrap-multilines
                 <PreviewDetails>
                   <PreviewImage src={data?.preview} alt="nft-card" />
                 </PreviewDetails>
               }
               loadingOverlay={<VideoLoader />}
+              // Next line is a validation for null value
+              hoverTarget={containerRef.current || undefined}
             />
           </MediaWrapper>
-          <PriceBar>
-            <Flex>
-              <NftText>{data?.name}</NftText>
-              {/* TODO: Price should be in the translations intl */}
-              <NftText>{isForSale && 'Price'}</NftText>
-            </Flex>
-            <Flex>
-              <NftId>{data?.id}</NftId>
-              <Dfinity>
-                {isForSale && (
-                  <>
-                    <img src={wicpLogo} alt="" />
-                    {data?.price}
-                  </>
-                )}
-              </Dfinity>
-            </Flex>
-          </PriceBar>
-        </CardWrapper>
-      </RouterLink>
-      <NFTCardOptions>
-        {(isConnected && (
-          <OnConnected
-            owned={owned}
-            isForSale={isForSale}
-            tokenId={data.id}
-            setModalStatus={setModalStatus}
-            price={data?.price}
-          />
-        )) || (
-          <OnDisconnected
-            isForSale={isForSale}
-            setModalStatus={setModalStatus}
-          />
-        )}
-        <LastOffer>
-          {
-            // TODO: Have put lastOffer verification
-            // because when not available the label text
-            // is shown without the corresponding value...
-            data?.lastOffer && (
-              <>
-                {!isForSale
-                  ? `${t('translation:nftCard.offerFor')} `
-                  : `${t('translation:nftCard.last')} `}
-                <b>{data?.lastOffer}</b>
-              </>
-            )
-          }
-        </LastOffer>
-      </NFTCardOptions>
+          <Flex>
+            <NftDataHeader>{data?.name}</NftDataHeader>
+            <NftDataHeader>
+              {isForSale ? `${t('translation:nftCard.price')}` : ''}
+            </NftDataHeader>
+          </Flex>
+          <Flex>
+            <NftDataText>{data?.id}</NftDataText>
+            <NftDataText>
+              {isForSale && (
+                <>
+                  <img src={wicpLogo} alt="" />
+                  {data?.price}
+                </>
+              )}
+            </NftDataText>
+          </Flex>
+        </RouterLink>
+        <NFTCardOptions onClick={(e) => e.stopPropagation()}>
+          {(isConnected && (
+            <OnConnected
+              owned={owned}
+              isForSale={isForSale}
+              tokenId={data.id}
+              setModalStatus={setModalStatus}
+              price={data?.price}
+            />
+          )) || (
+            <OnDisconnected
+              isForSale={isForSale}
+              setModalStatus={setModalStatus}
+            />
+          )}
+          <LastOffer>
+            {
+              // TODO: Have put lastOffer verification
+              // because when not available the label text
+              // is shown without the corresponding value...
+              data?.lastOffer && (
+                <>
+                  {!isForSale
+                    ? `${t('translation:nftCard.offerFor')} `
+                    : `${t('translation:nftCard.last')} `}
+                  <b>{data?.lastOffer}</b>
+                </>
+              )
+            }
+          </LastOffer>
+        </NFTCardOptions>
+      </CardWrapper>
     </CardContainer>
   );
 });

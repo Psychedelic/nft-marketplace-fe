@@ -41,6 +41,10 @@ export const {
     },
     space: {},
     fonts: {},
+    shadows: {
+      default: '0px 0px 8px #E6E9EF',
+      active: '0px 0px 16px #E6E9EF',
+    },
   },
   media: {
     sm: '(max-width: 640px)',
@@ -58,8 +62,8 @@ export const darkTheme = createTheme({
     mainTextColor: '#ffffff',
     borderColor: '#353945',
     buttonsBorderColor: '#777E90',
-    nftCardName: '#ffffff',
-    nftCardId: '#ffffff',
+    nftCardName: '#777E90',
+    nftCardId: '#777E90',
     nftCardSubSection: '#202022',
     tableBackgroundColor: '#141416',
     tableTextColor: '#ffffff',
@@ -78,5 +82,9 @@ export const darkTheme = createTheme({
     skeletonBackground:
       'linear-gradient(90deg, rgb(36 34 34) 0%, rgb(41 42 44) 59.9%)',
     checkboxSelectedFiltersText: '#2253FF',
+  },
+  shadows: {
+    default: 'none',
+    active: 'none',
   },
 });

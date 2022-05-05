@@ -19,10 +19,9 @@ export const CardContainer = styled('div', {
         },
       },
       false: {
+        transition: 'all 0.2s ease-in-out',
         '&:hover': {
-          boxShadow: '0px 0px 8px 3px $navBackgroundColor',
-          transition: 'transform 0.5s ease-in-out',
-          transform: 'scale(1.015)',
+          transform: 'scale(1.03)',
         },
       },
     },
@@ -34,26 +33,26 @@ export const CardWrapper = styled('div', {
   flexDirection: 'column',
   background: '$backgroundColor',
   border: '1.5px solid $borderColor',
-  borderBottom: 'unset',
   boxSizing: 'border-box',
-  boxShadow: '0px 0px 8px $navBackgroundColor',
-  borderTopRightRadius: '14px',
-  borderTopLeftRadius: '14px',
+  borderRadius: '14px',
   width: '100%',
-  // height: '100%',
-  padding: '0 0 3px',
-  cursor: 'pointer',
-  transition: 'all 0.5s ease-in-out',
+  padding: '10px 15px',
+  overflow: 'hidden',
+
+  transition: 'all 0.2s ease-in-out',
+  boxShadow: '$default',
+  '&:hover': {
+    boxShadow: '$active',
+  },
 });
 
 export const MediaWrapper = styled('div', {
   minHeight: '175px',
   height: '175px',
-  marginBottom: '8px',
+  margin: '10px -15px',
 
   '@lg': {
     height: '270px',
-    width: '100%',
   },
 });
 
@@ -79,35 +78,22 @@ export const VideoPlayer = styled(HoverVideoPlayer, {
 
 export const VideoLoader = styled('div', {
   position: 'absolute',
-  left: '40%',
-  top: '40%',
-  transform: 'translate(-60%, -60%)',
+  left: '50%',
+  top: '50%',
+  transform: 'translate(-50%, -50%)',
   width: '2em',
   height: '2em',
   border: '2px solid white',
   borderRadius: '50%',
   borderColor: 'white white transparent transparent',
   animation: `${overlaySpinner} 1s linear infinite`,
+  margin: '-15px',
 });
 
 export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: '0 10px 0',
-
-  '&:nth-child(1)': {
-    padding: '7px 10px',
-  },
-
-  '&:nth-child(2)': {
-    padding: 'unset',
-    marginBottom: '4px',
-  },
-
-  '& p': {
-    margin: '0',
-  },
 });
 
 export const OwnedCardText = styled('span', {
@@ -120,11 +106,11 @@ export const OwnedCardText = styled('span', {
   height: '15px',
 });
 
-export const Dfinity = styled('p', {
+export const NftDataText = styled('span', {
   fontStyle: 'normal',
-  fontWeight: '600',
-  fontSize: '16px',
-  lineHeight: '20px',
+  fontWeight: 'bolder',
+  fontSize: '18px',
+  lineHeight: '24px',
   color: '$mainTextColor',
   display: 'flex',
   alignItems: 'center',
@@ -135,20 +121,11 @@ export const Dfinity = styled('p', {
   },
 });
 
-export const NftText = styled('p', {
+export const NftDataHeader = styled('span', {
   fontStyle: 'normal',
-  fontWeight: '400',
+  fontWeight: '500',
   fontSize: '14px',
-  lineHeight: '20px',
-  color: '#767D8E',
-});
-
-export const NftId = styled('p', {
-  fontStyle: 'normal',
-  fontWeight: '600',
-  fontSize: '16px',
-  lineHeight: '20px',
-  color: '$nftCardId',
+  color: '$nftCardName',
 });
 
 export const LastOffer = styled('span', {
@@ -163,26 +140,22 @@ export const LastOffer = styled('span', {
   },
 });
 
-export const ActionText = styled('p', {
+export const ActionText = styled('span', {
   fontStyle: 'normal',
-  fontWeight: '600',
   fontSize: '14px',
-  lineHeight: '20px',
   color: '#2253FF',
   cursor: 'pointer',
 });
 
-export const OuterFlex = styled('div', {
+export const NFTCardOptions = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   background: '$nftCardSubSection',
-  borderRight: '1.5px solid $borderColor',
-  borderLeft: '1.5px solid $borderColor',
-  borderBottom: '1.5px solid $borderColor',
-  borderBottomRightRadius: '14px',
-  borderBottomLeftRadius: '14px',
-  padding: '3px 10px',
+  padding: '5px 15px',
+
+  minHeight: '28px',
+  margin: '10px -15px -10px -15px',
 
   '& p': {
     margin: '0',
