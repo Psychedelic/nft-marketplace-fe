@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
-import { useThemeStore } from '../../../store';
+import { useThemeStore, usePlugStore } from '../../../store';
 import { LinkButton } from '../buttons';
 import { AccordionContentMetaData } from '../../mock-data/accordion-data';
 import {
@@ -23,7 +23,7 @@ import arrowup from '../../../assets/accordions/arrow-up.svg';
 import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import collection from '../../../assets/accordions/collection.svg';
 import creator from '../../../assets/accordions/creator.svg';
-import owner from '../../../assets/accordions/owner.svg';
+import plugIcon from '../../../assets/accordions/owner.svg';
 import discord from '../../../assets/buttons/discord.svg';
 import discordDark from '../../../assets/buttons/discord-dark.svg';
 import twitter from '../../../assets/buttons/twitter.svg';
@@ -31,11 +31,14 @@ import twitterDark from '../../../assets/buttons/twitter-dark.svg';
 import back from '../../../assets/buttons/back.svg';
 import backDark from '../../../assets/buttons/back-dark.svg';
 
+import { isNFTOwner } from '../../../integrations/kyasshu/utils';
+import { formatAddress } from '../../../utils/formatters';
+
 export type AboutAccordionProps = {
-  owned: boolean;
+  owner?: string;
 };
 
-export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
+export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const { theme } = useThemeStore();
@@ -43,6 +46,14 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
 
   const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
   const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
+
+  const { isConnected, principalId: plugPrincipal } = usePlugStore();
+
+  const isOwner = isNFTOwner({
+    isConnected,
+    owner,
+    principalId: plugPrincipal,
+  });
 
   const Buttons = [
     {
@@ -71,9 +82,11 @@ export const AboutAccordion = ({ owned }: AboutAccordionProps) => {
       image: creator,
     },
     {
-      subheading: owned ? 'You' : 'rgblt...whfy',
+      subheading: isOwner
+        ? 'You'
+        : (owner && formatAddress(owner)) || '',
       heading: 'Owner',
-      image: owner,
+      image: plugIcon,
     },
   ];
 
