@@ -1,30 +1,5 @@
 import { Button } from './styles';
 
-export type ActionButtonProps = {
-  onClick?: () => void;
-  type: any;
-  danger?: boolean;
-  size?: any;
-  text?: string;
-  disabled?: boolean;
-  handleClick: () => void;
-};
+export type ActionButtonProps = React.ComponentProps<typeof Button>;
 
-export const ActionButton = ({
-  type, // type - primary/secondary/outline
-  size, // size - small/default
-  danger = false, // danger - true/false
-  text,
-  disabled = false,
-  handleClick,
-}: ActionButtonProps) => (
-  <Button
-    onClick={handleClick}
-    type={type}
-    size={size}
-    danger={danger}
-    disabled={disabled}
-  >
-    {text}
-  </Button>
-);
+export const ActionButton = Button;

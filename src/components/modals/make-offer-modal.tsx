@@ -107,20 +107,12 @@ export const MakeOfferModal = ({
       */}
       <DialogPrimitive.Trigger asChild>
         {actionText ? (
-          <ActionText
-            onClick={() => console.log('makeOffer modal opened')}
-          >
-            {actionText}
-          </ActionText>
+          <ActionText>{actionText}</ActionText>
         ) : (
           <MakeOfferModalTrigger>
-            <ActionButton
-              type="primary"
-              text={t('translation:buttons.action.makeOffer')}
-              handleClick={() =>
-                console.log('makeOffer modal opened')
-              }
-            />
+            <ActionButton type="primary">
+              {t('translation:buttons.action.makeOffer')}
+            </ActionButton>
           </MakeOfferModalTrigger>
         )}
       </DialogPrimitive.Trigger>
@@ -166,7 +158,8 @@ export const MakeOfferModal = ({
                 placeholder={t(
                   'translation:inputField.placeholder.amount',
                 )}
-                setValue={(value) => setAmount(value)}
+                value={amount}
+                onChange={(e) => setAmount(e.currentTarget.value)}
               />
             </SaleContentWrapper>
             {/*
@@ -178,17 +171,19 @@ export const MakeOfferModal = ({
               <ModalButtonWrapper>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={handleModalClose}
-                />
+                  onChange={handleModalClose}
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
               <ModalButtonWrapper>
                 <ActionButton
                   type="primary"
-                  text={t('translation:modals.buttons.submitOffer')}
-                  handleClick={handleSubmitOffer}
+                  onChange={handleSubmitOffer}
                   disabled={!amount}
-                />
+                >
+                  {t('translation:modals.buttons.submitOffer')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -225,11 +220,12 @@ export const MakeOfferModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={() => {
+                  onClick={() => {
                     setModalStep(ListingStatusCodes.ListingInfo);
                   }}
-                />
+                >
+                  {t('translation:buttons.action.makeOffer')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -269,9 +265,10 @@ export const MakeOfferModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="primary"
-                  text={t('translation:modals.buttons.viewNFT')}
-                  handleClick={handleModalClose}
-                />
+                  onClick={handleModalClose}
+                >
+                  {t('translation:modals.buttons.viewNFT')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>

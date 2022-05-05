@@ -112,11 +112,9 @@ export const BuyNowModal = ({
           </ActionText>
         ) : (
           <BuyNowModalTrigger>
-            <ActionButton
-              type="primary"
-              text={t('translation:buttons.action.buyNow')}
-              handleClick={handleDirectBuy}
-            />
+            <ActionButton type="primary" onClick={handleDirectBuy}>
+              {t('translation:buttons.action.buyNow')}
+            </ActionButton>
           </BuyNowModalTrigger>
         )}
       </DialogPrimitive.Trigger>
@@ -169,11 +167,12 @@ export const BuyNowModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={() => {
+                  onClick={() => {
                     setModalStep('listingInfo');
                   }}
-                />
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -213,9 +212,10 @@ export const BuyNowModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="primary"
-                  text={t('translation:modals.buttons.viewNFT')}
-                  handleClick={handleModalClose}
-                />
+                  onChange={handleModalClose}
+                >
+                  {t('translation:modals.buttons.viewNFT')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>

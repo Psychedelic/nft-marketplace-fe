@@ -118,8 +118,11 @@ export const SellModal = ({
           // should pull from the API
           // dispatch(getAllListings());
           setModalStep(ListingStatusCodes.Confirmed);
+
+          console.log('-hit on success');
         },
         onFailure: () => {
+          console.log('-hit on failure');
           setModalStep(ListingStatusCodes.ListingInfo);
         },
       }),
@@ -138,21 +141,12 @@ export const SellModal = ({
       */}
       <DialogPrimitive.Trigger asChild>
         {actionText ? (
-          <ActionText
-            onClick={() => console.log('sell modal opened')}
-          >
-            {actionText}
-          </ActionText>
+          <ActionText>{actionText}</ActionText>
         ) : (
           <SellModalTrigger>
-            <ActionButton
-              type="primary"
-              text={t('translation:buttons.action.sell')}
-              handleClick={() => {
-                // eslint-disable-next-line no-console
-                console.log('Sell modal opened');
-              }}
-            />
+            <ActionButton type="primary">
+              {t('translation:buttons.action.sell')}
+            </ActionButton>
           </SellModalTrigger>
         )}
       </DialogPrimitive.Trigger>
@@ -198,7 +192,8 @@ export const SellModal = ({
                 placeholder={t(
                   'translation:inputField.placeholder.amount',
                 )}
-                setValue={(value) => setAmount(value)}
+                value={amount}
+                onChange={(e) => setAmount(e.currentTarget.value)}
               />
               <FeeContainer>
                 <FeeDetails>
@@ -238,19 +233,19 @@ export const SellModal = ({
               <ModalButtonWrapper>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={handleModalClose}
-                />
+                  onClick={handleModalClose}
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
               <ModalButtonWrapper>
                 <ActionButton
                   type="primary"
-                  text={t(
-                    'translation:modals.buttons.completeListing',
-                  )}
-                  handleClick={handleListing}
+                  onClick={handleListing}
                   disabled={!amount}
-                />
+                >
+                  {t('translation:modals.buttons.completeListing')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -287,11 +282,12 @@ export const SellModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={() => {
+                  onClick={() => {
                     setModalStep(ListingStatusCodes.ListingInfo);
                   }}
-                />
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -331,9 +327,10 @@ export const SellModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="primary"
-                  text={t('translation:modals.buttons.viewListing')}
-                  handleClick={() => handleModalOpen(false)}
-                />
+                  onClick={() => handleModalOpen(false)}
+                >
+                  {t('translation:modals.buttons.viewListing')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>

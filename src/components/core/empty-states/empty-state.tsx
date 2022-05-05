@@ -45,8 +45,7 @@ export const EmptyState = ({
         ) : (
           <ActionButton
             type="primary"
-            text={buttonText}
-            handleClick={() => {
+            onClick={() => {
               dispatch(
                 filterActions.removeFilter(
                   `${t('translation:buttons.action.myNfts')}`,
@@ -55,7 +54,9 @@ export const EmptyState = ({
               dispatch(filterActions.setMyNfts(false));
               dispatch(filterActions.clearAllFilters());
             }}
-          />
+          >
+            {buttonText}
+          </ActionButton>
         )}
       </ButtonWrapper>
     </EmptyStateWrapper>
