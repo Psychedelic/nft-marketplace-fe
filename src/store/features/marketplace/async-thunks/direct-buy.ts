@@ -6,6 +6,7 @@ import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { AppLog } from '../../../../utils/log';
+import { parseAmountToE8S } from '../../../../utils/formatters';
 
 type DirectBuyProps = DefaultCallbacks & DirectBuy;
 
@@ -23,7 +24,8 @@ export const directBuy = createAsyncThunk<
   );
 
   try {
-    const wicpAmount = BigInt(price);
+    const amountInE8S = parseAmountToE8S(price);
+    const wicpAmount = BigInt(amountInE8S);
     const WICP_APPROVE = {
       idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,
