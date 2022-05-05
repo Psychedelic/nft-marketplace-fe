@@ -36,7 +36,7 @@ export const CardWrapper = styled('div', {
   boxSizing: 'border-box',
   borderRadius: '14px',
   width: '100%',
-  padding: '15px',
+  padding: '10px 15px',
   overflow: 'hidden',
 
   transition: 'all 0.2s ease-in-out',
@@ -152,11 +152,10 @@ export const NFTCardOptions = styled('div', {
   alignItems: 'center',
   justifyContent: 'space-between',
   background: '$nftCardSubSection',
-  borderTop: '1.5px solid $borderColor',
-  padding: '7.5px 15px',
+  padding: '5px 15px',
 
   minHeight: '28px',
-  margin: '10px -15px -15px -15px',
+  margin: '10px -15px -10px -15px',
 
   '& p': {
     margin: '4px 0',
