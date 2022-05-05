@@ -1,3 +1,5 @@
+import { E8S_PER_ICP } from '../constants/common';
+
 export const formatAddress = (address: string) => {
   if (!address) {
     return '';
@@ -30,4 +32,10 @@ export const formatPriceValue = (price: string) => {
   if (!price || price === 'n/a') return 'n/a';
 
   return Number(price).toFixed(2);
+};
+
+export const parseAmountToE8S = (amount: number) => {
+  if (!amount) return 0;
+
+  return amount * E8S_PER_ICP;
 };
