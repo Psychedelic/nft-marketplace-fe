@@ -63,7 +63,8 @@ export const NftDetails = () => {
   const lastSalePrice =
     (tokenListing?.price &&
       parseE8SAmountToWICP(tokenListing.price)) ||
-    (nftDetails?.price && parseE8SAmountToWICP(nftDetails.price));
+    (nftDetails?.price &&
+      parseE8SAmountToWICP(BigInt(nftDetails.price)));
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
   const dispatch = useAppDispatch();
 

@@ -79,7 +79,9 @@ const OnConnected = ({
               onClose={() => setModalStatus(false)}
               actionText={`${t('translation:nftCard.forSale')}`}
               actionTextId={Number(tokenId)}
-              price={price?.toString()}
+              price={
+                (price && parseE8SAmountToWICP(BigInt(price))) || ''
+              }
             />
           ) : (
             <MakeOfferModal
@@ -175,7 +177,7 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
               isForSale={isForSale}
               tokenId={data.id}
               setModalStatus={setModalStatus}
-              price={parseE8SAmountToWICP(data?.price)}
+              price={data?.price}
             />
           )) || (
             <OnDisconnected

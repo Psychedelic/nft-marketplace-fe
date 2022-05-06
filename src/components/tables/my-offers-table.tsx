@@ -29,7 +29,10 @@ import {
   OffersTableHeaders,
 } from '../../constants/my-offers';
 import { OffersTableItem } from '../../declarations/legacy';
-import { formatPriceValue } from '../../utils/formatters';
+import {
+  formatPriceValue,
+  parseE8SAmountToWICP,
+} from '../../utils/formatters';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -195,7 +198,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
           computedCurrencyPrice,
         }: OffersTableItem) => (
           <PriceDetailsCell
-            wicp={price.toString()}
+            wicp={parseE8SAmountToWICP(price)}
             price={
               (computedCurrencyPrice &&
                 `$${formatPriceValue(
@@ -244,7 +247,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         }: OffersTableItem) => (
           <ButtonWrapper>
             <AcceptOfferModal
-              price={price.toString()}
+              price={parseE8SAmountToWICP(price)}
               formattedPrice={
                 (computedCurrencyPrice &&
                   computedCurrencyPrice.toString()) ||

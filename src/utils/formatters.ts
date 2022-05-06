@@ -34,10 +34,7 @@ export const formatPriceValue = (price: string) => {
   return Number(price).toFixed(2);
 };
 
-// Almost everytime we are getting amount type is string
-// So we declared amount type: string instead of number
 export const parseAmountToE8S = (amount: string) => {
-  // TODO: handle error notification when amount is not available
   if (!amount) return BigInt(0);
 
   const computedAmount = Number(amount) * E8S_PER_ICP;
@@ -45,26 +42,10 @@ export const parseAmountToE8S = (amount: string) => {
   return BigInt(computedAmount);
 };
 
-// parseE8SAmountToWICP is going to be used in different
-// places where amount type can be string/number/bigint
-// So we declared amount type: any and handled respective
-// type while parsing
-export const parseE8SAmountToWICP = (amount: any) => {
-  let computedWICP: any = '';
+export const parseE8SAmountToWICP = (amount: bigint) => {
+  if (!amount) return '';
 
-  if (!amount) return amount;
-
-  if (typeof amount === 'string') {
-    computedWICP = Number(amount) / E8S_PER_ICP;
-  }
-
-  if (typeof amount === 'number') {
-    computedWICP = amount / E8S_PER_ICP;
-  }
-
-  if (typeof amount === 'bigint') {
-    computedWICP = Number(amount.toString()) / E8S_PER_ICP;
-  }
+  const computedWICP = Number(amount.toString()) / E8S_PER_ICP;
 
   return computedWICP.toString();
 };

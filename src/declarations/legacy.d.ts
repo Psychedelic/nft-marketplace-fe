@@ -28,7 +28,7 @@ export type OfferItem = {
 
 export interface OffersTableItem {
   item: OfferItem;
-  price: string;
+  price: bigint;
   floorDifference: string;
   fromDetails: {
     formattedAddress: string;

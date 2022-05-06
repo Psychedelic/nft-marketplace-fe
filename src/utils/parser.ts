@@ -91,8 +91,8 @@ export const parseGetTokenOffersResponse = ({
     const tokenOffers = currParent[1] as Offer[];
     const parsedTokenOffers = tokenOffers.reduce(
       (accChild, currChild) => {
-        const price = parseE8SAmountToWICP(currChild?.price);
         const {
+          price,
           token_id: tokenId,
           buyer: paymentAddress,
           created,
@@ -110,7 +110,7 @@ export const parseGetTokenOffersResponse = ({
 
         const computedCurrencyPrice =
           currencyMarketPrice &&
-          currencyMarketPrice * Number(price.toString());
+          currencyMarketPrice * Number(parseE8SAmountToWICP(price));
 
         const offerTableItem: OffersTableItem = {
           item: {
@@ -121,7 +121,7 @@ export const parseGetTokenOffersResponse = ({
           },
           price,
           floorDifference: floorDiffPercentageCalculator({
-            currentPrice: price,
+            currentPrice: parseE8SAmountToWICP(price),
             floorDifferencePrice,
           }),
           fromDetails,
@@ -146,8 +146,8 @@ export const parseOffersMadeResponse = ({
   currencyMarketPrice,
 }: ParseOffersMadeParams) => {
   const parsedOffersMade = data.map((offerDetails) => {
-    const price = parseE8SAmountToWICP(offerDetails?.price);
     const {
+      price,
       token_id: tokenId,
       buyer: paymentAddress,
       created,
@@ -165,7 +165,7 @@ export const parseOffersMadeResponse = ({
 
     const computedCurrencyPrice =
       currencyMarketPrice &&
-      currencyMarketPrice * Number(price.toString());
+      currencyMarketPrice * Number(parseE8SAmountToWICP(price));
 
     const offerTableItem: OffersTableItem = {
       item: {
@@ -176,7 +176,7 @@ export const parseOffersMadeResponse = ({
       },
       price,
       floorDifference: floorDiffPercentageCalculator({
-        currentPrice: price,
+        currentPrice: parseE8SAmountToWICP(price),
         floorDifferencePrice,
       }),
       fromDetails,
