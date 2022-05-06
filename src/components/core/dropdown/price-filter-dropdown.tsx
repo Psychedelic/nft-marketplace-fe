@@ -15,6 +15,7 @@ import {
 } from './styles';
 import arrowdown from '../../../assets/arrowdown.svg';
 import arrowdownDark from '../../../assets/arrowdown-dark.svg';
+import { AppLog } from '../../../utils/log';
 
 export const SortByFilterDropdown = React.memo(() => {
   const { t } = useTranslation();
@@ -54,10 +55,14 @@ export const SortByFilterDropdown = React.memo(() => {
   ];
 
   const setSortBy = (key: string) => {
-    const translated = sortOptions.find((item) => item.key === key)?.value;
+    const translated = sortOptions.find(
+      (item) => item.key === key,
+    )?.value;
 
     if (!translated) {
-      console.warn(`Oops! Sort by key (${key}) translation does not exist`);
+      AppLog.warn(
+        `Oops! Sort by key (${key}) translation does not exist`,
+      );
 
       return;
     }
@@ -80,9 +85,7 @@ export const SortByFilterDropdown = React.memo(() => {
         <DropdownRadioGroup onValueChange={setSortBy}>
           {sortOptions.map((item) => (
             <>
-              <DropdownRadioMenuItem
-                value={item.key}
-              >
+              <DropdownRadioMenuItem value={item.key}>
                 {item.value}
               </DropdownRadioMenuItem>
               <DropdownMenuSeparator

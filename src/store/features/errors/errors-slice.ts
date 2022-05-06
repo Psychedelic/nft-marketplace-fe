@@ -33,7 +33,6 @@ export const notificationSlice = createSlice({
       });
     },
     removeErrorMessage: (state, action: PayloadAction<number>) => {
-      console.log(action.payload);
       state.errorMessages = state.errorMessages.filter(
         (error) => error.id !== action.payload,
       );
@@ -45,7 +44,6 @@ export const notificationSlice = createSlice({
       });
     },
     removeSuccessMessage: (state, action: PayloadAction<number>) => {
-      console.log(action.payload);
       state.successMessages = state.successMessages.filter(
         (successMessage) => successMessage.id !== action.payload,
       );

@@ -4,6 +4,7 @@ import crownsIdlFactory from '../../declarations/nft.did';
 import wicpIdlFactory from '../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
 import config from '../../config/env';
+import { AppLog } from '../../utils/log';
 
 export type ServiceName = 'marketplace' | 'crowns' | 'wicp';
 
@@ -20,32 +21,30 @@ export const createActor = async <T>({
       // which is not the case on page refresh
       // Otherwise, this cause `No Agent could be found`
       await new Promise((resolve) => setTimeout(resolve, 1800));
-      await (window as any)?.ic?.plug?.agent.fetchRootKey();
+      await window.ic?.plug?.agent.fetchRootKey();
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.warn(
+      AppLog.error(
         'Oops! Unable to fetch root key, is the local replica running?',
+        err,
       );
-      // eslint-disable-next-line no-console
-      console.error(err);
     }
   }
 
   if (serviceName === 'crowns') {
-    return await (window as any)?.ic?.plug?.createActor({
+    return await window.ic?.plug?.createActor({
       canisterId: config.crownsCanisterId,
       interfaceFactory: crownsIdlFactory,
     });
   }
 
   if (serviceName === 'wicp') {
-    return await (window as any)?.ic?.plug?.createActor({
+    return await window.ic?.plug?.createActor({
       canisterId: config.wICPCanisterId,
       interfaceFactory: wicpIdlFactory,
     });
   }
 
-  return await (window as any)?.ic?.plug?.createActor({
+  return await window.ic?.plug?.createActor({
     canisterId: config.marketplaceCanisterId,
     interfaceFactory: marketplaceIdlFactory,
   });

@@ -35,6 +35,7 @@ import {
   nftsActions,
   marketplaceActions,
 } from '../../store';
+import { AppLog } from '../../utils/log';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -102,7 +103,7 @@ export const SellModal = ({
 
   const handleListing = async () => {
     if (!tokenId) {
-      console.warn('Oops! Missing NFT id param');
+      AppLog.warn('Oops! Missing NFT id param');
 
       return;
     }
@@ -118,11 +119,8 @@ export const SellModal = ({
           // should pull from the API
           // dispatch(getAllListings());
           setModalStep(ListingStatusCodes.Confirmed);
-
-          console.log('-hit on success');
         },
         onFailure: () => {
-          console.log('-hit on failure');
           setModalStep(ListingStatusCodes.ListingInfo);
         },
       }),

@@ -2,6 +2,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Principal } from '@dfinity/principal';
 import { crownsSlice, OwnerTokenIdentifiers } from '../crowns-slice';
 import { actorInstanceHandler } from '../../../../integrations/actor';
+import { AppLog } from '../../../../utils/log';
+import { notificationActions } from '../../errors';
 
 type OwnerTokenIdentifiersProps = DefaultCallbacks & {
   plugPrincipal: string;
@@ -27,18 +29,20 @@ export const getOwnerTokenIdentifiers = createAsyncThunk<
       );
 
       if (!('Ok' in result)) {
-        if (typeof onFailure !== 'function') return;
-
-        onFailure();
-
-        console.error(result);
-
-        throw Error('Oops! Failed to retrieve user tokens');
+        throw Error('Invalid response');
       }
 
       return result.Ok;
     } catch (err) {
-      console.warn(err);
+      AppLog.error(err);
+      thunkAPI.dispatch(
+        notificationActions.setErrorMessage(
+          'Oops! Failed to retrieve user tokens',
+        ),
+      );
+      if (typeof onFailure === 'function') {
+        onFailure(err);
+      }
     }
   },
 );

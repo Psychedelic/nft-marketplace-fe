@@ -11,6 +11,7 @@ import {
   notificationActions,
   LoadedNFTData,
 } from '../store';
+import { AppLog } from '../utils/log';
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
@@ -78,8 +79,7 @@ export const useNFTSFetcher = () => {
           nftsActions.setLoadedNFTS(loadedNFTS as LoadedNFTData),
         );
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.warn(error);
+        AppLog.error(error);
 
         // set NFTS failed to load
         dispatch(

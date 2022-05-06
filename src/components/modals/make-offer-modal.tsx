@@ -24,6 +24,7 @@ import {
 
 import { ListingStatusCodes } from '../../constants/listing';
 import { useAppDispatch, marketplaceActions } from '../../store';
+import { AppLog } from '../../utils/log';
 
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
@@ -66,7 +67,7 @@ export const MakeOfferModal = ({
 
   const handleSubmitOffer = async () => {
     if (!tokenId) {
-      console.warn('Oops! Missing NFT id param');
+      AppLog.warn('Oops! Missing NFT id param');
 
       return;
     }
