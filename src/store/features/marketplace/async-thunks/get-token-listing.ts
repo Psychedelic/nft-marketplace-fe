@@ -31,7 +31,7 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
       if (typeof onSuccess !== 'function') return;
 
       if (!('Ok' in result)) {
-        console.warn(
+        AppLog.warn(
           `Oops! Failed to get token listing for id ${tokenId}`,
         );
 
