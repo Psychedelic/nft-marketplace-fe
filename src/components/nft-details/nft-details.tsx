@@ -1,4 +1,4 @@
-import { useMemo, useEffect, useState } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
@@ -35,7 +35,6 @@ import { NFTMetadata } from '../../declarations/legacy';
 export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
-  const { principalId } = usePlugStore();
   const recentlyListedForSale = useSelector(
     (state: RootState) => state.marketplace.recentlyListedForSale,
   );
@@ -70,6 +69,7 @@ export const NftDetails = () => {
 
   const [isUser, setIsUser] = useState<boolean>(false);
   const [isOffers, setLoadingOffers] = useState<boolean>(true);
+  const { principalId } = usePlugStore();
 
   // TODO: We need more control, plus the
   // kyasshu calls should be placed as a thunk/action

@@ -52,7 +52,7 @@ type DisconnectedProps = {
   connectionStatus: string;
 };
 
-const OnConnected = ({ isListed, isOwner, setIsUser, isUser, isOffers, price }: ConnectedProps) =>
+const OnConnected = ({ isListed, isOwner, price, setIsUser, isUser, isOffers }: ConnectedProps) =>
   !isOwner ? (
     <ButtonListWrapper>
       {isListed && (
