@@ -79,6 +79,10 @@ export const NftDetails = () => {
 
     dispatch(nftsActions.getNFTDetails({ id }));
 
+    // TODO: add loading placeholders in action buttons
+    // like Sell/Cancel/Edit/Make Offer/Buy Now
+    // to show users that getTokenListing call is under progress
+
     dispatch(
       marketplaceActions.getTokenListing({
         id,
