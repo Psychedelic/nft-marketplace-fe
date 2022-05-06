@@ -16,7 +16,7 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
       slice: marketplaceSlice,
     });
 
-    const { id: tokenId } = params;
+    const { id: tokenId, onSuccess, onFailure } = params;
 
     try {
       const nonFungibleContractAddress = Principal.fromText(
@@ -28,22 +28,25 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
       );
 
       if (!('Ok' in result)) {
-        console.warn(
+        throw Error(
           `Oops! Failed to get token listing for id ${tokenId}`,
         );
-
-        return {
-          [tokenId]: {},
-        };
       }
+
+      if (typeof onSuccess !== 'function') return;
+      onSuccess();
 
       return {
         [tokenId]: result.Ok,
       };
     } catch (err) {
       thunkAPI.dispatch(
-        notificationActions.setErrorMessage((err as Error).message),
+        notificationActions.setErrorMessage(
+          `Oops! Failed to get token listing for id ${tokenId}`,
+        ),
       );
+      if (typeof onFailure !== 'function') return;
+      onFailure();
     }
   },
 );

@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
@@ -34,6 +34,8 @@ import { NFTMetadata } from '../../declarations/legacy';
 export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
+  const [showNFTActionButtons, setShowNFTActionButtons] =
+    useState<boolean>(false);
   const recentlyListedForSale = useSelector(
     (state: RootState) => state.marketplace.recentlyListedForSale,
   );
@@ -80,9 +82,21 @@ export const NftDetails = () => {
     dispatch(
       marketplaceActions.getTokenListing({
         id,
+        onSuccess: () => {
+          // Listing got successfull so allowing
+          // user to take actions over NFT
+          setShowNFTActionButtons(true);
+        },
+        onFailure: () => {
+          // Listing got successfull so not allowing
+          // user to take actions over NFT
+          setShowNFTActionButtons(false);
+        },
       }),
     );
   }, [dispatch, id, recentlyListedForSale, recentlyCancelledItems]);
+
+  console.log(showNFTActionButtons, 'showNFTActionButtons');
 
   return (
     <Container>
