@@ -81,7 +81,7 @@ export const getCAPActivity = createAsyncThunk<
             token_id: tableData.token_id,
           },
           type: tableData.operation,
-          price: `$${tableData.list_price ?? tableData.price}`,
+          price: `${tableData.list_price ?? tableData.price}`,
           from: tableData.caller,
           to: '-',
           time: tableData.time,
