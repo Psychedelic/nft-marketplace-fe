@@ -7,6 +7,7 @@ import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
+import { errorMessageHandler } from '../../../../utils/error';
 
 export type MakeOfferProps = DefaultCallbacks & MakeOffer;
 
@@ -46,7 +47,15 @@ export const makeOffer = createAsyncThunk<
         userOwnedTokenId,
         userOfferInPrice,
       ],
-      onSuccess,
+      onSuccess: (res: any) => {
+        if ('Err' in res) throw new Error(
+          errorMessageHandler(res.Err)
+        );
+
+        if (typeof onSuccess !== 'function') return;
+
+        onSuccess()
+      },
       onFail: (res: any) => {
         throw res;
       },
