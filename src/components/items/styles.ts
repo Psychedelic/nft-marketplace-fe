@@ -9,6 +9,10 @@ export const Container = styled('div', {
   minHeight: '100vh',
   // borderLeft: '1px solid rgb(229, 232, 235)',
   borderLeft: '1px solid $borderColor',
+
+  '@sm': {
+    padding: '0px 15px 15px',
+  },
 });
 
 export const FilteredContainer = styled('div', {
