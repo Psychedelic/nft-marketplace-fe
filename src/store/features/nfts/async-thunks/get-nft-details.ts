@@ -7,7 +7,6 @@ import {
 } from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../errors';
 import { AppLog } from '../../../../utils/log';
-import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
 export type GetNFTDetailsProps =
   NSKyasshuUrl.GetNFTDetailsQueryParams;
