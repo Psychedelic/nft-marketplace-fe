@@ -21,6 +21,10 @@ export const NftMetadataContent = styled('div', {
   justifyContent: 'space-between',
   margin: '20px auto 0',
   padding: '0px 80px 0px',
+
+  '@md': {
+    justifyContent: 'center',
+  },
 });
 
 export const NftMetadataContentWrapper = styled('div', {
