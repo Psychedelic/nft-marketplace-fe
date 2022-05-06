@@ -73,6 +73,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const { id: plugPrincipal } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    
     setTableDetails({
       loading: true,
       loadedOffers: [],
