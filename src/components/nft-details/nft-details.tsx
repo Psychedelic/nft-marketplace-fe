@@ -96,8 +96,6 @@ export const NftDetails = () => {
     );
   }, [dispatch, id, recentlyListedForSale, recentlyCancelledItems]);
 
-  console.log(showNFTActionButtons, 'showNFTActionButtons');
-
   return (
     <Container>
       <NftActionBar
@@ -147,6 +145,7 @@ export const NftDetails = () => {
               lastSalePrice={lastSalePrice?.toString()}
               isListed={isListed}
               owner={owner}
+              showNFTActionButtons={showNFTActionButtons}
             />
             <AboutAccordion owner={owner} />
           </DetailsContainer>
