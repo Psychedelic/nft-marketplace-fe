@@ -125,14 +125,9 @@ export const ChangePriceModal = () => {
       */}
       <DialogPrimitive.Trigger asChild>
         <ChangePriceModalTrigger>
-          <ActionButton
-            type="primary"
-            text={t('translation:buttons.action.editListing')}
-            handleClick={() => {
-              // eslint-disable-next-line no-console
-              console.log('editListing modal opened');
-            }}
-          />
+          <ActionButton type="primary">
+            {t('translation:buttons.action.editListing')}
+          </ActionButton>
         </ChangePriceModalTrigger>
       </DialogPrimitive.Trigger>
       {/*
@@ -177,8 +172,8 @@ export const ChangePriceModal = () => {
                 placeholder={t(
                   'translation:inputField.placeholder.amount',
                 )}
-                setValue={(value) => setAmount(value)}
-                defaultValue={amount}
+                value={amount}
+                onChange={(e) => setAmount(e.currentTarget.value)}
               />
               <FeeContainer>
                 <FeeDetails>
@@ -218,19 +213,19 @@ export const ChangePriceModal = () => {
               <ModalButtonWrapper>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={handleModalClose}
-                />
+                  onClick={handleModalClose}
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
               <ModalButtonWrapper>
                 <ActionButton
                   type="primary"
-                  text={t(
-                    'translation:modals.buttons.completeListing',
-                  )}
-                  handleClick={handleListing}
+                  onClick={handleListing}
                   disabled={!amount}
-                />
+                >
+                  {t('translation:modals.buttons.completeListing')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -267,11 +262,12 @@ export const ChangePriceModal = () => {
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={() => {
+                  onClick={() => {
                     setModalStep(ListingStatusCodes.ListingInfo);
                   }}
-                />
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -311,9 +307,10 @@ export const ChangePriceModal = () => {
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="primary"
-                  text={t('translation:modals.buttons.viewListing')}
-                  handleClick={() => handleModalOpen(false)}
-                />
+                  onClick={() => handleModalOpen(false)}
+                >
+                  {t('translation:modals.buttons.viewListing')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>

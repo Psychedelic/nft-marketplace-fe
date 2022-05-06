@@ -94,7 +94,7 @@ export const ToastDescription = styled(ToastPrimitive.Description, {
         color: '#46D7AB',
       },
       error: {
-        color: '#FD5F51',
+        color: '$error',
       },
     },
   },

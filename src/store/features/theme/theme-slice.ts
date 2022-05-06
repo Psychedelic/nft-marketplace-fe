@@ -12,8 +12,6 @@ const initialState: ThemeState = {
   theme: !getTheme ? 'lightTheme' : getTheme,
 };
 
-console.log(getTheme);
-
 export const themeSlice = createSlice({
   name: 'theme',
   initialState,

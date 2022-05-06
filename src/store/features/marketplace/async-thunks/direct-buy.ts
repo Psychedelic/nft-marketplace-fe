@@ -5,6 +5,7 @@ import { DirectBuy } from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
+import { AppLog } from '../../../../utils/log';
 
 type DirectBuyProps = DefaultCallbacks & DirectBuy;
 
@@ -29,9 +30,7 @@ export const directBuy = createAsyncThunk<
       methodName: 'approve',
       args: [marketplaceCanisterId, wicpAmount],
       onFail: (res: any) => {
-        console.warn('Oops! Failed to deposit WICP', res);
-
-        if (typeof onFailure === 'function') onFailure();
+        throw res;
       },
     };
 
@@ -41,25 +40,19 @@ export const directBuy = createAsyncThunk<
       methodName: 'directBuy',
       args: [nonFungibleContractAddress, tokenId],
       onFail: (res: any) => {
-        console.warn('Oops! Failed to direct buy', res);
-
-        if (typeof onFailure === 'function') onFailure();
+        throw res;
       },
       onSuccess,
     };
 
-    const batchTxRes = await (
-      window as any
-    )?.ic?.plug?.batchTransactions([
+    const batchTxRes = await window.ic?.plug?.batchTransactions([
       WICP_APPROVE,
       // MKP_DEPOSIT_WICP,
       MKP_DIRECT_BUY,
     ]);
 
     if (!batchTxRes) {
-      if (typeof onFailure === 'function') onFailure();
-
-      return;
+      throw new Error('Empty response');
     }
 
     return {
@@ -67,10 +60,14 @@ export const directBuy = createAsyncThunk<
       price,
     };
   } catch (err) {
+    AppLog.error(err);
     dispatch(
-      notificationActions.setErrorMessage((err as Error).message),
+      notificationActions.setErrorMessage(
+        'Oops! Failed to direct buy',
+      ),
     );
-    if (typeof onFailure !== 'function') return;
-    onFailure();
+    if (typeof onFailure === 'function') {
+      onFailure(err);
+    }
   }
 });

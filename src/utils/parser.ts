@@ -46,7 +46,6 @@ export const parseAllListingResponse = (
 export const parseAllListingResponseAsObj = (
   data: GetAllListingsDataResponse,
 ) => {
-  console.log(data, 'listing data');
   const parsed: GetAllListingsDataParsedObj = data.reduce(
     (acc, curr) => {
       const tokenId = String(curr[0][1]);

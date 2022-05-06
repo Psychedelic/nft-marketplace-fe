@@ -6,6 +6,7 @@ import { dateRelative } from '../../../../integrations/functions/date';
 import shortAddress from '../../../../integrations/functions/short-address';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { getICAccountLink } from '../../../../utils/account-id';
+import { AppLog } from '../../../../utils/log';
 import { notificationActions } from '../../errors';
 import { CapActivityParams, tableActions } from '../table-slice';
 
@@ -102,7 +103,7 @@ export const getCAPActivity = createAsyncThunk<
 
     dispatch(tableActions.setCapActivityTable(actionPayload));
   } catch (error) {
-    console.warn(error);
+    AppLog.error(error);
     dispatch(
       notificationActions.setErrorMessage(
         'Oops! Unable to fetch activity table data',

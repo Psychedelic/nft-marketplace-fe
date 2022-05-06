@@ -33,11 +33,12 @@ const OffersView = () => {
                   ? 'outline'
                   : 'secondary'
               }
-              text={t('translation:offers.offersReceived')}
-              handleClick={() => {
+              onClick={() => {
                 setOffersType(OfferTypeStatusCodes.OffersReceived);
               }}
-            />
+            >
+              {t('translation:offers.offersReceived')}
+            </ActionButton>
           </ButtonDetailsWrapper>
           <ButtonDetailsWrapper>
             <ActionButton
@@ -46,11 +47,12 @@ const OffersView = () => {
                   ? 'outline'
                   : 'secondary'
               }
-              text={t('translation:offers.offersMade')}
-              handleClick={() => {
+              onClick={() => {
                 setOffersType(OfferTypeStatusCodes.OffersMade);
               }}
-            />
+            >
+              {t('translation:offers.offersMade')}
+            </ActionButton>
           </ButtonDetailsWrapper>
         </ButtonListWrapper>
       </TitleWrapper>

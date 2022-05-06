@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
 import { useAppDispatch, marketplaceActions } from '../../store';
-import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 import {
   ModalOverlay,
   ModalContent,
@@ -17,6 +16,8 @@ import {
   ActionText,
   BuyNowModalTrigger,
 } from './styles';
+import { AppLog } from '../../utils/log';
+import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
@@ -40,10 +41,11 @@ export const BuyNowModal = ({
   const dispatch = useAppDispatch();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  // BuyNow modal steps: pending/confirmed
-  const [modalStep, setModalStep] = useState<string>('pending');
+  const [modalStep, setModalStep] = useState<DirectBuyStatusCodes>(
+    DirectBuyStatusCodes.Pending,
+  );
 
-  const tokenId: bigint | undefined = (() => {
+  const tokenId = useMemo(() => {
     const tid = Number(id ?? actionTextId);
 
     if (!tid && tid !== 0) {
@@ -51,16 +53,16 @@ export const BuyNowModal = ({
     }
 
     return BigInt(tid);
-  })();
+  }, [id, actionTextId]);
 
   const handleModalOpen = (status: boolean) => {
+    setModalStep(DirectBuyStatusCodes.Pending);
     setModalOpened(status);
   };
 
   const handleModalClose = () => {
     setModalOpened(false);
-    // eslint-disable-next-line
-    onClose && onClose();
+    if (onClose) onClose();
   };
 
   const handleDirectBuy = () => {
@@ -68,7 +70,7 @@ export const BuyNowModal = ({
       typeof tokenId === 'undefined' ||
       (!tokenId && Number(tokenId) !== 0)
     ) {
-      console.warn('Oops! Missing id param');
+      AppLog.warn('Oops! Missing id param');
 
       return;
     }
@@ -89,7 +91,7 @@ export const BuyNowModal = ({
           setModalStep(DirectBuyStatusCodes.Confirmed);
         },
         onFailure: () => {
-          // TODO: trigger step failure
+          setModalOpened(false);
         },
       }),
     );
@@ -112,11 +114,9 @@ export const BuyNowModal = ({
           </ActionText>
         ) : (
           <BuyNowModalTrigger>
-            <ActionButton
-              type="primary"
-              text={t('translation:buttons.action.buyNow')}
-              handleClick={handleDirectBuy}
-            />
+            <ActionButton type="primary" onClick={handleDirectBuy}>
+              {t('translation:buttons.action.buyNow')}
+            </ActionButton>
           </BuyNowModalTrigger>
         )}
       </DialogPrimitive.Trigger>
@@ -137,7 +137,7 @@ export const BuyNowModal = ({
           Step: 1 -> pending
           ---------------------------------
         */}
-        {modalStep === 'pending' && (
+        {modalStep === DirectBuyStatusCodes.Pending && (
           <Container>
             {/*
               ---------------------------------
@@ -169,11 +169,10 @@ export const BuyNowModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={() => {
-                    setModalStep('listingInfo');
-                  }}
-                />
+                  onClick={handleModalClose}
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -183,7 +182,7 @@ export const BuyNowModal = ({
           Step: 2 -> confirmed
           ---------------------------------
         */}
-        {modalStep === 'confirmed' && (
+        {modalStep === DirectBuyStatusCodes.Confirmed && (
           <Container>
             {/*
               ---------------------------------
@@ -213,9 +212,10 @@ export const BuyNowModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="primary"
-                  text={t('translation:modals.buttons.viewNFT')}
-                  handleClick={handleModalClose}
-                />
+                  onChange={handleModalClose}
+                >
+                  {t('translation:modals.buttons.viewNFT')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>

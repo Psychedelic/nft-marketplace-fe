@@ -201,12 +201,13 @@ export const Filters = () => {
                           ? 'outline'
                           : 'secondary'
                       }
-                      text={t('translation:buttons.action.allNfts')}
-                      handleClick={() => {
+                      onClick={() => {
                         dispatch(filterActions.removeFilter(myNfts));
                         dispatch(filterActions.setMyNfts(false));
                       }}
-                    />
+                    >
+                      {t('translation:buttons.action.allNfts')}
+                    </ActionButton>
                   </FilterButtonWrapper>
                   <Subtext margin="rightAndLeft" color="secondary">
                     or
@@ -216,12 +217,13 @@ export const Filters = () => {
                       type={
                         filterExists(myNfts) ? 'outline' : 'secondary'
                       }
-                      text={t('translation:buttons.action.myNfts')}
-                      handleClick={() => {
+                      onClick={() => {
                         applyFilter('Display', myNfts);
                         dispatch(filterActions.setMyNfts(!isMyNfts));
                       }}
-                    />
+                    >
+                      {t('translation:buttons.action.myNfts')}
+                    </ActionButton>
                   </FilterButtonWrapper>
                 </Flex>
               </FilterGroup>
@@ -237,8 +239,7 @@ export const Filters = () => {
                           ? 'outline'
                           : 'secondary'
                       }
-                      text={t('translation:buttons.action.buyNow')}
-                      handleClick={() => {
+                      onClick={() => {
                         if (statusFilter !== '') setStatusFilter('');
                         applyFilter(
                           'Status',
@@ -257,7 +258,9 @@ export const Filters = () => {
                           dispatch(filterActions.setStatusFilter(''));
                         }
                       }}
-                    />
+                    >
+                      {t('translation:buttons.action.buyNow')}
+                    </ActionButton>
                   </FilterButtonWrapper>
                   <Subtext margin="rightAndLeft" color="secondary">
                     or
@@ -273,8 +276,7 @@ export const Filters = () => {
                           ? 'outline'
                           : 'secondary'
                       }
-                      text={t('translation:buttons.action.hasOffers')}
-                      handleClick={() => {
+                      onClick={() => {
                         if (statusFilter !== '') setStatusFilter('');
                         applyFilter(
                           'Status',
@@ -295,7 +297,9 @@ export const Filters = () => {
                           dispatch(filterActions.setStatusFilter(''));
                         }
                       }}
-                    />
+                    >
+                      {t('translation:buttons.action.hasOffers')}
+                    </ActionButton>
                   </FilterButtonWrapper>
                 </Flex>
               </FilterGroup>
@@ -336,9 +340,10 @@ export const Filters = () => {
                 {displayPriceApplyButton && (
                   <ActionButton
                     type="secondary"
-                    text="Apply"
-                    handleClick={handlePriceFilter}
-                  />
+                    onClick={handlePriceFilter}
+                  >
+                    {t('translation:buttons.action.apply')}
+                  </ActionButton>
                 )}
               </FilterGroup>
             </FilterSection>
@@ -352,7 +357,7 @@ export const Filters = () => {
                   (loadedFiltersList[0] as any)?.map(
                     (checkboxData: any) => (
                       <CheckboxFilterAccordion
-                        key={checkboxData.id}
+                        key={checkboxData.name}
                         checkboxData={checkboxData}
                         id={checkboxData.name}
                       />

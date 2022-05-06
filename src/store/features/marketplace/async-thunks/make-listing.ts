@@ -5,6 +5,7 @@ import crownsIdlFactory from '../../../../declarations/nft.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { notificationActions } from '../../errors';
 import { MakeListing } from '../marketplace-slice';
+import { AppLog } from '../../../../utils/log';
 
 type MakeListingProps = DefaultCallbacks & MakeListing;
 
@@ -31,12 +32,7 @@ export const makeListing = createAsyncThunk<
         methodName: 'approve',
         args: [marketplaceCanisterId, userOwnedTokenId],
         onFail: (res: any) => {
-          console.warn(
-            `Oops! Failed to approve Marketplace (${config.crownsCanisterId})`,
-            res,
-          );
-
-          if (typeof onFailure === 'function') onFailure();
+          throw res;
         },
       };
 
@@ -51,23 +47,17 @@ export const makeListing = createAsyncThunk<
         ],
         onSuccess,
         onFail: (res: any) => {
-          console.warn('Oops! Failed to make listing', res);
-
-          if (typeof onFailure === 'function') onFailure();
+          throw res;
         },
       };
 
-      const batchTxRes = await (
-        window as any
-      )?.ic?.plug?.batchTransactions([
+      const batchTxRes = await window.ic?.plug?.batchTransactions([
         CROWNS_APPROVE_MARKETPLACE,
         MKP_MAKE_LISTING,
       ]);
 
       if (!batchTxRes) {
-        if (typeof onFailure === 'function') onFailure();
-
-        return;
+        throw new Error('Empty response');
       }
 
       return {
@@ -75,11 +65,15 @@ export const makeListing = createAsyncThunk<
         amount,
       };
     } catch (err) {
+      AppLog.error(err);
       dispatch(
-        notificationActions.setErrorMessage((err as Error).message),
+        notificationActions.setErrorMessage(
+          'Oops! Failed to make listing',
+        ),
       );
-      if (typeof onFailure !== 'function') return;
-      onFailure();
+      if (typeof onFailure === 'function') {
+        onFailure(err);
+      }
     }
   },
 );

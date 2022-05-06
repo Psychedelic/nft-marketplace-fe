@@ -65,8 +65,6 @@ export const NftList = () => {
         count: 25,
       }),
     );
-
-    console.log('runs');
   };
 
   if (isMyNfts && !isConnected) {

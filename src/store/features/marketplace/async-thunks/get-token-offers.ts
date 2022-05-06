@@ -9,6 +9,7 @@ import config from '../../../../config/env';
 import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
 import { parseGetTokenOffersResponse } from '../../../../utils/parser';
 import { notificationActions } from '../../errors';
+import { AppLog } from '../../../../utils/log';
 
 export type GetUserReceivedOfferProps = DefaultCallbacks &
   GetUserReceivedOffer;
@@ -55,24 +56,30 @@ export const getTokenOffers = createAsyncThunk<
         currencyMarketPrice = icpPriceResponse.usd;
       }
 
-      const parsedTokenOffers = parseGetTokenOffersResponse({
-        data: result,
-        floorDifferencePrice,
-        currencyMarketPrice,
-      });
+      const parsedTokenOffers =
+        !Array.isArray(result) || !result.length
+          ? []
+          : parseGetTokenOffersResponse({
+              data: result,
+              floorDifferencePrice,
+              currencyMarketPrice,
+            });
 
-      if (!Array.isArray(result) || !result.length) return [];
+      if (typeof onSuccess === 'function') {
+        onSuccess(parsedTokenOffers);
+      }
 
-      if (typeof onSuccess !== 'function') return;
-
-      onSuccess(parsedTokenOffers);
       return parsedTokenOffers;
     } catch (err) {
+      AppLog.error(err);
       thunkAPI.dispatch(
-        notificationActions.setErrorMessage((err as Error).message),
+        notificationActions.setErrorMessage(
+          `Oops! Failed to get token offers`,
+        ),
       );
-      if (typeof onFailure !== 'function') return;
-      onFailure();
+      if (typeof onFailure === 'function') {
+        onFailure(err);
+      }
     }
   },
 );

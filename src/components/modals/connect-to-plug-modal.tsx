@@ -47,11 +47,7 @@ export const ConnectToPlugModal = ({
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <ActionText
-          onClick={() => console.log('connect to plug modal opened')}
-        >
-          {actionText}
-        </ActionText>
+        <ActionText>{actionText}</ActionText>
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------
