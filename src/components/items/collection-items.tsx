@@ -60,7 +60,7 @@ export const CollectionItems = () => {
       <FilteredContainer>
         <ContentWrapper>
           <Flex withMargin justifyContent>
-            <ContentFlex>
+            {/* <ContentFlex>
               <FilteredCountChip
                 label={t('translation:chips.labels.itemsLabel')}
                 count="10.0k"
@@ -79,7 +79,7 @@ export const CollectionItems = () => {
             </ContentFlex>
             <ContentFlex>
               <SortByFilterDropdown />
-            </ContentFlex>
+            </ContentFlex> */}
           </Flex>
           <Flex>
             <ContentFlex>
@@ -87,6 +87,7 @@ export const CollectionItems = () => {
                 if (!Array.isArray(appliedFilter.filterName)) {
                   return (
                     <FilteredTraitsChip
+                      key={appliedFilter.filterName}
                       name={
                         appliedFilter.filterCategory !==
                         `${t('translation:filters.priceRange')}`

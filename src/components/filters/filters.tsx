@@ -357,7 +357,7 @@ export const Filters = () => {
                   (loadedFiltersList[0] as any)?.map(
                     (checkboxData: any) => (
                       <CheckboxFilterAccordion
-                        key={checkboxData.id}
+                        key={checkboxData.name}
                         checkboxData={checkboxData}
                         id={checkboxData.name}
                       />

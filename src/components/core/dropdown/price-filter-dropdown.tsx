@@ -85,10 +85,11 @@ export const SortByFilterDropdown = React.memo(() => {
         <DropdownRadioGroup onValueChange={setSortBy}>
           {sortOptions.map((item) => (
             <>
-              <DropdownRadioMenuItem value={item.key}>
+              <DropdownRadioMenuItem value={item.key} key={item.key}>
                 {item.value}
               </DropdownRadioMenuItem>
               <DropdownMenuSeparator
+                key={item.key}
                 background={theme === 'darkTheme' ? 'dark' : 'light'}
               />
             </>
