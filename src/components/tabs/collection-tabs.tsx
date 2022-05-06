@@ -5,7 +5,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useThemeStore } from '../../store';
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
-import { TabsRoot, TabsTrigger, TabsList } from './styles';
+import {
+  TabsRoot,
+  TabsTrigger,
+  TabsList,
+  TabsContentWrapper,
+} from './styles';
 import activityActive from '../../assets/activity.svg';
 import activityActiveDark from '../../assets/activity-dark.svg';
 import itemsActive from '../../assets/items.svg';
@@ -91,14 +96,10 @@ export const CollectionTabs = () => {
         </TabsTrigger>
       </TabsList>
       <Tabs.Content value="items">
-        <div
-          style={{
-            display: 'flex',
-          }}
-        >
+        <TabsContentWrapper>
           <Filters />
           <CollectionItems />
-        </div>
+        </TabsContentWrapper>
       </Tabs.Content>
       <Tabs.Content value="activity">
         <ActivityTable />

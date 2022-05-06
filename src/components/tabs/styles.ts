@@ -59,3 +59,13 @@ export const TabsTrigger = styled(Tabs.Trigger, {
     outline: 'none',
   },
 });
+
+export const TabsContentWrapper = styled('div', {
+  display: 'flex',
+
+  '@md': {
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    borderTop: '1px solid $borderColor',
+  },
+});
