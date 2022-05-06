@@ -31,12 +31,14 @@ import { useAppDispatch, marketplaceActions } from '../../store';
 
 export type MakeOfferModalProps = {
   onClose?: () => void;
+  setIsUser?: (value: boolean) => void;
   actionText?: string;
   nftTokenId?: string;
 };
 
 export const MakeOfferModal = ({
   onClose,
+  setIsUser,
   actionText,
   nftTokenId,
 }: MakeOfferModalProps) => {
@@ -87,6 +89,7 @@ export const MakeOfferModal = ({
         amount,
         onSuccess: () => {
           setModalStep(ListingStatusCodes.Submitted);
+          setIsUser && setIsUser(true);
         },
         onFailure: () => {
           setModalStep(ListingStatusCodes.ListingInfo);

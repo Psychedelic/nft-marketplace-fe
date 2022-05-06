@@ -13,6 +13,7 @@ import {
   UndefinedPrice,
   ButtonListWrapper,
   ButtonDetailsWrapper,
+  Loading,
 } from './styles';
 import offer from '../../../assets/accordions/offer.svg';
 import offerDark from '../../../assets/accordions/offer-dark.svg';
@@ -25,19 +26,25 @@ import { NFTOffersTable } from '../../tables';
 import { Plug } from '../../plug';
 import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.utils';
 
-import { BuyNowModal, MakeOfferModal } from '../../modals';
+import { BuyNowModal, ChangePriceModal, MakeOfferModal } from '../../modals';
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { PlugStatusCodes } from '../../../constants/plug';
 
 export type OfferAccordionProps = {
   lastSalePrice?: string;
   isListed?: boolean;
+  isUser?: boolean;
+  setIsUser?: (value: boolean) => void;
+  isOffers?: boolean;
   owner?: string;
 };
 
 type ConnectedProps = {
   isListed?: boolean;
   isOwner?: boolean;
+  isUser?: boolean;
+  setIsUser?: (value: boolean) => void;
+  isOffers?: boolean;
   price?: string;
 };
 
@@ -45,7 +52,7 @@ type DisconnectedProps = {
   connectionStatus: string;
 };
 
-const OnConnected = ({ isListed, isOwner, price }: ConnectedProps) =>
+const OnConnected = ({ isListed, isOwner, setIsUser, isUser, isOffers, price }: ConnectedProps) =>
   !isOwner ? (
     <ButtonListWrapper>
       {isListed && (
@@ -54,7 +61,11 @@ const OnConnected = ({ isListed, isOwner, price }: ConnectedProps) =>
         </ButtonDetailsWrapper>
       )}
       <ButtonDetailsWrapper>
-        <MakeOfferModal />
+        {isOffers ? (
+          <Loading>Loading...</Loading>
+        ) : (
+          isUser ? <ChangePriceModal /> : <MakeOfferModal setIsUser={setIsUser} />
+        )}
       </ButtonDetailsWrapper>
     </ButtonListWrapper>
   ) : null;
@@ -69,6 +80,9 @@ const OnDisconnected = ({ connectionStatus }: DisconnectedProps) =>
 export const OfferAccordion = ({
   lastSalePrice,
   isListed,
+  isUser,
+  setIsUser,
+  isOffers,
   owner,
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
@@ -138,6 +152,9 @@ export const OfferAccordion = ({
           <OnConnected
             isListed={isListed}
             isOwner={isOwner}
+            isUser={isUser}
+            setIsUser={setIsUser}
+            isOffers={isOffers}
             price={lastSalePrice}
           />
         )) || <OnDisconnected connectionStatus={connectionStatus} />}

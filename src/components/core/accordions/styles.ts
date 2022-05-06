@@ -307,3 +307,8 @@ export const CheckboxSkeletonWrapper = styled('div', {
   padding: '0 15px',
   height: '44px',
 });
+
+export const Loading = styled('p', {
+  color: '$mainTextColor',
+  fontSize: '14px',
+});

@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
@@ -23,6 +23,7 @@ import {
   useAppDispatch,
   marketplaceActions,
   nftsActions,
+  usePlugStore,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 
@@ -34,11 +35,15 @@ import { NFTMetadata } from '../../declarations/legacy';
 export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
+  const { principalId } = usePlugStore();
   const recentlyListedForSale = useSelector(
     (state: RootState) => state.marketplace.recentlyListedForSale,
   );
   const recentlyCancelledItems = useSelector(
     (state: RootState) => state.marketplace.recentlyCancelledItems,
+  );
+  const recentlyAcceptedOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyAcceptedOffers,
   );
   const tokenListing = useSelector((state: RootState) => {
     if (
@@ -63,6 +68,9 @@ export const NftDetails = () => {
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
   const dispatch = useAppDispatch();
 
+  const [isUser, setIsUser] = useState<boolean>(false);
+  const [isOffers, setLoadingOffers] = useState<boolean>(true);
+
   // TODO: We need more control, plus the
   // kyasshu calls should be placed as a thunk/action
   // of the state management of your choice, which is redux toolkit
@@ -82,7 +90,21 @@ export const NftDetails = () => {
         id,
       }),
     );
-  }, [dispatch, id, recentlyListedForSale, recentlyCancelledItems]);
+    
+    dispatch(
+      marketplaceActions.getTokenOffers({
+        // TODO: update ownerTokenIdentifiers naming convention
+        ownerTokenIdentifiers: [BigInt(id)],
+        onSuccess: (offers: any) => {
+          setLoadingOffers(false);
+          setIsUser(offers.some((offer: any) => offer.fromDetails.address === principalId));
+        },
+        onFailure: () => {
+          // TODO: handle failure messages
+        },
+      }),
+    );
+  }, [dispatch, id, recentlyListedForSale, recentlyCancelledItems, recentlyAcceptedOffers]);
 
   return (
     <Container>
@@ -128,6 +150,9 @@ export const NftDetails = () => {
             <OfferAccordion
               lastSalePrice={lastSalePrice?.toString()}
               isListed={isListed}
+              isUser={isUser}
+              setIsUser={setIsUser}
+              isOffers={isOffers}
               owner={owner}
             />
             <AboutAccordion owner={owner} />
