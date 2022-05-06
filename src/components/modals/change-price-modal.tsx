@@ -36,6 +36,7 @@ import {
   marketplaceActions,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
+import { parseE8SAmountToWICP } from '../../utils/formatters';
 
 /* --------------------------------------------------------------------------
  * Edit Listing Modal Component
@@ -62,7 +63,7 @@ export const ChangePriceModal = () => {
   useEffect(() => {
     if (!nftDetails?.price || !modalOpened) return;
 
-    setAmount(nftDetails.price);
+    setAmount(parseE8SAmountToWICP(BigInt(nftDetails.price)));
   }, [nftDetails, modalOpened]);
 
   const handleModalOpen = (modalOpenedStatus: boolean) => {

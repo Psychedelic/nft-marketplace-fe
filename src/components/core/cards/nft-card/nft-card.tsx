@@ -27,6 +27,7 @@ import {
   SellModal,
 } from '../../../modals';
 import { usePlugStore } from '../../../../store';
+import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -78,7 +79,9 @@ const OnConnected = ({
               onClose={() => setModalStatus(false)}
               actionText={`${t('translation:nftCard.forSale')}`}
               actionTextId={Number(tokenId)}
-              price={price?.toString()}
+              price={
+                (price && parseE8SAmountToWICP(BigInt(price))) || ''
+              }
             />
           ) : (
             <MakeOfferModal
@@ -161,7 +164,7 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
               {isForSale && (
                 <>
                   <img src={wicpLogo} alt="" />
-                  {data?.price}
+                  {parseE8SAmountToWICP(data?.price)}
                 </>
               )}
             </NftDataText>
@@ -188,7 +191,13 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
                 {!isForSale
                   ? `${t('translation:nftCard.offerFor')} `
                   : `${t('translation:nftCard.last')} `}
-                <b>{data?.lastOffer}</b>
+                <b>
+                  {(data?.lastOffer &&
+                    parseE8SAmountToWICP(
+                      BigInt(data.lastOffer),
+                    ).toString()) ||
+                    ''}
+                </b>
               </>
             )}
           </LastOffer>

@@ -28,16 +28,25 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
         BigInt(tokenId),
       );
 
+      if (typeof onSuccess !== 'function') return;
+
       if (!('Ok' in result)) {
-        throw new Error('Invalid response');
+        AppLog.warn(
+          `Oops! Failed to get token listing for id ${tokenId}`,
+        );
+
+        onSuccess();
+
+        return {
+          [tokenId]: {},
+        };
       }
 
-      const resultObject = {
+      onSuccess();
+
+      return {
         [tokenId]: result.Ok,
       };
-
-      if (typeof onSuccess === 'function') onSuccess(resultObject);
-      return resultObject;
     } catch (err) {
       AppLog.error(err);
       thunkAPI.dispatch(

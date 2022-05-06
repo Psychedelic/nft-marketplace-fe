@@ -6,6 +6,7 @@ import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { AppLog } from '../../../../utils/log';
+import { parseAmountToE8S } from '../../../../utils/formatters';
 
 export type MakeOfferProps = DefaultCallbacks & MakeOffer;
 
@@ -22,7 +23,7 @@ export const makeOffer = createAsyncThunk<
     config.crownsCanisterId,
   );
   const userOwnedTokenId = BigInt(id);
-  const userOfferInPrice = BigInt(amount);
+  const userOfferInPrice = parseAmountToE8S(amount);
 
   try {
     const WICP_APPROVE_MARKETPLACE = {

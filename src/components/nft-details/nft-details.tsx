@@ -25,6 +25,7 @@ import {
   nftsActions,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
+import { parseE8SAmountToWICP } from '../../utils/formatters';
 
 // type CurrentListing = {
 //   seller: string;
@@ -61,7 +62,11 @@ export const NftDetails = () => {
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
   const owner = tokenListing?.seller?.toString() || nftDetails?.owner;
-  const lastSalePrice = tokenListing?.price || nftDetails?.price;
+  const lastSalePrice =
+    (tokenListing?.price &&
+      parseE8SAmountToWICP(tokenListing.price)) ||
+    (nftDetails?.price &&
+      parseE8SAmountToWICP(BigInt(nftDetails.price)));
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
   const dispatch = useAppDispatch();
 

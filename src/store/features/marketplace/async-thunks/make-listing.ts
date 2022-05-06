@@ -6,6 +6,7 @@ import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { notificationActions } from '../../errors';
 import { MakeListing } from '../marketplace-slice';
 import { AppLog } from '../../../../utils/log';
+import { parseAmountToE8S } from '../../../../utils/formatters';
 
 type MakeListingProps = DefaultCallbacks & MakeListing;
 
@@ -23,7 +24,7 @@ export const makeListing = createAsyncThunk<
     );
 
     const userOwnedTokenId = BigInt(id);
-    const userListForPrice = BigInt(amount);
+    const userListForPrice = parseAmountToE8S(amount);
 
     try {
       const CROWNS_APPROVE_MARKETPLACE = {

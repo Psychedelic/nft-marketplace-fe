@@ -10,6 +10,7 @@ import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
 import { parseGetTokenOffersResponse } from '../../../../utils/parser';
 import { notificationActions } from '../../errors';
 import { AppLog } from '../../../../utils/log';
+import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
 export type GetUserReceivedOfferProps = DefaultCallbacks &
   GetUserReceivedOffer;
@@ -61,7 +62,9 @@ export const getTokenOffers = createAsyncThunk<
           ? []
           : parseGetTokenOffersResponse({
               data: result,
-              floorDifferencePrice,
+              floorDifferencePrice: parseE8SAmountToWICP(
+                floorDifferencePrice,
+              ),
               currencyMarketPrice,
             });
 
