@@ -88,7 +88,7 @@ export const NftDetails = () => {
           setShowNFTActionButtons(true);
         },
         onFailure: () => {
-          // Listing got successfull so not allowing
+          // Listing got failed so not allowing
           // user to take actions over NFT
           setShowNFTActionButtons(false);
         },

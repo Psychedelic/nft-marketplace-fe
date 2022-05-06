@@ -27,13 +27,20 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
         BigInt(tokenId),
       );
 
+      if (typeof onSuccess !== 'function') return;
+
       if (!('Ok' in result)) {
-        throw Error(
+        console.warn(
           `Oops! Failed to get token listing for id ${tokenId}`,
         );
+
+        onSuccess();
+
+        return {
+          [tokenId]: {},
+        };
       }
 
-      if (typeof onSuccess !== 'function') return;
       onSuccess();
 
       return {
