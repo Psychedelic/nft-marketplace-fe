@@ -22,6 +22,7 @@ import { isNFTOwner } from '../../integrations/kyasshu/utils';
 export type NftActionBarProps = {
   isListed?: boolean;
   owner?: string;
+  showNFTActionButtons: boolean;
 };
 
 type ConnectedProps = {
@@ -53,6 +54,7 @@ const OnDisconnected = () => null;
 export const NftActionBar = ({
   isListed,
   owner,
+  showNFTActionButtons,
 }: NftActionBarProps) => {
   const { t } = useTranslation();
 
@@ -73,9 +75,13 @@ export const NftActionBar = ({
             {t('translation:buttons.action.backToResults')}
           </ActionText>
         </RouterLink>
-        {(isConnectedOwner && (
-          <OnConnected isListed={isListed} />
-        )) || <OnDisconnected />}
+        {showNFTActionButtons && (
+          <>
+            {(isConnectedOwner && (
+              <OnConnected isListed={isListed} />
+            )) || <OnDisconnected />}
+          </>
+        )}
       </NftActionBarWrapper>
     </Container>
   );

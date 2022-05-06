@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
@@ -34,6 +34,8 @@ import { NFTMetadata } from '../../declarations/legacy';
 export const NftDetails = () => {
   const { loadedNFTS } = useNFTSStore();
   const { id } = useParams();
+  const [showNFTActionButtons, setShowNFTActionButtons] =
+    useState<boolean>(false);
   const recentlyListedForSale = useSelector(
     (state: RootState) => state.marketplace.recentlyListedForSale,
   );
@@ -77,16 +79,34 @@ export const NftDetails = () => {
 
     dispatch(nftsActions.getNFTDetails({ id }));
 
+    // TODO: add loading placeholders in action buttons
+    // like Sell/Cancel/Edit/Make Offer/Buy Now
+    // to show users that getTokenListing call is under progress
+
     dispatch(
       marketplaceActions.getTokenListing({
         id,
+        onSuccess: () => {
+          // Listing got successfull so allowing
+          // user to take actions over NFT
+          setShowNFTActionButtons(true);
+        },
+        onFailure: () => {
+          // Listing got failed so not allowing
+          // user to take actions over NFT
+          setShowNFTActionButtons(false);
+        },
       }),
     );
   }, [dispatch, id, recentlyListedForSale, recentlyCancelledItems]);
 
   return (
     <Container>
-      <NftActionBar owner={owner} isListed={isListed} />
+      <NftActionBar
+        owner={owner}
+        isListed={isListed}
+        showNFTActionButtons={showNFTActionButtons}
+      />
       {nftDetails ? (
         <Wrapper>
           <PreviewContainer>
@@ -129,6 +149,7 @@ export const NftDetails = () => {
               lastSalePrice={lastSalePrice?.toString()}
               isListed={isListed}
               owner={owner}
+              showNFTActionButtons={showNFTActionButtons}
             />
             <AboutAccordion owner={owner} />
           </DetailsContainer>
