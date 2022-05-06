@@ -86,14 +86,9 @@ export const CancelListingModal = () => {
       */}
       <DialogPrimitive.Trigger asChild>
         <CancelListingModalTrigger>
-          <ActionButton
-            type="secondary"
-            text={t('translation:buttons.action.cancelListing')}
-            handleClick={() => {
-              // eslint-disable-next-line no-console
-              console.log('cancelListing modal opened');
-            }}
-          />
+          <ActionButton type="secondary">
+            {t('translation:buttons.action.cancelListing')}
+          </ActionButton>
         </CancelListingModalTrigger>
       </DialogPrimitive.Trigger>
       {/*
@@ -137,17 +132,19 @@ export const CancelListingModal = () => {
               <ModalButtonWrapper>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={handleModalClose}
-                />
+                  onClick={handleModalClose}
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
               <ModalButtonWrapper>
                 <ActionButton
                   type="primary"
-                  text={t('translation:modals.buttons.cancelListing')}
-                  handleClick={handleCancelListing}
+                  onClick={handleCancelListing}
                   danger
-                />
+                >
+                  {t('translation:modals.buttons.cancelListing')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>

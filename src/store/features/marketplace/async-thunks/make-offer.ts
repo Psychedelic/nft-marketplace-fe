@@ -5,6 +5,9 @@ import { MakeOffer } from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
+import { AppLog } from '../../../../utils/log';
+import { parseAmountToE8S } from '../../../../utils/formatters';
+import { errorMessageHandler } from '../../../../utils/error';
 
 export type MakeOfferProps = DefaultCallbacks & MakeOffer;
 
@@ -21,21 +24,17 @@ export const makeOffer = createAsyncThunk<
     config.crownsCanisterId,
   );
   const userOwnedTokenId = BigInt(id);
-  const userOfferInPrice = BigInt(amount);
+  const userOfferInPrice = parseAmountToE8S(amount);
+  const allowanceAmount = BigInt(9_223_372_036_854_775_807);
 
   try {
     const WICP_APPROVE_MARKETPLACE = {
       idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,
       methodName: 'approve',
-      args: [mkpContractAddress, userOfferInPrice],
+      args: [mkpContractAddress, allowanceAmount],
       onFail: (res: any) => {
-        console.warn(
-          `Oops! Failed to approve Marketplace (${config.wICPCanisterId})`,
-          res,
-        );
-
-        if (typeof onFailure === 'function') onFailure();
+        throw res;
       },
     };
 
@@ -48,28 +47,27 @@ export const makeOffer = createAsyncThunk<
         userOwnedTokenId,
         userOfferInPrice,
       ],
-      onSuccess,
-      onFail: (res: any) => {
-        console.warn(
-          `Oops! Failed to make offer (${config.marketplaceCanisterId})`,
-          res,
+      onSuccess: (res: any) => {
+        if ('Err' in res) throw new Error(
+          errorMessageHandler(res.Err)
         );
 
-        if (typeof onFailure === 'function') onFailure();
+        if (typeof onSuccess !== 'function') return;
+
+        onSuccess()
+      },
+      onFail: (res: any) => {
+        throw res;
       },
     };
 
-    const batchTxRes = await (
-      window as any
-    )?.ic?.plug?.batchTransactions([
+    const batchTxRes = await window.ic?.plug?.batchTransactions([
       WICP_APPROVE_MARKETPLACE,
       MKP_MAKE_OFFER_WICP,
     ]);
 
     if (!batchTxRes) {
-      if (typeof onFailure === 'function') onFailure();
-
-      return;
+      throw new Error('Empty response');
     }
 
     return {
@@ -77,10 +75,14 @@ export const makeOffer = createAsyncThunk<
       amount,
     };
   } catch (err) {
+    AppLog.error(err);
     dispatch(
-      notificationActions.setErrorMessage((err as Error).message),
+      notificationActions.setErrorMessage(
+        `Oops! Failed to make offer`,
+      ),
     );
-    if (typeof onFailure !== 'function') return;
-    onFailure();
+    if (typeof onFailure === 'function') {
+      onFailure(err);
+    }
   }
 });

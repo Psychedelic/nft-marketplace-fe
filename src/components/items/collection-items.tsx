@@ -87,6 +87,7 @@ export const CollectionItems = () => {
                 if (!Array.isArray(appliedFilter.filterName)) {
                   return (
                     <FilteredTraitsChip
+                      key={appliedFilter.filterName}
                       name={
                         appliedFilter.filterCategory !==
                         `${t('translation:filters.priceRange')}`

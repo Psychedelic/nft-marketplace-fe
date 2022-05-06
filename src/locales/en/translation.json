@@ -40,7 +40,8 @@
       "connectToPlug": "Connect to Plug",
       "installPlug": "Install Plug",
       "loading": "Loading...",
-      "connecting": "Connecting..."
+      "connecting": "Connecting...",
+      "apply": "Apply"
     }
   },
   "dropdown": {

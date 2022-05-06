@@ -9,7 +9,8 @@ export const Container = styled('div', {
   variants: {
     name: {
       searchInput: {
-        width: '600px',
+        width: '100%',
+        maxWidth: '600px',
         height: '44px',
       },
       filterInput: {
@@ -63,6 +64,12 @@ export const Input = styled('input', {
         lineHeight: '27px',
       },
     },
+    error: {
+      true: {
+        borderColor: '$error',
+        color: '$error',
+      },
+    },
   },
 });
 
@@ -78,19 +85,19 @@ export const SearchIcon = styled('img', {
 export const AmountTypeContainer = styled('div', {
   position: 'absolute',
   top: '0px',
+  bottom: '0px',
   right: '0px',
   width: '93px',
-  height: '53px',
-  background: '#FAFBFD',
+  background: '$tableBackgroundColor',
   borderRadius: '0px 14px 14px 0px',
   border: '1.5px solid $borderColor',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  color: '$mainTextColor',
 });
 
 export const AmountTypeTitle = styled('div', {
-  color: '#23262F',
   fontSize: '18px',
   fontWeight: '500',
   lineHeight: '22px',

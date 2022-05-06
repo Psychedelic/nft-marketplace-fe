@@ -49,12 +49,12 @@ export const TraitChipContainer = styled('div', {
         background: '$chipsNftBackgroundColor',
         border: '1.5px solid $borderColor',
         margin: '0px 15px 15px 0px',
+
+        '&:nth-child(3)': {
+          marginRight: '0px',
+        },
       },
     },
-  },
-
-  '&:nth-child(3)': {
-    marginRight: '0px',
   },
 
   '&:last-child': {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { AppLog } from '../../utils/log';
 
 const COINGECKO_ICP_ID = 'internet-computer';
 const COINGECKO_PRICE_UNAVAILABLE = 'n/a';
@@ -26,7 +27,7 @@ export const getICPPrice = async (): Promise<
 
     return data[COINGECKO_ICP_ID];
   } catch (err) {
-    console.error('Oops! Current ICP price is unavailable');
+    AppLog.error('Oops! Current ICP price is unavailable');
   }
 };
 
@@ -59,7 +60,7 @@ export const getCurrentMarketPrice = async ({
 
     return formatted;
   } catch (err) {
-    console.error(err);
+    AppLog.error(err);
   }
 
   return COINGECKO_PRICE_UNAVAILABLE;

@@ -71,10 +71,6 @@ export const GlobalSearch = () => {
             placeholder={t(
               'translation:inputField.placeholder.searchCollection',
             )}
-            handleClick={() => {
-              // eslint-disable-next-line no-console
-              console.log('click callback');
-            }}
           />
         </SearchModalTrigger>
       </DialogPrimitive.Trigger>

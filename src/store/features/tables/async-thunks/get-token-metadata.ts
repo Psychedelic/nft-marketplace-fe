@@ -1,10 +1,14 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { KyasshuUrl, NSKyasshuUrl } from '../../../../integrations/kyasshu';
+import {
+  KyasshuUrl,
+  NSKyasshuUrl,
+} from '../../../../integrations/kyasshu';
 import { tableActions } from '../table-slice';
+import { AppLog } from '../../../../utils/log';
 
 export type GetTokenMetadataProps =
-NSKyasshuUrl.GetNFTDetailsQueryParams;
+  NSKyasshuUrl.GetNFTDetailsQueryParams;
 
 export const getTokenMetadata = createAsyncThunk<
   void,
@@ -20,6 +24,6 @@ export const getTokenMetadata = createAsyncThunk<
       ),
     );
   } catch (error) {
-    console.log(error);
+    AppLog.error(error);
   }
 });

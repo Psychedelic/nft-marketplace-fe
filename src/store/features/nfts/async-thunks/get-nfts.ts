@@ -1,8 +1,12 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { nftsActions } from '../nfts-slice';
-import { KyasshuUrl, NSKyasshuUrl } from '../../../../integrations/kyasshu';
+import {
+  KyasshuUrl,
+  NSKyasshuUrl,
+} from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../errors';
+import { AppLog } from '../../../../utils/log';
 
 export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -66,8 +70,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
       // update store with loaded NFTS details
       dispatch(nftsActions.setLoadedNFTS(actionPayload));
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.warn(error);
+      AppLog.error(error);
 
       // set NFTS failed to load
       dispatch(
