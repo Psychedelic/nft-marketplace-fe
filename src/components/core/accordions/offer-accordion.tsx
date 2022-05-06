@@ -28,7 +28,6 @@ import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.u
 
 import {
   BuyNowModal,
-  ChangePriceModal,
   MakeOfferModal,
 } from '../../modals';
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
@@ -63,25 +62,30 @@ const OnConnected = ({
   setIsUser,
   isUser,
   isOffers,
-}: ConnectedProps) =>
-  !isOwner ? (
-    <ButtonListWrapper>
-      {isListed && (
-        <ButtonDetailsWrapper>
-          <BuyNowModal price={price?.toString()} />
-        </ButtonDetailsWrapper>
-      )}
-      <ButtonDetailsWrapper>
-        {isOffers ? (
-          <Loading>Loading...</Loading>
-        ) : isUser ? (
-          <ChangePriceModal />
-        ) : (
-          <MakeOfferModal setIsUser={setIsUser} />
+}: ConnectedProps) => {
+  const { t } = useTranslation();
+
+  return (
+    !isOwner ? (
+      <ButtonListWrapper>
+        {isListed && (
+          <ButtonDetailsWrapper>
+            <BuyNowModal price={price?.toString()} />
+          </ButtonDetailsWrapper>
         )}
-      </ButtonDetailsWrapper>
-    </ButtonListWrapper>
-  ) : null;
+        <ButtonDetailsWrapper>
+          {isOffers ? (
+            <Loading>Loading...</Loading>
+          ) : isUser ? (
+            <MakeOfferModal text={`${t('translation:buttons.action.editOffer')}`} />
+          ) : (
+            <MakeOfferModal setIsUser={setIsUser} />
+          )}
+        </ButtonDetailsWrapper>
+      </ButtonListWrapper>
+    ) : null
+  );
+}
 
 const OnDisconnected = ({ connectionStatus }: DisconnectedProps) =>
   connectionStatus !== PlugStatusCodes.Verifying ? (

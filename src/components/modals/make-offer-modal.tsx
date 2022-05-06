@@ -33,6 +33,7 @@ export type MakeOfferModalProps = {
   onClose?: () => void;
   setIsUser?: (value: boolean) => void;
   actionText?: string;
+  text?: string;
   nftTokenId?: string;
 };
 
@@ -40,6 +41,7 @@ export const MakeOfferModal = ({
   onClose,
   setIsUser,
   actionText,
+  text,
   nftTokenId,
 }: MakeOfferModalProps) => {
   const { t } = useTranslation();
@@ -119,7 +121,7 @@ export const MakeOfferModal = ({
           <MakeOfferModalTrigger>
             <ActionButton
               type="primary"
-              text={t('translation:buttons.action.makeOffer')}
+              text={text ? text : t('translation:buttons.action.makeOffer')}
               handleClick={() =>
                 console.log('makeOffer modal opened')
               }
