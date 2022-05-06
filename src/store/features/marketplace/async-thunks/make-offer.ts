@@ -24,13 +24,14 @@ export const makeOffer = createAsyncThunk<
   );
   const userOwnedTokenId = BigInt(id);
   const userOfferInPrice = parseAmountToE8S(amount);
+  const allowanceAmount = BigInt(9_223_372_036_854_775_807);
 
   try {
     const WICP_APPROVE_MARKETPLACE = {
       idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,
       methodName: 'approve',
-      args: [mkpContractAddress, userOfferInPrice],
+      args: [mkpContractAddress, allowanceAmount],
       onFail: (res: any) => {
         throw res;
       },

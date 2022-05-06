@@ -24,12 +24,12 @@ export const directBuy = createAsyncThunk<
   );
 
   try {
-    const wicpAmount = parseAmountToE8S(price);
+    const allowanceAmount = BigInt(9_223_372_036_854_775_807);
     const WICP_APPROVE = {
       idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,
       methodName: 'approve',
-      args: [marketplaceCanisterId, wicpAmount],
+      args: [marketplaceCanisterId, allowanceAmount],
       onFail: (res: any) => {
         throw res;
       },
