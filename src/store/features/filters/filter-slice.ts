@@ -91,7 +91,7 @@ export const filterSlice = createSlice({
           values: [...action.payload.values],
         });
         state.defaultFilters.push({
-          filterName: [action.payload.values],
+          filterName: [...action.payload.values],
           filterCategory: action.payload.key,
         });
 
@@ -104,9 +104,7 @@ export const filterSlice = createSlice({
           trait.key === action.payload.key,
       );
 
-      state.traits[traitsFilterIndex].values.push(
-        ...action.payload.values,
-      );
+      state.traits[traitsFilterIndex].values.push(...action.payload.values);
       const traitName = state.traits[traitsFilterIndex].key;
       const defaultFiltersIndex = state.defaultFilters.findIndex(
         (filter) => filter.filterCategory === traitName,
@@ -116,7 +114,7 @@ export const filterSlice = createSlice({
         state.defaultFilters[defaultFiltersIndex].filterName,
       ) &&
         state.defaultFilters[defaultFiltersIndex].filterName.push(
-          action.payload.values,
+          ...action.payload.values,
         );
     },
     setMyNfts: (state, action: PayloadAction<boolean>) => {
@@ -146,7 +144,7 @@ export const filterSlice = createSlice({
           trait.key === action.payload.key
         ) {
           const filteredTraitsValues = trait.values.filter(
-            (t) => t !== action.payload.value,
+            (t: string) => t !== action.payload.value,
           );
           return {
             ...trait,
