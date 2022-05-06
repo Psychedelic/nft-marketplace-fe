@@ -26,7 +26,11 @@ import { NFTOffersTable } from '../../tables';
 import { Plug } from '../../plug';
 import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.utils';
 
-import { BuyNowModal, ChangePriceModal, MakeOfferModal } from '../../modals';
+import {
+  BuyNowModal,
+  ChangePriceModal,
+  MakeOfferModal,
+} from '../../modals';
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { PlugStatusCodes } from '../../../constants/plug';
 
@@ -52,7 +56,14 @@ type DisconnectedProps = {
   connectionStatus: string;
 };
 
-const OnConnected = ({ isListed, isOwner, price, setIsUser, isUser, isOffers }: ConnectedProps) =>
+const OnConnected = ({
+  isListed,
+  isOwner,
+  price,
+  setIsUser,
+  isUser,
+  isOffers,
+}: ConnectedProps) =>
   !isOwner ? (
     <ButtonListWrapper>
       {isListed && (
@@ -63,8 +74,10 @@ const OnConnected = ({ isListed, isOwner, price, setIsUser, isUser, isOffers }: 
       <ButtonDetailsWrapper>
         {isOffers ? (
           <Loading>Loading...</Loading>
+        ) : isUser ? (
+          <ChangePriceModal />
         ) : (
-          isUser ? <ChangePriceModal /> : <MakeOfferModal setIsUser={setIsUser} />
+          <MakeOfferModal setIsUser={setIsUser} />
         )}
       </ButtonDetailsWrapper>
     </ButtonListWrapper>
