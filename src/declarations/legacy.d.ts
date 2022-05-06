@@ -24,11 +24,11 @@ export type OfferItem = {
   name: string;
   tokenId: bigint;
   logo?: string;
-}
+};
 
 export interface OffersTableItem {
   item: OfferItem;
-  price: bigint;
+  price: string;
   floorDifference: string;
   fromDetails: {
     formattedAddress: string;
