@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
 import { useAppDispatch, marketplaceActions } from '../../store';
-import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 import {
   ModalOverlay,
   ModalContent,
@@ -18,6 +17,7 @@ import {
   BuyNowModalTrigger,
 } from './styles';
 import { AppLog } from '../../utils/log';
+import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
@@ -41,8 +41,9 @@ export const BuyNowModal = ({
   const dispatch = useAppDispatch();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  // BuyNow modal steps: pending/confirmed
-  const [modalStep, setModalStep] = useState<string>('pending');
+  const [modalStep, setModalStep] = useState<DirectBuyStatusCodes>(
+    DirectBuyStatusCodes.Pending,
+  );
 
   const tokenId = useMemo(() => {
     const tid = Number(id ?? actionTextId);
@@ -55,6 +56,7 @@ export const BuyNowModal = ({
   }, [id, actionTextId]);
 
   const handleModalOpen = (status: boolean) => {
+    setModalStep(DirectBuyStatusCodes.Pending);
     setModalOpened(status);
   };
 
@@ -135,7 +137,7 @@ export const BuyNowModal = ({
           Step: 1 -> pending
           ---------------------------------
         */}
-        {modalStep === 'pending' && (
+        {modalStep === DirectBuyStatusCodes.Pending && (
           <Container>
             {/*
               ---------------------------------
@@ -167,9 +169,7 @@ export const BuyNowModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="secondary"
-                  onClick={() => {
-                    setModalStep('listingInfo');
-                  }}
+                  onClick={handleModalClose}
                 >
                   {t('translation:modals.buttons.cancel')}
                 </ActionButton>
@@ -182,7 +182,7 @@ export const BuyNowModal = ({
           Step: 2 -> confirmed
           ---------------------------------
         */}
-        {modalStep === 'confirmed' && (
+        {modalStep === DirectBuyStatusCodes.Confirmed && (
           <Container>
             {/*
               ---------------------------------

@@ -33,7 +33,7 @@ export const Button = styled('button', {
       },
       outline: {
         backgroundColor: 'transparent',
-        color: '#2253FF',
+        color: '$primary',
         border: '1.5px solid $primary',
       },
     },
