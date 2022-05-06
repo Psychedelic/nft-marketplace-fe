@@ -11,6 +11,7 @@ import { notificationActions } from '../../errors';
 import { parseOffersMadeResponse } from '../../../../utils/parser';
 import { OffersTableItem } from '../../../../declarations/legacy';
 import { AppLog } from '../../../../utils/log';
+import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
 export type GetBuyerOffersProps = DefaultCallbacks & GetBuyerOffers;
 
@@ -56,7 +57,9 @@ export const getBuyerOffers = createAsyncThunk<
 
     const parsedTokenOffers = parseOffersMadeResponse({
       data: result,
-      floorDifferencePrice,
+      floorDifferencePrice: parseE8SAmountToWICP(
+        floorDifferencePrice,
+      ),
       currencyMarketPrice,
     });
 
