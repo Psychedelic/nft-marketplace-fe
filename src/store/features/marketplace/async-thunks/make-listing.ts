@@ -24,8 +24,7 @@ export const makeListing = createAsyncThunk<
     );
 
     const userOwnedTokenId = BigInt(id);
-    const amountInE8S = parseAmountToE8S(amount);
-    const userListForPrice = BigInt(amountInE8S);
+    const userListForPrice = parseAmountToE8S(amount);
 
     try {
       const CROWNS_APPROVE_MARKETPLACE = {
