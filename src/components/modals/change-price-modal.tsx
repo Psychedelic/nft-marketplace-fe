@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
@@ -47,6 +47,7 @@ export const ChangePriceModal = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const { loadedNFTS } = useNFTSStore();
+  const navigate = useNavigate();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // ChangePrice modal steps: listingInfo/pending/confirmed
@@ -112,6 +113,11 @@ export const ChangePriceModal = () => {
         },
       }),
     );
+  };
+
+  const handleViewNFT = () => {
+    navigate(`/nft/${id}`, { replace: true });
+    setModalOpened(false);
   };
 
   return (
@@ -306,10 +312,7 @@ export const ChangePriceModal = () => {
             */}
             <ModalButtonsList>
               <ModalButtonWrapper fullWidth>
-                <ActionButton
-                  type="primary"
-                  onClick={() => handleModalOpen(false)}
-                >
+                <ActionButton type="primary" onClick={handleViewNFT}>
                   {t('translation:modals.buttons.viewListing')}
                 </ActionButton>
               </ModalButtonWrapper>
