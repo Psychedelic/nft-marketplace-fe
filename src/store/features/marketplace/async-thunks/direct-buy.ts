@@ -23,8 +23,7 @@ export const directBuy = createAsyncThunk<
   );
 
   try {
-    const amountInE8S = parseAmountToE8S(price);
-    const wicpAmount = BigInt(amountInE8S);
+    const wicpAmount = parseAmountToE8S(price);
     const WICP_APPROVE = {
       idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,

@@ -37,9 +37,12 @@ export const formatPriceValue = (price: string) => {
 // Almost everytime we are getting amount type is string
 // So we declared amount type: string instead of number
 export const parseAmountToE8S = (amount: string) => {
-  if (!amount) return 0;
+  // TODO: handle error notification when amount is not available
+  if (!amount) return BigInt(0);
 
-  return Number(amount) * E8S_PER_ICP;
+  const computedAmount = Number(amount) * E8S_PER_ICP;
+
+  return BigInt(computedAmount);
 };
 
 // parseE8SAmountToWICP is going to be used in different

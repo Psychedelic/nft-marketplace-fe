@@ -26,8 +26,7 @@ export const acceptOffer = createAsyncThunk<
     const userOwnedTokenId = BigInt(id);
     const buyerAddress = Principal.fromText(buyerPrincipalId);
 
-    const amountInE8S = parseAmountToE8S(offerPrice);
-    const offerInPrice = BigInt(amountInE8S);
+    const offerInPrice = parseAmountToE8S(offerPrice);
 
     const CROWNS_APPROVE_MARKETPLACE = {
       idl: crownsIdlFactory,
