@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
@@ -44,6 +44,7 @@ export const MakeOfferModal = ({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [modalStep, setModalStep] = useState<ListingStatusCodes>(
@@ -86,6 +87,11 @@ export const MakeOfferModal = ({
         },
       }),
     );
+  };
+
+  const handleViewNFT = () => {
+    navigate(`/nft/${tokenId}`, { replace: true });
+    setModalOpened(false);
   };
 
   return (
@@ -256,10 +262,7 @@ export const MakeOfferModal = ({
             */}
             <ModalButtonsList>
               <ModalButtonWrapper fullWidth>
-                <ActionButton
-                  type="primary"
-                  onClick={handleModalClose}
-                >
+                <ActionButton type="primary" onClick={handleViewNFT}>
                   {t('translation:modals.buttons.viewNFT')}
                 </ActionButton>
               </ModalButtonWrapper>
