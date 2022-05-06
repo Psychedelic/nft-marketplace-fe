@@ -162,11 +162,7 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
               {isForSale && (
                 <>
                   <img src={wicpLogo} alt="" />
-                  {(data?.price &&
-                    parseE8SAmountToWICP(
-                      BigInt(data.price),
-                    ).toString()) ||
-                    ''}
+                  {parseE8SAmountToWICP(data.price)}
                 </>
               )}
             </NftDataText>
@@ -179,13 +175,7 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
               isForSale={isForSale}
               tokenId={data.id}
               setModalStatus={setModalStatus}
-              price={
-                (data?.price &&
-                  parseE8SAmountToWICP(
-                    BigInt(data.price),
-                  ).toString()) ||
-                ''
-              }
+              price={parseE8SAmountToWICP(data.price)}
             />
           )) || (
             <OnDisconnected
@@ -203,13 +193,7 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
                   {!isForSale
                     ? `${t('translation:nftCard.offerFor')} `
                     : `${t('translation:nftCard.last')} `}
-                  <b>
-                    {(data?.lastOffer &&
-                      parseE8SAmountToWICP(
-                        BigInt(data.lastOffer),
-                      ).toString()) ||
-                      ''}
-                  </b>
+                  <b>{parseE8SAmountToWICP(data.lastOffer)}</b>
                 </>
               )
             }
