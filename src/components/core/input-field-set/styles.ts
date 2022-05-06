@@ -9,7 +9,8 @@ export const Container = styled('div', {
   variants: {
     name: {
       searchInput: {
-        width: '600px',
+        width: '100%',
+        maxWidth: '600px',
         height: '44px',
       },
       filterInput: {
