@@ -69,6 +69,7 @@ export const NftDetails = () => {
 
   const [isUser, setIsUser] = useState<boolean>(false);
   const [isOffers, setLoadingOffers] = useState<boolean>(true);
+  const [offerItem, setofferItem] = useState<any>({});
   const { principalId } = usePlugStore();
 
   // TODO: We need more control, plus the
@@ -98,6 +99,7 @@ export const NftDetails = () => {
         onSuccess: (offers: any) => {
           setLoadingOffers(false);
           setIsUser(offers.some((offer: any) => offer.fromDetails.address === principalId));
+          setofferItem(offers.find((offer: any) => offer.fromDetails.address === principalId));
         },
         onFailure: () => {
           // TODO: handle failure messages
@@ -153,6 +155,7 @@ export const NftDetails = () => {
               isUser={isUser}
               setIsUser={setIsUser}
               isOffers={isOffers}
+              offerItem={offerItem}
               owner={owner}
             />
             <AboutAccordion owner={owner} />

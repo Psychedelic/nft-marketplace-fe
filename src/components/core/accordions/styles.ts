@@ -298,6 +298,7 @@ export const ButtonListWrapper = styled('div', {
 
 export const ButtonDetailsWrapper = styled('div', {
   marginRight: '10px',
+  width: '100%',
 });
 
 export const CheckboxSkeletonWrapper = styled('div', {
@@ -311,4 +312,19 @@ export const CheckboxSkeletonWrapper = styled('div', {
 export const Loading = styled('p', {
   color: '$mainTextColor',
   fontSize: '14px',
+});
+
+export const ButtonFlex = styled('div', {
+  display: 'flex',
+  alignContent: 'center',
+  width: '100%',
+
+  '& button:nth-child(2)': {
+    width: '140px',
+    height: '50px',
+  },
+});
+
+export const Space = styled('div', {
+  width: '15px',
 });

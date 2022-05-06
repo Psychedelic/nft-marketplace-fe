@@ -49,6 +49,15 @@ export const CancelListingModalTrigger = styled('div', {
 export const CancelOfferModalTrigger = styled('div', {
   width: '98px',
   height: '33px',
+
+  variants: {
+    size: {
+      large: {
+        width: '140px',
+        height: '50px',
+      } 
+    }
+  }
 });
 
 export const AcceptOfferModalTrigger = styled('div', {

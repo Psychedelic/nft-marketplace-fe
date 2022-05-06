@@ -22,7 +22,13 @@ import { ListingStatusCodes } from '../../constants/listing';
  * Cancel Offer Modal Component
  * --------------------------------------------------------------------------*/
 
-export const CancelOfferModal = ({ item }: { item: OfferItem }) => {
+export type CancelOfferModalProps = {
+  setIsUser?: (value: boolean) => void;
+  size?: string;
+  item: OfferItem;
+};
+
+export const CancelOfferModal = ({ item, setIsUser, size }: CancelOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -51,6 +57,7 @@ export const CancelOfferModal = ({ item }: { item: OfferItem }) => {
         id: item?.tokenId.toString(),
         onSuccess: () => {
           setModalOpened(false);
+          setIsUser && setIsUser(false);
 
           console.log('TODO: handleCancelOffer: onSuccess');
         },
@@ -74,7 +81,7 @@ export const CancelOfferModal = ({ item }: { item: OfferItem }) => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <CancelOfferModalTrigger>
+        <CancelOfferModalTrigger size={size ? 'large' : undefined}>
           <ActionButton
             type="secondary"
             size="small"
