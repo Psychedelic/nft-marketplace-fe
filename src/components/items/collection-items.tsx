@@ -55,6 +55,9 @@ export const CollectionItems = () => {
     }
   };
 
+  // TODO: replace static FilteredCountChip data with dynamic
+  // data by using getCollectionData
+
   return (
     <Container>
       <FilteredContainer>
