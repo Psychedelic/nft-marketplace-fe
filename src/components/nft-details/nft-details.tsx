@@ -67,8 +67,9 @@ export const NftDetails = () => {
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
   const dispatch = useAppDispatch();
 
-  const [isUser, setIsUser] = useState<boolean>(false);
-  const [isOffers, setLoadingOffers] = useState<boolean>(true);
+  const [hasUserMadeOffer, setHasUserMadeOffer] =
+    useState<boolean>(false);
+  const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
   const [offerItem, setofferItem] = useState<any>({});
   const { principalId } = usePlugStore();
 
@@ -91,22 +92,38 @@ export const NftDetails = () => {
         id,
       }),
     );
-    
+
     dispatch(
       marketplaceActions.getTokenOffers({
         // TODO: update ownerTokenIdentifiers naming convention
         ownerTokenIdentifiers: [BigInt(id)],
         onSuccess: (offers: any) => {
           setLoadingOffers(false);
-          setIsUser(offers.some((offer: any) => offer.fromDetails.address === principalId));
-          setofferItem(offers.find((offer: any) => offer.fromDetails.address === principalId));
+          setHasUserMadeOffer(
+            offers.some(
+              (offer: any) =>
+                offer.fromDetails.address === principalId,
+            ),
+          );
+          setofferItem(
+            offers.find(
+              (offer: any) =>
+                offer.fromDetails.address === principalId,
+            ),
+          );
         },
         onFailure: () => {
           // TODO: handle failure messages
         },
       }),
     );
-  }, [dispatch, id, recentlyListedForSale, recentlyCancelledItems, recentlyAcceptedOffers]);
+  }, [
+    dispatch,
+    id,
+    recentlyListedForSale,
+    recentlyCancelledItems,
+    recentlyAcceptedOffers,
+  ]);
 
   return (
     <Container>
@@ -152,9 +169,9 @@ export const NftDetails = () => {
             <OfferAccordion
               lastSalePrice={lastSalePrice?.toString()}
               isListed={isListed}
-              isUser={isUser}
-              setIsUser={setIsUser}
-              isOffers={isOffers}
+              hasUserMadeOffer={hasUserMadeOffer}
+              setHasUserMadeOffer={setHasUserMadeOffer}
+              loadingOffers={loadingOffers}
               offerItem={offerItem}
               owner={owner}
             />

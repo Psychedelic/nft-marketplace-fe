@@ -31,7 +31,7 @@ import { useAppDispatch, marketplaceActions } from '../../store';
 
 export type MakeOfferModalProps = {
   onClose?: () => void;
-  setIsUser?: (value: boolean) => void;
+  setHasUserMadeOffer?: (value: boolean) => void;
   actionText?: string;
   text?: string;
   nftTokenId?: string;
@@ -39,7 +39,7 @@ export type MakeOfferModalProps = {
 
 export const MakeOfferModal = ({
   onClose,
-  setIsUser,
+  setHasUserMadeOffer,
   actionText,
   text,
   nftTokenId,
@@ -91,7 +91,7 @@ export const MakeOfferModal = ({
         amount,
         onSuccess: () => {
           setModalStep(ListingStatusCodes.Submitted);
-          setIsUser && setIsUser(true);
+          setHasUserMadeOffer && setHasUserMadeOffer(true);
         },
         onFailure: () => {
           setModalStep(ListingStatusCodes.ListingInfo);
@@ -121,7 +121,11 @@ export const MakeOfferModal = ({
           <MakeOfferModalTrigger>
             <ActionButton
               type="primary"
-              text={text ? text : t('translation:buttons.action.makeOffer')}
+              text={
+                text
+                  ? text
+                  : t('translation:buttons.action.makeOffer')
+              }
               handleClick={() =>
                 console.log('makeOffer modal opened')
               }

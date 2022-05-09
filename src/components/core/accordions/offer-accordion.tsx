@@ -40,9 +40,9 @@ import { PlugStatusCodes } from '../../../constants/plug';
 export type OfferAccordionProps = {
   lastSalePrice?: string;
   isListed?: boolean;
-  isUser?: boolean;
-  setIsUser?: (value: boolean) => void;
-  isOffers?: boolean;
+  hasUserMadeOffer?: boolean;
+  setHasUserMadeOffer?: (value: boolean) => void;
+  loadingOffers?: boolean;
   offerItem: OffersTableItem;
   owner?: string;
 };
@@ -50,9 +50,9 @@ export type OfferAccordionProps = {
 type ConnectedProps = {
   isListed?: boolean;
   isOwner?: boolean;
-  isUser?: boolean;
-  setIsUser?: (value: boolean) => void;
-  isOffers?: boolean;
+  hasUserMadeOffer?: boolean;
+  setHasUserMadeOffer?: (value: boolean) => void;
+  loadingOffers?: boolean;
   price?: string;
   offerItem: OffersTableItem;
 };
@@ -65,38 +65,42 @@ const OnConnected = ({
   isListed,
   isOwner,
   price,
-  setIsUser,
-  isUser,
-  isOffers,
+  setHasUserMadeOffer,
+  hasUserMadeOffer,
+  loadingOffers,
   offerItem,
 }: ConnectedProps) => {
   const { t } = useTranslation();
 
-  return (
-    !isOwner ? (
-      <ButtonListWrapper>
-        {isListed && (
-          <ButtonDetailsWrapper>
-            <BuyNowModal price={price?.toString()} />
-          </ButtonDetailsWrapper>
-        )}
+  return !isOwner ? (
+    <ButtonListWrapper>
+      {isListed && (
         <ButtonDetailsWrapper>
-          {isOffers ? (
-            <Loading>Loading...</Loading>
-          ) : isUser ? (
-            <ButtonFlex>
-              <MakeOfferModal text={`${t('translation:buttons.action.editOffer')}`} />
-              <Space />
-              <CancelOfferModal setIsUser={setIsUser} item={offerItem?.item} size="large" />
-            </ButtonFlex>
-          ) : (
-            <MakeOfferModal setIsUser={setIsUser} />
-          )}
+          <BuyNowModal price={price?.toString()} />
         </ButtonDetailsWrapper>
-      </ButtonListWrapper>
-    ) : null
-  );
-}
+      )}
+      <ButtonDetailsWrapper>
+        {loadingOffers ? (
+          <Loading>Loading...</Loading>
+        ) : hasUserMadeOffer ? (
+          <ButtonFlex>
+            <MakeOfferModal
+              text={`${t('translation:buttons.action.editOffer')}`}
+            />
+            <Space />
+            <CancelOfferModal
+              setHasUserMadeOffer={setHasUserMadeOffer}
+              item={offerItem?.item}
+              size="large"
+            />
+          </ButtonFlex>
+        ) : (
+          <MakeOfferModal setHasUserMadeOffer={setHasUserMadeOffer} />
+        )}
+      </ButtonDetailsWrapper>
+    </ButtonListWrapper>
+  ) : null;
+};
 
 const OnDisconnected = ({ connectionStatus }: DisconnectedProps) =>
   connectionStatus !== PlugStatusCodes.Verifying ? (
@@ -108,9 +112,9 @@ const OnDisconnected = ({ connectionStatus }: DisconnectedProps) =>
 export const OfferAccordion = ({
   lastSalePrice,
   isListed,
-  isUser,
-  setIsUser,
-  isOffers,
+  hasUserMadeOffer,
+  setHasUserMadeOffer,
+  loadingOffers,
   offerItem,
   owner,
 }: OfferAccordionProps) => {
@@ -181,9 +185,9 @@ export const OfferAccordion = ({
           <OnConnected
             isListed={isListed}
             isOwner={isOwner}
-            isUser={isUser}
-            setIsUser={setIsUser}
-            isOffers={isOffers}
+            hasUserMadeOffer={hasUserMadeOffer}
+            setHasUserMadeOffer={setHasUserMadeOffer}
+            loadingOffers={loadingOffers}
             offerItem={offerItem}
             price={lastSalePrice}
           />

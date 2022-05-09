@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending } from '../core';
-import { marketplaceActions, useAppDispatch } from '../../store';
+import {
+  marketplaceActions,
+  RootState,
+  useAppDispatch,
+} from '../../store';
 import { OfferItem } from '../../declarations/legacy';
 import {
   CancelOfferModalTrigger,
@@ -17,20 +21,27 @@ import {
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
 /* --------------------------------------------------------------------------
  * Cancel Offer Modal Component
  * --------------------------------------------------------------------------*/
 
 export type CancelOfferModalProps = {
-  setIsUser?: (value: boolean) => void;
+  setHasUserMadeOffer?: (value: boolean) => void;
   size?: string;
   item: OfferItem;
 };
 
-export const CancelOfferModal = ({ item, setIsUser, size }: CancelOfferModalProps) => {
+export const CancelOfferModal = ({
+  item,
+  setHasUserMadeOffer,
+  size,
+}: CancelOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const routeID = useParams();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Cancel offer modal steps: cancelOffer/pending
@@ -47,7 +58,35 @@ export const CancelOfferModal = ({ item, setIsUser, size }: CancelOfferModalProp
     setModalOpened(false);
   };
 
+  const recentlyMadeOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyMadeOffers,
+  );
+
   const handleCancelOffer = () => {
+    const test = recentlyMadeOffers.find(
+      (offer: any) => offer.id === routeID.id,
+    );
+    
+    if (!item) {
+      console.log(test, recentlyMadeOffers);
+      dispatch(
+        marketplaceActions.cancelOffer({
+          id: test?.id.toString(),
+          onSuccess: () => {
+            setModalOpened(false);
+            setHasUserMadeOffer && setHasUserMadeOffer(false);
+
+            console.log('TODO: handleCancelOffer: onSuccess');
+          },
+          onFailure: () => {
+            setModalStep(ListingStatusCodes.CancelOffer);
+
+            console.log('TODO: handleCancelOffer: onFailure');
+          },
+        }),
+      );
+    }
+
     if (!item?.tokenId) return;
 
     setModalStep(ListingStatusCodes.Pending);
@@ -57,7 +96,7 @@ export const CancelOfferModal = ({ item, setIsUser, size }: CancelOfferModalProp
         id: item?.tokenId.toString(),
         onSuccess: () => {
           setModalOpened(false);
-          setIsUser && setIsUser(false);
+          setHasUserMadeOffer && setHasUserMadeOffer(false);
 
           console.log('TODO: handleCancelOffer: onSuccess');
         },

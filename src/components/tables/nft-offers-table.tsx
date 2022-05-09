@@ -78,6 +78,7 @@ export const NFTOffersTable = ({
         },
       }),
     );
+
   }, [dispatch, recentlyAcceptedOffers]);
 
   const columns = useMemo(

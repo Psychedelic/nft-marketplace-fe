@@ -64,6 +64,7 @@ type InitialState = {
   recentlyCancelledItems: any;
   recentlyCancelledOffers: any;
   recentlyAcceptedOffers: any[];
+  recentlyMadeOffers: any[];
   actor?: MarketplaceActor;
   tokenListing: Record<string, Listing>;
 };
@@ -73,6 +74,7 @@ const initialState: InitialState = {
   recentlyCancelledItems: [],
   recentlyCancelledOffers: [],
   recentlyAcceptedOffers: [],
+  recentlyMadeOffers: [],
   tokenListing: {},
 };
 
@@ -116,6 +118,12 @@ export const marketplaceSlice = createSlice({
       if (!action.payload) return;
 
       state.recentlyAcceptedOffers.push(action.payload);
+    });
+
+    builder.addCase(makeOffer.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.recentlyMadeOffers.push(action.payload);
     });
   },
 });
