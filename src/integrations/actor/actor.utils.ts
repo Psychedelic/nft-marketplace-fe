@@ -14,8 +14,6 @@ export const createActor = async <T>({
 }: {
   serviceName?: ServiceName;
 }) => {
-  console.log('[debug] actor.utils.ts: bp:', 1);
-
   // Fetch root key for certificate validation during development
   if (process.env.NODE_ENV !== 'production') {
     try {
@@ -46,9 +44,8 @@ export const createActor = async <T>({
       interfaceFactory: wicpIdlFactory,
     });
   }
-  console.log('[debug] actor.utils.ts: bp:', 2);
+
   if (serviceName === 'cap') {
-    console.log('[debug] actor.utils.ts: bp:', 3);
     return await window.ic?.plug?.createActor({
       canisterId: config.capRouterId,
       interfaceFactory: capIdlFactory,
@@ -73,21 +70,15 @@ export const actorInstanceHandler = async <T>({
   serviceName: ServiceName;
   // Slice should have a `setActor` action
   slice: any;
-}) => {
-  console.log('[debug] actor.utils.ts: actorInstanceHandler: bp:', 1);
-  
+}) => {  
   const {
     [serviceName]: { actor },
   } = thunkAPI.getState();
-
-  console.log('[debug] actor.utils.ts: actorInstanceHandler: bp:', 2);
 
   if (!actor) {
     const actor = (await createActor<T>({
       serviceName,
     })) as ActorSubclass<T>;
-
-    console.log('[debug] actor.utils.ts: actorInstanceHandler: bp:', 3);
 
     // Set actor state
     thunkAPI.dispatch(slice.actions.setActor(actor));

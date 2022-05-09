@@ -52,8 +52,6 @@ export const ActivityTable = () => {
     (state: RootState) => state.cap.bucketId,
   );
 
-  console.log('[debug] activity-table.tsx: bucketId:', bucketId);
-
   useEffect(() => {
     dispatch(
       capActions.getTokenContractRootBucket({}),
