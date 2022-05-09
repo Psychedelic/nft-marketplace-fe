@@ -17,7 +17,7 @@ export class KyasshuUrl {
   }
 
   static getFilterTraits(): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/traits`;
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.canisterId}/data`;
   }
 
   static getCAPActivity({

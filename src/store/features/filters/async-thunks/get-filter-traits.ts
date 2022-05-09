@@ -23,9 +23,12 @@ export const getFilterTraits = createAsyncThunk<
       throw Error(response.statusText);
     }
 
-    const responseData = response.data.map((res: any) => {
+    console.log(response.data.traits);
+
+    const responseData = response.data.traits.map((res: any) => {
+      console.log(res[1]);
       let key;
-      switch (res.name) {
+      switch (res[0]) {
         case 'smallgem':
           key = FilterConstants.smallGem;
           break;
@@ -43,12 +46,14 @@ export const getFilterTraits = createAsyncThunk<
 
       const data = {
         key,
-        name: res.name,
-        values: [...res.values],
+        name: res[0],
+        values: [...res[1]],
       };
 
       return data;
     });
+
+    console.log(responseData);
 
     dispatch(filterActions.getAllFilters(responseData));
     dispatch(filterActions.setIsFilterTraitsLoading(false));
