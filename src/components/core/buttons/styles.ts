@@ -22,7 +22,7 @@ export const Button = styled('button', {
   variants: {
     type: {
       primary: {
-        backgroundColor: '#2253FF',
+        backgroundColor: '$primary',
         color: '#FCFCFD',
         border: 'none',
       },
@@ -33,10 +33,18 @@ export const Button = styled('button', {
       },
       outline: {
         backgroundColor: 'transparent',
-        color: '#2253FF',
-        border: '1.5px solid #2253FF',
+        color: '$primary',
+        border: '1.5px solid $primary',
       },
     },
+
+    disabled: {
+      true: {
+        opacity: 0.3,
+        pointerEvents: 'none',
+      },
+    },
+
     danger: {
       true: {
         backgroundColor: '#EF4444',

@@ -1,10 +1,15 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { nftsActions } from '../nfts-slice';
-import { KyasshuUrl, NSKyasshuUrl } from '../../../../integrations/kyasshu';
+import {
+  KyasshuUrl,
+  NSKyasshuUrl,
+} from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../errors';
+import { AppLog } from '../../../../utils/log';
 
-export type GetNFTDetailsProps = NSKyasshuUrl.GetNFTDetailsQueryParams;
+export type GetNFTDetailsProps =
+  NSKyasshuUrl.GetNFTDetailsQueryParams;
 
 export const getNFTDetails = createAsyncThunk<
   void,
@@ -51,8 +56,7 @@ export const getNFTDetails = createAsyncThunk<
     // update store with loaded NFT details
     dispatch(nftsActions.setLoadedNFTDetails(nftDetails));
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.warn(error);
+    AppLog.error(error);
     dispatch(
       notificationActions.setErrorMessage(
         'Oops! Unable to fetch NFT details',

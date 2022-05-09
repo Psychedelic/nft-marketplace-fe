@@ -57,7 +57,7 @@ export const CheckboxFilterAccordion = ({
       filterActions.applytraits({
         key: checkboxData.key,
         name: checkboxData.name,
-        values: e.target.value,
+        values: [e.target.value],
       }),
     );
   };

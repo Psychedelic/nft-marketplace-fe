@@ -17,6 +17,7 @@ import { TableLayout } from './table-layout';
 import { Container, InfiniteScrollWrapper } from './styles';
 import { NFTMetadata } from '../../declarations/legacy';
 import TableSkeletons from './table-skeletons';
+import { parseE8SAmountToWICP } from '../../utils/formatters';
 
 interface RowProps {
   item: {
@@ -86,7 +87,7 @@ export const ActivityTable = () => {
         Header: t('translation:tables.titles.price'),
         accessor: ({ price }: RowProps) => (
           <PriceDetailsCell
-            wicp={price}
+            wicp={parseE8SAmountToWICP(BigInt(price))}
             tableType=""
           />
         ),

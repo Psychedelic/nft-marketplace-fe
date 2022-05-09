@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
@@ -35,6 +35,7 @@ import {
   nftsActions,
   marketplaceActions,
 } from '../../store';
+import { AppLog } from '../../utils/log';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -54,6 +55,7 @@ export const SellModal = ({
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Sell modal steps: listingInfo/pending/confirmed
@@ -102,7 +104,7 @@ export const SellModal = ({
 
   const handleListing = async () => {
     if (!tokenId) {
-      console.warn('Oops! Missing NFT id param');
+      AppLog.warn('Oops! Missing NFT id param');
 
       return;
     }
@@ -126,6 +128,11 @@ export const SellModal = ({
     );
   };
 
+  const handleViewNFT = () => {
+    navigate(`/nft/${tokenId}`, { replace: true });
+    setModalOpened(false);
+  };
+
   return (
     <DialogPrimitive.Root
       open={modalOpened}
@@ -138,21 +145,12 @@ export const SellModal = ({
       */}
       <DialogPrimitive.Trigger asChild>
         {actionText ? (
-          <ActionText
-            onClick={() => console.log('sell modal opened')}
-          >
-            {actionText}
-          </ActionText>
+          <ActionText>{actionText}</ActionText>
         ) : (
           <SellModalTrigger>
-            <ActionButton
-              type="primary"
-              text={t('translation:buttons.action.sell')}
-              handleClick={() => {
-                // eslint-disable-next-line no-console
-                console.log('Sell modal opened');
-              }}
-            />
+            <ActionButton type="primary">
+              {t('translation:buttons.action.sell')}
+            </ActionButton>
           </SellModalTrigger>
         )}
       </DialogPrimitive.Trigger>
@@ -198,7 +196,8 @@ export const SellModal = ({
                 placeholder={t(
                   'translation:inputField.placeholder.amount',
                 )}
-                setValue={(value) => setAmount(value)}
+                value={amount}
+                onChange={(e) => setAmount(e.currentTarget.value)}
               />
               <FeeContainer>
                 <FeeDetails>
@@ -238,19 +237,19 @@ export const SellModal = ({
               <ModalButtonWrapper>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={handleModalClose}
-                />
+                  onClick={handleModalClose}
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
               <ModalButtonWrapper>
                 <ActionButton
                   type="primary"
-                  text={t(
-                    'translation:modals.buttons.completeListing',
-                  )}
-                  handleClick={handleListing}
+                  onClick={handleListing}
                   disabled={!amount}
-                />
+                >
+                  {t('translation:modals.buttons.completeListing')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -287,11 +286,12 @@ export const SellModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={() => {
+                  onClick={() => {
                     setModalStep(ListingStatusCodes.ListingInfo);
                   }}
-                />
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -329,11 +329,9 @@ export const SellModal = ({
             */}
             <ModalButtonsList>
               <ModalButtonWrapper fullWidth>
-                <ActionButton
-                  type="primary"
-                  text={t('translation:modals.buttons.viewListing')}
-                  handleClick={() => handleModalOpen(false)}
-                />
+                <ActionButton type="primary" onClick={handleViewNFT}>
+                  {t('translation:modals.buttons.viewListing')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>

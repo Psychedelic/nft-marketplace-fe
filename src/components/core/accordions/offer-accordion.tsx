@@ -45,6 +45,7 @@ export type OfferAccordionProps = {
   loadingOffers?: boolean;
   offerItem: OffersTableItem;
   owner?: string;
+  showNFTActionButtons: boolean;
 };
 
 type ConnectedProps = {
@@ -55,6 +56,7 @@ type ConnectedProps = {
   loadingOffers?: boolean;
   price?: string;
   offerItem: OffersTableItem;
+  showNFTActionButtons: boolean;
 };
 
 type DisconnectedProps = {
@@ -69,6 +71,7 @@ const OnConnected = ({
   hasUserMadeOffer,
   loadingOffers,
   offerItem,
+  showNFTActionButtons,
 }: ConnectedProps) => {
   const { t } = useTranslation();
 
@@ -117,6 +120,7 @@ export const OfferAccordion = ({
   loadingOffers,
   offerItem,
   owner,
+  showNFTActionButtons,
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
   // TODO: update offers count
@@ -190,10 +194,11 @@ export const OfferAccordion = ({
             loadingOffers={loadingOffers}
             offerItem={offerItem}
             price={lastSalePrice}
+            showNFTActionButtons={showNFTActionButtons}
           />
         )) || <OnDisconnected connectionStatus={connectionStatus} />}
       </AccordionHead>
-      {isConnected && (
+      {isConnected && showNFTActionButtons && (
         <Accordion.Item value="item-1">
           <AccordionTrigger
             padding="medium"

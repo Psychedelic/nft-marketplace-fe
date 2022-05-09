@@ -10,6 +10,8 @@ import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
 import { notificationActions } from '../../errors';
 import { parseOffersMadeResponse } from '../../../../utils/parser';
 import { OffersTableItem } from '../../../../declarations/legacy';
+import { AppLog } from '../../../../utils/log';
+import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
 export type GetBuyerOffersProps = DefaultCallbacks & GetBuyerOffers;
 
@@ -55,20 +57,26 @@ export const getBuyerOffers = createAsyncThunk<
 
     const parsedTokenOffers = parseOffersMadeResponse({
       data: result,
-      floorDifferencePrice,
+      floorDifferencePrice: parseE8SAmountToWICP(
+        floorDifferencePrice,
+      ),
       currencyMarketPrice,
     });
 
-    if (typeof onSuccess !== 'function') return;
-
-    onSuccess(parsedTokenOffers);
+    if (typeof onSuccess === 'function') {
+      onSuccess(parsedTokenOffers);
+    }
 
     return parsedTokenOffers;
   } catch (err) {
+    AppLog.error(err);
     thunkAPI.dispatch(
-      notificationActions.setErrorMessage((err as Error).message),
+      notificationActions.setErrorMessage(
+        'Oops! Failed to get buyer offers',
+      ),
     );
-    if (typeof onFailure !== 'function') return;
-    onFailure();
+    if (typeof onFailure === 'function') {
+      onFailure(err);
+    }
   }
 });

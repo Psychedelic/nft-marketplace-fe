@@ -7,6 +7,7 @@ import {
 } from './formatters';
 import { formatTimestamp } from '../integrations/functions/date';
 import { OffersTableItem } from '../declarations/legacy';
+import { parseE8SAmountToWICP } from '../utils/formatters';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
@@ -46,7 +47,6 @@ export const parseAllListingResponse = (
 export const parseAllListingResponseAsObj = (
   data: GetAllListingsDataResponse,
 ) => {
-  console.log(data, 'listing data');
   const parsed: GetAllListingsDataParsedObj = data.reduce(
     (acc, curr) => {
       const tokenId = String(curr[0][1]);
@@ -109,7 +109,7 @@ export const parseGetTokenOffersResponse = ({
 
         const computedCurrencyPrice =
           currencyMarketPrice &&
-          currencyMarketPrice * Number(price.toString());
+          currencyMarketPrice * Number(parseE8SAmountToWICP(price));
 
         const offerTableItem: OffersTableItem = {
           item: {
@@ -120,7 +120,7 @@ export const parseGetTokenOffersResponse = ({
           },
           price,
           floorDifference: floorDiffPercentageCalculator({
-            currentPrice: price,
+            currentPrice: parseE8SAmountToWICP(price),
             floorDifferencePrice,
           }),
           fromDetails,
@@ -164,7 +164,7 @@ export const parseOffersMadeResponse = ({
 
     const computedCurrencyPrice =
       currencyMarketPrice &&
-      currencyMarketPrice * Number(price.toString());
+      currencyMarketPrice * Number(parseE8SAmountToWICP(price));
 
     const offerTableItem: OffersTableItem = {
       item: {
@@ -175,7 +175,7 @@ export const parseOffersMadeResponse = ({
       },
       price,
       floorDifference: floorDiffPercentageCalculator({
-        currentPrice: price,
+        currentPrice: parseE8SAmountToWICP(price),
         floorDifferencePrice,
       }),
       fromDetails,

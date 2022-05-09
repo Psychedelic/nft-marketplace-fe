@@ -27,6 +27,7 @@ import {
   SellModal,
 } from '../../../modals';
 import { usePlugStore } from '../../../../store';
+import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -68,7 +69,7 @@ const OnConnected = ({
               actionText={`${t('translation:nftCard.sell')}`}
               nftTokenId={tokenId}
             />
-          )) || <span hidden-seller-options />}
+          )) || <span />}
         </div>
       )}
       {(showBuyerOptions && (
@@ -78,7 +79,9 @@ const OnConnected = ({
               onClose={() => setModalStatus(false)}
               actionText={`${t('translation:nftCard.forSale')}`}
               actionTextId={Number(tokenId)}
-              price={price?.toString()}
+              price={
+                (price && parseE8SAmountToWICP(BigInt(price))) || ''
+              }
             />
           ) : (
             <MakeOfferModal
@@ -88,7 +91,7 @@ const OnConnected = ({
             />
           )}
         </div>
-      )) || <span hidden-buyer-options />}
+      )) || <span />}
     </>
   );
 };
@@ -161,7 +164,7 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
               {isForSale && (
                 <>
                   <img src={wicpLogo} alt="" />
-                  {data?.price}
+                  {parseE8SAmountToWICP(data?.price)}
                 </>
               )}
             </NftDataText>
@@ -183,19 +186,20 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
             />
           )}
           <LastOffer>
-            {
-              // TODO: Have put lastOffer verification
-              // because when not available the label text
-              // is shown without the corresponding value...
-              data?.lastOffer && (
-                <>
-                  {!isForSale
-                    ? `${t('translation:nftCard.offerFor')} `
-                    : `${t('translation:nftCard.last')} `}
-                  <b>{data?.lastOffer}</b>
-                </>
-              )
-            }
+            {data?.lastOffer && (
+              <>
+                {!isForSale
+                  ? `${t('translation:nftCard.offerFor')} `
+                  : `${t('translation:nftCard.last')} `}
+                <b>
+                  {(data?.lastOffer &&
+                    parseE8SAmountToWICP(
+                      BigInt(data.lastOffer),
+                    ).toString()) ||
+                    ''}
+                </b>
+              </>
+            )}
           </LastOffer>
         </NFTCardOptions>
       </CardWrapper>

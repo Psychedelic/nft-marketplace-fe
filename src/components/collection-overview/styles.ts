@@ -17,15 +17,21 @@ export const NftMetadataBackground = styled('div', {
 export const NftMetadataContent = styled('div', {
   display: 'flex',
   alignItems: 'flex-start',
+  flexWrap: 'wrap',
   justifyContent: 'space-between',
   margin: '20px auto 0',
-  padding: '0px 80px 25px',
+  padding: '0px 80px 0px',
+
+  '@md': {
+    justifyContent: 'center',
+  },
 });
 
 export const NftMetadataContentWrapper = styled('div', {
   display: 'flex',
   alignItems: 'flex-start',
   justifyContent: 'space-between',
+  marginBottom: '25px',
 });
 
 export const NftProfilePictureWrapper = styled('div', {
@@ -64,13 +70,14 @@ export const Subtext = styled('p', {
   fontSize: '16px',
   lineHeight: '19px',
   color: '#777E90',
-  width: '600px',
+  maxWidth: '600px',
   marginBottom: '0px',
 });
 
 export const ButtonsWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
+  marginBottom: '25px',
 });
 
 export const HeaderWrapper = styled('div', {

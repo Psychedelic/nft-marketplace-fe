@@ -5,6 +5,8 @@ import { AcceptOffer } from '../marketplace-slice';
 import config from '../../../../config/env';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import crownsIdlFactory from '../../../../declarations/nft.did';
+import { AppLog } from '../../../../utils/log';
+import { parseAmountToE8S } from '../../../../utils/formatters';
 
 export type AcceptOfferProps = DefaultCallbacks & AcceptOffer;
 
@@ -25,7 +27,7 @@ export const acceptOffer = createAsyncThunk<
     const userOwnedTokenId = BigInt(id);
     const buyerAddress = Principal.fromText(buyerPrincipalId);
 
-    const offerInPrice = BigInt(offerPrice);
+    const offerInPrice = parseAmountToE8S(offerPrice);
 
     const CROWNS_APPROVE_MARKETPLACE = {
       idl: crownsIdlFactory,
@@ -33,12 +35,7 @@ export const acceptOffer = createAsyncThunk<
       methodName: 'approve',
       args: [marketplaceCanisterId, userOwnedTokenId],
       onFail: (res: any) => {
-        console.warn(
-          `Oops! Failed to approve Marketplace (${config.crownsCanisterId})`,
-          res,
-        );
-
-        if (typeof onFailure === 'function') onFailure();
+        throw res;
       },
     };
 
@@ -53,9 +50,7 @@ export const acceptOffer = createAsyncThunk<
       ],
       onSuccess,
       onFail: (res: any) => {
-        console.warn('Oops! Failed to make listing', res);
-
-        if (typeof onFailure === 'function') onFailure();
+        throw res;
       },
     };
 
@@ -70,9 +65,7 @@ export const acceptOffer = createAsyncThunk<
       ],
       onSuccess,
       onFail: (res: any) => {
-        console.warn('Oops! Failed to accept offer', res);
-
-        if (typeof onFailure === 'function') onFailure();
+        throw res;
       },
     };
 
@@ -85,9 +78,7 @@ export const acceptOffer = createAsyncThunk<
     ]);
 
     if (!batchTxRes) {
-      if (typeof onFailure === 'function') onFailure();
-
-      return;
+      throw new Error('Empty response');
     }
 
     return {
@@ -96,10 +87,14 @@ export const acceptOffer = createAsyncThunk<
       offerPrice,
     };
   } catch (err) {
+    AppLog.error(err);
     dispatch(
-      notificationActions.setErrorMessage((err as Error).message),
+      notificationActions.setErrorMessage(
+        `Oops! Failed to make listing`,
+      ),
     );
-    if (typeof onFailure !== 'function') return;
-    onFailure();
+    if (typeof onFailure === 'function') {
+      onFailure(err);
+    }
   }
 });

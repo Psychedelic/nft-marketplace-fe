@@ -2,7 +2,11 @@ import { useMemo, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useAppDispatch, RootState, marketplaceActions } from '../../store';
+import {
+  useAppDispatch,
+  RootState,
+  marketplaceActions,
+} from '../../store';
 import { PriceDetailsCell, TextCell, TextLinkCell } from '../core';
 import { AcceptOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
@@ -12,7 +16,10 @@ import {
   EmptyStateMessage,
 } from './styles';
 import { OffersTableItem } from '../../declarations/legacy';
-import { formatPriceValue } from '../../utils/formatters';
+import {
+  formatPriceValue,
+  parseE8SAmountToWICP,
+} from '../../utils/formatters';
 
 /* --------------------------------------------------------------------------
  * NFT Offers Table Component
@@ -90,7 +97,7 @@ export const NFTOffersTable = ({
           computedCurrencyPrice,
         }: OffersTableItem) => (
           <PriceDetailsCell
-            wicp={price.toString()}
+            wicp={parseE8SAmountToWICP(price)}
             price={
               (computedCurrencyPrice &&
                 `$${formatPriceValue(
@@ -139,7 +146,7 @@ export const NFTOffersTable = ({
         }: OffersTableItem) => (
           <ButtonWrapper>
             <AcceptOfferModal
-              price={price.toString()}
+              price={parseE8SAmountToWICP(price)}
               formattedPrice={
                 (computedCurrencyPrice &&
                   computedCurrencyPrice.toString()) ||

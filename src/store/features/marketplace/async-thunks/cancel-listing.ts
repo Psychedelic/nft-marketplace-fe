@@ -4,6 +4,7 @@ import { notificationActions } from '../../errors';
 import { CancelListing } from '../marketplace-slice';
 import config from '../../../../config/env';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
+import { AppLog } from '../../../../utils/log';
 
 export type CancelListingProps = DefaultCallbacks & CancelListing;
 
@@ -25,31 +26,31 @@ export const cancelListing = createAsyncThunk<
       methodName: 'cancelListing',
       args: [nonFungibleContractAddress, userOwnedTokenId],
       onFail: (res: any) => {
-        console.warn('Oops! Failed to withdraw NFT', res);
-
-        if (typeof onFailure === 'function') onFailure();
+        throw res;
       },
       onSuccess,
     };
 
-    const batchTxRes = await (
-      window as any
-    )?.ic?.plug?.batchTransactions([MKP_CANCEL_LISTING]);
+    const batchTxRes = await window.ic?.plug?.batchTransactions([
+      MKP_CANCEL_LISTING,
+    ]);
 
     if (!batchTxRes) {
-      if (typeof onFailure === 'function') onFailure();
-
-      return;
+      throw new Error('Empty response');
     }
 
     return {
       id,
     };
   } catch (err) {
+    AppLog.error(err);
     dispatch(
-      notificationActions.setErrorMessage((err as Error).message),
+      notificationActions.setErrorMessage(
+        'Oops! Failed to cancel listing',
+      ),
     );
-    if (typeof onFailure !== 'function') return;
-    onFailure();
+    if (typeof onFailure === 'function') {
+      onFailure(err);
+    }
   }
 });

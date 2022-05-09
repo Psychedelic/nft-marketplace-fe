@@ -21,6 +21,7 @@ import {
   PlugStatusCodes,
 } from '../../constants';
 import config from '../../config/env';
+import { AppLog } from '../../utils/log';
 
 const {
   crownsCanisterId,
@@ -145,9 +146,8 @@ export const Plug = () => {
       // connected to plug
       dispatch(plugActions.setIsConnected(true));
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
       // failed to connect plug
+      AppLog.error(err);
       dispatch(
         notificationActions.setErrorMessage(
           t('translation:errorMessages.unableToConnectToPlug'),
@@ -196,8 +196,7 @@ export const Plug = () => {
       {!isVerifying && !isConnecting && isConnected && (
         <PlugButton
           handleClick={() => {
-            // eslint-disable-next-line no-console
-            console.log('Already connected to plug!');
+            AppLog.warn('Already connected to plug!');
           }}
           text={
             principalId

@@ -106,11 +106,9 @@ export const CancelOfferModal = ({
           <ActionButton
             type="secondary"
             size="small"
-            text={t('translation:buttons.action.cancelOffer')}
-            handleClick={() => {
-              console.log('Cancel offer modal opened');
-            }}
           />
+            {t('translation:buttons.action.cancelOffer')}
+          </ActionButton>
         </CancelOfferModalTrigger>
       </DialogPrimitive.Trigger>
       {/*
@@ -154,17 +152,19 @@ export const CancelOfferModal = ({
               <ModalButtonWrapper>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={handleModalClose}
-                />
+                  onClick={handleModalClose}
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
               <ModalButtonWrapper>
                 <ActionButton
                   type="primary"
-                  text={t('translation:modals.buttons.cancelOffer')}
-                  handleClick={handleCancelOffer}
+                  onClick={handleCancelOffer}
                   danger
-                />
+                >
+                  {t('translation:modals.buttons.cancelOffer')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>

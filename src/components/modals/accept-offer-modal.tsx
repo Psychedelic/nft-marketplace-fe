@@ -72,13 +72,7 @@ export const AcceptOfferModal = ({
     ListingStatusCodes.OfferInfo,
   );
 
-  const tokenId: string | undefined = (() => {
-    const tid = nftTokenId ?? id;
-
-    if (!tid) return;
-
-    return tid;
-  })();
+  const tokenId = useMemo(() => nftTokenId || id, [nftTokenId, id]);
 
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === tokenId),
@@ -149,15 +143,9 @@ export const AcceptOfferModal = ({
       */}
       <DialogPrimitive.Trigger asChild>
         <AcceptOfferModalTrigger>
-          <ActionButton
-            type="outline"
-            size="small"
-            text={t('translation:buttons.action.acceptOffer')}
-            handleClick={() => {
-              // eslint-disable-next-line no-console
-              console.log('acceptOffer modal opened');
-            }}
-          />
+          <ActionButton type="outline" size="small">
+            {t('translation:buttons.action.acceptOffer')}
+          </ActionButton>
         </AcceptOfferModalTrigger>
       </DialogPrimitive.Trigger>
       {/*
@@ -280,16 +268,18 @@ export const AcceptOfferModal = ({
               <ModalButtonWrapper>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={handleModalClose}
-                />
+                  onClick={handleModalClose}
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
               <ModalButtonWrapper>
                 <ActionButton
                   type="primary"
-                  text={t('translation:modals.buttons.acceptOffer')}
-                  handleClick={handleAcceptOffer}
-                />
+                  onClick={handleAcceptOffer}
+                >
+                  {t('translation:modals.buttons.acceptOffer')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -326,11 +316,12 @@ export const AcceptOfferModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="secondary"
-                  text={t('translation:modals.buttons.cancel')}
-                  handleClick={() => {
+                  onClick={() => {
                     setModalStep(ListingStatusCodes.OfferInfo);
                   }}
-                />
+                >
+                  {t('translation:modals.buttons.cancel')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>
@@ -370,9 +361,10 @@ export const AcceptOfferModal = ({
               <ModalButtonWrapper fullWidth>
                 <ActionButton
                   type="primary"
-                  text={t('translation:modals.buttons.done')}
-                  handleClick={() => handleModalOpen(false)}
-                />
+                  onClick={() => handleModalOpen(false)}
+                >
+                  {t('translation:modals.buttons.done')}
+                </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>
           </Container>

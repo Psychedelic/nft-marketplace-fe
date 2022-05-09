@@ -24,7 +24,7 @@ export type OfferItem = {
   name: string;
   tokenId: bigint;
   logo?: string;
-}
+};
 
 export interface OffersTableItem {
   item: OfferItem;

@@ -1,4 +1,4 @@
-import React, { forwardRef, ChangeEvent } from 'react';
+import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import wicpLogo from '../../../assets/wicpIcon.png';
 import {
@@ -9,27 +9,13 @@ import {
   AmountTypeIcon,
 } from './styles';
 
-export type ModalInputProps = {
-  placeholder?: string;
-  setValue?: (value: string) => void;
-  defaultValue?: string;
-};
+export type ModalInputProps = React.ComponentProps<typeof Input>;
 
 export const ModalInput = forwardRef<
   HTMLInputElement,
   ModalInputProps
->(({ placeholder = '', setValue, defaultValue = '' }, ref) => {
+>((inputProps, ref) => {
   const { t } = useTranslation();
-
-  const handleValueChange = (
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
-    const value = event?.target?.value;
-
-    if (typeof setValue !== 'function') return;
-
-    setValue(value);
-  };
 
   return (
     <Container name="modalInput">
@@ -37,9 +23,7 @@ export const ModalInput = forwardRef<
         ref={ref}
         name="modalInput"
         type="number"
-        placeholder={placeholder}
-        onChange={handleValueChange}
-        defaultValue={defaultValue}
+        {...inputProps}
       />
       <AmountTypeContainer>
         <AmountTypeIcon src={wicpLogo} alt="WICP" />
