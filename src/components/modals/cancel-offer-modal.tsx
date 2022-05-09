@@ -63,37 +63,19 @@ export const CancelOfferModal = ({
   );
 
   const handleCancelOffer = () => {
-    const test = recentlyMadeOffers.find(
+    const offerItem = recentlyMadeOffers.find(
       (offer: any) => offer.id === routeID.id,
     );
-    
-    if (!item) {
-      console.log(test, recentlyMadeOffers);
-      dispatch(
-        marketplaceActions.cancelOffer({
-          id: test?.id.toString(),
-          onSuccess: () => {
-            setModalOpened(false);
-            setHasUserMadeOffer && setHasUserMadeOffer(false);
 
-            console.log('TODO: handleCancelOffer: onSuccess');
-          },
-          onFailure: () => {
-            setModalStep(ListingStatusCodes.CancelOffer);
+    if (!item?.tokenId && !offerItem?.id) return;
 
-            console.log('TODO: handleCancelOffer: onFailure');
-          },
-        }),
-      );
-    }
-
-    if (!item?.tokenId) return;
+    const id = item ? item?.tokenId.toString() : offerItem?.id.toString();
 
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       marketplaceActions.cancelOffer({
-        id: item?.tokenId.toString(),
+        id,
         onSuccess: () => {
           setModalOpened(false);
           setHasUserMadeOffer && setHasUserMadeOffer(false);
