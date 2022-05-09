@@ -1,5 +1,6 @@
 import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 import config from '../../../../config/env';
 import crownsIdlFactory from '../../../../declarations/nft.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
@@ -7,6 +8,9 @@ import { notificationActions } from '../../errors';
 import { MakeListing } from '../marketplace-slice';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
+import {
+  KyasshuUrl,
+} from '../../../../integrations/kyasshu';
 
 type MakeListingProps = DefaultCallbacks & MakeListing;
 
@@ -60,6 +64,12 @@ export const makeListing = createAsyncThunk<
       if (!batchTxRes) {
         throw new Error('Empty response');
       }
+
+      // We call the Cap Sync process
+      // but we don't have to wait for the response
+      axios.get(
+        KyasshuUrl.getCAPSync(),
+      );
 
       return {
         id,

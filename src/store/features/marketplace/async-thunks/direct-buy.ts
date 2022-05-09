@@ -1,12 +1,15 @@
 import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { notificationActions } from '../../errors';
 import { DirectBuy } from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { AppLog } from '../../../../utils/log';
-import { parseAmountToE8S } from '../../../../utils/formatters';
+import {
+  KyasshuUrl,
+} from '../../../../integrations/kyasshu';
 
 type DirectBuyProps = DefaultCallbacks & DirectBuy;
 
@@ -55,6 +58,12 @@ export const directBuy = createAsyncThunk<
     if (!batchTxRes) {
       throw new Error('Empty response');
     }
+
+    // We call the Cap Sync process
+    // but we don't have to wait for the response
+    axios.get(
+      KyasshuUrl.getCAPSync(),
+    );
 
     return {
       tokenId,

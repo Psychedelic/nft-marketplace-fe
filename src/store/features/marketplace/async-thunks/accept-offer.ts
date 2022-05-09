@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Principal } from '@dfinity/principal';
+import axios from 'axios';
 import { notificationActions } from '../../errors';
 import { AcceptOffer } from '../marketplace-slice';
 import config from '../../../../config/env';
@@ -7,6 +8,9 @@ import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import crownsIdlFactory from '../../../../declarations/nft.did';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
+import {
+  KyasshuUrl,
+} from '../../../../integrations/kyasshu';
 
 export type AcceptOfferProps = DefaultCallbacks & AcceptOffer;
 
@@ -80,6 +84,12 @@ export const acceptOffer = createAsyncThunk<
     if (!batchTxRes) {
       throw new Error('Empty response');
     }
+
+    // We call the Cap Sync process
+    // but we don't have to wait for the response
+    axios.get(
+      KyasshuUrl.getCAPSync(),
+    );
 
     return {
       id,
