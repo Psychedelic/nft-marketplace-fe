@@ -3,8 +3,6 @@ import { ActorSubclass } from '@dfinity/agent';
 import { getTokenContractRootBucket } from './async-thunks';
 import capIdlService from '../../../declarations/cap';
 
-import type { RootState } from '../../store';
-
 type CapActor = ActorSubclass<capIdlService>;
 
 type CapState = {
@@ -44,8 +42,5 @@ export const capActions = {
   ...capSlice.actions,
   getTokenContractRootBucket,
 };
-
-// Other code such as selectors can use the imported `RootState` type
-export const selectCapState = (state: RootState) => state.cap;
 
 export default capSlice.reducer;
