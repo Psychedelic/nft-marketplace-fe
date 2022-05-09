@@ -21,9 +21,14 @@ export class KyasshuUrl {
   }
 
   static getCAPActivity({
+    bucketId,
     pageCount,
   }: NSKyasshuUrl.GetCAPActivityQueryParams): string {
-    return `${config.kyasshuMarketplaceAPI}/cap/txns/q3fc5-haaaa-aaaaa-aaahq-cai/?page=${pageCount}`;
+    return `${config.kyasshuMarketplaceAPI}/cap/txns/${bucketId}/?page=${pageCount}`;
+  }
+
+  static getCAPSync(): string {
+    return `${config.kyasshuMarketplaceAPI}/cap/capSync`;
   }
 }
 
@@ -43,5 +48,6 @@ export namespace NSKyasshuUrl {
 
   export type GetCAPActivityQueryParams = {
     pageCount: number;
+    bucketId: string;
   };
 }

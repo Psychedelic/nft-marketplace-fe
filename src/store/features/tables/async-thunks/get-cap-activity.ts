@@ -32,14 +32,14 @@ const getOperation = (operationType: string) => {
 export const getCAPActivity = createAsyncThunk<
   void,
   GetCAPActivityProps
->('table/getCAPActivity', async ({ pageCount }, { dispatch }) => {
+>('table/getCAPActivity', async ({ pageCount, bucketId }, { dispatch }) => {
   if (pageCount === 0) {
     dispatch(tableActions.setIsTableDataLoading(true));
   }
 
   try {
     const response = await axios.get(
-      KyasshuUrl.getCAPActivity({ pageCount }),
+      KyasshuUrl.getCAPActivity({ pageCount, bucketId, }),
     );
     const { Items, Count } = response.data;
     let pageNo;

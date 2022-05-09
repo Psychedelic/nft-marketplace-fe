@@ -3,10 +3,11 @@ import { IDL } from '@dfinity/candid';
 import crownsIdlFactory from '../../declarations/nft.did';
 import wicpIdlFactory from '../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
+import capIdlFactory from '../../declarations/cap.did';
 import config from '../../config/env';
 import { AppLog } from '../../utils/log';
 
-export type ServiceName = 'marketplace' | 'crowns' | 'wicp';
+export type ServiceName = 'marketplace' | 'crowns' | 'wicp' | 'cap';
 
 export const createActor = async ({
   serviceName = 'marketplace',
@@ -27,6 +28,10 @@ export const createActor = async ({
       canisterId = config.wICPCanisterId;
       interfaceFactory = wicpIdlFactory;
       break;
+    case 'cap':
+      canisterId = config.capRouterId;
+      interfaceFactory = capIdlFactory;
+      break;
     default:
       canisterId = config.marketplaceCanisterId;
       interfaceFactory = marketplaceIdlFactory;
@@ -40,6 +45,7 @@ export const createActor = async ({
       host: config.host,
     });
   }
+
   const agent = new HttpAgent({
     host: config.host,
   });

@@ -10,6 +10,7 @@ import marketplaceReducer from './features/marketplace/marketplace-slice';
 import crownsReducer from './features/crowns/crowns-slice';
 import wicpReducer from './features/wicp';
 import tableReducer from './features/tables/table-slice';
+import capReducer from './features/cap/cap-slice';
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
     crowns: crownsReducer,
     wicp: wicpReducer,
     table: tableReducer,
+    cap: capReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

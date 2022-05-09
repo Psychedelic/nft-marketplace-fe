@@ -17,6 +17,7 @@ export interface TableState {
 
 export interface CapActivityParams {
   pageCount: number;
+  bucketId: string;
 }
 
 interface LoadedTableData {
