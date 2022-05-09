@@ -27,6 +27,7 @@ const {
   crownsCanisterId,
   marketplaceCanisterId,
   wICPCanisterId,
+  capRouterId,
   host,
 } = config;
 
@@ -34,6 +35,7 @@ const whitelist = [
   crownsCanisterId,
   marketplaceCanisterId,
   wICPCanisterId,
+  capRouterId,
 ];
 
 export const Plug = () => {

@@ -1,10 +1,13 @@
 import React, { useMemo, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import {
   useThemeStore,
   useAppDispatch,
   useTableStore,
   tableActions,
+  capActions,
+  RootState,
 } from '../../store';
 import {
   ItemDetailsCell,
@@ -45,19 +48,33 @@ export const ActivityTable = () => {
     nextPageNo,
   } = useTableStore();
   const dispatch = useAppDispatch();
+  const bucketId = useSelector(
+    (state: RootState) => state.cap.bucketId,
+  );
+
+  console.log('[debug] activity-table.tsx: bucketId:', bucketId);
 
   useEffect(() => {
-    dispatch(tableActions.getCAPActivity({ pageCount: 0 }));
+    dispatch(
+      capActions.getTokenContractRootBucket({}),
+    )
   }, [dispatch]);
 
+  useEffect(() => {
+    if (!bucketId) return;
+
+    dispatch(tableActions.getCAPActivity({ pageCount: 0, bucketId }));
+  }, [dispatch,bucketId]);
+
   const loadMoreData = useCallback(() => {
-    if (loadingTableData || !hasMoreData) return;
+    if (loadingTableData || !hasMoreData || !bucketId) return;
     dispatch(
       tableActions.getCAPActivity({
         pageCount: nextPageNo,
+        bucketId,
       }),
     );
-  }, [dispatch, loadingTableData, hasMoreData, nextPageNo]);
+  }, [dispatch, loadingTableData, hasMoreData, nextPageNo, bucketId]);
 
   const columns = useMemo(
     () => [

@@ -7,3 +7,4 @@ export * from './settings';
 export * from './tables';
 export * from './marketplace';
 export * from './crowns';
+export * from './cap';
