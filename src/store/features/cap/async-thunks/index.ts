@@ -4,14 +4,17 @@ import { capSlice } from '../cap-slice';
 import { actorInstanceHandler } from '../../../../integrations/actor';
 import { AppLog } from '../../../../utils/log';
 import { notificationActions } from '../../errors';
-import config from '../../../../config/env';
+
+type GetTokenContractRootBucket = {
+  marketplaceCanisterId: string;
+};
 
 export const getTokenContractRootBucket = createAsyncThunk<
 string | undefined,
-any
+GetTokenContractRootBucket
 >(
 'cap/getTokenContractRootBucket',
-async (params, thunkAPI) => {
+async ({ marketplaceCanisterId }, thunkAPI) => {
   // Checks if an actor instance exists already
   // otherwise creates a new instance
   const actorInstance = await actorInstanceHandler({
@@ -22,7 +25,7 @@ async (params, thunkAPI) => {
 
   try {
     const result = await actorInstance.get_token_contract_root_bucket({
-      canister: Principal.fromText(config.marketplaceCanisterId),
+      canister: Principal.fromText(marketplaceCanisterId),
       witness: false,
     });
 

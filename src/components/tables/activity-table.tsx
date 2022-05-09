@@ -21,6 +21,7 @@ import { Container, InfiniteScrollWrapper } from './styles';
 import { NFTMetadata } from '../../declarations/legacy';
 import TableSkeletons from './table-skeletons';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
+import config from '../../config/env';
 
 interface RowProps {
   item: {
@@ -54,7 +55,9 @@ export const ActivityTable = () => {
 
   useEffect(() => {
     dispatch(
-      capActions.getTokenContractRootBucket({}),
+      capActions.getTokenContractRootBucket({
+        marketplaceCanisterId: config?.marketplaceCanisterId,
+      }),
     )
   }, [dispatch]);
 
