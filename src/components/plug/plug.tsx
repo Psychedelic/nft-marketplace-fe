@@ -175,12 +175,14 @@ export const Plug = () => {
         <PlugButton
           handleClick={handleClick}
           text={t('translation:buttons.action.loading')}
+          isConnected={isConnected}
         />
       )}
       {isConnecting && (
         <PlugButton
           handleClick={handleClick}
           text={t('translation:buttons.action.connecting')}
+          isConnected={isConnected}
         />
       )}
       {!isVerifying && !isConnecting && !isConnected && (
@@ -191,6 +193,7 @@ export const Plug = () => {
               ? t('translation:buttons.action.connectToPlug')
               : t('translation:buttons.action.installPlug')
           }
+          isConnected={isConnected}
         />
       )}
       {!isVerifying && !isConnecting && isConnected && (
@@ -200,9 +203,10 @@ export const Plug = () => {
           }}
           text={
             principalId
-              ? formatAddress(principalId)
+              ? formatAddress(principalId as string)
               : t('translation:buttons.action.loading')
           }
+          isConnected={isConnected}
         />
       )}
     </>

@@ -3,7 +3,6 @@ import * as Dropdown from '@radix-ui/react-dropdown-menu';
 import { useNavigate } from 'react-router-dom';
 import {
   useAppDispatch,
-  usePlugStore,
   useThemeStore,
   plugActions,
 } from '../../store';
@@ -29,6 +28,7 @@ import disconnectDark from '../../assets/buttons/disconnect-dark.svg';
 export type PlugButtonProps = {
   handleClick: () => void;
   text: string;
+  isConnected: boolean,
 };
 
 /* --------------------------------------------------------------------------
@@ -38,10 +38,10 @@ export type PlugButtonProps = {
 export const PlugButton = ({
   handleClick,
   text,
+  isConnected,
 }: PlugButtonProps) => {
   const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
-  const { isConnected } = usePlugStore();
   const [openDropdown, setOpenDropdown] = useState(false);
   const isLightTheme = theme === 'lightTheme';
   const currTheme = theme === 'darkTheme' ? 'dark' : 'light';
@@ -51,6 +51,8 @@ export const PlugButton = ({
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isConnected) return;
+
     // TODO: check if principal already available in the store
     (async () => {
       const principal = await (
@@ -61,7 +63,7 @@ export const PlugButton = ({
 
       setUserPrincipal(principal.toString());
     })();
-  }, []);
+  }, [isConnected]);
 
   return (
     <Dropdown.Root
