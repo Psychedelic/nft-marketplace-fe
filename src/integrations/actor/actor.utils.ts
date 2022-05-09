@@ -3,10 +3,11 @@ import { ActorSubclass } from '@dfinity/agent';
 import crownsIdlFactory from '../../declarations/nft.did';
 import wicpIdlFactory from '../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
+import capIdlFactory from '../../declarations/cap.did';
 import config from '../../config/env';
 import { AppLog } from '../../utils/log';
 
-export type ServiceName = 'marketplace' | 'crowns' | 'wicp';
+export type ServiceName = 'marketplace' | 'crowns' | 'wicp' | 'cap';
 
 export const createActor = async <T>({
   serviceName = 'marketplace',
@@ -41,6 +42,14 @@ export const createActor = async <T>({
     return await window.ic?.plug?.createActor({
       canisterId: config.wICPCanisterId,
       interfaceFactory: wicpIdlFactory,
+    });
+  }
+
+
+  if (serviceName === 'cap') {
+    return await window.ic?.plug?.createActor({
+      canisterId: config.capRouterId,
+      interfaceFactory: capIdlFactory,
     });
   }
 
