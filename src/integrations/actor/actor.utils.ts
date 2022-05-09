@@ -1,5 +1,5 @@
-/* eslint-disable */
-import { ActorSubclass } from '@dfinity/agent';
+import { Actor, ActorSubclass, HttpAgent } from '@dfinity/agent';
+import { IDL } from '@dfinity/candid';
 import crownsIdlFactory from '../../declarations/nft.did';
 import wicpIdlFactory from '../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
@@ -8,45 +8,45 @@ import { AppLog } from '../../utils/log';
 
 export type ServiceName = 'marketplace' | 'crowns' | 'wicp';
 
-export const createActor = async <T>({
+export const createActor = async ({
   serviceName = 'marketplace',
+  plugIsConnected = false,
 }: {
   serviceName?: ServiceName;
+  plugIsConnected?: boolean;
 }) => {
-  // Fetch root key for certificate validation during development
-  if (process.env.NODE_ENV !== 'production') {
-    try {
-      // The `delay` is required to prevent a false negative
-      // as the Plug wallet needs to be ready
-      // which is not the case on page refresh
-      // Otherwise, this cause `No Agent could be found`
-      await new Promise((resolve) => setTimeout(resolve, 1800));
-      await window.ic?.plug?.agent.fetchRootKey();
-    } catch (err) {
-      AppLog.error(
-        'Oops! Unable to fetch root key, is the local replica running?',
-        err,
-      );
-    }
+  let canisterId: string;
+  let interfaceFactory: IDL.InterfaceFactory;
+
+  switch (serviceName) {
+    case 'crowns':
+      canisterId = config.crownsCanisterId;
+      interfaceFactory = crownsIdlFactory;
+      break;
+    case 'wicp':
+      canisterId = config.wICPCanisterId;
+      interfaceFactory = wicpIdlFactory;
+      break;
+    default:
+      canisterId = config.marketplaceCanisterId;
+      interfaceFactory = marketplaceIdlFactory;
+      break;
   }
 
-  if (serviceName === 'crowns') {
-    return await window.ic?.plug?.createActor({
-      canisterId: config.crownsCanisterId,
-      interfaceFactory: crownsIdlFactory,
+  if (plugIsConnected) {
+    return window.ic?.plug?.createActor({
+      canisterId,
+      interfaceFactory,
+      host: config.host,
     });
   }
+  const agent = new HttpAgent({
+    host: config.host,
+  });
 
-  if (serviceName === 'wicp') {
-    return await window.ic?.plug?.createActor({
-      canisterId: config.wICPCanisterId,
-      interfaceFactory: wicpIdlFactory,
-    });
-  }
-
-  return await window.ic?.plug?.createActor({
-    canisterId: config.marketplaceCanisterId,
-    interfaceFactory: marketplaceIdlFactory,
+  return Actor.createActor(interfaceFactory, {
+    agent,
+    canisterId,
   });
 };
 
@@ -65,17 +65,34 @@ export const actorInstanceHandler = async <T>({
 }) => {
   const {
     [serviceName]: { actor },
+    plug: { isConnected: plugIsConnected },
   } = thunkAPI.getState();
 
-  if (!actor) {
-    const actor = (await createActor<T>({
+  const currentAgent = actor && Actor.agentOf(actor);
+  const currentAgentPrincipal =
+    currentAgent && (await currentAgent.getPrincipal());
+
+  const plugAgent = plugIsConnected && window.ic?.plug?.agent;
+  const plugAgentPrincipal =
+    plugAgent && (await plugAgent.getPrincipal());
+
+  const isAnotherAgent =
+    !currentAgentPrincipal ||
+    (plugAgentPrincipal &&
+      currentAgentPrincipal !== plugAgentPrincipal);
+
+  if (!actor || isAnotherAgent) {
+    AppLog.warn(`Creating new actor instance for ${serviceName}`);
+
+    const newActor = (await createActor({
       serviceName,
+      plugIsConnected,
     })) as ActorSubclass<T>;
 
     // Set actor state
-    thunkAPI.dispatch(slice.actions.setActor(actor));
+    thunkAPI.dispatch(slice.actions.setActor(newActor));
 
-    return actor;
+    return newActor;
   }
 
   return actor;

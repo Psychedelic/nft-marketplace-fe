@@ -6,8 +6,15 @@ type RequestConnectArgs = {
 export const requestConnectToPlug = (args?: RequestConnectArgs) =>
   window.ic?.plug?.requestConnect(args);
 
-export const createPlugAgent = (args?: RequestConnectArgs) =>
-  window.ic?.plug?.createAgent(args);
+export const createPlugAgent = async (args?: RequestConnectArgs) => {
+  await window.ic?.plug?.createAgent(args);
+
+  if (process.env.NODE_ENV !== 'production') {
+    await window.ic?.plug?.agent?.fetchRootKey();
+  }
+
+  return window.ic?.plug?.agent;
+};
 
 export const isPlugInstalled = (global = window) =>
   (global?.ic && typeof global.ic?.plug === 'object') || false;

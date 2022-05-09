@@ -38,21 +38,20 @@ const whitelist = [
 
 export const Plug = () => {
   const { t } = useTranslation();
-  // eslint-disable-next-line
   const { isConnected, connectionStatus, principalId } =
     usePlugStore();
   const dispatch = useAppDispatch();
   const hasPlug = isPlugInstalled();
 
-  // eslint-disable-next-line
-  const isVerifying = useMemo(() => {
-    return connectionStatus === PlugStatusCodes.Verifying;
-  }, [connectionStatus]);
+  const isVerifying = useMemo(
+    () => connectionStatus === PlugStatusCodes.Verifying,
+    [connectionStatus],
+  );
 
-  // eslint-disable-next-line
-  const isConnecting = useMemo(() => {
-    return connectionStatus === PlugStatusCodes.Connecting;
-  }, [connectionStatus]);
+  const isConnecting = useMemo(
+    () => connectionStatus === PlugStatusCodes.Connecting,
+    [connectionStatus],
+  );
 
   useEffect(() => {
     const verifyPlugConnection = async () => {
