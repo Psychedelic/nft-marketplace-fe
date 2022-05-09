@@ -26,6 +26,10 @@ export class KyasshuUrl {
   }: NSKyasshuUrl.GetCAPActivityQueryParams): string {
     return `${config.kyasshuMarketplaceAPI}/cap/txns/${bucketId}/?page=${pageCount}`;
   }
+
+  static getCAPSync(): string {
+    return `${config.kyasshuMarketplaceAPI}/cap/capSync`;
+  }
 }
 
 export namespace NSKyasshuUrl {
