@@ -106,7 +106,7 @@ export const CancelOfferModal = ({
           <ActionButton
             type="secondary"
             size="small"
-          />
+          >
             {t('translation:buttons.action.cancelOffer')}
           </ActionButton>
         </CancelOfferModalTrigger>
