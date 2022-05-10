@@ -73,7 +73,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     (state: RootState) => state.marketplace.recentlyCancelledOffers,
   );
 
-  const { id: principalId } = useParams();
+  const { id: plugPrincipal } = useParams();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -124,12 +124,12 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const nextPageNo = 0;
 
   useEffect(() => {
-    if (!principalId) return;
+    if (!plugPrincipal) return;
 
     if (offersType === OfferTypeStatusCodes.OffersMade) {
       dispatch(
         marketplaceActions.getBuyerOffers({
-          userPrincipalId: principalId,
+          userPrincipalId: plugPrincipal,
           onSuccess: (offers) => {
             if (offersType === OfferTypeStatusCodes.OffersMade) {
               setTableDetails({
@@ -148,7 +148,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
     dispatch(
       crownsActions.getOwnerTokenIdentifiers({
-        principalId,
+        principalId: plugPrincipal,
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
