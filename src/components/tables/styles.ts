@@ -227,7 +227,6 @@ export const TableSkeletonsWrapper = styled('div', {
 export const ImageSkeleton = styled('div', {
   width: '48px',
   height: '48px',
-  margin: '10px 0px',
   borderRadius: '10px',
   marginRight: '12px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
