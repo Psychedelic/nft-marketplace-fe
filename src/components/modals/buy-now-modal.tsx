@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
 import { useAppDispatch, marketplaceActions } from '../../store';
@@ -40,6 +40,7 @@ export const BuyNowModal = ({
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [modalStep, setModalStep] = useState<DirectBuyStatusCodes>(
@@ -99,7 +100,8 @@ export const BuyNowModal = ({
   };
 
   const handleViewNFT = () => {
-    navigate(`/nft/${id}`, { replace: true });
+    const tokenId = location.pathname === "/" ? actionTextId : id
+    navigate(`/nft/${tokenId}`, { replace: true });
     setModalOpened(false);
   };
 
@@ -216,7 +218,7 @@ export const BuyNowModal = ({
             */}
             <ModalButtonsList>
               <ModalButtonWrapper fullWidth>
-                <ActionButton type="primary" onChange={handleViewNFT}>
+                <ActionButton type="primary" onClick={handleViewNFT}>
                   {t('translation:modals.buttons.viewNFT')}
                 </ActionButton>
               </ModalButtonWrapper>
