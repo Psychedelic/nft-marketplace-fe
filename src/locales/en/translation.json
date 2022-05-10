@@ -217,7 +217,8 @@
     "offerFor": "Offer for",
     "last": "Last",
     "sell": "Sell",
-    "price": "Price"
+    "price": "Price",
+    "lastSale": "Last sale"
   },
   "tabs": {
     "items": "Items",
@@ -249,4 +250,3 @@
     "copyToClipboard": "Copied to clipboard!"
   }
 }
-

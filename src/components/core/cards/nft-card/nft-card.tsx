@@ -11,13 +11,14 @@ import {
   Flex,
   OwnedCardText,
   NftDataHeader,
-  LastOffer,
+  ActionDetails,
   NftDataText,
   PreviewDetails,
   VideoPlayer,
   PreviewImage,
   VideoLoader,
   MediaWrapper,
+  ActionText,
 } from './styles';
 import wicpLogo from '../../../../assets/wicpIcon.png';
 import {
@@ -28,6 +29,7 @@ import {
 } from '../../../modals';
 import { usePlugStore } from '../../../../store';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
+import { NFTActionStatuses } from '../../../../constants/common';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -46,6 +48,12 @@ type ConnectedProps = {
 type DisconnectedProps = {
   isForSale?: boolean;
   setModalStatus: (status: boolean) => void;
+};
+
+type LastActionTakenDetailsProps = {
+  // TODO: update data type whereever it's required
+  data: any;
+  isForSale?: boolean;
 };
 
 const OnConnected = ({
@@ -113,6 +121,55 @@ const OnDisconnected = ({
         />
       )}
     </div>
+  );
+};
+
+const LastActionTakenDetails = ({
+  data,
+  isForSale,
+}: LastActionTakenDetailsProps) => {
+  const { t } = useTranslation();
+
+  if (data?.lastActionTaken === NFTActionStatuses.Sold) {
+    return (
+      <ActionDetails>
+        {data?.lastOffer && (
+          <>
+            <ActionText>
+              {t('translation:nftCard.lastSale')}
+            </ActionText>
+            <b>
+              {(data?.lastSale &&
+                parseE8SAmountToWICP(
+                  BigInt(data.lastSale),
+                ).toString()) ||
+                ''}
+            </b>
+          </>
+        )}
+      </ActionDetails>
+    );
+  }
+
+  return (
+    <ActionDetails>
+      {data?.lastOffer && (
+        <>
+          <ActionText>
+            {!isForSale
+              ? `${t('translation:nftCard.offerFor')} `
+              : `${t('translation:nftCard.last')} `}
+          </ActionText>
+          <b>
+            {(data?.lastOffer &&
+              parseE8SAmountToWICP(
+                BigInt(data.lastOffer),
+              ).toString()) ||
+              ''}
+          </b>
+        </>
+      )}
+    </ActionDetails>
   );
 };
 
@@ -185,22 +242,7 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
               setModalStatus={setModalStatus}
             />
           )}
-          <LastOffer>
-            {data?.lastOffer && (
-              <>
-                {!isForSale
-                  ? `${t('translation:nftCard.offerFor')} `
-                  : `${t('translation:nftCard.last')} `}
-                <b>
-                  {(data?.lastOffer &&
-                    parseE8SAmountToWICP(
-                      BigInt(data.lastOffer),
-                    ).toString()) ||
-                    ''}
-                </b>
-              </>
-            )}
-          </LastOffer>
+          <LastActionTakenDetails data={data} isForSale={isForSale} />
         </NFTCardOptions>
       </CardWrapper>
     </CardContainer>
