@@ -18,6 +18,7 @@ import {
   PreviewImage,
   VideoLoader,
   MediaWrapper,
+  ActionText,
 } from './styles';
 import wicpLogo from '../../../../assets/wicpIcon.png';
 import {
@@ -28,6 +29,7 @@ import {
 } from '../../../modals';
 import { usePlugStore } from '../../../../store';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
+import { NFTActionStatuses } from '../../../../constants/common';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -127,13 +129,37 @@ const LastActionTakenDetails = ({
   isForSale,
 }: LastActionTakenDetailsProps) => {
   const { t } = useTranslation();
+
+  if (data?.lastActionTaken === NFTActionStatuses.Sold) {
+    return (
+      <ActionDetails>
+        {data?.lastOffer && (
+          <>
+            <ActionText>
+              {t('translation:nftCard.lastSale')}
+            </ActionText>
+            <b>
+              {(data?.lastSale &&
+                parseE8SAmountToWICP(
+                  BigInt(data.lastSale),
+                ).toString()) ||
+                ''}
+            </b>
+          </>
+        )}
+      </ActionDetails>
+    );
+  }
+
   return (
     <ActionDetails>
       {data?.lastOffer && (
         <>
-          {!isForSale
-            ? `${t('translation:nftCard.offerFor')} `
-            : `${t('translation:nftCard.last')} `}
+          <ActionText>
+            {!isForSale
+              ? `${t('translation:nftCard.offerFor')} `
+              : `${t('translation:nftCard.last')} `}
+          </ActionText>
           <b>
             {(data?.lastOffer &&
               parseE8SAmountToWICP(

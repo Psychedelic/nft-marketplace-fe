@@ -140,10 +140,7 @@ export const ActionDetails = styled('span', {
 });
 
 export const ActionText = styled('span', {
-  fontStyle: 'normal',
-  fontSize: '14px',
-  color: '#2253FF',
-  cursor: 'pointer',
+  marginRight: '5px',
 });
 
 export const NFTCardOptions = styled('div', {
