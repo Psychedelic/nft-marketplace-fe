@@ -2,7 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { styled } from '@stitches/react';
 
 export const IconStyled = styled(FontAwesomeIcon, {
-  fontSize: '18px',
+  color: '$mainTextColor',
+  transition: 'transform 0.1s ease-in-out',
+
   variants: {
     paddingLeft: {
       true: {
@@ -12,6 +14,11 @@ export const IconStyled = styled(FontAwesomeIcon, {
     paddingRight: {
       true: {
         paddingRight: '0.8rem',
+      },
+    },
+    rotate: {
+      true: {
+        transform: 'rotate(180deg)',
       },
     },
   },

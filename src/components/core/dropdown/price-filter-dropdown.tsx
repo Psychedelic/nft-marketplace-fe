@@ -1,21 +1,16 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  useThemeStore,
-  filterActions,
-  useAppDispatch,
-} from '../../../store';
+import { filterActions, useAppDispatch } from '../../../store';
 import {
   DropdownRoot,
   DropdownStyle,
   DropdownContent,
   DropdownRadioMenuItem,
-  DropdownMenuSeparator,
   DropdownRadioGroup,
 } from './styles';
-import arrowdown from '../../../assets/arrowdown.svg';
-import arrowdownDark from '../../../assets/arrowdown-dark.svg';
 import { AppLog } from '../../../utils/log';
+import { ChevronDownIcon, Icon } from '../../icons';
+import { useTheme } from '../../../hooks';
 
 export const SortByFilterDropdown = React.memo(() => {
   const { t } = useTranslation();
@@ -24,9 +19,8 @@ export const SortByFilterDropdown = React.memo(() => {
   const [selectedValue, setSelectedValue] = useState(
     `${t('translation:dropdown.priceFilter.recentlyListed')}`,
   );
-  const { theme } = useThemeStore();
-  const isLightTheme = theme === 'lightTheme';
-  const currTheme = theme === 'darkTheme' ? 'dark' : 'light';
+  const [, themeObject] = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
 
   // TODO: move all the keys to constant variable file
   const sortOptions = [
@@ -72,27 +66,22 @@ export const SortByFilterDropdown = React.memo(() => {
   };
 
   return (
-    <DropdownRoot>
+    <DropdownRoot onOpenChange={setIsOpen}>
       <DropdownStyle>
         <p>{selectedValue}</p>
-        <img
-          src={isLightTheme ? arrowdown : arrowdownDark}
-          alt="arrow-down"
-        />
+        <Icon icon={ChevronDownIcon} rotate={isOpen} />
       </DropdownStyle>
 
-      <DropdownContent background={currTheme}>
+      <DropdownContent className={themeObject}>
         <DropdownRadioGroup onValueChange={setSortBy}>
           {sortOptions.map((item) => (
-            <>
-              <DropdownRadioMenuItem value={item.key} key={item.key}>
-                {item.value}
-              </DropdownRadioMenuItem>
-              <DropdownMenuSeparator
-                key={item.key}
-                background={theme === 'darkTheme' ? 'dark' : 'light'}
-              />
-            </>
+            <DropdownRadioMenuItem
+              value={item.key}
+              key={item.key}
+              className="list-item"
+            >
+              {item.value}
+            </DropdownRadioMenuItem>
           ))}
         </DropdownRadioGroup>
       </DropdownContent>

@@ -77,7 +77,6 @@ export const PlugButton = ({
             {text}
             {isConnected && (
               <PlugArrowDownIcon
-                size="sm"
                 icon={ChevronDownIcon}
                 rotate={openDropdown}
               />

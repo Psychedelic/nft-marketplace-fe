@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import * as Accordion from '@radix-ui/react-accordion';
 import {
   useFilterStore,
-  useThemeStore,
   useAppDispatch,
   filterActions,
 } from '../../../store';
@@ -13,8 +12,7 @@ import {
   AccordionContent,
   Form,
 } from './styles';
-import arrowdown from '../../../assets/arrowdown.svg';
-import arrowdownDark from '../../../assets/arrowdown-dark.svg';
+import { ChevronDownIcon, Icon } from '../../icons';
 
 export type CheckboxFilterAccordionProps = {
   id: string;
@@ -26,9 +24,7 @@ export const CheckboxFilterAccordion = ({
   checkboxData,
 }: CheckboxFilterAccordionProps) => {
   const dispatch = useAppDispatch();
-  const { theme } = useThemeStore();
   const { traits } = useFilterStore();
-  const isLightTheme = theme === 'lightTheme';
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const filterValueExists = (traitsValue: string) =>
     traits.some(
@@ -81,9 +77,11 @@ export const CheckboxFilterAccordion = ({
             {checkboxData.key}
             {traitsCount && <span>{`(${traitsCount})`}</span>}
           </p>
-          <img
-            src={isLightTheme ? arrowdown : arrowdownDark}
-            alt="arrow-down"
+
+          <Icon
+            icon={ChevronDownIcon}
+            rotate={!isAccordionOpen}
+            size="xs"
           />
         </AccordionTrigger>
         <AccordionContent padding="small">

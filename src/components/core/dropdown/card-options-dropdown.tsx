@@ -2,22 +2,16 @@ import React from 'react';
 import copyToClipboard from 'copy-to-clipboard';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useTranslation } from 'react-i18next';
+import { notificationActions, useAppDispatch } from '../../../store';
 import {
-  notificationActions,
-  useAppDispatch,
-  useThemeStore,
-} from '../../../store';
-import {
-  Flex,
   DropdownContent,
   DropdownMenuItem,
   DropdownGroup,
   DropdownButtonContainer,
 } from './styles';
-import moreoptions from '../../../assets/moreoptions.svg';
-import copy from '../../../assets/copy.svg';
-import copyDark from '../../../assets/copy-dark.svg';
 import { NFTMetadata } from '../../../declarations/legacy';
+import { CopyIcon, EllipsisIcon, Icon } from '../../icons';
+import { useTheme } from '../../../hooks';
 
 export type CardOptionsDropdownProps = {
   data: NFTMetadata;
@@ -27,9 +21,8 @@ export const CardOptionsDropdown = ({
   data,
 }: CardOptionsDropdownProps) => {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
+  const [, themeObject] = useTheme();
   const dispatch = useAppDispatch();
-  const isLightTheme = theme === 'lightTheme';
 
   const handleCopy = (e: any) => {
     e.preventDefault();
@@ -50,26 +43,21 @@ export const CardOptionsDropdown = ({
         }}
       >
         <DropdownButtonContainer>
-          <img src={moreoptions} alt="more-options" />
+          <Icon icon={EllipsisIcon} size="1x" />
         </DropdownButtonContainer>
       </DropdownMenu.Trigger>
 
       <DropdownContent
+        className={themeObject}
         width="small"
-        background={theme === 'darkTheme' ? 'dark' : 'light'}
         onClick={(e) => handleCopy(e)}
       >
         <DropdownGroup>
-          <DropdownMenuItem>
-            <Flex>
-              <p>
-                {`${t('translation:dropdown.moreOptions.copyLink')}`}
-              </p>
-              <img
-                src={isLightTheme ? copy : copyDark}
-                alt="copy-link"
-              />
-            </Flex>
+          <DropdownMenuItem className="list-item">
+            <p>
+              {`${t('translation:dropdown.moreOptions.copyLink')}`}
+            </p>
+            <Icon icon={CopyIcon} />
           </DropdownMenuItem>
         </DropdownGroup>
       </DropdownContent>

@@ -13,5 +13,5 @@ export { faArrowRightFromLine as ArrowRightFromLine } from '@fortawesome/pro-sol
 export { faRightFromBracket as DisconnectIcon } from '@fortawesome/pro-regular-svg-icons/faRightFromBracket';
 export { faTag as OfferIcon } from '@fortawesome/pro-regular-svg-icons/faTag';
 export { faChevronDown as ChevronDownIcon } from '@fortawesome/pro-solid-svg-icons/faChevronDown';
-
-// export {  as  } from '@fortawesome/pro-regular-svg-icons/';
+export { faEllipsis as EllipsisIcon } from '@fortawesome/pro-solid-svg-icons/faEllipsis';
+export { faClone as CopyIcon } from '@fortawesome/pro-regular-svg-icons/faClone';
