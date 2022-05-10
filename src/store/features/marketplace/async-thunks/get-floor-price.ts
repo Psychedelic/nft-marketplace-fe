@@ -6,6 +6,7 @@ import config from '../../../../config/env';
 import { notificationActions } from '../../errors';
 import { AppLog } from '../../../../utils/log';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
+import { nftsActions } from '../../nfts/nfts-slice';
 
 export const getFloorPrice = createAsyncThunk<any>(
   'marketplace/getFloor',
@@ -29,10 +30,14 @@ export const getFloorPrice = createAsyncThunk<any>(
       );
       if ('Ok' in floorResponse) {
         const floorPrice = floorResponse.Ok.toString();
-        floorPriceinWICP = parseE8SAmountToWICP(floorPrice);
+        floorPriceinWICP = Number(parseE8SAmountToWICP(floorPrice));
       }
 
-      console.log(floorPriceinWICP, 'floorPriceinWICP');
+      const actionPayload = {
+        price: floorPriceinWICP,
+      };
+
+      thunkAPI.dispatch(nftsActions.setFloorPrice(actionPayload));
 
       return floorPriceinWICP;
     } catch (err) {
