@@ -17,6 +17,8 @@ export const getFilterTraits = createAsyncThunk<
   void,
   GetFilterTraitsProps
 >('filters/getFilterTraits', async (_, { dispatch }) => {
+  dispatch(filterActions.setIsFilterTraitsLoading(true));
+
   try {
     const response = await axios.get(KyasshuUrl.getFilterTraits());
     if (response.status !== 200) {
@@ -26,7 +28,6 @@ export const getFilterTraits = createAsyncThunk<
     console.log(response.data.traits);
 
     const responseData = response.data.traits.map((res: any) => {
-      console.log(res[1]);
       let key;
       switch (res[0]) {
         case 'smallgem':

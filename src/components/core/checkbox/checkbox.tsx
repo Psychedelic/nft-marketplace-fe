@@ -4,8 +4,9 @@ import { Wrapper } from './styles';
 export type CheckboxProps = {
   title?: string;
   value: string; // Red
-  percentage: string; // 1291 (12.9%)
   filterValueExists: (value: string) => boolean;
+  percentage: string; // 1291 (12.9%)
+  occurence: string;
   handleSelectedFilters: (
     value: React.MouseEvent<HTMLInputElement, MouseEvent>,
   ) => void;
@@ -14,6 +15,7 @@ export type CheckboxProps = {
 export const Checkbox = ({
   value,
   percentage,
+  occurence,
   filterValueExists,
   handleSelectedFilters,
 }: CheckboxProps) => (
@@ -30,6 +32,6 @@ export const Checkbox = ({
       />
       {value}
     </label>
-    <span>{percentage}</span>
+    <span>{`${occurence} (${percentage})`}</span>
   </Wrapper>
 );
