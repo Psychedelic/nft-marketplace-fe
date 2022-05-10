@@ -7,6 +7,7 @@ import {
 } from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../errors';
 import { AppLog } from '../../../../utils/log';
+import { findLastAction } from '../../../../utils/nfts';
 
 export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -58,6 +59,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
           },
           status: nft?.status,
           owner: nft?.owner,
+          lastAction: findLastAction(nft),
         };
         return metadata;
       });
