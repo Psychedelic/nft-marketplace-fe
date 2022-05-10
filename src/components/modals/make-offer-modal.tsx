@@ -32,7 +32,6 @@ import { AppLog } from '../../utils/log';
 
 export type MakeOfferModalProps = {
   onClose?: () => void;
-  setHasUserMadeOffer?: (value: boolean) => void;
   actionText?: string;
   text?: string;
   nftTokenId?: string;
@@ -40,7 +39,6 @@ export type MakeOfferModalProps = {
 
 export const MakeOfferModal = ({
   onClose,
-  setHasUserMadeOffer,
   actionText,
   text,
   nftTokenId,
@@ -85,7 +83,6 @@ export const MakeOfferModal = ({
         amount,
         onSuccess: () => {
           setModalStep(ListingStatusCodes.Submitted);
-          setHasUserMadeOffer && setHasUserMadeOffer(true);
         },
         onFailure: () => {
           setModalStep(ListingStatusCodes.ListingInfo);

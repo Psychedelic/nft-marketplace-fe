@@ -41,7 +41,6 @@ export type OfferAccordionProps = {
   lastSalePrice?: string;
   isListed?: boolean;
   hasUserMadeOffer?: boolean;
-  setHasUserMadeOffer?: (value: boolean) => void;
   loadingOffers?: boolean;
   offerItem: OffersTableItem;
   owner?: string;
@@ -52,7 +51,6 @@ type ConnectedProps = {
   isListed?: boolean;
   isOwner?: boolean;
   hasUserMadeOffer?: boolean;
-  setHasUserMadeOffer?: (value: boolean) => void;
   loadingOffers?: boolean;
   price?: string;
   offerItem: OffersTableItem;
@@ -67,7 +65,6 @@ const OnConnected = ({
   isListed,
   isOwner,
   price,
-  setHasUserMadeOffer,
   hasUserMadeOffer,
   loadingOffers,
   offerItem,
@@ -92,13 +89,12 @@ const OnConnected = ({
             />
             <Space />
             <CancelOfferModal
-              setHasUserMadeOffer={setHasUserMadeOffer}
               item={offerItem?.item}
               size="large"
             />
           </ButtonFlex>
         ) : (
-          <MakeOfferModal setHasUserMadeOffer={setHasUserMadeOffer} />
+          <MakeOfferModal />
         )}
       </ButtonDetailsWrapper>
     </ButtonListWrapper>
@@ -116,7 +112,6 @@ export const OfferAccordion = ({
   lastSalePrice,
   isListed,
   hasUserMadeOffer,
-  setHasUserMadeOffer,
   loadingOffers,
   offerItem,
   owner,
@@ -190,7 +185,6 @@ export const OfferAccordion = ({
             isListed={isListed}
             isOwner={isOwner}
             hasUserMadeOffer={hasUserMadeOffer}
-            setHasUserMadeOffer={setHasUserMadeOffer}
             loadingOffers={loadingOffers}
             offerItem={offerItem}
             price={lastSalePrice}

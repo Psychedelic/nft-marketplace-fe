@@ -51,6 +51,14 @@ export const NFTOffersTable = ({
     (state: RootState) => state.marketplace.recentlyAcceptedOffers,
   );
 
+  const recentlyMadeOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyMadeOffers,
+  );
+
+  const recentlyCancelledOffers = useSelector((state: RootState) => {
+    return state.marketplace.recentlyCancelledOffers;
+  });
+
   const { id: tokenId } = useParams();
 
   useEffect(() => {
@@ -86,7 +94,7 @@ export const NFTOffersTable = ({
       }),
     );
 
-  }, [dispatch, recentlyAcceptedOffers]);
+  }, [dispatch, recentlyAcceptedOffers, recentlyMadeOffers, recentlyCancelledOffers]);
 
   const columns = useMemo(
     () => [

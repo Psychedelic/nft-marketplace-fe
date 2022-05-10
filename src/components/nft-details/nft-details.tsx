@@ -47,6 +47,9 @@ export const NftDetails = () => {
   const recentlyAcceptedOffers = useSelector(
     (state: RootState) => state.marketplace.recentlyAcceptedOffers,
   );
+  const recentlyMadeOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyMadeOffers,
+  );
   const tokenListing = useSelector((state: RootState) => {
     if (
       !id ||
@@ -58,11 +61,18 @@ export const NftDetails = () => {
     // eslint-disable-next-line consistent-return
     return state.marketplace.tokenListing[id];
   });
+  const tokenOffers = useSelector((state: RootState) => {
+    return state.marketplace.tokenOffers;
+  });
+  const recentlyCancelledOffers = useSelector((state: RootState) => {
+    return state.marketplace.recentlyCancelledOffers;
+  });
 
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
     [loadedNFTS, id],
   );
+
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
   const owner = tokenListing?.seller?.toString() || nftDetails?.owner;
@@ -72,10 +82,11 @@ export const NftDetails = () => {
     (nftDetails?.price &&
       parseE8SAmountToWICP(BigInt(nftDetails.price)));
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
+  const hasUserMadeOffer = tokenOffers?.some(
+    (offer: any) => offer?.item?.tokenId.toString() === id,
+  );
   const dispatch = useAppDispatch();
 
-  const [hasUserMadeOffer, setHasUserMadeOffer] =
-    useState<boolean>(false);
   const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
   const [offerItem, setofferItem] = useState<any>({});
   const { principalId } = usePlugStore();
@@ -120,12 +131,6 @@ export const NftDetails = () => {
         ownerTokenIdentifiers: [BigInt(id)],
         onSuccess: (offers: any) => {
           setLoadingOffers(false);
-          setHasUserMadeOffer(
-            offers.some(
-              (offer: any) =>
-                offer.fromDetails.address === principalId,
-            ),
-          );
           setofferItem(
             offers.find(
               (offer: any) =>
@@ -138,12 +143,15 @@ export const NftDetails = () => {
         },
       }),
     );
+    console.log(recentlyCancelledOffers, recentlyMadeOffers);
   }, [
     dispatch,
     id,
     recentlyListedForSale,
     recentlyCancelledItems,
     recentlyAcceptedOffers,
+    recentlyMadeOffers,
+    recentlyCancelledOffers
   ]);
 
   return (
@@ -195,7 +203,6 @@ export const NftDetails = () => {
               lastSalePrice={lastSalePrice?.toString()}
               isListed={isListed}
               hasUserMadeOffer={hasUserMadeOffer}
-              setHasUserMadeOffer={setHasUserMadeOffer}
               loadingOffers={loadingOffers}
               offerItem={offerItem}
               owner={owner}

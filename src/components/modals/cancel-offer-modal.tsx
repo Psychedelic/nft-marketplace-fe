@@ -29,14 +29,12 @@ import { useParams } from 'react-router';
  * --------------------------------------------------------------------------*/
 
 export type CancelOfferModalProps = {
-  setHasUserMadeOffer?: (value: boolean) => void;
   size?: string;
   item: OfferItem;
 };
 
 export const CancelOfferModal = ({
   item,
-  setHasUserMadeOffer,
   size,
 }: CancelOfferModalProps) => {
   const { t } = useTranslation();
@@ -58,18 +56,18 @@ export const CancelOfferModal = ({
     setModalOpened(false);
   };
 
-  const recentlyMadeOffers = useSelector(
-    (state: RootState) => state.marketplace.recentlyMadeOffers,
-  );
+  const tokenOffers = useSelector((state: RootState) => {
+    return state.marketplace?.tokenOffers;
+  });
 
   const handleCancelOffer = () => {
-    const offerItem = recentlyMadeOffers.find(
-      (offer: any) => offer.id === routeID.id,
+    const offerItem = tokenOffers?.find(
+      (offer: any) => offer?.item?.tokenId?.toString() === routeID.id,
     );
 
-    if (!item?.tokenId && !offerItem?.id) return;
+    if (!item?.tokenId && !offerItem?.item?.tokenId) return;
 
-    const id = item ? item?.tokenId.toString() : offerItem?.id.toString();
+    const id = item ? item?.tokenId.toString() : offerItem?.item?.tokenId?.toString();
 
     setModalStep(ListingStatusCodes.Pending);
 
@@ -78,7 +76,6 @@ export const CancelOfferModal = ({
         id,
         onSuccess: () => {
           setModalOpened(false);
-          setHasUserMadeOffer && setHasUserMadeOffer(false);
 
           console.log('TODO: handleCancelOffer: onSuccess');
         },
