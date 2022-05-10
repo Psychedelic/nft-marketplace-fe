@@ -177,6 +177,7 @@ export const Plug = () => {
           handleClick={handleClick}
           text={t('translation:buttons.action.loading')}
           isConnected={isConnected}
+          principalId={principalId}
         />
       )}
       {isConnecting && (
@@ -184,6 +185,7 @@ export const Plug = () => {
           handleClick={handleClick}
           text={t('translation:buttons.action.connecting')}
           isConnected={isConnected}
+          principalId={principalId}
         />
       )}
       {!isVerifying && !isConnecting && !isConnected && (
@@ -195,6 +197,7 @@ export const Plug = () => {
               : t('translation:buttons.action.installPlug')
           }
           isConnected={isConnected}
+          principalId={principalId}
         />
       )}
       {!isVerifying && !isConnecting && isConnected && (
@@ -208,6 +211,7 @@ export const Plug = () => {
               : t('translation:buttons.action.loading')
           }
           isConnected={isConnected}
+          principalId={principalId}
         />
       )}
     </>

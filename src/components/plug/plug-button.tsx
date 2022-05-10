@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import * as Dropdown from '@radix-ui/react-dropdown-menu';
+import { useEffect, useState } from 'react';
+import * as Popover from '@radix-ui/react-popover';
 import { useNavigate } from 'react-router-dom';
-import {
-  useAppDispatch,
-  useThemeStore,
-  plugActions,
-} from '../../store';
+import { useTranslation } from 'react-i18next';
+import { useAppDispatch, plugActions } from '../../store';
 import { disconnectPlug } from '../../integrations/plug';
 import {
   PlugButtonContainer,
@@ -13,8 +10,7 @@ import {
   PlugIcon,
   PlugArrowDownIcon,
   ConnectToPlugButton,
-  DropdownTrigger,
-  Flex,
+  ListItem,
 } from './styles';
 import plugIcon from '../../assets/plug-icon.svg';
 import plugIconDark from '../../assets/plug-icon-dark.svg';
@@ -24,11 +20,13 @@ import offers from '../../assets/buttons/offers.svg';
 import disconnect from '../../assets/buttons/disconnect.svg';
 import offersDark from '../../assets/buttons/offers-dark.svg';
 import disconnectDark from '../../assets/buttons/disconnect-dark.svg';
+import { useTheme } from '../../hooks';
 
 export type PlugButtonProps = {
   handleClick: () => void;
   text: string;
-  isConnected: boolean,
+  isConnected: boolean;
+  principalId?: string;
 };
 
 /* --------------------------------------------------------------------------
@@ -39,48 +37,28 @@ export const PlugButton = ({
   handleClick,
   text,
   isConnected,
+  principalId: userPrincipal,
 }: PlugButtonProps) => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { theme } = useThemeStore();
+  const [theme, themeObject] = useTheme();
   const [openDropdown, setOpenDropdown] = useState(false);
   const isLightTheme = theme === 'lightTheme';
-  const currTheme = theme === 'darkTheme' ? 'dark' : 'light';
-
-  const [userPrincipal, setUserPrincipal] = useState();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isConnected) return;
-
-    // TODO: check if principal already available in the store
-    (async () => {
-      const principal = await (
-        window as any
-      ).ic?.plug?.getPrincipal();
-
-      if (!principal) return;
-
-      setUserPrincipal(principal.toString());
-    })();
-  }, [isConnected]);
+    const scrollEvent = () => setOpenDropdown(false);
+    window.addEventListener('scroll', scrollEvent);
+    return () => window.removeEventListener('scroll', scrollEvent);
+  }, []);
 
   return (
-    <Dropdown.Root
-      onOpenChange={() => {
-        setOpenDropdown(!openDropdown);
-      }}
-      open={openDropdown}
-    >
-      <DropdownTrigger asChild>
+    <Popover.Root open={openDropdown}>
+      <Popover.Trigger asChild>
         <PlugButtonContainer
           onClick={handleClick}
-          onMouseEnter={() => {
-            setOpenDropdown(true);
-          }}
-          onMouseLeave={() => {
-            setTimeout(() => setOpenDropdown(false), 1500);
-          }}
+          onMouseEnter={() => setOpenDropdown(true)}
           className="plug-button"
         >
           <PlugButtonText className="plug-button-text">
@@ -97,31 +75,35 @@ export const PlugButton = ({
             )}
           </PlugButtonText>
         </PlugButtonContainer>
-      </DropdownTrigger>
-      {isConnected && (
-        <ConnectToPlugButton align="end" background={currTheme}>
-          <Flex onClick={() => navigate(`/offers/${userPrincipal}`)}>
-            <img
-              src={isLightTheme ? offers : offersDark}
-              alt="offers"
-            />
-            <p>My Offers</p>
-          </Flex>
-          <div />
-          <Flex
-            onClick={() => {
-              dispatch(plugActions.setIsConnected(false));
-              disconnectPlug();
-            }}
-          >
-            <img
-              src={isLightTheme ? disconnect : disconnectDark}
-              alt="disconnect"
-            />
-            <p>Disconnect</p>
-          </Flex>
-        </ConnectToPlugButton>
-      )}
-    </Dropdown.Root>
+      </Popover.Trigger>
+
+      <Popover.Content onMouseLeave={() => setOpenDropdown(false)}>
+        {isConnected && (
+          <ConnectToPlugButton align="end" className={themeObject}>
+            <ListItem
+              onClick={() => navigate(`/offers/${userPrincipal}`)}
+            >
+              <img
+                src={isLightTheme ? offers : offersDark}
+                alt="offers"
+              />
+              <p>{t('translation:buttons.action.myOffers')}</p>
+            </ListItem>
+            <ListItem
+              onClick={() => {
+                dispatch(plugActions.setIsConnected(false));
+                disconnectPlug();
+              }}
+            >
+              <img
+                src={isLightTheme ? disconnect : disconnectDark}
+                alt="disconnect"
+              />
+              <p>{t('translation:buttons.action.disconnect')}</p>
+            </ListItem>
+          </ConnectToPlugButton>
+        )}
+      </Popover.Content>
+    </Popover.Root>
   );
 };
