@@ -31,7 +31,14 @@ export const CollectionItems = () => {
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
 
-  const { loadingNFTs } = useNFTSStore();
+  const {
+    loadingNFTs,
+    loadingCollectionData,
+    loadingFloorPrice,
+    totalNFTSCount,
+    totalOwnersCount,
+    floorPrice,
+  } = useNFTSStore();
 
   useEffect(() => {
     dispatch(nftsActions.getCollectionData());
@@ -63,8 +70,8 @@ export const CollectionItems = () => {
     }
   };
 
-  // TODO: replace static FilteredCountChip data with dynamic
-  // data by using getCollectionData
+  // TODO: Add loader when collection data or floor price
+  // details are loading
 
   return (
     <Container>
@@ -72,21 +79,29 @@ export const CollectionItems = () => {
         <ContentWrapper>
           <Flex withMargin justifyContent>
             <ContentFlex>
-              <FilteredCountChip
-                label={t('translation:chips.labels.itemsLabel')}
-                count="10.0k"
-                showLogo={false}
-              />
-              <FilteredCountChip
-                label={t('translation:chips.labels.OwnersLabel')}
-                count="5.9k"
-                showLogo={false}
-              />
-              <FilteredCountChip
-                label={t('translation:chips.labels.FloorPriceLabel')}
-                count="22.12"
-                showLogo
-              />
+              {!loadingCollectionData && totalNFTSCount && (
+                <FilteredCountChip
+                  label={t('translation:chips.labels.itemsLabel')}
+                  count={totalNFTSCount}
+                  showLogo={false}
+                />
+              )}
+              {!loadingCollectionData && totalNFTSCount && (
+                <FilteredCountChip
+                  label={t('translation:chips.labels.OwnersLabel')}
+                  count={totalOwnersCount}
+                  showLogo={false}
+                />
+              )}
+              {!loadingFloorPrice && floorPrice && (
+                <FilteredCountChip
+                  label={t(
+                    'translation:chips.labels.FloorPriceLabel',
+                  )}
+                  count={floorPrice}
+                  showLogo
+                />
+              )}
             </ContentFlex>
             <ContentFlex>
               <SortByFilterDropdown />

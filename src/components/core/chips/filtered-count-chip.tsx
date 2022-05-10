@@ -10,7 +10,7 @@ import {
 
 export interface FilteredCountChipProps {
   label?: string;
-  count?: string;
+  count?: number;
   showLogo?: boolean;
 }
 
