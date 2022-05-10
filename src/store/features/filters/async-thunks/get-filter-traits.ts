@@ -13,6 +13,12 @@ export type GetFilterTraitsProps =
   | NSKyasshuUrl.GetFilterTraitsQueryParams
   | undefined;
 
+export type TraitsValuesProps = {
+  value: string,
+  occurance: number,
+  rarity: number
+}
+
 export const getFilterTraits = createAsyncThunk<
   void,
   GetFilterTraitsProps
@@ -25,9 +31,7 @@ export const getFilterTraits = createAsyncThunk<
       throw Error(response.statusText);
     }
 
-    console.log(response.data.traits);
-
-    const responseData = response.data.traits.map((res: any) => {
+    const responseData = response.data.traits.map((res: [string, TraitsValuesProps[]]) => {
       let key;
       switch (res[0]) {
         case 'smallgem':
@@ -53,8 +57,6 @@ export const getFilterTraits = createAsyncThunk<
 
       return data;
     });
-
-    console.log(responseData);
 
     dispatch(filterActions.getAllFilters(responseData));
     dispatch(filterActions.setIsFilterTraitsLoading(false));
