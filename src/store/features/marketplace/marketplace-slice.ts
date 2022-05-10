@@ -14,6 +14,7 @@ import {
   directBuy,
   getTokenOffers,
   makeOffer,
+  getFloorPrice,
 } from './async-thunks';
 
 export type MakeListing = {
@@ -43,7 +44,7 @@ export type AcceptOffer = {
 
 export type CancelOffer = {
   id: string;
-}
+};
 
 export type GetUserReceivedOffer = {
   ownerTokenIdentifiers?: OwnerTokenIdentifiers;
@@ -131,6 +132,7 @@ export const marketplaceActions = {
   getTokenOffers,
   makeListing,
   makeOffer,
+  getFloorPrice,
 };
 
 export default marketplaceSlice.reducer;

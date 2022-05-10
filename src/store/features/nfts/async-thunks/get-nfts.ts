@@ -20,6 +20,8 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
       dispatch(nftsActions.setIsNFTSLoading(true));
     }
 
+    dispatch(nftsActions.setCollectionDataLoading());
+
     try {
       const response = await axios.post(
         KyasshuUrl.getNFTs({ sort, order, page, count }),
@@ -69,6 +71,14 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
 
       // update store with loaded NFTS details
       dispatch(nftsActions.setLoadedNFTS(actionPayload));
+
+      const collectionPayload = {
+        itemsCount: items ? parseInt(items, 10) : 0,
+        ownersCount: 0,
+        price: 0,
+      };
+
+      dispatch(nftsActions.setCollectionData(collectionPayload));
     } catch (error) {
       AppLog.error(error);
 

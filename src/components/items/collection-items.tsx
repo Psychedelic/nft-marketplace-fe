@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
@@ -5,6 +6,7 @@ import {
   useAppDispatch,
   useNFTSStore,
   settingsActions,
+  nftsActions,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
@@ -28,7 +30,19 @@ export const CollectionItems = () => {
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
 
-  const { loadingNFTs } = useNFTSStore();
+  const {
+    loadingNFTs,
+    loadingCollectionData,
+    totalNFTSCount,
+    totalOwnersCount,
+    floorPrice,
+  } = useNFTSStore();
+
+  useEffect(() => {
+    if (appliedFilters?.defaultFilters.length > 0) return;
+
+    dispatch(nftsActions.getCollectionData());
+  }, [appliedFilters]);
 
   useNFTSFetcher();
 
@@ -55,27 +69,38 @@ export const CollectionItems = () => {
     }
   };
 
+  // TODO: Add loader when collection data or floor price
+  // details are loading
+
   return (
     <Container>
       <FilteredContainer>
         <ContentWrapper>
           <Flex withMargin justifyContent>
             <ContentFlex>
-              <FilteredCountChip
-                label={t('translation:chips.labels.itemsLabel')}
-                count="10.0k"
-                showLogo={false}
-              />
-              <FilteredCountChip
-                label={t('translation:chips.labels.OwnersLabel')}
-                count="5.9k"
-                showLogo={false}
-              />
-              <FilteredCountChip
-                label={t('translation:chips.labels.FloorPriceLabel')}
-                count="22.12"
-                showLogo
-              />
+              {!loadingCollectionData && totalNFTSCount > 0 && (
+                <FilteredCountChip
+                  label={t('translation:chips.labels.itemsLabel')}
+                  count={totalNFTSCount}
+                  showLogo={false}
+                />
+              )}
+              {!loadingCollectionData && totalOwnersCount > 0 && (
+                <FilteredCountChip
+                  label={t('translation:chips.labels.OwnersLabel')}
+                  count={totalOwnersCount}
+                  showLogo={false}
+                />
+              )}
+              {!loadingCollectionData && floorPrice > 0 && (
+                <FilteredCountChip
+                  label={t(
+                    'translation:chips.labels.FloorPriceLabel',
+                  )}
+                  count={floorPrice}
+                  showLogo
+                />
+              )}
             </ContentFlex>
             <ContentFlex>
               <SortByFilterDropdown />

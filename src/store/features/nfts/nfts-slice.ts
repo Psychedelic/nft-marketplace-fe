@@ -2,7 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
 import { NFTMetadata } from '../../../declarations/legacy';
-import { getNFTDetails, getNFTs } from './async-thunks';
+import {
+  getNFTDetails,
+  getNFTs,
+  getCollectionData,
+} from './async-thunks';
 
 // Define a type for the slice state
 interface NFTSState {
@@ -12,6 +16,10 @@ interface NFTSState {
   failedToLoadNFTSMessage: string;
   hasMoreNFTs: boolean;
   nextPageNo: number;
+  loadingCollectionData: boolean;
+  totalNFTSCount: number;
+  totalOwnersCount: number;
+  floorPrice: number;
 }
 
 // Define the initial state using that type
@@ -22,6 +30,10 @@ const initialState: NFTSState = {
   failedToLoadNFTSMessage: '',
   hasMoreNFTs: false,
   nextPageNo: 0,
+  loadingCollectionData: true,
+  totalNFTSCount: 0,
+  totalOwnersCount: 0,
+  floorPrice: 0,
 };
 
 export interface LoadedNFTData {
@@ -47,6 +59,12 @@ interface AcceptedNFTOfferData {
 interface FindNFTIndexData {
   nftList: NFTMetadata[];
   idToFind: string;
+}
+
+interface LoadedCollectionData {
+  itemsCount: number;
+  ownersCount: number;
+  price: number;
 }
 
 const findNFTIndex = ({ nftList, idToFind }: FindNFTIndexData) => {
@@ -152,6 +170,19 @@ export const nftsSlice = createSlice({
       state.loadedNFTS[index].isListed = false;
       state.loadedNFTS[index].owner = buyerId;
     },
+    setCollectionDataLoading: (state) => {
+      state.loadingCollectionData = true;
+    },
+    setCollectionData: (
+      state,
+      action: PayloadAction<LoadedCollectionData>,
+    ) => {
+      const { itemsCount, ownersCount, price } = action.payload;
+      state.totalNFTSCount = itemsCount;
+      state.totalOwnersCount = ownersCount;
+      state.floorPrice = price;
+      state.loadingCollectionData = false;
+    },
   },
 });
 
@@ -159,6 +190,7 @@ export const nftsActions = {
   ...nftsSlice.actions,
   getNFTs,
   getNFTDetails,
+  getCollectionData,
 };
 
 // Other code such as selectors can use the imported `RootState` type
