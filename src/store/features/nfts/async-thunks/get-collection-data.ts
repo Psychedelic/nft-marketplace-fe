@@ -9,6 +9,8 @@ import { marketplaceActions } from '../../marketplace/marketplace-slice';
 export const getCollectionData = createAsyncThunk<void>(
   'nfts/getCollectionData',
   async (_, { dispatch }) => {
+    dispatch(nftsActions.setCollectionDataLoading());
+
     try {
       const response = await axios.get(
         KyasshuUrl.getCollectionData(),

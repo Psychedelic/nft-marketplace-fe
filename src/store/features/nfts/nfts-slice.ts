@@ -170,6 +170,9 @@ export const nftsSlice = createSlice({
       state.loadedNFTS[index].isListed = false;
       state.loadedNFTS[index].owner = buyerId;
     },
+    setCollectionDataLoading: (state) => {
+      state.loadingCollectionData = true;
+    },
     setCollectionData: (
       state,
       action: PayloadAction<LoadedCollectionData>,

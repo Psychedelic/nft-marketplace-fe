@@ -39,8 +39,10 @@ export const CollectionItems = () => {
   } = useNFTSStore();
 
   useEffect(() => {
+    if (appliedFilters?.defaultFilters.length > 0) return;
+
     dispatch(nftsActions.getCollectionData());
-  }, []);
+  }, [appliedFilters]);
 
   useNFTSFetcher();
 
