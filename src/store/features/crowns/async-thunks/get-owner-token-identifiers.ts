@@ -6,7 +6,7 @@ import { AppLog } from '../../../../utils/log';
 import { notificationActions } from '../../errors';
 
 type OwnerTokenIdentifiersProps = DefaultCallbacks & {
-  plugPrincipal: string;
+  principalId: string;
 };
 
 export const getOwnerTokenIdentifiers = createAsyncThunk<
@@ -14,7 +14,7 @@ export const getOwnerTokenIdentifiers = createAsyncThunk<
   OwnerTokenIdentifiersProps
 >(
   'crowns/ownerTokenIdentifiers',
-  async ({ plugPrincipal, onFailure }, thunkAPI) => {
+  async ({ principalId, onFailure }, thunkAPI) => {
     // Checks if an actor instance exists already
     // otherwise creates a new instance
     const actorInstance = await actorInstanceHandler({
@@ -25,10 +25,16 @@ export const getOwnerTokenIdentifiers = createAsyncThunk<
 
     try {
       const result = await actorInstance.ownerTokenIdentifiers(
-        Principal.fromText(plugPrincipal),
+        Principal.fromText(principalId),
       );
 
       if (!('Ok' in result)) {
+        if (
+          'Err' in result &&
+          Object.keys(result.Err).includes('OwnerNotFound')
+        )
+          return [];
+
         throw Error('Invalid response');
       }
 

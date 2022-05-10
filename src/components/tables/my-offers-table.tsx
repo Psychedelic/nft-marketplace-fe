@@ -77,7 +77,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
+
     setTableDetails({
       loading: true,
       loadedOffers: [],
@@ -124,7 +124,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const nextPageNo = 0;
 
   useEffect(() => {
-    if (!isConnected || !plugPrincipal) return;
+    if (!plugPrincipal) return;
 
     if (offersType === OfferTypeStatusCodes.OffersMade) {
       dispatch(
@@ -148,7 +148,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
     dispatch(
       crownsActions.getOwnerTokenIdentifiers({
-        plugPrincipal,
+        principalId: plugPrincipal,
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
