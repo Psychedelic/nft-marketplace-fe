@@ -33,7 +33,7 @@ export const Error = () => {
           key={error.id}
           open={open}
           onOpenChange={setOpen}
-          duration={500000000}
+          duration={5000}
         >
           <ToastDescription state="error" asChild>
             <div>
