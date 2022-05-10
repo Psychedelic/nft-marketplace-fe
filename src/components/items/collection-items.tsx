@@ -7,6 +7,7 @@ import {
   useNFTSStore,
   settingsActions,
   nftsActions,
+  marketplaceActions,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
@@ -34,6 +35,7 @@ export const CollectionItems = () => {
 
   useEffect(() => {
     dispatch(nftsActions.getCollectionData());
+    dispatch(marketplaceActions.getFloorPrice());
   }, []);
 
   useNFTSFetcher();
