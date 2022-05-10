@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
@@ -5,6 +6,7 @@ import {
   useAppDispatch,
   useNFTSStore,
   settingsActions,
+  nftsActions,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
@@ -29,6 +31,10 @@ export const CollectionItems = () => {
   const appliedFilters = useFilterStore();
 
   const { loadingNFTs } = useNFTSStore();
+
+  useEffect(() => {
+    dispatch(nftsActions.getCollectionData());
+  }, []);
 
   useNFTSFetcher();
 
