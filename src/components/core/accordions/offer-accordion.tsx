@@ -42,7 +42,7 @@ export type OfferAccordionProps = {
   isListed?: boolean;
   hasUserMadeOffer?: boolean;
   loadingOffers?: boolean;
-  offerItem: OffersTableItem | null;
+  offerItem?: OffersTableItem;
   owner?: string;
   showNFTActionButtons: boolean;
 };
@@ -53,7 +53,7 @@ type ConnectedProps = {
   hasUserMadeOffer?: boolean;
   loadingOffers?: boolean;
   price?: string;
-  offerItem: OffersTableItem | null;
+  offerItem?: OffersTableItem;
   showNFTActionButtons: boolean;
 };
 

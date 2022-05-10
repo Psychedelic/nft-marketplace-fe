@@ -88,7 +88,7 @@ export const NftDetails = () => {
   const dispatch = useAppDispatch();
 
   const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
-  const [offerItem, setofferItem] = useState<OffersTableItem | null>(null);
+  const [offerItem, setOfferItem] = useState<OffersTableItem>();
   const { principalId } = usePlugStore();
 
   // TODO: We need more control, plus the
@@ -131,11 +131,11 @@ export const NftDetails = () => {
         ownerTokenIdentifiers: [BigInt(id)],
         onSuccess: (offers: OffersTableItem[]) => {
           setLoadingOffers(false);
-          setofferItem(
+          setOfferItem(
             offers.find(
               (offer: OffersTableItem) =>
                 offer.fromDetails.address === principalId,
-            )!,
+            ),
           );
         },
         onFailure: () => {
