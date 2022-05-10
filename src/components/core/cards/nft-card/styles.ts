@@ -128,7 +128,7 @@ export const NftDataHeader = styled('span', {
   color: '$nftCardName',
 });
 
-export const LastOffer = styled('span', {
+export const ActionDetails = styled('span', {
   fontStyle: 'normal',
   fontWeight: '500',
   fontSize: '14px',

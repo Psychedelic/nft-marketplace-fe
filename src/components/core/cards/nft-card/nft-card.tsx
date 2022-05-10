@@ -11,7 +11,7 @@ import {
   Flex,
   OwnedCardText,
   NftDataHeader,
-  LastOffer,
+  ActionDetails,
   NftDataText,
   PreviewDetails,
   VideoPlayer,
@@ -46,6 +46,12 @@ type ConnectedProps = {
 type DisconnectedProps = {
   isForSale?: boolean;
   setModalStatus: (status: boolean) => void;
+};
+
+type LastActionTakenDetailsProps = {
+  // TODO: update data type whereever it's required
+  data: any;
+  isForSale?: boolean;
 };
 
 const OnConnected = ({
@@ -113,6 +119,31 @@ const OnDisconnected = ({
         />
       )}
     </div>
+  );
+};
+
+const LastActionTakenDetails = ({
+  data,
+  isForSale,
+}: LastActionTakenDetailsProps) => {
+  const { t } = useTranslation();
+  return (
+    <ActionDetails>
+      {data?.lastOffer && (
+        <>
+          {!isForSale
+            ? `${t('translation:nftCard.offerFor')} `
+            : `${t('translation:nftCard.last')} `}
+          <b>
+            {(data?.lastOffer &&
+              parseE8SAmountToWICP(
+                BigInt(data.lastOffer),
+              ).toString()) ||
+              ''}
+          </b>
+        </>
+      )}
+    </ActionDetails>
   );
 };
 
@@ -185,22 +216,7 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
               setModalStatus={setModalStatus}
             />
           )}
-          <LastOffer>
-            {data?.lastOffer && (
-              <>
-                {!isForSale
-                  ? `${t('translation:nftCard.offerFor')} `
-                  : `${t('translation:nftCard.last')} `}
-                <b>
-                  {(data?.lastOffer &&
-                    parseE8SAmountToWICP(
-                      BigInt(data.lastOffer),
-                    ).toString()) ||
-                    ''}
-                </b>
-              </>
-            )}
-          </LastOffer>
+          <LastActionTakenDetails data={data} isForSale={isForSale} />
         </NFTCardOptions>
       </CardWrapper>
     </CardContainer>
