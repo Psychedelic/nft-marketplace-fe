@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Tabs from '@radix-ui/react-tabs';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useThemeStore } from '../../store';
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
 import {
@@ -11,40 +10,11 @@ import {
   TabsList,
   TabsContentWrapper,
 } from './styles';
-import activityActive from '../../assets/activity.svg';
-import activityActiveDark from '../../assets/activity-dark.svg';
-import itemsActive from '../../assets/items.svg';
-import itemsActiveDark from '../../assets/items-active-dark.svg';
-import itemsInactive from '../../assets/items-inactive.svg';
-import activityInactive from '../../assets/activity-inactive.svg';
 import { Filters } from '../filters';
-
-const TABS_ICONS = {
-  items: {
-    lightTheme: {
-      active: itemsActive,
-      inactive: itemsInactive,
-    },
-    darkTheme: {
-      active: itemsActiveDark,
-      inactive: itemsInactive,
-    },
-  },
-  activity: {
-    lightTheme: {
-      active: activityActive,
-      inactive: activityInactive,
-    },
-    darkTheme: {
-      active: activityActiveDark,
-      inactive: activityInactive,
-    },
-  },
-};
+import { Icon, ActivityIcon, ItemsIcon } from '../icons';
 
 export const CollectionTabs = () => {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -64,11 +34,6 @@ export const CollectionTabs = () => {
     [selectedTab],
   );
 
-  const selectedTheme = useMemo(
-    () => (theme !== 'darkTheme' ? 'lightTheme' : 'darkTheme'),
-    [theme],
-  );
-
   return (
     <TabsRoot defaultValue="items" value={selectedTab}>
       <TabsList aria-label="Manage your account">
@@ -77,10 +42,7 @@ export const CollectionTabs = () => {
           status={itemsStatus}
           onClick={() => navigate('/', { replace: true })}
         >
-          <img
-            src={TABS_ICONS.items[selectedTheme][itemsStatus]}
-            alt="items-tab"
-          />
+          <Icon icon={ItemsIcon} />
           {t('translation:tabs.items')}
         </TabsTrigger>
         <TabsTrigger
@@ -88,10 +50,7 @@ export const CollectionTabs = () => {
           status={activityStatus}
           onClick={() => navigate('/activity', { replace: true })}
         >
-          <img
-            src={TABS_ICONS.activity[selectedTheme][activityStatus]}
-            alt="activity-tab"
-          />
+          <Icon icon={ActivityIcon} />
           {t('translation:tabs.activity')}
         </TabsTrigger>
       </TabsList>
