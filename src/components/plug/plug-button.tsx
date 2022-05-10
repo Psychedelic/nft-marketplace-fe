@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -47,6 +47,17 @@ export const PlugButton = ({
 
   const navigate = useNavigate();
 
+  const disconnectHandler = useCallback(() => {
+    dispatch(plugActions.setIsConnected(false));
+    disconnectPlug();
+    setOpenDropdown(false);
+  }, [dispatch]);
+
+  const myOffersHandler = useCallback(() => {
+    navigate(`/offers/${userPrincipal}`);
+    setOpenDropdown(false);
+  }, [navigate, userPrincipal]);
+
   useEffect(() => {
     const scrollEvent = () => setOpenDropdown(false);
     window.addEventListener('scroll', scrollEvent);
@@ -80,21 +91,14 @@ export const PlugButton = ({
       <Popover.Content onMouseLeave={() => setOpenDropdown(false)}>
         {isConnected && (
           <ConnectToPlugButton align="end" className={themeObject}>
-            <ListItem
-              onClick={() => navigate(`/offers/${userPrincipal}`)}
-            >
+            <ListItem onClick={myOffersHandler}>
               <img
                 src={isLightTheme ? offers : offersDark}
                 alt="offers"
               />
               <p>{t('translation:buttons.action.myOffers')}</p>
             </ListItem>
-            <ListItem
-              onClick={() => {
-                dispatch(plugActions.setIsConnected(false));
-                disconnectPlug();
-              }}
-            >
+            <ListItem onClick={disconnectHandler}>
               <img
                 src={isLightTheme ? disconnect : disconnectDark}
                 alt="disconnect"
