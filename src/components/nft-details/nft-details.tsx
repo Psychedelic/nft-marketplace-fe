@@ -24,8 +24,12 @@ import {
   marketplaceActions,
   nftsActions,
   usePlugStore,
+  notificationActions,
 } from '../../store';
-import { NFTMetadata, OffersTableItem } from '../../declarations/legacy';
+import {
+  NFTMetadata,
+  OffersTableItem,
+} from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 
 // type CurrentListing = {
@@ -83,7 +87,8 @@ export const NftDetails = () => {
       parseE8SAmountToWICP(BigInt(nftDetails.price)));
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
   const hasUserMadeOffer = tokenOffers?.some(
-    (offer: OffersTableItem) => offer?.item?.tokenId.toString() === id,
+    (offer: OffersTableItem) =>
+      offer?.item?.tokenId.toString() === id,
   );
   const dispatch = useAppDispatch();
 
@@ -131,12 +136,16 @@ export const NftDetails = () => {
         ownerTokenIdentifiers: [BigInt(id)],
         onSuccess: (offers: OffersTableItem[]) => {
           setLoadingOffers(false);
-          setOfferItem(
-            offers.find(
-              (offer: OffersTableItem) =>
-                offer.fromDetails.address === principalId,
-            ),
+          const offerFound = offers.find(
+            (offer: OffersTableItem) =>
+              offer.fromDetails.address === principalId,
           );
+          if (!offerFound) {
+            console.warn('Oops! Offer not found');
+            dispatch(notificationActions.setErrorMessage('Oops! Offer not found'));
+            return;
+          }
+          setOfferItem(offerFound);
         },
         onFailure: () => {
           // TODO: handle failure messages
@@ -150,7 +159,7 @@ export const NftDetails = () => {
     recentlyCancelledItems,
     recentlyAcceptedOffers,
     recentlyMadeOffers,
-    recentlyCancelledOffers
+    recentlyCancelledOffers,
   ]);
 
   return (

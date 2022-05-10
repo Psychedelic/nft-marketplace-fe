@@ -66,7 +66,7 @@ export const CancelOfferModal = ({
       (offer: OffersTableItem) => offer?.item?.tokenId?.toString() === tokenId,
     );
 
-    if (!item?.tokenId && !offerItem?.item?.tokenId) return;
+    if (!item?.tokenId && !offerItem?.item?.tokenId.toString()) return;
 
     const id = item ? item?.tokenId.toString() : offerItem?.item?.tokenId?.toString();
 
