@@ -24,7 +24,6 @@ import {
   marketplaceActions,
   nftsActions,
   usePlugStore,
-  notificationActions,
 } from '../../store';
 import {
   NFTMetadata,
@@ -142,7 +141,7 @@ export const NftDetails = () => {
           );
           if (!offerFound) {
             console.warn('Oops! Offer not found');
-            dispatch(notificationActions.setErrorMessage('Oops! Offer not found'));
+            // TODO: What to do if an offer is not found?
             return;
           }
           setOfferItem(offerFound);
