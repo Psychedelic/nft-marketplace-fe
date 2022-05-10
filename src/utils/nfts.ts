@@ -1,6 +1,14 @@
 import { NFTActionStatuses } from '../constants/common';
 
-export const findLastAction = (nft: any) => {
+type NFTParams = {
+  lastSalePrice?: string;
+  lastSale?: string;
+  lastModified?: string;
+  lastOfferPrice?: string;
+  currentPrice?: string;
+};
+
+export const findLastAction = (nft: NFTParams) => {
   if (nft?.lastSalePrice && nft?.lastSale === nft?.lastModified) {
     return NFTActionStatuses.Sold;
   }
