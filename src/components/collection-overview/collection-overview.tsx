@@ -20,12 +20,7 @@ import {
 import crown from '../../assets/crown-pfp.png';
 import crownDark from '../../assets/crown-pfp-dark.png';
 import verified from '../../assets/verified-large.svg';
-import discord from '../../assets/buttons/discord.svg';
-import discordDark from '../../assets/buttons/discord-dark.svg';
-import twitter from '../../assets/buttons/twitter.svg';
-import twitterDark from '../../assets/buttons/twitter-dark.svg';
-import back from '../../assets/buttons/back.svg';
-import backDark from '../../assets/buttons/back-dark.svg';
+import { DiscordIcon, Icon, ShareIcon, TwitterIcon } from '../icons';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
@@ -61,16 +56,10 @@ export const CollectionOverview = () => {
             {t('translation:buttons.links.website')}
           </LinkButton>
           <LinkButton url="https://discord.gg/yVEcEzmrgm">
-            <img
-              src={isLightTheme ? discord : discordDark}
-              alt={t('translation:buttons.links.discord')}
-            />
+            <Icon icon={DiscordIcon} />
           </LinkButton>
           <LinkButton url="https://twitter.com/cap_ois">
-            <img
-              src={isLightTheme ? twitter : twitterDark}
-              alt={t('translation:buttons.links.twitter')}
-            />
+            <Icon icon={TwitterIcon} />
           </LinkButton>
 
           <LinkButton
@@ -85,10 +74,7 @@ export const CollectionOverview = () => {
               );
             }}
           >
-            <img
-              src={isLightTheme ? back : backDark}
-              alt={t('translation:buttons.links.back')}
-            />
+            <Icon icon={ShareIcon} />
           </LinkButton>
         </ButtonsWrapper>
       </NftMetadataContent>

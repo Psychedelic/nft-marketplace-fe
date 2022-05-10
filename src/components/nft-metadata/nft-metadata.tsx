@@ -1,11 +1,7 @@
 import React from 'react';
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
-import {
-  notificationActions,
-  useAppDispatch,
-  useThemeStore,
-} from '../../store';
+import { notificationActions, useAppDispatch } from '../../store';
 import { LinkButton } from '../core';
 
 import {
@@ -13,9 +9,8 @@ import {
   Heading,
   Subtext,
 } from './styles';
-import back from '../../assets/buttons/back.svg';
-import backDark from '../../assets/buttons/back-dark.svg';
 import verified from '../../assets/verified-small.svg';
+import { Icon, ShareIcon } from '../icons';
 
 export interface NFTMetaDataProps {
   id?: string;
@@ -23,9 +18,7 @@ export interface NFTMetaDataProps {
 
 export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
   const dispatch = useAppDispatch();
-  const isLightTheme = theme === 'lightTheme';
 
   return (
     <CollectionMetadataWrapper>
@@ -46,10 +39,8 @@ export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
           );
         }}
       >
-        <img
-          src={isLightTheme ? back : backDark}
-          alt={t('translation:buttons.links.back')}
-        />
+        <Icon icon={ShareIcon} />
+        <img alt={t('translation:buttons.links.back')} />
       </LinkButton>
     </CollectionMetadataWrapper>
   );

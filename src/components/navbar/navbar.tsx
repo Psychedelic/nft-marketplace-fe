@@ -12,8 +12,6 @@ import { Plug } from '../plug';
 import appLogo from '../../assets/app-logo.svg';
 import appName from '../../assets/app-name.svg';
 import appNameDark from '../../assets/app-name-dark.svg';
-import moon from '../../assets/buttons/dark-theme.svg';
-import sun from '../../assets/buttons/light-theme.svg';
 import {
   Container,
   LogoContainer,
@@ -21,6 +19,7 @@ import {
   LogoName,
   ActionButtonsContainer,
 } from './styles';
+import { Icon, MoonIcon, SunIcon } from '../icons';
 
 /* --------------------------------------------------------------------------
  * NavBar Component
@@ -57,7 +56,7 @@ export const NavBar = () => {
       <GlobalSearch />
       <ActionButtonsContainer>
         <LinkButton handleClick={changeThemeHandler}>
-          <img src={isLightTheme ? moon : sun} alt="" />
+          <Icon icon={isLightTheme ? MoonIcon : SunIcon} />
         </LinkButton>
         <Plug />
       </ActionButtonsContainer>

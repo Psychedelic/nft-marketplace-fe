@@ -24,15 +24,15 @@ import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import collection from '../../../assets/accordions/collection.svg';
 import creator from '../../../assets/accordions/creator.svg';
 import plugIcon from '../../../assets/accordions/owner.svg';
-import discord from '../../../assets/buttons/discord.svg';
-import discordDark from '../../../assets/buttons/discord-dark.svg';
-import twitter from '../../../assets/buttons/twitter.svg';
-import twitterDark from '../../../assets/buttons/twitter-dark.svg';
-import back from '../../../assets/buttons/back.svg';
-import backDark from '../../../assets/buttons/back-dark.svg';
 
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { formatAddress } from '../../../utils/formatters';
+import {
+  DiscordIcon,
+  Icon,
+  ShareIcon,
+  TwitterIcon,
+} from '../../icons';
 
 export type AboutAccordionProps = {
   owner?: string;
@@ -54,21 +54,6 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
     owner,
     principalId: plugPrincipal,
   });
-
-  const Buttons = [
-    {
-      image: isLightTheme ? discord : discordDark,
-      alt: 'discord',
-    },
-    {
-      image: isLightTheme ? twitter : twitterDark,
-      alt: 'twitter',
-    },
-    {
-      image: isLightTheme ? back : backDark,
-      alt: 'back',
-    },
-  ];
 
   const AccordionHeadContentData = [
     {
@@ -146,13 +131,18 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
               <LinkButton type="textBtn">
                 {t('translation:buttons.links.website')}
               </LinkButton>
-              &nbsp;
-              {Buttons.map((button) => (
-                <LinkButton key={button.alt}>
-                  <img src={button.image} alt={button.image} />
-                </LinkButton>
-              ))}
-              &nbsp;
+
+              <LinkButton>
+                <Icon icon={DiscordIcon} />
+              </LinkButton>
+
+              <LinkButton>
+                <Icon icon={TwitterIcon} />
+              </LinkButton>
+
+              <LinkButton>
+                <Icon icon={ShareIcon} />
+              </LinkButton>
             </ButtonWrapper>
           </div>
         </AccordionContent>
