@@ -16,6 +16,9 @@ interface NFTSState {
   failedToLoadNFTSMessage: string;
   hasMoreNFTs: boolean;
   nextPageNo: number;
+  loadingCollectionData: boolean;
+  totalNFTSCount: number;
+  totalOwnersCount: number;
 }
 
 // Define the initial state using that type
@@ -26,6 +29,9 @@ const initialState: NFTSState = {
   failedToLoadNFTSMessage: '',
   hasMoreNFTs: false,
   nextPageNo: 0,
+  loadingCollectionData: true,
+  totalNFTSCount: 0,
+  totalOwnersCount: 0,
 };
 
 export interface LoadedNFTData {
@@ -51,6 +57,11 @@ interface AcceptedNFTOfferData {
 interface FindNFTIndexData {
   nftList: NFTMetadata[];
   idToFind: string;
+}
+
+interface LoadedCollectionData {
+  itemsCount: number;
+  ownersCount: number;
 }
 
 const findNFTIndex = ({ nftList, idToFind }: FindNFTIndexData) => {
@@ -155,6 +166,15 @@ export const nftsSlice = createSlice({
 
       state.loadedNFTS[index].isListed = false;
       state.loadedNFTS[index].owner = buyerId;
+    },
+    setCollectionData: (
+      state,
+      action: PayloadAction<LoadedCollectionData>,
+    ) => {
+      const { itemsCount, ownersCount } = action.payload;
+      state.totalNFTSCount = itemsCount;
+      state.totalOwnersCount = ownersCount;
+      state.loadingCollectionData = false;
     },
   },
 });

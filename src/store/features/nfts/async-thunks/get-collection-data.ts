@@ -16,7 +16,14 @@ export const getCollectionData = createAsyncThunk<void>(
         throw Error(response.statusText);
       }
 
-      console.log(response, 'collection data');
+      const responseData = response?.data;
+
+      const actionPayload = {
+        itemsCount: responseData?.items || 0,
+        ownersCount: responseData?.owners || 0,
+      };
+
+      dispatch(nftsActions.setCollectionData(actionPayload));
     } catch (error) {
       AppLog.error(error);
       dispatch(
