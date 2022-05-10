@@ -2,7 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
 import { NFTMetadata } from '../../../declarations/legacy';
-import { getNFTDetails, getNFTs } from './async-thunks';
+import {
+  getNFTDetails,
+  getNFTs,
+  getCollectionData,
+} from './async-thunks';
 
 // Define a type for the slice state
 interface NFTSState {
@@ -159,6 +163,7 @@ export const nftsActions = {
   ...nftsSlice.actions,
   getNFTs,
   getNFTDetails,
+  getCollectionData,
 };
 
 // Other code such as selectors can use the imported `RootState` type

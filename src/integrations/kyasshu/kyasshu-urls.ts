@@ -30,6 +30,10 @@ export class KyasshuUrl {
   static getCAPSync(): string {
     return `${config.kyasshuMarketplaceAPI}/cap/capSync`;
   }
+
+  static getCollectionData(): string {
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/data`;
+  }
 }
 
 export namespace NSKyasshuUrl {
