@@ -34,4 +34,5 @@ export const LogoName = styled('img', {
 export const ActionButtonsContainer = styled('div', {
   // base styles
   display: 'flex',
+  alignItems: 'center',
 });

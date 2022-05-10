@@ -1,4 +1,4 @@
-import * as Dropdown from '@radix-ui/react-dropdown-menu';
+import * as Popover from '@radix-ui/react-popover';
 import { styled } from '../../stitches.config';
 
 export const PlugButtonContainer = styled('button', {
@@ -10,11 +10,10 @@ export const PlugButtonContainer = styled('button', {
   fontSize: '16px',
   fontWeight: '500',
   lineHeight: '19px',
-  borderRadius: '14px',
+  borderRadius: '15px',
   border: 'none',
   marginLeft: '10px',
   background:
-    // eslint-disable-next-line max-len
     'linear-gradient(93.07deg, #FFD719 0.61%, #F754D4 33.98%, #1FD1EC 65.84%, #48FA6B 97.7%)',
 
   '&:hover': {
@@ -26,6 +25,7 @@ export const PlugButtonText = styled('div', {
   // base styles
   width: '136px',
   height: '40px',
+  padding: '2px 4px',
   backgroundColor: '$buttonBackgroundColor',
   color: '$mainTextColor',
   borderRadius: '14px',
@@ -35,15 +35,15 @@ export const PlugButtonText = styled('div', {
   fontFamily: 'proxima-nova, sans-serif',
 });
 
-export const DropdownTrigger = styled(Dropdown.Trigger, {
+export const DropdownTrigger = styled(Popover.Trigger, {
   '&:focus': {
     outline: 'none',
   },
 });
 
-export const ConnectToPlugButton = styled(Dropdown.Content, {
+export const ConnectToPlugButton = styled(Popover.Content, {
   minWidth: '220px',
-  border: '2px solid $buttonBorderColor',
+  border: '2px solid $borderColor',
   boxSizing: 'border-box',
   boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.15)',
   '@media (prefers-reduced-motion: no-preference)': {
@@ -55,27 +55,13 @@ export const ConnectToPlugButton = styled(Dropdown.Content, {
   marginTop: '5%',
   padding: '0',
 
-  '& div:nth-child(2)': {
-    height: '1px',
-    background: '#E5E8EB',
-  },
-  variants: {
-    background: {
-      dark: {
-        background: '#141416',
-        color: '#ffffff',
-        border: '2px solid #353945',
-      },
-      light: {
-        background: '#ffffff',
-        color: '#23262F',
-        border: '2px solid #E5E8EB',
-      },
-    },
-  },
+  background: '$backgroundColor',
+  color: '$mainTextColor',
+
+  overflow: 'hidden',
 });
 
-export const Flex = styled('div', {
+export const ListItem = styled('div', {
   display: 'flex',
   alignItems: 'center',
   padding: '15px',
@@ -86,12 +72,23 @@ export const Flex = styled('div', {
   lineHeight: '19px',
   cursor: 'pointer',
 
+  transition: 'background-color 0.2s ease-in-out',
+
   '& img': {
     marginRight: '15px',
   },
 
   '& p': {
     margin: '0px',
+  },
+
+  borderBottom: '1px solid $borderColor',
+  '&:last-child': {
+    borderBottom: 'none',
+  },
+
+  '&:hover': {
+    background: '$borderColor',
   },
 });
 
