@@ -7,20 +7,19 @@ import { disconnectPlug } from '../../integrations/plug';
 import {
   PlugButtonContainer,
   PlugButtonText,
-  PlugIcon,
   PlugArrowDownIcon,
   ConnectToPlugButton,
   ListItem,
+  PopoverTrigger,
+  PlugIconStyled,
 } from './styles';
-import plugIcon from '../../assets/plug-icon.svg';
-import plugIconDark from '../../assets/plug-icon-dark.svg';
-import arrowdown from '../../assets/arrowdown.svg';
-import arrowdownDark from '../../assets/arrowdown-dark.svg';
-import offers from '../../assets/buttons/offers.svg';
-import disconnect from '../../assets/buttons/disconnect.svg';
-import offersDark from '../../assets/buttons/offers-dark.svg';
-import disconnectDark from '../../assets/buttons/disconnect-dark.svg';
 import { useTheme } from '../../hooks';
+import {
+  ChevronDownIcon,
+  DisconnectIcon,
+  Icon,
+  OfferIcon,
+} from '../icons';
 
 export type PlugButtonProps = {
   handleClick: () => void;
@@ -43,7 +42,6 @@ export const PlugButton = ({
   const dispatch = useAppDispatch();
   const [theme, themeObject] = useTheme();
   const [openDropdown, setOpenDropdown] = useState(false);
-  const isLightTheme = theme === 'lightTheme';
 
   const navigate = useNavigate();
 
@@ -66,7 +64,7 @@ export const PlugButton = ({
 
   return (
     <Popover.Root open={openDropdown}>
-      <Popover.Trigger asChild>
+      <PopoverTrigger asChild>
         <PlugButtonContainer
           onClick={handleClick}
           onMouseEnter={() => setOpenDropdown(true)}
@@ -74,35 +72,30 @@ export const PlugButton = ({
         >
           <PlugButtonText className="plug-button-text">
             {isConnected && (
-              <PlugIcon
-                src={isLightTheme ? plugIcon : plugIconDark}
-              />
+              <PlugIconStyled dark={theme === 'darkTheme'} />
             )}
             {text}
             {isConnected && (
               <PlugArrowDownIcon
-                src={isLightTheme ? arrowdown : arrowdownDark}
+                size="sm"
+                icon={ChevronDownIcon}
+                rotate={openDropdown}
+                noPadding
               />
             )}
           </PlugButtonText>
         </PlugButtonContainer>
-      </Popover.Trigger>
+      </PopoverTrigger>
 
       <Popover.Content onMouseLeave={() => setOpenDropdown(false)}>
         {isConnected && (
           <ConnectToPlugButton align="end" className={themeObject}>
             <ListItem onClick={myOffersHandler}>
-              <img
-                src={isLightTheme ? offers : offersDark}
-                alt="offers"
-              />
+              <Icon icon={OfferIcon} />
               <p>{t('translation:buttons.action.myOffers')}</p>
             </ListItem>
             <ListItem onClick={disconnectHandler}>
-              <img
-                src={isLightTheme ? disconnect : disconnectDark}
-                alt="disconnect"
-              />
+              <Icon icon={DisconnectIcon} />
               <p>{t('translation:buttons.action.disconnect')}</p>
             </ListItem>
           </ConnectToPlugButton>
