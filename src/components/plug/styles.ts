@@ -101,11 +101,12 @@ export const PlugIconStyled = styled(PlugIcon, {
 export const PlugArrowDownIcon = styled(Icon, {
   transition: 'transform 0.1s ease-in-out',
   marginLeft: '10px',
+  fontSize: '11px',
 
   variants: {
     rotate: {
       true: {
-        transform: 'rotate(180deg)',
+        transform: 'rotate(180deg) translateY(-2px)',
       },
     },
   },

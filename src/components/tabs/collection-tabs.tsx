@@ -42,7 +42,7 @@ export const CollectionTabs = () => {
           status={itemsStatus}
           onClick={() => navigate('/', { replace: true })}
         >
-          <Icon icon={ItemsIcon} />
+          <Icon icon={ItemsIcon} paddingRight />
           {t('translation:tabs.items')}
         </TabsTrigger>
         <TabsTrigger
@@ -50,7 +50,7 @@ export const CollectionTabs = () => {
           status={activityStatus}
           onClick={() => navigate('/activity', { replace: true })}
         >
-          <Icon icon={ActivityIcon} />
+          <Icon icon={ActivityIcon} paddingRight />
           {t('translation:tabs.activity')}
         </TabsTrigger>
       </TabsList>

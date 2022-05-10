@@ -80,7 +80,6 @@ export const PlugButton = ({
                 size="sm"
                 icon={ChevronDownIcon}
                 rotate={openDropdown}
-                noPadding
               />
             )}
           </PlugButtonText>
@@ -91,11 +90,11 @@ export const PlugButton = ({
         {isConnected && (
           <ConnectToPlugButton align="end" className={themeObject}>
             <ListItem onClick={myOffersHandler}>
-              <Icon icon={OfferIcon} />
+              <Icon icon={OfferIcon} paddingRight />
               <p>{t('translation:buttons.action.myOffers')}</p>
             </ListItem>
             <ListItem onClick={disconnectHandler}>
-              <Icon icon={DisconnectIcon} />
+              <Icon icon={DisconnectIcon} paddingRight />
               <p>{t('translation:buttons.action.disconnect')}</p>
             </ListItem>
           </ConnectToPlugButton>
