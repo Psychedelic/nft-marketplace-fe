@@ -6,47 +6,51 @@ import config from '../../../../config/env';
 import { notificationActions } from '../../errors';
 import { AppLog } from '../../../../utils/log';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
-import { nftsActions } from '../../nfts/nfts-slice';
 
-export const getFloorPrice = createAsyncThunk<any>(
-  'marketplace/getFloor',
-  async (_, thunkAPI) => {
-    // Checks if an actor instance exists already
-    // otherwise creates a new instance
-    const actorInstance = await actorInstanceHandler({
-      thunkAPI,
-      serviceName: 'marketplace',
-      slice: marketplaceSlice,
-    });
+export type GetFloorPriceProps = DefaultCallbacks;
 
-    try {
-      let floorPriceinWICP;
-      const nonFungibleContractAddress = Principal.fromText(
-        config.crownsCanisterId,
-      );
+export const getFloorPrice = createAsyncThunk<
+  any | undefined,
+  GetFloorPriceProps
+>('marketplace/getFloor', async (params, thunkAPI) => {
+  // Checks if an actor instance exists already
+  // otherwise creates a new instance
+  const actorInstance = await actorInstanceHandler({
+    thunkAPI,
+    serviceName: 'marketplace',
+    slice: marketplaceSlice,
+  });
 
-      const floorResponse = await actorInstance.getFloor(
-        nonFungibleContractAddress,
-      );
-      if ('Ok' in floorResponse) {
-        const floorPrice = floorResponse.Ok.toString();
-        floorPriceinWICP = Number(parseE8SAmountToWICP(floorPrice));
-      }
+  const { onSuccess, onFailure } = params;
 
-      const actionPayload = {
-        price: floorPriceinWICP,
-      };
+  try {
+    let floorPriceinWICP;
+    const nonFungibleContractAddress = Principal.fromText(
+      config.crownsCanisterId,
+    );
 
-      thunkAPI.dispatch(nftsActions.setFloorPrice(actionPayload));
-
-      return floorPriceinWICP;
-    } catch (err) {
-      AppLog.error(err);
-      thunkAPI.dispatch(
-        notificationActions.setErrorMessage(
-          `Oops! Failed to get floor price`,
-        ),
-      );
+    const floorResponse = await actorInstance.getFloor(
+      nonFungibleContractAddress,
+    );
+    if ('Ok' in floorResponse) {
+      const floorPrice = floorResponse.Ok.toString();
+      floorPriceinWICP = Number(parseE8SAmountToWICP(floorPrice));
     }
-  },
-);
+
+    if (typeof onSuccess === 'function') {
+      onSuccess(floorPriceinWICP);
+    }
+
+    return floorPriceinWICP;
+  } catch (err) {
+    AppLog.error(err);
+    thunkAPI.dispatch(
+      notificationActions.setErrorMessage(
+        `Oops! Failed to get floor price`,
+      ),
+    );
+    if (typeof onFailure === 'function') {
+      onFailure(err);
+    }
+  }
+});

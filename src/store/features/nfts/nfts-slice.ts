@@ -19,8 +19,7 @@ interface NFTSState {
   loadingCollectionData: boolean;
   totalNFTSCount: number;
   totalOwnersCount: number;
-  loadingFloorPrice: boolean;
-  floorPrice: number | undefined;
+  floorPrice: number;
 }
 
 // Define the initial state using that type
@@ -34,7 +33,6 @@ const initialState: NFTSState = {
   loadingCollectionData: true,
   totalNFTSCount: 0,
   totalOwnersCount: 0,
-  loadingFloorPrice: true,
   floorPrice: 0,
 };
 
@@ -66,10 +64,7 @@ interface FindNFTIndexData {
 interface LoadedCollectionData {
   itemsCount: number;
   ownersCount: number;
-}
-
-interface LoadedFloorPriceData {
-  price: number | undefined;
+  price: number;
 }
 
 const findNFTIndex = ({ nftList, idToFind }: FindNFTIndexData) => {
@@ -179,18 +174,11 @@ export const nftsSlice = createSlice({
       state,
       action: PayloadAction<LoadedCollectionData>,
     ) => {
-      const { itemsCount, ownersCount } = action.payload;
+      const { itemsCount, ownersCount, price } = action.payload;
       state.totalNFTSCount = itemsCount;
       state.totalOwnersCount = ownersCount;
-      state.loadingCollectionData = false;
-    },
-    setFloorPrice: (
-      state,
-      action: PayloadAction<LoadedFloorPriceData>,
-    ) => {
-      const { price } = action.payload;
       state.floorPrice = price;
-      state.loadingFloorPrice = false;
+      state.loadingCollectionData = false;
     },
   },
 });

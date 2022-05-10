@@ -7,7 +7,6 @@ import {
   useNFTSStore,
   settingsActions,
   nftsActions,
-  marketplaceActions,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
@@ -34,7 +33,6 @@ export const CollectionItems = () => {
   const {
     loadingNFTs,
     loadingCollectionData,
-    loadingFloorPrice,
     totalNFTSCount,
     totalOwnersCount,
     floorPrice,
@@ -42,7 +40,6 @@ export const CollectionItems = () => {
 
   useEffect(() => {
     dispatch(nftsActions.getCollectionData());
-    dispatch(marketplaceActions.getFloorPrice());
   }, []);
 
   useNFTSFetcher();
@@ -79,21 +76,21 @@ export const CollectionItems = () => {
         <ContentWrapper>
           <Flex withMargin justifyContent>
             <ContentFlex>
-              {!loadingCollectionData && totalNFTSCount && (
+              {!loadingCollectionData && totalNFTSCount > 0 && (
                 <FilteredCountChip
                   label={t('translation:chips.labels.itemsLabel')}
                   count={totalNFTSCount}
                   showLogo={false}
                 />
               )}
-              {!loadingCollectionData && totalNFTSCount && (
+              {!loadingCollectionData && totalOwnersCount > 0 && (
                 <FilteredCountChip
                   label={t('translation:chips.labels.OwnersLabel')}
                   count={totalOwnersCount}
                   showLogo={false}
                 />
               )}
-              {!loadingFloorPrice && floorPrice && (
+              {!loadingCollectionData && floorPrice > 0 && (
                 <FilteredCountChip
                   label={t(
                     'translation:chips.labels.FloorPriceLabel',
