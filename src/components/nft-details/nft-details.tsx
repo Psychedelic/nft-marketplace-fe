@@ -25,7 +25,7 @@ import {
   nftsActions,
   usePlugStore,
 } from '../../store';
-import { NFTMetadata } from '../../declarations/legacy';
+import { NFTMetadata, OffersTableItem } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 
 // type CurrentListing = {
@@ -83,12 +83,12 @@ export const NftDetails = () => {
       parseE8SAmountToWICP(BigInt(nftDetails.price)));
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
   const hasUserMadeOffer = tokenOffers?.some(
-    (offer: any) => offer?.item?.tokenId.toString() === id,
+    (offer: OffersTableItem) => offer?.item?.tokenId.toString() === id,
   );
   const dispatch = useAppDispatch();
 
   const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
-  const [offerItem, setofferItem] = useState<any>({});
+  const [offerItem, setofferItem] = useState<OffersTableItem | null>(null);
   const { principalId } = usePlugStore();
 
   // TODO: We need more control, plus the
@@ -129,13 +129,13 @@ export const NftDetails = () => {
       marketplaceActions.getTokenOffers({
         // TODO: update ownerTokenIdentifiers naming convention
         ownerTokenIdentifiers: [BigInt(id)],
-        onSuccess: (offers: any) => {
+        onSuccess: (offers: OffersTableItem[]) => {
           setLoadingOffers(false);
           setofferItem(
             offers.find(
-              (offer: any) =>
+              (offer: OffersTableItem) =>
                 offer.fromDetails.address === principalId,
-            ),
+            )!,
           );
         },
         onFailure: () => {
@@ -143,7 +143,6 @@ export const NftDetails = () => {
         },
       }),
     );
-    console.log(recentlyCancelledOffers, recentlyMadeOffers);
   }, [
     dispatch,
     id,

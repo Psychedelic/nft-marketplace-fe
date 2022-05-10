@@ -23,6 +23,7 @@ import {
 import { ListingStatusCodes } from '../../constants/listing';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { OffersTableItem } from '../../declarations/legacy';
 
 /* --------------------------------------------------------------------------
  * Cancel Offer Modal Component
@@ -39,7 +40,7 @@ export const CancelOfferModal = ({
 }: CancelOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const routeID = useParams();
+  const {id : tokenId} = useParams();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Cancel offer modal steps: cancelOffer/pending
@@ -62,7 +63,7 @@ export const CancelOfferModal = ({
 
   const handleCancelOffer = () => {
     const offerItem = tokenOffers?.find(
-      (offer: any) => offer?.item?.tokenId?.toString() === routeID.id,
+      (offer: OffersTableItem) => offer?.item?.tokenId?.toString() === tokenId,
     );
 
     if (!item?.tokenId && !offerItem?.item?.tokenId) return;

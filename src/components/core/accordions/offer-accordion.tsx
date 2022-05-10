@@ -42,7 +42,7 @@ export type OfferAccordionProps = {
   isListed?: boolean;
   hasUserMadeOffer?: boolean;
   loadingOffers?: boolean;
-  offerItem: OffersTableItem;
+  offerItem: OffersTableItem | null;
   owner?: string;
   showNFTActionButtons: boolean;
 };
@@ -53,7 +53,7 @@ type ConnectedProps = {
   hasUserMadeOffer?: boolean;
   loadingOffers?: boolean;
   price?: string;
-  offerItem: OffersTableItem;
+  offerItem: OffersTableItem | null;
   showNFTActionButtons: boolean;
 };
 
@@ -89,7 +89,7 @@ const OnConnected = ({
             />
             <Space />
             <CancelOfferModal
-              item={offerItem?.item}
+              item={offerItem?.item!}
               size="large"
             />
           </ButtonFlex>
