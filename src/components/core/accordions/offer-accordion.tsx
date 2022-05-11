@@ -33,7 +33,11 @@ import { NFTOffersTable } from '../../tables';
 import { Plug } from '../../plug';
 import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.utils';
 
-import { BuyNowModal, MakeOfferModal } from '../../modals';
+import {
+  BuyNowModal,
+  MakeOfferModal,
+  CancelOfferModal,
+} from '../../modals';
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { PlugStatusCodes } from '../../../constants/plug';
 import { OffersTableItem } from '../../../declarations/legacy';
@@ -140,6 +144,14 @@ const OnConnected = ({
               <MakeOfferModal
                 isOfferEditing={true}
                 offerPrice={userMadeOffer?.price}
+              />
+            </ButtonDetailsWrapper>
+          )}
+          {!loadingOffers && userMadeOffer && (
+            <ButtonDetailsWrapper>
+              <CancelOfferModal
+                item={userMadeOffer?.item}
+                largeTriggerButton={true}
               />
             </ButtonDetailsWrapper>
           )}
