@@ -68,12 +68,12 @@ const config: Config = {
   development: {
     // TODO: this should be removed or have a none ambiguous name
     canisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
-    host: 'http://44.228.128.46:8000',
+    host: 'http://127.0.0.1:8000',
     // TODO: See <Important-1>
     // TODO: This is causing confusion, as we have a fieldname for crowns canister id
     // can we get rid of collectionId?
     collectionId: NFT_CROWNS_CANISTER_ID,
-    kyasshuMarketplaceAPI: 'http://44.228.128.46:3000/local',
+    kyasshuMarketplaceAPI: 'http://localhost:3000/local',
     icExplorer: 'https://dashboard.internetcomputer.org',
     crownsCanisterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
