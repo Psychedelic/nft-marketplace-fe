@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
-import { useThemeStore, usePlugStore } from '../../../store';
+import { usePlugStore } from '../../../store';
 import {
   AccordionStyle,
   AccordionTrigger,
@@ -14,13 +14,7 @@ import {
   ButtonListWrapper,
   ButtonDetailsWrapper,
 } from './styles';
-import offer from '../../../assets/accordions/offer.svg';
-import offerDark from '../../../assets/accordions/offer-dark.svg';
 import dfinity from '../../../assets/accordions/dfinity.svg';
-import arrowdown from '../../../assets/accordions/arrow-down.svg';
-import arrowdownDark from '../../../assets/accordions/arrow-down-dark.svg';
-import arrowup from '../../../assets/accordions/arrow-up.svg';
-import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import { NFTOffersTable } from '../../tables';
 import { Plug } from '../../plug';
 import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.utils';
@@ -28,6 +22,7 @@ import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.u
 import { BuyNowModal, MakeOfferModal } from '../../modals';
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { PlugStatusCodes } from '../../../constants/plug';
+import { Icon } from '../../icons';
 
 export type OfferAccordionProps = {
   lastSalePrice?: string;
@@ -80,17 +75,10 @@ export const OfferAccordion = ({
   showNFTActionButtons,
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
-  // TODO: update offers count
-  const totalOffers = 1;
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [marketPrice, setMarketPrice] = useState<
     string | undefined
   >();
-  const { theme } = useThemeStore();
-  const isLightTheme = theme === 'lightTheme';
-
-  const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
-  const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
   const {
     isConnected,
@@ -160,18 +148,12 @@ export const OfferAccordion = ({
             onClick={() => setIsAccordionOpen(!isAccordionOpen)}
           >
             <div>
-              <img
-                src={isLightTheme ? offer : offerDark}
-                alt="offer-collection"
-              />
+              <Icon icon="offer" paddingRight />
               <p>
                 {`${t('translation:accordions.offer.header.offer')}`}
               </p>
             </div>
-            <img
-              src={!isAccordionOpen ? arrowupTheme : arrowdownTheme}
-              alt="arrow-down"
-            />
+            <Icon icon="chevron-down" rotate={isAccordionOpen} />
           </AccordionTrigger>
           <AccordionContent
             padding="none"

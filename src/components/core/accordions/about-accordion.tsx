@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
-import { useThemeStore, usePlugStore } from '../../../store';
+import { usePlugStore } from '../../../store';
 import { LinkButton } from '../buttons';
 import { AccordionContentMetaData } from '../../mock-data/accordion-data';
 import {
@@ -15,12 +15,6 @@ import {
   Flex,
   Subtext,
 } from './styles';
-import info from '../../../assets/accordions/info.svg';
-import infoDark from '../../../assets/accordions/info-dark.svg';
-import arrowdown from '../../../assets/accordions/arrow-down.svg';
-import arrowdownDark from '../../../assets/accordions/arrow-down-dark.svg';
-import arrowup from '../../../assets/accordions/arrow-up.svg';
-import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import collection from '../../../assets/accordions/collection.svg';
 import creator from '../../../assets/accordions/creator.svg';
 import plugIcon from '../../../assets/accordions/owner.svg';
@@ -36,11 +30,6 @@ export type AboutAccordionProps = {
 export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-  const { theme } = useThemeStore();
-  const isLightTheme = theme === 'lightTheme';
-
-  const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
-  const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
@@ -91,20 +80,14 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
-            <img
-              src={isLightTheme ? info : infoDark}
-              alt="about-collection"
-            />
+            <Icon icon="info" paddingRight />
             <p>
               {`${t(
                 'translation:accordions.about.header.aboutCrowns',
               )}`}
             </p>
           </div>
-          <img
-            src={!isAccordionOpen ? arrowupTheme : arrowdownTheme}
-            alt="arrow-down"
-          />
+          <Icon icon="chevron-down" rotate={isAccordionOpen} />
         </AccordionTrigger>
         <AccordionContent
           padding="medium"
