@@ -22,7 +22,15 @@ import { ListingStatusCodes } from '../../constants/listing';
  * Cancel Offer Modal Component
  * --------------------------------------------------------------------------*/
 
-export const CancelOfferModal = ({ item }: { item: OfferItem }) => {
+export type CancelOfferModalProps = {
+  item: OfferItem;
+  largeTriggerButton?: boolean;
+};
+
+export const CancelOfferModal = ({
+  item,
+  largeTriggerButton = false,
+}: CancelOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
@@ -74,7 +82,7 @@ export const CancelOfferModal = ({ item }: { item: OfferItem }) => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <CancelOfferModalTrigger>
+        <CancelOfferModalTrigger largeButton={largeTriggerButton}>
           <ActionButton type="secondary" size="small">
             {t('translation:buttons.action.cancelOffer')}
           </ActionButton>

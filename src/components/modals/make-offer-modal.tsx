@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -25,6 +25,7 @@ import {
 import { ListingStatusCodes } from '../../constants/listing';
 import { useAppDispatch, marketplaceActions } from '../../store';
 import { AppLog } from '../../utils/log';
+import { parseE8SAmountToWICP } from '../../utils/formatters';
 
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
@@ -34,12 +35,16 @@ export type MakeOfferModalProps = {
   onClose?: () => void;
   actionText?: string;
   nftTokenId?: string;
+  isOfferEditing?: boolean;
+  offerPrice?: bigint;
 };
 
 export const MakeOfferModal = ({
   onClose,
   actionText,
   nftTokenId,
+  isOfferEditing,
+  offerPrice,
 }: MakeOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -54,6 +59,12 @@ export const MakeOfferModal = ({
   const [amount, setAmount] = useState('');
 
   const tokenId = useMemo(() => id || nftTokenId, [id, nftTokenId]);
+
+  useEffect(() => {
+    if (!offerPrice || !modalOpened) return;
+
+    setAmount(parseE8SAmountToWICP(offerPrice));
+  }, [offerPrice, modalOpened]);
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -110,7 +121,9 @@ export const MakeOfferModal = ({
         ) : (
           <MakeOfferModalTrigger>
             <ActionButton type="primary">
-              {t('translation:buttons.action.makeOffer')}
+              {isOfferEditing
+                ? t('translation:buttons.action.editOffer')
+                : t('translation:buttons.action.makeOffer')}
             </ActionButton>
           </MakeOfferModalTrigger>
         )}
@@ -141,7 +154,9 @@ export const MakeOfferModal = ({
             */}
             <ModalHeader>
               <ModalTitle>
-                {t('translation:modals.title.makeAnOffer')}
+                {isOfferEditing
+                  ? t('translation:modals.title.editOffer')
+                  : t('translation:modals.title.makeAnOffer')}
               </ModalTitle>
               <ModalDescription>
                 {t('translation:modals.description.makeAnOffer')}
@@ -223,7 +238,7 @@ export const MakeOfferModal = ({
                     setModalStep(ListingStatusCodes.ListingInfo);
                   }}
                 >
-                  {t('translation:buttons.action.makeOffer')}
+                  {t('translation:modals.buttons.cancel')}
                 </ActionButton>
               </ModalButtonWrapper>
             </ModalButtonsList>

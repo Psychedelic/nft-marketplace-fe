@@ -23,9 +23,12 @@ import {
   useAppDispatch,
   marketplaceActions,
   nftsActions,
+  useFilterStore,
+  filterActions,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
+import { extractTraitData } from '../../store/features/filters/async-thunks/get-filter-traits';
 
 // type CurrentListing = {
 //   seller: string;
@@ -33,7 +36,9 @@ import { parseE8SAmountToWICP } from '../../utils/formatters';
 // };
 
 export const NftDetails = () => {
+  const dispatch = useAppDispatch();
   const { loadedNFTS } = useNFTSStore();
+  const { loadedFiltersList, loadingFilterList } = useFilterStore();
   const { id } = useParams();
   const [showNFTActionButtons, setShowNFTActionButtons] =
     useState<boolean>(false);
@@ -55,10 +60,12 @@ export const NftDetails = () => {
     return state.marketplace.tokenListing[id];
   });
 
-  const nftDetails: NFTMetadata | undefined = useMemo(
-    () => loadedNFTS.find((nft) => nft.id === id),
-    [loadedNFTS, id],
-  );
+  const nftDetails: NFTMetadata | undefined = useMemo(() => {
+    const details = loadedNFTS.find((nft) => nft.id === id);
+    if (!details) return;
+
+    return extractTraitData({ dispatch, details, loadedFiltersList });
+  }, [loadedNFTS, id, loadedFiltersList]);
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
   const owner = tokenListing?.seller?.toString() || nftDetails?.owner;
@@ -68,7 +75,6 @@ export const NftDetails = () => {
     (nftDetails?.price &&
       parseE8SAmountToWICP(BigInt(nftDetails.price)));
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
-  const dispatch = useAppDispatch();
 
   // TODO: We need more control, plus the
   // kyasshu calls should be placed as a thunk/action
@@ -83,6 +89,8 @@ export const NftDetails = () => {
     if (!id) return;
 
     dispatch(nftsActions.getNFTDetails({ id }));
+
+    dispatch(filterActions.getFilterTraits());
 
     // TODO: add loading placeholders in action buttons
     // like Sell/Cancel/Edit/Make Offer/Buy Now
@@ -126,26 +134,33 @@ export const NftDetails = () => {
               <source src={nftDetails.location} type="video/mp4" />
             </Video>
             <NFTTraitsContainer>
-              <NFTTraitsChip
-                label="Base"
-                name={nftDetails.traits.base}
-                rimValue="420 (4.20%)"
-              />
-              <NFTTraitsChip
-                label="BigGem"
-                name={nftDetails.traits.biggem}
-                rimValue="420 (4.20%)"
-              />
-              <NFTTraitsChip
-                label="Rim"
-                name={nftDetails.traits.rim}
-                rimValue="420 (4.20%)"
-              />
-              <NFTTraitsChip
-                label="SmallGem"
-                name={nftDetails.traits.smallgem}
-                rimValue="420 (4.20%)"
-              />
+              {loadingFilterList ? (
+                // TO-DO: Add in skeleton for trait boxes
+                <p>Loading</p>
+              ) : (
+                <>
+                  <NFTTraitsChip
+                    label="Base"
+                    name={nftDetails.traits.base.name}
+                    rimValue={`${nftDetails.traits.base.occurance} (${nftDetails.traits.base.rarity}%)`}
+                  />
+                  <NFTTraitsChip
+                    label="BigGem"
+                    name={nftDetails.traits.biggem.name}
+                    rimValue={`${nftDetails.traits.biggem.occurance} (${nftDetails.traits.biggem.rarity}%)`}
+                  />
+                  <NFTTraitsChip
+                    label="Rim"
+                    name={nftDetails.traits.rim.name}
+                    rimValue={`${nftDetails.traits.rim.occurance} (${nftDetails.traits.rim.rarity}%)`}
+                  />
+                  <NFTTraitsChip
+                    label="SmallGem"
+                    name={nftDetails.traits.smallgem.name}
+                    rimValue={`${nftDetails.traits.smallgem.occurance} (${nftDetails.traits.smallgem.rarity}%)`}
+                  />
+                </>
+              )}
             </NFTTraitsContainer>
           </PreviewContainer>
           <DetailsContainer>

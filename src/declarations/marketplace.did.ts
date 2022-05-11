@@ -34,9 +34,20 @@ export default ({ IDL }: { IDL: any }) => {
     status: OfferStatus,
     created: IDL.Nat64,
     token_id: IDL.Nat,
-    price: IDL.Nat,
-    buyer: IDL.Principal,
     token_owner: IDL.Principal,
+    buyer: IDL.Principal,
+    price: IDL.Nat,
+    nft_canister_id: IDL.Principal,
+  });
+  const Collection = IDL.Record({
+    collection_fee: IDL.Nat,
+    creation_time: IDL.Nat64,
+    nft_canister_standard: NFTStandard,
+    owner: IDL.Principal,
+    collection_name: IDL.Text,
+    fungible_volume: IDL.Nat,
+    fungible_canister_standard: FungibleStandard,
+    fungible_canister_id: IDL.Principal,
     nft_canister_id: IDL.Principal,
   });
   const Result_1 = IDL.Variant({ Ok: IDL.Nat, Err: MPApiError });
@@ -46,10 +57,11 @@ export default ({ IDL }: { IDL: any }) => {
     Created: IDL.Null,
   });
   const Listing = IDL.Record({
+    fee: IDL.Vec(IDL.Tuple(IDL.Text, IDL.Principal, IDL.Nat)),
     status: ListingStatus,
     created: IDL.Nat64,
-    price: IDL.Nat,
     seller: IDL.Principal,
+    price: IDL.Nat,
   });
   const Result_2 = IDL.Variant({ Ok: Listing, Err: MPApiError });
   return IDL.Service({
@@ -99,7 +111,13 @@ export default ({ IDL }: { IDL: any }) => {
       [IDL.Vec(Offer)],
       ['query'],
     ),
+    getCollections: IDL.Func(
+      [],
+      [IDL.Vec(IDL.Tuple(IDL.Principal, Collection))],
+      ['query'],
+    ),
     getFloor: IDL.Func([IDL.Principal], [Result_1], ['query']),
+    getProtocolFee: IDL.Func([], [IDL.Nat], ['query']),
     getTokenListing: IDL.Func(
       [IDL.Principal, IDL.Nat],
       [Result_2],
@@ -120,6 +138,7 @@ export default ({ IDL }: { IDL: any }) => {
       [Result],
       [],
     ),
+    setProtocolFee: IDL.Func([IDL.Nat], [Result], []),
     withdrawFungible: IDL.Func(
       [IDL.Principal, FungibleStandard],
       [Result],
