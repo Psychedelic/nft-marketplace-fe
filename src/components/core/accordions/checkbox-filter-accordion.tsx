@@ -90,9 +90,10 @@ export const CheckboxFilterAccordion = ({
           <Form>
             {checkboxData.values.map((data: any) => (
               <Checkbox
-                key={data}
-                value={data}
-                percentage={data.percentage}
+                key={data.value}
+                value={data.value}
+                percentage={data.rarity}
+                occurence={data.occurance}
                 handleSelectedFilters={handleSelectedFilters}
                 filterValueExists={filterValueExists}
               />

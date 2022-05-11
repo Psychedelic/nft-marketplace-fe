@@ -16,6 +16,7 @@ export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
 export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
   'nfts/getNFTs',
   async ({ payload, sort, order, page, count }, { dispatch }) => {
+
     // set loading NFTS state to true
     if (page === 0) {
       dispatch(nftsActions.setIsNFTSLoading(true));
@@ -52,10 +53,26 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
           ),
           location: nft?.url,
           traits: {
-            base: nft?.metadata?.base?.value?.TextContent,
-            biggem: nft?.metadata?.biggem?.value?.TextContent,
-            rim: nft?.metadata?.rim?.value?.TextContent,
-            smallgem: nft?.metadata?.smallgem?.value?.TextContent,
+            base: {
+              name: nft?.metadata?.base?.value?.TextContent,
+              occurance: null,
+              rarity: null,
+            },
+            biggem: {
+              name: nft?.metadata?.biggem?.value?.TextContent,
+              occurance: null,
+              rarity: null,
+            },
+            rim: {
+              name: nft?.metadata?.rim?.value?.TextContent,
+              occurance: null,
+              rarity: null,
+            },
+            smallgem: {
+              name: nft?.metadata?.smallgem?.value?.TextContent,
+              occurance: null,
+              rarity: null,
+            }
           },
           status: nft?.status,
           owner: nft?.owner,

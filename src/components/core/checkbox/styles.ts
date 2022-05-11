@@ -18,7 +18,7 @@ export const Wrapper = styled('div', {
     fontSize: '16px',
     lineHeight: '20px',
     color: '$mainTextColor',
-    width: '100%',
+    width: '60%',
     cursor: 'pointer',
 
     '& input[type="checkbox"]': {

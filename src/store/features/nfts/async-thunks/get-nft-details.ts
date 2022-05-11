@@ -38,11 +38,26 @@ export const getNFTDetails = createAsyncThunk<
       location: responseData?.url,
       rendered: true,
       traits: {
-        base: responseData?.metadata?.base?.value?.TextContent,
-        biggem: responseData?.metadata?.biggem?.value?.TextContent,
-        rim: responseData?.metadata?.rim?.value?.TextContent,
-        smallgem:
-          responseData?.metadata?.smallgem?.value?.TextContent,
+        base: {
+          name: responseData?.metadata?.base?.value?.TextContent,
+          occurance: null,
+          rarity: null,
+        },
+        biggem: {
+          name: responseData?.metadata?.biggem?.value?.TextContent,
+          occurance: null,
+          rarity: null,
+        },
+        rim: {
+          name: responseData?.metadata?.rim?.value?.TextContent,
+          occurance: null,
+          rarity: null,
+        },
+        smallgem: {
+          name: responseData?.metadata?.smallgem?.value?.TextContent,
+          occurance: null,
+          rarity: null,
+        }
       },
       owner: responseData?.owner,
     };
