@@ -73,13 +73,14 @@ const OnConnected = ({
     return state.marketplace.tokenOffers;
   });
 
-  const userMadeOffer: OffersTableItem[] = useMemo(
+  const userMadeOffer: OffersTableItem = useMemo(
     () =>
       tokenOffers.find(
         (offer: OffersTableItem) =>
-          offer.fromDetails.address === plugPrincipalId,
+          offer?.fromDetails?.address === plugPrincipalId &&
+          offer?.item?.tokenId.toString() === id,
       ),
-    [tokenOffers, plugPrincipalId],
+    [id, tokenOffers, plugPrincipalId],
   );
 
   useEffect(() => {
@@ -101,8 +102,6 @@ const OnConnected = ({
     );
   }, [id, dispatch, plugPrincipalId]);
 
-  console.log(loadingOffers, userMadeOffer, 'accordion component');
-
   return (
     <>
       {!isOwner && showNFTActionButtons && (
@@ -112,9 +111,19 @@ const OnConnected = ({
               <BuyNowModal price={price?.toString()} />
             </ButtonDetailsWrapper>
           )}
-          <ButtonDetailsWrapper>
-            <MakeOfferModal />
-          </ButtonDetailsWrapper>
+          {!loadingOffers && !userMadeOffer && (
+            <ButtonDetailsWrapper>
+              <MakeOfferModal />
+            </ButtonDetailsWrapper>
+          )}
+          {!loadingOffers && userMadeOffer && (
+            <ButtonDetailsWrapper>
+              <MakeOfferModal
+                isOfferEditing={true}
+                offerPrice={userMadeOffer?.price}
+              />
+            </ButtonDetailsWrapper>
+          )}
         </ButtonListWrapper>
       )}
     </>

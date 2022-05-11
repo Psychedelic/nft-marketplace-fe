@@ -42,7 +42,8 @@
       "connecting": "Connecting...",
       "apply": "Apply",
       "myOffers": "My Offers",
-      "disconnect": "Disconnect"
+      "disconnect": "Disconnect",
+      "editOffer": "Edit Offer"
     }
   },
   "dropdown": {
@@ -178,7 +179,8 @@
       "cancelListing": "Cancel Listing",
       "cancelOffer": "Cancel Offer",
       "acceptOffer": "Accept Offer",
-      "offerAccepted": "Offer Accepted!"
+      "offerAccepted": "Offer Accepted!",
+      "editOffer": "Edit Offer"
     },
     "description": {
       "makeListing": "Enter the sale price you want for your NFT.",
@@ -252,4 +254,3 @@
     "copyToClipboard": "Copied to clipboard!"
   }
 }
-
