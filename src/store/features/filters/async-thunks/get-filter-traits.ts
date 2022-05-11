@@ -120,7 +120,7 @@ export const extractTraitData = ({
 
     return nftDetails;
   } catch (error) {
-    console.log(error);
+    AppLog.error(error);
     dispatch(
       notificationActions.setErrorMessage(
         'Oops! Failed to get trait data',
