@@ -15,14 +15,17 @@ dayjs.tz.setDefault('Europe/London');
 
 const USER_TIMEZONE = dayjs.tz.guess();
 
-const NOW = new Date(
-  new Date().toLocaleString('en-US', {
-    timeZone: USER_TIMEZONE,
-  }),
-).toISOString();
+const NOW = () =>
+  new Date(
+    new Date().toLocaleString('en-US', {
+      timeZone: USER_TIMEZONE,
+    }),
+  ).toISOString();
 
-export const dateRelative = (timestamp: string, now: string = NOW) =>
-  dayjs.utc(timestamp).from(now);
+export const dateRelative = (
+  timestamp: string,
+  now: string = NOW(),
+) => dayjs.utc(timestamp).from(now);
 
 export const formatTimestamp = (timestamp: bigint) => {
   let formattedTimestamp = '-';
@@ -34,7 +37,7 @@ export const formatTimestamp = (timestamp: bigint) => {
       .substring(0, 13);
     formattedTimestamp = dayjs
       .utc(Number(timestampInMilliseconds))
-      .from(NOW);
+      .from(NOW());
   }
   return formattedTimestamp;
 };
