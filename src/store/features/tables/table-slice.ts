@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
-import { getCAPActivity, getTokenMetadata } from './async-thunks';
+import { getCAPActivity, getTokenMetadata, getTokenTransactions } from './async-thunks';
 
 interface LoadedTableMetaData {
   media: string;
@@ -13,6 +13,7 @@ export interface TableState {
   failedToLoadTableData: boolean;
   hasMoreData: boolean;
   nextPageNo: number;
+  tokenTransactions: any,
 }
 
 export interface CapActivityParams {
@@ -36,6 +37,7 @@ const initialState: TableState = {
   failedToLoadTableData: false,
   hasMoreData: false,
   nextPageNo: 0,
+  tokenTransactions: undefined,
 };
 
 export const tableSlice = createSlice({
@@ -83,12 +85,30 @@ export const tableSlice = createSlice({
       state.loadedTableMetaData.media = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    // TODO: Token transactions should be saved by id
+    // for quick access, to start will reset on each new call
+    builder.addCase(getTokenTransactions.pending, (state) => {
+      state.tokenTransactions = initialState.tokenTransactions;
+    });
+
+    builder.addCase(getTokenTransactions.rejected, (state) => {
+      state.tokenTransactions = initialState.tokenTransactions;
+    });
+
+    builder.addCase(getTokenTransactions.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.tokenTransactions = action.payload;
+    });
+  },
 });
 
 export const tableActions = {
   ...tableSlice.actions,
   getCAPActivity,
   getTokenMetadata,
+  getTokenTransactions,
 };
 
 export const selectTableState = (state: RootState) => state.table;

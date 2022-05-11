@@ -1,6 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../../store';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import {
+  useThemeStore,
+  tableActions,
+  RootState,
+  useAppDispatch,
+} from '../../store';
 import {
   TypeDetailsCell,
   PriceDetailsCell,
@@ -22,6 +29,21 @@ interface RowProps {
 export const NFTActivityTable = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const dispatch = useAppDispatch();
+  const tokenTransactions = useSelector(
+    (state: RootState) => state.table.tokenTransactions,
+  );
+  const { id: tokenId } = useParams();
+
+  console.log('[debug] nft-activity-table.tsx: tokenTransactions', tokenTransactions);
+
+  useEffect(() => {
+    if (!tokenId) return;
+
+    dispatch(
+      tableActions.getTokenTransactions({ tokenId: Number(tokenId) }),
+    );
+  }, [dispatch, tokenId]);
 
   const columns = useMemo(
     () => [
