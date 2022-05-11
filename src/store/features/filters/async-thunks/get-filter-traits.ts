@@ -5,9 +5,10 @@ import {
   NSKyasshuUrl,
 } from '../../../../integrations/kyasshu';
 import { FilterConstants } from '../../../../constants';
-import { filterActions } from '..';
+import { filterActions, FilterTraitsList } from '..';
 import { notificationActions } from '../../errors';
 import { AppLog } from '../../../../utils/log';
+import { NFTMetadata } from '../../../../declarations/legacy';
 
 export type GetFilterTraitsProps =
   | NSKyasshuUrl.GetFilterTraitsQueryParams
@@ -69,3 +70,38 @@ export const getFilterTraits = createAsyncThunk<
     );
   }
 });
+
+export const extractTraitData = (details: NFTMetadata, loadedFiltersList: FilterTraitsList[]) => {
+  const extractedTraitData: any = loadedFiltersList[0];
+  let nftDetails = { ...details };
+
+  if (nftDetails?.traits) {
+    const traitNames = Object.keys(nftDetails.traits);
+    traitNames?.forEach((traitName: string) => {
+      const nftName = nftDetails?.traits[`${traitName}`].name;
+      const extractedTraitDataValue: TraitsValuesProps =
+        extractedTraitData
+          ?.filter(
+            (traitData: FilterTraitsList) =>
+              traitData.name === traitName,
+          )
+          .map((traitData: FilterTraitsList) => traitData.values)[0]
+          .filter((traitDataValues: TraitsValuesProps) => {
+            return traitDataValues?.value === nftName;
+          })[0];
+      nftDetails = {
+        ...nftDetails,
+        traits: {
+          ...nftDetails.traits,
+          [`${traitName}`]: {
+            name: nftName,
+            occurance: extractedTraitDataValue?.occurance,
+            rarity: extractedTraitDataValue?.rarity,
+          },
+        },
+      };
+    });
+  }
+
+  return nftDetails;
+};
