@@ -236,7 +236,7 @@ export const parseTokenTransactions = ({
       Object.values(curr.event.caller._arr),
     );
     const fromPrincipal = Principal.fromUint8Array(parsedArr);
-    const from = {
+    const to = {
       raw: fromPrincipal.toString(),
       formatted: formatAddress(
         Principal.fromUint8Array(parsedArr).toString()
@@ -251,8 +251,10 @@ export const parseTokenTransactions = ({
         },
         type: getOperationType(curr.event.operation),
         price: parseE8SAmountToWICP(curr.event.details[2][1].U64),
-        from,
-        to: '',
+        // TODO: the from/to needs a bit of thought as the type of operation
+        // might not provide the data (for example on makeList)
+        from: '',
+        to,
         date: formatTimestamp(BigInt(curr.event.time)),
         floorDifference: '',
       }
