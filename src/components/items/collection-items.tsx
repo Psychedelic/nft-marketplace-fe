@@ -24,6 +24,7 @@ import {
   ContentFlex,
   SkeletonListWrapper,
 } from './styles';
+import { parseE8SAmountToWICP } from '../../utils/formatters';
 
 export const CollectionItems = () => {
   const { t } = useTranslation();
@@ -117,7 +118,7 @@ export const CollectionItems = () => {
                         appliedFilter.filterCategory !==
                         `${t('translation:filters.priceRange')}`
                           ? appliedFilter.filterName
-                          : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`
+                          : `WICP: ${parseE8SAmountToWICP(appliedFilter.filterName.min)} - ${parseE8SAmountToWICP(appliedFilter.filterName.max)}`
                       }
                       rim={`${appliedFilter.filterCategory}`}
                       appliedFilterValue={appliedFilter}
