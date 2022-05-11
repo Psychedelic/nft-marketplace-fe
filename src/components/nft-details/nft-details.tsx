@@ -62,9 +62,9 @@ export const NftDetails = () => {
 
   const nftDetails: NFTMetadata | undefined = useMemo(() => {
     const details = loadedNFTS.find((nft) => nft.id === id);
-    if (details) {
-      return extractTraitData(details, loadedFiltersList);
-    }
+    if (!details) return;
+
+    return extractTraitData({ dispatch, details, loadedFiltersList });
   }, [loadedNFTS, id, loadedFiltersList]);
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
