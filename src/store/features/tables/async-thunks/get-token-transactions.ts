@@ -7,13 +7,15 @@ import {
   NSKyasshuUrl,
 } from '../../../../integrations/kyasshu';
 import { parseE8SAmountToWICP, formatAddress } from '../../../../utils/formatters';
+import { OperationTypes } from '../../../../components/core/table-cells/type-details-cell';
 import { AppLog } from '../../../../utils/log';
 
-// TODO: Have these as candid types from https://github.com/Psychedelic/nft-marketplace
-type Operations = 'directBuy' | 'makeListing' | 'makeOffer' | 'acceptOffer';
-
-const getOperationType = (operation: Operations) => {
+// TODO: This should not exist, so no need to move to utils or helpers
+// only used temporarily to map the operation types to the types known in the UI
+// the UI should use the service operation type names instead
+const getOperationType = (operation: OperationTypes) => {
   // TODO: Refactor, the table should use the source type names
+  // see todo in /src/components/core/table-cells/type-details-cell.tsx
   switch (operation) {
     case 'directBuy':
       return 'sale';
@@ -26,18 +28,20 @@ const getOperationType = (operation: Operations) => {
 
 // TODO: Should be reused, as table type is similar
 // see comment in the nft-activity-table-tsx
-type TokenTransactionItem = {
+type TablePrincipal = {
+  raw: string,
+  formatted: string,
+}
+
+export type TokenTransactionItem = {
   items: {
     name: string,
-    logo: string,
+    logo?: string,
   },
-  type: Operations,
+  type: OperationTypes,
   price: BigInt,
-  from: {
-    raw: string,
-    formattedAddress: string,
-  },
-  to: string,
+  from: TablePrincipal,
+  to: TablePrincipal,
   date: string,
 };
 
@@ -54,7 +58,7 @@ const parseTokenTransactions = ({
     const fromPrincipal = Principal.fromUint8Array(parsedArr);
     const from = {
       raw: fromPrincipal.toString(),
-      formattedAddress: formatAddress(
+      formatted: formatAddress(
         Principal.fromUint8Array(parsedArr).toString()
       ),
     }
@@ -64,7 +68,6 @@ const parseTokenTransactions = ({
       {
         item: {
           name: `CAP Crowns #${curr.event.details[0][1].U64}`,
-          logo: '/static/media/crowns-logo.76ded72b07b1a03258836a39dff4aa7c.svg',
         },
         type: getOperationType(curr.event.operation),
         price: parseE8SAmountToWICP(curr.event.details[2][1].U64),

@@ -17,6 +17,11 @@ export interface TypeDetailsCellProps {
   theme: string | null;
 }
 
+// TODO: The `type` should use the known terms used in the source
+// ( https://github.com/Psychedelic/nft-marketplace )
+// and these at time of writing are the following: directBuy, makeListing, etc
+export type OperationTypes = 'directBuy' | 'makeListing' | 'makeOffer' | 'acceptOffer';
+
 export const TypeDetailsCell = ({
   name,
   type,
