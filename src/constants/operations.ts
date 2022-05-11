@@ -1,9 +1,9 @@
 export enum OperationConstants {
-  list = 'list',
-  sale = 'sale',
-  offer = 'offer',
+  makeListing = 'list',
+  directBuy = 'sale',
+  makeOffer = 'offer',
   denyOffer = 'Deny Offer',
   cancelOffer = 'Cancel Offer',
   cancelListing = 'Cancel Listing',
-  acceptOffer = 'Accept Offer',
+  acceptOffer = 'sale',
 }

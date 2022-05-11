@@ -16,13 +16,13 @@ const getOperation = (operationType: string) => {
   let operationValue;
   switch (operationType) {
     case 'makeSaleOffer':
-      operationValue = OperationConstants.list;
+      operationValue = OperationConstants.makeListing;
       break;
     case 'directBuy':
-      operationValue = OperationConstants.sale;
+      operationValue = OperationConstants.directBuy;
       break;
     case 'makeOffer':
-      operationValue = OperationConstants.offer;
+      operationValue = OperationConstants.makeOffer;
       break;
     case 'denyOffer':
       operationValue = OperationConstants.denyOffer;
@@ -31,7 +31,7 @@ const getOperation = (operationType: string) => {
       operationValue = OperationConstants.cancelOffer;
       break;
     case 'makeListing':
-      operationValue = OperationConstants.list;
+      operationValue = OperationConstants.makeListing;
       break;
     case 'cancelListing':
       operationValue = OperationConstants.cancelListing;
