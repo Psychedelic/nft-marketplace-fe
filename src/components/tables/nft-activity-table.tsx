@@ -15,15 +15,19 @@ import {
   TextLinkCell,
 } from '../core';
 import { TableLayout } from './table-layout';
-import { mockTableData } from './mock-data';
 import { Container } from './styles';
 
+// TODO: The type exists in the get-token-transactions.ts
+// so best reuse one of them
 interface RowProps {
   price: string;
   type: string;
-  from: string;
+  from: {
+    raw: string,
+    formattedAddress: string,
+  };
   to: string;
-  expiration: string;
+  date: string;
 }
 
 export const NFTActivityTable = () => {
@@ -34,8 +38,6 @@ export const NFTActivityTable = () => {
     (state: RootState) => state.table.tokenTransactions,
   );
   const { id: tokenId } = useParams();
-
-  console.log('[debug] nft-activity-table.tsx: tokenTransactions', tokenTransactions);
 
   useEffect(() => {
     if (!tokenId) return;
@@ -62,16 +64,18 @@ export const NFTActivityTable = () => {
         Header: t('translation:tables.titles.price'),
         accessor: ({ price }: RowProps) => (
           <PriceDetailsCell
-            wicp="5.12 WICP"
-            price={price}
+            wicp={`${price} WICP`}
+            // Obs: we don't know the historical market price at time of direct buy
+            // so we are not going to display it, as by computing the current market price
+            // would be misleading
             tableType="nftActivity"
           />
-        ),
+        )
       },
       {
         Header: t('translation:tables.titles.from'),
         accessor: ({ from }: RowProps) => (
-          <TextLinkCell text={from} url="" type="nftActivity" />
+          <TextLinkCell text={from.formattedAddress} url="" type="nftActivity" />
         ),
       },
       {
@@ -82,8 +86,8 @@ export const NFTActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.date'),
-        accessor: ({ expiration }: RowProps) => (
-          <TextCell text={expiration} type="nftActivityDate" />
+        accessor: ({ date }: RowProps) => (
+          <TextCell text={date} type="nftActivityDate" />
         ),
       },
     ],
@@ -92,15 +96,21 @@ export const NFTActivityTable = () => {
 
   return (
     <Container>
-      <TableLayout
-        columns={columns}
-        data={mockTableData}
-        tableType="nftActivity"
-        loaderDetails={{
-          showItemDetails: true,
-          showTypeDetails: true,
-        }}
-      />
+      {
+        // TODO: Show loading until data readiness
+        // and show empty view when no data
+        tokenTransactions && (
+          <TableLayout
+            columns={columns}
+            data={tokenTransactions}
+            tableType="nftActivity"
+            loaderDetails={{
+              showItemDetails: true,
+              showTypeDetails: true,
+            }}
+          />
+        )
+      }
     </Container>
   );
 };
