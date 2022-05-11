@@ -12,9 +12,9 @@ import {
   Subtext,
   ButtonsWrapper,
   HeaderWrapper,
+  VerifiedIcon,
 } from './styles';
 import crown from '../../assets/crown.svg';
-import verified from '../../assets/verified-large.svg';
 import { Icon } from '../icons';
 
 export const CollectionOverview = () => {
@@ -32,7 +32,7 @@ export const CollectionOverview = () => {
           <HeaderWrapper>
             <Heading>
               Crowns
-              <img src={verified} alt="verified" />
+              <VerifiedIcon icon="verified" paddingLeft size="md" />
             </Heading>
             <Subtext>
               Crowns are a collection of 10,000 generated NFTs on the

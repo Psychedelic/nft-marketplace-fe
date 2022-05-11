@@ -8,8 +8,8 @@ import {
   CollectionMetadataWrapper,
   Heading,
   Subtext,
+  VerifiedIcon,
 } from './styles';
-import verified from '../../assets/verified-small.svg';
 import { Icon } from '../icons';
 
 export interface NFTMetaDataProps {
@@ -26,7 +26,7 @@ export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
         <Heading>{id}</Heading>
         <Subtext>
           Crowns
-          <img src={verified} alt="verified" />
+          <VerifiedIcon icon="verified" paddingLeft />
         </Subtext>
       </div>
       <LinkButton

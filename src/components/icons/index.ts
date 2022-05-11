@@ -22,6 +22,7 @@ import { FaMoneyBillWave } from '@react-icons/all-files/fa/FaMoneyBillWave';
 import { FaList } from '@react-icons/all-files/fa/FaList';
 import { FaInfoCircle } from '@react-icons/all-files/fa/FaInfoCircle';
 import { FaSearch } from '@react-icons/all-files/fa/FaSearch';
+import { GoVerified } from '@react-icons/all-files/go/GoVerified';
 
 import { PlugIcon, AppNameIcon } from './custom';
 
@@ -50,6 +51,7 @@ export const Icons = {
   list: FaList,
   info: FaInfoCircle,
   search: FaSearch,
+  verified: GoVerified,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,

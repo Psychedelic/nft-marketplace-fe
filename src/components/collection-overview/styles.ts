@@ -1,5 +1,6 @@
 import { styled } from '../../stitches.config';
 import background from '../../assets/nft-background.png';
+import { Icon } from '../icons';
 
 export const NftMetadataWrapper = styled('div', {
   display: 'block',
@@ -90,4 +91,8 @@ export const ButtonsWrapper = styled('div', {
 
 export const HeaderWrapper = styled('div', {
   marginLeft: '140px',
+});
+
+export const VerifiedIcon = styled(Icon, {
+  color: '$primary',
 });
