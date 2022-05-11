@@ -15,7 +15,7 @@ import {
   TextLinkCell,
 } from '../core';
 import { TableLayout } from './table-layout';
-import { TokenTransactionItem } from '../../store/features/tables/async-thunks/get-token-transactions';
+import { TokenTransactionItem } from '../../utils/parser';
 import { Container } from './styles';
 
 type RowProps = TokenTransactionItem;
