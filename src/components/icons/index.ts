@@ -7,7 +7,7 @@ import { FaTwitter } from '@react-icons/all-files/fa/FaTwitter';
 import { FaShare } from '@react-icons/all-files/fa/FaShare';
 import { FaArrowLeft } from '@react-icons/all-files/fa/FaArrowLeft';
 import { FaArrowCircleLeft } from '@react-icons/all-files/fa/FaArrowCircleLeft';
-import { MdExitToApp } from '@react-icons/all-files/md/MdExitToApp';
+import { FaSignOutAlt } from '@react-icons/all-files/fa/FaSignOutAlt';
 import { FaTag } from '@react-icons/all-files/fa/FaTag';
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown';
 import { FaEllipsisH } from '@react-icons/all-files/fa/FaEllipsisH';
@@ -36,7 +36,7 @@ export const Icons = {
   share: FaShare,
   'arrow-left': FaArrowLeft,
   'arrow-left-circle': FaArrowCircleLeft,
-  disconnect: MdExitToApp,
+  disconnect: FaSignOutAlt,
   offer: FaTag,
   'chevron-down': FaChevronDown,
   ellipsis: FaEllipsisH,
