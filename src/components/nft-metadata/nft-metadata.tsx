@@ -40,7 +40,6 @@ export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
         }}
       >
         <Icon icon="share" />
-        <img alt={t('translation:buttons.links.back')} />
       </LinkButton>
     </CollectionMetadataWrapper>
   );
