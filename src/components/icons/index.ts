@@ -20,6 +20,8 @@ import { FaSeedling } from '@react-icons/all-files/fa/FaSeedling';
 import { FaExchangeAlt } from '@react-icons/all-files/fa/FaExchangeAlt';
 import { FaMoneyBillWave } from '@react-icons/all-files/fa/FaMoneyBillWave';
 import { FaList } from '@react-icons/all-files/fa/FaList';
+import { FaInfoCircle } from '@react-icons/all-files/fa/FaInfoCircle';
+import { FaSearch } from '@react-icons/all-files/fa/FaSearch';
 
 import { PlugIcon, AppNameIcon } from './custom';
 
@@ -46,6 +48,8 @@ export const Icons = {
   transfer: FaExchangeAlt,
   sale: FaMoneyBillWave,
   list: FaList,
+  info: FaInfoCircle,
+  search: FaSearch,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,

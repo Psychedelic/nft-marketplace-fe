@@ -44,7 +44,7 @@ export const CardOptionsDropdown = ({
         }}
       >
         <DropdownButtonContainer>
-          <Icon icon="ellipsis" size="lg" />
+          <Icon icon="ellipsis" />
         </DropdownButtonContainer>
       </DropdownMenu.Trigger>
 

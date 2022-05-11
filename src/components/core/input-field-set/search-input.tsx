@@ -1,5 +1,4 @@
 import React, { forwardRef, ChangeEvent } from 'react';
-import searchLogo from '../../../assets/searchIcon.svg';
 import { Container, Input, SearchIcon } from './styles';
 
 export type SearchInputProps = {
@@ -30,7 +29,7 @@ export const SearchInput = forwardRef<
 
     return (
       <Container name="searchInput" onClick={handleClick}>
-        <SearchIcon src={searchLogo} alt="search" />
+        <SearchIcon icon="search" />
         <Input
           ref={ref}
           name="searchInput"

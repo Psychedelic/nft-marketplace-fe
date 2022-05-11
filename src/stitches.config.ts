@@ -40,6 +40,7 @@ export const {
       greyMid: '#767D8E',
       error: '#FD5F51',
       primary: '#2253FF',
+      modalText: '#767D8E',
     },
     space: {},
     fonts: {},
@@ -84,6 +85,9 @@ export const darkTheme = createTheme({
     skeletonBackground:
       'linear-gradient(90deg, rgb(36 34 34) 0%, rgb(41 42 44) 59.9%)',
     checkboxSelectedFiltersText: '#2253FF',
+    error: '#FD5F51',
+    primary: '#2253FF',
+    modalText: '#767D8E',
   },
   shadows: {
     default: 'none',
