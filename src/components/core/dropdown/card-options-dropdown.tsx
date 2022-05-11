@@ -37,13 +37,18 @@ export const CardOptionsDropdown = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger
+        className={themeObject}
         asChild
         style={{
           cursor: 'pointer',
         }}
       >
         <DropdownButtonContainer>
-          <Icon icon={EllipsisIcon} size="1x" />
+          <Icon
+            icon={EllipsisIcon}
+            size="1x"
+            color="$mainTextColor"
+          />
         </DropdownButtonContainer>
       </DropdownMenu.Trigger>
 

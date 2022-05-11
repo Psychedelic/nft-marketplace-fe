@@ -36,6 +36,7 @@ export const DropdownButtonContainer = styled('div', {
   height: 10,
   padding: '10px 15px',
   margin: -10,
+  color: '$mainTextColor',
 });
 
 export const DropdownContent = styled(DropdownMenu.Content, {

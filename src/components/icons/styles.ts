@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { styled } from '@stitches/react';
 
 export const IconStyled = styled(FontAwesomeIcon, {
-  color: '$mainTextColor',
   transition: 'transform 0.1s ease-in-out',
 
   variants: {
