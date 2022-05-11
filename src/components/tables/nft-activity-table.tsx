@@ -15,20 +15,10 @@ import {
   TextLinkCell,
 } from '../core';
 import { TableLayout } from './table-layout';
+import { TokenTransactionItem } from '../../store/features/tables/async-thunks/get-token-transactions';
 import { Container } from './styles';
 
-// TODO: The type exists in the get-token-transactions.ts
-// so best reuse one of them
-interface RowProps {
-  price: string;
-  type: string;
-  from: {
-    raw: string,
-    formattedAddress: string,
-  };
-  to: string;
-  date: string;
-}
+type RowProps = TokenTransactionItem;
 
 export const NFTActivityTable = () => {
   const { t } = useTranslation();
@@ -74,13 +64,13 @@ export const NFTActivityTable = () => {
       {
         Header: t('translation:tables.titles.from'),
         accessor: ({ from }: RowProps) => (
-          <TextLinkCell text={from.formattedAddress} url="" type="nftActivity" />
+          <TextLinkCell text={from.formatted} url="" type="nftActivity" />
         ),
       },
       {
         Header: t('translation:tables.titles.to'),
         accessor: ({ to }: RowProps) => (
-          <TextLinkCell text={to} url="" type="nftActivity" />
+          <TextLinkCell text={to.formatted} url="" type="nftActivity" />
         ),
       },
       {
