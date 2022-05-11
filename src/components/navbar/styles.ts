@@ -1,4 +1,5 @@
 import { styled } from '../../stitches.config';
+import { Icon } from '../icons';
 
 export const Container = styled('div', {
   // base styles
@@ -25,7 +26,7 @@ export const LogoIcon = styled('img', {
   marginRight: '7px',
 });
 
-export const LogoName = styled('img', {
+export const LogoName = styled(Icon, {
   width: '68px',
   marginRight: '7px',
   marginTop: '5px',

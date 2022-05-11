@@ -10,8 +10,6 @@ import { LinkButton } from '../core';
 import { GlobalSearch } from '../search';
 import { Plug } from '../plug';
 import appLogo from '../../assets/app-logo.svg';
-import appName from '../../assets/app-name.svg';
-import appNameDark from '../../assets/app-name-dark.svg';
 import {
   Container,
   LogoContainer,
@@ -48,8 +46,8 @@ export const NavBar = () => {
             alt={t('translation:common.collectionName')}
           />
           <LogoName
-            src={isLightTheme ? appName : appNameDark}
-            alt={t('translation:common.collectionName')}
+            icon="app-name"
+            extraIconProps={{ dark: !isLightTheme }}
           />
         </LogoContainer>
       </RouterLink>

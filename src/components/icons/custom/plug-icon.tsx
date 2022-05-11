@@ -4,7 +4,9 @@ export interface PlugIconProps {
   dark?: boolean;
 }
 
-export const PlugIcon = ({ dark }: PlugIconProps) => (
+export const PlugIcon: React.VFC<PlugIconProps> = ({
+  dark,
+}: PlugIconProps) => (
   <svg
     viewBox="0 0 15 23"
     fill="none"

@@ -11,7 +11,7 @@ import { FaTag } from '@react-icons/all-files/fa/FaTag';
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown';
 import { FaEllipsisH } from '@react-icons/all-files/fa/FaEllipsisH';
 import { FaRegClone } from '@react-icons/all-files/fa/FaRegClone';
-import { PlugIcon } from './custom';
+import { PlugIcon, AppNameIcon } from './custom';
 
 export const Icons = {
   activity: FiActivity,
@@ -28,6 +28,7 @@ export const Icons = {
   ellipsis: FaEllipsisH,
   copy: FaRegClone,
   plug: PlugIcon,
+  'app-name': AppNameIcon,
 };
 
 export * from './icon';
