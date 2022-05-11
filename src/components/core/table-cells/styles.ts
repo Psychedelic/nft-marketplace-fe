@@ -21,7 +21,7 @@ export const ItemName = styled('div', {
 });
 
 export const TypeDetails = styled('div', {
-  // base styles
+  color: '$mainTextColor',
   display: 'flex',
   alignItems: 'center',
 });

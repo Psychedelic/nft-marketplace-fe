@@ -1,6 +1,4 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../../../store';
 import miniDfinity from '../../../assets/mini-dfinity.svg';
 import {
   TraitChipContainer,
@@ -8,7 +6,6 @@ import {
   TraitName,
   TraitRim,
   TraitActionContainer,
-  TraitClear,
   Image,
 } from './styles';
 import { Icon } from '../../icons';

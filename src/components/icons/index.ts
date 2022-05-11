@@ -16,6 +16,10 @@ import { FaCheck } from '@react-icons/all-files/fa/FaCheck';
 import { RiCloseCircleLine } from '@react-icons/all-files/ri/RiCloseCircleLine';
 import { RiCloseLine } from '@react-icons/all-files/ri/RiCloseLine';
 import { FaExclamationCircle } from '@react-icons/all-files/fa/FaExclamationCircle';
+import { FaSeedling } from '@react-icons/all-files/fa/FaSeedling';
+import { FaExchangeAlt } from '@react-icons/all-files/fa/FaExchangeAlt';
+import { FaMoneyBillWave } from '@react-icons/all-files/fa/FaMoneyBillWave';
+import { FaList } from '@react-icons/all-files/fa/FaList';
 
 import { PlugIcon, AppNameIcon } from './custom';
 
@@ -38,6 +42,10 @@ export const Icons = {
   close: RiCloseLine,
   'close-circle': RiCloseCircleLine,
   warning: FaExclamationCircle,
+  mint: FaSeedling,
+  transfer: FaExchangeAlt,
+  sale: FaMoneyBillWave,
+  list: FaList,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,
