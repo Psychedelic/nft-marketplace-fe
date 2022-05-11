@@ -16,6 +16,7 @@ export const CountLabel = styled('div', {
 });
 
 export const CountInNumbers = styled('div', {
+  color: '$mainTextColor',
   fontWeight: '600',
 });
 
