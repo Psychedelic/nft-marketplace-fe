@@ -9,7 +9,7 @@ import {
   DropdownRadioGroup,
 } from './styles';
 import { AppLog } from '../../../utils/log';
-import { ChevronDownIcon, Icon } from '../../icons';
+import { Icon } from '../../icons';
 import { useTheme } from '../../../hooks';
 
 export const SortByFilterDropdown = React.memo(() => {
@@ -69,7 +69,7 @@ export const SortByFilterDropdown = React.memo(() => {
     <DropdownRoot onOpenChange={setIsOpen}>
       <DropdownStyle>
         <p>{selectedValue}</p>
-        <Icon icon={ChevronDownIcon} rotate={isOpen} />
+        <Icon icon="chevron-down" rotate={isOpen} />
       </DropdownStyle>
 
       <DropdownContent className={themeObject}>

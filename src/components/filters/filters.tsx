@@ -31,7 +31,6 @@ import {
   CollapseIcon,
 } from './styles';
 import CheckboxAccordionSkeleton from '../core/accordions/checkbox-accordion-skeleton';
-import { ArrowLeftToLineIcon, ArrowRightFromLine } from '../icons';
 
 /* --------------------------------------------------------------------------
  * Filters Component
@@ -145,11 +144,7 @@ export const Filters = () => {
             dispatch(settingsActions.setFilterCollapsed(!collapsed));
           }}
         >
-          <CollapseIcon
-            icon={
-              collapsed ? ArrowLeftToLineIcon : ArrowRightFromLine
-            }
-          />
+          <CollapseIcon icon="arrow-left" rotate={!collapsed} />
         </IconActionButton>
       </CloseFilterContainer>
       {collapsed && (

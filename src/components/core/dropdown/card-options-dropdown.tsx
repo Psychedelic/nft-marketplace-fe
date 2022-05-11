@@ -10,7 +10,7 @@ import {
   DropdownButtonContainer,
 } from './styles';
 import { NFTMetadata } from '../../../declarations/legacy';
-import { CopyIcon, EllipsisIcon, Icon } from '../../icons';
+import { Icon } from '../../icons';
 import { useTheme } from '../../../hooks';
 
 export type CardOptionsDropdownProps = {
@@ -44,11 +44,7 @@ export const CardOptionsDropdown = ({
         }}
       >
         <DropdownButtonContainer>
-          <Icon
-            icon={EllipsisIcon}
-            size="1x"
-            color="$mainTextColor"
-          />
+          <Icon icon="ellipsis" size="lg" />
         </DropdownButtonContainer>
       </DropdownMenu.Trigger>
 
@@ -62,7 +58,7 @@ export const CardOptionsDropdown = ({
             <p>
               {`${t('translation:dropdown.moreOptions.copyLink')}`}
             </p>
-            <Icon icon={CopyIcon} />
+            <Icon icon="copy" />
           </DropdownMenuItem>
         </DropdownGroup>
       </DropdownContent>

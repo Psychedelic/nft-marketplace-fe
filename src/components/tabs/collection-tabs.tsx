@@ -11,7 +11,7 @@ import {
   TabsContentWrapper,
 } from './styles';
 import { Filters } from '../filters';
-import { Icon, ActivityIcon, ItemsIcon } from '../icons';
+import { Icon } from '../icons';
 
 export const CollectionTabs = () => {
   const { t } = useTranslation();
@@ -42,7 +42,7 @@ export const CollectionTabs = () => {
           status={itemsStatus}
           onClick={() => navigate('/', { replace: true })}
         >
-          <Icon icon={ItemsIcon} paddingRight />
+          <Icon icon="grid" />
           {t('translation:tabs.items')}
         </TabsTrigger>
         <TabsTrigger
@@ -50,7 +50,7 @@ export const CollectionTabs = () => {
           status={activityStatus}
           onClick={() => navigate('/activity', { replace: true })}
         >
-          <Icon icon={ActivityIcon} paddingRight />
+          <Icon icon="activity" />
           {t('translation:tabs.activity')}
         </TabsTrigger>
       </TabsList>

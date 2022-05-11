@@ -19,7 +19,7 @@ import {
   LogoName,
   ActionButtonsContainer,
 } from './styles';
-import { Icon, MoonIcon, SunIcon } from '../icons';
+import { Icon } from '../icons';
 
 /* --------------------------------------------------------------------------
  * NavBar Component
@@ -56,7 +56,7 @@ export const NavBar = () => {
       <GlobalSearch />
       <ActionButtonsContainer>
         <LinkButton handleClick={changeThemeHandler}>
-          <Icon icon={isLightTheme ? MoonIcon : SunIcon} />
+          <Icon icon={isLightTheme ? 'moon' : 'sun'} />
         </LinkButton>
         <Plug />
       </ActionButtonsContainer>

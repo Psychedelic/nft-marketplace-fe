@@ -10,7 +10,7 @@ import {
   Subtext,
 } from './styles';
 import verified from '../../assets/verified-small.svg';
-import { Icon, ShareIcon } from '../icons';
+import { Icon } from '../icons';
 
 export interface NFTMetaDataProps {
   id?: string;
@@ -39,7 +39,7 @@ export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
           );
         }}
       >
-        <Icon icon={ShareIcon} />
+        <Icon icon="share" />
         <img alt={t('translation:buttons.links.back')} />
       </LinkButton>
     </CollectionMetadataWrapper>

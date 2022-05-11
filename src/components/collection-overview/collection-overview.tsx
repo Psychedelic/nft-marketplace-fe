@@ -20,7 +20,7 @@ import {
 import crown from '../../assets/crown-pfp.png';
 import crownDark from '../../assets/crown-pfp-dark.png';
 import verified from '../../assets/verified-large.svg';
-import { DiscordIcon, Icon, ShareIcon, TwitterIcon } from '../icons';
+import { Icon } from '../icons';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
@@ -56,10 +56,10 @@ export const CollectionOverview = () => {
             {t('translation:buttons.links.website')}
           </LinkButton>
           <LinkButton url="https://discord.gg/yVEcEzmrgm">
-            <Icon icon={DiscordIcon} />
+            <Icon icon="discord" />
           </LinkButton>
           <LinkButton url="https://twitter.com/cap_ois">
-            <Icon icon={TwitterIcon} />
+            <Icon icon="twitter" />
           </LinkButton>
 
           <LinkButton
@@ -74,7 +74,7 @@ export const CollectionOverview = () => {
               );
             }}
           >
-            <Icon icon={ShareIcon} />
+            <Icon icon="share" />
           </LinkButton>
         </ButtonsWrapper>
       </NftMetadataContent>

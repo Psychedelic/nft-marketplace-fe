@@ -14,12 +14,7 @@ import {
   PlugIconStyled,
 } from './styles';
 import { useTheme } from '../../hooks';
-import {
-  ChevronDownIcon,
-  DisconnectIcon,
-  Icon,
-  OfferIcon,
-} from '../icons';
+import { Icon } from '../icons';
 
 export type PlugButtonProps = {
   handleClick: () => void;
@@ -72,12 +67,15 @@ export const PlugButton = ({
         >
           <PlugButtonText className="plug-button-text">
             {isConnected && (
-              <PlugIconStyled dark={theme === 'darkTheme'} />
+              <PlugIconStyled
+                icon="plug"
+                extraIconProps={{ dark: theme === 'darkTheme' }}
+              />
             )}
             {text}
             {isConnected && (
               <PlugArrowDownIcon
-                icon={ChevronDownIcon}
+                icon="chevron-down"
                 rotate={openDropdown}
               />
             )}
@@ -89,11 +87,11 @@ export const PlugButton = ({
         {isConnected && (
           <ConnectToPlugButton align="end" className={themeObject}>
             <ListItem onClick={myOffersHandler}>
-              <Icon icon={OfferIcon} paddingRight />
+              <Icon icon="offer" paddingRight />
               <p>{t('translation:buttons.action.myOffers')}</p>
             </ListItem>
             <ListItem onClick={disconnectHandler}>
-              <Icon icon={DisconnectIcon} paddingRight />
+              <Icon icon="disconnect" paddingRight />
               <p>{t('translation:buttons.action.disconnect')}</p>
             </ListItem>
           </ConnectToPlugButton>

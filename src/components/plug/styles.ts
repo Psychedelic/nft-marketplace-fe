@@ -1,6 +1,6 @@
 import * as Popover from '@radix-ui/react-popover';
 import { styled } from '../../stitches.config';
-import { Icon, PlugIcon } from '../icons';
+import { Icon } from '../icons';
 
 export const PlugButtonContainer = styled('button', {
   // base styles
@@ -93,7 +93,7 @@ export const ListItem = styled('div', {
   },
 });
 
-export const PlugIconStyled = styled(PlugIcon, {
+export const PlugIconStyled = styled(Icon, {
   marginRight: '10px',
   width: '12px',
 });

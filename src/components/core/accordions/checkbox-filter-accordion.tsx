@@ -12,7 +12,7 @@ import {
   AccordionContent,
   Form,
 } from './styles';
-import { ChevronDownIcon, Icon } from '../../icons';
+import { Icon } from '../../icons';
 
 export type CheckboxFilterAccordionProps = {
   id: string;
@@ -79,9 +79,9 @@ export const CheckboxFilterAccordion = ({
           </p>
 
           <Icon
-            icon={ChevronDownIcon}
+            icon="chevron-down"
             rotate={!isAccordionOpen}
-            size="xs"
+            size="sm"
           />
         </AccordionTrigger>
         <AccordionContent padding="small">

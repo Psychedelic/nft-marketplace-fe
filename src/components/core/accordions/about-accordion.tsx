@@ -27,12 +27,7 @@ import plugIcon from '../../../assets/accordions/owner.svg';
 
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { formatAddress } from '../../../utils/formatters';
-import {
-  DiscordIcon,
-  Icon,
-  ShareIcon,
-  TwitterIcon,
-} from '../../icons';
+import { Icon } from '../../icons';
 
 export type AboutAccordionProps = {
   owner?: string;
@@ -133,15 +128,15 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
               </LinkButton>
 
               <LinkButton>
-                <Icon icon={DiscordIcon} />
+                <Icon icon="discord" />
               </LinkButton>
 
               <LinkButton>
-                <Icon icon={TwitterIcon} />
+                <Icon icon="twitter" />
               </LinkButton>
 
               <LinkButton>
-                <Icon icon={ShareIcon} />
+                <Icon icon="share" />
               </LinkButton>
             </ButtonWrapper>
           </div>

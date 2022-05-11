@@ -1,17 +1,33 @@
-export { IconStyled as Icon } from './styles';
-export * from './custom';
+import { FiActivity } from '@react-icons/all-files/fi/FiActivity';
+import { FiGrid } from '@react-icons/all-files/fi/FiGrid';
+import { FaMoon } from '@react-icons/all-files/fa/FaMoon';
+import { FaSun } from '@react-icons/all-files/fa/FaSun';
+import { FaDiscord } from '@react-icons/all-files/fa/FaDiscord';
+import { FaTwitter } from '@react-icons/all-files/fa/FaTwitter';
+import { FaShare } from '@react-icons/all-files/fa/FaShare';
+import { FaArrowLeft } from '@react-icons/all-files/fa/FaArrowLeft';
+import { MdExitToApp } from '@react-icons/all-files/md/MdExitToApp';
+import { FaTag } from '@react-icons/all-files/fa/FaTag';
+import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown';
+import { FaEllipsisH } from '@react-icons/all-files/fa/FaEllipsisH';
+import { FaRegClone } from '@react-icons/all-files/fa/FaRegClone';
+import { PlugIcon } from './custom';
 
-export { faWavePulse as ActivityIcon } from '@fortawesome/pro-regular-svg-icons/faWavePulse';
-export { faTableCells as ItemsIcon } from '@fortawesome/pro-regular-svg-icons/faTableCells';
-export { faMoon as MoonIcon } from '@fortawesome/pro-solid-svg-icons/faMoon';
-export { faSun as SunIcon } from '@fortawesome/pro-solid-svg-icons/faSun';
-export { faDiscord as DiscordIcon } from '@fortawesome/free-brands-svg-icons/faDiscord';
-export { faTwitter as TwitterIcon } from '@fortawesome/free-brands-svg-icons/faTwitter';
-export { faShare as ShareIcon } from '@fortawesome/pro-solid-svg-icons/faShare';
-export { faArrowLeftToLine as ArrowLeftToLineIcon } from '@fortawesome/pro-solid-svg-icons/faArrowLeftToLine';
-export { faArrowRightFromLine as ArrowRightFromLine } from '@fortawesome/pro-solid-svg-icons/faArrowRightFromLine';
-export { faRightFromBracket as DisconnectIcon } from '@fortawesome/pro-regular-svg-icons/faRightFromBracket';
-export { faTag as OfferIcon } from '@fortawesome/pro-regular-svg-icons/faTag';
-export { faChevronDown as ChevronDownIcon } from '@fortawesome/pro-solid-svg-icons/faChevronDown';
-export { faEllipsis as EllipsisIcon } from '@fortawesome/pro-solid-svg-icons/faEllipsis';
-export { faClone as CopyIcon } from '@fortawesome/pro-regular-svg-icons/faClone';
+export const Icons = {
+  activity: FiActivity,
+  grid: FiGrid,
+  moon: FaMoon,
+  sun: FaSun,
+  discord: FaDiscord,
+  twitter: FaTwitter,
+  share: FaShare,
+  'arrow-left': FaArrowLeft,
+  disconnect: MdExitToApp,
+  offer: FaTag,
+  'chevron-down': FaChevronDown,
+  ellipsis: FaEllipsisH,
+  copy: FaRegClone,
+  plug: PlugIcon,
+};
+
+export * from './icon';
