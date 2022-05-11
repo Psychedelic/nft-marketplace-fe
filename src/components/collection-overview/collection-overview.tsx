@@ -1,10 +1,6 @@
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
-import {
-  notificationActions,
-  useAppDispatch,
-  useThemeStore,
-} from '../../store';
+import { notificationActions, useAppDispatch } from '../../store';
 import { LinkButton } from '../core';
 import {
   NftMetadataWrapper,
@@ -17,16 +13,13 @@ import {
   ButtonsWrapper,
   HeaderWrapper,
 } from './styles';
-import crown from '../../assets/crown-pfp.png';
-import crownDark from '../../assets/crown-pfp-dark.png';
+import crown from '../../assets/crown.svg';
 import verified from '../../assets/verified-large.svg';
 import { Icon } from '../icons';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
   const dispatch = useAppDispatch();
-  const isLightTheme = theme === 'lightTheme';
 
   return (
     <NftMetadataWrapper>
@@ -34,10 +27,7 @@ export const CollectionOverview = () => {
       <NftMetadataContent>
         <NftMetadataContentWrapper>
           <NftProfilePictureWrapper>
-            <img
-              src={isLightTheme ? crown : crownDark}
-              alt="crown-pfp"
-            />
+            <img src={crown} alt="crown-pfp" />
           </NftProfilePictureWrapper>
           <HeaderWrapper>
             <Heading>

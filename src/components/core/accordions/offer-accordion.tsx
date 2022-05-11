@@ -13,8 +13,8 @@ import {
   UndefinedPrice,
   ButtonListWrapper,
   ButtonDetailsWrapper,
+  AccordionImage,
 } from './styles';
-import dfinity from '../../../assets/accordions/dfinity.svg';
 import { NFTOffersTable } from '../../tables';
 import { Plug } from '../../plug';
 import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.utils';
@@ -23,6 +23,7 @@ import { BuyNowModal, MakeOfferModal } from '../../modals';
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { PlugStatusCodes } from '../../../constants/plug';
 import { Icon } from '../../icons';
+import wicpIcon from '../../../assets/wicp.svg';
 
 export type OfferAccordionProps = {
   lastSalePrice?: string;
@@ -114,7 +115,13 @@ export const OfferAccordion = ({
       <AccordionHead flexDirection="column">
         <AccordionHeadContent flexProperties="offer">
           <FlexRight>
-            <img src={dfinity} alt={dfinity} />
+            <AccordionImage
+              style={{
+                backgroundImage: `url(${wicpIcon})`,
+                width: '60px',
+                height: '60px',
+              }}
+            />
             <div>
               <span>
                 {t(

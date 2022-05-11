@@ -14,10 +14,9 @@ import {
   AccordionHeadContent,
   Flex,
   Subtext,
+  AccordionImage,
 } from './styles';
-import collection from '../../../assets/accordions/collection.svg';
-import creator from '../../../assets/accordions/creator.svg';
-import plugIcon from '../../../assets/accordions/owner.svg';
+import plugIcon from '../../../assets/plug-circle.svg';
 
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { formatAddress } from '../../../utils/formatters';
@@ -43,12 +42,15 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
     {
       subheading: 'CAP Crowns',
       heading: 'Collection',
-      image: collection,
+      // TODO: replace with collection url after integration is done
+      image:
+        'https://storageapi2.fleek.co/fleek-team-bucket/logos/crowns-ooo.png',
     },
     {
       subheading: 'Psychedelic',
       heading: 'Creator',
-      image: creator,
+      // TODO: replace with creator url after integration is done
+      image: 'https://psychedelic.ooo/images/11-2.svg',
     },
     {
       subheading: isOwner
@@ -64,7 +66,9 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
       <AccordionHead>
         {AccordionHeadContentData.map((data) => (
           <AccordionHeadContent key={data.heading}>
-            <img src={data.image} alt={data.heading} />
+            <AccordionImage
+              style={{ backgroundImage: `url(${data.image})` }}
+            />
             <div>
               <span>{data.heading}</span>
               <p>{data.subheading}</p>

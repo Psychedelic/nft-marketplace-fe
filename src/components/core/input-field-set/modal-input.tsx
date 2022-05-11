@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import wicpLogo from '../../../assets/wicpIcon.png';
+import wicpLogo from '../../../assets/wicp.svg';
 import {
   Container,
   Input,

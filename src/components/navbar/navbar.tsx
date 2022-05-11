@@ -9,7 +9,7 @@ import {
 import { LinkButton } from '../core';
 import { GlobalSearch } from '../search';
 import { Plug } from '../plug';
-import appLogo from '../../assets/app-logo.svg';
+import crown from '../../assets/crown.svg';
 import {
   Container,
   LogoContainer,
@@ -42,7 +42,7 @@ export const NavBar = () => {
       <RouterLink to="/">
         <LogoContainer>
           <LogoIcon
-            src={appLogo}
+            src={crown}
             alt={t('translation:common.collectionName')}
           />
           <LogoName

@@ -4,7 +4,7 @@ import throttle from 'lodash.throttle';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { SearchInput } from '../core';
-import wicpIcon from '../../assets/wicpIcon.png';
+import wicpIcon from '../../assets/wicp.svg';
 import {
   SearchModalTrigger,
   ModalOverlay,

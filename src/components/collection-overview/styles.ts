@@ -32,20 +32,28 @@ export const NftMetadataContentWrapper = styled('div', {
   alignItems: 'flex-start',
   justifyContent: 'space-between',
   marginBottom: '25px',
+  position: 'relative',
 });
 
 export const NftProfilePictureWrapper = styled('div', {
   position: 'absolute',
-  border: 'transparent',
   marginRight: '10px',
+  backgroundColor: 'black',
+  border: '5px solid $backgroundColor',
+  borderRadius: '100%',
+  padding: '10px',
+  top: '-65px',
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  width: '96px',
+  height: '96px',
 
   '& img': {
-    borderRadius: '100%',
-    objectFit: 'cover',
-    width: '125px',
-    height: '125px',
+    width: '85%',
     position: 'relative',
-    top: '-65px',
   },
 });
 

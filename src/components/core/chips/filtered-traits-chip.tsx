@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import miniDfinity from '../../../assets/mini-dfinity.svg';
+import wicpIcon from '../../../assets/wicp.svg';
 import {
   TraitChipContainer,
   TraitSpecsContainer,
@@ -29,7 +29,7 @@ export const FilteredTraitsChip = ({
     <TraitChipContainer type="filtered">
       {appliedFilterValue.filterCategory ===
         `${t('translation:filters.priceRange')}` && (
-        <Image src={miniDfinity} alt="mini-dfinity" />
+        <Image src={wicpIcon} alt="mini-dfinity" />
       )}
       <TraitSpecsContainer>
         <TraitName>{name}</TraitName>

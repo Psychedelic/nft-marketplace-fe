@@ -1,4 +1,4 @@
-import crownsLogo from '../../assets/crowns-logo.svg';
+import crownsLogo from '../../assets/crown.svg';
 
 // TODO: Update offers mock data table
 

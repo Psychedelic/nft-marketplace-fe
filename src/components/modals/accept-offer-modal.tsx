@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Completed, Pending } from '../core';
-import wicpIcon from '../../assets/wicpIcon.png';
+import wicpIcon from '../../assets/wicp.svg';
 import {
   AcceptOfferModalTrigger,
   ModalOverlay,

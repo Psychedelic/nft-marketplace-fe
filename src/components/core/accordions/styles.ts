@@ -79,10 +79,6 @@ export const AccordionHeadContent = styled('div', {
     color: '$mainTextColor',
   },
 
-  '& img': {
-    marginRight: '12px',
-  },
-
   '& span': {
     fontStyle: 'normal',
     fontWeight: '500',
@@ -103,6 +99,16 @@ export const AccordionHeadContent = styled('div', {
     alignitems: 'center',
     color: '$mainTextColor',
   },
+});
+
+export const AccordionImage = styled('div', {
+  marginRight: '12px',
+  width: '42px',
+  height: '42px',
+  borderRadius: '50%',
+  backgroundSize: 'contain',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
 });
 
 export const FlexRight = styled('div', {
