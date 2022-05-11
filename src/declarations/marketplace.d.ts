@@ -8,6 +8,7 @@ export interface Collection {
   nft_canister_standard: NFTStandard;
   owner: Principal;
   collection_name: string;
+  fungible_volume: bigint;
   fungible_canister_standard: FungibleStandard;
   fungible_canister_id: Principal;
   nft_canister_id: Principal;
@@ -84,7 +85,7 @@ export interface _SERVICE {
     Array<[[Principal, Principal], bigint]>
   >;
   getBuyerOffers: ActorMethod<[Principal, Principal], Array<Offer>>;
-  getCollections: ActorMethod<[], Array<Collection>>;
+  getCollections: ActorMethod<[], Array<[Principal, Collection]>>;
   getFloor: ActorMethod<[Principal], Result_1>;
   getProtocolFee: ActorMethod<[], bigint>;
   getTokenListing: ActorMethod<[Principal, bigint], Result_2>;

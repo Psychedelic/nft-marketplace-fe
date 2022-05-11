@@ -45,6 +45,7 @@ export default ({ IDL }: { IDL: any }) => {
     nft_canister_standard: NFTStandard,
     owner: IDL.Principal,
     collection_name: IDL.Text,
+    fungible_volume: IDL.Nat,
     fungible_canister_standard: FungibleStandard,
     fungible_canister_id: IDL.Principal,
     nft_canister_id: IDL.Principal,
@@ -110,7 +111,11 @@ export default ({ IDL }: { IDL: any }) => {
       [IDL.Vec(Offer)],
       ['query'],
     ),
-    getCollections: IDL.Func([], [IDL.Vec(Collection)], ['query']),
+    getCollections: IDL.Func(
+      [],
+      [IDL.Vec(IDL.Tuple(IDL.Principal, Collection))],
+      ['query'],
+    ),
     getFloor: IDL.Func([IDL.Principal], [Result_1], ['query']),
     getProtocolFee: IDL.Func([], [IDL.Nat], ['query']),
     getTokenListing: IDL.Func(
