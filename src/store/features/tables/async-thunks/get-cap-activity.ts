@@ -18,11 +18,26 @@ const getOperation = (operationType: string) => {
     case 'makeSaleOffer':
       operationValue = OperationConstants.list;
       break;
-    case 'acceptBuyOffer':
+    case 'directBuy':
       operationValue = OperationConstants.sale;
       break;
     case 'makeOffer':
       operationValue = OperationConstants.offer;
+      break;
+    case 'denyOffer':
+      operationValue = OperationConstants.denyOffer;
+      break;
+    case 'cancelOffer':
+      operationValue = OperationConstants.cancelOffer;
+      break;
+    case 'makeListing':
+      operationValue = OperationConstants.list;
+      break;
+    case 'cancelListing':
+      operationValue = OperationConstants.cancelListing;
+      break;
+    case 'acceptOffer':
+      operationValue = OperationConstants.acceptOffer;
       break;
     default:
   }
