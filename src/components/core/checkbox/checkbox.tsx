@@ -32,6 +32,6 @@ export const Checkbox = ({
       />
       {value}
     </label>
-    <span>{`${occurence} (${percentage})`}</span>
+    <span>{`${occurence} (${percentage}%)`}</span>
   </Wrapper>
 );
