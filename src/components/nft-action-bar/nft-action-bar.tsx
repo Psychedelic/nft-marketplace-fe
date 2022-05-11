@@ -14,10 +14,10 @@ import {
   ButtonListWrapper,
   ButtonWrapper,
 } from './styles';
-import back from '../../assets/back.svg';
 
 import { usePlugStore } from '../../store';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
+import { Icon } from '../icons';
 
 export type NftActionBarProps = {
   isListed?: boolean;
@@ -71,17 +71,16 @@ export const NftActionBar = ({
       <NftActionBarWrapper>
         <RouterLink to="/">
           <ActionText>
-            <img src={back} alt="back to results" />
+            <Icon icon="arrow-left-circle" paddingRight />
             {t('translation:buttons.action.backToResults')}
           </ActionText>
         </RouterLink>
-        {showNFTActionButtons && (
-          <>
-            {(isConnectedOwner && (
-              <OnConnected isListed={isListed} />
-            )) || <OnDisconnected />}
-          </>
-        )}
+        {showNFTActionButtons &&
+          (isConnectedOwner ? (
+            <OnConnected isListed={isListed} />
+          ) : (
+            <OnDisconnected />
+          ))}
       </NftActionBarWrapper>
     </Container>
   );

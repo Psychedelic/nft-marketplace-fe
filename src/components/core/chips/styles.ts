@@ -17,7 +17,6 @@ export const CountLabel = styled('div', {
 
 export const CountInNumbers = styled('div', {
   fontWeight: '600',
-  color: '$chipsTextColor',
 });
 
 export const CountLogo = styled('img', {
@@ -34,6 +33,7 @@ export const TraitChipContainer = styled('div', {
   padding: '12px 15px',
   borderRadius: '14px',
   background: '$chipsBackgroundColor',
+  color: '$chipsTextColor',
 
   // variants
   variants: {
@@ -72,7 +72,6 @@ export const TraitName = styled('div', {
   fontSize: '16px',
   fontWeight: '600',
   lineHeight: '19px',
-  color: '$mainTextColor',
   marginBottom: '2px',
 
   // variants

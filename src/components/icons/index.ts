@@ -6,11 +6,17 @@ import { FaDiscord } from '@react-icons/all-files/fa/FaDiscord';
 import { FaTwitter } from '@react-icons/all-files/fa/FaTwitter';
 import { FaShare } from '@react-icons/all-files/fa/FaShare';
 import { FaArrowLeft } from '@react-icons/all-files/fa/FaArrowLeft';
+import { FaArrowCircleLeft } from '@react-icons/all-files/fa/FaArrowCircleLeft';
 import { MdExitToApp } from '@react-icons/all-files/md/MdExitToApp';
 import { FaTag } from '@react-icons/all-files/fa/FaTag';
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown';
 import { FaEllipsisH } from '@react-icons/all-files/fa/FaEllipsisH';
 import { FaRegClone } from '@react-icons/all-files/fa/FaRegClone';
+import { FaCheck } from '@react-icons/all-files/fa/FaCheck';
+import { RiCloseCircleLine } from '@react-icons/all-files/ri/RiCloseCircleLine';
+import { RiCloseLine } from '@react-icons/all-files/ri/RiCloseLine';
+import { FaExclamationCircle } from '@react-icons/all-files/fa/FaExclamationCircle';
+
 import { PlugIcon, AppNameIcon } from './custom';
 
 export const Icons = {
@@ -22,11 +28,17 @@ export const Icons = {
   twitter: FaTwitter,
   share: FaShare,
   'arrow-left': FaArrowLeft,
+  'arrow-left-circle': FaArrowCircleLeft,
   disconnect: MdExitToApp,
   offer: FaTag,
   'chevron-down': FaChevronDown,
   ellipsis: FaEllipsisH,
   copy: FaRegClone,
+  check: FaCheck,
+  close: RiCloseLine,
+  'close-circle': RiCloseCircleLine,
+  warning: FaExclamationCircle,
+
   plug: PlugIcon,
   'app-name': AppNameIcon,
 };

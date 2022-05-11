@@ -24,11 +24,8 @@ export const IconWrapper = styled('span', {
       },
     },
     size: {
-      false: {
-        width: '1.4rem',
-      },
       sm: {
-        fontSize: '1.0rem',
+        fontSize: '0.8rem',
       },
       md: {
         fontSize: '1.4rem',

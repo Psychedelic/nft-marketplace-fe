@@ -4,17 +4,14 @@ import {
   Toast,
   ToastDescription,
   ToastDescriptionText,
-  ToastDescriptionIcon,
-  ToastActionIcon,
   ToastProvider,
 } from './styles';
-import closeWarning from '../../assets/close-warning.svg';
-import success from '../../assets/success-icon.svg';
 import {
   notificationActions,
   useAppDispatch,
   useErrorsStore,
 } from '../../store';
+import { Icon } from '../icons';
 
 const SuccessHandling = () => {
   const [open, setOpen] = React.useState(false);
@@ -30,25 +27,24 @@ const SuccessHandling = () => {
     <ToastProvider swipeDirection="right">
       {successMessages.map((successMessage) => (
         <Toast
+          state="success"
           key={successMessage.id}
           open={open}
           onOpenChange={setOpen}
-          duration={500000000}
+          duration={5000}
         >
-          <ToastDescription state="success" asChild>
+          <ToastDescription asChild>
             <div>
-              <ToastDescriptionIcon
-                src={success}
-                alt="success-icon"
-              />
+              <Icon icon="check" size="md" paddingRight />
               <ToastDescriptionText>
                 {successMessage.message}
               </ToastDescriptionText>
             </div>
           </ToastDescription>
-          <ToastActionIcon
-            src={closeWarning}
-            alt="close-warning"
+
+          <Icon
+            icon="close-circle"
+            size="md"
             onClick={() =>
               dispatch(
                 notificationActions.removeSuccessMessage(

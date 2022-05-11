@@ -1,8 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useThemeStore } from '../../../store';
-import closeIcon from '../../../assets/closeIcon.svg';
-import closeIconDark from '../../../assets/closeIcon-dark.svg';
 import miniDfinity from '../../../assets/mini-dfinity.svg';
 import {
   TraitChipContainer,
@@ -13,6 +11,7 @@ import {
   TraitClear,
   Image,
 } from './styles';
+import { Icon } from '../../icons';
 
 export interface FilteredTraitsChipProps {
   name?: string;
@@ -28,8 +27,6 @@ export const FilteredTraitsChip = ({
   removeFilter,
 }: FilteredTraitsChipProps) => {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
-  const isLightTheme = theme === 'lightTheme';
 
   return (
     <TraitChipContainer type="filtered">
@@ -42,10 +39,7 @@ export const FilteredTraitsChip = ({
         <TraitRim>{rim}</TraitRim>
       </TraitSpecsContainer>
       <TraitActionContainer onClick={() => removeFilter()}>
-        <TraitClear
-          src={isLightTheme ? closeIcon : closeIconDark}
-          alt={t('translation:logoAlts.close')}
-        />
+        <Icon icon="close" size="md" />
       </TraitActionContainer>
     </TraitChipContainer>
   );
