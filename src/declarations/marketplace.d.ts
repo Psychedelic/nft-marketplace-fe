@@ -2,12 +2,24 @@
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
 
+export interface Collection {
+  collection_fee: bigint;
+  creation_time: bigint;
+  nft_canister_standard: NFTStandard;
+  owner: Principal;
+  collection_name: string;
+  fungible_volume: bigint;
+  fungible_canister_standard: FungibleStandard;
+  fungible_canister_id: Principal;
+  nft_canister_id: Principal;
+}
 export type FungibleStandard = { DIP20: null };
 export interface Listing {
+  fee: Array<[string, Principal, bigint]>;
   status: ListingStatus;
   created: bigint;
-  price: bigint;
   seller: Principal;
+  price: bigint;
 }
 export type ListingStatus =
   | { Selling: null }
@@ -34,9 +46,9 @@ export interface Offer {
   status: OfferStatus;
   created: bigint;
   token_id: bigint;
-  price: bigint;
-  buyer: Principal;
   token_owner: Principal;
+  buyer: Principal;
+  price: bigint;
   nft_canister_id: Principal;
 }
 export type OfferStatus =
@@ -73,7 +85,9 @@ export interface _SERVICE {
     Array<[[Principal, Principal], bigint]>
   >;
   getBuyerOffers: ActorMethod<[Principal, Principal], Array<Offer>>;
+  getCollections: ActorMethod<[], Array<[Principal, Collection]>>;
   getFloor: ActorMethod<[Principal], Result_1>;
+  getProtocolFee: ActorMethod<[], bigint>;
   getTokenListing: ActorMethod<[Principal, bigint], Result_2>;
   getTokenOffers: ActorMethod<
     [Principal, Array<bigint>],
@@ -81,6 +95,7 @@ export interface _SERVICE {
   >;
   makeListing: ActorMethod<[Principal, bigint, bigint], Result>;
   makeOffer: ActorMethod<[Principal, bigint, bigint], Result>;
+  setProtocolFee: ActorMethod<[bigint], Result>;
   withdrawFungible: ActorMethod<
     [Principal, FungibleStandard],
     Result
