@@ -69,6 +69,18 @@ const OnConnected = ({
   const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
   const { principalId: plugPrincipalId } = usePlugStore();
 
+  const recentlyAcceptedOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyAcceptedOffers,
+  );
+
+  const recentlyMadeOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyMadeOffers,
+  );
+
+  const recentlyCancelledOffers = useSelector((state: RootState) => {
+    return state.marketplace.recentlyCancelledOffers;
+  });
+
   const tokenOffers = useSelector((state: RootState) => {
     return state.marketplace.tokenOffers;
   });
@@ -100,7 +112,14 @@ const OnConnected = ({
         },
       }),
     );
-  }, [id, dispatch, plugPrincipalId]);
+  }, [
+    id,
+    dispatch,
+    plugPrincipalId,
+    recentlyAcceptedOffers,
+    recentlyMadeOffers,
+    recentlyCancelledOffers,
+  ]);
 
   return (
     <>
