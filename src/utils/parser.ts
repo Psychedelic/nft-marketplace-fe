@@ -9,7 +9,7 @@ import {
 import { formatTimestamp } from '../integrations/functions/date';
 import { OffersTableItem } from '../declarations/legacy';
 import { sortTokenOffersByPrice } from './sorting';
-import { OperationTypes } from '../constants';
+import { OperationTypes, OperationType } from '../constants';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
@@ -194,7 +194,7 @@ export const parseOffersMadeResponse = ({
   return parsedOffersMade;
 };
 
-export const getOperationType = (operationType: keyof typeof OperationTypes) => OperationTypes[operationType];
+export const getOperationType = (operationType: OperationType) => OperationTypes[operationType];
 
 // TODO: Should be reused, as table type is similar
 // see comment in the nft-activity-table-tsx
