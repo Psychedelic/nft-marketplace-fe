@@ -1,7 +1,6 @@
 import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { OperationConstants } from '../../../../constants';
 import { dateRelative } from '../../../../integrations/functions/date';
 import shortAddress from '../../../../integrations/functions/short-address';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
@@ -9,37 +8,9 @@ import { getICAccountLink } from '../../../../utils/account-id';
 import { AppLog } from '../../../../utils/log';
 import { notificationActions } from '../../notifications';
 import { CapActivityParams, tableActions } from '../table-slice';
+import { getOperationType } from '../../../../utils/parser';
 
 export type GetCAPActivityProps = CapActivityParams;
-
-const getOperation = (operationType: string) => {
-  let operationValue;
-  switch (operationType) {
-    case 'makeListing':
-      operationValue = OperationConstants.makeListing;
-      break;
-    case 'directBuy':
-      operationValue = OperationConstants.directBuy;
-      break;
-    case 'makeOffer':
-      operationValue = OperationConstants.makeOffer;
-      break;
-    case 'denyOffer':
-      operationValue = OperationConstants.denyOffer;
-      break;
-    case 'cancelOffer':
-      operationValue = OperationConstants.cancelOffer;
-      break;
-    case 'cancelListing':
-      operationValue = OperationConstants.cancelListing;
-      break;
-    case 'acceptOffer':
-      operationValue = OperationConstants.acceptOffer;
-      break;
-    default:
-  }
-  return operationValue;
-};
 
 export const getCAPActivity = createAsyncThunk<
   void,
@@ -70,7 +41,7 @@ export const getCAPActivity = createAsyncThunk<
         );
 
         const capData = {
-          operation: getOperation(item.event.operation),
+          operation: getOperationType(item.event.operation),
           time: dateRelative(item.event.time),
           caller: callerPrincipalIdString,
           callerDfinityExplorerUrl: getICAccountLink(

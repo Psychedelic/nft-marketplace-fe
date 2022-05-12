@@ -30,7 +30,10 @@ export type OperationTypes =
   | 'directBuy'
   | 'makeListing'
   | 'makeOffer'
-  | 'acceptOffer';
+  | 'acceptOffer'
+  | 'denyOffer'
+  | 'cancelOffer'
+  | 'cancelListing';
 
 export const TypeDetailsCell = ({
   name,

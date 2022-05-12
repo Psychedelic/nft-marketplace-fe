@@ -10,6 +10,7 @@ import { formatTimestamp } from '../integrations/functions/date';
 import { OffersTableItem } from '../declarations/legacy';
 import { OperationTypes } from '../components/core/table-cells/type-details-cell';
 import { sortTokenOffersByPrice } from './sorting';
+import { OperationConstants } from '../constants';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
@@ -194,21 +195,7 @@ export const parseOffersMadeResponse = ({
   return parsedOffersMade;
 };
 
-// TODO: This should not exist, so no need to move to utils or helpers
-// only used temporarily to map the operation types to the types known in the UI
-// the UI should use the service operation type names instead
-export const getOperationType = (operation: OperationTypes) => {
-  // TODO: Refactor, the table should use the source type names
-  // see todo in /src/components/core/table-cells/type-details-cell.tsx
-  switch (operation) {
-    case 'directBuy':
-      return 'sale';
-    case 'makeListing':
-      return 'list';
-    default:
-      return operation;
-  }
-};
+export const getOperationType = (operationType: OperationTypes) => OperationConstants[operationType];
 
 // TODO: Should be reused, as table type is similar
 // see comment in the nft-activity-table-tsx
