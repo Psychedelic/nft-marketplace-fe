@@ -190,6 +190,7 @@ export const parseOffersMadeResponse = ({
   return parsedOffersMade;
 };
 
+// TODO: Have a "unknown" type for cases where operation mapping fails
 export const getOperationType = (operationType: OperationType) => OperationTypes[operationType];
 
 // TODO: Should be reused, as table type is similar
