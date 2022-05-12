@@ -23,3 +23,6 @@ export const findLastAction = (nft: NFTParams) => {
 
   return '';
 };
+
+// eslint-disable-next-line no-restricted-globals
+export const isTokenId = (id: any) => typeof id !== 'undefined' && !isNaN(id) && Number(id) > -1
