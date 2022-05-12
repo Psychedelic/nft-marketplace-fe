@@ -4,10 +4,11 @@ import { Listing, Offer } from '../declarations/marketplace';
 import {
   formatAddress,
   floorDiffPercentageCalculator,
+  parseE8SAmountToWICP,
 } from './formatters';
 import { formatTimestamp } from '../integrations/functions/date';
 import { OffersTableItem } from '../declarations/legacy';
-import { parseE8SAmountToWICP } from '../utils/formatters';
+import { OperationTypes } from '../components/core/table-cells/type-details-cell';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
@@ -187,4 +188,87 @@ export const parseOffersMadeResponse = ({
   });
 
   return parsedOffersMade;
+};
+
+// TODO: This should not exist, so no need to move to utils or helpers
+// only used temporarily to map the operation types to the types known in the UI
+// the UI should use the service operation type names instead
+export const getOperationType = (operation: OperationTypes) => {
+  // TODO: Refactor, the table should use the source type names
+  // see todo in /src/components/core/table-cells/type-details-cell.tsx
+  switch (operation) {
+    case 'directBuy':
+      return 'sale';
+    case 'makeListing':
+      return 'list';
+    default:
+      return operation;
+  }
+};
+
+// TODO: Should be reused, as table type is similar
+// see comment in the nft-activity-table-tsx
+type TablePrincipal = {
+  raw: string;
+  formatted: string;
+};
+
+export type TokenTransactionItem = {
+  items: {
+    name: string;
+    logo?: string;
+  };
+  type: OperationTypes;
+  price: BigInt;
+  from: TablePrincipal;
+  to: TablePrincipal;
+  date: string;
+};
+
+export const parseTokenTransactions = ({
+  items,
+}: {
+  items: any[];
+}) => {
+  const parsed = items.reduce((acc: any, curr: any) => {
+    const parsedArr = Uint8Array.from(
+      // eslint-disable-next-line no-underscore-dangle
+      Object.values(curr.event.caller._arr),
+    );
+    const fromPrincipal = Principal.fromUint8Array(parsedArr);
+    const from = {
+      raw: fromPrincipal.toString(),
+      formatted: formatAddress(
+        Principal.fromUint8Array(parsedArr).toString(),
+      ),
+    };
+    const toPrincipal = Principal.fromUint8Array(
+      curr.event.details[3][1].Principal._arr,
+    );
+    const to = {
+      raw: toPrincipal.toString(),
+      formatted: formatAddress(toPrincipal.toString()),
+    };
+
+    acc = [
+      ...acc,
+      {
+        item: {
+          name: `CAP Crowns #${curr.event.details[0][1].U64}`,
+        },
+        type: getOperationType(curr.event.operation),
+        price: parseE8SAmountToWICP(curr.event.details[2][1].U64),
+        // TODO: the from/to needs a bit of thought as the type of operation
+        // might not provide the data (for example on makeList)
+        from,
+        to,
+        date: formatTimestamp(BigInt(curr.event.time)),
+        floorDifference: '',
+      },
+    ];
+
+    return acc;
+  }, [] as TokenTransactionItem[]);
+
+  return parsed;
 };

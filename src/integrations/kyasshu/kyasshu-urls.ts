@@ -34,6 +34,12 @@ export class KyasshuUrl {
   static getCollectionData(): string {
     return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/data`;
   }
+
+  static getTokenTransactions({
+    tokenId
+  }: NSKyasshuUrl.GetTokenTransactions): string {
+    return `${config.kyasshuMarketplaceAPI}/cap/token/txns/${config.marketplaceCanisterId}/${tokenId}`
+  }
 }
 
 export namespace NSKyasshuUrl {
@@ -54,4 +60,8 @@ export namespace NSKyasshuUrl {
     pageCount: number;
     bucketId: string;
   };
+
+  export type GetTokenTransactions = {
+    tokenId: number;
+  }
 }

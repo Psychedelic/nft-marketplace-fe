@@ -1,6 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../../store';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import {
+  useThemeStore,
+  tableActions,
+  RootState,
+  useAppDispatch,
+} from '../../store';
 import {
   TypeDetailsCell,
   PriceDetailsCell,
@@ -8,20 +15,35 @@ import {
   TextLinkCell,
 } from '../core';
 import { TableLayout } from './table-layout';
-import { mockTableData } from './mock-data';
+import { TokenTransactionItem } from '../../utils/parser';
 import { Container } from './styles';
+import { recentNFTUpdatesCount } from '../../hooks/use-marketplace-store';
 
-interface RowProps {
-  price: string;
-  type: string;
-  from: string;
-  to: string;
-  expiration: string;
-}
+type RowProps = TokenTransactionItem;
 
 export const NFTActivityTable = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const dispatch = useAppDispatch();
+  const tokenTransactions = useSelector(
+    (state: RootState) => state.table.tokenTransactions,
+  );
+
+  const loadingTokenTransactions = useSelector(
+    (state: RootState) => state.table.loadingTokenTransactions,
+  );
+
+  const recentCountOfNFTUpdates = recentNFTUpdatesCount();
+
+  const { id: tokenId } = useParams();
+
+  useEffect(() => {
+    if (!tokenId) return;
+
+    dispatch(
+      tableActions.getTokenTransactions({ tokenId: Number(tokenId) }),
+    );
+  }, [dispatch, tokenId, recentCountOfNFTUpdates]);
 
   const columns = useMemo(
     () => [
@@ -39,8 +61,10 @@ export const NFTActivityTable = () => {
         Header: t('translation:tables.titles.price'),
         accessor: ({ price }: RowProps) => (
           <PriceDetailsCell
-            wicp="5.12 WICP"
-            price={price}
+            wicp={`${price} WICP`}
+            // Obs: we don't know the historical market price at time of direct buy
+            // so we are not going to display it, as by computing the current market price
+            // would be misleading
             tableType="nftActivity"
           />
         ),
@@ -48,19 +72,27 @@ export const NFTActivityTable = () => {
       {
         Header: t('translation:tables.titles.from'),
         accessor: ({ from }: RowProps) => (
-          <TextLinkCell text={from} url="" type="nftActivity" />
+          <TextLinkCell
+            text={from.formatted}
+            url=""
+            type="nftActivity"
+          />
         ),
       },
       {
         Header: t('translation:tables.titles.to'),
         accessor: ({ to }: RowProps) => (
-          <TextLinkCell text={to} url="" type="nftActivity" />
+          <TextLinkCell
+            text={to.formatted}
+            url=""
+            type="nftActivity"
+          />
         ),
       },
       {
         Header: t('translation:tables.titles.date'),
-        accessor: ({ expiration }: RowProps) => (
-          <TextCell text={expiration} type="nftActivityDate" />
+        accessor: ({ date }: RowProps) => (
+          <TextCell text={date} type="nftActivityDate" />
         ),
       },
     ],
@@ -69,15 +101,20 @@ export const NFTActivityTable = () => {
 
   return (
     <Container>
-      <TableLayout
-        columns={columns}
-        data={mockTableData}
-        tableType="nftActivity"
-        loaderDetails={{
-          showItemDetails: true,
-          showTypeDetails: true,
-        }}
-      />
+      {
+        <TableLayout
+          columns={columns}
+          data={tokenTransactions}
+          tableType="nftActivity"
+          loadingTableRows={loadingTokenTransactions}
+          loaderDetails={{
+            showItemDetails: false,
+            showTypeDetails: true,
+            type: 'medium',
+          }}
+          emptyMessage={t('translation:emptyStates.nftActivity')}
+        />
+      }
     </Container>
   );
 };
