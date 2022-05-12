@@ -15,7 +15,7 @@ dayjs.tz.setDefault('Europe/London');
 
 const USER_TIMEZONE = dayjs.tz.guess();
 
-const NOW = () =>
+const getNow = () =>
   new Date(
     new Date().toLocaleString('en-US', {
       timeZone: USER_TIMEZONE,
@@ -24,7 +24,7 @@ const NOW = () =>
 
 export const dateRelative = (
   timestamp: string,
-  now: string = NOW(),
+  now: string = getNow(),
 ) => dayjs.utc(timestamp).from(now);
 
 export const formatTimestamp = (timestamp: bigint) => {
@@ -37,7 +37,7 @@ export const formatTimestamp = (timestamp: bigint) => {
       .substring(0, 13);
     formattedTimestamp = dayjs
       .utc(Number(timestampInMilliseconds))
-      .from(NOW());
+      .from(getNow());
   }
   return formattedTimestamp;
 };
