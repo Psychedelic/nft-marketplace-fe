@@ -97,20 +97,17 @@ export const NFTActivityTable = () => {
   return (
     <Container>
       {
-        // TODO: Show loading until data readiness
-        // and show empty view when no data
-        tokenTransactions && (
-          <TableLayout
-            columns={columns}
-            data={tokenTransactions}
-            tableType="nftActivity"
-            loading={loadingTokenTransactions}
-            loaderDetails={{
-              showItemDetails: false,
-              showTypeDetails: true,
-            }}
-          />
-        )
+        <TableLayout
+          columns={columns}
+          data={tokenTransactions}
+          tableType="nftActivity"
+          loadingTableRows={!loadingTokenTransactions}
+          loaderDetails={{
+            showItemDetails: false,
+            showTypeDetails: true,
+            type: 'medium',
+          }}
+        />
       }
     </Container>
   );

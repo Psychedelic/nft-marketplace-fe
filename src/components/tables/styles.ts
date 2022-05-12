@@ -184,6 +184,13 @@ export const TableWrapper = styled('div', {
         },
       },
     },
+    loadingTableRows: {
+      true: {
+        table: {
+          borderRadius: '15px 15px 0px 0px',
+        },
+      },
+    },
   },
 });
 
@@ -212,7 +219,9 @@ export const TableSkeletonsWrapper = styled('div', {
           paddingTop: '15px',
         },
       },
-
+      medium: {
+        padding: '10px 30px',
+      },
       large: {
         padding: '5px 80px',
 
@@ -312,4 +321,11 @@ export const EmptyStateMessage = styled('p', {
       },
     },
   },
+});
+
+export const LoadingContainer = styled('div', {
+  border: '1px solid $borderColor',
+  borderRadius: '0px 0px 15px 15px',
+  borderTop: '0px',
+  padding: '20px 10px 20px 0px',
 });

@@ -1,6 +1,6 @@
 import { useTable } from 'react-table';
 import { useTableStore } from '../../store';
-import { TableWrapper } from './styles';
+import { TableWrapper, LoadingContainer } from './styles';
 import TableSkeletons from './table-skeletons';
 
 export interface TableLayoutProps {
@@ -14,6 +14,7 @@ export interface TableLayoutProps {
     showTypeDetails?: boolean;
     type?: string;
   };
+  loadingTableRows?: boolean;
 }
 
 export const TableLayout = ({
@@ -23,6 +24,7 @@ export const TableLayout = ({
   columnsToHide = [],
   loading,
   loaderDetails,
+  loadingTableRows = false,
 }: TableLayoutProps) => {
   const {
     getTableProps,
@@ -54,7 +56,10 @@ export const TableLayout = ({
       <TableSkeletons loaderDetails={loaderDetails} />
     </>
   ) : (
-    <TableWrapper type={tableType}>
+    <TableWrapper
+      type={tableType}
+      loadingTableRows={loadingTableRows}
+    >
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -85,6 +90,16 @@ export const TableLayout = ({
           })}
         </tbody>
       </table>
+      {loadingTableRows && (
+        <LoadingContainer>
+          <TableSkeletons loaderDetails={loaderDetails} />
+          <TableSkeletons loaderDetails={loaderDetails} />
+          <TableSkeletons loaderDetails={loaderDetails} />
+          <TableSkeletons loaderDetails={loaderDetails} />
+          <TableSkeletons loaderDetails={loaderDetails} />
+          <TableSkeletons loaderDetails={loaderDetails} />
+        </LoadingContainer>
+      )}
     </TableWrapper>
   );
 };

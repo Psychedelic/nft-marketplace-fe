@@ -42,7 +42,7 @@ const initialState: TableState = {
   failedToLoadTableData: false,
   hasMoreData: false,
   nextPageNo: 0,
-  tokenTransactions: undefined,
+  tokenTransactions: [],
   loadingTokenTransactions: true,
 };
 
