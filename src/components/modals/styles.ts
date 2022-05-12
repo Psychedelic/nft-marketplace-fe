@@ -1,5 +1,6 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { styled, keyframes } from '../../stitches.config';
+import { Icon } from '../icons';
 
 const overlayShow = keyframes({
   '0%': {
@@ -153,9 +154,11 @@ export const FeeLabel = styled('div', {
   marginRight: '6px',
 });
 
-export const InfoIcon = styled('img', {
+export const InfoIcon = styled(Icon, {
+  color: '$modalText',
   width: '16px',
   height: '16px',
+  marginBottom: '-3px',
 });
 
 export const FeePercent = styled('div', {

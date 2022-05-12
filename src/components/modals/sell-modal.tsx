@@ -8,7 +8,6 @@ import {
   Pending,
   Completed,
 } from '../core';
-import infoLogo from '../../assets/info-icon.svg';
 import {
   SellModalTrigger,
   ModalOverlay,
@@ -22,11 +21,11 @@ import {
   FeeDetails,
   FeeLabelContainer,
   FeeLabel,
-  InfoIcon,
   FeePercent,
   ModalButtonsList,
   ModalButtonWrapper,
   ActionText,
+  InfoIcon,
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
@@ -205,7 +204,7 @@ export const SellModal = ({
                     <FeeLabel>
                       {t('translation:modals.labels.listingFee')}
                     </FeeLabel>
-                    <InfoIcon src={infoLogo} alt="info" />
+                    <InfoIcon icon="info" />
                   </FeeLabelContainer>
                   <FeePercent>
                     {t('translation:modals.labels.listingFeePercent')}
@@ -218,7 +217,7 @@ export const SellModal = ({
                         'translation:modals.labels.creatorRoyalityFee',
                       )}
                     </FeeLabel>
-                    <InfoIcon src={infoLogo} alt="info" />
+                    <InfoIcon icon="info" />
                   </FeeLabelContainer>
                   <FeePercent>
                     {t(

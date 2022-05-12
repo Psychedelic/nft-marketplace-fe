@@ -1,4 +1,4 @@
-import wicpIcon from '../../../assets/wicpIcon.png';
+import wicpIcon from '../../../assets/wicp.svg';
 import {
   PriceDetails,
   WICPContainer,

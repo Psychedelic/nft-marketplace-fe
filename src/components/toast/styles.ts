@@ -53,11 +53,21 @@ export const Toast = styled(ToastPrimitive.Root, {
   boxShadow:
     'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
   padding: 15,
-  display: 'grid',
-  gridTemplateAreas: '"title action" "description action"',
-  gridTemplateColumns: 'auto max-content',
-  columnGap: 15,
-  alignItems: 'flex-start',
+  display: 'flex',
+  gap: 15,
+  justifyContent: 'space-between',
+  alignItems: 'center',
+
+  variants: {
+    state: {
+      success: {
+        color: '#46D7AB',
+      },
+      error: {
+        color: '$error',
+      },
+    },
+  },
 
   '@media (prefers-reduced-motion: no-preference)': {
     '&[data-state="open"]': {
@@ -82,38 +92,11 @@ export const Toast = styled(ToastPrimitive.Root, {
 export const ToastDescription = styled(ToastPrimitive.Description, {
   gridArea: 'description',
   display: 'flex',
-  alignItems: 'baseline',
-  margin: 0,
+  alignItems: 'base-line',
+  justifyContent: 'center',
   fontWeight: 'bold',
-  fontSize: '16px',
-  lineHeight: '22px',
-  marginTop: '0',
-  variants: {
-    state: {
-      success: {
-        color: '#46D7AB',
-      },
-      error: {
-        color: '$error',
-      },
-    },
-  },
 });
 
 export const ToastDescriptionText = styled('p', {
   margin: '0px',
-});
-
-export const ToastDescriptionIcon = styled('img', {
-  position: 'relative',
-  width: '15px',
-  marginRight: '10px',
-  top: '2px',
-});
-
-export const ToastActionIcon = styled('img', {
-  gridArea: 'action',
-  cursor: 'pointer',
-  position: 'relative',
-  top: '3px',
 });

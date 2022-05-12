@@ -1,18 +1,14 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useThemeStore } from '../../../store';
-import closeIcon from '../../../assets/closeIcon.svg';
-import closeIconDark from '../../../assets/closeIcon-dark.svg';
-import miniDfinity from '../../../assets/mini-dfinity.svg';
+import wicpIcon from '../../../assets/wicp.svg';
 import {
   TraitChipContainer,
   TraitSpecsContainer,
   TraitName,
   TraitRim,
   TraitActionContainer,
-  TraitClear,
   Image,
 } from './styles';
+import { Icon } from '../../icons';
 
 export interface FilteredTraitsChipProps {
   name?: string;
@@ -28,24 +24,19 @@ export const FilteredTraitsChip = ({
   removeFilter,
 }: FilteredTraitsChipProps) => {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
-  const isLightTheme = theme === 'lightTheme';
 
   return (
     <TraitChipContainer type="filtered">
       {appliedFilterValue.filterCategory ===
         `${t('translation:filters.priceRange')}` && (
-        <Image src={miniDfinity} alt="mini-dfinity" />
+        <Image src={wicpIcon} alt="mini-dfinity" />
       )}
       <TraitSpecsContainer>
         <TraitName>{name}</TraitName>
         <TraitRim>{rim}</TraitRim>
       </TraitSpecsContainer>
       <TraitActionContainer onClick={() => removeFilter()}>
-        <TraitClear
-          src={isLightTheme ? closeIcon : closeIconDark}
-          alt={t('translation:logoAlts.close')}
-        />
+        <Icon icon="close" size="md" />
       </TraitActionContainer>
     </TraitChipContainer>
   );

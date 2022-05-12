@@ -3,8 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Completed, Pending } from '../core';
-import infoLogo from '../../assets/info-icon.svg';
-import wicpIcon from '../../assets/wicpIcon.png';
+import wicpIcon from '../../assets/wicp.svg';
 import {
   AcceptOfferModalTrigger,
   ModalOverlay,
@@ -27,10 +26,10 @@ import {
   FeeDetails,
   FeeLabelContainer,
   FeeLabel,
-  InfoIcon,
   FeePercent,
   ModalButtonsList,
   ModalButtonWrapper,
+  InfoIcon,
 } from './styles';
 
 import { totalPriceCalculator } from '../../integrations/marketplace/price.utils';
@@ -214,7 +213,7 @@ export const AcceptOfferModal = ({
                     <FeeLabel>
                       {t('translation:modals.labels.listingFee')}
                     </FeeLabel>
-                    <InfoIcon src={infoLogo} alt="info" />
+                    <InfoIcon icon="info" />
                   </FeeLabelContainer>
                   <FeePercent>
                     {t('translation:modals.labels.listingFeePercent')}
@@ -227,7 +226,7 @@ export const AcceptOfferModal = ({
                         'translation:modals.labels.creatorRoyalityFee',
                       )}
                     </FeeLabel>
-                    <InfoIcon src={infoLogo} alt="info" />
+                    <InfoIcon icon="info" />
                   </FeeLabelContainer>
                   <FeePercent>
                     {t(

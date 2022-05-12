@@ -1,10 +1,6 @@
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
-import {
-  notificationActions,
-  useAppDispatch,
-  useThemeStore,
-} from '../../store';
+import { notificationActions, useAppDispatch } from '../../store';
 import { LinkButton } from '../core';
 import {
   NftMetadataWrapper,
@@ -16,22 +12,14 @@ import {
   Subtext,
   ButtonsWrapper,
   HeaderWrapper,
+  VerifiedIcon,
 } from './styles';
-import crown from '../../assets/crown-pfp.png';
-import crownDark from '../../assets/crown-pfp-dark.png';
-import verified from '../../assets/verified-large.svg';
-import discord from '../../assets/buttons/discord.svg';
-import discordDark from '../../assets/buttons/discord-dark.svg';
-import twitter from '../../assets/buttons/twitter.svg';
-import twitterDark from '../../assets/buttons/twitter-dark.svg';
-import back from '../../assets/buttons/back.svg';
-import backDark from '../../assets/buttons/back-dark.svg';
+import crown from '../../assets/crown.svg';
+import { Icon } from '../icons';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
   const dispatch = useAppDispatch();
-  const isLightTheme = theme === 'lightTheme';
 
   return (
     <NftMetadataWrapper>
@@ -39,15 +27,12 @@ export const CollectionOverview = () => {
       <NftMetadataContent>
         <NftMetadataContentWrapper>
           <NftProfilePictureWrapper>
-            <img
-              src={isLightTheme ? crown : crownDark}
-              alt="crown-pfp"
-            />
+            <img src={crown} alt="crown-pfp" />
           </NftProfilePictureWrapper>
           <HeaderWrapper>
             <Heading>
               Crowns
-              <img src={verified} alt="verified" />
+              <VerifiedIcon icon="verified" paddingLeft size="md" />
             </Heading>
             <Subtext>
               Crowns are a collection of 10,000 generated NFTs on the
@@ -61,16 +46,10 @@ export const CollectionOverview = () => {
             {t('translation:buttons.links.website')}
           </LinkButton>
           <LinkButton url="https://discord.gg/yVEcEzmrgm">
-            <img
-              src={isLightTheme ? discord : discordDark}
-              alt={t('translation:buttons.links.discord')}
-            />
+            <Icon icon="discord" />
           </LinkButton>
           <LinkButton url="https://twitter.com/cap_ois">
-            <img
-              src={isLightTheme ? twitter : twitterDark}
-              alt={t('translation:buttons.links.twitter')}
-            />
+            <Icon icon="twitter" />
           </LinkButton>
 
           <LinkButton
@@ -85,10 +64,7 @@ export const CollectionOverview = () => {
               );
             }}
           >
-            <img
-              src={isLightTheme ? back : backDark}
-              alt={t('translation:buttons.links.back')}
-            />
+            <Icon icon="share" />
           </LinkButton>
         </ButtonsWrapper>
       </NftMetadataContent>

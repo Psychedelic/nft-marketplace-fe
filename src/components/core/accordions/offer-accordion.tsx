@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import * as Accordion from '@radix-ui/react-accordion';
 import {
-  useThemeStore,
   usePlugStore,
   RootState,
   useAppDispatch,
@@ -21,14 +20,8 @@ import {
   UndefinedPrice,
   ButtonListWrapper,
   ButtonDetailsWrapper,
+  AccordionImage,
 } from './styles';
-import offer from '../../../assets/accordions/offer.svg';
-import offerDark from '../../../assets/accordions/offer-dark.svg';
-import dfinity from '../../../assets/accordions/dfinity.svg';
-import arrowdown from '../../../assets/accordions/arrow-down.svg';
-import arrowdownDark from '../../../assets/accordions/arrow-down-dark.svg';
-import arrowup from '../../../assets/accordions/arrow-up.svg';
-import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
 import { NFTOffersTable } from '../../tables';
 import { Plug } from '../../plug';
 import { getCurrentMarketPrice } from '../../../integrations/marketplace/price.utils';
@@ -40,6 +33,8 @@ import {
 } from '../../modals';
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { PlugStatusCodes } from '../../../constants/plug';
+import { Icon } from '../../icons';
+import wicpIcon from '../../../assets/wicp.svg';
 import { OffersTableItem } from '../../../declarations/legacy';
 
 export type OfferAccordionProps = {
@@ -81,13 +76,13 @@ const OnConnected = ({
     (state: RootState) => state.marketplace.recentlyMadeOffers,
   );
 
-  const recentlyCancelledOffers = useSelector((state: RootState) => {
-    return state.marketplace.recentlyCancelledOffers;
-  });
+  const recentlyCancelledOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyCancelledOffers,
+  );
 
-  const tokenOffers = useSelector((state: RootState) => {
-    return state.marketplace.tokenOffers;
-  });
+  const tokenOffers = useSelector(
+    (state: RootState) => state.marketplace.tokenOffers,
+  );
 
   const userMadeOffer: OffersTableItem = useMemo(
     () =>
@@ -142,7 +137,7 @@ const OnConnected = ({
           {!loadingOffers && userMadeOffer && (
             <ButtonDetailsWrapper>
               <MakeOfferModal
-                isOfferEditing={true}
+                isOfferEditing
                 offerPrice={userMadeOffer?.price}
               />
             </ButtonDetailsWrapper>
@@ -151,7 +146,7 @@ const OnConnected = ({
             <ButtonDetailsWrapper>
               <CancelOfferModal
                 item={userMadeOffer?.item}
-                largeTriggerButton={true}
+                largeTriggerButton
               />
             </ButtonDetailsWrapper>
           )}
@@ -175,17 +170,10 @@ export const OfferAccordion = ({
   showNFTActionButtons,
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
-  // TODO: update offers count
-  const totalOffers = 1;
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [marketPrice, setMarketPrice] = useState<
     string | undefined
   >();
-  const { theme } = useThemeStore();
-  const isLightTheme = theme === 'lightTheme';
-
-  const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
-  const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
   const {
     isConnected,
@@ -221,7 +209,13 @@ export const OfferAccordion = ({
       <AccordionHead flexDirection="column">
         <AccordionHeadContent flexProperties="offer">
           <FlexRight>
-            <img src={dfinity} alt={dfinity} />
+            <AccordionImage
+              style={{
+                backgroundImage: `url(${wicpIcon})`,
+                width: '60px',
+                height: '60px',
+              }}
+            />
             <div>
               <span>
                 {t(
@@ -255,18 +249,12 @@ export const OfferAccordion = ({
             onClick={() => setIsAccordionOpen(!isAccordionOpen)}
           >
             <div>
-              <img
-                src={isLightTheme ? offer : offerDark}
-                alt="offer-collection"
-              />
+              <Icon icon="offer" paddingRight />
               <p>
                 {`${t('translation:accordions.offer.header.offer')}`}
               </p>
             </div>
-            <img
-              src={!isAccordionOpen ? arrowupTheme : arrowdownTheme}
-              alt="arrow-down"
-            />
+            <Icon icon="chevron-down" rotate={isAccordionOpen} />
           </AccordionTrigger>
           <AccordionContent
             padding="none"

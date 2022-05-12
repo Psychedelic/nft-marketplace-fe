@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
-  useThemeStore,
   filterActions,
   useAppDispatch,
   settingsActions,
@@ -15,10 +14,6 @@ import {
   FilterInput,
   IconActionButton,
 } from '../core';
-import closeFiltersIcon from '../../assets/buttons/close-filters.svg';
-import closeFiltersIconDark from '../../assets/buttons/close-filters-dark.svg';
-import openFiltersIcon from '../../assets/buttons/open-filters.svg';
-import openFiltersIconDark from '../../assets/buttons/open-filters-dark.svg';
 import {
   Container,
   CloseFilterContainer,
@@ -33,6 +28,7 @@ import {
   Subheadings,
   CheckboxFilters,
   FilterButtonWrapper,
+  CollapseIcon,
 } from './styles';
 import CheckboxAccordionSkeleton from '../core/accordions/checkbox-accordion-skeleton';
 
@@ -50,7 +46,6 @@ export const Filters = () => {
     loadingFilterList,
     isMyNfts,
   } = useFilterStore();
-  const { theme } = useThemeStore();
   const { collapsed, displayPriceApplyButton } = useSettingsStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
   const [priceFilterValue, setPriceFilterValue] = useState({
@@ -58,14 +53,6 @@ export const Filters = () => {
     max: '',
   });
   const myNfts = `${t('translation:buttons.action.myNfts')}`;
-  const isLightTheme = theme === 'lightTheme';
-
-  const closeFiltersIconTheme = isLightTheme
-    ? closeFiltersIcon
-    : closeFiltersIconDark;
-  const openFiltersIconTheme = isLightTheme
-    ? openFiltersIcon
-    : openFiltersIconDark;
 
   useEffect(() => {
     dispatch(filterActions.getFilterTraits());
@@ -157,12 +144,7 @@ export const Filters = () => {
             dispatch(settingsActions.setFilterCollapsed(!collapsed));
           }}
         >
-          <img
-            src={
-              collapsed ? closeFiltersIconTheme : openFiltersIconTheme
-            }
-            alt="filter-icon"
-          />
+          <CollapseIcon icon="arrow-left" rotate={!collapsed} />
         </IconActionButton>
       </CloseFilterContainer>
       {collapsed && (

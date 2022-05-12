@@ -58,14 +58,14 @@ export const ActivityTable = () => {
       capActions.getTokenContractRootBucket({
         marketplaceCanisterId: config?.marketplaceCanisterId,
       }),
-    )
+    );
   }, [dispatch]);
 
   useEffect(() => {
     if (!bucketId) return;
 
     dispatch(tableActions.getCAPActivity({ pageCount: 0, bucketId }));
-  }, [dispatch,bucketId]);
+  }, [dispatch, bucketId]);
 
   const loadMoreData = useCallback(() => {
     if (loadingTableData || !hasMoreData || !bucketId) return;
@@ -93,12 +93,7 @@ export const ActivityTable = () => {
       {
         Header: t('translation:tables.titles.type'),
         accessor: ({ type }: RowProps) => (
-          <TypeDetailsCell
-            name={type}
-            type={type}
-            tableType=""
-            theme={theme}
-          />
+          <TypeDetailsCell name={type} type={type} tableType="" />
         ),
       },
       {

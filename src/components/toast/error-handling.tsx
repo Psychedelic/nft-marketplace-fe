@@ -4,17 +4,14 @@ import {
   Toast,
   ToastDescription,
   ToastDescriptionText,
-  ToastDescriptionIcon,
-  ToastActionIcon,
   ToastProvider,
 } from './styles';
-import warning from '../../assets/error-icon.svg';
-import closeWarning from '../../assets/close-warning.svg';
 import {
   notificationActions,
   useAppDispatch,
   useErrorsStore,
 } from '../../store';
+import { Icon } from '../icons';
 
 export const Error = () => {
   const [open, setOpen] = React.useState(false);
@@ -34,21 +31,20 @@ export const Error = () => {
           open={open}
           onOpenChange={setOpen}
           duration={5000}
+          state="error"
         >
-          <ToastDescription state="error" asChild>
+          <ToastDescription asChild>
             <div>
-              <ToastDescriptionIcon
-                src={warning}
-                alt="warning-icon"
-              />
+              <Icon icon="warning" size="md" paddingRight />
               <ToastDescriptionText>
                 {error.message}
               </ToastDescriptionText>
             </div>
           </ToastDescription>
-          <ToastActionIcon
-            src={closeWarning}
-            alt="close-warning"
+
+          <Icon
+            size="md"
+            icon="close-circle"
             onClick={() =>
               dispatch(
                 notificationActions.removeErrorMessage(error.id),

@@ -1,5 +1,8 @@
 import { NftSkeleton } from '../core';
-import { NftListData } from '../mock-data/nft-list-data';
+
+const NftListData = Array(6)
+  .fill('')
+  .map((_, id) => ({ id: `${id}` }));
 
 export const NftSkeletonList = () => (
   <>

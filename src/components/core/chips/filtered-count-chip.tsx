@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import miniDfinity from '../../../assets/mini-dfinity.svg';
+import wicpImage from '../../../assets/wicp.svg';
 import {
   CountContainer,
   CountLabel,
@@ -27,7 +27,7 @@ export const FilteredCountChip = ({
       <CountInNumbers>{count}</CountInNumbers>
       {showLogo && (
         <CountLogo
-          src={miniDfinity}
+          src={wicpImage}
           alt={t('translation:logoAlts.wicp')}
         />
       )}

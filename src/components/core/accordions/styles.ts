@@ -5,7 +5,6 @@ export const AccordionStyle = styled(Accordion.Root, {
   border: '2px solid $borderColor',
   borderRadius: '15px',
   marginBottom: '25px',
-  // background: '$backgroundColor',
 
   variants: {
     backgroundColor: {
@@ -80,10 +79,6 @@ export const AccordionHeadContent = styled('div', {
     color: '$mainTextColor',
   },
 
-  '& img': {
-    marginRight: '12px',
-  },
-
   '& span': {
     fontStyle: 'normal',
     fontWeight: '500',
@@ -106,6 +101,16 @@ export const AccordionHeadContent = styled('div', {
   },
 });
 
+export const AccordionImage = styled('div', {
+  marginRight: '12px',
+  width: '42px',
+  height: '42px',
+  borderRadius: '50%',
+  backgroundSize: 'contain',
+  backgroundPosition: 'center',
+  backgroundRepeat: 'no-repeat',
+});
+
 export const FlexRight = styled('div', {
   display: 'flex',
   width: '50%',
@@ -113,6 +118,7 @@ export const FlexRight = styled('div', {
 });
 
 export const AccordionTrigger = styled(Accordion.Trigger, {
+  color: '$mainTextColor',
   variants: {
     backgroundColor: {
       open: {
@@ -183,7 +189,6 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
     },
     display: 'flex',
     alignItems: 'center',
-    color: '$mainTextColor',
 
     '& span': {
       margin: '0 0 0 10px',
@@ -203,6 +208,7 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
 });
 
 export const AccordionContent = styled(Accordion.Content, {
+  color: '$mainTextColor',
   variants: {
     backgroundColor: {
       open: {

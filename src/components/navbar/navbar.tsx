@@ -9,11 +9,7 @@ import {
 import { LinkButton } from '../core';
 import { GlobalSearch } from '../search';
 import { Plug } from '../plug';
-import appLogo from '../../assets/app-logo.svg';
-import appName from '../../assets/app-name.svg';
-import appNameDark from '../../assets/app-name-dark.svg';
-import moon from '../../assets/buttons/dark-theme.svg';
-import sun from '../../assets/buttons/light-theme.svg';
+import crown from '../../assets/crown.svg';
 import {
   Container,
   LogoContainer,
@@ -21,6 +17,7 @@ import {
   LogoName,
   ActionButtonsContainer,
 } from './styles';
+import { Icon } from '../icons';
 
 /* --------------------------------------------------------------------------
  * NavBar Component
@@ -45,19 +42,19 @@ export const NavBar = () => {
       <RouterLink to="/">
         <LogoContainer>
           <LogoIcon
-            src={appLogo}
+            src={crown}
             alt={t('translation:common.collectionName')}
           />
           <LogoName
-            src={isLightTheme ? appName : appNameDark}
-            alt={t('translation:common.collectionName')}
+            icon="app-name"
+            extraIconProps={{ dark: !isLightTheme }}
           />
         </LogoContainer>
       </RouterLink>
       <GlobalSearch />
       <ActionButtonsContainer>
         <LinkButton handleClick={changeThemeHandler}>
-          <img src={isLightTheme ? moon : sun} alt="" />
+          <Icon icon={isLightTheme ? 'moon' : 'sun'} />
         </LinkButton>
         <Plug />
       </ActionButtonsContainer>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
-import { useThemeStore, usePlugStore } from '../../../store';
+import { usePlugStore } from '../../../store';
 import { LinkButton } from '../buttons';
 import { AccordionContentMetaData } from '../../mock-data/accordion-data';
 import {
@@ -14,25 +14,13 @@ import {
   AccordionHeadContent,
   Flex,
   Subtext,
+  AccordionImage,
 } from './styles';
-import info from '../../../assets/accordions/info.svg';
-import infoDark from '../../../assets/accordions/info-dark.svg';
-import arrowdown from '../../../assets/accordions/arrow-down.svg';
-import arrowdownDark from '../../../assets/accordions/arrow-down-dark.svg';
-import arrowup from '../../../assets/accordions/arrow-up.svg';
-import arrowupDark from '../../../assets/accordions/arrow-up-dark.svg';
-import collection from '../../../assets/accordions/collection.svg';
-import creator from '../../../assets/accordions/creator.svg';
-import plugIcon from '../../../assets/accordions/owner.svg';
-import discord from '../../../assets/buttons/discord.svg';
-import discordDark from '../../../assets/buttons/discord-dark.svg';
-import twitter from '../../../assets/buttons/twitter.svg';
-import twitterDark from '../../../assets/buttons/twitter-dark.svg';
-import back from '../../../assets/buttons/back.svg';
-import backDark from '../../../assets/buttons/back-dark.svg';
+import plugIcon from '../../../assets/plug-circle.svg';
 
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { formatAddress } from '../../../utils/formatters';
+import { Icon } from '../../icons';
 
 export type AboutAccordionProps = {
   owner?: string;
@@ -41,11 +29,6 @@ export type AboutAccordionProps = {
 export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-  const { theme } = useThemeStore();
-  const isLightTheme = theme === 'lightTheme';
-
-  const arrowdownTheme = isLightTheme ? arrowdown : arrowdownDark;
-  const arrowupTheme = isLightTheme ? arrowup : arrowupDark;
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
@@ -55,31 +38,19 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
     principalId: plugPrincipal,
   });
 
-  const Buttons = [
-    {
-      image: isLightTheme ? discord : discordDark,
-      alt: 'discord',
-    },
-    {
-      image: isLightTheme ? twitter : twitterDark,
-      alt: 'twitter',
-    },
-    {
-      image: isLightTheme ? back : backDark,
-      alt: 'back',
-    },
-  ];
-
   const AccordionHeadContentData = [
     {
       subheading: 'CAP Crowns',
       heading: 'Collection',
-      image: collection,
+      // TODO: replace with collection url after integration is done
+      image:
+        'https://storageapi2.fleek.co/fleek-team-bucket/logos/crowns-ooo.png',
     },
     {
       subheading: 'Psychedelic',
       heading: 'Creator',
-      image: creator,
+      // TODO: replace with creator url after integration is done
+      image: 'https://psychedelic.ooo/images/11-2.svg',
     },
     {
       subheading: isOwner
@@ -95,7 +66,9 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
       <AccordionHead>
         {AccordionHeadContentData.map((data) => (
           <AccordionHeadContent key={data.heading}>
-            <img src={data.image} alt={data.heading} />
+            <AccordionImage
+              style={{ backgroundImage: `url(${data.image})` }}
+            />
             <div>
               <span>{data.heading}</span>
               <p>{data.subheading}</p>
@@ -111,20 +84,14 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
-            <img
-              src={isLightTheme ? info : infoDark}
-              alt="about-collection"
-            />
+            <Icon icon="info" paddingRight />
             <p>
               {`${t(
                 'translation:accordions.about.header.aboutCrowns',
               )}`}
             </p>
           </div>
-          <img
-            src={!isAccordionOpen ? arrowupTheme : arrowdownTheme}
-            alt="arrow-down"
-          />
+          <Icon icon="chevron-down" rotate={isAccordionOpen} />
         </AccordionTrigger>
         <AccordionContent
           padding="medium"
@@ -146,13 +113,18 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
               <LinkButton type="textBtn">
                 {t('translation:buttons.links.website')}
               </LinkButton>
-              &nbsp;
-              {Buttons.map((button) => (
-                <LinkButton key={button.alt}>
-                  <img src={button.image} alt={button.image} />
-                </LinkButton>
-              ))}
-              &nbsp;
+
+              <LinkButton>
+                <Icon icon="discord" />
+              </LinkButton>
+
+              <LinkButton>
+                <Icon icon="twitter" />
+              </LinkButton>
+
+              <LinkButton>
+                <Icon icon="share" />
+              </LinkButton>
             </ButtonWrapper>
           </div>
         </AccordionContent>

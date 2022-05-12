@@ -1,4 +1,5 @@
 import { styled } from '../../stitches.config';
+import { Icon } from '../icons';
 
 export const CollectionMetadataWrapper = styled('div', {
   display: 'flex',
@@ -29,8 +30,8 @@ export const Subtext = styled('p', {
   lineHeight: '20px',
   color: '#767D8E',
   margin: '0',
+});
 
-  '& img': {
-    marginLeft: '5px',
-  },
+export const VerifiedIcon = styled(Icon, {
+  color: '$primary',
 });

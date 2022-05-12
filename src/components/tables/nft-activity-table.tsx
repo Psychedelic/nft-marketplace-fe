@@ -32,7 +32,6 @@ export const NFTActivityTable = () => {
             name={type}
             type={type}
             tableType="nftActivity"
-            theme={theme}
           />
         ),
       },

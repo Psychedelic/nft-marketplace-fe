@@ -1,4 +1,5 @@
 import { styled } from '../../stitches.config';
+import { Icon } from '../icons';
 
 export const Container = styled('div', {
   position: 'relative',
@@ -153,4 +154,10 @@ export const FilterButtonWrapper = styled('div', {
   button: {
     fontWeight: '500',
   },
+});
+
+export const CollapseIcon = styled(Icon, {
+  color: '$mainTextColor',
+  width: '24px',
+  height: '24px',
 });

@@ -1,5 +1,6 @@
 import * as Popover from '@radix-ui/react-popover';
 import { styled } from '../../stitches.config';
+import { Icon } from '../icons';
 
 export const PlugButtonContainer = styled('button', {
   // base styles
@@ -35,7 +36,7 @@ export const PlugButtonText = styled('div', {
   fontFamily: 'proxima-nova, sans-serif',
 });
 
-export const DropdownTrigger = styled(Popover.Trigger, {
+export const PopoverTrigger = styled(Popover.Trigger, {
   '&:focus': {
     outline: 'none',
   },
@@ -92,11 +93,12 @@ export const ListItem = styled('div', {
   },
 });
 
-export const PlugIcon = styled('img', {
+export const PlugIconStyled = styled(Icon, {
   marginRight: '10px',
   width: '12px',
 });
 
-export const PlugArrowDownIcon = styled('img', {
+export const PlugArrowDownIcon = styled(Icon, {
   marginLeft: '10px',
+  fontSize: '11px',
 });

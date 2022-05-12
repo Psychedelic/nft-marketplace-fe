@@ -13,3 +13,4 @@ export * from './items';
 export * from './nft-details';
 export * from './plug';
 export * from './toast';
+export * from './icons';

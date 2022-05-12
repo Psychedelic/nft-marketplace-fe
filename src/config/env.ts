@@ -24,7 +24,7 @@ type ConfigParams = {
   crownsCanisterId: string;
   marketplaceCanisterId: string;
   wICPCanisterId: string;
-  capRouterId: string,
+  capRouterId: string;
 };
 
 type Config = {

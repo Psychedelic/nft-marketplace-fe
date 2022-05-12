@@ -1,21 +1,16 @@
 import React from 'react';
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
-import {
-  notificationActions,
-  useAppDispatch,
-  useThemeStore,
-} from '../../store';
+import { notificationActions, useAppDispatch } from '../../store';
 import { LinkButton } from '../core';
 
 import {
   CollectionMetadataWrapper,
   Heading,
   Subtext,
+  VerifiedIcon,
 } from './styles';
-import back from '../../assets/buttons/back.svg';
-import backDark from '../../assets/buttons/back-dark.svg';
-import verified from '../../assets/verified-small.svg';
+import { Icon } from '../icons';
 
 export interface NFTMetaDataProps {
   id?: string;
@@ -23,9 +18,7 @@ export interface NFTMetaDataProps {
 
 export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
   const { t } = useTranslation();
-  const { theme } = useThemeStore();
   const dispatch = useAppDispatch();
-  const isLightTheme = theme === 'lightTheme';
 
   return (
     <CollectionMetadataWrapper>
@@ -33,7 +26,7 @@ export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
         <Heading>{id}</Heading>
         <Subtext>
           Crowns
-          <img src={verified} alt="verified" />
+          <VerifiedIcon icon="verified" paddingLeft />
         </Subtext>
       </div>
       <LinkButton
@@ -46,10 +39,7 @@ export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
           );
         }}
       >
-        <img
-          src={isLightTheme ? back : backDark}
-          alt={t('translation:buttons.links.back')}
-        />
+        <Icon icon="share" />
       </LinkButton>
     </CollectionMetadataWrapper>
   );

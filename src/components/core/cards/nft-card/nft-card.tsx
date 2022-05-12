@@ -20,7 +20,7 @@ import {
   MediaWrapper,
   ActionText,
 } from './styles';
-import wicpLogo from '../../../../assets/wicpIcon.png';
+import wicpLogo from '../../../../assets/wicp.svg';
 import {
   BuyNowModal,
   MakeOfferModal,

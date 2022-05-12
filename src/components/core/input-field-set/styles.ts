@@ -1,4 +1,5 @@
 import { styled } from '../../../stitches.config';
+import { Icon } from '../../icons';
 
 export const Container = styled('div', {
   // base styles
@@ -73,7 +74,8 @@ export const Input = styled('input', {
   },
 });
 
-export const SearchIcon = styled('img', {
+export const SearchIcon = styled(Icon, {
+  color: '$mainTextColor',
   position: 'absolute',
   width: '16px',
   height: '16px',
