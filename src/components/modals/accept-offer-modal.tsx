@@ -42,6 +42,7 @@ import {
 import { NFTMetadata } from '../../declarations/legacy';
 import { ListingStatusCodes } from '../../constants/listing';
 import { formatPriceValue } from '../../utils/formatters';
+import { isTokenId } from '../../utils/nfts';
 
 export interface AcceptOfferProps {
   price: string;
@@ -84,13 +85,13 @@ export const AcceptOfferModal = ({
 
     const isAccepted = modalStep === ListingStatusCodes.Accepted;
 
-    if (modalOpenedStatus || !tokenId || !isAccepted) return;
+    if (modalOpenedStatus || !isTokenId(tokenId) || !isAccepted) return;
 
     // Update NFT owner details in store
     // on successful offer acceptance and closing the modal
     dispatch(
       nftsActions.acceptNFTOffer({
-        id: tokenId,
+        id: tokenId as string,
         buyerId: offerFrom,
       }),
     );
@@ -101,13 +102,13 @@ export const AcceptOfferModal = ({
   };
 
   const handleAcceptOffer = async () => {
-    if (!tokenId) return;
+    if (!isTokenId(tokenId)) return;
 
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       marketplaceActions.acceptOffer({
-        id: tokenId,
+        id: tokenId as string,
         buyerPrincipalId: offerFrom,
         offerPrice: price,
         onSuccess: () => {

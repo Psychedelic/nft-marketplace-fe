@@ -1,4 +1,5 @@
 import { NFTActionStatuses } from '../constants/common';
+import{ TokenMetadataById } from '../store/features/tables/table-slice';
 
 type NFTParams = {
   lastSalePrice?: string;
@@ -23,3 +24,14 @@ export const findLastAction = (nft: NFTParams) => {
 
   return '';
 };
+
+// eslint-disable-next-line no-restricted-globals
+export const isTokenId = (id: any) => typeof id !== 'undefined' && !isNaN(id) && Number(id) >= 0
+
+export const getTokenMetadataThumbnail = ({
+  tokendId,
+  tokenMetadataById,
+}: {
+  tokendId: string | number,
+  tokenMetadataById: TokenMetadataById,
+}) => typeof tokendId !== 'undefined' && tokenMetadataById[tokendId];
