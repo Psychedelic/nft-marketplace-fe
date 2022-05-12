@@ -17,6 +17,7 @@ import {
 import { TableLayout } from './table-layout';
 import { TokenTransactionItem } from '../../utils/parser';
 import { Container } from './styles';
+import { recentNFTUpdatesCount } from '../../hooks/use-marketplace-store';
 
 type RowProps = TokenTransactionItem;
 
@@ -27,29 +28,12 @@ export const NFTActivityTable = () => {
   const tokenTransactions = useSelector(
     (state: RootState) => state.table.tokenTransactions,
   );
+
   const loadingTokenTransactions = useSelector(
     (state: RootState) => state.table.loadingTokenTransactions,
   );
 
-  const recentlyListedForSale = useSelector(
-    (state: RootState) => state.marketplace.recentlyListedForSale,
-  );
-
-  const recentlyCancelledItems = useSelector(
-    (state: RootState) => state.marketplace.recentlyCancelledItems,
-  );
-
-  const recentlyAcceptedOffers = useSelector(
-    (state: RootState) => state.marketplace.recentlyAcceptedOffers,
-  );
-
-  const recentlyCancelledOffers = useSelector(
-    (state: RootState) => state.marketplace.recentlyCancelledOffers,
-  );
-
-  const recentlyMadeOffers = useSelector(
-    (state: RootState) => state.marketplace.recentlyMadeOffers,
-  );
+  const recentCountOfNFTUpdates = recentNFTUpdatesCount();
 
   const { id: tokenId } = useParams();
 
@@ -59,15 +43,7 @@ export const NFTActivityTable = () => {
     dispatch(
       tableActions.getTokenTransactions({ tokenId: Number(tokenId) }),
     );
-  }, [
-    dispatch,
-    tokenId,
-    recentlyListedForSale,
-    recentlyCancelledItems,
-    recentlyAcceptedOffers,
-    recentlyCancelledOffers,
-    recentlyMadeOffers,
-  ]);
+  }, [dispatch, tokenId, recentCountOfNFTUpdates]);
 
   const columns = useMemo(
     () => [
