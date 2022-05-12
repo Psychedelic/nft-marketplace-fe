@@ -30,6 +30,27 @@ export const NFTActivityTable = () => {
   const loadingTokenTransactions = useSelector(
     (state: RootState) => state.table.loadingTokenTransactions,
   );
+
+  const recentlyListedForSale = useSelector(
+    (state: RootState) => state.marketplace.recentlyListedForSale,
+  );
+
+  const recentlyCancelledItems = useSelector(
+    (state: RootState) => state.marketplace.recentlyCancelledItems,
+  );
+
+  const recentlyAcceptedOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyAcceptedOffers,
+  );
+
+  const recentlyCancelledOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyCancelledOffers,
+  );
+
+  const recentlyMadeOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyMadeOffers,
+  );
+
   const { id: tokenId } = useParams();
 
   useEffect(() => {
@@ -38,7 +59,15 @@ export const NFTActivityTable = () => {
     dispatch(
       tableActions.getTokenTransactions({ tokenId: Number(tokenId) }),
     );
-  }, [dispatch, tokenId]);
+  }, [
+    dispatch,
+    tokenId,
+    recentlyListedForSale,
+    recentlyCancelledItems,
+    recentlyAcceptedOffers,
+    recentlyCancelledOffers,
+    recentlyMadeOffers,
+  ]);
 
   const columns = useMemo(
     () => [
