@@ -38,6 +38,7 @@ export const CardWrapper = styled('div', {
   width: '100%',
   padding: '10px 15px',
   overflow: 'hidden',
+  minWidth: '210px',
 
   transition: 'all 0.2s ease-in-out',
   boxShadow: '$default',

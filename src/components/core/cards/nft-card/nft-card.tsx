@@ -30,6 +30,7 @@ import {
 import { usePlugStore } from '../../../../store';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 import { NFTActionStatuses } from '../../../../constants/common';
+import { NumberTooltip } from '../../../display-number';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -139,11 +140,13 @@ const LastActionTakenDetails = ({
               {t('translation:nftCard.lastSale')}
             </ActionText>
             <b>
-              {(data?.lastSale &&
-                parseE8SAmountToWICP(
-                  BigInt(data.lastSale),
-                ).toString()) ||
-                ''}
+              <NumberTooltip>
+                {(data?.lastSale &&
+                  parseE8SAmountToWICP(
+                    BigInt(data.lastSale),
+                  ).toString()) ||
+                  ''}
+              </NumberTooltip>
             </b>
           </>
         )}
@@ -161,11 +164,13 @@ const LastActionTakenDetails = ({
               : `${t('translation:nftCard.last')} `}
           </ActionText>
           <b>
-            {(data?.lastOffer &&
-              parseE8SAmountToWICP(
-                BigInt(data.lastOffer),
-              ).toString()) ||
-              ''}
+            <NumberTooltip>
+              {(data?.lastOffer &&
+                parseE8SAmountToWICP(
+                  BigInt(data.lastOffer),
+                ).toString()) ||
+                ''}
+            </NumberTooltip>
           </b>
         </>
       )}
@@ -221,7 +226,9 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
               {isForSale && (
                 <>
                   <img src={wicpLogo} alt="" />
-                  {parseE8SAmountToWICP(data?.price)}
+                  <NumberTooltip>
+                    {parseE8SAmountToWICP(data?.price)}
+                  </NumberTooltip>
                 </>
               )}
             </NftDataText>
