@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
-import { getCAPActivity, getTokenMetadata, getTokenTransactions } from './async-thunks';
+import {
+  getCAPActivity,
+  getTokenMetadata,
+  getTokenTransactions,
+} from './async-thunks';
 
 interface LoadedTableMetaData {
   media: string;
@@ -13,7 +17,8 @@ export interface TableState {
   failedToLoadTableData: boolean;
   hasMoreData: boolean;
   nextPageNo: number;
-  tokenTransactions: any,
+  tokenTransactions: any;
+  loadingTokenTransactions: boolean;
 }
 
 export interface CapActivityParams {
@@ -38,6 +43,7 @@ const initialState: TableState = {
   hasMoreData: false,
   nextPageNo: 0,
   tokenTransactions: undefined,
+  loadingTokenTransactions: true,
 };
 
 export const tableSlice = createSlice({
@@ -90,17 +96,22 @@ export const tableSlice = createSlice({
     // for quick access, to start will reset on each new call
     builder.addCase(getTokenTransactions.pending, (state) => {
       state.tokenTransactions = initialState.tokenTransactions;
+      state.loadingTokenTransactions = true;
     });
 
     builder.addCase(getTokenTransactions.rejected, (state) => {
       state.tokenTransactions = initialState.tokenTransactions;
     });
 
-    builder.addCase(getTokenTransactions.fulfilled, (state, action) => {
-      if (!action.payload) return;
+    builder.addCase(
+      getTokenTransactions.fulfilled,
+      (state, action) => {
+        if (!action.payload) return;
 
-      state.tokenTransactions = action.payload;
-    });
+        state.tokenTransactions = action.payload;
+        state.loadingTokenTransactions = false;
+      },
+    );
   },
 });
 

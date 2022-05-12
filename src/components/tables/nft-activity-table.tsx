@@ -27,6 +27,9 @@ export const NFTActivityTable = () => {
   const tokenTransactions = useSelector(
     (state: RootState) => state.table.tokenTransactions,
   );
+  const loadingTokenTransactions = useSelector(
+    (state: RootState) => state.table.loadingTokenTransactions,
+  );
   const { id: tokenId } = useParams();
 
   useEffect(() => {
@@ -59,18 +62,26 @@ export const NFTActivityTable = () => {
             // would be misleading
             tableType="nftActivity"
           />
-        )
+        ),
       },
       {
         Header: t('translation:tables.titles.from'),
         accessor: ({ from }: RowProps) => (
-          <TextLinkCell text={from.formatted} url="" type="nftActivity" />
+          <TextLinkCell
+            text={from.formatted}
+            url=""
+            type="nftActivity"
+          />
         ),
       },
       {
         Header: t('translation:tables.titles.to'),
         accessor: ({ to }: RowProps) => (
-          <TextLinkCell text={to.formatted} url="" type="nftActivity" />
+          <TextLinkCell
+            text={to.formatted}
+            url=""
+            type="nftActivity"
+          />
         ),
       },
       {
@@ -93,8 +104,9 @@ export const NFTActivityTable = () => {
             columns={columns}
             data={tokenTransactions}
             tableType="nftActivity"
+            loading={loadingTokenTransactions}
             loaderDetails={{
-              showItemDetails: true,
+              showItemDetails: false,
               showTypeDetails: true,
             }}
           />
