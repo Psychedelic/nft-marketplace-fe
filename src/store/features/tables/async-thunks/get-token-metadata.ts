@@ -13,7 +13,7 @@ export type GetTokenMetadataProps =
 export const getTokenMetadata = createAsyncThunk<
   TokenMetadataById | undefined,
   GetTokenMetadataProps
->('table/getTokenMetadata', async ({ id }) => {    
+>('table/getTokenMetadata', async ({ id }) => {
   try {
     const response = await axios.get(
       KyasshuUrl.getNFTDetails({ id }),

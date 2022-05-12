@@ -24,17 +24,18 @@ export const ItemDetailsCell = ({
   const tokenMetadataById = useSelector(
     (state: RootState) => state.table.tokenMetadataById,
   );
-
-  useEffect(() => {
-    if (!isTokenId(id)) return;
-
-    dispatch(tableActions.getTokenMetadata({ id } as { id: number | string }));
-  }, [dispatch, id]);
-
   const hasThumbnail = isTokenId(id) && getTokenMetadataThumbnail({
     tokenMetadataById,
     tokendId: id as string | number,
   });
+
+  useEffect(() => {
+    if (!isTokenId(id) || hasThumbnail) return;
+
+    // Only request metadata if NOT hasThumbnail as we cache
+    dispatch(tableActions.getTokenMetadata({ id } as { id: number | string }));
+  }, [dispatch, id, hasThumbnail]);
+
 
   return (
     <RouterLink to={`/nft/${id}`}>
