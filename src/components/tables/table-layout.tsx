@@ -1,6 +1,11 @@
 import { useTable } from 'react-table';
 import { useTableStore } from '../../store';
-import { TableWrapper, LoadingContainer } from './styles';
+import {
+  TableWrapper,
+  LoadingContainer,
+  EmptyStateContainer,
+  EmptyStateMessage,
+} from './styles';
 import TableSkeletons from './table-skeletons';
 
 export interface TableLayoutProps {
@@ -15,6 +20,7 @@ export interface TableLayoutProps {
     type?: string;
   };
   loadingTableRows?: boolean;
+  emptyMessage?: string;
 }
 
 export const TableLayout = ({
@@ -25,6 +31,7 @@ export const TableLayout = ({
   loading,
   loaderDetails,
   loadingTableRows = false,
+  emptyMessage,
 }: TableLayoutProps) => {
   const {
     getTableProps,
@@ -39,6 +46,8 @@ export const TableLayout = ({
       hiddenColumns: columnsToHide,
     },
   });
+
+  const isTableDataEmpty = data.length === 0;
 
   // TODO: We may need to remove loadingTableData fetching
   // from store and replace with props, since this a common layout
@@ -58,7 +67,7 @@ export const TableLayout = ({
   ) : (
     <TableWrapper
       type={tableType}
-      loadingTableRows={loadingTableRows}
+      dontShowTableRows={loadingTableRows || isTableDataEmpty}
     >
       <table {...getTableProps()}>
         <thead>
@@ -75,20 +84,22 @@ export const TableLayout = ({
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} key={row.id}>
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()} key={cell.column.id}>
-                    {cell.render('Cell')}
-                  </td>
-                ))}
-              </tr>
-            );
-          })}
-        </tbody>
+        {!loadingTableRows && !isTableDataEmpty && (
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} key={row.id}>
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()} key={cell.column.id}>
+                      {cell.render('Cell')}
+                    </td>
+                  ))}
+                </tr>
+              );
+            })}
+          </tbody>
+        )}
       </table>
       {loadingTableRows && (
         <LoadingContainer>
@@ -99,6 +110,13 @@ export const TableLayout = ({
           <TableSkeletons loaderDetails={loaderDetails} />
           <TableSkeletons loaderDetails={loaderDetails} />
         </LoadingContainer>
+      )}
+      {!loadingTableRows && isTableDataEmpty && (
+        <EmptyStateContainer>
+          <EmptyStateMessage type="mediumTable">
+            {emptyMessage}
+          </EmptyStateMessage>
+        </EmptyStateContainer>
       )}
     </TableWrapper>
   );

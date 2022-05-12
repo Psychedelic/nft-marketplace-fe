@@ -184,7 +184,7 @@ export const TableWrapper = styled('div', {
         },
       },
     },
-    loadingTableRows: {
+    dontShowTableRows: {
       true: {
         table: {
           borderRadius: '15px 15px 0px 0px',
@@ -294,6 +294,12 @@ export const StringSkeleton = styled('div', {
   transitionTimingFunction: 'ease-in-out',
 });
 
+export const EmptyStateContainer = styled('div', {
+  border: '1px solid $borderColor',
+  borderRadius: '0px 0px 15px 15px',
+  borderTop: '0px',
+});
+
 export const EmptyStateMessage = styled('p', {
   display: 'flex',
   flexDirection: 'column',
@@ -310,7 +316,14 @@ export const EmptyStateMessage = styled('p', {
         color: '$mainTextColor',
         margin: '50px 25px',
       },
-
+      mediumTable: {
+        fontWeight: '500',
+        fontSize: '16px',
+        lineHeight: '19px',
+        color: '$mainTextColor',
+        padding: '50px 25px',
+        margin: '0px',
+      },
       largeTable: {
         height: '100vh',
         fontWeight: '700',

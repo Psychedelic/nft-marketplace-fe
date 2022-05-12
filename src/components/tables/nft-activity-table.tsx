@@ -101,12 +101,13 @@ export const NFTActivityTable = () => {
           columns={columns}
           data={tokenTransactions}
           tableType="nftActivity"
-          loadingTableRows={!loadingTokenTransactions}
+          loadingTableRows={loadingTokenTransactions}
           loaderDetails={{
             showItemDetails: false,
             showTypeDetails: true,
             type: 'medium',
           }}
+          emptyMessage={t('translation:emptyStates.nftActivity')}
         />
       }
     </Container>
