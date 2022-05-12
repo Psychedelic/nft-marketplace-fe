@@ -230,7 +230,6 @@ export const parseTokenTransactions = ({
 }: {
   items: any[];
 }) => {
-  console.log(items, 'items');
   const parsed = items.reduce((acc: any, curr: any) => {
     const parsedArr = Uint8Array.from(
       // eslint-disable-next-line no-underscore-dangle
