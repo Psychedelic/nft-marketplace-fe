@@ -1,14 +1,12 @@
 import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { notificationActions } from '../../errors';
+import { notificationActions } from '../../notifications';
 import { CancelListing } from '../marketplace-slice';
 import config from '../../../../config/env';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { AppLog } from '../../../../utils/log';
-import {
-  KyasshuUrl,
-} from '../../../../integrations/kyasshu';
+import { KyasshuUrl } from '../../../../integrations/kyasshu';
 
 export type CancelListingProps = DefaultCallbacks & CancelListing;
 
@@ -45,10 +43,8 @@ export const cancelListing = createAsyncThunk<
 
     // We call the Cap Sync process
     // but we don't have to wait for the response
-    await axios.get(
-      KyasshuUrl.getCAPSync(),
-    );
-  
+    await axios.get(KyasshuUrl.getCAPSync());
+
     return {
       id,
     };

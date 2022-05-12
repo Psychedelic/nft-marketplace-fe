@@ -8,7 +8,7 @@ import {
 import config from '../../../../config/env';
 import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
 import { parseGetTokenOffersResponse } from '../../../../utils/parser';
-import { notificationActions } from '../../errors';
+import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 

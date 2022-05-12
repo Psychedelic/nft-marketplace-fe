@@ -2,7 +2,7 @@ export * from './plug';
 export * from './filters';
 export * from './theme';
 export * from './nfts';
-export * from './errors';
+export * from './notifications';
 export * from './settings';
 export * from './tables';
 export * from './marketplace';

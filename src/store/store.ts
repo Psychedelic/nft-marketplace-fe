@@ -4,7 +4,7 @@ import plugReducer from './features/plug/plug-slice';
 import filterReducer from './features/filters/filter-slice';
 import themeReducer from './features/theme/theme-slice';
 import nftsReducer from './features/nfts/nfts-slice';
-import notificationReducer from './features/errors/errors-slice';
+import notificationReducer from './features/notifications/notifications-slice';
 import settingsReducer from './features/settings/settings-slice';
 import marketplaceReducer from './features/marketplace/marketplace-slice';
 import crownsReducer from './features/crowns/crowns-slice';

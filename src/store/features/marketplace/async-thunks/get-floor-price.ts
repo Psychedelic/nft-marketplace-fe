@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { actorInstanceHandler } from '../../../../integrations/actor';
 import { marketplaceSlice } from '../marketplace-slice';
 import config from '../../../../config/env';
-import { notificationActions } from '../../errors';
+import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
@@ -54,3 +54,4 @@ export const getFloorPrice = createAsyncThunk<
     }
   }
 });
+

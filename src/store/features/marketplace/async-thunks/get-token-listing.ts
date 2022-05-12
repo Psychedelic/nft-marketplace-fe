@@ -2,7 +2,7 @@ import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { actorInstanceHandler } from '../../../../integrations/actor';
 import { marketplaceSlice } from '../marketplace-slice';
-import { notificationActions } from '../../errors';
+import { notificationActions } from '../../notifications';
 import config from '../../../../config/env';
 import { AppLog } from '../../../../utils/log';
 

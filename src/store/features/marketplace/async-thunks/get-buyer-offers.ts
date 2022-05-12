@@ -7,7 +7,7 @@ import {
 } from '../marketplace-slice';
 import config from '../../../../config/env';
 import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
-import { notificationActions } from '../../errors';
+import { notificationActions } from '../../notifications';
 import { parseOffersMadeResponse } from '../../../../utils/parser';
 import { OffersTableItem } from '../../../../declarations/legacy';
 import { AppLog } from '../../../../utils/log';

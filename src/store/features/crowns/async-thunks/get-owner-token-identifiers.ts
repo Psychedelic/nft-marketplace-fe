@@ -3,7 +3,7 @@ import { Principal } from '@dfinity/principal';
 import { crownsSlice, OwnerTokenIdentifiers } from '../crowns-slice';
 import { actorInstanceHandler } from '../../../../integrations/actor';
 import { AppLog } from '../../../../utils/log';
-import { notificationActions } from '../../errors';
+import { notificationActions } from '../../notifications';
 
 type OwnerTokenIdentifiersProps = DefaultCallbacks & {
   principalId: string;
