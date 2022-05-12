@@ -20,6 +20,7 @@ import {
   formatPriceValue,
   parseE8SAmountToWICP,
 } from '../../utils/formatters';
+import { isTokenId } from '../../utils/nfts';
 
 /* --------------------------------------------------------------------------
  * NFT Offers Table Component
@@ -55,9 +56,7 @@ export const NFTOffersTable = ({
     (state: RootState) => state.marketplace.recentlyMadeOffers,
   );
 
-  const recentlyCancelledOffers = useSelector((state: RootState) => {
-    return state.marketplace.recentlyCancelledOffers;
-  });
+  const recentlyCancelledOffers = useSelector((state: RootState) => state.marketplace.recentlyCancelledOffers);
 
   const { id: tokenId } = useParams();
 
@@ -76,12 +75,12 @@ export const NFTOffersTable = ({
   }, [isConnectedOwner]);
 
   useEffect(() => {
-    if (!tokenId) return;
+    if (!isTokenId(tokenId)) return;
 
     dispatch(
       marketplaceActions.getTokenOffers({
         // TODO: update ownerTokenIdentifiers naming convention
-        ownerTokenIdentifiers: [BigInt(tokenId)],
+        ownerTokenIdentifiers: [BigInt(tokenId as string)],
         onSuccess: (offers: any) => {
           setTableDetails({
             loading: false,

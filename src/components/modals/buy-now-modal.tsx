@@ -17,6 +17,7 @@ import {
   BuyNowModalTrigger,
 } from './styles';
 import { AppLog } from '../../utils/log';
+import { isTokenId } from '../../utils/nfts';
 import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 
 /* --------------------------------------------------------------------------
@@ -68,10 +69,7 @@ export const BuyNowModal = ({
   };
 
   const handleDirectBuy = () => {
-    if (
-      typeof tokenId === 'undefined' ||
-      (!tokenId && Number(tokenId) !== 0)
-    ) {
+    if (!isTokenId(tokenId)) {
       AppLog.warn('Oops! Missing id param');
 
       return;
@@ -81,7 +79,7 @@ export const BuyNowModal = ({
 
     dispatch(
       marketplaceActions.directBuy({
-        tokenId,
+        tokenId: tokenId as bigint,
         price,
         onSuccess: () => {
           // TODO: the get all listings is used to get data from the canister
@@ -100,6 +98,11 @@ export const BuyNowModal = ({
   };
 
   const handleViewNFT = () => {
+    // TODO: The tokenId is already declared at the top
+    // and its not determined by the location.pathname
+    // but instead id preceeds actionTextId
+    // so maybe decide which logic is valid and reuse for both cases
+    // unless there's a reason why for this
     const tokenId = location.pathname === "/" ? actionTextId : id
     navigate(`/nft/${tokenId}`, { replace: true });
     setModalOpened(false);
