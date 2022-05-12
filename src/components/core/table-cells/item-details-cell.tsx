@@ -5,6 +5,7 @@ import {
   useAppDispatch,
   useTableStore,
 } from '../../../store';
+import { isTokenId } from '../../../utils/nfts';
 import { ItemDetails, ItemLogo, ItemName } from './styles';
 import { ImageSkeleton } from '../../tables/styles';
 
@@ -22,7 +23,8 @@ export const ItemDetailsCell = ({
   const { loadedTableMetaData } = useTableStore();
 
   useEffect(() => {
-    if (!id) return;
+    if (!isTokenId(id)) return;
+
     dispatch(tableActions.getTokenMetadata({ id }));
   }, [dispatch, id]);
 
