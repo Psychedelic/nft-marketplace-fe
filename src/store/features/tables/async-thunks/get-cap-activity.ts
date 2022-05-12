@@ -80,21 +80,23 @@ export const getCAPActivity = createAsyncThunk<
     const result = Items.map((item: any) => {
       pageNo = item.page;
 
+      const isOffering = ['directBuy', 'makeOffer'].includes(item?.event?.operation);
+
       // eslint-disable-next-line no-underscore-dangle
       const parsedFromPrincipal = (() => {
-        if (item?.event?.details?.[2]?.[0] !== 'buyer') {
+        if (!isOffering) {
           // eslint-disable-next-line no-underscore-dangle
-          return getFormattedPrincipal(item?.event?.details?.[3]?.[1]?.Principal?._arr);
+          return getFormattedPrincipal(item?.event?.caller?._arr);
         };
-
-        // eslint-disable-next-line no-underscore-dangle
-        return getFormattedPrincipal(item?.event?.caller?._arr);
-      })();
-      const parsedToPrincipal = (() => {
-        if (item?.event?.details?.[2]?.[0] !== 'buyer') return;
-
+        
         // eslint-disable-next-line no-underscore-dangle
         return getFormattedPrincipal(item?.event?.details?.[3]?.[1]?.Principal?._arr);
+      })();
+      const parsedToPrincipal = (() => {
+        if (!isOffering) return;
+
+        // eslint-disable-next-line no-underscore-dangle
+        return getFormattedPrincipal(item?.event?.details?.[2]?.[1]?.Principal?._arr);
       })();
 
       if (!parsedFromPrincipal) return;
