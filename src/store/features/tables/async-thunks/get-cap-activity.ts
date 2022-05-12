@@ -41,6 +41,27 @@ const getOperation = (operationType: string) => {
   return operationValue;
 };
 
+const getFormattedPrincipal = (arr: any) => {
+  // eslint-disable-next-line no-underscore-dangle
+  if (!arr) return;
+
+  const parsedArr = Uint8Array.from(
+    // eslint-disable-next-line no-underscore-dangle
+    Object.values(arr),
+  );
+  const raw = Principal.fromUint8Array(parsedArr);
+  const text = raw.toText();
+  const formatted = shortAddress(
+    raw.toText(),
+  );
+
+  return {
+    raw,
+    text,
+    formatted,
+  };
+};
+
 export const getCAPActivity = createAsyncThunk<
   void,
   GetCAPActivityProps
@@ -58,22 +79,35 @@ export const getCAPActivity = createAsyncThunk<
 
     const result = Items.map((item: any) => {
       pageNo = item.page;
-      const parsedArr = Uint8Array.from(
+
+      // eslint-disable-next-line no-underscore-dangle
+      const parsedFromPrincipal = (() => {
+        if (item?.event?.details?.[2]?.[0] !== 'buyer') {
+          // eslint-disable-next-line no-underscore-dangle
+          return getFormattedPrincipal(item?.event?.details?.[3]?.[1]?.Principal?._arr);
+        };
+
         // eslint-disable-next-line no-underscore-dangle
-        Object.values(item.event.caller._arr),
-      );
-      const callerPrincipalId = Principal.fromUint8Array(parsedArr);
-      const callerPrincipalIdString = shortAddress(
-        callerPrincipalId.toText(),
-      );
+        return getFormattedPrincipal(item?.event?.caller?._arr);
+      })();
+      const parsedToPrincipal = (() => {
+        if (item?.event?.details?.[2]?.[0] !== 'buyer') return;
+
+        // eslint-disable-next-line no-underscore-dangle
+        return getFormattedPrincipal(item?.event?.details?.[3]?.[1]?.Principal?._arr);
+      })();
+
+      if (!parsedFromPrincipal) return;
 
       const capData = {
         operation: getOperation(item.event.operation),
         time: dateRelative(item.event.time),
-        caller: callerPrincipalIdString,
+        caller: parsedFromPrincipal.formatted,
         callerDfinityExplorerUrl: getICAccountLink(
-          callerPrincipalId.toText(),
+          parsedFromPrincipal?.raw.toString(),
         ),
+        from: parsedFromPrincipal.formatted,
+        to: parsedToPrincipal?.formatted,
       };
 
       const { details } = item.event;
@@ -94,8 +128,8 @@ export const getCAPActivity = createAsyncThunk<
           },
           type: tableData.operation,
           price: `${tableData.list_price ?? tableData.price}`,
-          from: tableData.caller,
-          to: '-',
+          from: tableData.from,
+          to: tableData.to,
           time: tableData.time,
           offerFrom: 'Prasanth',
           callerDfinityExplorerUrl:
