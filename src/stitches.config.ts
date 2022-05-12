@@ -35,7 +35,7 @@ export const {
       chipsNftBackgroundColor: '#F4F5F6',
       modalOverlay: '#fafbfde6',
       skeletonBackground:
-        'linear-gradient(90deg, rgb(229, 232, 235) 0%, rgb(247, 248, 250) 59.9%)',
+        'linear-gradient(90deg, rgb(209 211 213) 0%, rgb(247, 248, 250) 59.9%)',
       checkboxSelectedFiltersText: '#23262F',
       greyMid: '#767D8E',
       error: '#FD5F51',

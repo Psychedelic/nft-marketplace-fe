@@ -3,7 +3,7 @@ import { styled, keyframes } from '../../stitches.config';
 
 const fadeInOut = keyframes({
   '0%': {
-    opacity: '0.2',
+    opacity: '0.5',
   },
   '100%': {
     opacity: '1',
