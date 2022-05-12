@@ -1,4 +1,4 @@
-export enum OperationConstants {
+export enum OperationTypes {
   makeListing = 'list',
   directBuy = 'sale',
   makeOffer = 'offer',
