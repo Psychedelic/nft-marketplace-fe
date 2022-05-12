@@ -5,7 +5,7 @@ import {
   KyasshuUrl,
   NSKyasshuUrl,
 } from '../../../../integrations/kyasshu';
-import { notificationActions } from '../../errors';
+import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 
 export type GetNFTDetailsProps =
@@ -57,7 +57,7 @@ export const getNFTDetails = createAsyncThunk<
           name: responseData?.metadata?.smallgem?.value?.TextContent,
           occurance: null,
           rarity: null,
-        }
+        },
       },
       owner: responseData?.owner,
     };

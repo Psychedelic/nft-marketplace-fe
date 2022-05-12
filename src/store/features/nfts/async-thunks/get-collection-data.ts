@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { nftsActions } from '../nfts-slice';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
-import { notificationActions } from '../../errors';
+import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { marketplaceActions } from '../../marketplace/marketplace-slice';
 
@@ -51,3 +51,4 @@ export const getCollectionData = createAsyncThunk<void>(
     }
   },
 );
+

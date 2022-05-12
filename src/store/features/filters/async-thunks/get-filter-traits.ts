@@ -6,7 +6,7 @@ import {
 } from '../../../../integrations/kyasshu';
 import { FilterConstants } from '../../../../constants';
 import { filterActions, FilterTraitsList } from '..';
-import { notificationActions } from '../../errors';
+import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { NFTMetadata } from '../../../../declarations/legacy';
 
@@ -98,12 +98,11 @@ export const extractTraitData = ({
               (traitData: FilterTraitsList) =>
                 traitData.name === traitName,
             )
-            .map((traitData: FilterTraitsList) => {
-              return traitData.values;
-            })[0]
-            .filter((traitDataValues: TraitsValuesProps) => {
-              return traitDataValues?.value === nftName;
-            })[0];
+            .map((traitData: FilterTraitsList) => traitData.values)[0]
+            .filter(
+              (traitDataValues: TraitsValuesProps) =>
+                traitDataValues?.value === nftName,
+            )[0];
         nftDetails = {
           ...nftDetails,
           traits: {

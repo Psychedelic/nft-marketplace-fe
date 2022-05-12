@@ -1,10 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Error, NavBar } from './components';
+import { NavBar, ToastHandler } from './components';
 import CollectionView from './views/CollectionView';
 import NFTView from './views/NFTView';
 import OfferView from './views/OffersView';
-import SuccessHandling from './components/toast/success-handling';
 import { useTheme } from './hooks/use-theme';
 
 const App = () => {
@@ -22,8 +21,7 @@ const App = () => {
           <Route path="/offers/:id" element={<OfferView />} />
         </Routes>
       </BrowserRouter>
-      <Error />
-      <SuccessHandling />
+      <ToastHandler />
     </div>
   );
 };

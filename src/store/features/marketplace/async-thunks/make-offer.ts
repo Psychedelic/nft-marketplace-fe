@@ -1,7 +1,7 @@
 import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { notificationActions } from '../../errors';
+import { notificationActions } from '../../notifications';
 import { MakeOffer } from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
@@ -9,9 +9,7 @@ import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { errorMessageHandler } from '../../../../utils/error';
-import {
-  KyasshuUrl,
-} from '../../../../integrations/kyasshu';
+import { KyasshuUrl } from '../../../../integrations/kyasshu';
 
 export type MakeOfferProps = DefaultCallbacks & MakeOffer;
 
@@ -52,13 +50,12 @@ export const makeOffer = createAsyncThunk<
         userOfferInPrice,
       ],
       onSuccess: (res: any) => {
-        if ('Err' in res) throw new Error(
-          errorMessageHandler(res.Err)
-        );
+        if ('Err' in res)
+          throw new Error(errorMessageHandler(res.Err));
 
         if (typeof onSuccess !== 'function') return;
 
-        onSuccess()
+        onSuccess();
       },
       onFail: (res: any) => {
         throw res;
@@ -76,9 +73,7 @@ export const makeOffer = createAsyncThunk<
 
     // We call the Cap Sync process
     // but we don't have to wait for the response
-    await axios.get(
-      KyasshuUrl.getCAPSync(),
-    );
+    await axios.get(KyasshuUrl.getCAPSync());
 
     return {
       id,

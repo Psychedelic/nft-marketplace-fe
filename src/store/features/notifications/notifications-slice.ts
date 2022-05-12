@@ -2,24 +2,26 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
 
-export type ErrorMessages = {
+export type NotificationMessage = {
   message: string;
   id: number;
+  type: 'error' | 'success';
 };
 
-export type SuccessMessages = {
-  message: string;
-  id: number;
+export type ErrorMessages = NotificationMessage & {
+  type: 'error';
+};
+
+export type SuccessMessages = NotificationMessage & {
+  type: 'success';
 };
 
 export interface NotificationState {
-  errorMessages: ErrorMessages[];
-  successMessages: SuccessMessages[];
+  messages: Array<ErrorMessages | SuccessMessages>;
 }
 
 const initialState: NotificationState = {
-  errorMessages: [],
-  successMessages: [],
+  messages: [],
 };
 
 export const notificationSlice = createSlice({
@@ -27,26 +29,23 @@ export const notificationSlice = createSlice({
   initialState,
   reducers: {
     setErrorMessage: (state, action: PayloadAction<string>) => {
-      state.errorMessages.push({
+      state.messages.push({
         message: action.payload,
         id: Date.now(),
+        type: 'error',
       });
     },
-    removeErrorMessage: (state, action: PayloadAction<number>) => {
-      state.errorMessages = state.errorMessages.filter(
+    removeMessage: (state, action: PayloadAction<number>) => {
+      state.messages = state.messages.filter(
         (error) => error.id !== action.payload,
       );
     },
     setSuccessMessage: (state, action: PayloadAction<string>) => {
-      state.successMessages.push({
+      state.messages.push({
         message: action.payload,
         id: Date.now(),
+        type: 'success',
       });
-    },
-    removeSuccessMessage: (state, action: PayloadAction<number>) => {
-      state.successMessages = state.successMessages.filter(
-        (successMessage) => successMessage.id !== action.payload,
-      );
     },
   },
 });

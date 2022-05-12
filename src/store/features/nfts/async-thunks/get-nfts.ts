@@ -5,7 +5,7 @@ import {
   KyasshuUrl,
   NSKyasshuUrl,
 } from '../../../../integrations/kyasshu';
-import { notificationActions } from '../../errors';
+import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { findLastAction } from '../../../../utils/nfts';
 
@@ -16,7 +16,6 @@ export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
 export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
   'nfts/getNFTs',
   async ({ payload, sort, order, page, count }, { dispatch }) => {
-
     // set loading NFTS state to true
     if (page === 0) {
       dispatch(nftsActions.setIsNFTSLoading(true));
@@ -72,7 +71,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
               name: nft?.metadata?.smallgem?.value?.TextContent,
               occurance: null,
               rarity: null,
-            }
+            },
           },
           status: nft?.status,
           owner: nft?.owner,
