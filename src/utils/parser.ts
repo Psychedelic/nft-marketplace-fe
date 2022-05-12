@@ -8,9 +8,8 @@ import {
 } from './formatters';
 import { formatTimestamp } from '../integrations/functions/date';
 import { OffersTableItem } from '../declarations/legacy';
-import { OperationTypes } from '../components/core/table-cells/type-details-cell';
 import { sortTokenOffersByPrice } from './sorting';
-import { OperationConstants } from '../constants';
+import { OperationTypes } from '../constants';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
@@ -195,7 +194,7 @@ export const parseOffersMadeResponse = ({
   return parsedOffersMade;
 };
 
-export const getOperationType = (operationType: OperationTypes) => OperationConstants[operationType];
+export const getOperationType = (operationType: keyof typeof OperationTypes) => OperationTypes[operationType];
 
 // TODO: Should be reused, as table type is similar
 // see comment in the nft-activity-table-tsx
