@@ -15,14 +15,26 @@ export type GetCAPActivityProps = CapActivityParams;
 const getOperation = (operationType: string) => {
   let operationValue;
   switch (operationType) {
-    case 'makeSaleOffer':
-      operationValue = OperationConstants.list;
+    case 'makeListing':
+      operationValue = OperationConstants.makeListing;
       break;
-    case 'acceptBuyOffer':
-      operationValue = OperationConstants.sale;
+    case 'directBuy':
+      operationValue = OperationConstants.directBuy;
       break;
     case 'makeOffer':
-      operationValue = OperationConstants.offer;
+      operationValue = OperationConstants.makeOffer;
+      break;
+    case 'denyOffer':
+      operationValue = OperationConstants.denyOffer;
+      break;
+    case 'cancelOffer':
+      operationValue = OperationConstants.cancelOffer;
+      break;
+    case 'cancelListing':
+      operationValue = OperationConstants.cancelListing;
+      break;
+    case 'acceptOffer':
+      operationValue = OperationConstants.acceptOffer;
       break;
     default:
   }
