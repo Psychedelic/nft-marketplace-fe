@@ -19,12 +19,15 @@ export interface TableState {
   nextPageNo: number;
   tokenTransactions: any;
   loadingTokenTransactions: boolean;
+  tokenMetadataById: TokenMetadataById;
 }
 
 export interface CapActivityParams {
   pageCount: number;
   bucketId: string;
 }
+
+export type TokenMetadataById = Record<string, string>;
 
 interface LoadedTableData {
   loadedCapActivityTableData: Array<object>;
@@ -44,6 +47,7 @@ const initialState: TableState = {
   nextPageNo: 0,
   tokenTransactions: [],
   loadingTokenTransactions: true,
+  tokenMetadataById: {},
 };
 
 export const tableSlice = createSlice({
@@ -87,13 +91,17 @@ export const tableSlice = createSlice({
       state.failedToLoadTableData = !action.payload;
       state.loadingTableData = action.payload;
     },
-    setTableMetadata: (state, action: PayloadAction<string>) => {
-      state.loadedTableMetaData.media = action.payload;
-    },
   },
   extraReducers: (builder) => {
-    // TODO: Token transactions should be saved by id
-    // for quick access, to start will reset on each new call
+    builder.addCase(getTokenMetadata.fulfilled, (state, action) => {
+      if (!action || !action.payload) return;
+
+      state.tokenMetadataById = {
+        ...state.tokenMetadataById,
+        ...action.payload,
+      };
+    });
+
     builder.addCase(getTokenTransactions.pending, (state) => {
       state.tokenTransactions = initialState.tokenTransactions;
       state.loadingTokenTransactions = true;

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   tableActions,
   useAppDispatch,
-  useTableStore,
+  RootState,
 } from '../../../store';
-import { isTokenId } from '../../../utils/nfts';
+import { isTokenId, getTokenMetadataThumbnail } from '../../../utils/nfts';
 import { ItemDetails, ItemLogo, ItemName } from './styles';
 import { ImageSkeleton } from '../../tables/styles';
 
@@ -20,21 +21,28 @@ export const ItemDetailsCell = ({
   id,
 }: ItemDetailsCellProps) => {
   const dispatch = useAppDispatch();
-  const { loadedTableMetaData } = useTableStore();
+  const tokenMetadataById = useSelector(
+    (state: RootState) => state.table.tokenMetadataById,
+  );
 
   useEffect(() => {
     if (!isTokenId(id)) return;
 
-    dispatch(tableActions.getTokenMetadata({ id }));
+    dispatch(tableActions.getTokenMetadata({ id } as { id: number | string }));
   }, [dispatch, id]);
+
+  const hasThumbnail = isTokenId(id) && getTokenMetadataThumbnail({
+    tokenMetadataById,
+    tokendId: id as string | number,
+  });
 
   return (
     <RouterLink to={`/nft/${id}`}>
       <ItemDetails>
-        {!loadedTableMetaData.media ? (
+        {!hasThumbnail ? (
           <ImageSkeleton />
         ) : (
-          <ItemLogo src={loadedTableMetaData.media} alt="crowns" />
+          <ItemLogo src={hasThumbnail} alt="crowns" />
         )}
         <ItemName className="item-name">{name}</ItemName>
       </ItemDetails>

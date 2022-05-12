@@ -51,7 +51,7 @@ export namespace NSKyasshuUrl {
   };
 
   export type GetNFTDetailsQueryParams = {
-    id?: string | number;
+    id: string | number;
   };
 
   export type GetFilterTraitsQueryParams = {};
