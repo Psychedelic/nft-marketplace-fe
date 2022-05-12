@@ -13,7 +13,6 @@ import {
   useErrorsStore,
 } from '../../store';
 import { Icon, Icons } from '../icons';
-import type {} from '../icons';
 
 const ToastIcons: {
   [key in NotificationMessage['type']]: keyof typeof Icons;
