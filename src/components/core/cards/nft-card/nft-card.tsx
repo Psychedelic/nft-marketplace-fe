@@ -68,9 +68,6 @@ const OnConnected = ({
   const showBuyerOptions = !owned;
   const showSellOptions = owned;
 
-  // TODO: show Edit button for the owners when
-  // token got listed
-
   return (
     <>
       {showSellOptions && (
@@ -86,6 +83,7 @@ const OnConnected = ({
               onClose={() => setModalStatus(false)}
               actionText={`${t('translation:nftCard.editListing')}`}
               nftTokenId={tokenId}
+              nftPrice={price}
             />
           )}
         </div>
