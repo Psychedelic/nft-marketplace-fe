@@ -199,7 +199,7 @@ export const ButtonWrapper = styled('div', {
   height: '33px',
 });
 
-export const InfiniteScrollWrapper = styled(InfiniteScroll, {
+export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
   width: '100%',
   height: '100vh',
 });
