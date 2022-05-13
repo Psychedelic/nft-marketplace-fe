@@ -118,7 +118,7 @@ export const CollectionItems = () => {
                         appliedFilter.filterCategory !==
                         `${t('translation:filters.priceRange')}`
                           ? appliedFilter.filterName
-                          : `WICP: ${parseE8SAmountToWICP(appliedFilter.filterName.min)} - ${parseE8SAmountToWICP(appliedFilter.filterName.max)}`
+                          : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`
                       }
                       rim={`${appliedFilter.filterCategory}`}
                       appliedFilterValue={appliedFilter}
