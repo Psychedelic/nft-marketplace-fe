@@ -26,6 +26,7 @@ import {
   MakeOfferModal,
   ConnectToPlugModal,
   SellModal,
+  ChangePriceModal,
 } from '../../../modals';
 import { usePlugStore } from '../../../../store';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
@@ -74,13 +75,19 @@ const OnConnected = ({
     <>
       {showSellOptions && (
         <div onClick={() => setModalStatus(true)} role="dialog">
-          {(!isForSale && (
+          {!isForSale ? (
             <SellModal
               onClose={() => setModalStatus(false)}
               actionText={`${t('translation:nftCard.sell')}`}
               nftTokenId={tokenId}
             />
-          )) || <span />}
+          ) : (
+            <ChangePriceModal
+              onClose={() => setModalStatus(false)}
+              actionText={`${t('translation:nftCard.editListing')}`}
+              nftTokenId={tokenId}
+            />
+          )}
         </div>
       )}
       {(showBuyerOptions && (
