@@ -1,15 +1,15 @@
 import React from 'react';
-import { NftDetailSkeleton, NFTTraitsChipSkeleton } from './styles';
+import { NftDetailTraitSkeleton, NFTTraitsChipSkeleton } from './styles';
 
-const NftDetailsSkeleton = () => {
+const NftDetailsTraitSkeleton = () => {
   return (
-    <NftDetailSkeleton>
+    <NftDetailTraitSkeleton>
       <NFTTraitsChipSkeleton></NFTTraitsChipSkeleton>
       <NFTTraitsChipSkeleton></NFTTraitsChipSkeleton>
       <NFTTraitsChipSkeleton></NFTTraitsChipSkeleton>
       <NFTTraitsChipSkeleton></NFTTraitsChipSkeleton>
-    </NftDetailSkeleton>
+    </NftDetailTraitSkeleton>
   );
 };
 
-export default NftDetailsSkeleton;
+export default NftDetailsTraitSkeleton;

@@ -29,7 +29,7 @@ import {
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { extractTraitData } from '../../store/features/filters/async-thunks/get-filter-traits';
-import NftDetailsSkeleton from './nft-details-skeleton';
+import NftDetailsTraitSkeleton from './nft-details-skeleton';
 
 // type CurrentListing = {
 //   seller: string;
@@ -137,7 +137,7 @@ export const NftDetails = () => {
             <NFTTraitsContainer>
               {loadingFilterList ? (
                 // TO-DO: Add in skeleton for trait boxes
-                <NftDetailsSkeleton />
+                <NftDetailsTraitSkeleton />
               ) : (
                 <>
                   <NFTTraitsChip

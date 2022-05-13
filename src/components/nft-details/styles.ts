@@ -54,7 +54,7 @@ export const DetailsContainer = styled('div', {
   padding: '0px 0px 0px 30px',
 });
 
-export const NftDetailSkeleton = styled('div', {
+export const NftDetailTraitSkeleton = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
 });
