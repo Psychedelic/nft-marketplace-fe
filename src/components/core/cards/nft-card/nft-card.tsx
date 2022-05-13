@@ -67,6 +67,9 @@ const OnConnected = ({
   const showBuyerOptions = !owned;
   const showSellOptions = owned;
 
+  // TODO: show Edit button for the owners when
+  // token got listed
+
   return (
     <>
       {showSellOptions && (
