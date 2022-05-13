@@ -17,6 +17,7 @@ import {
   useTraitsPayload,
   isNFTOwner,
 } from '../../integrations/kyasshu/utils';
+import { parseAmountToE8S } from '../../utils/formatters';
 
 export const NftList = () => {
   const { t } = useTranslation();
@@ -43,8 +44,8 @@ export const NftList = () => {
       price:
         priceValues && Object.keys(priceValues).length
           ? {
-              min: priceValues?.min,
-              max: priceValues?.max,
+              min: Number(parseAmountToE8S(priceValues?.min)),
+              max: Number(parseAmountToE8S(priceValues?.max)),
               type: 'currentPrice',
             }
           : undefined,
