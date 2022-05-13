@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
-import { usePlugStore } from '../../../store';
+import { useAppDispatch, usePlugStore } from '../../../store';
 import { LinkButton } from '../buttons';
 import { AccordionContentMetaData } from '../../mock-data/accordion-data';
 import {
@@ -21,6 +22,7 @@ import plugIcon from '../../../assets/plug-circle.svg';
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { formatAddress } from '../../../utils/formatters';
 import { Icon } from '../../icons';
+import { notificationActions } from '../../../store/features/notifications';
 
 export type AboutAccordionProps = {
   owner?: string;
@@ -28,6 +30,7 @@ export type AboutAccordionProps = {
 
 export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
@@ -110,19 +113,30 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
               </Flex>
             ))}
             <ButtonWrapper>
-              <LinkButton type="textBtn">
+              <LinkButton type="textBtn" url="https://crowns.ooo/">
                 {t('translation:buttons.links.website')}
               </LinkButton>
 
-              <LinkButton>
+              <LinkButton url="https://discord.gg/yVEcEzmrgm">
                 <Icon icon="discord" />
               </LinkButton>
 
-              <LinkButton>
+              <LinkButton url="https://twitter.com/cap_ois">
                 <Icon icon="twitter" />
               </LinkButton>
 
-              <LinkButton>
+              <LinkButton
+                handleClick={() => {
+                  copyToClipboard(window.location.href);
+                  dispatch(
+                    notificationActions.setSuccessMessage(
+                      `${t(
+                        'translation:successMessages.copyToClipboard',
+                      )}`,
+                    ),
+                  );
+                }}
+              >
                 <Icon icon="share" />
               </LinkButton>
             </ButtonWrapper>
