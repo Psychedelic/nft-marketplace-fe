@@ -19,6 +19,7 @@ import {
   VideoLoader,
   MediaWrapper,
   ActionText,
+  PriceInActionSheet,
 } from './styles';
 import wicpLogo from '../../../../assets/wicp.svg';
 import {
@@ -146,13 +147,13 @@ const LastActionTakenDetails = ({
             <ActionText>
               {t('translation:nftCard.lastSale')}
             </ActionText>
-            <b>
+            <PriceInActionSheet>
               {(data?.lastSale &&
                 parseE8SAmountToWICP(
                   BigInt(data.lastSale),
                 ).toString()) ||
                 ''}
-            </b>
+            </PriceInActionSheet>
           </>
         )}
       </ActionDetails>
@@ -168,13 +169,13 @@ const LastActionTakenDetails = ({
               ? `${t('translation:nftCard.offerFor')} `
               : `${t('translation:nftCard.last')} `}
           </ActionText>
-          <b>
+          <PriceInActionSheet>
             {(data?.lastOffer &&
               parseE8SAmountToWICP(
                 BigInt(data.lastOffer),
               ).toString()) ||
               ''}
-          </b>
+          </PriceInActionSheet>
         </>
       )}
     </ActionDetails>

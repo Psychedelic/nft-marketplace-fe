@@ -157,3 +157,9 @@ export const NFTCardOptions = styled('div', {
     margin: '0',
   },
 });
+
+export const PriceInActionSheet = styled('span', {
+  fontSize: '14px',
+  fontWeight: '700',
+  color: '$mainTextColor',
+});
