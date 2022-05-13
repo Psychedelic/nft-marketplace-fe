@@ -23,6 +23,7 @@ import { FaList } from '@react-icons/all-files/fa/FaList';
 import { FaInfoCircle } from '@react-icons/all-files/fa/FaInfoCircle';
 import { FaSearch } from '@react-icons/all-files/fa/FaSearch';
 import { GoVerified } from '@react-icons/all-files/go/GoVerified';
+import { FaRegHandPaper } from '@react-icons/all-files/fa/FaRegHandPaper';
 
 import { PlugIcon, AppNameIcon } from './custom';
 
@@ -52,6 +53,7 @@ export const Icons = {
   info: FaInfoCircle,
   search: FaSearch,
   verified: GoVerified,
+  'hand-paper': FaRegHandPaper,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,

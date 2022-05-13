@@ -22,6 +22,7 @@ import { NFTMetadata } from '../../declarations/legacy';
 import TableSkeletons from './table-skeletons';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import config from '../../config/env';
+import { OperationType } from '../../constants';
 
 interface RowProps {
   item: {
@@ -29,7 +30,7 @@ interface RowProps {
     logo: string;
     token_id: string;
   };
-  type: string;
+  type: OperationType;
   price: string;
   quantity: string;
   from: string;
@@ -93,7 +94,7 @@ export const ActivityTable = () => {
       {
         Header: t('translation:tables.titles.type'),
         accessor: ({ type }: RowProps) => (
-          <TypeDetailsCell name={type} type={type} tableType="" />
+          <TypeDetailsCell type={type} tableType="" />
         ),
       },
       {
