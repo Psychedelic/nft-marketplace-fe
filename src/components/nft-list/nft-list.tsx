@@ -44,8 +44,8 @@ export const NftList = () => {
       price:
         priceValues && Object.keys(priceValues).length
           ? {
-              min: parseAmountToE8S(priceValues?.min),
-              max: parseAmountToE8S(priceValues?.max),
+              min: Number(parseAmountToE8S(priceValues?.min)),
+              max: Number(parseAmountToE8S(priceValues?.max)),
               type: 'currentPrice',
             }
           : undefined,

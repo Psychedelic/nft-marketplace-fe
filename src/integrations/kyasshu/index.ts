@@ -31,8 +31,8 @@ export const useNFTSFetcher = () => {
       price:
         priceValues && Object.keys(priceValues).length
           ? {
-              min: parseAmountToE8S(priceValues?.min),
-              max: parseAmountToE8S(priceValues?.max),
+              min: Number(parseAmountToE8S(priceValues?.min)),
+              max: Number(parseAmountToE8S(priceValues?.max)),
               type: 'currentPrice',
             }
           : undefined,
@@ -42,7 +42,6 @@ export const useNFTSFetcher = () => {
   const { sortBy } = useFilterStore();
 
   useEffect(() => {
-    console.log(payload);
     dispatch(
       nftsActions.getNFTs({
         payload,
