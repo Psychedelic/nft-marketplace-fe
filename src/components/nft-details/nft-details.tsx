@@ -29,7 +29,7 @@ import {
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { extractTraitData } from '../../store/features/filters/async-thunks/get-filter-traits';
-import NftDetailsTraitSkeleton from './nft-details-skeleton';
+import NftDetailsTraitSkeleton from './nft-details-traits-skeleton';
 
 // type CurrentListing = {
 //   seller: string;
