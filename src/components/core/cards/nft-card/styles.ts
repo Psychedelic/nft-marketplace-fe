@@ -1,5 +1,6 @@
 import HoverVideoPlayer from 'react-hover-video-player';
 import { styled, keyframes } from '../../../../stitches.config';
+import { NumberTooltip } from '../../../number-tooltip';
 
 const overlaySpinner = keyframes({
   from: {
@@ -157,4 +158,10 @@ export const NFTCardOptions = styled('div', {
   '& p': {
     margin: '0',
   },
+});
+
+export const PriceInActionSheet = styled(NumberTooltip, {
+  fontSize: '14px',
+  fontWeight: '700',
+  color: '$mainTextColor',
 });

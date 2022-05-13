@@ -1,4 +1,4 @@
-export enum OperationConstants {
+export enum OperationTypes {
   makeListing = 'list',
   directBuy = 'sale',
   makeOffer = 'offer',
@@ -7,3 +7,5 @@ export enum OperationConstants {
   cancelListing = 'Cancel Listing',
   acceptOffer = 'sale',
 }
+
+export type OperationType = keyof typeof OperationTypes;

@@ -14,4 +14,4 @@ export * from './nft-details';
 export * from './plug';
 export * from './toast';
 export * from './icons';
-export * from './display-number';
+export * from './number-tooltip';

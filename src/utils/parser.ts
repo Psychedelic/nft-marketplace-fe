@@ -8,7 +8,8 @@ import {
 } from './formatters';
 import { formatTimestamp } from '../integrations/functions/date';
 import { OffersTableItem } from '../declarations/legacy';
-import { OperationTypes } from '../components/core/table-cells/type-details-cell';
+import { sortTokenOffersByPrice } from './sorting';
+import { OperationTypes, OperationType } from '../constants';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
@@ -68,7 +69,7 @@ export const parseAllListingResponseAsObj = (
 
 type TokenOffers = Array<[bigint, Array<Offer>]>;
 
-type ParsedTokenOffers = OffersTableItem[];
+export type ParsedTokenOffers = OffersTableItem[];
 
 interface ParseGetTokenOffersParams {
   data: TokenOffers;
@@ -134,7 +135,10 @@ export const parseGetTokenOffersResponse = ({
       [] as ParsedTokenOffers,
     );
 
-    return [...accParent, ...parsedTokenOffers];
+    const sortedOffersByPrice =
+      sortTokenOffersByPrice(parsedTokenOffers);
+
+    return [...accParent, ...sortedOffersByPrice];
   }, [] as ParsedTokenOffers);
 
   return parsed;
@@ -190,21 +194,8 @@ export const parseOffersMadeResponse = ({
   return parsedOffersMade;
 };
 
-// TODO: This should not exist, so no need to move to utils or helpers
-// only used temporarily to map the operation types to the types known in the UI
-// the UI should use the service operation type names instead
-export const getOperationType = (operation: OperationTypes) => {
-  // TODO: Refactor, the table should use the source type names
-  // see todo in /src/components/core/table-cells/type-details-cell.tsx
-  switch (operation) {
-    case 'directBuy':
-      return 'sale';
-    case 'makeListing':
-      return 'list';
-    default:
-      return operation;
-  }
-};
+// TODO: Have a "unknown" type for cases where operation mapping fails
+export const getOperationType = (operationType: OperationType) => OperationTypes[operationType];
 
 // TODO: Should be reused, as table type is similar
 // see comment in the nft-activity-table-tsx

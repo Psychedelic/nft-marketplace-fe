@@ -222,7 +222,8 @@
     "last": "Last",
     "sell": "Sell",
     "price": "Price",
-    "lastSale": "Last sale"
+    "lastSale": "Last sale",
+    "editListing": "Edit"
   },
   "tabs": {
     "items": "Items",

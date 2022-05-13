@@ -7,12 +7,14 @@ import {
 } from '../../utils/formatters';
 import { NumberTooltipContent, NumberTooltipTrigger } from './styles';
 
-export interface NumberTooltipProps {
+export interface NumberTooltipProps
+  extends React.HTMLProps<HTMLSpanElement> {
   children: number | string;
 }
 
 export const NumberTooltip: React.FC<NumberTooltipProps> = ({
   children,
+  ...spanProps
 }) => {
   const [, themeObject] = useTheme();
 
@@ -25,7 +27,7 @@ export const NumberTooltip: React.FC<NumberTooltipProps> = ({
   return (
     <Tooltip.Root delayDuration={300}>
       <NumberTooltipTrigger asChild>
-        <span>{triggerText}</span>
+        <span {...spanProps}>{triggerText}</span>
       </NumberTooltipTrigger>
       {contentText.length > 3 && (
         <NumberTooltipContent className={themeObject}>

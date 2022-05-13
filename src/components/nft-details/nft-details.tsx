@@ -29,6 +29,7 @@ import {
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { extractTraitData } from '../../store/features/filters/async-thunks/get-filter-traits';
+import TraitsListLoader from './TraitsListLoader';
 
 // type CurrentListing = {
 //   seller: string;
@@ -135,8 +136,7 @@ export const NftDetails = () => {
             </Video>
             <NFTTraitsContainer>
               {loadingFilterList ? (
-                // TO-DO: Add in skeleton for trait boxes
-                <p>Loading</p>
+                <TraitsListLoader />
               ) : (
                 <>
                   <NFTTraitsChip
