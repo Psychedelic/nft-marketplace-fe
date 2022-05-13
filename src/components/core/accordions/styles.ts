@@ -123,6 +123,7 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
     backgroundColor: {
       open: {
         background: '$openAccordion',
+        borderRadius: '0px',
       },
       notopen: {
         background: '$closeAccordion',
