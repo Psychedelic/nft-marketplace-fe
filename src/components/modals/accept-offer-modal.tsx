@@ -85,7 +85,8 @@ export const AcceptOfferModal = ({
 
     const isAccepted = modalStep === ListingStatusCodes.Accepted;
 
-    if (modalOpenedStatus || !isTokenId(tokenId) || !isAccepted) return;
+    if (modalOpenedStatus || !isTokenId(tokenId) || !isAccepted)
+      return;
 
     // Update NFT owner details in store
     // on successful offer acceptance and closing the modal
@@ -159,7 +160,14 @@ export const AcceptOfferModal = ({
         Modal Content
         ---------------------------------
       */}
-      <ModalContent>
+      <ModalContent
+        onInteractOutside={(event) => {
+          event.preventDefault();
+        }}
+        onEscapeKeyDown={(event) => {
+          event.preventDefault();
+        }}
+      >
         {/*
           ---------------------------------
           Step: 1 -> offerInfo

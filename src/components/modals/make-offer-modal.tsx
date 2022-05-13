@@ -139,7 +139,14 @@ export const MakeOfferModal = ({
         Modal Content
         ---------------------------------
       */}
-      <ModalContent>
+      <ModalContent
+        onInteractOutside={(event) => {
+          event.preventDefault();
+        }}
+        onEscapeKeyDown={(event) => {
+          event.preventDefault();
+        }}
+      >
         {/*
           ---------------------------------
           Step: 1 -> listingInfo
