@@ -25,6 +25,7 @@ import {
   ModalButtonsList,
   ModalButtonWrapper,
   InfoIcon,
+  ActionText,
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
@@ -36,12 +37,23 @@ import {
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
+import { AppLog } from '../../utils/log';
 
 /* --------------------------------------------------------------------------
  * Edit Listing Modal Component
  * --------------------------------------------------------------------------*/
 
-export const ChangePriceModal = () => {
+export type ChangePriceModalProps = {
+  onClose?: () => void;
+  actionText?: string;
+  nftTokenId?: string;
+};
+
+export const ChangePriceModal = ({
+  onClose,
+  actionText,
+  nftTokenId,
+}: ChangePriceModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -54,6 +66,8 @@ export const ChangePriceModal = () => {
     ListingStatusCodes.ListingInfo,
   );
   const [amount, setAmount] = useState<string>('');
+
+  const tokenId = useMemo(() => id || nftTokenId, [id, nftTokenId]);
 
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
@@ -90,16 +104,21 @@ export const ChangePriceModal = () => {
 
   const handleModalClose = () => {
     setModalOpened(false);
+    if (onClose) onClose();
   };
 
   const handleListing = async () => {
-    if (!id) return;
+    if (!tokenId) {
+      AppLog.warn('Oops! Missing NFT id param');
+
+      return;
+    }
 
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       marketplaceActions.makeListing({
-        id,
+        id: tokenId,
         amount,
         onSuccess: () => {
           // TODO: should the app state change / update
@@ -115,7 +134,7 @@ export const ChangePriceModal = () => {
   };
 
   const handleViewNFT = () => {
-    navigate(`/nft/${id}`, { replace: true });
+    navigate(`/nft/${tokenId}`, { replace: true });
     setModalOpened(false);
   };
 
@@ -130,11 +149,15 @@ export const ChangePriceModal = () => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <ChangePriceModalTrigger>
-          <ActionButton type="primary">
-            {t('translation:buttons.action.editListing')}
-          </ActionButton>
-        </ChangePriceModalTrigger>
+        {actionText ? (
+          <ActionText>{actionText}</ActionText>
+        ) : (
+          <ChangePriceModalTrigger>
+            <ActionButton type="primary">
+              {t('translation:buttons.action.editListing')}
+            </ActionButton>
+          </ChangePriceModalTrigger>
+        )}
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------
