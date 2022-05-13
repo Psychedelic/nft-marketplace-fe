@@ -26,7 +26,11 @@ export const findLastAction = (nft: NFTParams) => {
 };
 
 // eslint-disable-next-line no-restricted-globals
-export const isTokenId = (id: any) => typeof id !== 'undefined' && !isNaN(id) && Number(id) >= 0
+export const isTokenId = (id: any) => {
+  const parsedId = Number(id);
+
+  return typeof id !== 'undefined' && !isNaN(parsedId) && parsedId >= 0;
+}
 
 export const getTokenMetadataThumbnail = ({
   tokendId,
