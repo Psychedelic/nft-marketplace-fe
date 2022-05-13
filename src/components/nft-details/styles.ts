@@ -53,3 +53,26 @@ export const DetailsContainer = styled('div', {
   alignItems: 'flex-end',
   padding: '0px 0px 0px 30px',
 });
+
+export const NftDetailSkeleton = styled('div', {
+  display: 'flex',
+  flexWrap: 'wrap',
+});
+
+export const NFTTraitsChipSkeleton = styled('div', {
+  boxSizing: 'border-box',
+  display: 'flex',
+  alignItems: 'center',
+  padding: '12px 15px',
+  borderRadius: '14px',
+  background: '$skeletonBackground',
+  minWidth: '150px',
+  border: '1.5px solid $borderColor',
+  margin: '0px 15px 15px 0px',
+  height: '85px',
+
+  '&:nth-child(3)': {
+    marginRight: '0px',
+  },
+});
+
