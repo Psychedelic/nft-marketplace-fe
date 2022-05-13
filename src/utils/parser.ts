@@ -9,6 +9,7 @@ import {
 import { formatTimestamp } from '../integrations/functions/date';
 import { OffersTableItem } from '../declarations/legacy';
 import { OperationTypes } from '../components/core/table-cells/type-details-cell';
+import { sortTokenOffersByPrice } from './sorting';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
@@ -68,7 +69,7 @@ export const parseAllListingResponseAsObj = (
 
 type TokenOffers = Array<[bigint, Array<Offer>]>;
 
-type ParsedTokenOffers = OffersTableItem[];
+export type ParsedTokenOffers = OffersTableItem[];
 
 interface ParseGetTokenOffersParams {
   data: TokenOffers;
@@ -134,7 +135,10 @@ export const parseGetTokenOffersResponse = ({
       [] as ParsedTokenOffers,
     );
 
-    return [...accParent, ...parsedTokenOffers];
+    const sortedOffersByPrice =
+      sortTokenOffersByPrice(parsedTokenOffers);
+
+    return [...accParent, ...sortedOffersByPrice];
   }, [] as ParsedTokenOffers);
 
   return parsed;
