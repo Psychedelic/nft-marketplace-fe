@@ -73,6 +73,10 @@ export const NFTTraitsChipSkeleton = styled('div', {
 
   '&:nth-child(3)': {
     marginRight: '0px',
+
+    '@md': {
+      marginRight: '15px',
+    },
   },
 });
 
