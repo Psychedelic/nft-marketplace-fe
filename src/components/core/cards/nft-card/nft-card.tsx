@@ -32,6 +32,7 @@ import {
 import { usePlugStore } from '../../../../store';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 import { NFTActionStatuses } from '../../../../constants/common';
+import { NumberTooltip } from '../../../number-tooltip';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -230,7 +231,9 @@ export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
               {isForSale && (
                 <>
                   <img src={wicpLogo} alt="" />
-                  {parseE8SAmountToWICP(data?.price)}
+                  <NumberTooltip>
+                    {parseE8SAmountToWICP(data?.price)}
+                  </NumberTooltip>
                 </>
               )}
             </NftDataText>
