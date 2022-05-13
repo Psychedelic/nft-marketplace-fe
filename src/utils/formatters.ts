@@ -50,6 +50,8 @@ export const parseE8SAmountToWICP = (amount: bigint) => {
   return computedWICP.toString();
 };
 
+export const parseAmountToE8SAsNum = (amount: string) => Number(parseAmountToE8S(amount));
+
 const fixStringEnding = (str: string): string =>
   str.replace(/0+$/, '').replace(/\.$/, '');
 
