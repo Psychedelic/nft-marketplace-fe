@@ -19,6 +19,7 @@ import {
   VideoLoader,
   MediaWrapper,
   ActionText,
+  PriceInActionSheet,
 } from './styles';
 import wicpLogo from '../../../../assets/wicp.svg';
 import {
@@ -26,6 +27,7 @@ import {
   MakeOfferModal,
   ConnectToPlugModal,
   SellModal,
+  ChangePriceModal,
 } from '../../../modals';
 import { usePlugStore } from '../../../../store';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
@@ -71,13 +73,20 @@ const OnConnected = ({
     <>
       {showSellOptions && (
         <div onClick={() => setModalStatus(true)} role="dialog">
-          {(!isForSale && (
+          {!isForSale ? (
             <SellModal
               onClose={() => setModalStatus(false)}
               actionText={`${t('translation:nftCard.sell')}`}
               nftTokenId={tokenId}
             />
-          )) || <span />}
+          ) : (
+            <ChangePriceModal
+              onClose={() => setModalStatus(false)}
+              actionText={`${t('translation:nftCard.editListing')}`}
+              nftTokenId={tokenId}
+              nftPrice={price}
+            />
+          )}
         </div>
       )}
       {(showBuyerOptions && (
@@ -138,13 +147,13 @@ const LastActionTakenDetails = ({
             <ActionText>
               {t('translation:nftCard.lastSale')}
             </ActionText>
-            <b>
+            <PriceInActionSheet>
               {(data?.lastSale &&
                 parseE8SAmountToWICP(
                   BigInt(data.lastSale),
                 ).toString()) ||
                 ''}
-            </b>
+            </PriceInActionSheet>
           </>
         )}
       </ActionDetails>
@@ -160,13 +169,13 @@ const LastActionTakenDetails = ({
               ? `${t('translation:nftCard.offerFor')} `
               : `${t('translation:nftCard.last')} `}
           </ActionText>
-          <b>
+          <PriceInActionSheet>
             {(data?.lastOffer &&
               parseE8SAmountToWICP(
                 BigInt(data.lastOffer),
               ).toString()) ||
               ''}
-          </b>
+          </PriceInActionSheet>
         </>
       )}
     </ActionDetails>

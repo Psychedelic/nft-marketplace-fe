@@ -25,6 +25,7 @@ import {
   ModalButtonsList,
   ModalButtonWrapper,
   InfoIcon,
+  ActionText,
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
@@ -36,12 +37,26 @@ import {
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
+import { AppLog } from '../../utils/log';
+import { isTokenId } from '../../utils/nfts';
 
 /* --------------------------------------------------------------------------
  * Edit Listing Modal Component
  * --------------------------------------------------------------------------*/
 
-export const ChangePriceModal = () => {
+export type ChangePriceModalProps = {
+  onClose?: () => void;
+  actionText?: string;
+  nftTokenId?: string;
+  nftPrice?: bigint;
+};
+
+export const ChangePriceModal = ({
+  onClose,
+  actionText,
+  nftTokenId,
+  nftPrice,
+}: ChangePriceModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -55,19 +70,28 @@ export const ChangePriceModal = () => {
   );
   const [amount, setAmount] = useState<string>('');
 
+  const tokenId = useMemo(() => id || nftTokenId, [id, nftTokenId]);
+
   const nftDetails: NFTMetadata | undefined = useMemo(
     () => loadedNFTS.find((nft) => nft.id === id),
     [loadedNFTS, id],
   );
 
-  useEffect(() => {
-    if (!nftDetails?.price || !modalOpened) return;
+  const tokenPrice = useMemo(
+    () =>
+      (nftDetails?.price && BigInt(nftDetails?.price)) || nftPrice,
+    [nftDetails, nftPrice],
+  );
 
-    setAmount(parseE8SAmountToWICP(BigInt(nftDetails.price)));
+  useEffect(() => {
+    if (!tokenPrice || !modalOpened) return;
+
+    setAmount(parseE8SAmountToWICP(tokenPrice));
   }, [nftDetails, modalOpened]);
 
   const handleModalOpen = (modalOpenedStatus: boolean) => {
     setModalOpened(modalOpenedStatus);
+    setAmount('');
     setModalStep(ListingStatusCodes.ListingInfo);
 
     const isConfirmed = modalStep === ListingStatusCodes.Confirmed;
@@ -90,16 +114,21 @@ export const ChangePriceModal = () => {
 
   const handleModalClose = () => {
     setModalOpened(false);
+    if (onClose) onClose();
   };
 
   const handleListing = async () => {
-    if (!id) return;
+    if (!isTokenId(tokenId)) {
+      AppLog.warn('Oops! Missing NFT id param');
+
+      return;
+    }
 
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       marketplaceActions.makeListing({
-        id,
+        id: tokenId as string,
         amount,
         onSuccess: () => {
           // TODO: should the app state change / update
@@ -115,7 +144,7 @@ export const ChangePriceModal = () => {
   };
 
   const handleViewNFT = () => {
-    navigate(`/nft/${id}`, { replace: true });
+    navigate(`/nft/${tokenId}`, { replace: true });
     setModalOpened(false);
   };
 
@@ -130,11 +159,15 @@ export const ChangePriceModal = () => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <ChangePriceModalTrigger>
-          <ActionButton type="primary">
-            {t('translation:buttons.action.editListing')}
-          </ActionButton>
-        </ChangePriceModalTrigger>
+        {actionText ? (
+          <ActionText>{actionText}</ActionText>
+        ) : (
+          <ChangePriceModalTrigger>
+            <ActionButton type="primary">
+              {t('translation:buttons.action.editListing')}
+            </ActionButton>
+          </ChangePriceModalTrigger>
+        )}
       </DialogPrimitive.Trigger>
       {/*
         ---------------------------------
