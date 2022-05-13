@@ -50,11 +50,7 @@ export const NFTActivityTable = () => {
       {
         Header: t('translation:tables.titles.event'),
         accessor: ({ type }: RowProps) => (
-          <TypeDetailsCell
-            name={type}
-            type={type}
-            tableType="nftActivity"
-          />
+          <TypeDetailsCell type={type} tableType="nftActivity" />
         ),
       },
       {
@@ -101,20 +97,18 @@ export const NFTActivityTable = () => {
 
   return (
     <Container>
-      {
-        <TableLayout
-          columns={columns}
-          data={tokenTransactions}
-          tableType="nftActivity"
-          loadingTableRows={loadingTokenTransactions}
-          loaderDetails={{
-            showItemDetails: false,
-            showTypeDetails: true,
-            type: 'medium',
-          }}
-          emptyMessage={t('translation:emptyStates.nftActivity')}
-        />
-      }
+      <TableLayout
+        columns={columns}
+        data={tokenTransactions}
+        tableType="nftActivity"
+        loadingTableRows={loadingTokenTransactions}
+        loaderDetails={{
+          showItemDetails: false,
+          showTypeDetails: true,
+          type: 'medium',
+        }}
+        emptyMessage={t('translation:emptyStates.nftActivity')}
+      />
     </Container>
   );
 };

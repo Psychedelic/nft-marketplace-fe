@@ -1,38 +1,36 @@
+import { useTranslation } from 'react-i18next';
+import { OperationType } from '../../../constants';
 import { Icon, Icons } from '../../icons';
 import { TypeDetails, TypeName } from './styles';
 
 export interface TypeDetailsCellProps {
-  name?: string;
-  type?: string;
+  type: OperationType;
   tableType: any;
 }
 
-const EventIcon: { [key: string]: keyof typeof Icons } = {
+const EventIcon: { [key in OperationType]: keyof typeof Icons } = {
   acceptOffer: 'sale',
   directBuy: 'sale',
   makeListing: 'list',
-  cancelListing: 'list',
+  cancelListing: 'offer',
   makeOffer: 'offer',
-  cancelOffer: 'offer',
-  denyOffer: 'offer',
-  offer: 'offer',
-
-  // TODO: remove bellow items after list integration is complete
-  mint: 'mint',
-  list: 'list',
-  sale: 'sale',
-  transfer: 'transfer',
+  cancelOffer: 'hand-paper',
+  denyOffer: 'hand-paper',
 };
 
 export const TypeDetailsCell = ({
-  name,
   type,
   tableType,
-}: TypeDetailsCellProps) => (
-  <TypeDetails>
-    {type && Object.keys(EventIcon).includes(type) && (
-      <Icon icon={EventIcon[type]} paddingRight />
-    )}
-    <TypeName tableType={tableType}>{name}</TypeName>
-  </TypeDetails>
-);
+}: TypeDetailsCellProps) => {
+  const { t } = useTranslation();
+  return (
+    <TypeDetails>
+      {type && Object.keys(EventIcon).includes(type) && (
+        <Icon icon={EventIcon[type]} paddingRight />
+      )}
+      <TypeName tableType={tableType}>
+        {t(`translation:tables.eventType.${type}`)}
+      </TypeName>
+    </TypeDetails>
+  );
+};

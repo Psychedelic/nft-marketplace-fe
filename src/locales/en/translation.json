@@ -161,6 +161,15 @@
       "floorDifference": "Floor Difference",
       "expiration": "Expiration",
       "action": "Action"
+    },
+    "eventType": {
+      "makeListing": "List",
+      "directBuy": "Sale",
+      "makeOffer": "Offer",
+      "denyOffer": "Deny Offer",
+      "cancelOffer": "Cancel Offer",
+      "cancelListing": "Cancel Listing",
+      "acceptOffer": "Sale"
     }
   },
   "modals": {
@@ -256,3 +265,4 @@
     "copyToClipboard": "Copied to clipboard!"
   }
 }
+
