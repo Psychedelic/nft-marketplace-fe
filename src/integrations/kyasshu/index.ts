@@ -7,7 +7,7 @@ import {
   useFilterStore,
   usePlugStore,
 } from '../../store';
-import { parseAmountToE8S } from '../../utils/formatters';
+import { parseAmountToE8SAsNum } from '../../utils/formatters';
 import { useTraitsPayload, usePriceValues } from './utils';
 
 export const useNFTSFetcher = () => {
@@ -31,8 +31,8 @@ export const useNFTSFetcher = () => {
       price:
         priceValues && Object.keys(priceValues).length
           ? {
-              min: Number(parseAmountToE8S(priceValues?.min)),
-              max: Number(parseAmountToE8S(priceValues?.max)),
+              min: parseAmountToE8SAsNum(priceValues?.min),
+              max: parseAmountToE8SAsNum(priceValues?.max),
               type: 'currentPrice',
             }
           : undefined,

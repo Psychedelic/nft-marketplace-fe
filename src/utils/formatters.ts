@@ -49,3 +49,11 @@ export const parseE8SAmountToWICP = (amount: bigint) => {
 
   return computedWICP.toString();
 };
+
+export const parseAmountToE8SAsNum = (amount: string) => {
+  if (!amount) return '';
+
+  const computedNumber = Number(parseAmountToE8S(amount));
+
+  return computedNumber;
+}
