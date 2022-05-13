@@ -47,12 +47,14 @@ export type ChangePriceModalProps = {
   onClose?: () => void;
   actionText?: string;
   nftTokenId?: string;
+  nftPrice?: bigint;
 };
 
 export const ChangePriceModal = ({
   onClose,
   actionText,
   nftTokenId,
+  nftPrice,
 }: ChangePriceModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -74,14 +76,21 @@ export const ChangePriceModal = ({
     [loadedNFTS, id],
   );
 
-  useEffect(() => {
-    if (!nftDetails?.price || !modalOpened) return;
+  const tokenPrice = useMemo(
+    () =>
+      (nftDetails?.price && BigInt(nftDetails?.price)) || nftPrice,
+    [nftDetails, nftPrice],
+  );
 
-    setAmount(parseE8SAmountToWICP(BigInt(nftDetails.price)));
+  useEffect(() => {
+    if (!tokenPrice || !modalOpened) return;
+
+    setAmount(parseE8SAmountToWICP(tokenPrice));
   }, [nftDetails, modalOpened]);
 
   const handleModalOpen = (modalOpenedStatus: boolean) => {
     setModalOpened(modalOpenedStatus);
+    setAmount('');
     setModalStep(ListingStatusCodes.ListingInfo);
 
     const isConfirmed = modalStep === ListingStatusCodes.Confirmed;
