@@ -38,6 +38,7 @@ import {
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { AppLog } from '../../utils/log';
+import { isTokenId } from '../../utils/nfts';
 
 /* --------------------------------------------------------------------------
  * Edit Listing Modal Component
@@ -117,7 +118,7 @@ export const ChangePriceModal = ({
   };
 
   const handleListing = async () => {
-    if (!tokenId) {
+    if (!isTokenId(tokenId)) {
       AppLog.warn('Oops! Missing NFT id param');
 
       return;
@@ -127,7 +128,7 @@ export const ChangePriceModal = ({
 
     dispatch(
       marketplaceActions.makeListing({
-        id: tokenId,
+        id: tokenId as string,
         amount,
         onSuccess: () => {
           // TODO: should the app state change / update
