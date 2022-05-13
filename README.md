@@ -67,19 +67,11 @@ Install required packages.
 yarn install
 ```
 
-Runs the app in the development mode, or run the app using a desired backend environment.
+Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ```sh
 yarn start
-
- - or -
-
-yarn start staging
-
- - or -
-
-yarn start production
 ```
 
 Builds the app for production to the `build` folder.\
@@ -147,4 +139,3 @@ git commit -m 'fix: font-size used in the address description'
 
 git commit -m 'refactor: simplified markup for the address panel'
 ```
-
