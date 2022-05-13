@@ -1,6 +1,10 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import {
+  useParams,
+  useNavigate,
+  useLocation,
+} from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
 import { useAppDispatch, marketplaceActions } from '../../store';
@@ -103,7 +107,7 @@ export const BuyNowModal = ({
     // but instead id preceeds actionTextId
     // so maybe decide which logic is valid and reuse for both cases
     // unless there's a reason why for this
-    const tokenId = location.pathname === "/" ? actionTextId : id
+    const tokenId = location.pathname === '/' ? actionTextId : id;
     navigate(`/nft/${tokenId}`, { replace: true });
     setModalOpened(false);
   };
@@ -142,7 +146,14 @@ export const BuyNowModal = ({
         Modal Content
         ---------------------------------
       */}
-      <ModalContent>
+      <ModalContent
+        onInteractOutside={(event) => {
+          event.preventDefault();
+        }}
+        onEscapeKeyDown={(event) => {
+          event.preventDefault();
+        }}
+      >
         {/*
           ---------------------------------
           Step: 1 -> pending
