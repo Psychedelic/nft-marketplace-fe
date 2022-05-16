@@ -15,6 +15,8 @@ export const getTokenContractRootBucket = createAsyncThunk<
 >(
   'cap/getTokenContractRootBucket',
   async ({ marketplaceCanisterId }, thunkAPI) => {
+    thunkAPI.dispatch(capSlice.actions.setLoading(true));
+
     // Checks if an actor instance exists already
     // otherwise creates a new instance
     const actorInstance = await actorInstanceHandler({
@@ -45,6 +47,8 @@ export const getTokenContractRootBucket = createAsyncThunk<
           'Oops! Failed to retrieve bucket id',
         ),
       );
+    } finally {
+      thunkAPI.dispatch(capSlice.actions.setLoading(false));
     }
   },
 );

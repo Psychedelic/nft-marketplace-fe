@@ -8,11 +8,13 @@ type CapActor = ActorSubclass<capIdlService>;
 type CapState = {
   actor?: CapActor;
   bucketId: string;
-}
+  loading: boolean;
+};
 
 // Define the initial state using that type
 const initialState: CapState = {
   bucketId: '',
+  loading: false,
 };
 
 export const capSlice = createSlice({
@@ -25,6 +27,9 @@ export const capSlice = createSlice({
     setBucketId: (state, action: PayloadAction<string>) => {
       state.bucketId = action.payload;
     },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -33,9 +38,9 @@ export const capSlice = createSlice({
         if (!action.payload) return;
 
         state.bucketId = action.payload;
-      }
+      },
     );
-  }
+  },
 });
 
 export const capActions = {
@@ -44,3 +49,4 @@ export const capActions = {
 };
 
 export default capSlice.reducer;
+

@@ -3,6 +3,9 @@ import { styled, keyframes } from '../../stitches.config';
 
 const fadeInOut = keyframes({
   '0%': {
+    opacity: '1',
+  },
+  '50%': {
     opacity: '0.5',
   },
   '100%': {
@@ -22,10 +25,6 @@ export const TableWrapper = styled('div', {
 
   table: {
     borderSpacing: '0',
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: 'transparent',
-    borderImage: 'initial',
     width: 'inherit',
     background: '$tableBackgroundColor',
 
@@ -36,7 +35,6 @@ export const TableWrapper = styled('div', {
       lineHeight: '22px',
       borderBottom: '1px solid #292929',
       whiteSpace: 'nowrap',
-      // minWidth: '100px', // TODO: make variant
     },
 
     thead: {
@@ -204,11 +202,7 @@ export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
   height: '100vh',
 });
 
-export const TableSkeletonsWrapper = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-
+export const TableSkeletonsWrapper = styled('tr', {
   // variants
   variants: {
     type: {
@@ -244,53 +238,19 @@ export const ImageSkeleton = styled('div', {
   transitionTimingFunction: 'ease-in-out',
 });
 
-export const NameSkeleton = styled('div', {
-  width: '300px',
-  height: '20px',
-  borderRadius: '10px',
-  backgroundColor: 'rgba(0, 0, 0, 0.11)',
-  background: '$skeletonBackground',
-  animation: `${fadeInOut} 1.8s linear infinite`,
-  transitionTimingFunction: 'ease-in-out',
-});
-
 export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
+  gap: '10px',
 });
 
-export const TypeDetailsSkeleton = styled('div', {
-  width: '48px',
-  height: '48px',
-  margin: '10px 0px',
-  borderRadius: '10px',
-  marginRight: '12px',
-  backgroundColor: 'rgba(0, 0, 0, 0.11)',
-  background: '$skeletonBackground',
-  animation: `${fadeInOut} 0.1.8s linear infinite`,
-});
-
-export const PriceSkeleton = styled('div', {
-  width: '100px',
-  height: '15px',
+export const SkeletonBox = styled('div', {
+  width: '106px',
+  height: '1.4rem',
   borderRadius: '10px',
   backgroundColor: 'rgba(0, 0, 0, 0.11)',
   background: '$skeletonBackground',
-  animation: `${fadeInOut} 1.8s linear infinite`,
-  transitionTimingFunction: 'ease-in-out',
-
-  '&:nth-child(1)': {
-    marginBottom: '5px',
-  },
-});
-
-export const StringSkeleton = styled('div', {
-  width: '120px',
-  height: '15px',
-  borderRadius: '10px',
-  backgroundColor: 'rgba(0, 0, 0, 0.11)',
-  background: '$skeletonBackground',
-  animation: `${fadeInOut} 1.8s linear infinite`,
+  animation: `${fadeInOut} 1.2s linear infinite`,
   transitionTimingFunction: 'ease-in-out',
 });
 

@@ -1,7 +1,6 @@
 import { useTable } from 'react-table';
 import {
   TableWrapper,
-  LoadingContainer,
   EmptyStateContainer,
   EmptyStateMessage,
 } from './styles';
@@ -29,7 +28,6 @@ export const TableLayout = ({
   columnsToHide = [],
   loading,
   loaderDetails,
-  loadingTableRows = false,
   emptyMessage,
 }: TableLayoutProps) => {
   const {
@@ -48,21 +46,8 @@ export const TableLayout = ({
 
   const isTableDataEmpty = data.length === 0;
 
-  // TODO: Refactor Table skeleton loader
-  return loading && isTableDataEmpty ? (
-    <>
-      <TableSkeletons loaderDetails={loaderDetails} />
-      <TableSkeletons loaderDetails={loaderDetails} />
-      <TableSkeletons loaderDetails={loaderDetails} />
-      <TableSkeletons loaderDetails={loaderDetails} />
-      <TableSkeletons loaderDetails={loaderDetails} />
-      <TableSkeletons loaderDetails={loaderDetails} />
-    </>
-  ) : (
-    <TableWrapper
-      type={tableType}
-      dontShowTableRows={loadingTableRows || isTableDataEmpty}
-    >
+  return (
+    <TableWrapper type={tableType}>
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, idx) => (
@@ -79,34 +64,32 @@ export const TableLayout = ({
             </tr>
           ))}
         </thead>
-        {!loadingTableRows && !isTableDataEmpty && (
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={row.id}>
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} key={cell.column.id}>
-                      {cell.render('Cell')}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        )}
+        <tbody {...getTableBodyProps()}>
+          {loading && isTableDataEmpty && (
+            <>
+              <TableSkeletons loaderDetails={loaderDetails} />
+              <TableSkeletons loaderDetails={loaderDetails} />
+              <TableSkeletons loaderDetails={loaderDetails} />
+              <TableSkeletons loaderDetails={loaderDetails} />
+              <TableSkeletons loaderDetails={loaderDetails} />
+              <TableSkeletons loaderDetails={loaderDetails} />
+            </>
+          )}
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()} key={row.id}>
+                {row.cells.map((cell) => (
+                  <td {...cell.getCellProps()} key={cell.column.id}>
+                    {cell.render('Cell')}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
-      {loadingTableRows && (
-        <LoadingContainer>
-          <TableSkeletons loaderDetails={loaderDetails} />
-          <TableSkeletons loaderDetails={loaderDetails} />
-          <TableSkeletons loaderDetails={loaderDetails} />
-          <TableSkeletons loaderDetails={loaderDetails} />
-          <TableSkeletons loaderDetails={loaderDetails} />
-          <TableSkeletons loaderDetails={loaderDetails} />
-        </LoadingContainer>
-      )}
-      {!loadingTableRows && isTableDataEmpty && (
+      {!loading && isTableDataEmpty && (
         <EmptyStateContainer>
           <EmptyStateMessage type="mediumTable">
             {emptyMessage}

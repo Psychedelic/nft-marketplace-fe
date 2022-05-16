@@ -9,6 +9,7 @@ import {
   tableActions,
   capActions,
   RootState,
+  useCapStore,
 } from '../../store';
 import {
   ItemDetailsCell,
@@ -54,6 +55,7 @@ export const ActivityTable = () => {
     loadingTableData,
     nextPageNo,
   } = useTableStore();
+  const { loading: capLoading } = useCapStore();
   const dispatch = useAppDispatch();
   const bucketId = useSelector(
     (state: RootState) => state.cap.bucketId,
@@ -168,7 +170,7 @@ export const ActivityTable = () => {
           columns={columns}
           data={loadedCapActivityData}
           tableType="activity"
-          loading={loadingTableData}
+          loading={loadingTableData || capLoading}
           loaderDetails={{
             showItemDetails: true,
             showTypeDetails: true,

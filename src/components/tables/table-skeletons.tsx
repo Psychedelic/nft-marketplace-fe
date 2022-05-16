@@ -1,12 +1,4 @@
-import React from 'react';
-import {
-  TableSkeletonsWrapper,
-  ImageSkeleton,
-  NameSkeleton,
-  Flex,
-  PriceSkeleton,
-  StringSkeleton,
-} from './styles';
+import { TableSkeletonsWrapper, SkeletonBox, Flex } from './styles';
 
 export type TableSkeletonProps = {
   loaderDetails: {
@@ -17,26 +9,35 @@ export type TableSkeletonProps = {
 };
 
 export const ItemDetail = () => (
-  <Flex>
-    <ImageSkeleton />
-    <NameSkeleton />
-  </Flex>
+  <td>
+    <Flex>
+      <SkeletonBox style={{ width: '48px', height: '48px' }} />
+      <SkeletonBox style={{ width: '160px' }} />
+    </Flex>
+  </td>
 );
 
 export const TypeDetail = () => (
-  <Flex>
-    <ImageSkeleton />
-  </Flex>
+  <td>
+    <Flex>
+      <SkeletonBox style={{ width: '20px', height: '20px' }} />
+      <SkeletonBox />
+    </Flex>
+  </td>
 );
 
 export const PriceDetail = () => (
-  <div>
-    <PriceSkeleton />
-    <PriceSkeleton />
-  </div>
+  <td>
+    <SkeletonBox />
+    <SkeletonBox />
+  </td>
 );
 
-export const TableStrings = () => <StringSkeleton />;
+export const TableStrings = () => (
+  <td>
+    <SkeletonBox />
+  </td>
+);
 
 const TableSkeletons = ({
   loaderDetails: {
@@ -45,10 +46,10 @@ const TableSkeletons = ({
     type = 'large',
   },
 }: TableSkeletonProps) => (
-  <TableSkeletonsWrapper type={type}>
+  <TableSkeletonsWrapper type={type} role="row">
     {showItemDetails && <ItemDetail />}
     {showTypeDetails && <TypeDetail />}
-    <PriceDetail />
+    <TableStrings />
     <TableStrings />
     <TableStrings />
     <TableStrings />
