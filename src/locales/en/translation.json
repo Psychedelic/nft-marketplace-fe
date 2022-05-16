@@ -155,6 +155,8 @@
       "quantity": "Quantity",
       "from": "From",
       "to": "To",
+      "seller": "Seller",
+      "buyer": "Buyer",
       "time": "Time",
       "event": "Event",
       "date": "Date",
