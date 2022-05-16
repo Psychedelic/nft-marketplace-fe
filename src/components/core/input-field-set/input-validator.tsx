@@ -10,8 +10,8 @@ export type InputValidatorProps = React.ComponentProps<
 };
 
 /**
- * Currently the validator is going to turn unable
- * the value change if the new value is not valid.
+ * Currently the validator going to stop the
+ * change event if the new value is invalid.
  * New validators can be added here in the future.
  */
 const useValidatorCallback = (
