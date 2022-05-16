@@ -10,11 +10,9 @@ const spin = keyframes({
 });
 
 export const Container = styled('div', {
-  width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  width: 'auto',
   padding: '15px',
+  textAlign: 'center',
 });
 
 export const PendingLogo = styled('img', {
