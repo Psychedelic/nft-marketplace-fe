@@ -6,9 +6,12 @@ import {
   useAppDispatch,
   RootState,
 } from '../../../store';
-import { isTokenId, getTokenMetadataThumbnail } from '../../../utils/nfts';
+import {
+  isTokenId,
+  getTokenMetadataThumbnail,
+} from '../../../utils/nfts';
 import { ItemDetails, ItemLogo, ItemName } from './styles';
-import { ImageSkeleton } from '../../tables/styles';
+import { SkeletonBox } from '../skeleton';
 
 export interface ItemDetailsCellProps {
   name?: string;
@@ -24,24 +27,29 @@ export const ItemDetailsCell = ({
   const tokenMetadataById = useSelector(
     (state: RootState) => state.table.tokenMetadataById,
   );
-  const hasThumbnail = isTokenId(id) && getTokenMetadataThumbnail({
-    tokenMetadataById,
-    tokendId: id as string | number,
-  });
+  const hasThumbnail =
+    isTokenId(id) &&
+    getTokenMetadataThumbnail({
+      tokenMetadataById,
+      tokendId: id as string | number,
+    });
 
   useEffect(() => {
     if (!isTokenId(id) || hasThumbnail) return;
 
     // Only request metadata if NOT hasThumbnail as we cache
-    dispatch(tableActions.getTokenMetadata({ id } as { id: number | string }));
+    dispatch(
+      tableActions.getTokenMetadata({ id } as {
+        id: number | string;
+      }),
+    );
   }, [dispatch, id, hasThumbnail]);
-
 
   return (
     <RouterLink to={`/nft/${id}`}>
       <ItemDetails>
         {!hasThumbnail ? (
-          <ImageSkeleton />
+          <SkeletonBox style={{ width: '48px', height: '48px' }} />
         ) : (
           <ItemLogo src={hasThumbnail} alt="crowns" />
         )}

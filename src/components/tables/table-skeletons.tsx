@@ -1,4 +1,5 @@
-import { TableSkeletonsWrapper, SkeletonBox, Flex } from './styles';
+import { SkeletonBox } from '../core/skeleton';
+import { TableSkeletonsWrapper, Flex } from './styles';
 
 export type TableSkeletonProps = {
   loaderDetails: {

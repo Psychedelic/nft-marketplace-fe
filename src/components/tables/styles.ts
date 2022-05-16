@@ -1,17 +1,5 @@
 import InfiniteScroll from 'react-infinite-scroller';
-import { styled, keyframes } from '../../stitches.config';
-
-const fadeInOut = keyframes({
-  '0%': {
-    opacity: '1',
-  },
-  '50%': {
-    opacity: '0.5',
-  },
-  '100%': {
-    opacity: '1',
-  },
-});
+import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
   width: '100%',
@@ -227,31 +215,10 @@ export const TableSkeletonsWrapper = styled('tr', {
   },
 });
 
-export const ImageSkeleton = styled('div', {
-  width: '48px',
-  height: '48px',
-  borderRadius: '10px',
-  marginRight: '12px',
-  backgroundColor: 'rgba(0, 0, 0, 0.11)',
-  background: '$skeletonBackground',
-  animation: `${fadeInOut} 1.8s linear infinite`,
-  transitionTimingFunction: 'ease-in-out',
-});
-
 export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '10px',
-});
-
-export const SkeletonBox = styled('div', {
-  width: '106px',
-  height: '1.4rem',
-  borderRadius: '10px',
-  backgroundColor: 'rgba(0, 0, 0, 0.11)',
-  background: '$skeletonBackground',
-  animation: `${fadeInOut} 1.2s linear infinite`,
-  transitionTimingFunction: 'ease-in-out',
 });
 
 export const EmptyStateContainer = styled('div', {
