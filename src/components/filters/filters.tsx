@@ -97,13 +97,18 @@ export const Filters = () => {
     }
   };
 
-  const applyPriceFilter = () => {
-    if (
-      priceFilterValue.min !== '0' &&
-      priceFilterValue.max !== '0'
-    ) {
+  const applyPriceFilter = (value: string, isMax: boolean) => {
+    const key = isMax ? 'max' : 'min';
+    const altKey = isMax ? 'min' : 'max';
+    if (value === '' && priceFilterValue[altKey] === '') {
+      dispatch(settingsActions.setPriceApplyButton(false));
+    } else {
       dispatch(settingsActions.setPriceApplyButton(true));
     }
+    setPriceFilterValue((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
   };
 
   const handlePriceFilter = () => {
@@ -294,11 +299,7 @@ export const Filters = () => {
                     )}
                     inputValue={priceFilterValue.min}
                     setValue={(value) => {
-                      setPriceFilterValue({
-                        ...priceFilterValue,
-                        min: value,
-                      });
-                      applyPriceFilter();
+                      applyPriceFilter(value, false);
                     }}
                   />
                   <Subtext margin="rightAndLeft" color="secondary">
@@ -310,11 +311,7 @@ export const Filters = () => {
                     )}
                     inputValue={priceFilterValue.max}
                     setValue={(value) => {
-                      setPriceFilterValue({
-                        ...priceFilterValue,
-                        max: value,
-                      });
-                      applyPriceFilter();
+                      applyPriceFilter(value, true);
                     }}
                   />
                 </Flex>
