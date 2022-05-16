@@ -10,8 +10,12 @@ import {
   isTokenId,
   getTokenMetadataThumbnail,
 } from '../../../utils/nfts';
-import { ItemDetails, ItemLogo, ItemName } from './styles';
-import { SkeletonBox } from '../skeleton';
+import {
+  ItemDetails,
+  ItemLogo,
+  ItemName,
+  ThumbnailSkeleton,
+} from './styles';
 
 export interface ItemDetailsCellProps {
   name?: string;
@@ -49,7 +53,7 @@ export const ItemDetailsCell = ({
     <RouterLink to={`/nft/${id}`}>
       <ItemDetails>
         {!hasThumbnail ? (
-          <SkeletonBox style={{ width: '48px', height: '48px' }} />
+          <ThumbnailSkeleton />
         ) : (
           <ItemLogo src={hasThumbnail} alt="crowns" />
         )}

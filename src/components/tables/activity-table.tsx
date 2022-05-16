@@ -85,6 +85,11 @@ export const ActivityTable = () => {
     );
   }, [dispatch, loadingTableData, hasMoreData, nextPageNo, bucketId]);
 
+  const isTableLoading = useMemo(
+    () => capLoading || loadingTableData,
+    [loadingTableData, capLoading],
+  );
+
   const columns = useMemo(
     () => [
       {
@@ -170,7 +175,7 @@ export const ActivityTable = () => {
           columns={columns}
           data={loadedCapActivityData}
           tableType="activity"
-          loading={loadingTableData || capLoading}
+          loading={isTableLoading}
           loaderDetails={{
             showItemDetails: true,
             showTypeDetails: true,

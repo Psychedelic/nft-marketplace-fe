@@ -35,7 +35,7 @@ export const {
       chipsNftBackgroundColor: '#F4F5F6',
       modalOverlay: '#fafbfde6',
       skeletonBackground:
-        'linear-gradient(160deg, rgb(209 211 213) 20%, rgb(247, 248, 250) 59.9%)',
+        'linear-gradient(160deg, rgb(209 211 213) 20%, rgb(247, 248, 250) 80%)',
       checkboxSelectedFiltersText: '#23262F',
       greyMid: '#767D8E',
       error: '#FD5F51',
@@ -83,7 +83,7 @@ export const darkTheme = createTheme({
     tabActive: '#ffffff',
     modalOverlay: '#0a0a0ae6',
     skeletonBackground:
-      'linear-gradient(160deg, rgb(36 34 34) 20%, rgb(41 42 44) 59.9%)',
+      'linear-gradient(160deg, rgb(36 34 34) 20%, rgb(41 42 44) 80%)',
     checkboxSelectedFiltersText: '#2253FF',
     error: '#FD5F51',
     primary: '#2253FF',
