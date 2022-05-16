@@ -103,6 +103,11 @@ export const nftsSlice = createSlice({
         state.hasMoreNFTs = false;
       }
     },
+    clearLoadedNFTS: (state) => {
+      state.loadedNFTS = [];
+      state.hasMoreNFTs = false;
+      state.nextPageNo = 0;
+    },
     setFailedToLoadNFTS: (state, action: PayloadAction<boolean>) => {
       state.failedToLoadNFTS = !action.payload;
       state.loadingNFTs = action.payload;

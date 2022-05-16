@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useUpdateEffect } from '../../hooks';
 
 import {
   nftsActions,
@@ -41,6 +42,10 @@ export const useNFTSFetcher = () => {
 
   const { sortBy } = useFilterStore();
 
+  useUpdateEffect(() => {
+    dispatch(nftsActions.clearLoadedNFTS());
+  }, [traits, isMyNfts, priceValues, sortBy, status]);
+
   useEffect(() => {
     dispatch(
       nftsActions.getNFTs({
@@ -51,6 +56,7 @@ export const useNFTSFetcher = () => {
         count: 25,
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, traits, isMyNfts, priceValues, sortBy, status]);
 };
 
