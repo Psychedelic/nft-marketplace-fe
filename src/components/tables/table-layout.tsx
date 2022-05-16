@@ -1,5 +1,4 @@
 import { useTable } from 'react-table';
-import { useTableStore } from '../../store';
 import {
   TableWrapper,
   LoadingContainer,
@@ -49,13 +48,8 @@ export const TableLayout = ({
 
   const isTableDataEmpty = data.length === 0;
 
-  // TODO: We may need to remove loadingTableData fetching
-  // from store and replace with props, since this a common layout
-  // across all the tables
-  const { loadingTableData } = useTableStore();
-
   // TODO: Refactor Table skeleton loader
-  return loadingTableData || loading ? (
+  return loading && isTableDataEmpty ? (
     <>
       <TableSkeletons loaderDetails={loaderDetails} />
       <TableSkeletons loaderDetails={loaderDetails} />
