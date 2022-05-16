@@ -12,6 +12,14 @@ import { getOperationType } from '../../../../utils/parser';
 
 export type GetCAPActivityProps = CapActivityParams;
 
+const findBuyer = (item: any) => {
+  const found = item.event.details.find((curr: any) => curr[0] === 'buyer');
+
+  if (!found || (Array.isArray(found) && found.length !== 2)) return;
+
+  return found[1];
+}
+
 export const getCAPActivity = createAsyncThunk<
   void,
   GetCAPActivityProps
@@ -29,8 +37,15 @@ export const getCAPActivity = createAsyncThunk<
       const { Items, Count } = response.data;
       let pageNo;
 
+      console.log('[debug] Items', Items);
+
       const result = Items.map((item: any) => {
         pageNo = item.page;
+
+        const hasBuyer = findBuyer(item);
+
+        console.log('[debug] hasBuyer', hasBuyer);
+
         const parsedArr = Uint8Array.from(
           // eslint-disable-next-line no-underscore-dangle
           Object.values(item.event.caller._arr),
