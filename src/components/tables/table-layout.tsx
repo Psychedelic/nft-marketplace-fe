@@ -71,10 +71,11 @@ export const TableLayout = ({
     >
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map((headerGroup) => (
+          {headerGroups.map((headerGroup, idx) => (
             <tr
               {...headerGroup.getHeaderGroupProps()}
-              key={headerGroup.id}
+              // eslint-disable-next-line react/no-array-index-key
+              key={idx}
             >
               {headerGroup.headers.map((column) => (
                 <th {...column.getHeaderProps()} key={column.id}>
