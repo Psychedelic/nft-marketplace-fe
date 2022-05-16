@@ -45,6 +45,7 @@ export const Filters = () => {
     status,
     loadingFilterList,
     isMyNfts,
+    isAlreadyFetched,
   } = useFilterStore();
   const { collapsed, displayPriceApplyButton } = useSettingsStore();
   const [statusFilter, setStatusFilter] = useState<string>('');
@@ -55,7 +56,10 @@ export const Filters = () => {
   const myNfts = `${t('translation:buttons.action.myNfts')}`;
 
   useEffect(() => {
-    dispatch(filterActions.getFilterTraits());
+    if (!isAlreadyFetched) {
+      dispatch(filterActions.getFilterTraits());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   const filterExists = (filterName: string) =>

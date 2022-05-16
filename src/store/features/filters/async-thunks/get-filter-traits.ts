@@ -69,6 +69,7 @@ export const getFilterTraits = createAsyncThunk<
 
     dispatch(filterActions.getAllFilters(responseData));
     dispatch(filterActions.setIsFilterTraitsLoading(false));
+    dispatch(filterActions.setIsAlreadyFetched(true));
   } catch (error) {
     AppLog.error(error);
     dispatch(
