@@ -1,6 +1,7 @@
 import React, { useMemo, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { Principal } from '@dfinity/principal';
 import {
   useThemeStore,
   useAppDispatch,
@@ -20,7 +21,8 @@ import { TableLayout } from './table-layout';
 import { Container, InfiniteScrollWrapper } from './styles';
 import { NFTMetadata } from '../../declarations/legacy';
 import TableSkeletons from './table-skeletons';
-import { parseE8SAmountToWICP } from '../../utils/formatters';
+import { parseE8SAmountToWICP, formatAddress } from '../../utils/formatters';
+import { getICAccountLink } from '../../utils/account-id';
 import config from '../../config/env';
 import { OperationType } from '../../constants';
 
@@ -33,8 +35,8 @@ interface RowProps {
   type: OperationType;
   price: string;
   quantity: string;
-  from: string;
-  to: string;
+  seller: Principal,
+  buyer?: Principal;
   time: string;
   data: NFTMetadata;
   callerDfinityExplorerUrl: string;
@@ -107,20 +109,45 @@ export const ActivityTable = () => {
         ),
       },
       {
-        Header: t('translation:tables.titles.from'),
-        accessor: ({ from, callerDfinityExplorerUrl }: RowProps) => (
-          <TextLinkCell
-            text={from}
-            url={callerDfinityExplorerUrl}
-            type=""
-          />
-        ),
+        Header: t('translation:tables.titles.seller'),
+        accessor: ({ seller }: RowProps) => {
+          const principalText = seller.toText();
+          const short = formatAddress(principalText);
+          const url = getICAccountLink(principalText);
+
+          return (
+            <TextLinkCell
+              text={short}
+              url={url}
+              type=""
+            />
+          );
+        },
       },
       {
-        Header: t('translation:tables.titles.to'),
-        accessor: ({ to }: RowProps) => (
-          <TextLinkCell text={to} type="" />
-        ),
+        Header: t('translation:tables.titles.buyer'),
+        accessor: ({ buyer }: RowProps) => {
+          if (!buyer) {
+            return (
+              <TextLinkCell
+                text="-"
+                type=""
+              />
+            );
+          };
+
+          const principalText = buyer.toText();
+          const short = formatAddress(principalText);
+          const url = getICAccountLink(principalText);
+
+          return (
+            <TextLinkCell
+              text={short}
+              url={url}
+              type=""
+            />
+          );
+        },
       },
       {
         Header: t('translation:tables.titles.time'),

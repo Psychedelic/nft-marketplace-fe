@@ -263,3 +263,12 @@ export const parseTokenTransactions = ({
 
   return parsed;
 };
+
+export const parseTablePrincipal = (arr: Record<number, number>): Principal | undefined => {
+  const parsedArr = Uint8Array.from(
+    Object.values(arr),
+  );
+  const pid = Principal.fromUint8Array(parsedArr);
+
+  return pid;
+}

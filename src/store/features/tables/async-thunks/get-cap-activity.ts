@@ -1,14 +1,11 @@
-import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { dateRelative } from '../../../../integrations/functions/date';
-import shortAddress from '../../../../integrations/functions/short-address';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
-import { getICAccountLink } from '../../../../utils/account-id';
 import { AppLog } from '../../../../utils/log';
 import { notificationActions } from '../../notifications';
 import { CapActivityParams, tableActions } from '../table-slice';
-import { getOperationType } from '../../../../utils/parser';
+import { getOperationType, parseTablePrincipal } from '../../../../utils/parser';
 
 export type GetCAPActivityProps = CapActivityParams;
 
@@ -28,25 +25,12 @@ export const getCAPActivity = createAsyncThunk<
       );
       const { Items, Count } = response.data;
       let pageNo;
-
       const result = Items.map((item: any) => {
         pageNo = item.page;
-        const parsedArr = Uint8Array.from(
-          // eslint-disable-next-line no-underscore-dangle
-          Object.values(item.event.caller._arr),
-        );
-        const callerPrincipalId = Principal.fromUint8Array(parsedArr);
-        const callerPrincipalIdString = shortAddress(
-          callerPrincipalId.toText(),
-        );
 
         const capData = {
           operation: getOperationType(item.event.operation),
           time: dateRelative(item.event.time),
-          caller: callerPrincipalIdString,
-          callerDfinityExplorerUrl: getICAccountLink(
-            callerPrincipalId.toText(),
-          ),
         };
 
         const { details } = item.event;
@@ -60,6 +44,11 @@ export const getCAPActivity = createAsyncThunk<
 
       const loadedCapActivityTableData = result.map(
         (tableData: any) => {
+          // eslint-disable-next-line no-underscore-dangle
+          const seller = parseTablePrincipal(tableData.seller.Principal._arr);
+          // eslint-disable-next-line no-underscore-dangle
+          const buyer = tableData?.buyer && parseTablePrincipal(tableData.buyer.Principal._arr);
+
           const data = {
             item: {
               name: `CAP Crowns #${tableData.token_id}`,
@@ -67,10 +56,9 @@ export const getCAPActivity = createAsyncThunk<
             },
             type: tableData.operation,
             price: `${tableData.list_price ?? tableData.price}`,
-            from: tableData.caller,
-            to: '-',
+            seller,
+            buyer,
             time: tableData.time,
-            offerFrom: 'Prasanth',
             callerDfinityExplorerUrl:
               tableData.callerDfinityExplorerUrl,
           };
