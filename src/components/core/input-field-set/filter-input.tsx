@@ -1,5 +1,6 @@
 import React, { forwardRef, ChangeEvent } from 'react';
-import { Container, Input } from './styles';
+import { InputValidator } from './input-validator';
+import { Container } from './styles';
 
 export type FilterInputProps = {
   placeholder?: string;
@@ -22,11 +23,12 @@ export const FilterInput = forwardRef<
 
   return (
     <Container name="filterInput">
-      <Input
+      <InputValidator
         ref={ref}
         value={inputValue}
         name="filterInput"
         type="number"
+        validator="wicp"
         placeholder={placeholder}
         onChange={handleValueChange}
       />
