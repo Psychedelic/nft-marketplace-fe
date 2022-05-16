@@ -12,13 +12,16 @@ import { getOperationType } from '../../../../utils/parser';
 
 export type GetCAPActivityProps = CapActivityParams;
 
-const findBuyer = (item: any) => {
-  const found = item.event.details.find((curr: any) => curr[0] === 'buyer');
+const findEventAuthorByName = (item: any, name: 'buyer' | 'seller') => {
+  const found = item.event.details.find((curr: any) => curr[0] === name);
 
   if (!found || (Array.isArray(found) && found.length !== 2)) return;
 
   return found[1];
-}
+};
+
+const findBuyer = (item: any) => findEventAuthorByName(item, 'buyer');
+const findSeller = (item: any) => findEventAuthorByName(item, 'seller');
 
 export const getCAPActivity = createAsyncThunk<
   void,
@@ -42,8 +45,10 @@ export const getCAPActivity = createAsyncThunk<
       const result = Items.map((item: any) => {
         pageNo = item.page;
 
+        const hasSeller = findSeller(item);
         const hasBuyer = findBuyer(item);
 
+        console.log('[debug] hasSeller', hasSeller);
         console.log('[debug] hasBuyer', hasBuyer);
 
         const parsedArr = Uint8Array.from(
