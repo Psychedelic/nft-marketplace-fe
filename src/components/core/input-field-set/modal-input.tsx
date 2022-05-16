@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import wicpLogo from '../../../assets/wicp.svg';
+import { InputValidator } from './input-validator';
 import {
   Container,
   Input,
@@ -19,10 +20,11 @@ export const ModalInput = forwardRef<
 
   return (
     <Container name="modalInput">
-      <Input
+      <InputValidator
         ref={ref}
         name="modalInput"
         type="number"
+        validator="wicp"
         {...inputProps}
       />
       <AmountTypeContainer>
