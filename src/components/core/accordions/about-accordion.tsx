@@ -65,20 +65,22 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
 
   const AccordionContentMetaData = [
     {
-      title: 'Canister ID',
+      title: t('translation:accordions.about.header.canisterId'),
       value: 't7wg4-tyaaa-aaaak-qacaa-cai',
     },
     {
-      title: 'Token Standard',
-      value: 'DIP20',
+      title: t('translation:accordions.about.header.tokenStandard'),
+      value: t('translation:accordions.about.details.dip721'),
     },
     {
-      title: 'Token ID',
+      title: t('translation:accordions.about.header.tokenId'),
       value: '2713',
     },
     {
-      title: 'Blockchain',
-      value: 'Internet Computer',
+      title: t('translation:accordions.about.header.blockchain'),
+      value: t(
+        'translation:accordions.about.details.internetComputer',
+      ),
     },
   ];
 
