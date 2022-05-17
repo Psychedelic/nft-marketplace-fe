@@ -1,22 +1,3 @@
-export const AccordionContentMetaData = [
-  {
-    title: 'Canister ID',
-    value: 't7wg4-tyaaa-aaaak-qacaa-cai',
-  },
-  {
-    title: 'Token Standard',
-    value: 'DIP20',
-  },
-  {
-    title: 'Token ID',
-    value: '2713',
-  },
-  {
-    title: 'Blockchain',
-    value: 'Internet Computer',
-  },
-];
-
 export const refinedCheckboxDummyData = [
   {
     title: 'Big Gem',

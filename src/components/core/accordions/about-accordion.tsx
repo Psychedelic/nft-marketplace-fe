@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import { useAppDispatch, usePlugStore } from '../../../store';
 import { LinkButton } from '../buttons';
-import { AccordionContentMetaData } from '../../mock-data/accordion-data';
 import {
   AccordionStyle,
   AccordionTrigger,
@@ -61,6 +60,25 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
         : (owner && formatAddress(owner)) || '',
       heading: 'Owner',
       image: plugIcon,
+    },
+  ];
+
+  const AccordionContentMetaData = [
+    {
+      title: 'Canister ID',
+      value: 't7wg4-tyaaa-aaaak-qacaa-cai',
+    },
+    {
+      title: 'Token Standard',
+      value: 'DIP20',
+    },
+    {
+      title: 'Token ID',
+      value: '2713',
+    },
+    {
+      title: 'Blockchain',
+      value: 'Internet Computer',
     },
   ];
 
