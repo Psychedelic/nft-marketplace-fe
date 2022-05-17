@@ -129,6 +129,7 @@ export const Traitvalue = styled('div', {
 export const TraitActionContainer = styled('div', {
   display: 'flex',
   padding: '7px',
+  cursor: 'pointer',
 });
 
 export const TraitClear = styled('img', {
