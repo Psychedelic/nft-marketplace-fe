@@ -14,7 +14,7 @@ import {
   HeaderWrapper,
   VerifiedIcon,
 } from './styles';
-import jelly from '../../assets/jelly.svg';
+import crown from '../../assets/crown.svg';
 import { Icon } from '../icons';
 
 export const CollectionOverview = () => {
@@ -27,7 +27,7 @@ export const CollectionOverview = () => {
       <NftMetadataContent>
         <NftMetadataContentWrapper>
           <NftProfilePictureWrapper>
-            <img src={jelly} alt="crown-pfp" />
+            <img src={crown} alt="crown-pfp" />
           </NftProfilePictureWrapper>
           <HeaderWrapper>
             <Heading>
