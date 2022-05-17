@@ -203,7 +203,7 @@ export const filterSlice = createSlice({
     },
     setSearchResults: (state, action: PayloadAction<NFTMetadata[]>) => {
       state.searchResults = action.payload;
-    }
+    },
     setIsAlreadyFetched: (state, action: PayloadAction<boolean>) => {
       state.isAlreadyFetched = action.payload;
     },
