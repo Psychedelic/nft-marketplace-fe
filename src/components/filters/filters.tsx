@@ -58,6 +58,15 @@ export const Filters = () => {
     dispatch(filterActions.getFilterTraits());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (!displayPriceApplyButton) {
+      setPriceFilterValue({
+        min: '',
+        max: '',
+      });
+    }
+  }, [displayPriceApplyButton]);
+
   const filterExists = (filterName: string) =>
     defaultFilters.some(
       (appliedFilter) => appliedFilter.filterName === filterName,
