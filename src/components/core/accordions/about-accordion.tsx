@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import { useAppDispatch, usePlugStore } from '../../../store';
 import { LinkButton } from '../buttons';
-import { AccordionContentMetaData } from '../../mock-data/accordion-data';
 import {
   AccordionStyle,
   AccordionTrigger,
@@ -23,6 +23,7 @@ import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { formatAddress } from '../../../utils/formatters';
 import { Icon } from '../../icons';
 import { notificationActions } from '../../../store/features/notifications';
+import config from '../../../config/env';
 
 export type AboutAccordionProps = {
   owner?: string;
@@ -31,6 +32,7 @@ export type AboutAccordionProps = {
 export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { id } = useParams();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
@@ -63,6 +65,30 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
       image: plugIcon,
     },
   ];
+
+  const AccordionContentMetaData = useMemo(
+    () => [
+      {
+        title: t('translation:accordions.about.header.canisterId'),
+        value: config.crownsCanisterId,
+      },
+      {
+        title: t('translation:accordions.about.header.tokenStandard'),
+        value: t('translation:accordions.about.details.dip721'),
+      },
+      {
+        title: t('translation:accordions.about.header.tokenId'),
+        value: id,
+      },
+      {
+        title: t('translation:accordions.about.header.blockchain'),
+        value: t(
+          'translation:accordions.about.details.internetComputer',
+        ),
+      },
+    ],
+    [config, id],
+  );
 
   return (
     <AccordionStyle type="single" collapsible width="medium">

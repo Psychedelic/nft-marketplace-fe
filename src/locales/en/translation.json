@@ -113,6 +113,10 @@
         "tokenId": "Token ID",
         "blockchain": "Blockchain",
         "internetComputer": "Internet Computer"
+      },
+      "details": {
+        "dip721": "DIP 721",
+        "internetComputer": "Internet Computer"
       }
     },
     "offer": {
@@ -267,4 +271,3 @@
     "copyToClipboard": "Copied to clipboard!"
   }
 }
-
