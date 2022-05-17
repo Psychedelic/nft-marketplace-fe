@@ -79,6 +79,8 @@ export const AcceptOfferModal = ({
     [loadedNFTS, tokenId],
   );
 
+  // TODO: don't close modal as soon as
+  // accepting the offer
   const handleModalOpen = (modalOpenedStatus: boolean) => {
     setModalOpened(modalOpenedStatus);
     setModalStep(ListingStatusCodes.OfferInfo);
