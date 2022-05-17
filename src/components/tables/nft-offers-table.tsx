@@ -43,6 +43,7 @@ export const NFTOffersTable = ({
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
+  
   const [tableDetails, setTableDetails] = useState<NFTTableDetails>({
     loadedOffers: [],
     loading: true,
