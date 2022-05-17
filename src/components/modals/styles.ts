@@ -323,7 +323,7 @@ export const ActionText = styled('span', {
   cursor: 'pointer',
 
   '&:hover': {
-    textDecoration: 'underline',
+    opacity: '60%',
   },
 });
 
