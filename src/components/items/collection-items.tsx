@@ -38,11 +38,14 @@ export const CollectionItems = () => {
     floorPrice,
   } = useNFTSStore();
 
+  const appliedFiltersCount =
+    appliedFilters?.defaultFilters.length || 0;
+
   useEffect(() => {
-    if (appliedFilters?.defaultFilters.length > 0) return;
+    if (appliedFiltersCount > 0) return;
 
     dispatch(nftsActions.getCollectionData());
-  }, [appliedFilters]);
+  }, [appliedFiltersCount]);
 
   useNFTSFetcher();
 
