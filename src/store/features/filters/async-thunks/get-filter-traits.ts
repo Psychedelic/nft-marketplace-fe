@@ -9,6 +9,7 @@ import { filterActions, FilterTraitsList } from '..';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { NFTMetadata } from '../../../../declarations/legacy';
+import { parseTraits } from '../../../../utils/traits';
 
 export type GetFilterTraitsProps =
   | NSKyasshuUrl.GetFilterTraitsQueryParams
@@ -57,10 +58,12 @@ export const getFilterTraits = createAsyncThunk<
           default:
         }
 
+        const parsedTraits = parseTraits(res[1]);
+
         const data = {
           key,
           name: res[0],
-          values: [...res[1]],
+          values: [...parsedTraits],
         };
 
         return data;
