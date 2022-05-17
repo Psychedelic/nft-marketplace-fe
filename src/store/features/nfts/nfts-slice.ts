@@ -30,7 +30,7 @@ const initialState: NFTSState = {
   failedToLoadNFTSMessage: '',
   hasMoreNFTs: false,
   nextPageNo: 0,
-  loadingCollectionData: true,
+  loadingCollectionData: false,
   totalNFTSCount: 0,
   totalOwnersCount: 0,
   floorPrice: 0,

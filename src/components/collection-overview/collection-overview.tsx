@@ -1,6 +1,12 @@
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
-import { notificationActions, useAppDispatch } from '../../store';
+import { useMemo } from 'react';
+import {
+  notificationActions,
+  useAppDispatch,
+  useNFTSStore,
+  useTableStore,
+} from '../../store';
 import { LinkButton } from '../core';
 import {
   NftMetadataWrapper,
@@ -21,6 +27,14 @@ export const CollectionOverview = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
 
+  const { loadingTableData } = useTableStore();
+  const { loadingNFTs, loadingCollectionData } = useNFTSStore();
+
+  const showLoading = useMemo(
+    () => loadingTableData || loadingNFTs || loadingCollectionData,
+    [loadingTableData, loadingNFTs, loadingCollectionData],
+  );
+
   return (
     <NftMetadataWrapper>
       <NftMetadataBackground />
@@ -33,6 +47,13 @@ export const CollectionOverview = () => {
             <Heading>
               Crowns
               <VerifiedIcon icon="verified" paddingLeft size="md" />
+              {showLoading && (
+                <Icon
+                  icon="spinner"
+                  paddingLeft
+                  extraIconProps={{ size: '32px' }}
+                />
+              )}
             </Heading>
             <Subtext>
               Crowns are a collection of 10,000 generated NFTs on the
