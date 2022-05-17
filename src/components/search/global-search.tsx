@@ -29,7 +29,7 @@ import {
   useFilterStore,
   useNFTSStore,
 } from '../../store';
-import { parseE8SAmountToWICP } from '../../utils/formatters';
+import { formatPriceValue } from '../../utils/formatters';
 
 /* --------------------------------------------------------------------------
  * Global Search Component
@@ -52,19 +52,20 @@ export const GlobalSearch = () => {
   const handleSearch = useCallback(
     throttle((value: string) => {
 
-      if (value.length <= 0) {
+      if (!value) {
         dispatch(filterActions.setSearchResults([]));
-      } else {
-        dispatch(
-          filterActions.getSearchResults({
-            sort: sortBy,
-            order: 'd',
-            page: nextPageNo,
-            count: 25,
-            search: value,
-          }),
-        );
+        return;
       }
+    
+      dispatch(
+        filterActions.getSearchResults({
+          sort: sortBy,
+          order: 'd',
+          page: nextPageNo,
+          count: 25,
+          search: value,
+        }),
+      );
     }, 2500),
     [loadedNFTS],
   );
@@ -130,7 +131,7 @@ export const GlobalSearch = () => {
                         <WICPLogo src={wicpIcon} alt="wicp" />
                         <WICPText size="small">
                           {nft.price
-                            ? parseE8SAmountToWICP(BigInt(nft.price))
+                            ? formatPriceValue(nft.price)
                             : '- '}
                           WICP
                         </WICPText>
@@ -139,7 +140,7 @@ export const GlobalSearch = () => {
                         <SubText>$</SubText>
                         <SubText>{`${
                           nft.price
-                            ? parseE8SAmountToWICP(BigInt(nft.price))
+                            ? formatPriceValue(nft.price.toString())
                             : '-'
                         }`}</SubText>
                       </PriceText>

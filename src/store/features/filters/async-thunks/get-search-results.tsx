@@ -7,6 +7,8 @@ import {
 import { filterActions } from '..';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
+import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
+import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
 export type GetSearchResultsProps =
   NSKyasshuUrl.GetSearchQueryParams & {
@@ -24,6 +26,7 @@ export const getSearchResults = createAsyncThunk<
     };
 
     try {
+      let priceInUSD: number;
       const response = await axios.post(
         KyasshuUrl.getSearchResults({ sort, order, page, count }),
         payload,
@@ -31,11 +34,16 @@ export const getSearchResults = createAsyncThunk<
 
       const { data } = response.data;
 
+      const icpPriceResponse = await getICPPrice();
+      if (icpPriceResponse && icpPriceResponse.usd) {
+        priceInUSD = icpPriceResponse.usd;
+      }
+
       const searchResult = data.map((nft: any) => {
         const searchResultData = {
           id: nft.index,
           name: 'Cap Crowns',
-          price: nft.currentPrice,
+          price: priceInUSD * Number(parseE8SAmountToWICP(nft.currentPrice)),
           preview: nft.url.replace(
             /\/(\w+)\.\w+/g,
             '/thumbnails/$1.png',
