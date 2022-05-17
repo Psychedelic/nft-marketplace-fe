@@ -45,7 +45,6 @@ export const getSearchResults = createAsyncThunk<
         return searchResultData;
       });
 
-      if (!data.length) dispatch(filterActions.setSearchResults([]));
       dispatch(filterActions.setSearchResults(searchResult));
     } catch (error) {
       AppLog.error(error);
