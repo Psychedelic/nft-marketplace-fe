@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NFTMetadata } from '../../../declarations/legacy';
 import type { RootState } from '../../store';
-import { getFilterTraits } from './async-thunks';
+import { getFilterTraits, getSearchResults } from './async-thunks';
 
 export interface TraitsDataState {
   key: string;
@@ -31,6 +32,7 @@ export interface FilterState {
   isMyNfts: boolean;
   sortBy: string;
   status: string;
+  searchResults: NFTMetadata[];
 }
 
 const initialState: FilterState = {
@@ -41,6 +43,7 @@ const initialState: FilterState = {
   isMyNfts: false,
   sortBy: 'lastModified',
   status: '',
+  searchResults: [],
 };
 
 export const filterSlice = createSlice({
@@ -194,12 +197,16 @@ export const filterSlice = createSlice({
     setStatusFilter: (state, action: PayloadAction<string>) => {
       state.status = action.payload;
     },
+    setSearchResults: (state, action: PayloadAction<NFTMetadata[]>) => {
+      state.searchResults = action.payload;
+    },
   },
 });
 
 export const filterActions = {
   ...filterSlice.actions,
   getFilterTraits,
+  getSearchResults,
 };
 
 export const selectFilterState = (state: RootState) => state.filter;

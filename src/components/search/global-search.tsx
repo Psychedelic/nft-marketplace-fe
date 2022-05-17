@@ -23,8 +23,13 @@ import {
   PriceText,
   SubText,
 } from './styles';
-import { useNFTSStore } from '../../store';
-import { NFTMetadata } from '../../declarations/legacy';
+import {
+  filterActions,
+  useAppDispatch,
+  useFilterStore,
+  useNFTSStore,
+} from '../../store';
+import { parseE8SAmountToWICP } from '../../utils/formatters';
 
 /* --------------------------------------------------------------------------
  * Global Search Component
@@ -32,11 +37,12 @@ import { NFTMetadata } from '../../declarations/legacy';
 
 export const GlobalSearch = () => {
   const { t } = useTranslation();
-  const { loadedNFTS } = useNFTSStore();
+  const { loadedNFTS, nextPageNo } = useNFTSStore();
+  const dispatch = useAppDispatch();
+  const { sortBy, searchResults } = useFilterStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState('');
-  const [searchResult, setSearchResult] = useState<NFTMetadata[]>([]);
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -45,11 +51,21 @@ export const GlobalSearch = () => {
 
   const handleSearch = useCallback(
     throttle((value: string) => {
-      const searchResultData = loadedNFTS.filter((nfts) =>
-        nfts.id.startsWith(value),
-      );
-      setSearchResult(searchResultData);
-    }, 3000),
+
+      if (value.length <= 0) {
+        dispatch(filterActions.setSearchResults([]));
+      } else {
+        dispatch(
+          filterActions.getSearchResults({
+            sort: sortBy,
+            order: 'd',
+            page: nextPageNo,
+            count: 25,
+            search: value,
+          }),
+        );
+      }
+    }, 2500),
     [loadedNFTS],
   );
 
@@ -96,9 +112,9 @@ export const GlobalSearch = () => {
           />
         </SearchContainer>
         {searchText &&
-          (searchResult.length ? (
+          (searchResults.length ? (
             <ItemsListContainer>
-              {searchResult?.slice(0, 5).map((nft) => (
+              {searchResults?.map((nft) => (
                 <RouterLink
                   to={`/nft/${nft.id}`}
                   onClick={closeDropDown}
@@ -113,14 +129,18 @@ export const GlobalSearch = () => {
                       <WICPContainer size="small">
                         <WICPLogo src={wicpIcon} alt="wicp" />
                         <WICPText size="small">
-                          {nft.price ? nft.price : '- '}
+                          {nft.price
+                            ? parseE8SAmountToWICP(BigInt(nft.price))
+                            : '- '}
                           WICP
                         </WICPText>
                       </WICPContainer>
                       <PriceText>
                         <SubText>$</SubText>
                         <SubText>{`${
-                          nft.price ? nft.price : '-'
+                          nft.price
+                            ? parseE8SAmountToWICP(BigInt(nft.price))
+                            : '-'
                         }`}</SubText>
                       </PriceText>
                     </PriceDetails>

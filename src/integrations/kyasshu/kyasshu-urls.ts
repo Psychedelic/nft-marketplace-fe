@@ -36,9 +36,13 @@ export class KyasshuUrl {
   }
 
   static getTokenTransactions({
-    tokenId
+    tokenId,
   }: NSKyasshuUrl.GetTokenTransactions): string {
-    return `${config.kyasshuMarketplaceAPI}/cap/token/txns/${config.marketplaceCanisterId}/${tokenId}`
+    return `${config.kyasshuMarketplaceAPI}/cap/token/txns/${config.marketplaceCanisterId}/${tokenId}`;
+  }
+
+  static getSearchResults({ sort, order, page, count }: NSKyasshuUrl.GetSearchQueryParams ): string {
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
   }
 }
 
@@ -63,5 +67,12 @@ export namespace NSKyasshuUrl {
 
   export type GetTokenTransactions = {
     tokenId: number;
-  }
+  };
+
+  export type GetSearchQueryParams = {
+    page: number;
+    sort: string;
+    order: string;
+    count?: number;
+  };
 }
