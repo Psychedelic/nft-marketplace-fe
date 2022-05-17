@@ -41,7 +41,7 @@ import { AppLog } from '../../utils/log';
 import { isTokenId } from '../../utils/nfts';
 
 /* --------------------------------------------------------------------------
- * Edit Listing Modal Component
+ * Change Price Modal Component
  * --------------------------------------------------------------------------*/
 
 export type ChangePriceModalProps = {
@@ -164,7 +164,7 @@ export const ChangePriceModal = ({
         ) : (
           <ChangePriceModalTrigger>
             <ActionButton type="primary">
-              {t('translation:buttons.action.editListing')}
+              {t('translation:buttons.action.changePrice')}
             </ActionButton>
           </ChangePriceModalTrigger>
         )}
@@ -202,10 +202,10 @@ export const ChangePriceModal = ({
             */}
             <ModalHeader>
               <ModalTitle>
-                {t('translation:modals.title.editListing')}
+                {t('translation:modals.title.changePrice')}
               </ModalTitle>
               <ModalDescription>
-                {t('translation:modals.description.editListing')}
+                {t('translation:modals.description.changePrice')}
               </ModalDescription>
             </ModalHeader>
             {/*
