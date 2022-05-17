@@ -85,7 +85,7 @@ export const ClearButton = styled('div', {
   fontWeight: '500',
   fontSize: '14px',
   lineHeight: '19px',
-  color: '#2253FF',
+  color: '#5542CF',
   margin: '0px 0px 0px 15px',
 
   '&:hover': {
@@ -98,13 +98,13 @@ export const Subtext = styled('p', {
   fontWeight: '500',
   fontSize: '14px',
   lineHeight: '19px',
-  color: '#2253FF',
+  color: '#5542CF',
   margin: '0px 0px 0px 30px',
 
   variants: {
     color: {
       primary: {
-        color: '#2253FF',
+        color: '#5542CF',
       },
       secondary: {
         color: '#777E90',

@@ -61,7 +61,7 @@ export const TableWrapper = styled('div', {
         '&:hover': {
           background: '$tableRowHoverColor',
           '.item-name': {
-            color: '#2253FF',
+            color: '#5542CF',
           },
         },
       },
