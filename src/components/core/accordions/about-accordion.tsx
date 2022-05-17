@@ -22,6 +22,7 @@ import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { formatAddress } from '../../../utils/formatters';
 import { Icon } from '../../icons';
 import { notificationActions } from '../../../store/features/notifications';
+import config from '../../../config/env';
 
 export type AboutAccordionProps = {
   owner?: string;
@@ -66,7 +67,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
   const AccordionContentMetaData = [
     {
       title: t('translation:accordions.about.header.canisterId'),
-      value: 't7wg4-tyaaa-aaaak-qacaa-cai',
+      value: config.crownsCanisterId,
     },
     {
       title: t('translation:accordions.about.header.tokenStandard'),
