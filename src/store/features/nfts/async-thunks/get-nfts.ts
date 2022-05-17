@@ -8,6 +8,7 @@ import {
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { findLastAction } from '../../../../utils/nfts';
+import { isEmptyObject } from '../../../../utils/common';
 
 export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -19,9 +20,11 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
     // set loading NFTS state to true
     if (page === 0) {
       dispatch(nftsActions.setIsNFTSLoading(true));
-    }
 
-    dispatch(nftsActions.setCollectionDataLoading());
+      if (!isEmptyObject(payload)) {
+        dispatch(nftsActions.setCollectionDataLoading());
+      }
+    }
 
     try {
       const response = await axios.post(
@@ -90,13 +93,15 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
       // update store with loaded NFTS details
       dispatch(nftsActions.setLoadedNFTS(actionPayload));
 
-      const collectionPayload = {
-        itemsCount: items ? parseInt(items, 10) : 0,
-        ownersCount: 0,
-        price: 0,
-      };
+      if (page === 0 && !isEmptyObject(payload)) {
+        const collectionPayload = {
+          itemsCount: items ? parseInt(items, 10) : 0,
+          ownersCount: 0,
+          price: 0,
+        };
 
-      dispatch(nftsActions.setCollectionData(collectionPayload));
+        dispatch(nftsActions.setCollectionData(collectionPayload));
+      }
     } catch (error) {
       AppLog.error(error);
 
