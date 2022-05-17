@@ -31,6 +31,7 @@ export interface FilterState {
   isMyNfts: boolean;
   sortBy: string;
   status: string;
+  isAlreadyFetched: boolean;
 }
 
 const initialState: FilterState = {
@@ -41,6 +42,7 @@ const initialState: FilterState = {
   isMyNfts: false,
   sortBy: 'lastModified',
   status: '',
+  isAlreadyFetched: false,
 };
 
 export const filterSlice = createSlice({
@@ -104,7 +106,9 @@ export const filterSlice = createSlice({
           trait.key === action.payload.key,
       );
 
-      state.traits[traitsFilterIndex].values.push(...action.payload.values);
+      state.traits[traitsFilterIndex].values.push(
+        ...action.payload.values,
+      );
       const traitName = state.traits[traitsFilterIndex].key;
       const defaultFiltersIndex = state.defaultFilters.findIndex(
         (filter) => filter.filterCategory === traitName,
@@ -193,6 +197,9 @@ export const filterSlice = createSlice({
     },
     setStatusFilter: (state, action: PayloadAction<string>) => {
       state.status = action.payload;
+    },
+    setIsAlreadyFetched: (state, action: PayloadAction<boolean>) => {
+      state.isAlreadyFetched = action.payload;
     },
   },
 });

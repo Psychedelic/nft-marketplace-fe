@@ -36,6 +36,7 @@ export const CollectionItems = () => {
     totalNFTSCount,
     totalOwnersCount,
     floorPrice,
+    loadedNFTS,
   } = useNFTSStore();
 
   const appliedFiltersCount =
@@ -168,7 +169,7 @@ export const CollectionItems = () => {
             </ContentFlex>
           </Flex>
         </ContentWrapper>
-        {loadingNFTs ? (
+        {loadingNFTs && loadedNFTS.length === 0 ? (
           <SkeletonListWrapper>
             <NftSkeletonList />
           </SkeletonListWrapper>

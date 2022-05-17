@@ -1,4 +1,5 @@
 import { styled } from '../../../../stitches.config';
+import { SkeletonBox } from '../../skeleton';
 
 export const CardWrapper = styled('div', {
   display: 'flex',
@@ -15,20 +16,13 @@ export const CardWrapper = styled('div', {
   transition: 'all 0.5s ease-in-out',
 });
 
-export const SkeletonLarge = styled('div', {
+export const SkeletonLarge = styled(SkeletonBox, {
   height: '200px',
   width: '100%',
   margin: '10px 0px',
-  backgroundColor: 'rgba(0, 0, 0, 0.11)',
-  borderRadius: '14px',
-  background: '$skeletonBackground',
 });
 
-export const SkeletonSmall = styled('div', {
-  height: '15px',
+export const SkeletonSmall = styled(SkeletonBox, {
   width: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.11)',
-  borderRadius: '24px',
   margin: '8px 0px 0px',
-  background: '$skeletonBackground',
 });
