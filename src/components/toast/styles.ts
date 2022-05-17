@@ -61,7 +61,7 @@ export const Toast = styled(ToastPrimitive.Root, {
   variants: {
     state: {
       success: {
-        color: '#46D7AB',
+        color: '#00AC7C',
       },
       error: {
         color: '$error',
