@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
@@ -66,26 +66,29 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
     },
   ];
 
-  const AccordionContentMetaData = [
-    {
-      title: t('translation:accordions.about.header.canisterId'),
-      value: config.crownsCanisterId,
-    },
-    {
-      title: t('translation:accordions.about.header.tokenStandard'),
-      value: t('translation:accordions.about.details.dip721'),
-    },
-    {
-      title: t('translation:accordions.about.header.tokenId'),
-      value: id,
-    },
-    {
-      title: t('translation:accordions.about.header.blockchain'),
-      value: t(
-        'translation:accordions.about.details.internetComputer',
-      ),
-    },
-  ];
+  const AccordionContentMetaData = useMemo(
+    () => [
+      {
+        title: t('translation:accordions.about.header.canisterId'),
+        value: config.crownsCanisterId,
+      },
+      {
+        title: t('translation:accordions.about.header.tokenStandard'),
+        value: t('translation:accordions.about.details.dip721'),
+      },
+      {
+        title: t('translation:accordions.about.header.tokenId'),
+        value: id,
+      },
+      {
+        title: t('translation:accordions.about.header.blockchain'),
+        value: t(
+          'translation:accordions.about.details.internetComputer',
+        ),
+      },
+    ],
+    [config, id],
+  );
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
