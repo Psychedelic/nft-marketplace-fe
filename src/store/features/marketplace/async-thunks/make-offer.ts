@@ -79,11 +79,14 @@ export const makeOffer = createAsyncThunk<
       id,
       amount,
     };
-  } catch (err) {
+  } catch (err: any) {
     AppLog.error(err);
+
+    const defaultErrorMessage = `Oops! Failed to make offer`;
+
     dispatch(
       notificationActions.setErrorMessage(
-        `Oops! Failed to make offer`,
+        err?.message || defaultErrorMessage,
       ),
     );
     if (typeof onFailure === 'function') {

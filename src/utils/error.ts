@@ -4,10 +4,8 @@ export const errorMessageHandler = (Err: Record<string, any>) => {
 
   switch (key) {
     case 'InsufficientFungibleBalance':
-      return 'Oops! Insufficient fungible balance'
+      return 'Oops! Insufficient fungible balance';
     default:
-      return 'Oops! Unknown error'
+      return 'Oops! Unknown error';
   }
-}
-
-
+};
