@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
@@ -31,6 +32,7 @@ export type AboutAccordionProps = {
 export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { id } = useParams();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
@@ -75,7 +77,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
     },
     {
       title: t('translation:accordions.about.header.tokenId'),
-      value: '2713',
+      value: id,
     },
     {
       title: t('translation:accordions.about.header.blockchain'),
