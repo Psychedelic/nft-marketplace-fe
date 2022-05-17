@@ -33,6 +33,7 @@ export interface FilterState {
   sortBy: string;
   status: string;
   searchResults: NFTMetadata[];
+  isAlreadyFetched: boolean;
 }
 
 const initialState: FilterState = {
@@ -44,6 +45,7 @@ const initialState: FilterState = {
   sortBy: 'lastModified',
   status: '',
   searchResults: [],
+  isAlreadyFetched: false,
 };
 
 export const filterSlice = createSlice({
@@ -107,7 +109,9 @@ export const filterSlice = createSlice({
           trait.key === action.payload.key,
       );
 
-      state.traits[traitsFilterIndex].values.push(...action.payload.values);
+      state.traits[traitsFilterIndex].values.push(
+        ...action.payload.values,
+      );
       const traitName = state.traits[traitsFilterIndex].key;
       const defaultFiltersIndex = state.defaultFilters.findIndex(
         (filter) => filter.filterCategory === traitName,
@@ -199,6 +203,9 @@ export const filterSlice = createSlice({
     },
     setSearchResults: (state, action: PayloadAction<NFTMetadata[]>) => {
       state.searchResults = action.payload;
+    }
+    setIsAlreadyFetched: (state, action: PayloadAction<boolean>) => {
+      state.isAlreadyFetched = action.payload;
     },
   },
 });

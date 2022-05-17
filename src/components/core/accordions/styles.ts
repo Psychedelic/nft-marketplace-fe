@@ -1,5 +1,6 @@
 import * as Accordion from '@radix-ui/react-accordion';
 import { styled } from '../../../stitches.config';
+import { SkeletonBox } from '../skeleton';
 
 export const AccordionStyle = styled(Accordion.Root, {
   border: '2px solid $borderColor',
@@ -307,10 +308,10 @@ export const ButtonDetailsWrapper = styled('div', {
   marginRight: '10px',
 });
 
-export const CheckboxSkeletonWrapper = styled('div', {
-  background: '$skeletonBackground',
+export const CheckboxSkeletonWrapper = styled(SkeletonBox, {
   borderRadius: '15px',
   marginBottom: '25px',
   padding: '0 15px',
   height: '44px',
+  width: '270px',
 });

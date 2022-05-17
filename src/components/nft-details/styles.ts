@@ -1,4 +1,5 @@
 import { styled } from '../../stitches.config';
+import { SkeletonBox } from '../core';
 
 export const Container = styled('div', {
   width: '100%',
@@ -59,13 +60,12 @@ export const TraitsListLoaderSkeletonWrapper = styled('div', {
   flexWrap: 'wrap',
 });
 
-export const NFTTraitsChipSkeleton = styled('div', {
+export const NFTTraitsChipSkeleton = styled(SkeletonBox, {
   boxSizing: 'border-box',
   display: 'flex',
   alignItems: 'center',
   padding: '12px 15px',
   borderRadius: '14px',
-  background: '$skeletonBackground',
   minWidth: '150px',
   border: '1.5px solid $borderColor',
   margin: '0px 15px 15px 0px',
@@ -79,4 +79,3 @@ export const NFTTraitsChipSkeleton = styled('div', {
     },
   },
 });
-

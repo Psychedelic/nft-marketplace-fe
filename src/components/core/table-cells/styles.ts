@@ -1,9 +1,17 @@
 import { styled } from '../../../stitches.config';
+import { SkeletonBox } from '../skeleton';
 
 export const ItemDetails = styled('div', {
   // base styles
   display: 'flex',
   alignItems: 'center',
+});
+
+export const ThumbnailSkeleton = styled(SkeletonBox, {
+  width: '48px',
+  height: '48px',
+  borderRadius: '10px',
+  marginRight: '12px',
 });
 
 export const ItemLogo = styled('img', {

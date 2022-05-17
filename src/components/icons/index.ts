@@ -25,7 +25,7 @@ import { FaSearch } from '@react-icons/all-files/fa/FaSearch';
 import { GoVerified } from '@react-icons/all-files/go/GoVerified';
 import { FaRegHandPaper } from '@react-icons/all-files/fa/FaRegHandPaper';
 
-import { PlugIcon, AppNameIcon } from './custom';
+import { PlugIcon, AppNameIcon, SpinnerIcon } from './custom';
 
 export const Icons = {
   activity: FiActivity,
@@ -54,6 +54,7 @@ export const Icons = {
   search: FaSearch,
   verified: GoVerified,
   'hand-paper': FaRegHandPaper,
+  spinner: SpinnerIcon,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,

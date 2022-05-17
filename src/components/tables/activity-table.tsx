@@ -9,6 +9,7 @@ import {
   tableActions,
   capActions,
   RootState,
+  useCapStore,
 } from '../../store';
 import {
   ItemDetailsCell,
@@ -21,7 +22,10 @@ import { TableLayout } from './table-layout';
 import { Container, InfiniteScrollWrapper } from './styles';
 import { NFTMetadata } from '../../declarations/legacy';
 import TableSkeletons from './table-skeletons';
-import { parseE8SAmountToWICP, formatAddress } from '../../utils/formatters';
+import {
+  parseE8SAmountToWICP,
+  formatAddress,
+} from '../../utils/formatters';
 import { getICAccountLink } from '../../utils/account-id';
 import config from '../../config/env';
 import { OperationType } from '../../constants';
@@ -35,7 +39,7 @@ interface RowProps {
   type: OperationType;
   price: string;
   quantity: string;
-  seller: Principal,
+  seller: Principal;
   buyer?: Principal;
   time: string;
   data: NFTMetadata;
@@ -51,6 +55,7 @@ export const ActivityTable = () => {
     loadingTableData,
     nextPageNo,
   } = useTableStore();
+  const { loading: capLoading } = useCapStore();
   const dispatch = useAppDispatch();
   const bucketId = useSelector(
     (state: RootState) => state.cap.bucketId,
@@ -79,6 +84,11 @@ export const ActivityTable = () => {
       }),
     );
   }, [dispatch, loadingTableData, hasMoreData, nextPageNo, bucketId]);
+
+  const isTableLoading = useMemo(
+    () => capLoading || loadingTableData,
+    [loadingTableData, capLoading],
+  );
 
   const columns = useMemo(
     () => [
@@ -115,38 +125,21 @@ export const ActivityTable = () => {
           const short = formatAddress(principalText);
           const url = getICAccountLink(principalText);
 
-          return (
-            <TextLinkCell
-              text={short}
-              url={url}
-              type=""
-            />
-          );
+          return <TextLinkCell text={short} url={url} type="" />;
         },
       },
       {
         Header: t('translation:tables.titles.buyer'),
         accessor: ({ buyer }: RowProps) => {
           if (!buyer) {
-            return (
-              <TextLinkCell
-                text="-"
-                type=""
-              />
-            );
-          };
+            return <TextLinkCell text="-" type="" />;
+          }
 
           const principalText = buyer.toText();
           const short = formatAddress(principalText);
           const url = getICAccountLink(principalText);
 
-          return (
-            <TextLinkCell
-              text={short}
-              url={url}
-              type=""
-            />
-          );
+          return <TextLinkCell text={short} url={url} type="" />;
         },
       },
       {
@@ -182,6 +175,7 @@ export const ActivityTable = () => {
           columns={columns}
           data={loadedCapActivityData}
           tableType="activity"
+          loading={isTableLoading}
           loaderDetails={{
             showItemDetails: true,
             showTypeDetails: true,
