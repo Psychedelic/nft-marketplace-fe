@@ -315,23 +315,6 @@ export const AcceptOfferModal = ({
               ---------------------------------
             */}
             <Pending />
-            {/*
-              ---------------------------------
-              Pending Action Buttons
-              ---------------------------------
-            */}
-            <ModalButtonsList>
-              <ModalButtonWrapper fullWidth>
-                <ActionButton
-                  type="secondary"
-                  onClick={() => {
-                    setModalStep(ListingStatusCodes.OfferInfo);
-                  }}
-                >
-                  {t('translation:modals.buttons.cancel')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
           </Container>
         )}
         {/*
