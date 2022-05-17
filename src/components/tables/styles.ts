@@ -9,7 +9,7 @@ export const Container = styled('div', {
 export const TableWrapper = styled('div', {
   // marginTop: '44px', // TODO: make variant
   width: '100%',
-  height: '100vh',
+  minHeight: '20vh',
 
   table: {
     borderSpacing: '0',
@@ -187,7 +187,6 @@ export const ButtonWrapper = styled('div', {
 
 export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
   width: '100%',
-  height: '100vh',
 });
 
 export const TableSkeletonsWrapper = styled('tr', {
@@ -221,13 +220,11 @@ export const Flex = styled('div', {
   gap: '10px',
 });
 
-export const EmptyStateContainer = styled('div', {
-  border: '1px solid $borderColor',
-  borderRadius: '0px 0px 15px 15px',
-  borderTop: '0px',
+export const EmptyStateContainer = styled('th', {
+  border: 'none !important',
 });
 
-export const EmptyStateMessage = styled('p', {
+export const EmptyStateMessage = styled('td', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

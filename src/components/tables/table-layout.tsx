@@ -88,14 +88,19 @@ export const TableLayout = ({
             );
           })}
         </tbody>
+        {!loading && isTableDataEmpty && (
+          <EmptyStateContainer
+            colSpan={headerGroups[0]?.headers.length}
+          >
+            <EmptyStateMessage
+              colSpan={headerGroups[0]?.headers.length}
+              type="mediumTable"
+            >
+              {emptyMessage}
+            </EmptyStateMessage>
+          </EmptyStateContainer>
+        )}
       </table>
-      {!loading && isTableDataEmpty && (
-        <EmptyStateContainer>
-          <EmptyStateMessage type="mediumTable">
-            {emptyMessage}
-          </EmptyStateMessage>
-        </EmptyStateContainer>
-      )}
     </TableWrapper>
   );
 };

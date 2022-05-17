@@ -6,7 +6,6 @@ export const Container = styled('div', {
   borderTop: '1px solid $borderColor',
   padding: '0px 80px 80px',
   width: '100%',
-  minHeight: '100vh',
   // borderLeft: '1px solid rgb(229, 232, 235)',
   borderLeft: '1px solid $borderColor',
 
