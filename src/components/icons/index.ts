@@ -10,6 +10,7 @@ import { FaArrowCircleLeft } from '@react-icons/all-files/fa/FaArrowCircleLeft';
 import { FaSignOutAlt } from '@react-icons/all-files/fa/FaSignOutAlt';
 import { FaTag } from '@react-icons/all-files/fa/FaTag';
 import { FaChevronDown } from '@react-icons/all-files/fa/FaChevronDown';
+import { FaChevronUp } from '@react-icons/all-files/fa/FaChevronUp';
 import { FaEllipsisH } from '@react-icons/all-files/fa/FaEllipsisH';
 import { FaRegClone } from '@react-icons/all-files/fa/FaRegClone';
 import { FaCheck } from '@react-icons/all-files/fa/FaCheck';
@@ -40,6 +41,7 @@ export const Icons = {
   disconnect: FaSignOutAlt,
   offer: FaTag,
   'chevron-down': FaChevronDown,
+  'chevron-up': FaChevronUp,
   ellipsis: FaEllipsisH,
   copy: FaRegClone,
   check: FaCheck,
