@@ -299,23 +299,6 @@ export const ChangePriceModal = ({
               ---------------------------------
             */}
             <Pending />
-            {/*
-              ---------------------------------
-              Pending Action Buttons
-              ---------------------------------
-            */}
-            <ModalButtonsList>
-              <ModalButtonWrapper fullWidth>
-                <ActionButton
-                  type="secondary"
-                  onClick={() => {
-                    setModalStep(ListingStatusCodes.ListingInfo);
-                  }}
-                >
-                  {t('translation:modals.buttons.cancel')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
           </Container>
         )}
         {/*
