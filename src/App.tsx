@@ -5,13 +5,18 @@ import CollectionView from './views/CollectionView';
 import NFTView from './views/NFTView';
 import OfferView from './views/OffersView';
 import { useTheme } from './hooks/use-theme';
-import { darkThemeGlobals, isDarkTheme } from './utils/styles';
+import {
+  darkThemeGlobals,
+  isDarkTheme,
+  portalZIndexGlobals,
+} from './utils/styles';
 
 const App = () => {
   const [theme, themeObject] = useTheme();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   isDarkTheme(theme) && darkThemeGlobals();
+  portalZIndexGlobals();
 
   return (
     <div className={themeObject}>

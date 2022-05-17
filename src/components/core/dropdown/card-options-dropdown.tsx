@@ -35,13 +35,14 @@ export const CardOptionsDropdown = ({
   };
 
   return (
-    <DropdownMenu.Root>
+    <DropdownMenu.Root modal={false}>
       <DropdownMenu.Trigger
         className={themeObject}
         asChild
         style={{
           cursor: 'pointer',
         }}
+        onClick={(e) => e.preventDefault()}
       >
         <DropdownButtonContainer>
           <Icon icon="ellipsis" />

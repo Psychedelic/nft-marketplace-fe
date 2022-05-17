@@ -66,10 +66,16 @@ export const SortByFilterDropdown = React.memo(() => {
   };
 
   return (
-    <DropdownRoot onOpenChange={setIsOpen}>
-      <DropdownStyle>
-        <p>{selectedValue}</p>
-        <Icon icon="chevron-down" rotate={isOpen} />
+    <DropdownRoot
+      onOpenChange={setIsOpen}
+      modal={false}
+      open={isOpen}
+    >
+      <DropdownStyle onClick={(e) => e.preventDefault()} asChild>
+        <div>
+          <p>{selectedValue}</p>
+          <Icon icon="chevron-down" rotate={isOpen} />
+        </div>
       </DropdownStyle>
 
       <DropdownContent className={themeObject}>
