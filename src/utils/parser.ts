@@ -8,7 +8,10 @@ import {
 } from './formatters';
 import { formatTimestamp } from '../integrations/functions/date';
 import { OffersTableItem } from '../declarations/legacy';
-import { sortTokenOffersByPrice } from './sorting';
+import {
+  sortTokenOffersByPrice,
+  sortTransactionsByTime,
+} from './sorting';
 import { OperationTypes, OperationType } from '../constants';
 
 type GetAllListingsDataResponse = Array<
@@ -195,7 +198,8 @@ export const parseOffersMadeResponse = ({
 };
 
 // TODO: Have a "unknown" type for cases where operation mapping fails
-export const getOperationType = (operationType: OperationType) => OperationTypes[operationType];
+export const getOperationType = (operationType: OperationType) =>
+  OperationTypes[operationType];
 
 // TODO: Should be reused, as table type is similar
 // see comment in the nft-activity-table-tsx
@@ -214,6 +218,7 @@ export type TokenTransactionItem = {
   from: TablePrincipal;
   to: TablePrincipal;
   date: string;
+  time: number;
 };
 
 export const parseTokenTransactions = ({
@@ -254,21 +259,24 @@ export const parseTokenTransactions = ({
         from,
         to,
         date: formatTimestamp(BigInt(curr.event.time)),
+        time: curr.event.time,
         floorDifference: '',
       },
     ];
 
-    return acc;
+    const sortedTransactionsByTime = sortTransactionsByTime(acc);
+
+    return sortedTransactionsByTime;
   }, [] as TokenTransactionItem[]);
 
   return parsed;
 };
 
-export const parseTablePrincipal = (arr: Record<number, number>): Principal | undefined => {
-  const parsedArr = Uint8Array.from(
-    Object.values(arr),
-  );
+export const parseTablePrincipal = (
+  arr: Record<number, number>,
+): Principal | undefined => {
+  const parsedArr = Uint8Array.from(Object.values(arr));
   const pid = Principal.fromUint8Array(parsedArr);
 
   return pid;
-}
+};
