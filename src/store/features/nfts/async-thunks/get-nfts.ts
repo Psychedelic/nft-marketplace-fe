@@ -20,10 +20,10 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
     // set loading NFTS state to true
     if (page === 0) {
       dispatch(nftsActions.setIsNFTSLoading(true));
+    }
 
-      if (!isEmptyObject(payload)) {
-        dispatch(nftsActions.setCollectionDataLoading());
-      }
+    if (!isEmptyObject(payload)) {
+      dispatch(nftsActions.setCollectionDataLoading());
     }
 
     try {
@@ -93,7 +93,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
       // update store with loaded NFTS details
       dispatch(nftsActions.setLoadedNFTS(actionPayload));
 
-      if (page === 0 && !isEmptyObject(payload)) {
+      if (!isEmptyObject(payload)) {
         const collectionPayload = {
           itemsCount: items ? parseInt(items, 10) : 0,
           ownersCount: 0,
