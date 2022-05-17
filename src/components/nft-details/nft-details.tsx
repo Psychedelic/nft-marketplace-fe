@@ -142,22 +142,22 @@ export const NftDetails = () => {
                   <NFTTraitsChip
                     label="Base"
                     name={nftDetails.traits.base.name}
-                    rimValue={`${nftDetails.traits.base.occurance} (${nftDetails.traits.base.rarity}%)`}
+                    rimValue={`${nftDetails.traits.base.occurance} (${nftDetails.traits.base.rarity.toFixed(2)}%)`}
                   />
                   <NFTTraitsChip
                     label="BigGem"
                     name={nftDetails.traits.biggem.name}
-                    rimValue={`${nftDetails.traits.biggem.occurance} (${nftDetails.traits.biggem.rarity}%)`}
+                    rimValue={`${nftDetails.traits.biggem.occurance} (${nftDetails.traits.biggem.rarity.toFixed(2)}%)`}
                   />
                   <NFTTraitsChip
                     label="Rim"
                     name={nftDetails.traits.rim.name}
-                    rimValue={`${nftDetails.traits.rim.occurance} (${nftDetails.traits.rim.rarity}%)`}
+                    rimValue={`${nftDetails.traits.rim.occurance} (${nftDetails.traits.rim.rarity.toFixed(2)}%)`}
                   />
                   <NFTTraitsChip
                     label="SmallGem"
                     name={nftDetails.traits.smallgem.name}
-                    rimValue={`${nftDetails.traits.smallgem.occurance} (${nftDetails.traits.smallgem.rarity}%)`}
+                    rimValue={`${nftDetails.traits.smallgem.occurance} (${nftDetails.traits.smallgem.rarity.toFixed(2)}%)`}
                   />
                 </>
               )}
