@@ -59,8 +59,7 @@ export const Filters = () => {
     if (!isAlreadyFetched) {
       dispatch(filterActions.getFilterTraits());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, [dispatch, isAlreadyFetched]);
 
   const filterExists = (filterName: string) =>
     defaultFilters.some(
