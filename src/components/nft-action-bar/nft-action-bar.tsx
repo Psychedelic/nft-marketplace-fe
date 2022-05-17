@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   CancelListingModal,
@@ -57,6 +57,7 @@ export const NftActionBar = ({
   showNFTActionButtons,
 }: NftActionBarProps) => {
   const { t } = useTranslation();
+  const location = useLocation()
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
@@ -69,12 +70,12 @@ export const NftActionBar = ({
   return (
     <Container>
       <NftActionBarWrapper>
-        <RouterLink to="/">
+        <div onClick={() => history.back()}>
           <ActionText>
             <Icon icon="arrow-left-circle" paddingRight />
             {t('translation:buttons.action.backToResults')}
           </ActionText>
-        </RouterLink>
+        </div>
         {showNFTActionButtons &&
           (isConnectedOwner ? (
             <OnConnected isListed={isListed} />
