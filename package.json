@@ -35,10 +35,13 @@
     "react-hover-video-player": "^9.4.0",
     "react-i18next": "^11.15.3",
     "react-infinite-scroller": "^1.2.6",
+    "react-lottie": "^1.2.3",
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-table": "^7.7.0",
+    "react-tsparticles": "^2.0.6",
+    "tsparticles": "^2.0.6",
     "web-vitals": "^2.1.2"
   },
   "scripts": {
@@ -84,6 +87,7 @@
     "@types/react": "^17.0.38",
     "@types/react-dom": "^17.0.11",
     "@types/react-infinite-scroller": "^1.2.3",
+    "@types/react-lottie": "^1.2.6",
     "@types/react-table": "^7.7.9",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",

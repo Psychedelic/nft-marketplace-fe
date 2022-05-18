@@ -6,7 +6,6 @@ import { marketplaceActions, useAppDispatch } from '../../store';
 import { OfferItem } from '../../declarations/legacy';
 import {
   CancelOfferModalTrigger,
-  ModalOverlay,
   ModalContent,
   Container,
   ModalHeader,
@@ -15,6 +14,7 @@ import {
   ModalButtonsList,
   ModalButtonWrapper,
 } from './styles';
+import { ModalOverlay } from './modal-overlay';
 
 import { ListingStatusCodes } from '../../constants/listing';
 

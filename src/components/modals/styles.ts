@@ -66,7 +66,7 @@ export const AcceptOfferModalTrigger = styled('div', {
   height: '33px',
 });
 
-export const ModalOverlay = styled(DialogPrimitive.Overlay, {
+export const ModalOverlayContainer = styled(DialogPrimitive.Overlay, {
   backgroundColor: '$modalOverlay',
   position: 'fixed',
   inset: 0,

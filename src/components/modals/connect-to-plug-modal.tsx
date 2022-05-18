@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
-  ModalOverlay,
   ModalContent,
   Container,
   ModalButtonWrapper,
@@ -10,6 +9,7 @@ import {
 } from './styles';
 import { Plug } from '../plug';
 import { usePlugStore } from '../../store';
+import { ModalOverlay } from './modal-overlay';
 
 /* --------------------------------------------------------------------------
  * Connect to Plug Modal Component

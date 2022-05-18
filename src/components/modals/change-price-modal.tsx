@@ -10,7 +10,6 @@ import {
 } from '../core';
 import {
   ChangePriceModalTrigger,
-  ModalOverlay,
   ModalContent,
   Container,
   ModalHeader,
@@ -39,6 +38,7 @@ import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { AppLog } from '../../utils/log';
 import { isTokenId } from '../../utils/nfts';
+import { ModalOverlay } from './modal-overlay';
 
 /* --------------------------------------------------------------------------
  * Change Price Modal Component
@@ -174,7 +174,9 @@ export const ChangePriceModal = ({
         Modal Overlay
         ---------------------------------
       */}
-      <ModalOverlay />
+      <ModalOverlay
+        enableParticles={modalStep === ListingStatusCodes.Confirmed}
+      />
       {/*
         ---------------------------------
         Modal Content

@@ -11,7 +11,6 @@ import {
 } from '../core';
 import {
   SellModalTrigger,
-  ModalOverlay,
   ModalContent,
   SellModalPreviewWrapper,
   SellModalPreviewContainer,
@@ -44,6 +43,7 @@ import {
 import { AppLog } from '../../utils/log';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { NFTMetadata } from '../../declarations/legacy';
+import { ModalOverlay } from './modal-overlay';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -181,7 +181,9 @@ export const SellModal = ({
         Modal Overlay
         ---------------------------------
       */}
-      <ModalOverlay />
+      <ModalOverlay
+        enableParticles={modalStep === ListingStatusCodes.Confirmed}
+      />
       {/*
         ---------------------------------
         Modal Content
