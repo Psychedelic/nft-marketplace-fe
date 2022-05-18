@@ -130,16 +130,15 @@ export const Filters = () => {
           `${t('translation:filters.priceRange')}`,
         ),
       );
-    } else if (priceFilterValue.max === '') {
+    }
+    if (priceFilterValue.max === '') {
       dispatch(
         notificationActions.setErrorMessage(
           `${t('translation:errorMessages.priceEmptyField')}`,
         ),
       );
-    } else if (
-      priceFilterValue.min === '' &&
-      priceFilterValue.max !== ''
-    ) {
+    }
+    if (priceFilterValue.min === '' && priceFilterValue.max !== '') {
       setPriceFilterValue((prevState) => ({
         ...prevState,
         min: '0',
@@ -148,17 +147,13 @@ export const Filters = () => {
         ...priceFilterValue,
         min: '0',
       });
-    } else {
-      // eslint-disable-next-line no-lonely-if
-      if (
-        priceFilterValue.min !== '0' &&
-        priceFilterValue.max !== '0'
-      ) {
-        applyFilter(
-          `${t('translation:filters.priceRange')}`,
-          priceFilterValue,
-        );
-      }
+    }
+    // eslint-disable-next-line no-lonely-if
+    if (priceFilterValue.min !== '' && priceFilterValue.max !== '') {
+      applyFilter(
+        `${t('translation:filters.priceRange')}`,
+        priceFilterValue,
+      );
     }
   };
 
