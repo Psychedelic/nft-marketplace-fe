@@ -131,7 +131,7 @@ const OnConnected = ({
           )}
           {!loadingOffers && !userMadeOffer && (
             <ButtonDetailsWrapper>
-              <MakeOfferModal />
+              <MakeOfferModal isNFTListed={isListed} />
             </ButtonDetailsWrapper>
           )}
           {!loadingOffers && userMadeOffer && (
