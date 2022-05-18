@@ -39,8 +39,8 @@ export const Wrapper = styled('div', {
     },
 
     '& input[type="checkbox"]:checked + span:before': {
-      background: '#5542CF',
-      borderColor: '#5542CF',
+      background: '$primary',
+      borderColor: '$primary',
       color: '#ffffff',
       content: '\\2713',
       width: '18px',

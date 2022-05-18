@@ -319,7 +319,7 @@ export const ActionText = styled('span', {
   fontWeight: '500',
   fontSize: '14px',
   lineHeight: '20px',
-  color: '#5542CF',
+  color: '$primary',
   cursor: 'pointer',
 
   '&:hover': {
