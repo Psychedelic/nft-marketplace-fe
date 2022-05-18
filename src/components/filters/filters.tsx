@@ -130,27 +130,38 @@ export const Filters = () => {
           `${t('translation:filters.priceRange')}`,
         ),
       );
-    } else if (
-      priceFilterValue.min === '' ||
-      priceFilterValue.max === ''
-    ) {
+
+      return;
+    }
+    if (priceFilterValue.max === '') {
       dispatch(
         notificationActions.setErrorMessage(
           `${t('translation:errorMessages.priceEmptyField')}`,
         ),
       );
-    } else {
-      // eslint-disable-next-line no-lonely-if
-      if (
-        priceFilterValue.min !== '0' &&
-        priceFilterValue.max !== '0'
-      ) {
-        applyFilter(
-          `${t('translation:filters.priceRange')}`,
-          priceFilterValue,
-        );
-      }
+
+      return;
     }
+    if (priceFilterValue.min === '' && priceFilterValue.max !== '') {
+      setPriceFilterValue((prevState) => ({
+        ...prevState,
+        min: '0',
+      }));
+      applyFilter(`${t('translation:filters.priceRange')}`, {
+        ...priceFilterValue,
+        min: '0',
+      });
+
+      return;
+    }
+    if (priceFilterValue.min !== '' && priceFilterValue.max !== '') {
+      applyFilter(
+        `${t('translation:filters.priceRange')}`,
+        priceFilterValue,
+      );
+    }
+
+    return;
   };
 
   return (
