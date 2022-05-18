@@ -12,6 +12,7 @@ import {
   ActionText,
   ButtonListWrapper,
   ButtonWrapper,
+  RouteLink,
 } from './styles';
 
 import { usePlugStore } from '../../store';
@@ -68,12 +69,12 @@ export const NftActionBar = ({
   return (
     <Container>
       <NftActionBarWrapper>
-        <div onClick={() => history.back()}>
+        <RouteLink onClick={() => history.back()}>
           <ActionText>
             <Icon icon="arrow-left-circle" paddingRight />
-            {t('translation:buttons.action.backToResults')}
+            {t('translation:buttons.links.back')}
           </ActionText>
-        </div>
+        </ RouteLink>
         {showNFTActionButtons &&
           (isConnectedOwner ? (
             <OnConnected isListed={isListed} />
