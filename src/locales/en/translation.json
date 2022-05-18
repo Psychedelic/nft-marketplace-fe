@@ -176,6 +176,9 @@
       "cancelOffer": "Cancel Offer",
       "cancelListing": "Cancel Listing",
       "acceptOffer": "Sale"
+    },
+    "labels": {
+      "you": "You"
     }
   },
   "modals": {
