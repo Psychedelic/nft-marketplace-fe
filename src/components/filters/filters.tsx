@@ -154,7 +154,6 @@ export const Filters = () => {
 
       return;
     }
-    // eslint-disable-next-line no-lonely-if
     if (priceFilterValue.min !== '' && priceFilterValue.max !== '') {
       applyFilter(
         `${t('translation:filters.priceRange')}`,
