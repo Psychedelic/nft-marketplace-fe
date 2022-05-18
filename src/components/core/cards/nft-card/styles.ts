@@ -13,7 +13,7 @@ const overlaySpinner = keyframes({
 
 export const CardContainer = styled('div', {
   variants: {
-    shouldAnimate: {
+    disableAnimation: {
       true: {
         '&:hover': {
           transform: 'unset',

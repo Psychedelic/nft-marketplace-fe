@@ -292,7 +292,7 @@ export const SellModal = ({
               <NftCard
                 data={nftDetails}
                 owned={isOwner}
-                previewCard={true}
+                previewCard
               />
             </NFTCardPreview>
           </SellModalPreviewWrapper>

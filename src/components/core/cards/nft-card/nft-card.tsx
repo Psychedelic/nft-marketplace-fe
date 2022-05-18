@@ -200,7 +200,7 @@ export const NftCard = React.memo(
 
     return (
       <CardContainer
-        shouldAnimate={modalOpen || previewCard}
+        disableAnimation={modalOpen || previewCard}
         ref={containerRef}
       >
         <CardWrapper>
