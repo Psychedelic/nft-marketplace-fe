@@ -38,6 +38,7 @@ export type NftCardProps = {
   owned?: boolean;
   // TODO: Data should have a well defined type def
   data: any;
+  previewCard?: boolean;
 };
 
 type ConnectedProps = {
@@ -183,80 +184,93 @@ const LastActionTakenDetails = ({
   );
 };
 
-export const NftCard = React.memo(({ owned, data }: NftCardProps) => {
-  const { t } = useTranslation();
-  const [modalOpen, setModalOpen] = useState(false);
-  const { isConnected } = usePlugStore();
-  const containerRef = useRef<HTMLDivElement>(null);
+export const NftCard = React.memo(
+  ({ owned, data, previewCard }: NftCardProps) => {
+    const { t } = useTranslation();
+    const [modalOpen, setModalOpen] = useState(false);
+    const { isConnected } = usePlugStore();
+    const containerRef = useRef<HTMLDivElement>(null);
 
-  // TODO: Move any status code as constant
-  const isForSale = data.status === 'forSale';
+    // TODO: Move any status code as constant
+    const isForSale = data.status === 'forSale';
 
-  const setModalStatus = (status: boolean) => {
-    setModalOpen(status);
-  };
+    const setModalStatus = (status: boolean) => {
+      setModalOpen(status);
+    };
 
-  return (
-    <CardContainer type={modalOpen} ref={containerRef}>
-      <CardWrapper>
-        <RouterLink to={`/nft/${data.id}`}>
-          <Flex>
-            <OwnedCardText>
-              {owned ? `${t('translation:nftCard.owned')}` : ''}
-            </OwnedCardText>
-            <CardOptionsDropdown data={data} />
-          </Flex>
-          <MediaWrapper>
-            <VideoPlayer
-              videoSrc={data.location}
-              pausedOverlay={
-                <PreviewDetails>
-                  <PreviewImage src={data?.preview} alt="nft-card" />
-                </PreviewDetails>
-              }
-              loadingOverlay={<VideoLoader />}
-              // Next line is a validation for null value
-              hoverTarget={containerRef.current || undefined}
-            />
-          </MediaWrapper>
-          <Flex>
-            <NftDataHeader>{data?.name}</NftDataHeader>
-            <NftDataHeader>
-              {isForSale ? `${t('translation:nftCard.price')}` : ''}
-            </NftDataHeader>
-          </Flex>
-          <Flex>
-            <NftDataText>{data?.id}</NftDataText>
-            <NftDataText>
-              {isForSale && (
-                <>
-                  <img src={wicpLogo} alt="" />
-                  <NumberTooltip>
-                    {parseE8SAmountToWICP(data?.price)}
-                  </NumberTooltip>
-                </>
+    return (
+      <CardContainer
+        shouldAnimate={modalOpen || previewCard}
+        ref={containerRef}
+      >
+        <CardWrapper>
+          <RouterLink to={`/nft/${data.id}`} className="card-router">
+            <Flex>
+              <OwnedCardText>
+                {owned ? `${t('translation:nftCard.owned')}` : ''}
+              </OwnedCardText>
+              <CardOptionsDropdown data={data} />
+            </Flex>
+            <MediaWrapper>
+              <VideoPlayer
+                videoSrc={data.location}
+                pausedOverlay={
+                  <PreviewDetails>
+                    <PreviewImage
+                      src={data?.preview}
+                      alt="nft-card"
+                    />
+                  </PreviewDetails>
+                }
+                loadingOverlay={<VideoLoader />}
+                // Next line is a validation for null value
+                hoverTarget={containerRef.current || undefined}
+              />
+            </MediaWrapper>
+            <Flex>
+              <NftDataHeader>{data?.name}</NftDataHeader>
+              <NftDataHeader>
+                {isForSale ? `${t('translation:nftCard.price')}` : ''}
+              </NftDataHeader>
+            </Flex>
+            <Flex>
+              <NftDataText>{data?.id}</NftDataText>
+              <NftDataText>
+                {isForSale && (
+                  <>
+                    <img src={wicpLogo} alt="" />
+                    <NumberTooltip>
+                      {parseE8SAmountToWICP(data?.price)}
+                    </NumberTooltip>
+                  </>
+                )}
+              </NftDataText>
+            </Flex>
+          </RouterLink>
+          {!previewCard && (
+            <NFTCardOptions onClick={(e) => e.stopPropagation()}>
+              {(isConnected && (
+                <OnConnected
+                  owned={owned}
+                  isForSale={isForSale}
+                  tokenId={data.id}
+                  setModalStatus={setModalStatus}
+                  price={data?.price}
+                />
+              )) || (
+                <OnDisconnected
+                  isForSale={isForSale}
+                  setModalStatus={setModalStatus}
+                />
               )}
-            </NftDataText>
-          </Flex>
-        </RouterLink>
-        <NFTCardOptions onClick={(e) => e.stopPropagation()}>
-          {(isConnected && (
-            <OnConnected
-              owned={owned}
-              isForSale={isForSale}
-              tokenId={data.id}
-              setModalStatus={setModalStatus}
-              price={data?.price}
-            />
-          )) || (
-            <OnDisconnected
-              isForSale={isForSale}
-              setModalStatus={setModalStatus}
-            />
+              <LastActionTakenDetails
+                data={data}
+                isForSale={isForSale}
+              />
+            </NFTCardOptions>
           )}
-          <LastActionTakenDetails data={data} isForSale={isForSale} />
-        </NFTCardOptions>
-      </CardWrapper>
-    </CardContainer>
-  );
-});
+        </CardWrapper>
+      </CardContainer>
+    );
+  },
+);
