@@ -37,7 +37,7 @@ export type MakeOfferModalProps = {
   nftTokenId?: string;
   isOfferEditing?: boolean;
   offerPrice?: bigint;
-  secondaryBtn?: boolean;
+  isNFTListed?: boolean;
 };
 
 export const MakeOfferModal = ({
@@ -46,7 +46,7 @@ export const MakeOfferModal = ({
   nftTokenId,
   isOfferEditing,
   offerPrice,
-  secondaryBtn,
+  isNFTListed,
 }: MakeOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -122,7 +122,7 @@ export const MakeOfferModal = ({
           <ActionText>{actionText}</ActionText>
         ) : (
           <MakeOfferModalTrigger>
-            <ActionButton type={secondaryBtn ? 'outline' : 'primary'}>
+            <ActionButton type={isNFTListed ? 'outline' : 'primary'}>
               {isOfferEditing
                 ? t('translation:buttons.action.editOffer')
                 : t('translation:buttons.action.makeOffer')}
