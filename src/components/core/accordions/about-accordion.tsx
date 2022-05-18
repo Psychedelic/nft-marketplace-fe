@@ -120,7 +120,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
               )}`}
             </p>
           </div>
-          <Icon icon="chevron-down" rotate={isAccordionOpen} />
+          <Icon icon="chevron-up" rotate={isAccordionOpen} />
         </AccordionTrigger>
         <AccordionContent
           padding="medium"
