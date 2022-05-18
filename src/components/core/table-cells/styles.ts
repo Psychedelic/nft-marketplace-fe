@@ -161,14 +161,14 @@ export const TextDetails = styled('div', {
   variants: {
     type: {
       activityTime: {
-        color: '#2253FF',
+        color: '$tableLinkTextColor',
       },
 
       nftActivityDate: {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '22px',
-        color: '#2253FF',
+        color: '$tableLinkTextColor',
       },
 
       offers: {
@@ -185,7 +185,7 @@ export const TextLinkDetails = styled('a', {
   fontSize: '16px',
   fontWeight: '500',
   lineHeight: '20px',
-  color: '#2253FF',
+  color: '$tableLinkTextColor',
   textDecoration: 'none',
   cursor: 'pointer',
 
@@ -195,14 +195,14 @@ export const TextLinkDetails = styled('a', {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '22px',
-        color: '#2253FF',
+        color: '$tableLinkTextColor',
       },
 
       offers: {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '19px',
-        color: '#2253FF',
+        color: '$tableLinkTextColor',
       },
     },
   },

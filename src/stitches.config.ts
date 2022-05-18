@@ -71,7 +71,7 @@ export const darkTheme = createTheme({
     tableBackgroundColor: '#141416',
     tableTextColor: '#ffffff',
     tableNftActivityTextColor: '#ffffff',
-    tableLinkTextColor: '#ffffff',
+    tableLinkTextColor: '#2253FF',
     tableRowHoverColor: '#141416',
     openAccordion: '#19191C',
     closeAccordion: '#141416',

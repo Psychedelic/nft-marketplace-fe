@@ -30,6 +30,7 @@ import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { extractTraitData } from '../../store/features/filters/async-thunks/get-filter-traits';
 import TraitsListLoader from './TraitsListLoader';
+import { roundOffDecimalValue } from '../../utils/nfts';
 
 // type CurrentListing = {
 //   seller: string;
@@ -142,22 +143,42 @@ export const NftDetails = () => {
                   <NFTTraitsChip
                     label="Base"
                     name={nftDetails.traits.base.name}
-                    rimValue={`${nftDetails.traits.base.occurance} (${nftDetails.traits.base.rarity.toFixed(2)}%)`}
+                    rimValue={`${
+                      nftDetails.traits.base.occurance
+                    } (${roundOffDecimalValue(
+                      nftDetails.traits.base.rarity,
+                      2,
+                    )}%)`}
                   />
                   <NFTTraitsChip
                     label="BigGem"
                     name={nftDetails.traits.biggem.name}
-                    rimValue={`${nftDetails.traits.biggem.occurance} (${nftDetails.traits.biggem.rarity.toFixed(2)}%)`}
+                    rimValue={`${
+                      nftDetails.traits.biggem.occurance
+                    } (${roundOffDecimalValue(
+                      nftDetails.traits.biggem.rarity,
+                      2,
+                    )}%)`}
                   />
                   <NFTTraitsChip
                     label="Rim"
                     name={nftDetails.traits.rim.name}
-                    rimValue={`${nftDetails.traits.rim.occurance} (${nftDetails.traits.rim.rarity.toFixed(2)}%)`}
+                    rimValue={`${
+                      nftDetails.traits.rim.occurance
+                    } (${roundOffDecimalValue(
+                      nftDetails.traits.rim.rarity,
+                      2,
+                    )}%)`}
                   />
                   <NFTTraitsChip
                     label="SmallGem"
                     name={nftDetails.traits.smallgem.name}
-                    rimValue={`${nftDetails.traits.smallgem.occurance} (${nftDetails.traits.smallgem.rarity.toFixed(2)}%)`}
+                    rimValue={`${
+                      nftDetails.traits.smallgem.occurance
+                    } (${roundOffDecimalValue(
+                      nftDetails.traits.smallgem.rarity,
+                      2,
+                    )}%)`}
                   />
                 </>
               )}
