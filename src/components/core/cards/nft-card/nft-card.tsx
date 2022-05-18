@@ -83,7 +83,7 @@ const OnConnected = ({
           ) : (
             <ChangePriceModal
               onClose={() => setModalStatus(false)}
-              actionText={`${t('translation:nftCard.editListing')}`}
+              actionText={`${t('translation:nftCard.changePrice')}`}
               nftTokenId={tokenId}
               nftPrice={price}
             />

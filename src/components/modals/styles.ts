@@ -115,7 +115,7 @@ export const ModalTitle = styled(DialogPrimitive.Title, {
 
 export const ModalDescription = styled(DialogPrimitive.Description, {
   fontSize: '18px',
-  fontWeight: '600',
+  fontWeight: '500',
   lineHeight: '20px',
   color: '#767D8E',
   margin: '0px',
@@ -323,7 +323,7 @@ export const ActionText = styled('span', {
   cursor: 'pointer',
 
   '&:hover': {
-    textDecoration: 'underline',
+    opacity: '60%',
   },
 });
 

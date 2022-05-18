@@ -208,7 +208,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
                 )}`) ||
               ''
             }
-            tableType=""
+            tableType="offers"
           />
         ),
       },

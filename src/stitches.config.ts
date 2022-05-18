@@ -40,6 +40,7 @@ export const {
       greyMid: '#767D8E',
       error: '#FD5F51',
       primary: '#5542CF',
+      success: '#00AC7C',
       modalText: '#767D8E',
     },
     space: {},
@@ -87,6 +88,7 @@ export const darkTheme = createTheme({
     checkboxSelectedFiltersText: '#5542CF',
     error: '#FD5F51',
     primary: '#5542CF',
+    success: '#00AC7C',
     modalText: '#767D8E',
   },
   shadows: {

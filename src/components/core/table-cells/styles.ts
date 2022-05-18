@@ -79,7 +79,6 @@ export const WICPContainer = styled('div', {
   // base styles
   display: 'flex',
   alignItems: 'center',
-  marginBottom: '6px',
 
   variants: {
     tableType: {

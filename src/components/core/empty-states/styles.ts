@@ -18,6 +18,9 @@ export const EmptyStateMessage = styled('p', {
 });
 
 export const ButtonWrapper = styled('div', {
+  height: '50px',
+  margin: '10px',
+
   '.plug-button': {
     marginLeft: '0px',
   },

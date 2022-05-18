@@ -9,7 +9,7 @@ import {
 import { LinkButton } from '../core';
 import { GlobalSearch } from '../search';
 import { Plug } from '../plug';
-import crown from '../../assets/crown.svg';
+import jelly from '../../assets/jelly-full-image.svg';
 import {
   Container,
   LogoContainer,
@@ -42,12 +42,8 @@ export const NavBar = () => {
       <RouterLink to="/">
         <LogoContainer>
           <LogoIcon
-            src={crown}
+            src={jelly}
             alt={t('translation:common.collectionName')}
-          />
-          <LogoName
-            icon="app-name"
-            extraIconProps={{ dark: !isLightTheme }}
           />
         </LogoContainer>
       </RouterLink>

@@ -118,7 +118,15 @@ export const Plug = () => {
     }
   }, [isConnected, dispatch]);
 
-  const handleConnectToPlug = async () => {
+  const handleConnect = async () => {
+    // Is plug installed
+    if (!hasPlug) {
+      // Ask user to install plug
+      window.open(PLUG_WALLET_WEBSITE_URL, '_blank');
+      return;
+    }
+
+    // connect to plug if installed
     try {
       // verifying plug connection
       dispatch(
@@ -157,24 +165,11 @@ export const Plug = () => {
       dispatch(plugActions.setIsConnected(false));
     }
   };
-
-  const handleClick = () => {
-    // Is plug installed
-    if (!hasPlug) {
-      // Ask user to install plug
-      window.open(PLUG_WALLET_WEBSITE_URL, '_blank');
-      return;
-    }
-
-    // connect to plug if installed
-    handleConnectToPlug();
-  };
-
   return (
     <>
       {isVerifying && (
         <PlugButton
-          handleClick={handleClick}
+          handleConnect={handleConnect}
           text={t('translation:buttons.action.loading')}
           isConnected={isConnected}
           principalId={principalId}
@@ -182,7 +177,7 @@ export const Plug = () => {
       )}
       {isConnecting && (
         <PlugButton
-          handleClick={handleClick}
+          handleConnect={handleConnect}
           text={t('translation:buttons.action.connecting')}
           isConnected={isConnected}
           principalId={principalId}
@@ -190,7 +185,7 @@ export const Plug = () => {
       )}
       {!isVerifying && !isConnecting && !isConnected && (
         <PlugButton
-          handleClick={handleClick}
+          handleConnect={handleConnect}
           text={
             hasPlug
               ? t('translation:buttons.action.connectToPlug')
@@ -202,7 +197,7 @@ export const Plug = () => {
       )}
       {!isVerifying && !isConnecting && isConnected && (
         <PlugButton
-          handleClick={() => {
+          handleConnect={() => {
             AppLog.warn('Already connected to plug!');
           }}
           text={
