@@ -130,6 +130,8 @@ export const Filters = () => {
           `${t('translation:filters.priceRange')}`,
         ),
       );
+
+      return;
     }
     if (priceFilterValue.max === '') {
       dispatch(
@@ -137,6 +139,8 @@ export const Filters = () => {
           `${t('translation:errorMessages.priceEmptyField')}`,
         ),
       );
+
+      return;
     }
     if (priceFilterValue.min === '' && priceFilterValue.max !== '') {
       setPriceFilterValue((prevState) => ({
@@ -147,6 +151,8 @@ export const Filters = () => {
         ...priceFilterValue,
         min: '0',
       });
+
+      return;
     }
     // eslint-disable-next-line no-lonely-if
     if (priceFilterValue.min !== '' && priceFilterValue.max !== '') {
@@ -155,6 +161,8 @@ export const Filters = () => {
         priceFilterValue,
       );
     }
+
+    return;
   };
 
   return (
