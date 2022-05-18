@@ -6,6 +6,7 @@ import {
   useAppDispatch,
   RootState,
   marketplaceActions,
+  usePlugStore,
 } from '../../store';
 import { PriceDetailsCell, TextCell, TextLinkCell } from '../core';
 import { AcceptOfferModal } from '../modals';
@@ -21,6 +22,7 @@ import {
   parseE8SAmountToWICP,
 } from '../../utils/formatters';
 import { isTokenId } from '../../utils/nfts';
+import { isNFTOwner } from '../../integrations/kyasshu/utils';
 
 /* --------------------------------------------------------------------------
  * NFT Offers Table Component
@@ -43,7 +45,7 @@ export const NFTOffersTable = ({
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
-  
+
   const [tableDetails, setTableDetails] = useState<NFTTableDetails>({
     loadedOffers: [],
     loading: true,
@@ -57,9 +59,13 @@ export const NFTOffersTable = ({
     (state: RootState) => state.marketplace.recentlyMadeOffers,
   );
 
-  const recentlyCancelledOffers = useSelector((state: RootState) => state.marketplace.recentlyCancelledOffers);
+  const recentlyCancelledOffers = useSelector(
+    (state: RootState) => state.marketplace.recentlyCancelledOffers,
+  );
 
   const { id: tokenId } = useParams();
+
+  const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
   useEffect(() => {
     if (!isConnectedOwner && !columnsToHide.includes('action')) {
@@ -132,13 +138,23 @@ export const NFTOffersTable = ({
         accessor: ({
           fromDetails,
           callerDfinityExplorerUrl,
-        }: OffersTableItem) => (
-          <TextLinkCell
-            text={fromDetails.formattedAddress}
-            url={callerDfinityExplorerUrl}
-            type="offers"
-          />
-        ),
+        }: OffersTableItem) => {
+          const isOwner = isNFTOwner({
+            isConnected,
+            owner: fromDetails.address,
+            principalId: plugPrincipal,
+          });
+          return (
+            <TextLinkCell
+              text={
+                (isOwner && t('translation:tables.labels.you')) ||
+                fromDetails.formattedAddress
+              }
+              url={callerDfinityExplorerUrl}
+              type="offers"
+            />
+          );
+        },
       },
       {
         Header: t('translation:tables.titles.time'),
