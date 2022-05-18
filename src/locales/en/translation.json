@@ -218,7 +218,8 @@
       "listingFeePercent": "2.5%",
       "creatorRoyalityFee": "Creator Royalty Fee",
       "creatorRoyalityFeePercent": "2.5%",
-      "totalEarnings": "Total Earnings"
+      "totalEarnings": "Total Earnings",
+      "preview": "Preview"
     },
     "buttons": {
       "cancel": "Cancel",

@@ -95,6 +95,32 @@ export const ModalContent = styled(DialogPrimitive.Content, {
   },
 });
 
+export const SellModalPreviewWrapper = styled('div', {
+  display: 'flex',
+  alignItems: 'end',
+  gap: '65px',
+});
+
+export const SellModalPreviewContainer = styled('div', {
+  width: '100%',
+  maxWidth: '430px',
+});
+
+export const NFTCardPreview = styled('div', {
+  width: '210px',
+  '.card-router': {
+    cursor: 'default',
+  },
+});
+
+export const NFTPreviewText = styled('div', {
+  color: '$modalText',
+  fontSize: '18px',
+  fontWeight: '600',
+  lineHeight: '20px',
+  marginBottom: '20px',
+});
+
 export const Container = styled('div', {
   width: '100%',
 });

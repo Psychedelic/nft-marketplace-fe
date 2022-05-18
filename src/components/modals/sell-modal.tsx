@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
@@ -7,11 +7,14 @@ import {
   ModalInput,
   Pending,
   Completed,
+  NftCard,
 } from '../core';
 import {
   SellModalTrigger,
   ModalOverlay,
   ModalContent,
+  SellModalPreviewWrapper,
+  SellModalPreviewContainer,
   Container,
   ModalHeader,
   ModalTitle,
@@ -26,6 +29,8 @@ import {
   ModalButtonWrapper,
   ActionText,
   InfoIcon,
+  NFTCardPreview,
+  NFTPreviewText,
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
@@ -33,8 +38,12 @@ import {
   useAppDispatch,
   nftsActions,
   marketplaceActions,
+  usePlugStore,
+  useNFTSStore,
 } from '../../store';
 import { AppLog } from '../../utils/log';
+import { isNFTOwner } from '../../integrations/kyasshu/utils';
+import { NFTMetadata } from '../../declarations/legacy';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -55,6 +64,8 @@ export const SellModal = ({
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isConnected, principalId: plugPrincipal } = usePlugStore();
+  const { loadedNFTS } = useNFTSStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Sell modal steps: listingInfo/pending/confirmed
@@ -71,6 +82,12 @@ export const SellModal = ({
     // eslint-disable-next-line consistent-return
     return tid;
   })();
+
+  const nftDetails: NFTMetadata | undefined = useMemo(() => {
+    const details = loadedNFTS.find((nft) => nft.id === tokenId);
+
+    return details;
+  }, [loadedNFTS, tokenId]);
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -132,6 +149,12 @@ export const SellModal = ({
     setModalOpened(false);
   };
 
+  const isOwner = isNFTOwner({
+    isConnected,
+    owner: nftDetails?.owner,
+    principalId: plugPrincipal,
+  });
+
   return (
     <DialogPrimitive.Root
       open={modalOpened}
@@ -178,87 +201,101 @@ export const SellModal = ({
           ---------------------------------
         */}
         {modalStep === ListingStatusCodes.ListingInfo && (
-          <Container>
-            {/*
+          <SellModalPreviewWrapper>
+            <SellModalPreviewContainer>
+              {/*
               ---------------------------------
               Listing Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.makeListing')}
-              </ModalTitle>
-              <ModalDescription>
-                {t('translation:modals.description.makeListing')}
-              </ModalDescription>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.makeListing')}
+                </ModalTitle>
+                <ModalDescription>
+                  {t('translation:modals.description.makeListing')}
+                </ModalDescription>
+              </ModalHeader>
+              {/*
               ---------------------------------
               Listing input details
               ---------------------------------
             */}
-            <SaleContentWrapper>
-              <ModalInput
-                placeholder={t(
-                  'translation:inputField.placeholder.amount',
-                )}
-                value={amount}
-                onChange={(e) => setAmount(e.currentTarget.value)}
-              />
-              <FeeContainer>
-                <FeeDetails>
-                  <FeeLabelContainer>
-                    <FeeLabel>
-                      {t('translation:modals.labels.listingFee')}
-                    </FeeLabel>
-                    <InfoIcon icon="info" />
-                  </FeeLabelContainer>
-                  <FeePercent>
-                    {t('translation:modals.labels.listingFeePercent')}
-                  </FeePercent>
-                </FeeDetails>
-                <FeeDetails>
-                  <FeeLabelContainer>
-                    <FeeLabel>
+              <SaleContentWrapper>
+                <ModalInput
+                  placeholder={t(
+                    'translation:inputField.placeholder.amount',
+                  )}
+                  value={amount}
+                  onChange={(e) => setAmount(e.currentTarget.value)}
+                />
+                <FeeContainer>
+                  <FeeDetails>
+                    <FeeLabelContainer>
+                      <FeeLabel>
+                        {t('translation:modals.labels.listingFee')}
+                      </FeeLabel>
+                      <InfoIcon icon="info" />
+                    </FeeLabelContainer>
+                    <FeePercent>
                       {t(
-                        'translation:modals.labels.creatorRoyalityFee',
+                        'translation:modals.labels.listingFeePercent',
                       )}
-                    </FeeLabel>
-                    <InfoIcon icon="info" />
-                  </FeeLabelContainer>
-                  <FeePercent>
-                    {t(
-                      'translation:modals.labels.creatorRoyalityFeePercent',
-                    )}
-                  </FeePercent>
-                </FeeDetails>
-              </FeeContainer>
-            </SaleContentWrapper>
-            {/*
+                    </FeePercent>
+                  </FeeDetails>
+                  <FeeDetails>
+                    <FeeLabelContainer>
+                      <FeeLabel>
+                        {t(
+                          'translation:modals.labels.creatorRoyalityFee',
+                        )}
+                      </FeeLabel>
+                      <InfoIcon icon="info" />
+                    </FeeLabelContainer>
+                    <FeePercent>
+                      {t(
+                        'translation:modals.labels.creatorRoyalityFeePercent',
+                      )}
+                    </FeePercent>
+                  </FeeDetails>
+                </FeeContainer>
+              </SaleContentWrapper>
+              {/*
               ---------------------------------
               Listing Action Buttons
               ---------------------------------
             */}
-            <ModalButtonsList>
-              <ModalButtonWrapper>
-                <ActionButton
-                  type="secondary"
-                  onClick={handleModalClose}
-                >
-                  {t('translation:modals.buttons.cancel')}
-                </ActionButton>
-              </ModalButtonWrapper>
-              <ModalButtonWrapper>
-                <ActionButton
-                  type="primary"
-                  onClick={handleListing}
-                  disabled={!amount}
-                >
-                  {t('translation:modals.buttons.completeListing')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
-          </Container>
+              <ModalButtonsList>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="primary"
+                    onClick={handleListing}
+                    disabled={!amount}
+                  >
+                    {t('translation:modals.buttons.completeListing')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
+            </SellModalPreviewContainer>
+            <NFTCardPreview>
+              <NFTPreviewText>
+                {t('translation:modals.labels.preview')}
+              </NFTPreviewText>
+              <NftCard
+                data={nftDetails}
+                owned={isOwner}
+                previewCard
+              />
+            </NFTCardPreview>
+          </SellModalPreviewWrapper>
         )}
         {/*
           ---------------------------------
