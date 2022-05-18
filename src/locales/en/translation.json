@@ -31,7 +31,7 @@
       "hasOffers": "Has Offers",
       "makeOffer": "Make Offer",
       "cancelListing": "Cancel Listing",
-      "editListing": "Edit Listing",
+      "changePrice": "Change Price",
       "backToResults": "Back to results",
       "sell": "Sell",
       "cancelOffer": "Cancel",
@@ -187,7 +187,7 @@
       "makeListing": "List for Sale",
       "pendingConfirmation": "Pending Confirmation",
       "listingComplete": "Listing Complete",
-      "editListing": "Edit Listing",
+      "changePrice": "Change Price",
       "nftPurchased": "NFT Purchased!",
       "makeAnOffer": "Make an Offer",
       "offerSubmitted": "Offer Submitted",
@@ -201,7 +201,7 @@
       "makeListing": "Enter the sale price you want for your NFT.",
       "pendingConfirmation": "Please confirm the transaction within Plug Wallet.",
       "listingComplete": "Congrats, your NFT is now listed for sale.",
-      "editListing": "Enter the new sale price you want for your NFT.",
+      "changePrice": "Enter the new sale price you want for your NFT.",
       "nftPurchased": "Congrats, you successfully purchased an NFT.",
       "makeAnOffer": "Enter the offer you want to make.",
       "offerSubmitted": "Congrats, you successfully placed an offer.",
@@ -238,7 +238,7 @@
     "sell": "Sell",
     "price": "Price",
     "lastSale": "Last sale",
-    "editListing": "Edit"
+    "changePrice": "Edit"
   },
   "tabs": {
     "items": "Items",
