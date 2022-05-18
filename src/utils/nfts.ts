@@ -39,3 +39,7 @@ export const getTokenMetadataThumbnail = ({
   tokendId: string | number,
   tokenMetadataById: TokenMetadataById,
 }) => typeof tokendId !== 'undefined' && tokenMetadataById[tokendId];
+
+export const roundOffDecimalValue = (value: number, decimalPlace: number) => {
+  return value.toFixed(decimalPlace);
+}

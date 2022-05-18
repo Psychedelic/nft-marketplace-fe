@@ -153,7 +153,7 @@ export const PriceText = styled('div', {
 
 export const TextDetails = styled('div', {
   fontSize: '16px',
-  fontWeight: '600',
+  fontWeight: '500',
   lineHeight: '20px',
   color: '$mainTextColor',
 
@@ -182,7 +182,7 @@ export const TextDetails = styled('div', {
 
 export const TextLinkDetails = styled('a', {
   fontSize: '16px',
-  fontWeight: '600',
+  fontWeight: '500',
   lineHeight: '20px',
   color: '$primary',
   textDecoration: 'none',

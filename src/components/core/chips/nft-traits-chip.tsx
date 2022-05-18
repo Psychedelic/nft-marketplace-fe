@@ -21,8 +21,8 @@ export const NFTTraitsChip = ({
   <TraitChipContainer type="nft">
     <TraitSpecsContainer>
       <TraitLabel type="nft">{label}</TraitLabel>
-      <TraitName type="nft">{name}</TraitName>
-      <Traitvalue>{rimValue}</Traitvalue>
+      <TraitName type="nft">{name ? name : '-'}</TraitName>
+      <Traitvalue>{rimValue ? rimValue : '-'}</Traitvalue>
     </TraitSpecsContainer>
   </TraitChipContainer>
 );
