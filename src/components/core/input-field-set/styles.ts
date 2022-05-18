@@ -61,7 +61,7 @@ export const Input = styled('input', {
       modalInput: {
         padding: '15px 116px 15px 21px',
         fontSize: '22px',
-        fontWeight: 600,
+        fontWeight: 500,
         lineHeight: '27px',
       },
     },
