@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -51,11 +51,21 @@ export const PlugButton = ({
     setOpenDropdown(false);
   }, [navigate, userPrincipal]);
 
-  useEffect(() => {
-    const scrollEvent = () => setOpenDropdown(false);
-    window.addEventListener('scroll', scrollEvent);
-    return () => window.removeEventListener('scroll', scrollEvent);
-  }, []);
+  useLayoutEffect(() => {
+    if (openDropdown) {
+      // Add class after portal is added to the DOM
+      setTimeout(() => {
+        const portalElement = document.querySelector(
+          '[data-radix-portal]',
+        );
+        portalElement?.classList.add('above-nav');
+      });
+
+      const scrollEvent = () => setOpenDropdown(false);
+      window.addEventListener('scroll', scrollEvent);
+      return () => window.removeEventListener('scroll', scrollEvent);
+    }
+  }, [openDropdown]);
 
   const handleClick = useCallback(() => {
     if (isConnected) {
@@ -90,9 +100,13 @@ export const PlugButton = ({
         </PlugButtonContainer>
       </PopoverTrigger>
 
-      <Popover.Content onMouseLeave={() => setOpenDropdown(false)}>
-        {isConnected && (
-          <ConnectToPlugButton align="end" className={themeObject}>
+      {isConnected && (
+        <ConnectToPlugButton
+          align="end"
+          className={themeObject}
+          onMouseLeave={() => setOpenDropdown(false)}
+        >
+          <div>
             <ListItem onClick={myOffersHandler}>
               <Icon icon="offer" paddingRight />
               <p>{t('translation:buttons.action.myOffers')}</p>
@@ -101,9 +115,9 @@ export const PlugButton = ({
               <Icon icon="disconnect" paddingRight />
               <p>{t('translation:buttons.action.disconnect')}</p>
             </ListItem>
-          </ConnectToPlugButton>
-        )}
-      </Popover.Content>
+          </div>
+        </ConnectToPlugButton>
+      )}
     </Popover.Root>
   );
 };
