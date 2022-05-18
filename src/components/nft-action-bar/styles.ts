@@ -40,7 +40,3 @@ export const ButtonListWrapper = styled('div', {
 export const ButtonWrapper = styled('div', {
   marginLeft: '10px',
 });
-
-export const RouteLink = styled('div', {
-  cursor: 'pointer',
-})
