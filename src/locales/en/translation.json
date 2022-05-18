@@ -31,7 +31,7 @@
       "hasOffers": "Has Offers",
       "makeOffer": "Make Offer",
       "cancelListing": "Cancel Listing",
-      "editListing": "Edit Listing",
+      "changePrice": "Change Price",
       "backToResults": "Back to results",
       "sell": "Sell",
       "cancelOffer": "Cancel",
@@ -176,6 +176,9 @@
       "cancelOffer": "Cancel Offer",
       "cancelListing": "Cancel Listing",
       "acceptOffer": "Sale"
+    },
+    "labels": {
+      "you": "You"
     }
   },
   "modals": {
@@ -187,7 +190,7 @@
       "makeListing": "List for Sale",
       "pendingConfirmation": "Pending Confirmation",
       "listingComplete": "Listing Complete",
-      "editListing": "Edit Listing",
+      "changePrice": "Change Price",
       "nftPurchased": "NFT Purchased!",
       "makeAnOffer": "Make an Offer",
       "offerSubmitted": "Offer Submitted",
@@ -201,7 +204,7 @@
       "makeListing": "Enter the sale price you want for your NFT.",
       "pendingConfirmation": "Please confirm the transaction within Plug Wallet.",
       "listingComplete": "Congrats, your NFT is now listed for sale.",
-      "editListing": "Enter the new sale price you want for your NFT.",
+      "changePrice": "Enter the new sale price you want for your NFT.",
       "nftPurchased": "Congrats, you successfully purchased an NFT.",
       "makeAnOffer": "Enter the offer you want to make.",
       "offerSubmitted": "Congrats, you successfully placed an offer.",
@@ -238,7 +241,7 @@
     "sell": "Sell",
     "price": "Price",
     "lastSale": "Last sale",
-    "editListing": "Edit"
+    "changePrice": "Edit"
   },
   "tabs": {
     "items": "Items",
@@ -254,7 +257,7 @@
     "connectMessage": "Connect to see your NFT’s",
     "noNfts": "You don’t own any NFT’s yet",
     "noOwnedFilteredNfts": "You don't own any NFTs with those filters",
-    "noFilteredNfts": "We cannot find any NFTs with those filters",
+    "noFilteredNfts": "No NFTs with the filters set",
     "noNftsAction": "Browse NFT’s for Sale",
     "noFilteredNftsAction": "Browse Other NFTs",
     "noNFTId": "No NFT found with that ID",

@@ -79,7 +79,6 @@ export const WICPContainer = styled('div', {
   // base styles
   display: 'flex',
   alignItems: 'center',
-  marginBottom: '6px',
 
   variants: {
     tableType: {
@@ -161,14 +160,14 @@ export const TextDetails = styled('div', {
   variants: {
     type: {
       activityTime: {
-        color: '$tableLinkTextColor',
+        color: '$primary',
       },
 
       nftActivityDate: {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '22px',
-        color: '$tableLinkTextColor',
+        color: '$primary',
       },
 
       offers: {
@@ -185,7 +184,7 @@ export const TextLinkDetails = styled('a', {
   fontSize: '16px',
   fontWeight: '500',
   lineHeight: '20px',
-  color: '$tableLinkTextColor',
+  color: '$primary',
   textDecoration: 'none',
   cursor: 'pointer',
 
@@ -195,7 +194,7 @@ export const TextLinkDetails = styled('a', {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '22px',
-        color: '$tableLinkTextColor',
+        color: '$primary',
       },
 
       offers: {

@@ -22,7 +22,7 @@ export const LogoContainer = styled('div', {
 });
 
 export const LogoIcon = styled('img', {
-  width: '48px',
+  width: '100px',
   marginRight: '7px',
 });
 

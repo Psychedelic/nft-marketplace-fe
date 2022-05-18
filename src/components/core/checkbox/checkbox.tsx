@@ -30,6 +30,7 @@ export const Checkbox = ({
         // checks if value exists in array and sets checked to true
         checked={filterValueExists(value)}
       />
+      <span />
       {value}
     </label>
     <span>{`${occurence} (${percentage}%)`}</span>

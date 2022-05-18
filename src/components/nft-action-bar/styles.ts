@@ -25,6 +25,7 @@ export const ActionText = styled('p', {
   color: '#777E90',
   display: 'flex',
   margin: '0',
+  textTransform: 'capitalize',
 
   '& img': {
     marginRight: '5px',
@@ -39,3 +40,7 @@ export const ButtonListWrapper = styled('div', {
 export const ButtonWrapper = styled('div', {
   marginLeft: '10px',
 });
+
+export const RouteLink = styled('div', {
+  cursor: 'pointer',
+})

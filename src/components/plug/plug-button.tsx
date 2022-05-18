@@ -17,7 +17,7 @@ import { useTheme } from '../../hooks';
 import { Icon } from '../icons';
 
 export type PlugButtonProps = {
-  handleClick: () => void;
+  handleConnect: () => void;
   text: string;
   isConnected: boolean;
   principalId?: string;
@@ -28,7 +28,7 @@ export type PlugButtonProps = {
  * --------------------------------------------------------------------------*/
 
 export const PlugButton = ({
-  handleClick,
+  handleConnect,
   text,
   isConnected,
   principalId: userPrincipal,
@@ -57,12 +57,19 @@ export const PlugButton = ({
     return () => window.removeEventListener('scroll', scrollEvent);
   }, []);
 
+  const handleClick = useCallback(() => {
+    if (isConnected) {
+      setOpenDropdown(!openDropdown);
+    } else {
+      handleConnect();
+    }
+  }, [handleConnect, isConnected, openDropdown]);
+
   return (
     <Popover.Root open={openDropdown}>
       <PopoverTrigger asChild>
         <PlugButtonContainer
           onClick={handleClick}
-          onMouseEnter={() => setOpenDropdown(true)}
           className="plug-button"
         >
           <PlugButtonText className="plug-button-text">
