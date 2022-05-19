@@ -71,3 +71,7 @@ printf "🤖 Kyasshu will now cache %s tokens\n\n" "$numberOfTokens"
 yarn kyasshu:cache "$numberOfTokens"
 
 printf "👍 Kyasshu process completed!\n\n"
+
+printf "✍️ Add collection to Marketplace\n"
+
+./nft-marketplace/.scripts/add-collection.sh
