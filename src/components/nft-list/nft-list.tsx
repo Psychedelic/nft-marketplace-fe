@@ -10,7 +10,7 @@ import {
   usePlugStore,
   nftsActions,
 } from '../../store';
-import { EmptyState } from '../core';
+import { EmptyState, NftSkeleton } from '../core';
 import { ButtonType } from '../../constants/empty-states';
 import {
   usePriceValues,
@@ -18,6 +18,7 @@ import {
   isNFTOwner,
 } from '../../integrations/kyasshu/utils';
 import { parseAmountToE8SAsNum } from '../../utils/formatters';
+import { VirtualizedList } from '../core/infinite-list/virtualzed-list';
 
 export const NftList = () => {
   const { t } = useTranslation();
@@ -56,6 +57,8 @@ export const NftList = () => {
 
   const loadMoreNFTS = () => {
     if (loadingNFTs || !hasMoreNFTs) return;
+
+    console.log('calling page', nextPageNo);
 
     dispatch(
       nftsActions.getNFTs({
@@ -118,23 +121,27 @@ export const NftList = () => {
       pageStart={0}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       loadMore={nextPageNo > 0 ? loadMoreNFTS : () => {}}
-      hasMore={hasMoreNFTs}
+      hasMore={!hasMoreNFTs}
       loader={<NftSkeletonList />}
       useWindow={true || false}
-      threshold={250 * 5}
-      className="infinite-loader"
+      threshold={0}
+      css={{ width: '100%' }}
     >
-      {loadedNFTS?.map((nft) => (
-        <NftCard
-          data={nft}
-          key={nft.id}
-          owned={isNFTOwner({
-            isConnected,
-            owner: nft?.owner,
-            principalId,
-          })}
-        />
-      ))}
+      <VirtualizedList
+        items={loadedNFTS}
+        ItemRenderer={React.memo((nft) => (
+          <NftCard
+            data={nft}
+            key={nft.id}
+            owned={isNFTOwner({
+              isConnected,
+              owner: nft?.owner,
+              principalId,
+            })}
+          />
+        ))}
+        Skeleton={NftSkeleton}
+      />
     </InfiniteScrollWrapper>
   );
 };

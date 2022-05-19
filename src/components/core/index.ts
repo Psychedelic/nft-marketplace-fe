@@ -11,3 +11,4 @@ export * from './cards';
 export * from './tooltip';
 export { EmptyState } from './empty-states';
 export * from './skeleton';
+export * from './infinite-list';
