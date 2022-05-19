@@ -78,6 +78,12 @@ export const VideoPlayer = styled(HoverVideoPlayer, {
   },
 });
 
+export const PreviewCardVideo = styled('video', {
+  height: '100%',
+  width: '100%',
+  objectFit: 'cover',
+});
+
 export const VideoLoader = styled('div', {
   position: 'absolute',
   left: '50%',
