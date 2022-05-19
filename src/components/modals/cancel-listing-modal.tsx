@@ -5,7 +5,6 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending } from '../core';
 import {
   CancelListingModalTrigger,
-  ModalOverlay,
   ModalContent,
   Container,
   ModalHeader,
@@ -14,6 +13,7 @@ import {
   ModalButtonsList,
   ModalButtonWrapper,
 } from './styles';
+import { ModalOverlay } from './modal-overlay';
 
 import { ListingStatusCodes } from '../../constants/listing';
 import {

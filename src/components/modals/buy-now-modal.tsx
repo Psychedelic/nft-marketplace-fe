@@ -9,7 +9,6 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
 import { useAppDispatch, marketplaceActions } from '../../store';
 import {
-  ModalOverlay,
   ModalContent,
   Container,
   ModalHeader,
@@ -23,6 +22,7 @@ import {
 import { AppLog } from '../../utils/log';
 import { isTokenId } from '../../utils/nfts';
 import { DirectBuyStatusCodes } from '../../constants/direct-buy';
+import { ModalOverlay } from './modal-overlay';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
@@ -140,7 +140,9 @@ export const BuyNowModal = ({
         Modal Overlay
         ---------------------------------
       */}
-      <ModalOverlay />
+      <ModalOverlay
+        enableParticles={modalStep === DirectBuyStatusCodes.Confirmed}
+      />
       {/*
         ---------------------------------
         Modal Content

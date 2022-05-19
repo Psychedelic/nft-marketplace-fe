@@ -6,7 +6,6 @@ import { ActionButton, Completed, Pending } from '../core';
 import wicpIcon from '../../assets/wicp.svg';
 import {
   AcceptOfferModalTrigger,
-  ModalOverlay,
   ModalContent,
   Container,
   ModalHeader,
@@ -43,6 +42,7 @@ import { NFTMetadata } from '../../declarations/legacy';
 import { ListingStatusCodes } from '../../constants/listing';
 import { formatPriceValue } from '../../utils/formatters';
 import { isTokenId } from '../../utils/nfts';
+import { ModalOverlay } from './modal-overlay';
 
 export interface AcceptOfferProps {
   price: string;
@@ -154,7 +154,9 @@ export const AcceptOfferModal = ({
         Modal Overlay
         ---------------------------------
       */}
-      <ModalOverlay />
+      <ModalOverlay
+        enableParticles={modalStep === ListingStatusCodes.Accepted}
+      />
       {/*
         ---------------------------------
         Modal Content

@@ -1,9 +1,21 @@
 import React from 'react';
-import completedIcon from '../../../assets/completed.svg';
-import { Container, CompletedLogo } from './styles';
+import Lottie from 'react-lottie';
+import partyPopperLottie from '../../../assets/lotties/party-popper.json';
+import { Container } from './styles';
 
 export const Completed = () => (
   <Container>
-    <CompletedLogo src={completedIcon} alt="completed" />
+    <Lottie
+      options={{
+        animationData: partyPopperLottie,
+        loop: false,
+        rendererSettings: {
+          preserveAspectRatio: 'xMidYMid slice',
+        },
+      }}
+      height={112}
+      width={112}
+      style={{ transform: 'scale(3)', pointerEvents: 'none' }}
+    />
   </Container>
 );

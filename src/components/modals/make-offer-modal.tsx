@@ -5,12 +5,11 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
   ActionButton,
   ModalInput,
-  Completed,
   Pending,
+  Completed,
 } from '../core';
 import {
   MakeOfferModalTrigger,
-  ModalOverlay,
   ModalContent,
   Container,
   ModalHeader,
@@ -21,6 +20,7 @@ import {
   ModalButtonWrapper,
   ActionText,
 } from './styles';
+import { ModalOverlay } from './modal-overlay';
 
 import { ListingStatusCodes } from '../../constants/listing';
 import { useAppDispatch, marketplaceActions } from '../../store';
@@ -135,7 +135,9 @@ export const MakeOfferModal = ({
         Modal Overlay
         ---------------------------------
       */}
-      <ModalOverlay />
+      <ModalOverlay
+        enableParticles={modalStep === ListingStatusCodes.Submitted}
+      />
       {/*
         ---------------------------------
         Modal Content
