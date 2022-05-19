@@ -78,7 +78,9 @@ Here's an example of how to generate 500
 yarn mock:generate-tokens 5
 ```
 
-Similarly, you'd cache 500 crown tokens (corresponding number to what we generated) in the off-chain Kyasshu Marketplace API (only once the token generation has completed!) by:
+The `mock:generate-tokens` process makes a `mint` request to the Crowns Canister Service per token and once completed calls Kyasshu to cache the tokens. So, for the example above `mock:generate-tokens 5` the process mint 500 tokens onchain and also caches 500 tokens offchain.
+
+Alternatively, you could make the mint request yourself and then after call the off-chain Kyasshu Marketplace API by:
 
 ```sh
 yarn kyasshu:cache 500
