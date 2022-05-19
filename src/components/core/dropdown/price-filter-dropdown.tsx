@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   filterActions,
@@ -70,9 +70,10 @@ export const SortByFilterDropdown = React.memo(() => {
     dispatch(filterActions.setSortingFilter(key));
   };
 
-  const sortValue = sortOptions.find(
-    (sortItem) => sortItem.key === sortBy,
-  )?.value;
+  const sortValue = useMemo(() => {
+    return sortOptions.find((sortItem) => sortItem.key === sortBy)
+      ?.value;
+  }, [sortOptions, sortBy]);
 
   return (
     <DropdownRoot
