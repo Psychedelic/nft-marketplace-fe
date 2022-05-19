@@ -48,7 +48,7 @@ export const ToastViewport = styled(ToastPrimitive.Viewport, {
 });
 
 export const Toast = styled(ToastPrimitive.Root, {
-  backgroundColor: 'white',
+  backgroundColor: '$toastBackground',
   borderRadius: '20px',
   boxShadow:
     'hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px',
