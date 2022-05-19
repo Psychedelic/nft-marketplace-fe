@@ -42,6 +42,7 @@ export const {
       primary: '#5542CF',
       success: '#00AC7C',
       modalText: '#767D8E',
+      toastBackground: '#ffffff',
     },
     space: {},
     fonts: {},
@@ -90,6 +91,7 @@ export const darkTheme = createTheme({
     primary: '#5542CF',
     success: '#00AC7C',
     modalText: '#767D8E',
+    toastBackground: '#1e1e1e',
   },
   shadows: {
     default: 'none',
