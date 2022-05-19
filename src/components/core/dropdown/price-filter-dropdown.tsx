@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { filterActions, useAppDispatch } from '../../../store';
+import {
+  filterActions,
+  useAppDispatch,
+  useFilterStore,
+} from '../../../store';
 import {
   DropdownRoot,
   DropdownStyle,
@@ -15,6 +19,7 @@ import { useTheme } from '../../../hooks';
 export const SortByFilterDropdown = React.memo(() => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { sortBy } = useFilterStore();
 
   const [selectedValue, setSelectedValue] = useState(
     `${t('translation:dropdown.priceFilter.recentlyListed')}`,
@@ -65,6 +70,11 @@ export const SortByFilterDropdown = React.memo(() => {
     dispatch(filterActions.setSortingFilter(key));
   };
 
+  const sortValue = useMemo(() => {
+    return sortOptions.find((sortItem) => sortItem.key === sortBy)
+      ?.value;
+  }, [sortOptions, sortBy]);
+
   return (
     <DropdownRoot
       onOpenChange={setIsOpen}
@@ -73,7 +83,7 @@ export const SortByFilterDropdown = React.memo(() => {
     >
       <DropdownStyle onClick={(e) => e.preventDefault()} asChild>
         <div>
-          <p>{selectedValue}</p>
+          <p>{sortValue}</p>
           <Icon icon="chevron-down" rotate={isOpen} />
         </div>
       </DropdownStyle>
