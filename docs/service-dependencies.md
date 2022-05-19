@@ -80,6 +80,8 @@ yarn mock:generate-tokens 5
 
 The `mock:generate-tokens` process makes a `mint` request to the Crowns Canister Service per token and once completed calls Kyasshu to cache the tokens. So, for the example above `mock:generate-tokens 5` the process mint 500 tokens onchain and also caches 500 tokens offchain.
 
+💡 Silently, the `mock:generate-tokens` also checks for required NPM dependencies and installs it for you in the `/nft-marketplace/crowns/mocks`, which you can do manually, by going to the directory and executing the npm install command.
+
 Alternatively, you could make the mint request yourself and then after call the off-chain Kyasshu Marketplace API by:
 
 ```sh

@@ -1,5 +1,18 @@
 #!/bin/bash
 
+crownsMockPath=./nft-marketplace/crowns/mocks
+
+dependenciesHandler() {
+  if [ ! -d "$crownsMockPath/node_modules" ];
+  then
+    (
+      printf "🙏 Will install npm dependencies\n\n"
+      cd "$crownsMockPath" || exit 1
+      npm install
+    )
+  fi
+}
+
 userIdentityWarning() {
   _identity=$1
 
@@ -17,6 +30,10 @@ userIdentityWarning() {
     printf "\n"
   fi
 }
+
+# Check if dependencies are installed
+# before anything else
+dependenciesHandler
 
 max_chunks=$1
 
@@ -42,7 +59,7 @@ userIdentityWarning "$whoami"
 printf "🤖 Mint process will mint a count of %s tokens\n\n" "$numberOfTokens"
 
 (
-  cd ./nft-marketplace/crowns/mocks || exit
+  cd ./nft-marketplace/crowns/mocks || exit 1
 
   USER_PRINCIPALS="[ \"$whoami\", \"$alice\", \"$bob\" ]" MAX_CHUNKS=$max_chunks node mint-crowns.js
 )
