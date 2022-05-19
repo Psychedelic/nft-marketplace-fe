@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NftCard } from '../core/cards/nft-card';
 import { NftSkeletonList } from '../nft-skeleton-list';
@@ -9,6 +9,7 @@ import {
   useAppDispatch,
   usePlugStore,
   nftsActions,
+  useSettingsStore,
 } from '../../store';
 import { EmptyState } from '../core';
 import { ButtonType } from '../../constants/empty-states';
@@ -18,11 +19,19 @@ import {
   isNFTOwner,
 } from '../../integrations/kyasshu/utils';
 import { parseAmountToE8SAsNum } from '../../utils/formatters';
+import { calculateGridGap } from '../../utils/styles';
 
 export const NftList = () => {
   const { t } = useTranslation();
   // eslint-disable-next-line
   const dispatch = useAppDispatch();
+
+  const [gridGap, setGridGap] = useState('35px 57px');
+
+  const gridContainerRef = useRef<HTMLDivElement>(null);
+
+  const { collapsed: filtersCollapsed } = useSettingsStore();
+
   const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } =
     useNFTSStore();
   const { isMyNfts, status, defaultFilters } = useFilterStore();
@@ -113,28 +122,46 @@ export const NftList = () => {
     );
   }
 
+  useLayoutEffect(() => {
+    const scrollEvent = () => {
+      if (!gridContainerRef?.current?.clientWidth) return;
+
+      setGridGap(
+        calculateGridGap(gridContainerRef.current.clientWidth),
+      );
+    };
+
+    scrollEvent();
+
+    window.addEventListener('resize', scrollEvent);
+    return () => window.removeEventListener('resize', scrollEvent);
+  }, [filtersCollapsed]);
+
   return (
-    <InfiniteScrollWrapper
-      pageStart={0}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      loadMore={nextPageNo > 0 ? loadMoreNFTS : () => {}}
-      hasMore={hasMoreNFTs}
-      loader={<NftSkeletonList />}
-      useWindow={true || false}
-      threshold={250 * 5}
-      className="infinite-loader"
-    >
-      {loadedNFTS?.map((nft) => (
-        <NftCard
-          data={nft}
-          key={nft.id}
-          owned={isNFTOwner({
-            isConnected,
-            owner: nft?.owner,
-            principalId,
-          })}
-        />
-      ))}
-    </InfiniteScrollWrapper>
+    <div ref={gridContainerRef}>
+      <InfiniteScrollWrapper
+        pageStart={0}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        loadMore={nextPageNo > 0 ? loadMoreNFTS : () => {}}
+        hasMore={hasMoreNFTs}
+        loader={<NftSkeletonList />}
+        useWindow={true || false}
+        threshold={250 * 5}
+        className="infinite-loader"
+        style={{ gap: `${gridGap}` }}
+      >
+        {loadedNFTS?.map((nft) => (
+          <NftCard
+            data={nft}
+            key={nft.id}
+            owned={isNFTOwner({
+              isConnected,
+              owner: nft?.owner,
+              principalId,
+            })}
+          />
+        ))}
+      </InfiniteScrollWrapper>
+    </div>
   );
 };

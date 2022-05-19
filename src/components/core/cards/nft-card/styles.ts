@@ -52,10 +52,6 @@ export const MediaWrapper = styled('div', {
   minHeight: '175px',
   height: '175px',
   margin: '10px -15px',
-
-  '@lg': {
-    height: '270px',
-  },
 });
 
 export const PreviewDetails = styled('div', {
