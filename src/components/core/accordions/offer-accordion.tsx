@@ -124,11 +124,12 @@ const OnConnected = ({
     <>
       {!isOwner && showNFTActionButtons && (
         <ButtonListWrapper>
-          {isListed && (
-            <ButtonDetailsWrapper>
-              <BuyNowModal price={price?.toString()} />
-            </ButtonDetailsWrapper>
-          )}
+          <ButtonDetailsWrapper>
+            <BuyNowModal
+              price={price?.toString()}
+              isTriggerVisible={isListed}
+            />
+          </ButtonDetailsWrapper>
           <ButtonDetailsWrapper>
             <MakeOfferModal
               isNFTListed={isListed}

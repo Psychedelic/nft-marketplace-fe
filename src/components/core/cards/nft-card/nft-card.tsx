@@ -93,23 +93,21 @@ const OnConnected = ({
       )}
       {(showBuyerOptions && (
         <div onClick={() => setModalStatus(true)} role="dialog">
-          {isForSale ? (
-            <BuyNowModal
-              onClose={() => setModalStatus(false)}
-              actionText={`${t('translation:nftCard.forSale')}`}
-              actionTextId={Number(tokenId)}
-              price={
-                (price && parseE8SAmountToWICP(BigInt(price))) || ''
-              }
-            />
-          ) : (
-            <MakeOfferModal
-              onClose={() => setModalStatus(false)}
-              actionText={`${t('translation:nftCard.forOffer')}`}
-              nftTokenId={tokenId}
-              isTriggerVisible
-            />
-          )}
+          <BuyNowModal
+            onClose={() => setModalStatus(false)}
+            actionText={`${t('translation:nftCard.forSale')}`}
+            actionTextId={Number(tokenId)}
+            price={
+              (price && parseE8SAmountToWICP(BigInt(price))) || ''
+            }
+            isTriggerVisible={isForSale}
+          />
+          <MakeOfferModal
+            onClose={() => setModalStatus(false)}
+            actionText={`${t('translation:nftCard.forOffer')}`}
+            nftTokenId={tokenId}
+            isTriggerVisible={!isForSale}
+          />
         </div>
       )) || <span />}
     </>
