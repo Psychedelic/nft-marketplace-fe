@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CardOptionsDropdown } from '../../dropdown';
@@ -14,9 +14,7 @@ import {
   ActionDetails,
   NftDataText,
   PreviewDetails,
-  VideoPlayer,
   PreviewImage,
-  VideoLoader,
   MediaWrapper,
   ActionText,
   PriceInActionSheet,
@@ -176,13 +174,92 @@ const LastActionTakenDetails = ({
   );
 };
 
+type MediaProps = {
+  disableVideo?: boolean;
+  previewCard?: boolean;
+  location?: string;
+  preview?: string;
+  containerRef: React.RefObject<HTMLDivElement>;
+};
+
+const Media = ({
+  location = '',
+  preview,
+  containerRef,
+}: MediaProps): JSX.Element => {
+  const [previewTriggered, setPreviewTriggered] = useState(false);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      let triggerTimeout: NodeJS.Timeout;
+      const hoverInCallback = () => {
+        triggerTimeout = setTimeout(() => {
+          setPreviewTriggered(true);
+        }, 1000);
+      };
+      const hoverOutCallback = () => {
+        clearTimeout(triggerTimeout);
+        setPreviewTriggered(false);
+      };
+
+      containerRef.current.addEventListener(
+        'mouseenter',
+        hoverInCallback,
+      );
+      containerRef.current.addEventListener(
+        'mouseleave',
+        hoverOutCallback,
+      );
+
+      return () => {
+        if (containerRef.current) {
+          containerRef.current.removeEventListener(
+            'mouseenter',
+            hoverInCallback,
+          );
+          containerRef.current.removeEventListener(
+            'mouseleave',
+            hoverOutCallback,
+          );
+        }
+      };
+    }
+  }, [setPreviewTriggered, containerRef, previewTriggered]);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      if (previewTriggered) {
+        containerRef.current.style.transform = 'scale(1.03)';
+      } else {
+        containerRef.current.style.transform = '';
+      }
+    }
+  }, [previewTriggered, containerRef]);
+
+  return (
+    <MediaWrapper>
+      <PreviewDetails>
+        {!previewTriggered ? (
+          <PreviewImage src={preview} alt="nft-card" />
+        ) : (
+          <PreviewCardVideo
+            src={location}
+            // poster={preview}
+            autoPlay
+            loop
+          />
+        )}
+      </PreviewDetails>
+    </MediaWrapper>
+  );
+};
+
 export const NftCard = React.memo(
   ({
     owned,
     data,
     previewCard = false,
     previewCardAmount,
-    disableVideo,
   }: NftCardProps) => {
     const { t } = useTranslation();
     const { isConnected } = usePlugStore();
@@ -204,36 +281,12 @@ export const NftCard = React.memo(
               </OwnedCardText>
               <CardOptionsDropdown data={data} />
             </Flex>
-            <MediaWrapper>
-              {/* eslint-disable-next-line no-nested-ternary */}
-              {disableVideo ? (
-                <PreviewDetails>
-                  <PreviewImage src={data?.preview} alt="nft-card" />
-                </PreviewDetails>
-              ) : previewCard ? (
-                <PreviewCardVideo
-                  src={data.location}
-                  poster={data?.preview}
-                  autoPlay
-                  loop
-                />
-              ) : (
-                <VideoPlayer
-                  videoSrc={data.location}
-                  pausedOverlay={
-                    <PreviewDetails>
-                      <PreviewImage
-                        src={data?.preview}
-                        alt="nft-card"
-                      />
-                    </PreviewDetails>
-                  }
-                  loadingOverlay={<VideoLoader />}
-                  // Next line is a validation for null value
-                  hoverTarget={containerRef.current || undefined}
-                />
-              )}
-            </MediaWrapper>
+            <Media
+              containerRef={containerRef}
+              location={data?.location}
+              preview={data?.preview}
+              previewCard={previewCard}
+            />
             <Flex>
               <NftDataHeader>{data?.name}</NftDataHeader>
               <NftDataHeader>

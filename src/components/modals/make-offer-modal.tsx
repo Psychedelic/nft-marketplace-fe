@@ -26,6 +26,7 @@ import { ListingStatusCodes } from '../../constants/listing';
 import { useAppDispatch, marketplaceActions } from '../../store';
 import { AppLog } from '../../utils/log';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
+import { useTheme } from '../../hooks';
 
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
@@ -55,6 +56,7 @@ export const MakeOfferModal = ({
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [, themeObject] = useTheme();
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [modalStep, setModalStep] = useState<ListingStatusCodes>(
     ListingStatusCodes.ListingInfo,

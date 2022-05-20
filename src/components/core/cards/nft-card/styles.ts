@@ -13,6 +13,7 @@ const overlaySpinner = keyframes({
 });
 
 export const CardContainer = styled('div', {
+  transition: 'all 0.2s ease-in-out',
   variants: {
     disableAnimation: {
       true: {
@@ -20,12 +21,7 @@ export const CardContainer = styled('div', {
           transform: 'unset',
         },
       },
-      false: {
-        transition: 'all 0.2s ease-in-out',
-        '&:hover': {
-          transform: 'scale(1.03)',
-        },
-      },
+      false: {},
     },
   },
 });
