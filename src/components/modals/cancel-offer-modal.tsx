@@ -88,97 +88,99 @@ export const CancelOfferModal = ({
           </ActionButton>
         </CancelOfferModalTrigger>
       </DialogPrimitive.Trigger>
-      {/*
+      <DialogPrimitive.Portal>
+        {/*
         ---------------------------------
         Modal Overlay
         ---------------------------------
       */}
-      <ModalOverlay />
-      {/*
+        <ModalOverlay />
+        {/*
         ---------------------------------
         Modal Content
         ---------------------------------
       */}
-      <ModalContent
-        onInteractOutside={(event) => {
-          event.preventDefault();
-        }}
-        onEscapeKeyDown={(event) => {
-          event.preventDefault();
-        }}
-      >
-        {/*
+        <ModalContent
+          onInteractOutside={(event) => {
+            event.preventDefault();
+          }}
+          onEscapeKeyDown={(event) => {
+            event.preventDefault();
+          }}
+        >
+          {/*
           ---------------------------------
           Step: 1 -> cancelOffer
           ---------------------------------
         */}
-        {modalStep === ListingStatusCodes.CancelOffer && (
-          <Container>
-            {/*
+          {modalStep === ListingStatusCodes.CancelOffer && (
+            <Container>
+              {/*
           ---------------------------------
           Offer Header
           ---------------------------------
         */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.cancelOffer')}
-              </ModalTitle>
-              <ModalDescription>
-                {t('translation:modals.description.cancelOffer')}
-              </ModalDescription>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.cancelOffer')}
+                </ModalTitle>
+                <ModalDescription>
+                  {t('translation:modals.description.cancelOffer')}
+                </ModalDescription>
+              </ModalHeader>
+              {/*
           ---------------------------------
           Offer Action Buttons
           ---------------------------------
         */}
-            <ModalButtonsList>
-              <ModalButtonWrapper>
-                <ActionButton
-                  type="secondary"
-                  onClick={handleModalClose}
-                >
-                  {t('translation:modals.buttons.cancel')}
-                </ActionButton>
-              </ModalButtonWrapper>
-              <ModalButtonWrapper>
-                <ActionButton
-                  type="primary"
-                  onClick={handleCancelOffer}
-                  danger
-                >
-                  {t('translation:modals.buttons.cancelOffer')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
-          </Container>
-        )}
-        {/*
+              <ModalButtonsList>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="primary"
+                    onClick={handleCancelOffer}
+                    danger
+                  >
+                    {t('translation:modals.buttons.cancelOffer')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
+            </Container>
+          )}
+          {/*
           ---------------------------------
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === ListingStatusCodes.Pending && (
-          <Container>
-            {/*
+          {modalStep === ListingStatusCodes.Pending && (
+            <Container>
+              {/*
             ---------------------------------
             Pending Header
             ---------------------------------
           */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.pendingConfirmation')}
-              </ModalTitle>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.pendingConfirmation')}
+                </ModalTitle>
+              </ModalHeader>
+              {/*
             ---------------------------------
             Pending details
             ---------------------------------
           */}
-            <Pending />
-          </Container>
-        )}
-      </ModalContent>
+              <Pending />
+            </Container>
+          )}
+        </ModalContent>
+      </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
 };
