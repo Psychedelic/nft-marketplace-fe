@@ -73,14 +73,12 @@ const OnConnected = ({
       {showSellOptions && (
         <div role="dialog">
           <SellModal
-            onClose={() => {}}
             actionText={`${t('translation:nftCard.sell')}`}
             nftTokenId={tokenId}
             isTriggerVisible={!isForSale}
           />
 
           <ChangePriceModal
-            onClose={() => {}}
             actionText={`${t('translation:nftCard.changePrice')}`}
             nftTokenId={tokenId}
             nftPrice={price}
@@ -91,7 +89,6 @@ const OnConnected = ({
       {(showBuyerOptions && (
         <div role="dialog">
           <BuyNowModal
-            onClose={() => {}}
             actionText={`${t('translation:nftCard.forSale')}`}
             actionTextId={Number(tokenId)}
             price={
@@ -100,7 +97,6 @@ const OnConnected = ({
             isTriggerVisible={isForSale}
           />
           <MakeOfferModal
-            onClose={() => {}}
             actionText={`${t('translation:nftCard.forOffer')}`}
             nftTokenId={tokenId}
             isTriggerVisible={!isForSale}
