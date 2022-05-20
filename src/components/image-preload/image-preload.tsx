@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { forwardRef, useMemo, useState } from 'react';
+import { ImageCache } from '../../utils/image-cache';
+import { AppLog } from '../../utils/log';
 import { SkeletonBox } from '../core';
 import { ImagePreloadStyles } from './styles';
 
@@ -15,10 +17,15 @@ export const ImagePreload = forwardRef<
 
   useMemo(() => {
     if (src) {
-      setLoaded(false);
-      const image = new Image();
-      image.src = src;
-      image.onload = () => setLoaded(true);
+      const image = ImageCache.get(src);
+
+      if (!image) {
+        ImageCache.store(src)
+          .then(() => setLoaded(true))
+          .catch((err) => AppLog.warn('Failed to load image', err));
+      } else {
+        setLoaded(true);
+      }
     }
   }, [src, setLoaded]);
 
