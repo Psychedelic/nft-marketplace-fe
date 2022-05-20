@@ -25,31 +25,37 @@ const contentShow = keyframes({
 export const SellModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
+  marginLeft: '10px',
 });
 
 export const ChangePriceModalTrigger = styled('div', {
   width: '155px',
   height: '50px',
+  marginLeft: '10px',
 });
 
 export const BuyNowModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
+  marginRight: '10px',
 });
 
 export const MakeOfferModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
+  marginRight: '10px',
 });
 
 export const CancelListingModalTrigger = styled('div', {
   width: '155px',
   height: '50px',
+  marginLeft: '10px',
 });
 
 export const CancelOfferModalTrigger = styled('div', {
   width: '98px',
   height: '33px',
+  marginRight: '10px',
 
   variants: {
     largeButton: {

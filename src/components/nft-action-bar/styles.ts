@@ -35,7 +35,6 @@ export const ActionText = styled('p', {
 export const ButtonListWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
-  gap: '10px',
   marginLeft: '10px',
 });
 
