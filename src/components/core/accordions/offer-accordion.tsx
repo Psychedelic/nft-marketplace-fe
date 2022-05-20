@@ -14,7 +14,6 @@ import {
   AccordionTrigger,
   AccordionContent,
   AccordionHead,
-  AccordionHeadContent,
   PlugButtonWrapper,
   UndefinedPrice,
   ButtonListWrapper,
