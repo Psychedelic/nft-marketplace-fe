@@ -35,12 +35,14 @@ export const ActionText = styled('p', {
 export const ButtonListWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
+  gap: '10px',
+  marginLeft: '10px',
 });
 
 export const ButtonWrapper = styled('div', {
-  marginLeft: '10px',
+  marginLeft: '0px',
 });
 
 export const RouteLink = styled('div', {
   cursor: 'pointer',
-})
+});
