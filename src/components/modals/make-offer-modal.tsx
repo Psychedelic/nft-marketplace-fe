@@ -205,7 +205,7 @@ export const MakeOfferModal = ({
                 <ActionButton
                   type="primary"
                   onClick={handleSubmitOffer}
-                  disabled={!amount}
+                  disabled={!amount || Number(amount) <= 0}
                 >
                   {t('translation:modals.buttons.submitOffer')}
                 </ActionButton>
