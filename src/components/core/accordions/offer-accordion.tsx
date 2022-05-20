@@ -14,13 +14,16 @@ import {
   AccordionTrigger,
   AccordionContent,
   AccordionHead,
-  AccordionHeadContent,
-  FlexRight,
   PlugButtonWrapper,
   UndefinedPrice,
   ButtonListWrapper,
   ButtonDetailsWrapper,
-  AccordionImage,
+  PriceWrapper,
+  CurrentPriceWrapper,
+  LogoWrapper,
+  OfferLabel,
+  OfferPrice,
+  MarketPrice,
 } from './styles';
 import { NFTOffersTable } from '../../tables';
 import { Plug } from '../../plug';
@@ -36,6 +39,10 @@ import { PlugStatusCodes } from '../../../constants/plug';
 import { Icon } from '../../icons';
 import wicpIcon from '../../../assets/wicp.svg';
 import { OffersTableItem } from '../../../declarations/legacy';
+import {
+  parseE8SAmountToWICP,
+  formatPriceValue,
+} from '../../../utils/formatters';
 
 export type OfferAccordionProps = {
   lastSalePrice?: string;
@@ -170,6 +177,11 @@ export const OfferAccordion = ({
   showNFTActionButtons,
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
+  // TODO: On loading and awaiting for token offers response
+  // should display a small loader in the place of price
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [marketPrice, setMarketPrice] = useState<
     string | undefined
@@ -180,6 +192,34 @@ export const OfferAccordion = ({
     principalId: plugPrincipal,
     connectionStatus,
   } = usePlugStore();
+
+  const tokenOffers = useSelector(
+    (state: RootState) => state.marketplace.tokenOffers,
+  );
+
+  const topOffer: OffersTableItem = useMemo(
+    () => tokenOffers && tokenOffers[0],
+    [tokenOffers],
+  );
+
+  useEffect(() => {
+    // TODO: handle the error gracefully when there is no id
+    if (!id || !plugPrincipal) return;
+
+    dispatch(
+      marketplaceActions.getTokenOffers({
+        ownerTokenIdentifiers: [BigInt(id)],
+
+        onSuccess: () => {
+          setLoadingOffers(false);
+        },
+
+        onFailure: () => {
+          // TODO: handle failure messages
+        },
+      }),
+    );
+  }, [id, dispatch, plugPrincipal]);
 
   useEffect(() => {
     if (!lastSalePrice || !isListed) return;
@@ -207,30 +247,66 @@ export const OfferAccordion = ({
   return (
     <AccordionStyle type="single" collapsible width="medium">
       <AccordionHead flexDirection="column">
-        <AccordionHeadContent flexProperties="offer">
-          <FlexRight>
-            <AccordionImage
-              style={{
-                backgroundImage: `url(${wicpIcon})`,
-                width: '60px',
-                height: '60px',
-              }}
-            />
-            <div>
-              <span>
-                {t(
-                  'translation:accordions.offer.header.currentPrice',
-                )}
-              </span>
-              <h4>
-                {(isListedWithPrice && `${lastSalePrice} WICP`) || (
-                  <UndefinedPrice>--</UndefinedPrice>
-                )}
-              </h4>
-            </div>
-          </FlexRight>
-          <h3>{isListedWithPrice && marketPrice}</h3>
-        </AccordionHeadContent>
+        {isListed ? (
+          <PriceWrapper>
+            <CurrentPriceWrapper>
+              <LogoWrapper
+                size="large"
+                style={{
+                  backgroundImage: `url(${wicpIcon})`,
+                }}
+              />
+              <div>
+                <OfferLabel>
+                  {t(
+                    'translation:accordions.offer.header.currentPrice',
+                  )}
+                </OfferLabel>
+                <OfferPrice>
+                  {(isListedWithPrice && `${lastSalePrice} WICP`) || (
+                    <UndefinedPrice>--</UndefinedPrice>
+                  )}
+                </OfferPrice>
+              </div>
+            </CurrentPriceWrapper>
+            <MarketPrice>
+              {isListedWithPrice && marketPrice}
+            </MarketPrice>
+          </PriceWrapper>
+        ) : (
+          <PriceWrapper>
+            <CurrentPriceWrapper>
+              <LogoWrapper
+                size="large"
+                style={{
+                  backgroundImage: `url(${wicpIcon})`,
+                }}
+              />
+              <div>
+                <OfferLabel>
+                  {t('translation:accordions.offer.header.topOffer')}
+                </OfferLabel>
+                {(!loadingOffers && (
+                  <OfferPrice>
+                    {(topOffer?.price &&
+                      `${parseE8SAmountToWICP(
+                        topOffer.price,
+                      )} WICP`) ||
+                      t(
+                        'translation:accordions.offer.emptyStates.noOffer',
+                      )}
+                  </OfferPrice>
+                )) || <UndefinedPrice>--</UndefinedPrice>}
+              </div>
+            </CurrentPriceWrapper>
+            <MarketPrice>
+              {(topOffer?.computedCurrencyPrice &&
+                `US$${formatPriceValue(
+                  topOffer.computedCurrencyPrice.toString(),
+                )}`) || <UndefinedPrice>--</UndefinedPrice>}
+            </MarketPrice>
+          </PriceWrapper>
+        )}
         {(isConnected && (
           <OnConnected
             isListed={isListed}

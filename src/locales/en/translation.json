@@ -122,7 +122,11 @@
     "offer": {
       "header": {
         "offer": "Offers",
-        "currentPrice": "Current Price"
+        "currentPrice": "Current Price",
+        "topOffer": "Top Offer"
+      },
+      "emptyStates": {
+        "noOffer": "No Offers"
       }
     }
   },

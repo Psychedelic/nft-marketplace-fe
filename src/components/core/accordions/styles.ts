@@ -102,7 +102,49 @@ export const AccordionHeadContent = styled('div', {
   },
 });
 
-export const AccordionImage = styled('div', {
+export const PriceWrapper = styled('div', {
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
+});
+
+export const CurrentPriceWrapper = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+});
+
+export const OfferLabel = styled('div', {
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '18px',
+  color: '$greyMid',
+});
+
+export const OfferPrice = styled('div', {
+  margin: '5px 0 0',
+  fontStyle: 'normal',
+  fontWeight: 'bold',
+  fontSize: '32px',
+  lineHeight: '39px',
+  display: 'flex',
+  alignitems: 'center',
+  color: '$mainTextColor',
+});
+
+export const MarketPrice = styled('div', {
+  fontStyle: 'normal',
+  fontWeight: 'normal',
+  fontSize: '32px',
+  lineHeight: '39px',
+  display: 'flex',
+  alignItems: 'center',
+  textAlign: 'right',
+  color: '$mainTextColor',
+  margin: '0',
+});
+
+export const LogoWrapper = styled('div', {
   marginRight: '12px',
   width: '42px',
   height: '42px',
@@ -110,6 +152,15 @@ export const AccordionImage = styled('div', {
   backgroundSize: 'contain',
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
+
+  variants: {
+    size: {
+      large: {
+        width: '60px',
+        height: '60px',
+      },
+    },
+  },
 });
 
 export const FlexRight = styled('div', {
