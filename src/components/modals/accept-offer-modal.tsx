@@ -149,220 +149,224 @@ export const AcceptOfferModal = ({
           </ActionButton>
         </AcceptOfferModalTrigger>
       </DialogPrimitive.Trigger>
-      {/*
+      <DialogPrimitive.Portal>
+        {/*
         ---------------------------------
         Modal Overlay
         ---------------------------------
       */}
-      <ModalOverlay
-        enableParticles={modalStep === ListingStatusCodes.Accepted}
-      />
-      {/*
+        <ModalOverlay
+          enableParticles={modalStep === ListingStatusCodes.Accepted}
+        />
+        {/*
         ---------------------------------
         Modal Content
         ---------------------------------
       */}
-      <ModalContent
-        onInteractOutside={(event) => {
-          event.preventDefault();
-        }}
-        onEscapeKeyDown={(event) => {
-          event.preventDefault();
-        }}
-      >
-        {/*
+        <ModalContent
+          onInteractOutside={(event) => {
+            event.preventDefault();
+          }}
+          onEscapeKeyDown={(event) => {
+            event.preventDefault();
+          }}
+        >
+          {/*
           ---------------------------------
           Step: 1 -> offerInfo
           ---------------------------------
         */}
-        {modalStep === ListingStatusCodes.OfferInfo && (
-          <Container>
-            {/*
+          {modalStep === ListingStatusCodes.OfferInfo && (
+            <Container>
+              {/*
               ---------------------------------
               Offer Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.acceptOffer')}
-              </ModalTitle>
-              <ModalDescription>
-                {t('translation:modals.description.acceptOffer')}
-              </ModalDescription>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.acceptOffer')}
+                </ModalTitle>
+                <ModalDescription>
+                  {t('translation:modals.description.acceptOffer')}
+                </ModalDescription>
+              </ModalHeader>
+              {/*
               ---------------------------------
               Offer details
               ---------------------------------
             */}
-            <SaleContentWrapper>
-              <ItemDetailsWrapper>
-                <ItemDetails>
-                  {nftDetails?.preview && (
-                    <ItemLogo
-                      src={nftDetails?.preview}
-                      alt="crowns"
-                    />
-                  )}
-                  <ItemName>{`CAP Crowns #${
-                    nftTokenId ?? nftDetails?.id
-                  }`}</ItemName>
-                </ItemDetails>
-                <PriceDetails>
-                  <WICPContainer size="small">
-                    <WICPLogo src={wicpIcon} alt="wicp" />
-                    <WICPText size="small">{`${price} WICP`}</WICPText>
-                  </WICPContainer>
-                  <PriceText>{`$${formatPriceValue(
-                    formattedPrice,
-                  )}`}</PriceText>
-                </PriceDetails>
-              </ItemDetailsWrapper>
-              <FeeContainer>
-                <FeeDetails>
-                  <FeeLabelContainer>
-                    <FeeLabel>
-                      {t('translation:modals.labels.listingFee')}
-                    </FeeLabel>
-                    <InfoIcon icon="info" />
-                  </FeeLabelContainer>
-                  <FeePercent>
-                    {t('translation:modals.labels.listingFeePercent')}
-                  </FeePercent>
-                </FeeDetails>
-                <FeeDetails>
-                  <FeeLabelContainer>
-                    <FeeLabel>
-                      {t(
-                        'translation:modals.labels.creatorRoyalityFee',
-                      )}
-                    </FeeLabel>
-                    <InfoIcon icon="info" />
-                  </FeeLabelContainer>
-                  <FeePercent>
-                    {t(
-                      'translation:modals.labels.creatorRoyalityFeePercent',
+              <SaleContentWrapper>
+                <ItemDetailsWrapper>
+                  <ItemDetails>
+                    {nftDetails?.preview && (
+                      <ItemLogo
+                        src={nftDetails?.preview}
+                        alt="crowns"
+                      />
                     )}
-                  </FeePercent>
-                </FeeDetails>
-              </FeeContainer>
-              <ItemDetailsWrapper lastChild>
-                <ItemDetails>
-                  <ItemName>
-                    {t('translation:modals.labels.totalEarnings')}
-                  </ItemName>
-                </ItemDetails>
-                <PriceDetails>
-                  <WICPContainer size="large">
-                    <WICPLogo
-                      src={wicpIcon}
-                      alt="wicp"
-                      size="large"
-                    />
-                    <WICPText size="large">{`${formatPriceValue(
-                      totalEarningsInWICP.toString(),
-                    )} WICP`}</WICPText>
-                  </WICPContainer>
-                  <PriceText size="large">{`$${formatPriceValue(
-                    totalEarningsInDollars.toString(),
-                  )}`}</PriceText>
-                </PriceDetails>
-              </ItemDetailsWrapper>
-            </SaleContentWrapper>
-            {/*
+                    <ItemName>{`CAP Crowns #${
+                      nftTokenId ?? nftDetails?.id
+                    }`}</ItemName>
+                  </ItemDetails>
+                  <PriceDetails>
+                    <WICPContainer size="small">
+                      <WICPLogo src={wicpIcon} alt="wicp" />
+                      <WICPText size="small">{`${price} WICP`}</WICPText>
+                    </WICPContainer>
+                    <PriceText>{`$${formatPriceValue(
+                      formattedPrice,
+                    )}`}</PriceText>
+                  </PriceDetails>
+                </ItemDetailsWrapper>
+                <FeeContainer>
+                  <FeeDetails>
+                    <FeeLabelContainer>
+                      <FeeLabel>
+                        {t('translation:modals.labels.listingFee')}
+                      </FeeLabel>
+                      <InfoIcon icon="info" />
+                    </FeeLabelContainer>
+                    <FeePercent>
+                      {t(
+                        'translation:modals.labels.listingFeePercent',
+                      )}
+                    </FeePercent>
+                  </FeeDetails>
+                  <FeeDetails>
+                    <FeeLabelContainer>
+                      <FeeLabel>
+                        {t(
+                          'translation:modals.labels.creatorRoyalityFee',
+                        )}
+                      </FeeLabel>
+                      <InfoIcon icon="info" />
+                    </FeeLabelContainer>
+                    <FeePercent>
+                      {t(
+                        'translation:modals.labels.creatorRoyalityFeePercent',
+                      )}
+                    </FeePercent>
+                  </FeeDetails>
+                </FeeContainer>
+                <ItemDetailsWrapper lastChild>
+                  <ItemDetails>
+                    <ItemName>
+                      {t('translation:modals.labels.totalEarnings')}
+                    </ItemName>
+                  </ItemDetails>
+                  <PriceDetails>
+                    <WICPContainer size="large">
+                      <WICPLogo
+                        src={wicpIcon}
+                        alt="wicp"
+                        size="large"
+                      />
+                      <WICPText size="large">{`${formatPriceValue(
+                        totalEarningsInWICP.toString(),
+                      )} WICP`}</WICPText>
+                    </WICPContainer>
+                    <PriceText size="large">{`$${formatPriceValue(
+                      totalEarningsInDollars.toString(),
+                    )}`}</PriceText>
+                  </PriceDetails>
+                </ItemDetailsWrapper>
+              </SaleContentWrapper>
+              {/*
               ---------------------------------
               Offer Action Buttons
               ---------------------------------
             */}
-            <ModalButtonsList>
-              <ModalButtonWrapper>
-                <ActionButton
-                  type="secondary"
-                  onClick={handleModalClose}
-                >
-                  {t('translation:modals.buttons.cancel')}
-                </ActionButton>
-              </ModalButtonWrapper>
-              <ModalButtonWrapper>
-                <ActionButton
-                  type="primary"
-                  onClick={handleAcceptOffer}
-                >
-                  {t('translation:modals.buttons.acceptOffer')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
-          </Container>
-        )}
-        {/*
+              <ModalButtonsList>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="primary"
+                    onClick={handleAcceptOffer}
+                  >
+                    {t('translation:modals.buttons.acceptOffer')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
+            </Container>
+          )}
+          {/*
           ---------------------------------
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === ListingStatusCodes.Pending && (
-          <Container>
-            {/*
+          {modalStep === ListingStatusCodes.Pending && (
+            <Container>
+              {/*
               ---------------------------------
               Pending Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.pendingConfirmation')}
-              </ModalTitle>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.pendingConfirmation')}
+                </ModalTitle>
+              </ModalHeader>
+              {/*
               ---------------------------------
               Pending details
               ---------------------------------
             */}
-            <Pending />
-          </Container>
-        )}
-        {/*
+              <Pending />
+            </Container>
+          )}
+          {/*
           ---------------------------------
           Step: 3 -> accepted
           ---------------------------------
         */}
-        {modalStep === ListingStatusCodes.Accepted && (
-          <Container>
-            {/*
+          {modalStep === ListingStatusCodes.Accepted && (
+            <Container>
+              {/*
               ---------------------------------
               Accepted Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.offerAccepted')}
-              </ModalTitle>
-              <ModalDescription>
-                {t('translation:modals.description.offerAccepted')}
-              </ModalDescription>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.offerAccepted')}
+                </ModalTitle>
+                <ModalDescription>
+                  {t('translation:modals.description.offerAccepted')}
+                </ModalDescription>
+              </ModalHeader>
+              {/*
               ---------------------------------
               Accepted details
               ---------------------------------
             */}
-            <Completed />
-            {/*
+              <Completed />
+              {/*
               ---------------------------------
               Accepted Action Buttons
               ---------------------------------
             */}
-            <ModalButtonsList>
-              <ModalButtonWrapper fullWidth>
-                <ActionButton
-                  type="primary"
-                  onClick={() => handleModalOpen(false)}
-                >
-                  {t('translation:modals.buttons.done')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
-          </Container>
-        )}
-      </ModalContent>
+              <ModalButtonsList>
+                <ModalButtonWrapper fullWidth>
+                  <ActionButton
+                    type="primary"
+                    onClick={() => handleModalOpen(false)}
+                  >
+                    {t('translation:modals.buttons.done')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
+            </Container>
+          )}
+        </ModalContent>
+      </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
 };
