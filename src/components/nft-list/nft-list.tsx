@@ -123,7 +123,7 @@ export const NftList = () => {
       loadMore={nextPageNo > 0 ? loadMoreNFTS : () => {}}
       hasMore={hasMoreNFTs}
       useWindow={true || false}
-      threshold={0}
+      threshold={250}
       css={{ width: '100%', height: 'fit-content' }}
     >
       <VirtualizedList
@@ -137,6 +137,7 @@ export const NftList = () => {
               owner: nft?.owner,
               principalId,
             })}
+            disableVideo
           />
         ))}
         Skeleton={NftSkeleton}

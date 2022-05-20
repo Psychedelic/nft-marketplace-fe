@@ -1,5 +1,6 @@
 import HoverVideoPlayer from 'react-hover-video-player';
 import { styled, keyframes } from '../../../../stitches.config';
+import { ImagePreload } from '../../../image-preload';
 import { NumberTooltip } from '../../../number-tooltip';
 
 const overlaySpinner = keyframes({
@@ -64,10 +65,11 @@ export const PreviewDetails = styled('div', {
   height: '100%',
 });
 
-export const PreviewImage = styled('img', {
+export const PreviewImage = styled(ImagePreload, {
   width: '100%',
   height: '100%',
   objectFit: 'cover',
+  borderRadius: '0px',
 });
 
 export const VideoPlayer = styled(HoverVideoPlayer, {

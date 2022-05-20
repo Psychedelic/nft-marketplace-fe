@@ -39,6 +39,7 @@ export type NftCardProps = {
   // TODO: Data should have a well defined type def
   data: any;
   previewCard?: boolean;
+  disableVideo?: boolean;
 };
 
 type ConnectedProps = {
@@ -185,7 +186,7 @@ const LastActionTakenDetails = ({
 };
 
 export const NftCard = React.memo(
-  ({ owned, data, previewCard }: NftCardProps) => {
+  ({ owned, data, previewCard, disableVideo }: NftCardProps) => {
     const { t } = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
     const { isConnected } = usePlugStore();
@@ -212,20 +213,26 @@ export const NftCard = React.memo(
               <CardOptionsDropdown data={data} />
             </Flex>
             <MediaWrapper>
-              <VideoPlayer
-                videoSrc={data.location}
-                pausedOverlay={
-                  <PreviewDetails>
-                    <PreviewImage
-                      src={data?.preview}
-                      alt="nft-card"
-                    />
-                  </PreviewDetails>
-                }
-                loadingOverlay={<VideoLoader />}
-                // Next line is a validation for null value
-                hoverTarget={containerRef.current || undefined}
-              />
+              {!disableVideo ? (
+                <VideoPlayer
+                  videoSrc={data.location}
+                  pausedOverlay={
+                    <PreviewDetails>
+                      <PreviewImage
+                        src={data?.preview}
+                        alt="nft-card"
+                      />
+                    </PreviewDetails>
+                  }
+                  loadingOverlay={<VideoLoader />}
+                  // Next line is a validation for null value
+                  hoverTarget={containerRef.current || undefined}
+                />
+              ) : (
+                <PreviewDetails>
+                  <PreviewImage src={data?.preview} alt="nft-card" />
+                </PreviewDetails>
+              )}
             </MediaWrapper>
             <Flex>
               <NftDataHeader>{data?.name}</NftDataHeader>

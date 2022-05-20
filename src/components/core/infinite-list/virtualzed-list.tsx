@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef } from 'react';
+import { Fragment, useEffect, useMemo, useRef } from 'react';
 import useVirtual from 'react-cool-virtual';
 
 export type VirtualizedListProps<T extends object> = {
@@ -7,22 +7,49 @@ export type VirtualizedListProps<T extends object> = {
   Skeleton: React.VFC;
 };
 
+const DefaultProps = {
+  width: 210,
+  height: 300,
+  headerOffset: 76,
+  columns: 3,
+};
+
 export const VirtualizedList = <T extends object>({
   items,
   ItemRenderer,
 }: VirtualizedListProps<T>) => {
+  const scrollThreshold = 300;
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const colItems = 3;
+  const [colItems, spacingCoefficient] = useMemo(() => {
+    const wrapperReference = wrapperRef.current;
+    if (wrapperReference) {
+      const innerWidth =
+        wrapperReference.getBoundingClientRect().width;
+
+      const newColItems = Math.floor(innerWidth / DefaultProps.width);
+
+      const newSpacingCoefficient =
+        1 +
+        (innerWidth - DefaultProps.width * newColItems) /
+          (newColItems - 1) /
+          DefaultProps.width;
+
+      console.log(newColItems, newSpacingCoefficient);
+
+      return [newColItems, newSpacingCoefficient];
+    }
+    return [DefaultProps.columns, 1.2];
+  }, [wrapperRef, wrapperRef.current?.scrollWidth]);
 
   const row = useVirtual<HTMLDivElement, HTMLDivElement>({
     itemCount: Math.ceil(items.length / colItems),
-    itemSize: 320,
+    itemSize: DefaultProps.height,
   });
   const col = useVirtual<HTMLDivElement, HTMLDivElement>({
     horizontal: true,
     itemCount: colItems,
-    itemSize: 280,
+    itemSize: DefaultProps.width,
   });
 
   const getItemIndex = (rowIndex: number, colIndex: number) =>
@@ -33,7 +60,7 @@ export const VirtualizedList = <T extends object>({
     const wrapperReference = wrapperRef.current;
     if (scrollerReference && wrapperReference) {
       // Constant offset of header
-      const headerOffset = 76;
+      const { headerOffset } = DefaultProps;
 
       // Set scroller height to cover the view
       scrollerReference.style.height = `${
@@ -51,25 +78,35 @@ export const VirtualizedList = <T extends object>({
       const scrollListener = () => {
         // Window scroll applicable to scroller
         const windowRelativeScroll =
-          document.documentElement.scrollHeight - topFullDistance;
+          document.documentElement.scrollHeight +
+          scrollThreshold / 2 -
+          topFullDistance;
 
         // Coefficient between window scroll and scroller container
         const scrollCoefficient =
           scrollerReference.scrollHeight / windowRelativeScroll;
 
+        const currentWindowRelativeScroll =
+          window.scrollY - topFullDistance;
+
         // New scroll Y position
         const scrollerY = Math.max(
-          (window.scrollY - topFullDistance) * scrollCoefficient,
+          currentWindowRelativeScroll * scrollCoefficient,
           0,
         );
         scrollerReference.scrollTo(0, scrollerY);
 
+        const topThreshold = scrollThreshold / 4;
         // New offset of the scroller inside the wrapper
-        const offsetInWrapper = Math.min(
-          Math.max(window.scrollY - topFullDistance, 0),
-          wrapperReference.getBoundingClientRect().height -
-            scrollerReference.offsetHeight,
+        const minimalOffset = Math.max(
+          currentWindowRelativeScroll - topThreshold,
+          0,
         );
+
+        const realOffset =
+          wrapperReference.getBoundingClientRect().height -
+          scrollerReference.offsetHeight;
+        const offsetInWrapper = Math.min(minimalOffset, realOffset);
         scrollerReference.style.transform = `translateY(${offsetInWrapper}px)`;
       };
 
@@ -90,7 +127,7 @@ export const VirtualizedList = <T extends object>({
       // Update wrapper height when total items change
       wrapperReference.style.height = `${scrollerReference.scrollHeight}px`;
     }
-  }, [items.length, row.outerRef, wrapperRef]);
+  }, [wrapperRef, row.outerRef, row.outerRef.current?.scrollHeight]);
 
   return (
     <div ref={wrapperRef}>
@@ -98,7 +135,9 @@ export const VirtualizedList = <T extends object>({
         id="outerId"
         style={{
           width: '100%',
+          paddingBottom: `${scrollThreshold / 2}px`,
           overflow: 'hidden',
+          scrollBehavior: 'unset',
         }}
         ref={(el) => {
           row.outerRef.current = el;
@@ -125,7 +164,9 @@ export const VirtualizedList = <T extends object>({
                         position: 'absolute',
                         height: `${rowItem.size}px`,
                         width: `${colItem.size}px`,
-                        transform: `translateX(${colItem.start}px) translateY(${rowItem.start}px)`,
+                        transform: `translateX(${
+                          colItem.start * spacingCoefficient
+                        }px) translateY(${rowItem.start * 1.2}px)`,
                       }}
                     >
                       <ItemRenderer
