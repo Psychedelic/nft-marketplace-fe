@@ -184,7 +184,7 @@ const LastActionTakenDetails = ({
 };
 
 export const NftCard = React.memo(
-  ({ owned, data, previewCard }: NftCardProps) => {
+  ({ owned, data, previewCard = false }: NftCardProps) => {
     const { t } = useTranslation();
     const [modalOpen, setModalOpen] = useState(false);
     const { isConnected } = usePlugStore();
