@@ -148,6 +148,7 @@ const OnConnected = ({
           <ButtonDetailsWrapper>
             <MakeOfferModal
               isOfferEditing
+              isNFTListed={isListed}
               offerPrice={userMadeOffer?.price}
               isTriggerVisible={Boolean(
                 !loadingOffers && userMadeOffer,
