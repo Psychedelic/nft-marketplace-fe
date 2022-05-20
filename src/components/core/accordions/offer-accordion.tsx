@@ -136,19 +136,23 @@ const OnConnected = ({
               <BuyNowModal price={price?.toString()} />
             </ButtonDetailsWrapper>
           )}
-          {!loadingOffers && !userMadeOffer && (
-            <ButtonDetailsWrapper>
-              <MakeOfferModal isNFTListed={isListed} />
-            </ButtonDetailsWrapper>
-          )}
-          {!loadingOffers && userMadeOffer && (
-            <ButtonDetailsWrapper>
-              <MakeOfferModal
-                isOfferEditing
-                offerPrice={userMadeOffer?.price}
-              />
-            </ButtonDetailsWrapper>
-          )}
+          <ButtonDetailsWrapper>
+            <MakeOfferModal
+              isNFTListed={isListed}
+              isTriggerVisible={Boolean(
+                !loadingOffers && !userMadeOffer,
+              )}
+            />
+          </ButtonDetailsWrapper>
+          <ButtonDetailsWrapper>
+            <MakeOfferModal
+              isOfferEditing
+              offerPrice={userMadeOffer?.price}
+              isTriggerVisible={Boolean(
+                !loadingOffers && userMadeOffer,
+              )}
+            />
+          </ButtonDetailsWrapper>
           {!loadingOffers && userMadeOffer && (
             <ButtonDetailsWrapper>
               <CancelOfferModal

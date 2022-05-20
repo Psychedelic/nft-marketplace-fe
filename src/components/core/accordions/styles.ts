@@ -353,10 +353,11 @@ export const ButtonListWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   paddingTop: '30px',
+  gap: '10px',
 });
 
 export const ButtonDetailsWrapper = styled('div', {
-  marginRight: '10px',
+  marginLeft: '0px',
 });
 
 export const CheckboxSkeletonWrapper = styled(SkeletonBox, {
