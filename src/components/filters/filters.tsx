@@ -29,6 +29,7 @@ import {
   CheckboxFilters,
   FilterButtonWrapper,
   CollapseIcon,
+  FilterHeader,
 } from './styles';
 import CheckboxAccordionSkeleton from '../core/accordions/checkbox-accordion-skeleton';
 
@@ -177,29 +178,29 @@ export const Filters = () => {
       </CloseFilterContainer>
       {collapsed && (
         <FiltersContainer>
+          <FilterHeader>
+            <Heading>Filters</Heading>
+            {defaultFilters.length ? (
+              <ClearButton
+                onClick={() => {
+                  dispatch(filterActions.clearAllFilters());
+                  dispatch(
+                    settingsActions.setPriceApplyButton(false),
+                  );
+                  dispatch(filterActions.setMyNfts(false));
+                  setPriceFilterValue({
+                    min: '',
+                    max: '',
+                  });
+                }}
+              >
+                {`${t('translation:filters.clearAll')}`}
+              </ClearButton>
+            ) : (
+              ''
+            )}
+          </FilterHeader>
           <FiltersWrapper>
-            <Flex>
-              <Heading>Filters</Heading>
-              {defaultFilters.length ? (
-                <ClearButton
-                  onClick={() => {
-                    dispatch(filterActions.clearAllFilters());
-                    dispatch(
-                      settingsActions.setPriceApplyButton(false),
-                    );
-                    dispatch(filterActions.setMyNfts(false));
-                    setPriceFilterValue({
-                      min: '',
-                      max: '',
-                    });
-                  }}
-                >
-                  {`${t('translation:filters.clearAll')}`}
-                </ClearButton>
-              ) : (
-                ''
-              )}
-            </Flex>
             <FilterSection>
               <FilterGroup>
                 <Subheadings>Display</Subheadings>
