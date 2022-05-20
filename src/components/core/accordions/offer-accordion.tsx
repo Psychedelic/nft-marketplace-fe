@@ -204,6 +204,9 @@ export const OfferAccordion = ({
     principalId: plugPrincipal,
   });
 
+  // TODO: show top offer if NFT not
+  // listed for sale
+
   return (
     <AccordionStyle type="single" collapsible width="medium">
       <AccordionHead flexDirection="column">
