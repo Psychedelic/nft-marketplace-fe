@@ -40,7 +40,7 @@ export type NftCardProps = {
   // TODO: Data should have a well defined type def
   data: any;
   previewCard?: boolean;
-  previewCardAmount?: any;
+  previewCardAmount?: string | number;
 };
 
 type ConnectedProps = {
@@ -200,8 +200,6 @@ export const NftCard = React.memo(
       setModalOpen(status);
     };
 
-    console.log(data?.price, previewCardAmount);
-
     return (
       <CardContainer
         disableAnimation={modalOpen || previewCard}
@@ -256,7 +254,7 @@ export const NftCard = React.memo(
                   <>
                     <img src={wicpLogo} alt="" />
                     <NumberTooltip>
-                      {previewCardAmount && previewCardAmount}
+                      {previewCardAmount ? previewCardAmount : ''}
                     </NumberTooltip>
                   </>
                 )}
