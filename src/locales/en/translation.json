@@ -124,6 +124,9 @@
         "offer": "Offers",
         "currentPrice": "Current Price",
         "topOffer": "Top Offer"
+      },
+      "emptyStates": {
+        "noOffer": "No Offers"
       }
     }
   },
