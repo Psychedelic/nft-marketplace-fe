@@ -107,6 +107,7 @@ const OnConnected = ({
               onClose={() => setModalStatus(false)}
               actionText={`${t('translation:nftCard.forOffer')}`}
               nftTokenId={tokenId}
+              isTriggerVisible
             />
           )}
         </div>
