@@ -38,6 +38,7 @@ export type MakeOfferModalProps = {
   isOfferEditing?: boolean;
   offerPrice?: bigint;
   isNFTListed?: boolean;
+  isTriggerVisible?: boolean;
 };
 
 export const MakeOfferModal = ({
@@ -47,6 +48,7 @@ export const MakeOfferModal = ({
   isOfferEditing,
   offerPrice,
   isNFTListed,
+  isTriggerVisible,
 }: MakeOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -117,168 +119,177 @@ export const MakeOfferModal = ({
         Modal Trigger
         ---------------------------------
       */}
-      <DialogPrimitive.Trigger asChild>
-        {actionText ? (
-          <ActionText>{actionText}</ActionText>
-        ) : (
-          <MakeOfferModalTrigger>
-            <ActionButton type={isNFTListed ? 'outline' : 'primary'}>
-              {isOfferEditing
-                ? t('translation:buttons.action.editOffer')
-                : t('translation:buttons.action.makeOffer')}
-            </ActionButton>
-          </MakeOfferModalTrigger>
-        )}
-      </DialogPrimitive.Trigger>
-      {/*
+      {isTriggerVisible && (
+        <DialogPrimitive.Trigger asChild>
+          {actionText ? (
+            <ActionText>{actionText}</ActionText>
+          ) : (
+            <MakeOfferModalTrigger>
+              <ActionButton
+                type={isNFTListed ? 'outline' : 'primary'}
+              >
+                {isOfferEditing
+                  ? t('translation:buttons.action.editOffer')
+                  : t('translation:buttons.action.makeOffer')}
+              </ActionButton>
+            </MakeOfferModalTrigger>
+          )}
+        </DialogPrimitive.Trigger>
+      )}
+      <DialogPrimitive.Portal>
+        {/*
         ---------------------------------
         Modal Overlay
         ---------------------------------
       */}
-      <ModalOverlay
-        enableParticles={modalStep === ListingStatusCodes.Submitted}
-      />
-      {/*
+        <ModalOverlay
+          enableParticles={modalStep === ListingStatusCodes.Submitted}
+        />
+        {/*
         ---------------------------------
         Modal Content
         ---------------------------------
       */}
-      <ModalContent
-        onInteractOutside={(event) => {
-          event.preventDefault();
-        }}
-        onEscapeKeyDown={(event) => {
-          event.preventDefault();
-        }}
-      >
-        {/*
+        <ModalContent
+          onInteractOutside={(event) => {
+            event.preventDefault();
+          }}
+          onEscapeKeyDown={(event) => {
+            event.preventDefault();
+          }}
+        >
+          {/*
           ---------------------------------
           Step: 1 -> listingInfo
           ---------------------------------
         */}
-        {modalStep === ListingStatusCodes.ListingInfo && (
-          <Container>
-            {/*
+          {modalStep === ListingStatusCodes.ListingInfo && (
+            <Container>
+              {/*
               ---------------------------------
               Listing Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {isOfferEditing
-                  ? t('translation:modals.title.editOffer')
-                  : t('translation:modals.title.makeAnOffer')}
-              </ModalTitle>
-              <ModalDescription>
-                {t('translation:modals.description.makeAnOffer')}
-              </ModalDescription>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {isOfferEditing
+                    ? t('translation:modals.title.editOffer')
+                    : t('translation:modals.title.makeAnOffer')}
+                </ModalTitle>
+                <ModalDescription>
+                  {t('translation:modals.description.makeAnOffer')}
+                </ModalDescription>
+              </ModalHeader>
+              {/*
               ---------------------------------
               Listing input details
               ---------------------------------
             */}
-            <SaleContentWrapper>
-              <ModalInput
-                placeholder={t(
-                  'translation:inputField.placeholder.amount',
-                )}
-                value={amount}
-                onChange={(e) => setAmount(e.currentTarget.value)}
-              />
-            </SaleContentWrapper>
-            {/*
+              <SaleContentWrapper>
+                <ModalInput
+                  placeholder={t(
+                    'translation:inputField.placeholder.amount',
+                  )}
+                  value={amount}
+                  onChange={(e) => setAmount(e.currentTarget.value)}
+                />
+              </SaleContentWrapper>
+              {/*
               ---------------------------------
               Listing Action Buttons
               ---------------------------------
             */}
-            <ModalButtonsList>
-              <ModalButtonWrapper>
-                <ActionButton
-                  type="secondary"
-                  onClick={handleModalClose}
-                >
-                  {t('translation:modals.buttons.cancel')}
-                </ActionButton>
-              </ModalButtonWrapper>
-              <ModalButtonWrapper>
-                <ActionButton
-                  type="primary"
-                  onClick={handleSubmitOffer}
-                  disabled={!amount || Number(amount) <= 0}
-                >
-                  {t('translation:modals.buttons.submitOffer')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
-          </Container>
-        )}
-        {/*
+              <ModalButtonsList>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="primary"
+                    onClick={handleSubmitOffer}
+                    disabled={!amount || Number(amount) <= 0}
+                  >
+                    {t('translation:modals.buttons.submitOffer')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
+            </Container>
+          )}
+          {/*
           ---------------------------------
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === ListingStatusCodes.Pending && (
-          <Container>
-            {/*
+          {modalStep === ListingStatusCodes.Pending && (
+            <Container>
+              {/*
               ---------------------------------
               Pending Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.pendingConfirmation')}
-              </ModalTitle>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.pendingConfirmation')}
+                </ModalTitle>
+              </ModalHeader>
+              {/*
               ---------------------------------
               Pending details
               ---------------------------------
             */}
-            <Pending />
-          </Container>
-        )}
-        {/*
+              <Pending />
+            </Container>
+          )}
+          {/*
           ---------------------------------
           Step: 3 -> submitted
           ---------------------------------
         */}
-        {modalStep === ListingStatusCodes.Submitted && (
-          <Container>
-            {/*
+          {modalStep === ListingStatusCodes.Submitted && (
+            <Container>
+              {/*
               ---------------------------------
               Submitted Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.offerSubmitted')}
-              </ModalTitle>
-              <ModalDescription>
-                {t('translation:modals.description.offerSubmitted')}
-              </ModalDescription>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.offerSubmitted')}
+                </ModalTitle>
+                <ModalDescription>
+                  {t('translation:modals.description.offerSubmitted')}
+                </ModalDescription>
+              </ModalHeader>
+              {/*
               ---------------------------------
               Submitted details
               ---------------------------------
             */}
-            <Completed />
-            {/*
+              <Completed />
+              {/*
               ---------------------------------
               Submitted Action Buttons
               ---------------------------------
             */}
-            <ModalButtonsList>
-              <ModalButtonWrapper fullWidth>
-                <ActionButton type="primary" onClick={handleViewNFT}>
-                  {t('translation:modals.buttons.viewNFT')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
-          </Container>
-        )}
-      </ModalContent>
+              <ModalButtonsList>
+                <ModalButtonWrapper fullWidth>
+                  <ActionButton
+                    type="primary"
+                    onClick={handleViewNFT}
+                  >
+                    {t('translation:modals.buttons.viewNFT')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
+            </Container>
+          )}
+        </ModalContent>
+      </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
 };

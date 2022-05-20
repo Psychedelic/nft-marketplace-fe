@@ -49,26 +49,28 @@ export const ConnectToPlugModal = ({
       <DialogPrimitive.Trigger asChild>
         <ActionText>{actionText}</ActionText>
       </DialogPrimitive.Trigger>
-      {/*
+      <DialogPrimitive.Portal>
+        {/*
         ---------------------------------
         Modal Overlay
         ---------------------------------
       */}
-      <ModalOverlay />
-      {/*
+        <ModalOverlay />
+        {/*
         ---------------------------------
         Modal Content
         ---------------------------------
       */}
-      <ModalContent>
-        <Container>
-          <PlugButtonContainer>
-            <ModalButtonWrapper fullWidth>
-              <Plug />
-            </ModalButtonWrapper>
-          </PlugButtonContainer>
-        </Container>
-      </ModalContent>
+        <ModalContent>
+          <Container>
+            <PlugButtonContainer>
+              <ModalButtonWrapper fullWidth>
+                <Plug />
+              </ModalButtonWrapper>
+            </PlugButtonContainer>
+          </Container>
+        </ModalContent>
+      </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
 };

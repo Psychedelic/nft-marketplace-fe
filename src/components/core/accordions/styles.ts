@@ -356,7 +356,7 @@ export const ButtonListWrapper = styled('div', {
 });
 
 export const ButtonDetailsWrapper = styled('div', {
-  marginRight: '10px',
+  marginLeft: '0px',
 });
 
 export const CheckboxSkeletonWrapper = styled(SkeletonBox, {
