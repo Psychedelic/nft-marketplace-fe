@@ -32,15 +32,13 @@ type ConnectedProps = {
 const OnConnected = ({ isListed }: ConnectedProps) => (
   <ButtonListWrapper>
     {isListed && (
-      <>
-        <ButtonWrapper>
-          <CancelListingModal />
-        </ButtonWrapper>
-        <ButtonWrapper>
-          <ChangePriceModal />
-        </ButtonWrapper>
-      </>
+      <ButtonWrapper>
+        <CancelListingModal />
+      </ButtonWrapper>
     )}
+    <ButtonWrapper>
+      <ChangePriceModal isTriggerVisible={isListed} />
+    </ButtonWrapper>
     <ButtonWrapper>
       <SellModal isTriggerVisible={!isListed} />
     </ButtonWrapper>

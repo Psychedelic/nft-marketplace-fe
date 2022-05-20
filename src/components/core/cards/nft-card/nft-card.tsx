@@ -84,14 +84,13 @@ const OnConnected = ({
             isTriggerVisible={!isForSale}
           />
 
-          {isForSale && (
-            <ChangePriceModal
-              onClose={() => setModalStatus(false)}
-              actionText={`${t('translation:nftCard.changePrice')}`}
-              nftTokenId={tokenId}
-              nftPrice={price}
-            />
-          )}
+          <ChangePriceModal
+            onClose={() => setModalStatus(false)}
+            actionText={`${t('translation:nftCard.changePrice')}`}
+            nftTokenId={tokenId}
+            nftPrice={price}
+            isTriggerVisible={isForSale}
+          />
         </div>
       )}
       {(showBuyerOptions && (
