@@ -238,7 +238,7 @@ export const NftCard = React.memo(
             <Flex>
               <NftDataHeader>{data?.name}</NftDataHeader>
               <NftDataHeader>
-                {isForSale ? `${t('translation:nftCard.price')}` : ''}
+                {isForSale || previewCard ? `${t('translation:nftCard.price')}` : ''}
               </NftDataHeader>
             </Flex>
             <Flex>
