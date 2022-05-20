@@ -15,12 +15,16 @@ import {
   AccordionContent,
   AccordionHead,
   AccordionHeadContent,
-  FlexRight,
   PlugButtonWrapper,
   UndefinedPrice,
   ButtonListWrapper,
   ButtonDetailsWrapper,
-  AccordionImage,
+  PriceWrapper,
+  CurrentPriceWrapper,
+  LogoWrapper,
+  OfferLabel,
+  OfferPrice,
+  MarketPrice,
 } from './styles';
 import { NFTOffersTable } from '../../tables';
 import { Plug } from '../../plug';
@@ -204,36 +208,34 @@ export const OfferAccordion = ({
     principalId: plugPrincipal,
   });
 
-  // TODO: show top offer if NFT not
-  // listed for sale
-
   return (
     <AccordionStyle type="single" collapsible width="medium">
       <AccordionHead flexDirection="column">
-        <AccordionHeadContent flexProperties="offer">
-          <FlexRight>
-            <AccordionImage
+        <PriceWrapper>
+          <CurrentPriceWrapper>
+            <LogoWrapper
+              size="large"
               style={{
                 backgroundImage: `url(${wicpIcon})`,
-                width: '60px',
-                height: '60px',
               }}
             />
             <div>
-              <span>
+              <OfferLabel>
                 {t(
                   'translation:accordions.offer.header.currentPrice',
                 )}
-              </span>
-              <h4>
+              </OfferLabel>
+              <OfferPrice>
                 {(isListedWithPrice && `${lastSalePrice} WICP`) || (
                   <UndefinedPrice>--</UndefinedPrice>
                 )}
-              </h4>
+              </OfferPrice>
             </div>
-          </FlexRight>
-          <h3>{isListedWithPrice && marketPrice}</h3>
-        </AccordionHeadContent>
+          </CurrentPriceWrapper>
+          <MarketPrice>
+            {isListedWithPrice && marketPrice}
+          </MarketPrice>
+        </PriceWrapper>
         {(isConnected && (
           <OnConnected
             isListed={isListed}

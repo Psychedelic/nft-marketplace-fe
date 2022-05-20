@@ -15,7 +15,7 @@ import {
   AccordionHeadContent,
   Flex,
   Subtext,
-  AccordionImage,
+  LogoWrapper,
 } from './styles';
 import plugIcon from '../../../assets/plug-circle.svg';
 
@@ -95,7 +95,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
       <AccordionHead>
         {AccordionHeadContentData.map((data) => (
           <AccordionHeadContent key={data.heading}>
-            <AccordionImage
+            <LogoWrapper
               style={{ backgroundImage: `url(${data.image})` }}
             />
             <div>
