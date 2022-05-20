@@ -34,7 +34,7 @@
       "changePrice": "Change Price",
       "backToResults": "Back to results",
       "sell": "Sell",
-      "cancelOffer": "Cancel",
+      "cancelOffer": "Cancel Offer",
       "acceptOffer": "Accept",
       "connectToPlug": "Connect to Plug",
       "installPlug": "Install Plug",
@@ -122,7 +122,11 @@
     "offer": {
       "header": {
         "offer": "Offers",
-        "currentPrice": "Current Price"
+        "currentPrice": "Current Price",
+        "topOffer": "Top Offer"
+      },
+      "emptyStates": {
+        "noOffer": "No Offers"
       }
     }
   },

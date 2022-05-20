@@ -29,23 +29,21 @@ type ConnectedProps = {
   isListed?: boolean;
 };
 
-const OnConnected = ({ isListed }: ConnectedProps) =>
-  isListed ? (
-    <ButtonListWrapper>
+const OnConnected = ({ isListed }: ConnectedProps) => (
+  <ButtonListWrapper>
+    {isListed && (
       <ButtonWrapper>
         <CancelListingModal />
       </ButtonWrapper>
-      <ButtonWrapper>
-        <ChangePriceModal />
-      </ButtonWrapper>
-    </ButtonListWrapper>
-  ) : (
-    <ButtonListWrapper>
-      <ButtonWrapper>
-        <SellModal />
-      </ButtonWrapper>
-    </ButtonListWrapper>
-  );
+    )}
+    <ButtonWrapper>
+      <ChangePriceModal isTriggerVisible={isListed} />
+    </ButtonWrapper>
+    <ButtonWrapper>
+      <SellModal isTriggerVisible={!isListed} />
+    </ButtonWrapper>
+  </ButtonListWrapper>
+);
 
 // TODO: On disconnected users should display a particular state
 // also, for the users which are not "ownersOf"
@@ -74,7 +72,7 @@ export const NftActionBar = ({
             <Icon icon="arrow-left-circle" paddingRight />
             {t('translation:buttons.links.back')}
           </ActionText>
-        </ RouteLink>
+        </RouteLink>
         {showNFTActionButtons &&
           (isConnectedOwner ? (
             <OnConnected isListed={isListed} />

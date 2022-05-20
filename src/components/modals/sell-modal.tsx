@@ -53,12 +53,14 @@ export type SellModalProps = {
   onClose?: () => void;
   actionText?: string;
   nftTokenId?: string;
+  isTriggerVisible?: boolean;
 };
 
 export const SellModal = ({
   onClose,
   actionText,
   nftTokenId,
+  isTriggerVisible,
 }: SellModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -165,206 +167,218 @@ export const SellModal = ({
         Modal Trigger
         ---------------------------------
       */}
-      <DialogPrimitive.Trigger asChild>
-        {actionText ? (
-          <ActionText>{actionText}</ActionText>
-        ) : (
-          <SellModalTrigger>
-            <ActionButton type="primary">
-              {t('translation:buttons.action.sell')}
-            </ActionButton>
-          </SellModalTrigger>
-        )}
-      </DialogPrimitive.Trigger>
-      {/*
+      {isTriggerVisible && (
+        <DialogPrimitive.Trigger asChild>
+          {actionText ? (
+            <ActionText>{actionText}</ActionText>
+          ) : (
+            <SellModalTrigger>
+              <ActionButton type="primary">
+                {t('translation:buttons.action.sell')}
+              </ActionButton>
+            </SellModalTrigger>
+          )}
+        </DialogPrimitive.Trigger>
+      )}
+      <DialogPrimitive.Portal>
+        {/*
         ---------------------------------
         Modal Overlay
         ---------------------------------
       */}
-      <ModalOverlay
-        enableParticles={modalStep === ListingStatusCodes.Confirmed}
-      />
-      {/*
+        <ModalOverlay
+          enableParticles={modalStep === ListingStatusCodes.Confirmed}
+        />
+        {/*
         ---------------------------------
         Modal Content
         ---------------------------------
       */}
-      <ModalContent
-        onInteractOutside={(event) => {
-          event.preventDefault();
-        }}
-        onEscapeKeyDown={(event) => {
-          event.preventDefault();
-        }}
-      >
-        {/*
+        <ModalContent
+          onInteractOutside={(event) => {
+            event.preventDefault();
+          }}
+          onEscapeKeyDown={(event) => {
+            event.preventDefault();
+          }}
+        >
+          {/*
           ---------------------------------
           Step: 1 -> listingInfo
           ---------------------------------
         */}
-        {modalStep === ListingStatusCodes.ListingInfo && (
-          <SellModalPreviewWrapper>
-            <SellModalPreviewContainer>
-              {/*
+          {modalStep === ListingStatusCodes.ListingInfo && (
+            <SellModalPreviewWrapper>
+              <SellModalPreviewContainer>
+                {/*
               ---------------------------------
               Listing Header
               ---------------------------------
             */}
-              <ModalHeader>
-                <ModalTitle>
-                  {t('translation:modals.title.makeListing')}
-                </ModalTitle>
-                <ModalDescription>
-                  {t('translation:modals.description.makeListing')}
-                </ModalDescription>
-              </ModalHeader>
-              {/*
+                <ModalHeader>
+                  <ModalTitle>
+                    {t('translation:modals.title.makeListing')}
+                  </ModalTitle>
+                  <ModalDescription>
+                    {t('translation:modals.description.makeListing')}
+                  </ModalDescription>
+                </ModalHeader>
+                {/*
               ---------------------------------
               Listing input details
               ---------------------------------
             */}
-              <SaleContentWrapper>
-                <ModalInput
-                  placeholder={t(
-                    'translation:inputField.placeholder.amount',
-                  )}
-                  value={amount}
-                  onChange={(e) => setAmount(e.currentTarget.value)}
-                />
-                <FeeContainer>
-                  <FeeDetails>
-                    <FeeLabelContainer>
-                      <FeeLabel>
-                        {t('translation:modals.labels.listingFee')}
-                      </FeeLabel>
-                      <InfoIcon icon="info" />
-                    </FeeLabelContainer>
-                    <FeePercent>
-                      {t(
-                        'translation:modals.labels.listingFeePercent',
-                      )}
-                    </FeePercent>
-                  </FeeDetails>
-                  <FeeDetails>
-                    <FeeLabelContainer>
-                      <FeeLabel>
+                <SaleContentWrapper>
+                  <ModalInput
+                    placeholder={t(
+                      'translation:inputField.placeholder.amount',
+                    )}
+                    value={amount}
+                    onChange={(e) => setAmount(e.currentTarget.value)}
+                  />
+                  <FeeContainer>
+                    <FeeDetails>
+                      <FeeLabelContainer>
+                        <FeeLabel>
+                          {t('translation:modals.labels.listingFee')}
+                        </FeeLabel>
+                        <InfoIcon icon="info" />
+                      </FeeLabelContainer>
+                      <FeePercent>
                         {t(
-                          'translation:modals.labels.creatorRoyalityFee',
+                          'translation:modals.labels.listingFeePercent',
                         )}
-                      </FeeLabel>
-                      <InfoIcon icon="info" />
-                    </FeeLabelContainer>
-                    <FeePercent>
-                      {t(
-                        'translation:modals.labels.creatorRoyalityFeePercent',
-                      )}
-                    </FeePercent>
-                  </FeeDetails>
-                </FeeContainer>
-              </SaleContentWrapper>
-              {/*
+                      </FeePercent>
+                    </FeeDetails>
+                    <FeeDetails>
+                      <FeeLabelContainer>
+                        <FeeLabel>
+                          {t(
+                            'translation:modals.labels.creatorRoyalityFee',
+                          )}
+                        </FeeLabel>
+                        <InfoIcon icon="info" />
+                      </FeeLabelContainer>
+                      <FeePercent>
+                        {t(
+                          'translation:modals.labels.creatorRoyalityFeePercent',
+                        )}
+                      </FeePercent>
+                    </FeeDetails>
+                  </FeeContainer>
+                </SaleContentWrapper>
+                {/*
               ---------------------------------
               Listing Action Buttons
               ---------------------------------
             */}
-              <ModalButtonsList>
-                <ModalButtonWrapper>
-                  <ActionButton
-                    type="secondary"
-                    onClick={handleModalClose}
-                  >
-                    {t('translation:modals.buttons.cancel')}
-                  </ActionButton>
-                </ModalButtonWrapper>
-                <ModalButtonWrapper>
-                  <ActionButton
-                    type="primary"
-                    onClick={handleListing}
-                    disabled={!amount}
-                  >
-                    {t('translation:modals.buttons.completeListing')}
-                  </ActionButton>
-                </ModalButtonWrapper>
-              </ModalButtonsList>
-            </SellModalPreviewContainer>
-            <NFTCardPreview>
-              <NFTPreviewText>
-                {t('translation:modals.labels.preview')}
-              </NFTPreviewText>
-              <NftCard
-                data={nftDetails}
-                owned={isOwner}
-                previewCard
-              />
-            </NFTCardPreview>
-          </SellModalPreviewWrapper>
-        )}
-        {/*
+                <ModalButtonsList>
+                  <ModalButtonWrapper>
+                    <ActionButton
+                      type="secondary"
+                      onClick={handleModalClose}
+                    >
+                      {t('translation:modals.buttons.cancel')}
+                    </ActionButton>
+                  </ModalButtonWrapper>
+                  <ModalButtonWrapper>
+                    <ActionButton
+                      type="primary"
+                      onClick={handleListing}
+                      disabled={!amount}
+                    >
+                      {t(
+                        'translation:modals.buttons.completeListing',
+                      )}
+                    </ActionButton>
+                  </ModalButtonWrapper>
+                </ModalButtonsList>
+              </SellModalPreviewContainer>
+              <NFTCardPreview>
+                <NFTPreviewText>
+                  {t('translation:modals.labels.preview')}
+                </NFTPreviewText>
+                <NftCard
+                  data={nftDetails}
+                  owned={isOwner}
+                  previewCardAmount={amount}
+                  previewCard
+                />
+              </NFTCardPreview>
+            </SellModalPreviewWrapper>
+          )}
+          {/*
           ---------------------------------
           Step: 2 -> pending
           ---------------------------------
         */}
-        {modalStep === ListingStatusCodes.Pending && (
-          <Container>
-            {/*
+          {modalStep === ListingStatusCodes.Pending && (
+            <Container>
+              {/*
               ---------------------------------
               Pending Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.pendingConfirmation')}
-              </ModalTitle>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.pendingConfirmation')}
+                </ModalTitle>
+              </ModalHeader>
+              {/*
               ---------------------------------
               Pending details
               ---------------------------------
             */}
-            <Pending />
-          </Container>
-        )}
-        {/*
+              <Pending />
+            </Container>
+          )}
+          {/*
           ---------------------------------
           Step: 3 -> confirmed
           ---------------------------------
         */}
-        {modalStep === ListingStatusCodes.Confirmed && (
-          <Container>
-            {/*
+          {modalStep === ListingStatusCodes.Confirmed && (
+            <Container>
+              {/*
               ---------------------------------
               Confirmed Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.listingComplete')}
-              </ModalTitle>
-              <ModalDescription>
-                {t('translation:modals.description.listingComplete')}
-              </ModalDescription>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.listingComplete')}
+                </ModalTitle>
+                <ModalDescription>
+                  {t(
+                    'translation:modals.description.listingComplete',
+                  )}
+                </ModalDescription>
+              </ModalHeader>
+              {/*
               ---------------------------------
               Confirmed details
               ---------------------------------
             */}
-            <Completed />
-            {/*
+              <Completed />
+              {/*
               ---------------------------------
               Confirmed Action Buttons
               ---------------------------------
             */}
-            <ModalButtonsList>
-              <ModalButtonWrapper fullWidth>
-                <ActionButton type="primary" onClick={handleViewNFT}>
-                  {t('translation:modals.buttons.viewListing')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
-          </Container>
-        )}
-      </ModalContent>
+              <ModalButtonsList>
+                <ModalButtonWrapper fullWidth>
+                  <ActionButton
+                    type="primary"
+                    onClick={handleViewNFT}
+                  >
+                    {t('translation:modals.buttons.viewListing')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
+            </Container>
+          )}
+        </ModalContent>
+      </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
 };

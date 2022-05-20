@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CardOptionsDropdown } from '../../dropdown';
@@ -20,6 +20,7 @@ import {
   MediaWrapper,
   ActionText,
   PriceInActionSheet,
+  PreviewCardVideo,
 } from './styles';
 import wicpLogo from '../../../../assets/wicp.svg';
 import {
@@ -40,6 +41,7 @@ export type NftCardProps = {
   data: any;
   previewCard?: boolean;
   disableVideo?: boolean;
+  previewCardAmount?: string | number;
 };
 
 type ConnectedProps = {
@@ -47,12 +49,10 @@ type ConnectedProps = {
   isForSale?: boolean;
   tokenId: string;
   price?: bigint;
-  setModalStatus: (status: boolean) => void;
 };
 
 type DisconnectedProps = {
   isForSale?: boolean;
-  setModalStatus: (status: boolean) => void;
 };
 
 type LastActionTakenDetailsProps = {
@@ -66,7 +66,6 @@ const OnConnected = ({
   isForSale,
   tokenId,
   price,
-  setModalStatus,
 }: ConnectedProps) => {
   const { t } = useTranslation();
   const showBuyerOptions = !owned;
@@ -75,54 +74,46 @@ const OnConnected = ({
   return (
     <>
       {showSellOptions && (
-        <div onClick={() => setModalStatus(true)} role="dialog">
-          {!isForSale ? (
-            <SellModal
-              onClose={() => setModalStatus(false)}
-              actionText={`${t('translation:nftCard.sell')}`}
-              nftTokenId={tokenId}
-            />
-          ) : (
-            <ChangePriceModal
-              onClose={() => setModalStatus(false)}
-              actionText={`${t('translation:nftCard.changePrice')}`}
-              nftTokenId={tokenId}
-              nftPrice={price}
-            />
-          )}
+        <div role="dialog">
+          <SellModal
+            actionText={`${t('translation:nftCard.sell')}`}
+            nftTokenId={tokenId}
+            isTriggerVisible={!isForSale}
+          />
+
+          <ChangePriceModal
+            actionText={`${t('translation:nftCard.changePrice')}`}
+            nftTokenId={tokenId}
+            nftPrice={price}
+            isTriggerVisible={isForSale}
+          />
         </div>
       )}
       {(showBuyerOptions && (
-        <div onClick={() => setModalStatus(true)} role="dialog">
-          {isForSale ? (
-            <BuyNowModal
-              onClose={() => setModalStatus(false)}
-              actionText={`${t('translation:nftCard.forSale')}`}
-              actionTextId={Number(tokenId)}
-              price={
-                (price && parseE8SAmountToWICP(BigInt(price))) || ''
-              }
-            />
-          ) : (
-            <MakeOfferModal
-              onClose={() => setModalStatus(false)}
-              actionText={`${t('translation:nftCard.forOffer')}`}
-              nftTokenId={tokenId}
-            />
-          )}
+        <div role="dialog">
+          <BuyNowModal
+            actionText={`${t('translation:nftCard.forSale')}`}
+            actionTextId={Number(tokenId)}
+            price={
+              (price && parseE8SAmountToWICP(BigInt(price))) || ''
+            }
+            isTriggerVisible={isForSale}
+          />
+          <MakeOfferModal
+            actionText={`${t('translation:nftCard.forOffer')}`}
+            nftTokenId={tokenId}
+            isTriggerVisible={!isForSale}
+          />
         </div>
       )) || <span />}
     </>
   );
 };
 
-const OnDisconnected = ({
-  isForSale,
-  setModalStatus,
-}: DisconnectedProps) => {
+const OnDisconnected = ({ isForSale }: DisconnectedProps) => {
   const { t } = useTranslation();
   return (
-    <div onClick={() => setModalStatus(true)} role="dialog">
+    <div role="dialog">
       {isForSale ? (
         <ConnectToPlugModal
           actionText={`${t('translation:nftCard.forSale')}`}
@@ -186,22 +177,23 @@ const LastActionTakenDetails = ({
 };
 
 export const NftCard = React.memo(
-  ({ owned, data, previewCard, disableVideo }: NftCardProps) => {
+  ({
+    owned,
+    data,
+    previewCard = false,
+    previewCardAmount,
+    disableVideo,
+  }: NftCardProps) => {
     const { t } = useTranslation();
-    const [modalOpen, setModalOpen] = useState(false);
     const { isConnected } = usePlugStore();
     const containerRef = useRef<HTMLDivElement>(null);
 
     // TODO: Move any status code as constant
     const isForSale = data.status === 'forSale';
 
-    const setModalStatus = (status: boolean) => {
-      setModalOpen(status);
-    };
-
     return (
       <CardContainer
-        disableAnimation={modalOpen || previewCard}
+        disableAnimation={previewCard}
         ref={containerRef}
       >
         <CardWrapper>
@@ -213,7 +205,19 @@ export const NftCard = React.memo(
               <CardOptionsDropdown data={data} />
             </Flex>
             <MediaWrapper>
-              {!disableVideo ? (
+              {/* eslint-disable-next-line no-nested-ternary */}
+              {disableVideo ? (
+                <PreviewDetails>
+                  <PreviewImage src={data?.preview} alt="nft-card" />
+                </PreviewDetails>
+              ) : previewCard ? (
+                <PreviewCardVideo
+                  src={data.location}
+                  poster={data?.preview}
+                  autoPlay
+                  loop
+                />
+              ) : (
                 <VideoPlayer
                   videoSrc={data.location}
                   pausedOverlay={
@@ -228,16 +232,14 @@ export const NftCard = React.memo(
                   // Next line is a validation for null value
                   hoverTarget={containerRef.current || undefined}
                 />
-              ) : (
-                <PreviewDetails>
-                  <PreviewImage src={data?.preview} alt="nft-card" />
-                </PreviewDetails>
               )}
             </MediaWrapper>
             <Flex>
               <NftDataHeader>{data?.name}</NftDataHeader>
               <NftDataHeader>
-                {isForSale ? `${t('translation:nftCard.price')}` : ''}
+                {isForSale || previewCard
+                  ? `${t('translation:nftCard.price')}`
+                  : ''}
               </NftDataHeader>
             </Flex>
             <Flex>
@@ -251,6 +253,14 @@ export const NftCard = React.memo(
                     </NumberTooltip>
                   </>
                 )}
+                {previewCard && (
+                  <>
+                    <img src={wicpLogo} alt="" />
+                    <NumberTooltip>
+                      {previewCardAmount || ''}
+                    </NumberTooltip>
+                  </>
+                )}
               </NftDataText>
             </Flex>
           </RouterLink>
@@ -261,15 +271,9 @@ export const NftCard = React.memo(
                   owned={owned}
                   isForSale={isForSale}
                   tokenId={data.id}
-                  setModalStatus={setModalStatus}
                   price={data?.price}
                 />
-              )) || (
-                <OnDisconnected
-                  isForSale={isForSale}
-                  setModalStatus={setModalStatus}
-                />
-              )}
+              )) || <OnDisconnected isForSale={isForSale} />}
               <LastActionTakenDetails
                 data={data}
                 isForSale={isForSale}

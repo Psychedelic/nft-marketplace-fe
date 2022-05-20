@@ -42,7 +42,7 @@ export const FiltersContainer = styled('div', {
 });
 
 export const FiltersWrapper = styled('div', {
-  padding: '32px 20px',
+  padding: '0 20px 32px',
 });
 
 export const Flex = styled('div', {
@@ -64,6 +64,10 @@ export const FilterSection = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   margin: '35px 0px 0px',
+
+  '&:nth-child(1)': {
+    marginBottom: '15px',
+  },
 });
 
 export const FilterGroup = styled('div', {
@@ -160,4 +164,16 @@ export const CollapseIcon = styled(Icon, {
   color: '$mainTextColor',
   width: '24px',
   height: '24px',
+});
+
+export const FilterHeader = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  margin: '0',
+  position: 'sticky',
+  width: '100%',
+  background: '$backgroundColor',
+  top: '0',
+  padding: '32px 20px 20px',
+  zIndex: '5',
 });
