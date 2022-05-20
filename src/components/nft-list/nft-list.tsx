@@ -121,11 +121,10 @@ export const NftList = () => {
       pageStart={0}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       loadMore={nextPageNo > 0 ? loadMoreNFTS : () => {}}
-      hasMore={!hasMoreNFTs}
-      loader={<NftSkeletonList />}
+      hasMore={hasMoreNFTs}
       useWindow={true || false}
       threshold={0}
-      css={{ width: '100%' }}
+      css={{ width: '100%', height: 'fit-content' }}
     >
       <VirtualizedList
         items={loadedNFTS}
