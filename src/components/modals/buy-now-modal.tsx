@@ -33,6 +33,7 @@ export type BuyNowModalProps = {
   actionText?: string;
   actionTextId?: number;
   price?: string;
+  isTriggerVisible?: boolean;
 };
 
 export const BuyNowModal = ({
@@ -40,6 +41,7 @@ export const BuyNowModal = ({
   actionText,
   actionTextId,
   price = '',
+  isTriggerVisible,
 }: BuyNowModalProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -122,126 +124,135 @@ export const BuyNowModal = ({
         Modal Trigger
         ---------------------------------
       */}
-      <DialogPrimitive.Trigger asChild>
-        {actionText ? (
-          <ActionText onClick={handleDirectBuy}>
-            {actionText}
-          </ActionText>
-        ) : (
-          <BuyNowModalTrigger>
-            <ActionButton type="primary" onClick={handleDirectBuy}>
-              {t('translation:buttons.action.buyNow')}
-            </ActionButton>
-          </BuyNowModalTrigger>
-        )}
-      </DialogPrimitive.Trigger>
-      {/*
+      {isTriggerVisible && (
+        <DialogPrimitive.Trigger asChild>
+          {actionText ? (
+            <ActionText onClick={handleDirectBuy}>
+              {actionText}
+            </ActionText>
+          ) : (
+            <BuyNowModalTrigger>
+              <ActionButton type="primary" onClick={handleDirectBuy}>
+                {t('translation:buttons.action.buyNow')}
+              </ActionButton>
+            </BuyNowModalTrigger>
+          )}
+        </DialogPrimitive.Trigger>
+      )}
+      <DialogPrimitive.Portal>
+        {/*
         ---------------------------------
         Modal Overlay
         ---------------------------------
       */}
-      <ModalOverlay
-        enableParticles={modalStep === DirectBuyStatusCodes.Confirmed}
-      />
-      {/*
+        <ModalOverlay
+          enableParticles={
+            modalStep === DirectBuyStatusCodes.Confirmed
+          }
+        />
+        {/*
         ---------------------------------
         Modal Content
         ---------------------------------
       */}
-      <ModalContent
-        onInteractOutside={(event) => {
-          event.preventDefault();
-        }}
-        onEscapeKeyDown={(event) => {
-          event.preventDefault();
-        }}
-      >
-        {/*
+        <ModalContent
+          onInteractOutside={(event) => {
+            event.preventDefault();
+          }}
+          onEscapeKeyDown={(event) => {
+            event.preventDefault();
+          }}
+        >
+          {/*
           ---------------------------------
           Step: 1 -> pending
           ---------------------------------
         */}
-        {modalStep === DirectBuyStatusCodes.Pending && (
-          <Container>
-            {/*
+          {modalStep === DirectBuyStatusCodes.Pending && (
+            <Container>
+              {/*
               ---------------------------------
               Pending Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.pendingConfirmation')}
-              </ModalTitle>
-              <ModalDescription>
-                {t(
-                  'translation:modals.description.pendingConfirmation',
-                )}
-              </ModalDescription>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.pendingConfirmation')}
+                </ModalTitle>
+                <ModalDescription>
+                  {t(
+                    'translation:modals.description.pendingConfirmation',
+                  )}
+                </ModalDescription>
+              </ModalHeader>
+              {/*
               ---------------------------------
               Pending details
               ---------------------------------
             */}
-            <Pending />
-            {/*
+              <Pending />
+              {/*
               ---------------------------------
               Pending Action Buttons
               ---------------------------------
             */}
-            <ModalButtonsList>
-              <ModalButtonWrapper fullWidth>
-                <ActionButton
-                  type="secondary"
-                  onClick={handleModalClose}
-                >
-                  {t('translation:modals.buttons.cancel')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
-          </Container>
-        )}
-        {/*
+              <ModalButtonsList>
+                <ModalButtonWrapper fullWidth>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
+            </Container>
+          )}
+          {/*
           ---------------------------------
           Step: 2 -> confirmed
           ---------------------------------
         */}
-        {modalStep === DirectBuyStatusCodes.Confirmed && (
-          <Container>
-            {/*
+          {modalStep === DirectBuyStatusCodes.Confirmed && (
+            <Container>
+              {/*
               ---------------------------------
               Confirmed Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.nftPurchased')}
-              </ModalTitle>
-              <ModalDescription>
-                {t('translation:modals.description.nftPurchased')}
-              </ModalDescription>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.nftPurchased')}
+                </ModalTitle>
+                <ModalDescription>
+                  {t('translation:modals.description.nftPurchased')}
+                </ModalDescription>
+              </ModalHeader>
+              {/*
               ---------------------------------
               Confirmed details
               ---------------------------------
             */}
-            <Completed />
-            {/*
+              <Completed />
+              {/*
               ---------------------------------
               Confirmed Action Buttons
               ---------------------------------
             */}
-            <ModalButtonsList>
-              <ModalButtonWrapper fullWidth>
-                <ActionButton type="primary" onClick={handleViewNFT}>
-                  {t('translation:modals.buttons.viewNFT')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
-          </Container>
-        )}
-      </ModalContent>
+              <ModalButtonsList>
+                <ModalButtonWrapper fullWidth>
+                  <ActionButton
+                    type="primary"
+                    onClick={handleViewNFT}
+                  >
+                    {t('translation:modals.buttons.viewNFT')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
+            </Container>
+          )}
+        </ModalContent>
+      </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
 };
