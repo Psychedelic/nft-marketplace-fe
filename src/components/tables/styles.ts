@@ -28,12 +28,13 @@ export const TableWrapper = styled('div', {
       tr: {
         th: {
           fontSize: '16px',
-          fontWeight: '600',
+          fontWeight: '500',
           lineHeight: '19px',
           color: '$mainTextColor',
           padding: '25px 0px 25px 10px',
           borderTop: '1px solid $borderColor',
           borderBottom: '1px solid $borderColor',
+          width: '100px',
 
           '&:first-child': {
             paddingLeft: '80px',

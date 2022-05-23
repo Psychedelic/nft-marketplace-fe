@@ -23,7 +23,7 @@ export const ItemLogo = styled('img', {
 
 export const ItemName = styled('div', {
   fontSize: '16px',
-  fontWeight: '600',
+  fontWeight: '500',
   lineHeight: '20px',
   color: '$mainTextColor',
 });
@@ -43,7 +43,7 @@ export const TypeLogo = styled('img', {
 
 export const TypeName = styled('div', {
   fontSize: '16px',
-  fontWeight: '600',
+  fontWeight: '500',
   lineHeight: '20px',
   color: '$mainTextColor',
   textTransform: 'capitalize',
@@ -95,7 +95,7 @@ export const WICPContainer = styled('div', {
 
 export const WICPText = styled('div', {
   fontSize: '16px',
-  fontWeight: '600',
+  fontWeight: '500',
   lineHeight: '20px',
   color: '$mainTextColor',
   marginRight: '4px',
