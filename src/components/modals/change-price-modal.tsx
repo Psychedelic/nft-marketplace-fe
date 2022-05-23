@@ -39,6 +39,7 @@ import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { AppLog } from '../../utils/log';
 import { isTokenId } from '../../utils/nfts';
 import { ModalOverlay } from './modal-overlay';
+import { ThemeRootElement } from '../../constants/common';
 
 /* --------------------------------------------------------------------------
  * Change Price Modal Component
@@ -173,7 +174,9 @@ export const ChangePriceModal = ({
           )}
         </DialogPrimitive.Trigger>
       )}
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal
+        container={document.getElementById(ThemeRootElement)}
+      >
         {/*
         ---------------------------------
         Modal Overlay

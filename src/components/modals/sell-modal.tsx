@@ -44,6 +44,7 @@ import { AppLog } from '../../utils/log';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { NFTMetadata } from '../../declarations/legacy';
 import { ModalOverlay } from './modal-overlay';
+import { ThemeRootElement } from '../../constants/common';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -180,7 +181,9 @@ export const SellModal = ({
           )}
         </DialogPrimitive.Trigger>
       )}
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal
+        container={document.getElementById(ThemeRootElement)}
+      >
         {/*
         ---------------------------------
         Modal Overlay

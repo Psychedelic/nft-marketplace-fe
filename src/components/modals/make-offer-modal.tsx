@@ -26,6 +26,7 @@ import { ListingStatusCodes } from '../../constants/listing';
 import { useAppDispatch, marketplaceActions } from '../../store';
 import { AppLog } from '../../utils/log';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
+import { ThemeRootElement } from '../../constants/common';
 
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
@@ -136,7 +137,9 @@ export const MakeOfferModal = ({
           )}
         </DialogPrimitive.Trigger>
       )}
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal
+        container={document.getElementById(ThemeRootElement)}
+      >
         {/*
         ---------------------------------
         Modal Overlay
