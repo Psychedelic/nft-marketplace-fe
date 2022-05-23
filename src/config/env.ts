@@ -24,6 +24,7 @@ type Config = {
 };
 
 const config: Config = {
+  // The production version
   production: {
     host: 'http://127.0.0.1:8000',
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
@@ -33,6 +34,10 @@ const config: Config = {
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
     capRouterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
   },
+  // Staging (serverless, local-replica)
+  // Is similar to the process we have for local development
+  // but hosted in a AWS Server and the running services
+  // are not expected to perform well but good enough for tests
   staging: {
     host: 'http://44.228.128.46:8000',
     kyasshuMarketplaceAPI: 'http://44.228.128.46:3000/local',
@@ -42,15 +47,11 @@ const config: Config = {
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
     capRouterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
   },
-  development: {
-    host: 'http://127.0.0.1:8000',
-    kyasshuMarketplaceAPI: 'http://localhost:3000/local',
-    icExplorer: 'https://dashboard.internetcomputer.org',
-    nftCollectionId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
-    marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
-    wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
-    capRouterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
-  },
+  // Mainnet test environment
+  // Provides the Service Canisters published to the Mainnet
+  // where Kyasshu API is hosted in a AWS Server
+  // and the cached data points to the same canister ids
+  // listed in here
   test: {
     host: 'http://127.0.0.1:8000',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
@@ -59,6 +60,16 @@ const config: Config = {
     marketplaceCanisterId: 'o3ios-jaaaa-aaaag-qakqq-cai',
     wICPCanisterId: 'lassd-pqaaa-aaaag-qakpq-cai',
     capRouterId: 'lhtux-ciaaa-aaaag-qakpa-cai',
+  },
+  // The local development environment settings
+  development: {
+    host: 'http://127.0.0.1:8000',
+    kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    icExplorer: 'https://dashboard.internetcomputer.org',
+    nftCollectionId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
+    marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
+    wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
+    capRouterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
   },
 };
 
