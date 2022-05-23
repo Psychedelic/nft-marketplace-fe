@@ -56,3 +56,15 @@ export const SkeletonListWrapper = styled('div', {
   gridAutoFlow: 'row dense',
   gridGap: '35px 50px',
 });
+
+export const ClearButton = styled('div', {
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '14px',
+  lineHeight: '19px',
+  color: '$primary',
+
+  '&:hover': {
+    cursor: 'pointer',
+  },
+});
