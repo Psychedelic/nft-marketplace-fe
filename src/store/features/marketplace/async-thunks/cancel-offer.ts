@@ -18,7 +18,7 @@ export const cancelOffer = createAsyncThunk<
 
   try {
     const nonFungibleContractAddress = Principal.fromText(
-      config.crownsCanisterId,
+      config.nftCollectionId,
     );
     const userOwnedTokenId = BigInt(id);
 

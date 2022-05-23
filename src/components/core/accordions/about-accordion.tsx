@@ -70,7 +70,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
     () => [
       {
         title: t('translation:accordions.about.header.canisterId'),
-        value: config.crownsCanisterId,
+        value: config.nftCollectionId,
       },
       {
         title: t('translation:accordions.about.header.tokenStandard'),
