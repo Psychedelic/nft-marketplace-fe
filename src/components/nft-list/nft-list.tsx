@@ -118,11 +118,10 @@ export const NftList = () => {
   return (
     <InfiniteScrollWrapper
       pageStart={0}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      loadMore={nextPageNo > 0 ? loadMoreNFTS : () => {}}
+      loadMore={nextPageNo > 0 && loadMoreNFTS}
       hasMore={hasMoreNFTs}
-      useWindow={true || false}
-      threshold={250}
+      useWindow
+      threshold={1250}
       css={{ width: '100%', height: 'fit-content' }}
     >
       <VirtualizedList

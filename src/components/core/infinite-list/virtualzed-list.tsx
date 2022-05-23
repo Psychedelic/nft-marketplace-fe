@@ -33,6 +33,7 @@ export const VirtualizedList = <T extends object>({
 }: VirtualizedListProps<T>) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
+  // Calculate the total amount of columns and spacing
   const [colItems, spacingCoefficient] = useMemo(() => {
     const wrapperReference = wrapperRef.current;
     if (wrapperReference) {
@@ -50,6 +51,7 @@ export const VirtualizedList = <T extends object>({
       return [newColItems, newSpacingCoefficient];
     }
     return [columns, rowSpacing];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wrapperRef, wrapperRef.current?.scrollWidth]);
 
   const row = useVirtual<HTMLDivElement, HTMLDivElement>({
@@ -57,6 +59,7 @@ export const VirtualizedList = <T extends object>({
       Math.ceil(items.length / colItems) + (loadingMore ? 1 : 0),
     itemSize: height,
   });
+
   const col = useVirtual<HTMLDivElement, HTMLDivElement>({
     horizontal: true,
     itemCount: colItems,
@@ -126,14 +129,29 @@ export const VirtualizedList = <T extends object>({
         window.removeEventListener('resize', updateListener);
       };
     }
-  }, [row.outerRef, col.outerRef, wrapperRef, scrollThreshold]);
+  }, [row.outerRef, wrapperRef, scrollThreshold]);
 
+  // Update wrapper list based on scroller
   useEffect(() => {
     const scrollerReference = row.outerRef.current;
     const wrapperReference = wrapperRef.current;
     if (wrapperReference && scrollerReference) {
       // Update wrapper height when total items change
-      wrapperReference.style.height = `${scrollerReference.scrollHeight}px`;
+      const scrollerResizeListener = () => {
+        wrapperReference.style.height = `${scrollerReference.scrollHeight}px`;
+      };
+
+      scrollerResizeListener();
+      scrollerReference.addEventListener(
+        'resize',
+        scrollerResizeListener,
+      );
+      return () => {
+        scrollerReference.removeEventListener(
+          'resize',
+          scrollerResizeListener,
+        );
+      };
     }
   }, [
     wrapperRef,
@@ -149,7 +167,6 @@ export const VirtualizedList = <T extends object>({
           width: '100%',
           padding: `30px 30px ${scrollThreshold / 2}px 30px`,
           overflow: 'hidden',
-          scrollBehavior: 'unset',
         }}
         ref={(el) => {
           row.outerRef.current = el;
