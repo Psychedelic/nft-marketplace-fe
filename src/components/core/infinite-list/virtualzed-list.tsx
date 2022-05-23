@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import useVirtual from 'react-cool-virtual';
 
 const DefaultProps = {
@@ -33,26 +33,37 @@ export const VirtualizedList = <T extends object>({
 }: VirtualizedListProps<T>) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
+  const [colItems, setColItems] = useState(columns);
+  const [spacingCoefficient, setSpacingCoefficient] =
+    useState(rowSpacing);
+
   // Calculate the total amount of columns and spacing
-  const [colItems, spacingCoefficient] = useMemo(() => {
+  useEffect(() => {
     const wrapperReference = wrapperRef.current;
     if (wrapperReference) {
-      const innerWidth =
-        wrapperReference.getBoundingClientRect().width;
+      const resizeListener = () => {
+        const innerWidth =
+          wrapperReference.getBoundingClientRect().width;
 
-      const newColItems = Math.floor(innerWidth / width);
+        const newColItems = Math.floor(innerWidth / width);
 
-      const newSpacingCoefficient =
-        1 +
-        (innerWidth - width * newColItems) /
-          (newColItems - 1) /
-          width;
+        const newSpacingCoefficient =
+          1 +
+          (innerWidth - width * newColItems) /
+            (newColItems - 1) /
+            width;
 
-      return [newColItems, newSpacingCoefficient];
+        setColItems(newColItems);
+        setSpacingCoefficient(newSpacingCoefficient);
+      };
+      resizeListener();
+
+      window.addEventListener('resize', resizeListener);
+      return () => {
+        window.removeEventListener('resize', resizeListener);
+      };
     }
-    return [columns, rowSpacing];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [wrapperRef, wrapperRef.current?.scrollWidth]);
+  }, [wrapperRef, width]);
 
   const row = useVirtual<HTMLDivElement, HTMLDivElement>({
     itemCount:
