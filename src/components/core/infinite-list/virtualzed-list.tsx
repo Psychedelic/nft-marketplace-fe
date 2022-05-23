@@ -1,24 +1,36 @@
 import { Fragment, useEffect, useMemo, useRef } from 'react';
 import useVirtual from 'react-cool-virtual';
 
-export type VirtualizedListProps<T extends object> = {
-  items: T[];
-  ItemRenderer: React.VFC<T>;
-  Skeleton: React.VFC;
-};
-
 const DefaultProps = {
   width: 210,
   height: 300,
   headerOffset: 76,
   columns: 3,
+  scrollThreshold: 300,
+  rowSpacing: 1.2,
+};
+
+export type VirtualizedListProps<T extends object> = Partial<
+  typeof DefaultProps
+> & {
+  items: T[];
+  ItemRenderer: React.VFC<T>;
+  Skeleton: React.VFC;
+  loadingMore?: boolean;
 };
 
 export const VirtualizedList = <T extends object>({
   items,
   ItemRenderer,
+  loadingMore,
+  Skeleton,
+  width = DefaultProps.width,
+  height = DefaultProps.height,
+  headerOffset = DefaultProps.headerOffset,
+  columns = DefaultProps.columns,
+  scrollThreshold = DefaultProps.scrollThreshold,
+  rowSpacing = DefaultProps.rowSpacing,
 }: VirtualizedListProps<T>) => {
-  const scrollThreshold = 300;
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const [colItems, spacingCoefficient] = useMemo(() => {
@@ -27,29 +39,28 @@ export const VirtualizedList = <T extends object>({
       const innerWidth =
         wrapperReference.getBoundingClientRect().width;
 
-      const newColItems = Math.floor(innerWidth / DefaultProps.width);
+      const newColItems = Math.floor(innerWidth / width);
 
       const newSpacingCoefficient =
         1 +
-        (innerWidth - DefaultProps.width * newColItems) /
+        (innerWidth - width * newColItems) /
           (newColItems - 1) /
-          DefaultProps.width;
-
-      console.log(newColItems, newSpacingCoefficient);
+          width;
 
       return [newColItems, newSpacingCoefficient];
     }
-    return [DefaultProps.columns, 1.2];
+    return [columns, rowSpacing];
   }, [wrapperRef, wrapperRef.current?.scrollWidth]);
 
   const row = useVirtual<HTMLDivElement, HTMLDivElement>({
-    itemCount: Math.ceil(items.length / colItems),
-    itemSize: DefaultProps.height,
+    itemCount:
+      Math.ceil(items.length / colItems) + (loadingMore ? 1 : 0),
+    itemSize: height,
   });
   const col = useVirtual<HTMLDivElement, HTMLDivElement>({
     horizontal: true,
     itemCount: colItems,
-    itemSize: DefaultProps.width,
+    itemSize: width,
   });
 
   const getItemIndex = (rowIndex: number, colIndex: number) =>
@@ -60,7 +71,6 @@ export const VirtualizedList = <T extends object>({
     const wrapperReference = wrapperRef.current;
     if (scrollerReference && wrapperReference) {
       // Constant offset of header
-      const { headerOffset } = DefaultProps;
 
       // Set scroller height to cover the view
       scrollerReference.style.height = `${
@@ -75,7 +85,7 @@ export const VirtualizedList = <T extends object>({
         initialTop + window.scrollY - headerOffset;
 
       // Scroll listener to update list scroll
-      const scrollListener = () => {
+      const updateListener = () => {
         // Window scroll applicable to scroller
         const windowRelativeScroll =
           document.documentElement.scrollHeight +
@@ -98,27 +108,25 @@ export const VirtualizedList = <T extends object>({
 
         const topThreshold = scrollThreshold / 4;
         // New offset of the scroller inside the wrapper
-        const minimalOffset = Math.max(
+        const offsetInWrapper = Math.max(
           currentWindowRelativeScroll - topThreshold,
           0,
         );
-
-        const realOffset =
-          wrapperReference.getBoundingClientRect().height -
-          scrollerReference.offsetHeight;
-        const offsetInWrapper = Math.min(minimalOffset, realOffset);
         scrollerReference.style.transform = `translateY(${offsetInWrapper}px)`;
       };
 
       // Update scroll position on first render
-      scrollListener();
+      setTimeout(updateListener);
 
       // Update scroll position on window scroll
-      window.addEventListener('scroll', scrollListener);
-      return () =>
-        window.removeEventListener('scroll', scrollListener);
+      window.addEventListener('scroll', updateListener);
+      window.addEventListener('resize', updateListener);
+      return () => {
+        window.removeEventListener('scroll', updateListener);
+        window.removeEventListener('resize', updateListener);
+      };
     }
-  }, [row.outerRef, col.outerRef, wrapperRef]);
+  }, [row.outerRef, col.outerRef, wrapperRef, scrollThreshold]);
 
   useEffect(() => {
     const scrollerReference = row.outerRef.current;
@@ -127,15 +135,19 @@ export const VirtualizedList = <T extends object>({
       // Update wrapper height when total items change
       wrapperReference.style.height = `${scrollerReference.scrollHeight}px`;
     }
-  }, [wrapperRef, row.outerRef, row.outerRef.current?.scrollHeight]);
+  }, [
+    wrapperRef,
+    row.outerRef,
+    row.outerRef.current?.scrollHeight,
+    loadingMore,
+  ]);
 
   return (
     <div ref={wrapperRef}>
       <div
-        id="outerId"
         style={{
           width: '100%',
-          paddingBottom: `${scrollThreshold / 2}px`,
+          padding: `30px 30px ${scrollThreshold / 2}px 30px`,
           overflow: 'hidden',
           scrollBehavior: 'unset',
         }}
@@ -153,31 +165,31 @@ export const VirtualizedList = <T extends object>({
         >
           {row.items.map((rowItem) => (
             <Fragment key={rowItem.index}>
-              {col.items.map(
-                (colItem) =>
-                  items[
+              {col.items.map((colItem) => (
+                <div
+                  key={colItem.index}
+                  style={{
+                    position: 'absolute',
+                    height: `${rowItem.size}px`,
+                    width: `${colItem.size}px`,
+                    transform: `translateX(${
+                      colItem.start * spacingCoefficient
+                    }px) translateY(${rowItem.start * rowSpacing}px)`,
+                  }}
+                >
+                  {items[
                     getItemIndex(rowItem.index, colItem.index)
-                  ] && (
-                    <div
-                      key={colItem.index}
-                      style={{
-                        position: 'absolute',
-                        height: `${rowItem.size}px`,
-                        width: `${colItem.size}px`,
-                        transform: `translateX(${
-                          colItem.start * spacingCoefficient
-                        }px) translateY(${rowItem.start * 1.2}px)`,
-                      }}
-                    >
-                      <ItemRenderer
-                        key={colItem.index}
-                        {...items[
-                          getItemIndex(rowItem.index, colItem.index)
-                        ]}
-                      />
-                    </div>
-                  ),
-              )}
+                  ] ? (
+                    <ItemRenderer
+                      {...items[
+                        getItemIndex(rowItem.index, colItem.index)
+                      ]}
+                    />
+                  ) : (
+                    loadingMore && <Skeleton />
+                  )}
+                </div>
+              ))}
             </Fragment>
           ))}
         </div>

@@ -35,7 +35,6 @@ export type NftCardProps = {
   // TODO: Data should have a well defined type def
   data: any;
   previewCard?: boolean;
-  disableVideo?: boolean;
   previewCardAmount?: string | number;
 };
 

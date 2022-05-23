@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NftCard } from '../core/cards/nft-card';
-import { NftSkeletonList } from '../nft-skeleton-list';
 import { InfiniteScrollWrapper } from './styles';
 import {
   useNFTSStore,
@@ -127,6 +126,7 @@ export const NftList = () => {
       css={{ width: '100%', height: 'fit-content' }}
     >
       <VirtualizedList
+        loadingMore={loadingNFTs}
         items={loadedNFTS}
         ItemRenderer={React.memo((nft) => (
           <NftCard
@@ -137,7 +137,6 @@ export const NftList = () => {
               owner: nft?.owner,
               principalId,
             })}
-            disableVideo
           />
         ))}
         Skeleton={NftSkeleton}
