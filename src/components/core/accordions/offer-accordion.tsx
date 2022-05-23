@@ -334,6 +334,7 @@ export const OfferAccordion = ({
               <Icon icon="offer" paddingRight />
               <p>
                 {`${t('translation:accordions.offer.header.offer')}`}
+                <span>{`(${tokenOffers.length})`}</span>
               </p>
             </div>
             <Icon icon="chevron-up" rotate={isAccordionOpen} />

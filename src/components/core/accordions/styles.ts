@@ -31,7 +31,7 @@ export const AccordionStyle = styled(Accordion.Root, {
 export const AccordionHead = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
-  padding: '30px 25px',
+  padding: '25px',
   flexWrap: 'wrap',
 
   // variants
@@ -46,7 +46,6 @@ export const AccordionHead = styled('div', {
 
 export const AccordionHeadContent = styled('div', {
   display: 'flex',
-  marginBottom: '10px',
 
   variants: {
     flexProperties: {
@@ -244,9 +243,9 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
     alignItems: 'center',
 
     '& span': {
-      margin: '0 0 0 10px',
+      margin: '0 0 0 5px',
       fontStyle: 'normal',
-      fontWeight: '800',
+      fontWeight: '500',
       fontSize: '16px',
       lineHeight: '19px',
       display: 'flex',
