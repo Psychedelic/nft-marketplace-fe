@@ -41,9 +41,6 @@
     "react-scripts": "5.0.0",
     "react-table": "^7.7.0",
     "react-tsparticles": "^2.0.6",
-    "react-virtualized": "^9.22.3",
-    "react-window": "^1.8.7",
-    "react-window-infinite-loader": "^1.0.7",
     "tsparticles": "^2.0.6",
     "web-vitals": "^2.1.2"
   },

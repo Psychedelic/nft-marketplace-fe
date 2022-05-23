@@ -9,7 +9,7 @@ import {
   usePlugStore,
   nftsActions,
 } from '../../store';
-import { EmptyState, NftSkeleton } from '../core';
+import { EmptyState, NftSkeleton, VirtualizedGrid } from '../core';
 import { ButtonType } from '../../constants/empty-states';
 import {
   usePriceValues,
@@ -17,7 +17,6 @@ import {
   isNFTOwner,
 } from '../../integrations/kyasshu/utils';
 import { parseAmountToE8SAsNum } from '../../utils/formatters';
-import { VirtualizedList } from '../core/infinite-list/virtualzed-list';
 
 export const NftList = () => {
   const { t } = useTranslation();
@@ -124,7 +123,7 @@ export const NftList = () => {
       threshold={1250}
       css={{ width: '100%', height: 'fit-content' }}
     >
-      <VirtualizedList
+      <VirtualizedGrid
         loadingMore={loadingNFTs}
         items={loadedNFTS}
         ItemRenderer={React.memo((nft) => (

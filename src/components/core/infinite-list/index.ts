@@ -1,1 +1,1 @@
-export * from './infinite-list';
+export * from './virtualized-grid';
