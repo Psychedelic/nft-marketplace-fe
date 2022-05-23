@@ -22,7 +22,7 @@ export const makeListing = createAsyncThunk<
       config.marketplaceCanisterId,
     );
     const nonFungibleContractAddress = Principal.fromText(
-      config.crownsCanisterId,
+      config.nftCollectionId,
     );
 
     const userOwnedTokenId = BigInt(id);
@@ -31,7 +31,7 @@ export const makeListing = createAsyncThunk<
     try {
       const CROWNS_APPROVE_MARKETPLACE = {
         idl: crownsIdlFactory,
-        canisterId: config.crownsCanisterId,
+        canisterId: config.nftCollectionId,
         methodName: 'approve',
         args: [marketplaceCanisterId, userOwnedTokenId],
         onFail: (res: any) => {

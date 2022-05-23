@@ -21,7 +21,7 @@ export const createActor = async ({
 
   switch (serviceName) {
     case 'crowns':
-      canisterId = config.crownsCanisterId;
+      canisterId = config.nftCollectionId;
       interfaceFactory = crownsIdlFactory;
       break;
     case 'wicp':

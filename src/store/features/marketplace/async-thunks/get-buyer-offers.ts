@@ -33,7 +33,7 @@ export const getBuyerOffers = createAsyncThunk<
     let floorDifferencePrice;
     let currencyMarketPrice;
     const nonFungibleContractAddress = Principal.fromText(
-      config.crownsCanisterId,
+      config.nftCollectionId,
     );
     const userPrincipalAddress = Principal.fromText(userPrincipalId);
     const result = await actorInstance.getBuyerOffers(
