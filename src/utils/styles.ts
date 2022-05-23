@@ -4,7 +4,8 @@ export default {};
 
 export const darkThemeGlobals = globalCss({
   'html, body': {
-    backgroundColor: '#000',
+    background: '#141416',
+    height: '100%'
   },
 });
 
