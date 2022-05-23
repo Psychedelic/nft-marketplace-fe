@@ -132,9 +132,8 @@ export const NftDetails = () => {
               preload="metadata"
               controls={false}
               poster={nftDetails.preview}
-            >
-              <source src={nftDetails.location} type="video/mp4" />
-            </Video>
+              src={nftDetails.location}
+            />
             <NFTTraitsContainer>
               {loadingFilterList ? (
                 <TraitsListLoader />

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CardOptionsDropdown } from '../../dropdown';
@@ -13,12 +13,8 @@ import {
   NftDataHeader,
   ActionDetails,
   NftDataText,
-  PreviewDetails,
-  PreviewImage,
-  MediaWrapper,
   ActionText,
   PriceInActionSheet,
-  PreviewCardVideo,
 } from './styles';
 import wicpLogo from '../../../../assets/wicp.svg';
 import {
@@ -32,6 +28,7 @@ import { usePlugStore } from '../../../../store';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 import { NFTActionStatuses } from '../../../../constants/common';
 import { NumberTooltip } from '../../../number-tooltip';
+import { Media } from './media';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -174,86 +171,6 @@ const LastActionTakenDetails = ({
   );
 };
 
-type MediaProps = {
-  disableVideo?: boolean;
-  previewCard?: boolean;
-  location?: string;
-  preview?: string;
-  containerRef: React.RefObject<HTMLDivElement>;
-};
-
-const Media = ({
-  location = '',
-  preview,
-  containerRef,
-}: MediaProps): JSX.Element => {
-  const [previewTriggered, setPreviewTriggered] = useState(false);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      let triggerTimeout: NodeJS.Timeout;
-      const hoverInCallback = () => {
-        triggerTimeout = setTimeout(() => {
-          setPreviewTriggered(true);
-        }, 1000);
-      };
-      const hoverOutCallback = () => {
-        clearTimeout(triggerTimeout);
-        setPreviewTriggered(false);
-      };
-
-      containerRef.current.addEventListener(
-        'mouseenter',
-        hoverInCallback,
-      );
-      containerRef.current.addEventListener(
-        'mouseleave',
-        hoverOutCallback,
-      );
-
-      return () => {
-        if (containerRef.current) {
-          containerRef.current.removeEventListener(
-            'mouseenter',
-            hoverInCallback,
-          );
-          containerRef.current.removeEventListener(
-            'mouseleave',
-            hoverOutCallback,
-          );
-        }
-      };
-    }
-  }, [setPreviewTriggered, containerRef, previewTriggered]);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      if (previewTriggered) {
-        containerRef.current.style.transform = 'scale(1.03)';
-      } else {
-        containerRef.current.style.transform = '';
-      }
-    }
-  }, [previewTriggered, containerRef]);
-
-  return (
-    <MediaWrapper>
-      <PreviewDetails>
-        {!previewTriggered ? (
-          <PreviewImage src={preview} alt="nft-card" />
-        ) : (
-          <PreviewCardVideo
-            src={location}
-            // poster={preview}
-            autoPlay
-            loop
-          />
-        )}
-      </PreviewDetails>
-    </MediaWrapper>
-  );
-};
-
 export const NftCard = React.memo(
   ({
     owned,
@@ -269,10 +186,7 @@ export const NftCard = React.memo(
     const isForSale = data.status === 'forSale';
 
     return (
-      <CardContainer
-        disableAnimation={previewCard}
-        ref={containerRef}
-      >
+      <CardContainer ref={containerRef}>
         <CardWrapper>
           <RouterLink to={`/nft/${data.id}`} className="card-router">
             <Flex>

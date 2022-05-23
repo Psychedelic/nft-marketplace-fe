@@ -246,7 +246,8 @@
     "sell": "Sell",
     "price": "Price",
     "lastSale": "Last sale",
-    "changePrice": "Edit"
+    "changePrice": "Edit",
+    "hoverToPreview": "Keep hovering to start the preview"
   },
   "tabs": {
     "items": "Items",
@@ -279,3 +280,4 @@
     "copyToClipboard": "Copied to clipboard!"
   }
 }
+
