@@ -5,3 +5,5 @@ export enum NFTActionStatuses {
   OfferReceived = 'offer received',
   ForSale = 'for sale',
 }
+
+export const ThemeRootElement = 'theme-root-element';

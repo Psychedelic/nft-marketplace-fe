@@ -10,6 +10,7 @@ import {
 import { Plug } from '../plug';
 import { usePlugStore } from '../../store';
 import { ModalOverlay } from './modal-overlay';
+import { ThemeRootElement } from '../../constants/common';
 
 /* --------------------------------------------------------------------------
  * Connect to Plug Modal Component
@@ -49,7 +50,9 @@ export const ConnectToPlugModal = ({
       <DialogPrimitive.Trigger asChild>
         <ActionText>{actionText}</ActionText>
       </DialogPrimitive.Trigger>
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal
+        container={document.getElementById(ThemeRootElement)}
+      >
         {/*
         ---------------------------------
         Modal Overlay

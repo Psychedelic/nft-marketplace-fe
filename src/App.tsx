@@ -10,6 +10,7 @@ import {
   isDarkTheme,
   portalZIndexGlobals,
 } from './utils/styles';
+import { ThemeRootElement } from './constants/common';
 
 const App = () => {
   const [theme, themeObject] = useTheme();
@@ -19,7 +20,7 @@ const App = () => {
   portalZIndexGlobals();
 
   return (
-    <div className={themeObject}>
+    <div className={themeObject} id={ThemeRootElement}>
       <BrowserRouter>
         <NavBar />
         <Routes>
