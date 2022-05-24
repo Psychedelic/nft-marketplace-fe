@@ -280,7 +280,7 @@ export const ChangePriceModal = ({
                   <ActionButton
                     type="primary"
                     onClick={handleListing}
-                    disabled={!amount}
+                    disabled={!amount || Number(amount) <= 0}
                   >
                     {t('translation:modals.buttons.completeListing')}
                   </ActionButton>
