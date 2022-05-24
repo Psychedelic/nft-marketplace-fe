@@ -24,6 +24,14 @@ export interface ButtonFilterState {
   filterCategory: string;
 }
 
+export interface SearchResultDataState {
+  id: number;
+  name: string;
+  price: string;
+  wicpPrice: string;
+  preview: string;
+}
+
 export interface FilterState {
   defaultFilters: ButtonFilterState[];
   traits: TraitsDataState[];
@@ -32,7 +40,7 @@ export interface FilterState {
   isMyNfts: boolean;
   sortBy: string;
   status: string;
-  searchResults: NFTMetadata[];
+  searchResults: SearchResultDataState[];
   isAlreadyFetched: boolean;
 }
 
@@ -201,7 +209,10 @@ export const filterSlice = createSlice({
     setStatusFilter: (state, action: PayloadAction<string>) => {
       state.status = action.payload;
     },
-    setSearchResults: (state, action: PayloadAction<NFTMetadata[]>) => {
+    setSearchResults: (
+      state,
+      action: PayloadAction<SearchResultDataState[]>,
+    ) => {
       state.searchResults = action.payload;
     },
     setIsAlreadyFetched: (state, action: PayloadAction<boolean>) => {
