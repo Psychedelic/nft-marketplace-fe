@@ -8,5 +8,5 @@ export interface TextCellProps {
 }
 
 export const TextCell = ({ text, type }: TextCellProps) => (
-  <TextDetails type={type}>{text}</TextDetails>
+  <TextDetails type={type}>{text ? text : '-'}</TextDetails>
 );
