@@ -167,7 +167,7 @@ export const CollectionItems = () => {
                   />
                 ));
               })}
-              {appliedFilters.defaultFilters.length ? (
+              {appliedFilters.defaultFilters.length > 0 && (
                 <ClearButton
                   onClick={() => {
                     dispatch(filterActions.clearAllFilters());
@@ -179,8 +179,6 @@ export const CollectionItems = () => {
                 >{`${t(
                   'translation:filters.clearAll',
                 )}`}</ClearButton>
-              ) : (
-                ''
               )}
             </ContentFlex>
           </Flex>
