@@ -8,6 +8,6 @@ export interface TextLinkCellProps {
 
 export const TextLinkCell = ({ text, type }: TextLinkCellProps) => (
   <TextLinkDetails type={type} target="_blank">
-    {text}
+    {text ? text : '-'}
   </TextLinkDetails>
 );

@@ -20,8 +20,8 @@ export const PriceDetailsCell = ({
 }: PriceDetailsCellProps) => (
   <PriceDetails>
     <WICPContainer tableType={tableType}>
-      <WICPText tableType={tableType}>{wicp}</WICPText>
-      <WICPLogo src={wicpIcon} alt="wicp" />
+      <WICPText tableType={tableType}>{wicp ? wicp : '-'}</WICPText>
+      {wicp && <WICPLogo src={wicpIcon} alt="wicp" />}
     </WICPContainer>
     {price && <PriceText tableType={tableType}>{price}</PriceText>}
   </PriceDetails>
