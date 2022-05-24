@@ -10,12 +10,12 @@ export const IconWrapper = styled('span', {
   variants: {
     paddingLeft: {
       true: {
-        paddingLeft: '0.8rem',
+        paddingLeft: '0.5rem',
       },
     },
     paddingRight: {
       true: {
-        paddingRight: '0.8rem',
+        paddingRight: '0.5rem',
       },
     },
     rotate: {
