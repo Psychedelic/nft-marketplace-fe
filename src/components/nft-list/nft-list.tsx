@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import InfiniteScroll from 'react-infinite-scroller';
 import { NftCard } from '../core/cards/nft-card';
 import { NftSkeletonList } from '../nft-skeleton-list';
-import { InfiniteScrollWrapper } from './styles';
 import {
   useNFTSStore,
   useFilterStore,
@@ -114,7 +114,7 @@ export const NftList = () => {
   }
 
   return (
-    <InfiniteScrollWrapper
+    <InfiniteScroll
       pageStart={0}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       loadMore={nextPageNo > 0 ? loadMoreNFTS : () => {}}
@@ -140,6 +140,6 @@ export const NftList = () => {
         ))}
         Skeleton={NftSkeleton}
       />
-    </InfiniteScrollWrapper>
+    </InfiniteScroll>
   );
 };
