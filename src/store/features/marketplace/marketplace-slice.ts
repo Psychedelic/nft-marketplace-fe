@@ -15,6 +15,7 @@ import {
   getTokenOffers,
   makeOffer,
   getFloorPrice,
+  getCollections,
 } from './async-thunks';
 
 export type MakeListing = {
@@ -147,6 +148,7 @@ export const marketplaceActions = {
   makeListing,
   makeOffer,
   getFloorPrice,
+  getCollections,
 };
 
 export default marketplaceSlice.reducer;
