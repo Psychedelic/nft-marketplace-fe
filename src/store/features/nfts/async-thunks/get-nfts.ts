@@ -98,6 +98,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
           itemsCount: items ? parseInt(items, 10) : 0,
           ownersCount: 0,
           price: 0,
+          totalVolume: 0,
         };
 
         dispatch(nftsActions.setCollectionData(collectionPayload));
