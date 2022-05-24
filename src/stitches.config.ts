@@ -43,6 +43,7 @@ export const {
       success: '#00AC7C',
       modalText: '#767D8E',
       toastBackground: '#ffffff',
+      iconGrey: '#767D8F'
     },
     space: {},
     fonts: {},

@@ -1,5 +1,6 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { styled } from '../../../stitches.config';
+import { Icon } from '../../icons';
 
 export const DropdownRoot = styled(DropdownMenu.Root, {
   background: '$backgroundColor',
@@ -58,8 +59,11 @@ export const DropdownContent = styled(DropdownMenu.Content, {
   variants: {
     width: {
       small: {
-        marginTop: '2px',
-        minWidth: '160px',
+        marginTop: '0',
+        minWidth: '140px',
+        left: '-20px',
+        top: '-8px',
+        position: 'absolute',
       },
     },
   },
@@ -114,3 +118,7 @@ export const DropdownRadioMenuItem = styled(
 );
 
 export const DropdownMenuItem = styled(DropdownMenu.Item, {});
+
+export const EllipsisIcon = styled(Icon, {
+  color: '$iconGrey',
+});
