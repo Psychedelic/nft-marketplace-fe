@@ -13,7 +13,6 @@ export const PlugButtonContainer = styled('button', {
   lineHeight: '19px',
   borderRadius: '15px',
   border: 'none',
-  marginLeft: '10px',
   background:
     'linear-gradient(93.07deg, #FFD719 0.61%, #F754D4 33.98%, #1FD1EC 65.84%, #48FA6B 97.7%)',
 
