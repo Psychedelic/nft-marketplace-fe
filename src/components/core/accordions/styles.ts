@@ -365,3 +365,14 @@ export const CheckboxSkeletonWrapper = styled(SkeletonBox, {
   height: '44px',
   width: '270px',
 });
+
+export const TraitCount = styled('span', {
+  margin: '0 0 0 5px',
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '16px',
+  lineHeight: '19px',
+  display: 'flex',
+  alignItems: 'center',
+  color: '$checkboxSelectedFiltersText',
+});
