@@ -123,8 +123,7 @@ export const TableWrapper = styled('div', {
           thead: {
             tr: {
               th: {
-                // color: '#767D8E',
-                color: '$mainTextColor',
+                color: '$greyMid',
                 fontSize: '18px',
                 fontWeight: '500',
                 lineHeight: '22px',
