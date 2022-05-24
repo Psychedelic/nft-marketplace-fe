@@ -73,11 +73,14 @@ export const directBuy = createAsyncThunk<
       tokenId,
       price,
     };
-  } catch (err) {
+  } catch (err: any) {
     AppLog.error(err);
+
+    const defaultErrorMessage = `Oops! Failed to direct buy`;
+
     dispatch(
       notificationActions.setErrorMessage(
-        'Oops! Failed to direct buy',
+        err?.message || defaultErrorMessage,
       ),
     );
     if (typeof onFailure === 'function') {
