@@ -8,3 +8,4 @@ export * from './get-buyer-offers';
 export * from './get-token-offers';
 export * from './get-token-listing';
 export * from './get-floor-price';
+export * from './get-collections';

@@ -25,6 +25,7 @@ export const getCollectionData = createAsyncThunk<void>(
         itemsCount: responseData?.items || 0,
         ownersCount: responseData?.owners || 0,
         price: 0,
+        totalVolume: 0,
       };
 
       await dispatch(
@@ -33,6 +34,23 @@ export const getCollectionData = createAsyncThunk<void>(
             if (!floorPrice) return;
 
             actionPayload.price = floorPrice;
+          },
+          onFailure: () => {
+            // TODO: handle failure scenario
+          },
+        }),
+      );
+
+      await dispatch(
+        marketplaceActions.getCollections({
+          onSuccess: (collections) => {
+            if (!collections.length) return;
+
+            const crownsCollection = collections[0];
+
+            actionPayload.totalVolume = Number(
+              crownsCollection?.fungibleVolume,
+            );
           },
           onFailure: () => {
             // TODO: handle failure scenario
@@ -51,4 +69,3 @@ export const getCollectionData = createAsyncThunk<void>(
     }
   },
 );
-
