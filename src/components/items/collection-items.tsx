@@ -167,7 +167,7 @@ export const CollectionItems = () => {
                   />
                 ));
               })}
-              {appliedFilters.defaultFilters.length > 0 && (
+              {Boolean(appliedFilters?.defaultFilters?.length) && (
                 <ClearButton
                   onClick={() => {
                     dispatch(filterActions.clearAllFilters());
