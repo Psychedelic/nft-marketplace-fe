@@ -71,7 +71,7 @@ export const TraitSpecsContainer = styled('div', {
 
 export const TraitName = styled('div', {
   fontSize: '16px',
-  fontWeight: '600',
+  fontWeight: '500',
   lineHeight: '19px',
   marginBottom: '2px',
 
@@ -128,7 +128,6 @@ export const Traitvalue = styled('div', {
 
 export const TraitActionContainer = styled('div', {
   display: 'flex',
-  padding: '7px',
   '&:hover': {
     cursor: 'pointer',
   },
