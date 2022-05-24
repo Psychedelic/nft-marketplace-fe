@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CardOptionsDropdown } from '../../dropdown';
@@ -250,7 +250,7 @@ export const NftCard = React.memo(
                   <>
                     <img src={wicpLogo} alt="" />
                     <NumberTooltip>
-                      {previewCardAmount ? previewCardAmount : ''}
+                      {previewCardAmount || ''}
                     </NumberTooltip>
                   </>
                 )}
