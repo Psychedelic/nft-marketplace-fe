@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   CancelListingModal,
   ChangePriceModal,
@@ -12,10 +13,9 @@ import {
   ActionText,
   ButtonListWrapper,
   ButtonWrapper,
-  RouteLink,
 } from './styles';
 
-import { usePlugStore } from '../../store';
+import { usePlugStore, useSettingsStore } from '../../store';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { Icon } from '../icons';
 
@@ -57,6 +57,7 @@ export const NftActionBar = ({
   const { t } = useTranslation();
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
+  const { previouslyVisitedPath } = useSettingsStore();
 
   const isConnectedOwner = isNFTOwner({
     isConnected,
@@ -64,15 +65,19 @@ export const NftActionBar = ({
     principalId: plugPrincipal,
   });
 
+  const toLocation = {
+    pathname: previouslyVisitedPath,
+  };
+
   return (
     <Container>
       <NftActionBarWrapper>
-        <RouteLink onClick={() => history.back()}>
+        <RouterLink to={toLocation}>
           <ActionText>
             <Icon icon="arrow-left-circle" paddingRight />
             {t('translation:buttons.links.back')}
           </ActionText>
-        </RouteLink>
+        </RouterLink>
         {showNFTActionButtons &&
           (isConnectedOwner ? (
             <OnConnected isListed={isListed} />
