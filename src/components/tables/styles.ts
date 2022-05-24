@@ -9,7 +9,6 @@ export const Container = styled('div', {
 export const TableWrapper = styled('div', {
   // marginTop: '44px', // TODO: make variant
   width: '100%',
-  minHeight: '20vh',
 
   table: {
     borderSpacing: '0',
