@@ -51,12 +51,11 @@ export const GlobalSearch = () => {
 
   const handleSearch = useCallback(
     throttle((value: string) => {
-
       if (!value) {
         dispatch(filterActions.setSearchResults([]));
         return;
       }
-    
+
       dispatch(
         filterActions.getSearchResults({
           sort: sortBy,
@@ -127,23 +126,23 @@ export const GlobalSearch = () => {
                       <ItemName>{`${nft.name} ${nft.id}`}</ItemName>
                     </ItemDetails>
                     <PriceDetails>
-                      <WICPContainer size="small">
-                        <WICPLogo src={wicpIcon} alt="wicp" />
-                        <WICPText size="small">
-                          {nft.price
-                            ? formatPriceValue(nft.price)
-                            : '- '}
-                          WICP
-                        </WICPText>
-                      </WICPContainer>
-                      <PriceText>
-                        <SubText>$</SubText>
-                        <SubText>{`${
-                          nft.price
-                            ? formatPriceValue(nft.price.toString())
-                            : '-'
-                        }`}</SubText>
-                      </PriceText>
+                    {Boolean(nft?.wicpPrice) && (
+                        <WICPContainer size="small">
+                          <WICPLogo src={wicpIcon} alt="wicp" />
+                          <WICPText size="small">
+                            {nft.wicpPrice}
+                            WICP
+                          </WICPText>
+                        </WICPContainer>
+                      )}
+                      {Boolean(nft?.price) && (
+                        <PriceText>
+                          <SubText>$</SubText>
+                          <SubText>{`${formatPriceValue(
+                            nft.price.toString(),
+                          )}`}</SubText>
+                        </PriceText>
+                      )}
                     </PriceDetails>
                   </ItemDetailsWrapper>
                 </RouterLink>
