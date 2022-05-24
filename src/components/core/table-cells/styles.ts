@@ -201,7 +201,7 @@ export const TextLinkDetails = styled('a', {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '19px',
-        color: '$tableLinkTextColor',
+        color: '$primary',
       },
     },
   },
