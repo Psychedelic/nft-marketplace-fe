@@ -10,7 +10,7 @@ import {
   usePlugStore,
   nftsActions,
 } from '../../store';
-import { EmptyState } from '../core';
+import { EmptyState, NftSkeleton, VirtualizedGrid } from '../core';
 import { ButtonType } from '../../constants/empty-states';
 import {
   usePriceValues,
@@ -124,17 +124,22 @@ export const NftList = () => {
       threshold={250 * 5}
       className="infinite-loader"
     >
-      {loadedNFTS?.map((nft) => (
-        <NftCard
-          data={nft}
-          key={nft.id}
-          owned={isNFTOwner({
-            isConnected,
-            owner: nft?.owner,
-            principalId,
-          })}
-        />
-      ))}
+      <VirtualizedGrid
+        loadingMore={loadingNFTs}
+        items={loadedNFTS}
+        ItemRenderer={React.memo((nft) => (
+          <NftCard
+            data={nft}
+            key={nft.id}
+            owned={isNFTOwner({
+              isConnected,
+              owner: nft?.owner,
+              principalId,
+            })}
+          />
+        ))}
+        Skeleton={NftSkeleton}
+      />
     </InfiniteScrollWrapper>
   );
 };
