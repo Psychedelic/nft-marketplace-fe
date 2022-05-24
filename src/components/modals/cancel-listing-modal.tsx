@@ -176,6 +176,11 @@ export const CancelListingModal = () => {
                 <ModalTitle>
                   {t('translation:modals.title.pendingConfirmation')}
                 </ModalTitle>
+                <ModalDescription>
+                  {t(
+                    'translation:modals.description.pendingConfirmation',
+                  )}
+                </ModalDescription>
               </ModalHeader>
               {/*
             ---------------------------------
