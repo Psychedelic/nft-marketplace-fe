@@ -43,6 +43,7 @@ import { ListingStatusCodes } from '../../constants/listing';
 import { formatPriceValue } from '../../utils/formatters';
 import { isTokenId } from '../../utils/nfts';
 import { ModalOverlay } from './modal-overlay';
+import { ThemeRootElement } from '../../constants/common';
 
 export interface AcceptOfferProps {
   price: string;
@@ -149,7 +150,9 @@ export const AcceptOfferModal = ({
           </ActionButton>
         </AcceptOfferModalTrigger>
       </DialogPrimitive.Trigger>
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal
+        container={document.getElementById(ThemeRootElement)}
+      >
         {/*
         ---------------------------------
         Modal Overlay
