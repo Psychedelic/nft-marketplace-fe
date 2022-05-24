@@ -26,7 +26,7 @@ export const getFloorPrice = createAsyncThunk<
   try {
     let floorPriceinWICP;
     const nonFungibleContractAddress = Principal.fromText(
-      config.crownsCanisterId,
+      config.nftCollectionId,
     );
 
     const floorResponse = await actorInstance.getFloor(

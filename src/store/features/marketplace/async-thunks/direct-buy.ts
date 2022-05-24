@@ -21,7 +21,7 @@ export const directBuy = createAsyncThunk<
     config.marketplaceCanisterId,
   );
   const nonFungibleContractAddress = Principal.fromText(
-    config.crownsCanisterId,
+    config.nftCollectionId,
   );
 
   try {
