@@ -126,7 +126,7 @@ export const GlobalSearch = () => {
                       <ItemName>{`${nft.name} ${nft.id}`}</ItemName>
                     </ItemDetails>
                     <PriceDetails>
-                      {nft.wicpPrice && (
+                    {Boolean(nft?.wicpPrice) && (
                         <WICPContainer size="small">
                           <WICPLogo src={wicpIcon} alt="wicp" />
                           <WICPText size="small">
@@ -135,7 +135,7 @@ export const GlobalSearch = () => {
                           </WICPText>
                         </WICPContainer>
                       )}
-                      {nft.price && (
+                      {Boolean(nft?.price) && (
                         <PriceText>
                           <SubText>$</SubText>
                           <SubText>{`${formatPriceValue(
