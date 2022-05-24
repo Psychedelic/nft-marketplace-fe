@@ -4,7 +4,7 @@ import { actorInstanceHandler } from '../../../../integrations/actor';
 import { marketplaceSlice } from '../marketplace-slice';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
-import { parseE8SAmountToWICP } from '../../../../utils/formatters';
+import { parseGetCollectionsResponse } from '../../../../utils/parser';
 
 export type GetCollectionsProps = DefaultCallbacks;
 
@@ -24,13 +24,12 @@ export const getCollections = createAsyncThunk<
 
   try {
     const collectionsResponse = await actorInstance.getCollections();
-    console.log(collectionsResponse, 'collectionsResponse');
 
     const parsedCollections =
-      Array.isArray(collectionsResponse) ||
+      !Array.isArray(collectionsResponse) ||
       !collectionsResponse.length
         ? []
-        : collectionsResponse;
+        : parseGetCollectionsResponse(collectionsResponse);
 
     if (typeof onSuccess === 'function') {
       onSuccess(parsedCollections);

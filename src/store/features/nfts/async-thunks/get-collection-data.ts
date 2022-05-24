@@ -5,7 +5,6 @@ import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { marketplaceActions } from '../../marketplace/marketplace-slice';
-import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
 export const getCollectionData = createAsyncThunk<void>(
   'nfts/getCollectionData',
@@ -49,11 +48,9 @@ export const getCollectionData = createAsyncThunk<void>(
 
             const crownsCollection = collections[0];
 
-            const fungibleVolume = parseE8SAmountToWICP(
-              crownsCollection[1]?.fungible_volume,
+            actionPayload.totalVolume = Number(
+              crownsCollection?.fungibleVolume,
             );
-
-            actionPayload.totalVolume = Number(fungibleVolume);
           },
           onFailure: () => {
             // TODO: handle failure scenario

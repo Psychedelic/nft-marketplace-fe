@@ -280,3 +280,19 @@ export const parseTablePrincipal = (
 
   return pid;
 };
+
+// TODO: update data type while using collection details
+export const parseGetCollectionsResponse = (data: Array<any>) => {
+  const parsed = data.reduce((accParent, currParent) => {
+    const collection: any = {
+      collectionName: currParent[1]?.collection_name,
+      fungibleVolume: parseE8SAmountToWICP(
+        currParent[1]?.fungible_volume,
+      ),
+    };
+
+    return [...accParent, collection];
+  }, [] as Array<any>);
+
+  return parsed;
+};
