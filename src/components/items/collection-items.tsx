@@ -196,19 +196,20 @@ export const CollectionItems = () => {
                   );
                 });
               })}
-              {Boolean(appliedFilters?.defaultFilters?.length) && (
-                <ClearButton
-                  onClick={() => {
-                    dispatch(filterActions.clearAllFilters());
-                    dispatch(
-                      settingsActions.setPriceApplyButton(false),
-                    );
-                    dispatch(filterActions.setMyNfts(false));
-                  }}
-                >{`${t(
-                  'translation:filters.clearAll',
-                )}`}</ClearButton>
-              )}
+              {Boolean(appliedFilters?.defaultFilters?.length) &&
+                !appliedFilters.isMyNfts && (
+                  <ClearButton
+                    onClick={() => {
+                      dispatch(filterActions.clearAllFilters());
+                      dispatch(
+                        settingsActions.setPriceApplyButton(false),
+                      );
+                      dispatch(filterActions.setMyNfts(false));
+                    }}
+                  >{`${t(
+                    'translation:filters.clearAll',
+                  )}`}</ClearButton>
+                )}
             </ContentFlex>
           </Flex>
         </ContentWrapper>
