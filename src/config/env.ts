@@ -53,7 +53,7 @@ const config: Config = {
   // and the cached data points to the same canister ids
   // listed in here
   test: {
-    host: 'http://127.0.0.1:8000',
+    host: 'https://mainnet.dfinity.network',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
     icExplorer: 'https://dashboard.internetcomputer.org',
     nftCollectionId: 'iqvo2-7qaaa-aaaam-qacxa-cai',
