@@ -125,8 +125,8 @@ export const GlobalSearch = () => {
                       <ItemLogo src={nft.preview} alt="crowns" />
                       <ItemName>{`${nft.name} ${nft.id}`}</ItemName>
                     </ItemDetails>
-                    {nft.price ? (
-                      <PriceDetails>
+                    <PriceDetails>
+                      {nft.wicpPrice && (
                         <WICPContainer size="small">
                           <WICPLogo src={wicpIcon} alt="wicp" />
                           <WICPText size="small">
@@ -134,16 +134,16 @@ export const GlobalSearch = () => {
                             WICP
                           </WICPText>
                         </WICPContainer>
+                      )}
+                      {nft.price && (
                         <PriceText>
                           <SubText>$</SubText>
                           <SubText>{`${formatPriceValue(
                             nft.price.toString(),
                           )}`}</SubText>
                         </PriceText>
-                      </PriceDetails>
-                    ) : (
-                      ''
-                    )}
+                      )}
+                    </PriceDetails>
                   </ItemDetailsWrapper>
                 </RouterLink>
               ))}
