@@ -25,7 +25,7 @@ export const Subtext = styled('p', {
   display: 'flex',
   alignItems: 'center',
   fontStyle: 'normal',
-  fontWeight: '600',
+  fontWeight: '500',
   fontSize: '18px',
   lineHeight: '20px',
   color: '#767D8E',
@@ -34,4 +34,5 @@ export const Subtext = styled('p', {
 
 export const VerifiedIcon = styled(Icon, {
   color: '$primary',
+  width: '16px',
 });
