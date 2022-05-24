@@ -51,12 +51,11 @@ export const GlobalSearch = () => {
 
   const handleSearch = useCallback(
     throttle((value: string) => {
-
       if (!value) {
         dispatch(filterActions.setSearchResults([]));
         return;
       }
-    
+
       dispatch(
         filterActions.getSearchResults({
           sort: sortBy,
@@ -130,9 +129,7 @@ export const GlobalSearch = () => {
                       <WICPContainer size="small">
                         <WICPLogo src={wicpIcon} alt="wicp" />
                         <WICPText size="small">
-                          {nft.price
-                            ? formatPriceValue(nft.price)
-                            : '- '}
+                          {nft.price ? nft.wicpPrice + ' ' : '- '}
                           WICP
                         </WICPText>
                       </WICPContainer>
