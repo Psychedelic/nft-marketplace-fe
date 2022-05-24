@@ -21,6 +21,7 @@ import {
   nftsActions,
   marketplaceActions,
 } from '../../store';
+import { ThemeRootElement } from '../../constants/common';
 
 /* --------------------------------------------------------------------------
  * Cancel Listing Modal Component
@@ -91,7 +92,9 @@ export const CancelListingModal = () => {
           </ActionButton>
         </CancelListingModalTrigger>
       </DialogPrimitive.Trigger>
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal
+        container={document.getElementById(ThemeRootElement)}
+      >
         {/*
         ---------------------------------
         Modal Overlay

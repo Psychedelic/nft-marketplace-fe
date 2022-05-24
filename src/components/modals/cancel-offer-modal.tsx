@@ -17,6 +17,7 @@ import {
 import { ModalOverlay } from './modal-overlay';
 
 import { ListingStatusCodes } from '../../constants/listing';
+import { ThemeRootElement } from '../../constants/common';
 
 /* --------------------------------------------------------------------------
  * Cancel Offer Modal Component
@@ -88,7 +89,9 @@ export const CancelOfferModal = ({
           </ActionButton>
         </CancelOfferModalTrigger>
       </DialogPrimitive.Trigger>
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal
+        container={document.getElementById(ThemeRootElement)}
+      >
         {/*
         ---------------------------------
         Modal Overlay
