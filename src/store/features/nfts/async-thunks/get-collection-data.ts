@@ -5,6 +5,7 @@ import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { marketplaceActions } from '../../marketplace/marketplace-slice';
+import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
 export const getCollectionData = createAsyncThunk<void>(
   'nfts/getCollectionData',
@@ -25,6 +26,7 @@ export const getCollectionData = createAsyncThunk<void>(
         itemsCount: responseData?.items || 0,
         ownersCount: responseData?.owners || 0,
         price: 0,
+        totalVolume: 0,
       };
 
       await dispatch(
@@ -33,6 +35,25 @@ export const getCollectionData = createAsyncThunk<void>(
             if (!floorPrice) return;
 
             actionPayload.price = floorPrice;
+          },
+          onFailure: () => {
+            // TODO: handle failure scenario
+          },
+        }),
+      );
+
+      await dispatch(
+        marketplaceActions.getCollections({
+          onSuccess: (collections) => {
+            if (!collections.length) return;
+
+            const crownsCollection = collections[0];
+
+            const fungibleVolume = parseE8SAmountToWICP(
+              crownsCollection[1]?.fungible_volume,
+            );
+
+            actionPayload.totalVolume = Number(fungibleVolume);
           },
           onFailure: () => {
             // TODO: handle failure scenario
@@ -51,4 +72,3 @@ export const getCollectionData = createAsyncThunk<void>(
     }
   },
 );
-
