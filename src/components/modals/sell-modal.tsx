@@ -326,6 +326,11 @@ export const SellModal = ({
                 <ModalTitle>
                   {t('translation:modals.title.pendingConfirmation')}
                 </ModalTitle>
+                <ModalDescription>
+                  {t(
+                    'translation:modals.description.pendingConfirmation',
+                  )}
+                </ModalDescription>
               </ModalHeader>
               {/*
               ---------------------------------
