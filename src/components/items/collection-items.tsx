@@ -7,6 +7,7 @@ import {
   useNFTSStore,
   settingsActions,
   nftsActions,
+  usePlugStore,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
@@ -38,6 +39,8 @@ export const CollectionItems = () => {
     floorPrice,
     loadedNFTS,
   } = useNFTSStore();
+
+  const { isConnected } = usePlugStore();
 
   const appliedFiltersCount =
     appliedFilters?.defaultFilters.length || 0;
@@ -149,22 +152,31 @@ export const CollectionItems = () => {
                     />
                   );
                 }
-                return appliedFilter.filterName.map((value) => (
-                  <FilteredTraitsChip
-                    key={value}
-                    name={value}
-                    rim={`${appliedFilter.filterCategory}`}
-                    appliedFilterValue={appliedFilter}
-                    removeFilter={() => {
-                      dispatch(
-                        filterActions.removeTraitsFilter({
-                          value,
-                          key: appliedFilter.filterCategory,
-                        }),
-                      );
-                    }}
-                  />
-                ));
+                return appliedFilter.filterName.map((value) => {
+                  if (
+                    appliedFilters.isMyNfts &&
+                    isConnected &&
+                    !loadedNFTS.length &&
+                    value === t('translation:buttons.action.myNfts')
+                  )
+                    return;
+                  return (
+                    <FilteredTraitsChip
+                      key={value}
+                      name={value}
+                      rim={`${appliedFilter.filterCategory}`}
+                      appliedFilterValue={appliedFilter}
+                      removeFilter={() => {
+                        dispatch(
+                          filterActions.removeTraitsFilter({
+                            value,
+                            key: appliedFilter.filterCategory,
+                          }),
+                        );
+                      }}
+                    />
+                  );
+                });
               })}
             </ContentFlex>
           </Flex>
