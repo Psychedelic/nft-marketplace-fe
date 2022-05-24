@@ -366,7 +366,7 @@ export const CheckboxSkeletonWrapper = styled(SkeletonBox, {
   width: '270px',
 });
 
-export const TraitCount = styled('span', {
+export const ItemCount = styled('span', {
   margin: '0 0 0 5px',
   fontStyle: 'normal',
   fontWeight: '500',
