@@ -37,6 +37,7 @@ export const CollectionItems = () => {
     totalOwnersCount,
     floorPrice,
     loadedNFTS,
+    totalVolume,
   } = useNFTSStore();
 
   const appliedFiltersCount =
@@ -102,6 +103,13 @@ export const CollectionItems = () => {
                     'translation:chips.labels.FloorPriceLabel',
                   )}
                   count={floorPrice}
+                  showLogo
+                />
+              )}
+              {!loadingCollectionData && totalVolume > 0 && (
+                <FilteredCountChip
+                  label={t('translation:chips.labels.totalVolume')}
+                  count={totalVolume}
                   showLogo
                 />
               )}
