@@ -5,11 +5,13 @@ import type { RootState } from '../../store';
 export interface SettingsState {
   collapsed: boolean;
   displayPriceApplyButton: boolean;
+  previouslyVisitedPath: string;
 }
 
 const initialState: SettingsState = {
   collapsed: true,
   displayPriceApplyButton: false,
+  previouslyVisitedPath: '/',
 };
 
 export const settingsSlice = createSlice({
@@ -21,6 +23,12 @@ export const settingsSlice = createSlice({
     },
     setPriceApplyButton: (state, action: PayloadAction<boolean>) => {
       state.displayPriceApplyButton = action.payload;
+    },
+    setPreviouslyVisitedPath: (
+      state,
+      action: PayloadAction<string>,
+    ) => {
+      state.previouslyVisitedPath = action.payload;
     },
   },
 });
