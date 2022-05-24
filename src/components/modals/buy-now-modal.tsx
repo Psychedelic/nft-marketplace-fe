@@ -23,6 +23,7 @@ import { AppLog } from '../../utils/log';
 import { isTokenId } from '../../utils/nfts';
 import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 import { ModalOverlay } from './modal-overlay';
+import { ThemeRootElement } from '../../constants/common';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
@@ -139,7 +140,9 @@ export const BuyNowModal = ({
           )}
         </DialogPrimitive.Trigger>
       )}
-      <DialogPrimitive.Portal>
+      <DialogPrimitive.Portal
+        container={document.getElementById(ThemeRootElement)}
+      >
         {/*
         ---------------------------------
         Modal Overlay
