@@ -80,8 +80,9 @@ export const NftList = () => {
   if (
     isMyNfts &&
     isConnected &&
-    defaultFilters.length &&
-    !loadedNFTS.length
+    defaultFilters.length > 1 &&
+    !loadedNFTS.length &&
+    !principalId
   ) {
     return (
       <EmptyState
@@ -95,7 +96,7 @@ export const NftList = () => {
     );
   }
 
-  if (isMyNfts && isConnected && !loadedNFTS.length) {
+  if (isMyNfts && isConnected && !loadedNFTS.length && principalId) {
     return (
       <EmptyState
         message={`${t('translation:emptyStates.noNfts')}`}

@@ -40,7 +40,7 @@ export const CollectionItems = () => {
     loadedNFTS,
   } = useNFTSStore();
 
-  const { isConnected } = usePlugStore();
+  const { isConnected, principalId } = usePlugStore();
 
   const appliedFiltersCount =
     appliedFilters?.defaultFilters.length || 0;
@@ -117,6 +117,14 @@ export const CollectionItems = () => {
             <ContentFlex>
               {appliedFilters.defaultFilters.map((appliedFilter) => {
                 if (!Array.isArray(appliedFilter.filterName)) {
+                  if (
+                    appliedFilters.isMyNfts &&
+                    isConnected &&
+                    !loadedNFTS.length &&
+                    principalId
+                  ) {
+                    return;
+                  }
                   return (
                     <FilteredTraitsChip
                       key={appliedFilter.filterName}
@@ -157,9 +165,10 @@ export const CollectionItems = () => {
                     appliedFilters.isMyNfts &&
                     isConnected &&
                     !loadedNFTS.length &&
-                    value === t('translation:buttons.action.myNfts')
-                  )
+                    principalId
+                  ) {
                     return;
+                  }
                   return (
                     <FilteredTraitsChip
                       key={value}
