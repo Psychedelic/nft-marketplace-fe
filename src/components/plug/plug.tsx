@@ -24,7 +24,7 @@ import config from '../../config/env';
 import { AppLog } from '../../utils/log';
 
 const {
-  crownsCanisterId,
+  nftCollectionId,
   marketplaceCanisterId,
   wICPCanisterId,
   capRouterId,
@@ -32,7 +32,7 @@ const {
 } = config;
 
 const whitelist = [
-  crownsCanisterId,
+  nftCollectionId,
   marketplaceCanisterId,
   wICPCanisterId,
   capRouterId,
