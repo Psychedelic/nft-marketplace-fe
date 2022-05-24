@@ -8,7 +8,10 @@ import { filterActions } from '..';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
-import { parseE8SAmountToWICP } from '../../../../utils/formatters';
+import {
+  parseAmountToE8S,
+  parseE8SAmountToWICP,
+} from '../../../../utils/formatters';
 
 export type GetSearchResultsProps =
   NSKyasshuUrl.GetSearchQueryParams & {
@@ -43,7 +46,10 @@ export const getSearchResults = createAsyncThunk<
         const searchResultData = {
           id: nft.index,
           name: 'Cap Crowns',
-          price: priceInUSD * Number(parseE8SAmountToWICP(nft.currentPrice)),
+          price:
+            priceInUSD *
+            Number(parseE8SAmountToWICP(nft.currentPrice)),
+          wicpPrice: parseE8SAmountToWICP(nft.currentPrice),
           preview: nft.url.replace(
             /\/(\w+)\.\w+/g,
             '/thumbnails/$1.png',
