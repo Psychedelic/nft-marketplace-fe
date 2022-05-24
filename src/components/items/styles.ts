@@ -48,6 +48,7 @@ export const ContentFlex = styled('div', {
   display: 'flex',
   alignItems: 'center',
   flexWrap: 'wrap',
+  marginBottom: '10px',
 });
 
 export const SkeletonListWrapper = styled('div', {
@@ -55,4 +56,16 @@ export const SkeletonListWrapper = styled('div', {
   gridTemplateColumns: 'repeat(auto-fill,minmax(185px, 1fr))',
   gridAutoFlow: 'row dense',
   gridGap: '35px 50px',
+});
+
+export const ClearButton = styled('div', {
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '14px',
+  lineHeight: '19px',
+  color: '$primary',
+
+  '&:hover': {
+    cursor: 'pointer',
+  },
 });

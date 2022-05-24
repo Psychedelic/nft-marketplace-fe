@@ -1,4 +1,5 @@
 import React from 'react';
+import { roundOffDecimalValue } from '../../../utils/nfts';
 import { Wrapper } from './styles';
 
 export type CheckboxProps = {
@@ -33,6 +34,6 @@ export const Checkbox = ({
       <span />
       {value}
     </label>
-    <span>{`${occurence} (${percentage}%)`}</span>
+    <span>{`${occurence} (${roundOffDecimalValue(Number(percentage), 1)}%)`}</span>
   </Wrapper>
 );

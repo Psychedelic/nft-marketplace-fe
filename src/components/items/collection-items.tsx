@@ -24,6 +24,7 @@ import {
   Flex,
   ContentFlex,
   SkeletonListWrapper,
+  ClearButton,
 } from './styles';
 
 export const CollectionItems = () => {
@@ -38,6 +39,7 @@ export const CollectionItems = () => {
     totalOwnersCount,
     floorPrice,
     loadedNFTS,
+    totalVolume,
   } = useNFTSStore();
 
   const { isConnected, principalId } = usePlugStore();
@@ -105,6 +107,13 @@ export const CollectionItems = () => {
                     'translation:chips.labels.FloorPriceLabel',
                   )}
                   count={floorPrice}
+                  showLogo
+                />
+              )}
+              {!loadingCollectionData && totalVolume > 0 && (
+                <FilteredCountChip
+                  label={t('translation:chips.labels.totalVolume')}
+                  count={totalVolume}
                   showLogo
                 />
               )}
@@ -187,6 +196,19 @@ export const CollectionItems = () => {
                   );
                 });
               })}
+              {Boolean(appliedFilters?.defaultFilters?.length) && (
+                <ClearButton
+                  onClick={() => {
+                    dispatch(filterActions.clearAllFilters());
+                    dispatch(
+                      settingsActions.setPriceApplyButton(false),
+                    );
+                    dispatch(filterActions.setMyNfts(false));
+                  }}
+                >{`${t(
+                  'translation:filters.clearAll',
+                )}`}</ClearButton>
+              )}
             </ContentFlex>
           </Flex>
         </ContentWrapper>

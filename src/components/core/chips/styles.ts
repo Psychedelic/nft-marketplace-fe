@@ -42,7 +42,7 @@ export const TraitChipContainer = styled('div', {
       filtered: {
         background: 'rgba(34, 83, 255, 0.1)',
         border: '1.5px solid #87A1FF',
-        margin: '0px 10px 10px 0px',
+        margin: '0px 10px 0px 0px',
       },
 
       nft: {
@@ -71,7 +71,7 @@ export const TraitSpecsContainer = styled('div', {
 
 export const TraitName = styled('div', {
   fontSize: '16px',
-  fontWeight: '600',
+  fontWeight: '500',
   lineHeight: '19px',
   marginBottom: '2px',
 
@@ -128,7 +128,6 @@ export const Traitvalue = styled('div', {
 
 export const TraitActionContainer = styled('div', {
   display: 'flex',
-  padding: '7px',
   '&:hover': {
     cursor: 'pointer',
   },
