@@ -128,45 +128,47 @@ const OnConnected = ({
     recentlyCancelledOffers,
   ]);
 
+  const isNonOwnerActionButtons = !isOwner && showNFTActionButtons;
+
   return (
-    <>
-      {!isOwner && showNFTActionButtons && (
-        <ButtonListWrapper>
-          <ButtonDetailsWrapper>
-            <BuyNowModal
-              price={price?.toString()}
-              isTriggerVisible={isListed}
-            />
-          </ButtonDetailsWrapper>
-          <ButtonDetailsWrapper>
-            <MakeOfferModal
-              isNFTListed={isListed}
-              isTriggerVisible={Boolean(
-                !loadingOffers && !userMadeOffer,
-              )}
-            />
-          </ButtonDetailsWrapper>
-          <ButtonDetailsWrapper>
-            <MakeOfferModal
-              isOfferEditing
-              isNFTListed={isListed}
-              offerPrice={userMadeOffer?.price}
-              isTriggerVisible={Boolean(
-                !loadingOffers && userMadeOffer,
-              )}
-            />
-          </ButtonDetailsWrapper>
-          {!loadingOffers && userMadeOffer && (
-            <ButtonDetailsWrapper>
-              <CancelOfferModal
-                item={userMadeOffer?.item}
-                largeTriggerButton
-              />
-            </ButtonDetailsWrapper>
+    <ButtonListWrapper>
+      <ButtonDetailsWrapper>
+        <BuyNowModal
+          price={price?.toString()}
+          isTriggerVisible={isNonOwnerActionButtons && isListed}
+        />
+      </ButtonDetailsWrapper>
+      <ButtonDetailsWrapper>
+        <MakeOfferModal
+          isNFTListed={isListed}
+          isTriggerVisible={Boolean(
+            isNonOwnerActionButtons &&
+              !loadingOffers &&
+              !userMadeOffer,
           )}
-        </ButtonListWrapper>
+        />
+      </ButtonDetailsWrapper>
+      <ButtonDetailsWrapper>
+        <MakeOfferModal
+          isOfferEditing
+          isNFTListed={isListed}
+          offerPrice={userMadeOffer?.price}
+          isTriggerVisible={Boolean(
+            isNonOwnerActionButtons &&
+              !loadingOffers &&
+              userMadeOffer,
+          )}
+        />
+      </ButtonDetailsWrapper>
+      {isNonOwnerActionButtons && !loadingOffers && userMadeOffer && (
+        <ButtonDetailsWrapper>
+          <CancelOfferModal
+            item={userMadeOffer?.item}
+            largeTriggerButton
+          />
+        </ButtonDetailsWrapper>
       )}
-    </>
+    </ButtonListWrapper>
   );
 };
 
