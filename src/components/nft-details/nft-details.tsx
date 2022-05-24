@@ -50,6 +50,9 @@ export const NftDetails = () => {
   const recentlyCancelledItems = useSelector(
     (state: RootState) => state.marketplace.recentlyCancelledItems,
   );
+  const recentlyPurchasedTokens = useSelector(
+    (state: RootState) => state.marketplace.recentlyPurchasedTokens,
+  );
   const tokenListing = useSelector((state: RootState) => {
     if (
       !id ||
@@ -113,7 +116,13 @@ export const NftDetails = () => {
         },
       }),
     );
-  }, [dispatch, id, recentlyListedForSale, recentlyCancelledItems]);
+  }, [
+    dispatch,
+    id,
+    recentlyListedForSale,
+    recentlyCancelledItems,
+    recentlyPurchasedTokens,
+  ]);
 
   return (
     <Container>

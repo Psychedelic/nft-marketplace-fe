@@ -70,6 +70,7 @@ type InitialState = {
   tokenListing: Record<string, Listing>;
   tokenOffers: any[];
   recentlyMadeOffers: any[];
+  recentlyPurchasedTokens: any[];
 };
 
 const initialState: InitialState = {
@@ -80,6 +81,7 @@ const initialState: InitialState = {
   tokenListing: {},
   tokenOffers: [],
   recentlyMadeOffers: [],
+  recentlyPurchasedTokens: [],
 };
 
 export const marketplaceSlice = createSlice({
@@ -132,6 +134,11 @@ export const marketplaceSlice = createSlice({
       if (!action.payload) return;
 
       state.recentlyMadeOffers.push(action.payload);
+    });
+    builder.addCase(directBuy.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.recentlyPurchasedTokens.push(action.payload);
     });
   },
 });
