@@ -147,7 +147,8 @@
       "itemsLabel": "Items",
       "OwnersLabel": "Owners",
       "FloorPriceLabel": "Floor Price",
-      "rim": "Rim"
+      "rim": "Rim",
+      "totalVolume": "Total Volume"
     }
   },
   "logoAlts": {
