@@ -8,6 +8,7 @@ import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
+import { errorMessageHandler } from '../../../../utils/error';
 
 type DirectBuyProps = DefaultCallbacks & DirectBuy;
 
@@ -44,7 +45,14 @@ export const directBuy = createAsyncThunk<
       onFail: (res: any) => {
         throw res;
       },
-      onSuccess,
+      onSuccess: (res: any) => {
+        if ('Err' in res)
+          throw new Error(errorMessageHandler(res.Err));
+
+        if (typeof onSuccess !== 'function') return;
+
+        onSuccess();
+      },
     };
 
     const batchTxRes = await window.ic?.plug?.batchTransactions([
