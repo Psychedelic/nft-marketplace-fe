@@ -21,7 +21,7 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
 
     try {
       const nonFungibleContractAddress = Principal.fromText(
-        config.crownsCanisterId,
+        config.nftCollectionId,
       );
       const result = await actorInstance.getTokenListing(
         nonFungibleContractAddress,

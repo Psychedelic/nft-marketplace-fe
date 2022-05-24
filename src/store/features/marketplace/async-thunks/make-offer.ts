@@ -23,7 +23,7 @@ export const makeOffer = createAsyncThunk<
     config.marketplaceCanisterId,
   );
   const crownsContractAddress = Principal.fromText(
-    config.crownsCanisterId,
+    config.nftCollectionId,
   );
   const userOwnedTokenId = BigInt(id);
   const userOfferInPrice = parseAmountToE8S(amount);

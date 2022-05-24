@@ -7,17 +7,17 @@ export class KyasshuUrl {
     page,
     count,
   }: NSKyasshuUrl.GetNFTsQueryParams): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
   }
 
   static getNFTDetails({
     id,
   }: NSKyasshuUrl.GetNFTDetailsQueryParams): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nft/${id}`;
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/nft/${id}`;
   }
 
   static getFilterTraits(): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.crownsCanisterId}/data`;
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/data`;
   }
 
   static getCAPActivity({
@@ -32,7 +32,7 @@ export class KyasshuUrl {
   }
 
   static getCollectionData(): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/data`;
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/data`;
   }
 
   static getTokenTransactions({
@@ -41,8 +41,13 @@ export class KyasshuUrl {
     return `${config.kyasshuMarketplaceAPI}/cap/token/txns/${config.marketplaceCanisterId}/${tokenId}`;
   }
 
-  static getSearchResults({ sort, order, page, count }: NSKyasshuUrl.GetSearchQueryParams ): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.collectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
+  static getSearchResults({
+    sort,
+    order,
+    page,
+    count,
+  }: NSKyasshuUrl.GetSearchQueryParams): string {
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
   }
 }
 
