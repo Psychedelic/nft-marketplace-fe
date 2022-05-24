@@ -23,6 +23,7 @@ import {
   Flex,
   ContentFlex,
   SkeletonListWrapper,
+  ClearButton,
 } from './styles';
 
 export const CollectionItems = () => {
@@ -174,6 +175,19 @@ export const CollectionItems = () => {
                   />
                 ));
               })}
+              {Boolean(appliedFilters?.defaultFilters?.length) && (
+                <ClearButton
+                  onClick={() => {
+                    dispatch(filterActions.clearAllFilters());
+                    dispatch(
+                      settingsActions.setPriceApplyButton(false),
+                    );
+                    dispatch(filterActions.setMyNfts(false));
+                  }}
+                >{`${t(
+                  'translation:filters.clearAll',
+                )}`}</ClearButton>
+              )}
             </ContentFlex>
           </Flex>
         </ContentWrapper>
