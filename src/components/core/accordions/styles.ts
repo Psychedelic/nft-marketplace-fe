@@ -244,14 +244,14 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
     alignItems: 'center',
 
     '& span': {
-      margin: '0 0 0 10px',
+      margin: '0 0 0 5px',
       fontStyle: 'normal',
-      fontWeight: '800',
+      fontWeight: '500',
       fontSize: '16px',
       lineHeight: '19px',
       display: 'flex',
       alignItems: 'center',
-      color: '$checkboxSelectedFiltersText',
+      color: '$primary',
     },
   },
 
