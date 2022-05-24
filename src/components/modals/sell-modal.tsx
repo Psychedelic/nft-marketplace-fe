@@ -288,7 +288,7 @@ export const SellModal = ({
                     <ActionButton
                       type="primary"
                       onClick={handleListing}
-                      disabled={!amount}
+                      disabled={!amount || Number(amount) <= 0}
                     >
                       {t(
                         'translation:modals.buttons.completeListing',
