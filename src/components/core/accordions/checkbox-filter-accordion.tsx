@@ -11,6 +11,7 @@ import {
   AccordionTrigger,
   AccordionContent,
   Form,
+  ItemCount,
 } from './styles';
 import { Icon } from '../../icons';
 
@@ -75,7 +76,7 @@ export const CheckboxFilterAccordion = ({
         >
           <p>
             {checkboxData.key}
-            {traitsCount && <span>{`(${traitsCount})`}</span>}
+            {traitsCount && <ItemCount>{`(${traitsCount})`}</ItemCount>}
           </p>
 
           <Icon

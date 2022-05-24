@@ -24,6 +24,7 @@ import {
   OfferLabel,
   OfferPrice,
   MarketPrice,
+  ItemCount,
 } from './styles';
 import { NFTOffersTable } from '../../tables';
 import { Plug } from '../../plug';
@@ -334,6 +335,7 @@ export const OfferAccordion = ({
               <Icon icon="offer" paddingRight />
               <p>
                 {`${t('translation:accordions.offer.header.offer')}`}
+                <ItemCount>{`(${tokenOffers.length})`}</ItemCount>
               </p>
             </div>
             <Icon icon="chevron-up" rotate={isAccordionOpen} />
