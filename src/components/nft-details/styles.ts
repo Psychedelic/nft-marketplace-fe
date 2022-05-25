@@ -1,5 +1,6 @@
 import { styled } from '../../stitches.config';
 import { SkeletonBox } from '../core';
+import { VideoPreload } from '../video-preload';
 
 export const Container = styled('div', {
   width: '100%',
@@ -26,7 +27,7 @@ export const PreviewContainer = styled('div', {
   maxWidth: '480px',
 });
 
-export const Video = styled('video', {
+export const Video = styled(VideoPreload, {
   width: '100%',
   height: 'auto',
   borderRadius: '14px',
