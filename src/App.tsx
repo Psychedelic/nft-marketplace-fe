@@ -19,6 +19,8 @@ const App = () => {
   isDarkTheme(theme) && darkThemeGlobals();
   portalZIndexGlobals();
 
+  // TODO: check balanceOf API response to show Alerts
+
   return (
     <div className={themeObject} id={ThemeRootElement}>
       <BrowserRouter>
