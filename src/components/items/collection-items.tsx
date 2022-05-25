@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
@@ -42,7 +42,7 @@ export const CollectionItems = () => {
     totalVolume,
   } = useNFTSStore();
 
-  const { isConnected, principalId } = usePlugStore();
+  const { isConnected } = usePlugStore();
 
   const appliedFiltersCount =
     appliedFilters?.defaultFilters.length || 0;
@@ -130,7 +130,8 @@ export const CollectionItems = () => {
                     appliedFilters.isMyNfts &&
                     isConnected &&
                     !loadedNFTS.length &&
-                    principalId
+                    appliedFilter?.filterName ===
+                      t('translation:buttons.action.myNfts')
                   ) {
                     return;
                   }
@@ -170,14 +171,6 @@ export const CollectionItems = () => {
                   );
                 }
                 return appliedFilter.filterName.map((value) => {
-                  if (
-                    appliedFilters.isMyNfts &&
-                    isConnected &&
-                    !loadedNFTS.length &&
-                    principalId
-                  ) {
-                    return;
-                  }
                   return (
                     <FilteredTraitsChip
                       key={value}
@@ -196,8 +189,9 @@ export const CollectionItems = () => {
                   );
                 });
               })}
-              {Boolean(appliedFilters?.defaultFilters?.length) &&
-                !appliedFilters.isMyNfts && (
+
+              {/* If/else condition outside to render the button based on either condition, wrapped in a function */}
+              {Boolean(appliedFilters?.defaultFilters?.length) && (
                   <ClearButton
                     onClick={() => {
                       dispatch(filterActions.clearAllFilters());
