@@ -1,6 +1,7 @@
-import HoverVideoPlayer from 'react-hover-video-player';
 import { styled, keyframes } from '../../../../stitches.config';
+import { ImagePreload } from '../../../image-preload';
 import { NumberTooltip } from '../../../number-tooltip';
+import { VideoPreload } from '../../../video-preload';
 
 const overlaySpinner = keyframes({
   from: {
@@ -12,21 +13,7 @@ const overlaySpinner = keyframes({
 });
 
 export const CardContainer = styled('div', {
-  variants: {
-    disableAnimation: {
-      true: {
-        '&:hover': {
-          transform: 'unset',
-        },
-      },
-      false: {
-        transition: 'all 0.2s ease-in-out',
-        '&:hover': {
-          transform: 'scale(1.03)',
-        },
-      },
-    },
-  },
+  transition: 'all 0.2s ease-in-out',
 });
 
 export const CardWrapper = styled('div', {
@@ -49,6 +36,7 @@ export const CardWrapper = styled('div', {
 });
 
 export const MediaWrapper = styled('div', {
+  position: 'relative',
   minHeight: '175px',
   height: '175px',
   margin: '10px -15px',
@@ -64,24 +52,18 @@ export const PreviewDetails = styled('div', {
   height: '100%',
 });
 
-export const PreviewImage = styled('img', {
+export const PreviewImage = styled(ImagePreload, {
   width: '100%',
   height: '100%',
   objectFit: 'cover',
+  borderRadius: '0px',
 });
 
-export const VideoPlayer = styled(HoverVideoPlayer, {
-  height: '100%',
-  width: '100%',
-  video: {
-    height: '100%',
-  },
-});
-
-export const PreviewCardVideo = styled('video', {
+export const PreviewCardVideo = styled(VideoPreload, {
   height: '100%',
   width: '100%',
   objectFit: 'cover',
+  borderRadius: '0px',
 });
 
 export const VideoLoader = styled('div', {
@@ -169,5 +151,19 @@ export const NFTCardOptions = styled('div', {
 export const PriceInActionSheet = styled(NumberTooltip, {
   fontSize: '14px',
   fontWeight: '700',
+  color: '$mainTextColor',
+});
+
+export const HoverMessageContainer = styled('span', {
+  position: 'absolute',
+  bottom: '2px',
+  left: '2px',
+  right: '2px',
+  borderRadius: '4px',
+
+  textAlign: 'center',
+  fontSize: '10px',
+
+  backgroundColor: '$backgroundColor',
   color: '$mainTextColor',
 });

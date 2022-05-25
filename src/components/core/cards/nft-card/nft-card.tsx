@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CardOptionsDropdown } from '../../dropdown';
@@ -13,14 +13,8 @@ import {
   NftDataHeader,
   ActionDetails,
   NftDataText,
-  PreviewDetails,
-  VideoPlayer,
-  PreviewImage,
-  VideoLoader,
-  MediaWrapper,
   ActionText,
   PriceInActionSheet,
-  PreviewCardVideo,
 } from './styles';
 import wicpLogo from '../../../../assets/wicp.svg';
 import {
@@ -34,6 +28,7 @@ import { usePlugStore } from '../../../../store';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 import { NFTActionStatuses } from '../../../../constants/common';
 import { NumberTooltip } from '../../../number-tooltip';
+import { Media } from './media';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -190,10 +185,7 @@ export const NftCard = React.memo(
     const isForSale = data.status === 'forSale';
 
     return (
-      <CardContainer
-        disableAnimation={previewCard}
-        ref={containerRef}
-      >
+      <CardContainer ref={containerRef}>
         <CardWrapper>
           <RouterLink to={`/nft/${data.id}`} className="card-router">
             <Flex>
@@ -202,31 +194,12 @@ export const NftCard = React.memo(
               </OwnedCardText>
               <CardOptionsDropdown data={data} />
             </Flex>
-            <MediaWrapper>
-              {previewCard ? (
-                <PreviewCardVideo
-                  src={data.location}
-                  poster={data?.preview}
-                  autoPlay
-                  loop
-                />
-              ) : (
-                <VideoPlayer
-                  videoSrc={data.location}
-                  pausedOverlay={
-                    <PreviewDetails>
-                      <PreviewImage
-                        src={data?.preview}
-                        alt="nft-card"
-                      />
-                    </PreviewDetails>
-                  }
-                  loadingOverlay={<VideoLoader />}
-                  // Next line is a validation for null value
-                  hoverTarget={containerRef.current || undefined}
-                />
-              )}
-            </MediaWrapper>
+            <Media
+              containerRef={containerRef}
+              location={data?.location}
+              preview={data?.preview}
+              previewCard={previewCard}
+            />
             <Flex>
               <NftDataHeader>{data?.name}</NftDataHeader>
               <NftDataHeader>
@@ -250,7 +223,7 @@ export const NftCard = React.memo(
                   <>
                     <img src={wicpLogo} alt="" />
                     <NumberTooltip>
-                      {previewCardAmount ? previewCardAmount : ''}
+                      {previewCardAmount || ''}
                     </NumberTooltip>
                   </>
                 )}
