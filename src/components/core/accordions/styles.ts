@@ -264,7 +264,7 @@ export const AccordionContent = styled(Accordion.Content, {
   variants: {
     backgroundColor: {
       open: {
-        background: '$backgroundColor',
+        background: '$openAccordion',
       },
       notopen: {
         backgroundColor: 'white',
@@ -302,7 +302,8 @@ export const Description = styled('p', {
   fontSize: '16px',
   lineHeight: '19px',
   color: '#777E90',
-  margin: '15px 0 25px',
+  margin: '0',
+  padding: '15px 0 25px',
 });
 
 export const Flex = styled('div', {

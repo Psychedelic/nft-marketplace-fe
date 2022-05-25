@@ -237,7 +237,7 @@ export const EmptyStateMessage = styled('td', {
         fontSize: '16px',
         lineHeight: '19px',
         color: '$mainTextColor',
-        margin: '50px 25px',
+        padding: '50px 25px',
       },
       mediumTable: {
         fontWeight: '500',
