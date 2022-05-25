@@ -20,4 +20,11 @@ export const SkeletonBox = styled('div', {
   background: '$skeletonBackground',
   animation: `${fadeInOut} 1.2s linear infinite`,
   transitionTimingFunction: 'ease-in-out',
+  variants: {
+    type: {
+      small: {
+        width: '85px',
+      },
+    },
+  },
 });

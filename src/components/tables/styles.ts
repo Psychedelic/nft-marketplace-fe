@@ -84,6 +84,7 @@ export const TableWrapper = styled('div', {
                 lineHeight: '19px',
                 borderBottom: '1px solid $borderColor',
                 padding: '10px 20px',
+                minWidth: 'unset',
 
                 '&:first-child': {
                   paddingLeft: '20px',

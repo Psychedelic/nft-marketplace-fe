@@ -6,7 +6,13 @@ export type TableSkeletonProps = {
     showItemDetails?: boolean;
     showTypeDetails?: boolean;
     type?: any;
+    hideColumns?: boolean;
   };
+};
+
+export type TableStringsProps = {
+  type?: any;
+  hideColumns?: boolean;
 };
 
 export const ItemDetail = () => (
@@ -34,9 +40,12 @@ export const PriceDetail = () => (
   </td>
 );
 
-export const TableStrings = () => (
+export const TableStrings = ({
+  type,
+  hideColumns,
+}: TableStringsProps) => (
   <td>
-    <SkeletonBox />
+    <SkeletonBox type={!hideColumns ? type : undefined} />
   </td>
 );
 
@@ -45,15 +54,19 @@ const TableSkeletons = ({
     showItemDetails = true,
     showTypeDetails = true,
     type = 'large',
+    hideColumns,
   },
 }: TableSkeletonProps) => (
   <TableSkeletonsWrapper type={type} role="row">
     {showItemDetails && <ItemDetail />}
     {showTypeDetails && <TypeDetail />}
-    <TableStrings />
-    <TableStrings />
-    <TableStrings />
-    <TableStrings />
+    <TableStrings type={type} hideColumns={hideColumns} />
+    <TableStrings type={type} hideColumns={hideColumns} />
+    <TableStrings type={type} hideColumns={hideColumns} />
+    <TableStrings type={type} hideColumns={hideColumns} />
+    {hideColumns === false && (
+      <TableStrings type={type} hideColumns={hideColumns} />
+    )}
   </TableSkeletonsWrapper>
 );
 
