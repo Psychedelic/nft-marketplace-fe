@@ -8,6 +8,7 @@ const DefaultProps = {
   columns: 3,
   scrollThreshold: 300,
   rowSpacing: 1.2,
+  padding: 30,
 };
 
 export type VirtualizedGridProps<T extends object> = Partial<
@@ -30,6 +31,7 @@ export const VirtualizedGrid = <T extends object>({
   columns = DefaultProps.columns,
   scrollThreshold = DefaultProps.scrollThreshold,
   rowSpacing = DefaultProps.rowSpacing,
+  padding = DefaultProps.padding,
 }: VirtualizedGridProps<T>) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -67,7 +69,7 @@ export const VirtualizedGrid = <T extends object>({
 
   const row = useVirtual<HTMLDivElement, HTMLDivElement>({
     itemCount:
-      Math.ceil(items.length / colItems) + (loadingMore ? 1 : 0),
+      Math.ceil(items.length / colItems) + (loadingMore ? 2 : 0),
     itemSize: height,
   });
 
@@ -96,7 +98,7 @@ export const VirtualizedGrid = <T extends object>({
       const initialTop =
         scrollerReference.getBoundingClientRect().top;
       const topFullDistance =
-        initialTop + window.scrollY - headerOffset;
+        initialTop + window.scrollY - headerOffset - padding;
 
       // Scroll listener to update list scroll
       const updateListener = () => {
@@ -122,10 +124,15 @@ export const VirtualizedGrid = <T extends object>({
 
         const topThreshold = scrollThreshold / 4;
         // New offset of the scroller inside the wrapper
-        const offsetInWrapper = Math.max(
+        const minimalOffset = Math.max(
           currentWindowRelativeScroll - topThreshold,
           0,
         );
+        const realOffset =
+          wrapperReference.getBoundingClientRect().height -
+          scrollerReference.offsetHeight;
+
+        const offsetInWrapper = Math.min(minimalOffset, realOffset);
         scrollerReference.style.transform = `translateY(${offsetInWrapper}px)`;
       };
 
@@ -176,7 +183,8 @@ export const VirtualizedGrid = <T extends object>({
       <div
         style={{
           width: '100%',
-          padding: `30px 30px ${scrollThreshold / 2}px 30px`,
+          padding: `${padding}px`,
+          paddingBottom: `${scrollThreshold}px`,
           overflow: 'hidden',
         }}
         ref={(el) => {
@@ -207,15 +215,17 @@ export const VirtualizedGrid = <T extends object>({
                 >
                   {items[
                     getItemIndex(rowItem.index, colItem.index)
-                  ] ? (
+                  ] && (
                     <ItemRenderer
                       {...items[
                         getItemIndex(rowItem.index, colItem.index)
                       ]}
                     />
-                  ) : (
-                    loadingMore && <Skeleton />
                   )}
+                  {!items[
+                    getItemIndex(rowItem.index, colItem.index)
+                  ] &&
+                    loadingMore && <Skeleton />}
                 </div>
               ))}
             </Fragment>

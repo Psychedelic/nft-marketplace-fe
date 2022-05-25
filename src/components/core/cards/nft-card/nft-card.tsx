@@ -203,7 +203,10 @@ export const NftCard = React.memo(
               <CardOptionsDropdown data={data} />
             </Flex>
             <MediaWrapper>
-              {previewCard ? (
+              <PreviewDetails>
+                <PreviewImage src={data?.preview} alt="nft-card" />
+              </PreviewDetails>
+              {/* {previewCard ? (
                 <PreviewCardVideo
                   src={data.location}
                   poster={data?.preview}
@@ -225,7 +228,7 @@ export const NftCard = React.memo(
                   // Next line is a validation for null value
                   hoverTarget={containerRef.current || undefined}
                 />
-              )}
+              )} */}
             </MediaWrapper>
             <Flex>
               <NftDataHeader>{data?.name}</NftDataHeader>

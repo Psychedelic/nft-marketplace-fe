@@ -41,8 +41,6 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-table": "^7.7.0",
-    "@types/react-virtualized": "^9.21.21",
-    "@types/react-window-infinite-loader": "^1.0.6",
     "react-tsparticles": "^2.0.6",
     "tsparticles": "^2.0.6",
     "web-vitals": "^2.1.2"
