@@ -4,7 +4,7 @@ import { Icon } from '../icons';
 export const Container = styled('div', {
   // base styles
   position: 'fixed',
-  top: '0px',
+  top: '38px',
   left: '0px',
   right: '0px',
   display: 'flex',
