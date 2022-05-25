@@ -6,12 +6,14 @@ export interface SettingsState {
   collapsed: boolean;
   displayPriceApplyButton: boolean;
   previouslyVisitedPath: string;
+  showAlerts: boolean;
 }
 
 const initialState: SettingsState = {
   collapsed: true,
   displayPriceApplyButton: false,
   previouslyVisitedPath: '/',
+  showAlerts: true,
 };
 
 export const settingsSlice = createSlice({
@@ -29,6 +31,9 @@ export const settingsSlice = createSlice({
       action: PayloadAction<string>,
     ) => {
       state.previouslyVisitedPath = action.payload;
+    },
+    setAlerts: (state, action: PayloadAction<boolean>) => {
+      state.showAlerts = action.payload;
     },
   },
 });

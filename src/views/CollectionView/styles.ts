@@ -6,4 +6,13 @@ export const Container = styled('div', {
 
 export const CollectionWrapper = styled('div', {
   paddingTop: '72px',
+
+  // variants
+  variants: {
+    showAlerts: {
+      true: {
+        paddingTop: '110px',
+      },
+    },
+  },
 });

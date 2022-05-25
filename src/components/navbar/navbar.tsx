@@ -5,6 +5,7 @@ import {
   useThemeStore,
   themeActions,
   useAppDispatch,
+  useSettingsStore,
 } from '../../store';
 import { LinkButton } from '../core';
 import { GlobalSearch } from '../search';
@@ -27,6 +28,7 @@ export const NavBar = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
+  const { showAlerts } = useSettingsStore();
   const isLightTheme = theme === 'lightTheme';
 
   const changeThemeHandler = useCallback(() => {
@@ -40,7 +42,7 @@ export const NavBar = () => {
   useLocationResolver();
 
   return (
-    <Container>
+    <Container showAlerts={showAlerts}>
       <RouterLink to="/">
         <LogoContainer>
           <LogoIcon

@@ -10,6 +10,7 @@ import {
   ButtonDetailsWrapper,
 } from './styles';
 import { OfferTypeStatusCodes } from '../../constants/my-offers';
+import { useSettingsStore } from '../../store';
 
 /* --------------------------------------------------------------------------
  * Offers View Component
@@ -21,8 +22,10 @@ const OffersView = () => {
     OfferTypeStatusCodes.OffersReceived,
   );
 
+  const { showAlerts } = useSettingsStore();
+
   return (
-    <Container>
+    <Container showAlerts={showAlerts}>
       <TitleWrapper>
         <Title>{t('translation:offers.myOffers')}</Title>
         <ButtonListWrapper>
