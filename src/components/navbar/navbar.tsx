@@ -14,7 +14,6 @@ import {
   Container,
   LogoContainer,
   LogoIcon,
-  LogoName,
   ActionButtonsContainer,
 } from './styles';
 import { Icon } from '../icons';
@@ -39,9 +38,6 @@ export const NavBar = () => {
   }, [isLightTheme, dispatch]);
 
   useLocationResolver();
-
-  // TODO: show notification bar if there are any
-  // unfinished or failed transactions
 
   return (
     <Container>
