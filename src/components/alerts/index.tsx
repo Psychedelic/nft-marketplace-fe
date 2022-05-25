@@ -6,6 +6,7 @@ import {
   Message,
 } from './styles';
 import { Icon } from '../icons';
+import { WithdrawAssetsModal } from '../modals';
 
 /* --------------------------------------------------------------------------
  * Alerts Component
@@ -22,9 +23,7 @@ export const Alerts = () => {
           <Message>
             {t('translation:alerts.transactionsMessage')}
           </Message>
-          <Message clickable>
-            {t('translation:alerts.retryMessage')}
-          </Message>
+          <WithdrawAssetsModal />
         </MessageContainer>
       </AlertsWrapper>
     </AlertsContainer>
