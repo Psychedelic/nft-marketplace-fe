@@ -14,8 +14,8 @@ export const AlertsWrapper = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
   padding: '8px',
-  background: 'rgba(255, 215, 25, 0.15)',
-  color: '#987E00',
+  background: '$alertsBackground',
+  color: '$alertsTextColor',
 });
 
 export const MessageContainer = styled('div', {
@@ -27,14 +27,4 @@ export const Message = styled('div', {
   fontWeight: '500',
   lineHeight: '22px',
   marginLeft: '5px',
-
-  // variants
-  variants: {
-    clickable: {
-      true: {
-        textDecoration: 'underline',
-        cursor: 'pointer',
-      },
-    },
-  },
 });
