@@ -7,8 +7,8 @@ const DefaultProps = {
   headerOffset: 76,
   columns: 3,
   scrollThreshold: 300,
-  rowSpacing: 1.2,
-  padding: 30,
+  rowSpacing: 1.15,
+  padding: 15,
 };
 
 export type VirtualizedGridProps<T extends object> = Partial<
@@ -44,24 +44,25 @@ export const VirtualizedGrid = <T extends object>({
     const wrapperReference = wrapperRef.current;
     if (wrapperReference) {
       const resizeListener = () => {
-        const innerWidth =
-          wrapperReference.getBoundingClientRect().width -
-          2 * padding;
+        const wrapperWidth =
+          wrapperReference.getBoundingClientRect().width;
 
-        let newColItems = Math.floor(innerWidth / width);
+        let newColItems = Math.floor(wrapperWidth / width);
 
         const getSpacingCoefficient = () =>
-          (innerWidth - width * newColItems) /
+          (wrapperWidth - width * newColItems) /
           (newColItems - 1) /
           width;
 
         let newSpacingCoefficient = getSpacingCoefficient();
 
-        if (newSpacingCoefficient * innerWidth < 100) {
+        if (
+          (newSpacingCoefficient * wrapperWidth) / newColItems <
+          padding
+        ) {
           newColItems -= 1;
           newSpacingCoefficient = getSpacingCoefficient();
         }
-
         setColItems(newColItems);
         setSpacingCoefficient(newSpacingCoefficient + 1);
       };
@@ -196,7 +197,8 @@ export const VirtualizedGrid = <T extends object>({
     >
       <div
         style={{
-          width: `calc(100% - ${padding * 2}px)`,
+          width: `100%`,
+          margin: `-${padding}px`,
           padding: `${padding}px`,
           paddingBottom: `${scrollThreshold}px`,
           overflow: 'hidden',
