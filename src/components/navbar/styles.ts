@@ -4,7 +4,7 @@ import { Icon } from '../icons';
 export const Container = styled('div', {
   // base styles
   position: 'fixed',
-  top: '38px',
+  top: '0px',
   left: '0px',
   right: '0px',
   display: 'flex',
@@ -14,6 +14,15 @@ export const Container = styled('div', {
   backgroundColor: '$navBackgroundColor',
   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.08)',
   zIndex: 2,
+
+  // variants
+  variants: {
+    showAlerts: {
+      true: {
+        top: '38px',
+      },
+    },
+  },
 });
 
 export const LogoContainer = styled('div', {
