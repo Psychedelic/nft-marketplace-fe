@@ -41,6 +41,9 @@ export const NavBar = () => {
 
   useLocationResolver();
 
+  // TODO: show notification bar if there are any
+  // unfinished or failed transactions
+
   return (
     <Container>
       <RouterLink to="/">
