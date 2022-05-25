@@ -45,18 +45,25 @@ export const VirtualizedGrid = <T extends object>({
     if (wrapperReference) {
       const resizeListener = () => {
         const innerWidth =
-          wrapperReference.getBoundingClientRect().width;
+          wrapperReference.getBoundingClientRect().width -
+          2 * padding;
 
-        const newColItems = Math.floor(innerWidth / width);
+        let newColItems = Math.floor(innerWidth / width);
 
-        const newSpacingCoefficient =
-          1 +
+        const getSpacingCoefficient = () =>
           (innerWidth - width * newColItems) /
-            (newColItems - 1) /
-            width;
+          (newColItems - 1) /
+          width;
+
+        let newSpacingCoefficient = getSpacingCoefficient();
+
+        if (newSpacingCoefficient * innerWidth < 100) {
+          newColItems -= 1;
+          newSpacingCoefficient = getSpacingCoefficient();
+        }
 
         setColItems(newColItems);
-        setSpacingCoefficient(newSpacingCoefficient);
+        setSpacingCoefficient(newSpacingCoefficient + 1);
       };
       resizeListener();
 
@@ -66,6 +73,8 @@ export const VirtualizedGrid = <T extends object>({
       };
     }
   }, [wrapperRef, width]);
+
+  console.log(colItems, spacingCoefficient);
 
   const row = useVirtual<HTMLDivElement, HTMLDivElement>({
     itemCount:
@@ -179,10 +188,15 @@ export const VirtualizedGrid = <T extends object>({
   ]);
 
   return (
-    <div ref={wrapperRef}>
+    <div
+      ref={wrapperRef}
+      style={{
+        width: `100%`,
+      }}
+    >
       <div
         style={{
-          width: '100%',
+          width: `calc(100% - ${padding * 2}px)`,
           padding: `${padding}px`,
           paddingBottom: `${scrollThreshold}px`,
           overflow: 'hidden',
