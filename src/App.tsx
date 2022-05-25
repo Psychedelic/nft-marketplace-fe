@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { NavBar, ToastHandler } from './components';
+import { NavBar, ToastHandler, Alerts } from './components';
 import CollectionView from './views/CollectionView';
 import NFTView from './views/NFTView';
 import OfferView from './views/OffersView';
@@ -22,6 +22,7 @@ const App = () => {
   return (
     <div className={themeObject} id={ThemeRootElement}>
       <BrowserRouter>
+        <Alerts />
         <NavBar />
         <Routes>
           <Route path="/" element={<CollectionView />}>
