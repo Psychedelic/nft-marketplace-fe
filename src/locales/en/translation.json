@@ -278,5 +278,9 @@
   },
   "successMessages": {
     "copyToClipboard": "Copied to clipboard!"
+  },
+  "alerts": {
+    "transactionsMessage": "You have unfinished or failed transactions,",
+    "retryMessage": "click here to retry."
   }
 }
