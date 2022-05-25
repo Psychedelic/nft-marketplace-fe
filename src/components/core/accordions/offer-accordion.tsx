@@ -128,23 +128,21 @@ const OnConnected = ({
     recentlyCancelledOffers,
   ]);
 
-  const isNonOwnerActionButtons = !isOwner && showNFTActionButtons;
+  const showNonOwnerButtons = !isOwner && showNFTActionButtons;
 
   return (
     <ButtonListWrapper>
       <ButtonDetailsWrapper>
         <BuyNowModal
           price={price?.toString()}
-          isTriggerVisible={isNonOwnerActionButtons && isListed}
+          isTriggerVisible={showNonOwnerButtons && isListed}
         />
       </ButtonDetailsWrapper>
       <ButtonDetailsWrapper>
         <MakeOfferModal
           isNFTListed={isListed}
           isTriggerVisible={Boolean(
-            isNonOwnerActionButtons &&
-              !loadingOffers &&
-              !userMadeOffer,
+            showNonOwnerButtons && !loadingOffers && !userMadeOffer,
           )}
         />
       </ButtonDetailsWrapper>
@@ -154,13 +152,11 @@ const OnConnected = ({
           isNFTListed={isListed}
           offerPrice={userMadeOffer?.price}
           isTriggerVisible={Boolean(
-            isNonOwnerActionButtons &&
-              !loadingOffers &&
-              userMadeOffer,
+            showNonOwnerButtons && !loadingOffers && userMadeOffer,
           )}
         />
       </ButtonDetailsWrapper>
-      {isNonOwnerActionButtons && !loadingOffers && userMadeOffer && (
+      {showNonOwnerButtons && !loadingOffers && userMadeOffer && (
         <ButtonDetailsWrapper>
           <CancelOfferModal
             item={userMadeOffer?.item}
