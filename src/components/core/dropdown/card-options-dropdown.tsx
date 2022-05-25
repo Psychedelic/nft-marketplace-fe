@@ -8,6 +8,7 @@ import {
   DropdownMenuItem,
   DropdownGroup,
   DropdownButtonContainer,
+  EllipsisIcon,
 } from './styles';
 import { NFTMetadata } from '../../../declarations/legacy';
 import { Icon } from '../../icons';
@@ -45,7 +46,7 @@ export const CardOptionsDropdown = ({
         onClick={(e) => e.preventDefault()}
       >
         <DropdownButtonContainer>
-          <Icon icon="ellipsis" />
+          <EllipsisIcon icon="ellipsis" />
         </DropdownButtonContainer>
       </DropdownMenu.Trigger>
 
