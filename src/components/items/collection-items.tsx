@@ -81,6 +81,28 @@ export const CollectionItems = () => {
   // TODO: Add loader when collection data or floor price
   // details are loading
 
+  const displayClearButton = () => {
+    if (
+      appliedFilters.isMyNfts &&
+      isConnected &&
+      !loadedNFTS.length &&
+      appliedFilters.defaultFilters.length === 1
+    )
+      return;
+
+    if (appliedFilters?.defaultFilters?.length) {
+      return (
+        <ClearButton
+          onClick={() => {
+            dispatch(filterActions.clearAllFilters());
+            dispatch(settingsActions.setPriceApplyButton(false));
+            dispatch(filterActions.setMyNfts(false));
+          }}
+        >{`${t('translation:filters.clearAll')}`}</ClearButton>
+      );
+    }
+  };
+
   return (
     <Container>
       <FilteredContainer>
@@ -132,9 +154,8 @@ export const CollectionItems = () => {
                     !loadedNFTS.length &&
                     appliedFilter?.filterName ===
                       t('translation:buttons.action.myNfts')
-                  ) {
+                  )
                     return;
-                  }
                   return (
                     <FilteredTraitsChip
                       key={appliedFilter.filterName}
@@ -189,21 +210,7 @@ export const CollectionItems = () => {
                   );
                 });
               })}
-
-              {/* If/else condition outside to render the button based on either condition, wrapped in a function */}
-              {Boolean(appliedFilters?.defaultFilters?.length) && (
-                  <ClearButton
-                    onClick={() => {
-                      dispatch(filterActions.clearAllFilters());
-                      dispatch(
-                        settingsActions.setPriceApplyButton(false),
-                      );
-                      dispatch(filterActions.setMyNfts(false));
-                    }}
-                  >{`${t(
-                    'translation:filters.clearAll',
-                  )}`}</ClearButton>
-                )}
+              {displayClearButton()}
             </ContentFlex>
           </Flex>
         </ContentWrapper>
