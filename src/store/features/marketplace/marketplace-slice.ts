@@ -72,6 +72,7 @@ type InitialState = {
   tokenListing: Record<string, Listing>;
   tokenOffers: any[];
   recentlyMadeOffers: any[];
+  recentlyWithdrawnAssets: any[];
 };
 
 const initialState: InitialState = {
@@ -82,6 +83,7 @@ const initialState: InitialState = {
   tokenListing: {},
   tokenOffers: [],
   recentlyMadeOffers: [],
+  recentlyWithdrawnAssets: [],
 };
 
 export const marketplaceSlice = createSlice({
@@ -134,6 +136,11 @@ export const marketplaceSlice = createSlice({
       if (!action.payload) return;
 
       state.recentlyMadeOffers.push(action.payload);
+    });
+    builder.addCase(withdrawFungible.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.recentlyWithdrawnAssets.push(action.payload);
     });
   },
 });
