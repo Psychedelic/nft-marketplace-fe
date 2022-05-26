@@ -8,4 +8,5 @@ export enum ListingStatusCodes {
   Accepted = 'accepted',
   CancelOffer = 'cancelOffer',
   WithdrawInfo = 'withdrawInfo',
+  Completed = 'completed',
 }

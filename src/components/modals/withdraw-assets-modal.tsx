@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton, Pending } from '../core';
+import { ActionButton, Pending, Completed } from '../core';
 import wicpIcon from '../../assets/wicp.svg';
 import {
   WithdrawModalTrigger,
@@ -13,7 +13,6 @@ import {
   SaleContentWrapper,
   ItemDetailsWrapper,
   ItemDetails,
-  ItemStatus,
   ItemLogo,
   ItemName,
   ModalButtonsList,
@@ -39,7 +38,7 @@ export const WithdrawAssetsModal = () => {
   const dispatch = useAppDispatch();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
-  // Cancel offer modal steps: cancelOffer/pending
+  // Withdraw Assets modal steps: withdrawInfo/pending/completed
   const [modalStep, setModalStep] = useState<string>(
     ListingStatusCodes.WithdrawInfo,
   );
@@ -71,7 +70,7 @@ export const WithdrawAssetsModal = () => {
       marketplaceActions.withdrawFungible({
         principalId: assetsToWithdraw[0].principalId,
         onSuccess: () => {
-          setModalOpened(false);
+          setModalStep(ListingStatusCodes.Completed);
         },
         onFailure: () => {
           setModalStep(ListingStatusCodes.WithdrawInfo);
@@ -207,6 +206,46 @@ export const WithdrawAssetsModal = () => {
             ---------------------------------
           */}
               <Pending />
+            </Container>
+          )}
+          {/*
+          ---------------------------------
+          Step: 3 -> completed
+          ---------------------------------
+        */}
+          {modalStep === ListingStatusCodes.Completed && (
+            <Container>
+              {/*
+              ---------------------------------
+              Confirmed Header
+              ---------------------------------
+            */}
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.withdrawalSuccess')}
+                </ModalTitle>
+              </ModalHeader>
+              {/*
+              ---------------------------------
+              Confirmed details
+              ---------------------------------
+            */}
+              <Completed />
+              {/*
+              ---------------------------------
+              Confirmed Action Buttons
+              ---------------------------------
+            */}
+              <ModalButtonsList>
+                <ModalButtonWrapper fullWidth>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.close')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
             </Container>
           )}
         </ModalContent>
