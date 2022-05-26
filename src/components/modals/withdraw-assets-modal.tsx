@@ -22,7 +22,11 @@ import {
 
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
-import { useSettingsStore } from '../../store';
+import {
+  useSettingsStore,
+  useAppDispatch,
+  marketplaceActions,
+} from '../../store';
 import { ListingStatusCodes } from '../../constants/listing';
 import { AppLog } from '../../utils/log';
 
@@ -32,6 +36,7 @@ import { AppLog } from '../../utils/log';
 
 export const WithdrawAssetsModal = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Cancel offer modal steps: cancelOffer/pending
@@ -61,6 +66,18 @@ export const WithdrawAssetsModal = () => {
     }
 
     setModalStep(ListingStatusCodes.Pending);
+
+    dispatch(
+      marketplaceActions.withdrawFungible({
+        principalId: assetsToWithdraw[0].principalId,
+        onSuccess: () => {
+          setModalOpened(false);
+        },
+        onFailure: () => {
+          setModalStep(ListingStatusCodes.WithdrawInfo);
+        },
+      }),
+    );
   };
 
   return (
