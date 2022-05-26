@@ -296,3 +296,19 @@ export const parseGetCollectionsResponse = (data: Array<any>) => {
 
   return parsed;
 };
+
+// TODO: update data type while using collection details
+export const parseBalanceResponse = (data: Array<any>) => {
+  const parsed = data.reduce((accParent, currParent) => {
+    const assetsToWithdraw: any = {
+      principalId: Principal.fromUint8Array(
+        currParent[0]._arr,
+      ).toString(),
+      amount: parseE8SAmountToWICP(currParent[1]),
+    };
+
+    return [...accParent, assetsToWithdraw];
+  }, [] as Array<any>);
+
+  return parsed;
+};
