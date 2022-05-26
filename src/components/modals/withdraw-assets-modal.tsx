@@ -22,6 +22,7 @@ import {
 
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
+import { useSettingsStore } from '../../store';
 
 /* --------------------------------------------------------------------------
  * Withdraw Assets Modal Component
@@ -31,6 +32,8 @@ export const WithdrawAssetsModal = () => {
   const { t } = useTranslation();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
+
+  const { assetsToWithdraw } = useSettingsStore();
 
   const handleModalOpen = (modalOpenedStatus: boolean) => {
     setModalOpened(modalOpenedStatus);
@@ -97,17 +100,18 @@ export const WithdrawAssetsModal = () => {
               ---------------------------------
             */}
             <SaleContentWrapper>
-              <ItemDetailsWrapper type="withdraw">
-                <ItemDetails>
-                  <ItemLogo
-                    src={wicpIcon}
-                    alt="wicp"
-                    withoutBorderRadius
-                  />
-                  <ItemName>40.21 WICP</ItemName>
-                </ItemDetails>
-                <ItemStatus>Cancelled Offer</ItemStatus>
-              </ItemDetailsWrapper>
+              {assetsToWithdraw?.map((asset) => (
+                <ItemDetailsWrapper type="withdraw">
+                  <ItemDetails>
+                    <ItemLogo
+                      src={wicpIcon}
+                      alt="wicp"
+                      withoutBorderRadius
+                    />
+                    <ItemName>{asset.amount} WICP</ItemName>
+                  </ItemDetails>
+                </ItemDetailsWrapper>
+              ))}
             </SaleContentWrapper>
             {/*
               ---------------------------------
