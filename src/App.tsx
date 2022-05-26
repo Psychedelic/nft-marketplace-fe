@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { NavBar, ToastHandler, Alerts } from './components';
 import CollectionView from './views/CollectionView';
 import NFTView from './views/NFTView';
@@ -15,6 +16,7 @@ import {
   useAppDispatch,
   usePlugStore,
   marketplaceActions,
+  RootState,
 } from './store';
 
 const App = () => {
@@ -26,6 +28,10 @@ const App = () => {
   isDarkTheme(theme) && darkThemeGlobals();
   portalZIndexGlobals();
 
+  const recentlyWithdrawnAssets = useSelector(
+    (state: RootState) => state.marketplace.recentlyWithdrawnAssets,
+  );
+
   useEffect(() => {
     if (!isConnected || !plugPrincipal) return;
 
@@ -34,7 +40,7 @@ const App = () => {
         userPrincipalId: plugPrincipal,
       }),
     );
-  }, [dispatch, isConnected, plugPrincipal]);
+  }, [dispatch, isConnected, plugPrincipal, recentlyWithdrawnAssets]);
 
   return (
     <div className={themeObject} id={ThemeRootElement}>
