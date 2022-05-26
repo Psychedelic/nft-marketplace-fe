@@ -54,7 +54,7 @@ export const NftList = () => {
   const { sortBy } = useFilterStore();
 
   const loadMoreNFTS = () => {
-    if (loadingNFTs || !hasMoreNFTs) return;
+    if (loadingNFTs || !hasMoreNFTs || nextPageNo <= 0) return;
 
     dispatch(
       nftsActions.getNFTs({
@@ -115,7 +115,7 @@ export const NftList = () => {
   return (
     <InfiniteScroll
       pageStart={0}
-      loadMore={nextPageNo > 0 ? loadMoreNFTS : () => undefined}
+      loadMore={loadMoreNFTS}
       hasMore={hasMoreNFTs}
       useWindow
       threshold={500}
