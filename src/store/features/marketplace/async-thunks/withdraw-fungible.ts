@@ -26,7 +26,7 @@ export const withdrawFungible = createAsyncThunk<
   const { onSuccess, onFailure, principalId } = params;
 
   try {
-    const fungibleStandard = 'DIP20';
+    const fungibleStandard = { DIP20: null };
     const principalAddress = Principal.fromText(principalId);
 
     const withdrawResponse = await actorInstance.withdrawFungible(
