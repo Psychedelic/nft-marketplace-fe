@@ -7,4 +7,5 @@ export enum ListingStatusCodes {
   OfferInfo = 'offerInfo',
   Accepted = 'accepted',
   CancelOffer = 'cancelOffer',
+  WithdrawInfo = 'withdrawInfo',
 }
