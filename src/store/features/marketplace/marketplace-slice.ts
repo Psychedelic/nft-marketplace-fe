@@ -17,6 +17,7 @@ import {
   getFloorPrice,
   getCollections,
   getAssetsToWithdraw,
+  withdrawFungible,
 } from './async-thunks';
 
 export type MakeListing = {
@@ -151,6 +152,7 @@ export const marketplaceActions = {
   getFloorPrice,
   getCollections,
   getAssetsToWithdraw,
+  withdrawFungible,
 };
 
 export default marketplaceSlice.reducer;
