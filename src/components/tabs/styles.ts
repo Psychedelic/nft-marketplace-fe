@@ -69,3 +69,9 @@ export const TabsContentWrapper = styled('div', {
     borderTop: '1px solid $borderColor',
   },
 });
+
+export const TabsContent = styled(Tabs.Content, {
+  '&:focus': {
+    outline: 'none',
+  },
+});
