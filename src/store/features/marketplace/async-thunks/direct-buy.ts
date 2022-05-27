@@ -32,7 +32,7 @@ export const directBuy = createAsyncThunk<
 
   try {
     // default allowance amount
-    let allowanceAmount = BigInt(9_223_372_036_854_775_807);
+    let allowanceAmount = BigInt(0);
 
     if (sumOfUserAllowance && price) {
       const calculatedAllowance = sumOfUserAllowance + Number(price);

@@ -33,7 +33,7 @@ export const makeOffer = createAsyncThunk<
   const userOfferInPrice = parseAmountToE8S(amount);
 
   // default allowance amount
-  let allowanceAmount = BigInt(9_223_372_036_854_775_807);
+  let allowanceAmount = BigInt(0);
 
   if (sumOfUserAllowance && amount) {
     const calculatedAllowance = sumOfUserAllowance + Number(amount);
