@@ -13,53 +13,59 @@ export type VideoPreloadProps = React.ComponentProps<
   typeof VideoPreloadStyles
 >;
 
-export const VideoPreload = forwardRef<
-  HTMLVideoElement,
-  VideoPreloadProps
->(({ src, ...props }, ref) => {
-  const [loaded, setLoaded] = useState(false);
-  const [videoBlob, setVideoBlob] = useState<Blob>();
+export const VideoPreload = React.memo(
+  forwardRef<HTMLVideoElement, VideoPreloadProps>(
+    ({ src, ...props }, ref) => {
+      const [loaded, setLoaded] = useState(false);
+      const [videoBlob, setVideoBlob] = useState<Blob>();
 
-  useMemo(() => {
-    if (src) {
-      const blob = VideoCache.get(src);
+      useMemo(() => {
+        if (src) {
+          const blob = VideoCache.get(src);
 
-      if (!blob) {
-        VideoCache.store(src)
-          .then((newBlob) => {
+          if (!blob) {
+            VideoCache.store(src)
+              .then((newBlob) => {
+                setLoaded(true);
+                setVideoBlob(newBlob);
+              })
+              .catch((err) =>
+                AppLog.warn('Failed to load video', err),
+              );
+          } else {
             setLoaded(true);
-            setVideoBlob(newBlob);
-          })
-          .catch((err) => AppLog.warn('Failed to load video', err));
-      } else {
-        setLoaded(true);
-        setVideoBlob(blob);
+            setVideoBlob(blob);
+          }
+        }
+      }, [src, setLoaded]);
+
+      if (!loaded && !props.poster) {
+        return (
+          <SkeletonBox
+            style={props.style}
+            className={props.className}
+          />
+        );
       }
-    }
-  }, [src, setLoaded]);
 
-  if (!loaded && !props.poster) {
-    return (
-      <SkeletonBox style={props.style} className={props.className} />
-    );
-  }
-
-  return (
-    <VideoPreloadContainer
-      style={props.style}
-      className={props.className}
-    >
-      <VideoPreloadStyles
-        src={videoBlob && window.URL.createObjectURL(videoBlob)}
-        {...props}
-        ref={ref}
-      />
-      {(!loaded || !videoBlob) && (
-        <VideoPreloadSpinner
-          icon="spinner"
-          extraIconProps={{ size: '60px' }}
-        />
-      )}
-    </VideoPreloadContainer>
-  );
-});
+      return (
+        <VideoPreloadContainer
+          style={props.style}
+          className={props.className}
+        >
+          <VideoPreloadStyles
+            src={videoBlob && window.URL.createObjectURL(videoBlob)}
+            {...props}
+            ref={ref}
+          />
+          {(!loaded || !videoBlob) && (
+            <VideoPreloadSpinner
+              icon="spinner"
+              extraIconProps={{ size: '60px' }}
+            />
+          )}
+        </VideoPreloadContainer>
+      );
+    },
+  ),
+);
