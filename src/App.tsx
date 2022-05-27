@@ -6,11 +6,7 @@ import CollectionView from './views/CollectionView';
 import NFTView from './views/NFTView';
 import OfferView from './views/OffersView';
 import { useTheme } from './hooks/use-theme';
-import {
-  darkThemeGlobals,
-  isDarkTheme,
-  portalZIndexGlobals,
-} from './utils/styles';
+import { portalZIndexGlobals } from './utils/styles';
 import { ThemeRootElement } from './constants/common';
 import {
   useAppDispatch,
@@ -18,6 +14,7 @@ import {
   marketplaceActions,
   RootState,
 } from './store';
+import { useThemeGlobals } from './hooks';
 import { useBuyerOffers } from './hooks/use-buyer-offers';
 
 const App = () => {
@@ -25,8 +22,7 @@ const App = () => {
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
   const [theme, themeObject] = useTheme();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  isDarkTheme(theme) && darkThemeGlobals();
+  useThemeGlobals(theme);
   portalZIndexGlobals();
 
   const recentlyWithdrawnAssets = useSelector(
