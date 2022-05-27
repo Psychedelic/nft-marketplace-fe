@@ -25,10 +25,12 @@ import { FaInfoCircle } from '@react-icons/all-files/fa/FaInfoCircle';
 import { FaSearch } from '@react-icons/all-files/fa/FaSearch';
 import { GoVerified } from '@react-icons/all-files/go/GoVerified';
 import { FaRegHandPaper } from '@react-icons/all-files/fa/FaRegHandPaper';
+import { IoWarningOutline } from '@react-icons/all-files/io5/IoWarningOutline';
 
 import { PlugIcon, AppNameIcon, SpinnerIcon } from './custom';
 
 export const Icons = {
+  warningOutline: IoWarningOutline,
   activity: FiActivity,
   grid: FiGrid,
   moon: FaMoon,

@@ -43,7 +43,9 @@ export const {
       success: '#00AC7C',
       modalText: '#767D8E',
       toastBackground: '#ffffff',
-      iconGrey: '#767D8F'
+      iconGrey: '#767D8F',
+      lightYellow: '#ffd71926',
+      paleYellow: '#987E00',
     },
     space: {},
     fonts: {},

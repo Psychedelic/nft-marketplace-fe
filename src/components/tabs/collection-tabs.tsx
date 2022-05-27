@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import * as Tabs from '@radix-ui/react-tabs';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
@@ -9,6 +8,7 @@ import {
   TabsTrigger,
   TabsList,
   TabsContentWrapper,
+  TabsContent,
 } from './styles';
 import { Filters } from '../filters';
 import { Icon } from '../icons';
@@ -54,15 +54,15 @@ export const CollectionTabs = () => {
           {t('translation:tabs.activity')}
         </TabsTrigger>
       </TabsList>
-      <Tabs.Content value="items">
+      <TabsContent value="items">
         <TabsContentWrapper>
           <Filters />
           <CollectionItems />
         </TabsContentWrapper>
-      </Tabs.Content>
-      <Tabs.Content value="activity">
+      </TabsContent>
+      <TabsContent value="activity">
         <ActivityTable />
-      </Tabs.Content>
+      </TabsContent>
     </TabsRoot>
   );
 };

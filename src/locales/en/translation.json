@@ -203,7 +203,9 @@
       "cancelOffer": "Cancel Offer",
       "acceptOffer": "Accept Offer",
       "offerAccepted": "Offer Accepted!",
-      "editOffer": "Edit Offer"
+      "editOffer": "Edit Offer",
+      "withdrawAssets": "Withdraw Assets",
+      "withdrawalSuccess": "Withdrawal Success"
     },
     "description": {
       "makeListing": "Enter the sale price you want for your NFT.",
@@ -216,7 +218,8 @@
       "cancelListing": "Are you sure you want to cancel the listing?",
       "cancelOffer": "Are you sure you want to cancel this Offer?",
       "acceptOffer": "Review the following offer and accept the bid.",
-      "offerAccepted": "Congrats, you successfully accepted an offer."
+      "offerAccepted": "Congrats, you successfully accepted an offer.",
+      "withdrawAssets": "The following fungible balances remain in the canister due to an error completing a transaction. Review the assets and click retry to receive them."
     },
     "labels": {
       "listingFee": "Listing Fee",
@@ -235,7 +238,9 @@
       "cancelListing": "Cancel Listing",
       "cancelOffer": "Cancel Offer",
       "acceptOffer": "Accept Offer",
-      "done": "Done"
+      "done": "Done",
+      "retryAll": "Retry All",
+      "close": "Close"
     }
   },
   "nftCard": {
@@ -278,6 +283,10 @@
   },
   "successMessages": {
     "copyToClipboard": "Copied to clipboard!"
+  },
+  "alerts": {
+    "transactionsMessage": "You have unfinished or failed transactions,",
+    "retryMessage": "click here to retry."
   }
 }
 

@@ -5,16 +5,17 @@ import {
   useThemeStore,
   themeActions,
   useAppDispatch,
+  useSettingsStore,
 } from '../../store';
 import { LinkButton } from '../core';
 import { GlobalSearch } from '../search';
 import { Plug } from '../plug';
 import jelly from '../../assets/jelly-full-image.svg';
+import jellyDark from '../../assets/jelly-full-image-dark.svg';
 import {
   Container,
   LogoContainer,
   LogoIcon,
-  LogoName,
   ActionButtonsContainer,
 } from './styles';
 import { Icon } from '../icons';
@@ -28,6 +29,7 @@ export const NavBar = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
+  const { showAlerts } = useSettingsStore();
   const isLightTheme = theme === 'lightTheme';
 
   const changeThemeHandler = useCallback(() => {
@@ -41,11 +43,11 @@ export const NavBar = () => {
   useLocationResolver();
 
   return (
-    <Container>
+    <Container showAlerts={showAlerts}>
       <RouterLink to="/">
         <LogoContainer>
           <LogoIcon
-            src={jelly}
+            src={isLightTheme ? jelly : jellyDark}
             alt={t('translation:common.collectionName')}
           />
         </LogoContainer>
