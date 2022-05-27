@@ -16,6 +16,7 @@ export interface TableLayoutProps {
     showItemDetails?: boolean;
     showTypeDetails?: boolean;
     type?: string;
+    hideColumns?: boolean;
   };
   loadingTableRows?: boolean;
   emptyMessage?: string;

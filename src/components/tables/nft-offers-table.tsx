@@ -45,6 +45,7 @@ export const NFTOffersTable = ({
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
+  const [hideColumns, setHideColumn] = useState<boolean>(false);
 
   const [tableDetails, setTableDetails] = useState<NFTTableDetails>({
     loadedOffers: [],
@@ -70,6 +71,7 @@ export const NFTOffersTable = ({
   useEffect(() => {
     if (!isConnectedOwner && !columnsToHide.includes('action')) {
       setColumnsToHide((oldColumns) => [...oldColumns, 'action']);
+      setHideColumn(true);
 
       return;
     }
@@ -79,6 +81,7 @@ export const NFTOffersTable = ({
     );
 
     setColumnsToHide(newColumnsToHide);
+    setHideColumn(false);
   }, [isConnectedOwner]);
 
   useEffect(() => {
@@ -206,6 +209,7 @@ export const NFTOffersTable = ({
               showItemDetails: false,
               showTypeDetails: false,
               type: 'small',
+              hideColumns,
             }}
           />
         </Container>
