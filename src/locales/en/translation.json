@@ -247,8 +247,7 @@
     "sell": "Sell",
     "price": "Price",
     "lastSale": "Last sale",
-    "changePrice": "Edit",
-    "hoverToPreview": "Keep hovering to start the preview"
+    "changePrice": "Edit"
   },
   "tabs": {
     "items": "Items",

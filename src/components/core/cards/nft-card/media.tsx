@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { VideoCache } from '../../../../utils/video-cache';
 import {
-  HoverMessageContainer,
   MediaWrapper,
   PreviewCardVideo,
   PreviewDetails,
@@ -13,7 +12,7 @@ export type MediaProps = {
   previewCard?: boolean;
   location?: string;
   preview?: string;
-  hoverStartDelay?: number;
+  videoLoadDelay?: number;
   containerRef: React.RefObject<HTMLDivElement>;
 };
 
@@ -21,10 +20,9 @@ export const Media = ({
   location = '',
   preview,
   containerRef,
-  hoverStartDelay = 1500,
+  videoLoadDelay = 500,
   previewCard,
 }: MediaProps): JSX.Element => {
-  const { t } = useTranslation();
   const [previewTriggered, setPreviewTriggered] =
     useState(previewCard);
   const [startedHovering, setStartedHovering] = useState(false);
@@ -34,10 +32,15 @@ export const Media = ({
       let triggerTimeout: NodeJS.Timeout;
       const hoverInCallback = () => {
         setStartedHovering(true);
+
+        if (location !== '' && VideoCache.get(location)) {
+          return setPreviewTriggered(true);
+        }
+
         if (!previewTriggered) {
           triggerTimeout = setTimeout(() => {
             setPreviewTriggered(true);
-          }, hoverStartDelay);
+          }, videoLoadDelay);
         }
       };
       const hoverOutCallback = () => {
@@ -73,19 +76,19 @@ export const Media = ({
     setStartedHovering,
     containerRef,
     previewTriggered,
-    hoverStartDelay,
+    videoLoadDelay,
     previewCard,
+    location,
   ]);
 
   useEffect(() => {
-    if (!previewCard && containerRef.current) {
-      if (previewTriggered) {
-        containerRef.current.style.transform = 'scale(1.03)';
-      } else {
-        containerRef.current.style.transform = '';
-      }
+    if (!containerRef.current) return;
+    if (startedHovering) {
+      containerRef.current.style.transform = 'scale(1.03)';
+    } else {
+      containerRef.current.style.transform = '';
     }
-  }, [previewCard, previewTriggered, containerRef]);
+  }, [previewCard, startedHovering, containerRef]);
 
   return (
     <MediaWrapper>
@@ -96,16 +99,12 @@ export const Media = ({
             poster={preview}
             autoPlay
             loop
+            muted
           />
         ) : (
           <PreviewImage src={preview} alt="nft-card" />
         )}
       </PreviewDetails>
-      {!previewCard && startedHovering && !previewTriggered && (
-        <HoverMessageContainer>
-          {t('translation:nftCard.hoverToPreview')}
-        </HoverMessageContainer>
-      )}
     </MediaWrapper>
   );
 };
