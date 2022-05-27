@@ -74,6 +74,7 @@ type InitialState = {
   recentlyMadeOffers: any[];
   recentlyPurchasedTokens: any[];
   recentlyWithdrawnAssets: any[];
+  utilizedAllowance: number;
 };
 
 const initialState: InitialState = {
@@ -86,6 +87,7 @@ const initialState: InitialState = {
   recentlyMadeOffers: [],
   recentlyPurchasedTokens: [],
   recentlyWithdrawnAssets: [],
+  utilizedAllowance: 0,
 };
 
 export const marketplaceSlice = createSlice({
