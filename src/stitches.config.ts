@@ -44,6 +44,7 @@ export const {
       modalText: '#767D8E',
       lightYellow: '#ffd71926',
       paleYellow: '#987E00',
+      toastBackground: '#FFFFFF',
     },
     space: {},
     fonts: {},
