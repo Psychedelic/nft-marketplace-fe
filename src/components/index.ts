@@ -15,4 +15,6 @@ export * from './plug';
 export * from './toast';
 export * from './icons';
 export * from './number-tooltip';
+export * from './video-preload';
+export * from './image-preload';
 export * from './alerts';
