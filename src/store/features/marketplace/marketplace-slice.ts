@@ -57,6 +57,10 @@ export type GetBuyerOffers = {
   userPrincipalId: string;
 };
 
+export type UtilizedAllowance = {
+  utilizedAllowance: number;
+};
+
 type RecentyListedForSale = MakeListing[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
