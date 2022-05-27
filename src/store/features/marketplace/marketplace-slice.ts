@@ -74,6 +74,7 @@ type InitialState = {
   recentlyMadeOffers: any[];
   recentlyPurchasedTokens: any[];
   recentlyWithdrawnAssets: any[];
+  sumOfUserAllowance: number;
 };
 
 const initialState: InitialState = {
@@ -86,6 +87,7 @@ const initialState: InitialState = {
   recentlyMadeOffers: [],
   recentlyPurchasedTokens: [],
   recentlyWithdrawnAssets: [],
+  sumOfUserAllowance: 0,
 };
 
 export const marketplaceSlice = createSlice({
@@ -94,6 +96,9 @@ export const marketplaceSlice = createSlice({
   reducers: {
     setActor: (state, action: PayloadAction<MarketplaceActor>) => {
       state.actor = action.payload;
+    },
+    setSumOfUserAllowance: (state, action: PayloadAction<number>) => {
+      state.sumOfUserAllowance = action.payload;
     },
   },
   extraReducers: (builder) => {

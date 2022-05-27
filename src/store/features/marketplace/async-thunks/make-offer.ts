@@ -16,8 +16,12 @@ export type MakeOfferProps = DefaultCallbacks & MakeOffer;
 export const makeOffer = createAsyncThunk<
   MakeOffer | undefined,
   MakeOfferProps
->('marketplace/makeOffer', async (params, { dispatch }) => {
+>('marketplace/makeOffer', async (params, { dispatch, getState }) => {
   const { id, amount, onSuccess, onFailure } = params;
+
+  const {
+    marketplace: { sumOfUserAllowance },
+  }: any = getState();
 
   const mkpContractAddress = Principal.fromText(
     config.marketplaceCanisterId,
@@ -27,7 +31,14 @@ export const makeOffer = createAsyncThunk<
   );
   const userOwnedTokenId = BigInt(id);
   const userOfferInPrice = parseAmountToE8S(amount);
-  const allowanceAmount = BigInt(9_223_372_036_854_775_807);
+
+  const allowanceAmountInWICP = sumOfUserAllowance
+    ? sumOfUserAllowance + Number(amount)
+    : Number(amount);
+
+  const allowanceAmount = parseAmountToE8S(
+    allowanceAmountInWICP.toString(),
+  );
 
   try {
     const WICP_APPROVE_MARKETPLACE = {

@@ -15,6 +15,7 @@ import {
   RootState,
 } from './store';
 import { useThemeGlobals } from './hooks';
+import { useBuyerOffers } from './hooks/use-buyer-offers';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -37,6 +38,8 @@ const App = () => {
       }),
     );
   }, [dispatch, isConnected, plugPrincipal, recentlyWithdrawnAssets]);
+
+  useBuyerOffers();
 
   return (
     <div className={themeObject} id={ThemeRootElement}>
