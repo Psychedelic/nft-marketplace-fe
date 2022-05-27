@@ -218,7 +218,7 @@
       "cancelOffer": "Are you sure you want to cancel this Offer?",
       "acceptOffer": "Review the following offer and accept the bid.",
       "offerAccepted": "Congrats, you successfully accepted an offer.",
-      "withdrawAssets": "The following assets failed to withdraw at time of cancellation for either NFTs or offers with WICP. Review the assets and click retry to recieve them."
+      "withdrawAssets": "The following fungible balances remain in the canister due to an error completing a transaction. Review the assets and click retry to receive them."
     },
     "labels": {
       "listingFee": "Listing Fee",
