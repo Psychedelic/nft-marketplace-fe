@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
@@ -7,6 +7,7 @@ import {
   useNFTSStore,
   settingsActions,
   nftsActions,
+  usePlugStore,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
@@ -40,6 +41,8 @@ export const CollectionItems = () => {
     loadedNFTS,
     totalVolume,
   } = useNFTSStore();
+
+  const { isConnected } = usePlugStore();
 
   const appliedFiltersCount =
     appliedFilters?.defaultFilters.length || 0;
@@ -77,6 +80,28 @@ export const CollectionItems = () => {
 
   // TODO: Add loader when collection data or floor price
   // details are loading
+
+  const displayClearButton = () => {
+    if (
+      appliedFilters.isMyNfts &&
+      isConnected &&
+      !loadedNFTS.length &&
+      appliedFilters.defaultFilters.length === 1
+    )
+      return;
+
+    if (appliedFilters?.defaultFilters?.length) {
+      return (
+        <ClearButton
+          onClick={() => {
+            dispatch(filterActions.clearAllFilters());
+            dispatch(settingsActions.setPriceApplyButton(false));
+            dispatch(filterActions.setMyNfts(false));
+          }}
+        >{`${t('translation:filters.clearAll')}`}</ClearButton>
+      );
+    }
+  };
 
   return (
     <Container>
@@ -123,6 +148,14 @@ export const CollectionItems = () => {
             <ContentFlex>
               {appliedFilters.defaultFilters.map((appliedFilter) => {
                 if (!Array.isArray(appliedFilter.filterName)) {
+                  if (
+                    appliedFilters.isMyNfts &&
+                    isConnected &&
+                    !loadedNFTS.length &&
+                    appliedFilter?.filterName ===
+                      t('translation:buttons.action.myNfts')
+                  )
+                    return;
                   return (
                     <FilteredTraitsChip
                       key={appliedFilter.filterName}
@@ -158,36 +191,26 @@ export const CollectionItems = () => {
                     />
                   );
                 }
-                return appliedFilter.filterName.map((value) => (
-                  <FilteredTraitsChip
-                    key={value}
-                    name={value}
-                    rim={`${appliedFilter.filterCategory}`}
-                    appliedFilterValue={appliedFilter}
-                    removeFilter={() => {
-                      dispatch(
-                        filterActions.removeTraitsFilter({
-                          value,
-                          key: appliedFilter.filterCategory,
-                        }),
-                      );
-                    }}
-                  />
-                ));
+                return appliedFilter.filterName.map((value) => {
+                  return (
+                    <FilteredTraitsChip
+                      key={value}
+                      name={value}
+                      rim={`${appliedFilter.filterCategory}`}
+                      appliedFilterValue={appliedFilter}
+                      removeFilter={() => {
+                        dispatch(
+                          filterActions.removeTraitsFilter({
+                            value,
+                            key: appliedFilter.filterCategory,
+                          }),
+                        );
+                      }}
+                    />
+                  );
+                });
               })}
-              {Boolean(appliedFilters?.defaultFilters?.length) && (
-                <ClearButton
-                  onClick={() => {
-                    dispatch(filterActions.clearAllFilters());
-                    dispatch(
-                      settingsActions.setPriceApplyButton(false),
-                    );
-                    dispatch(filterActions.setMyNfts(false));
-                  }}
-                >{`${t(
-                  'translation:filters.clearAll',
-                )}`}</ClearButton>
-              )}
+              {displayClearButton()}
             </ContentFlex>
           </Flex>
         </ContentWrapper>
