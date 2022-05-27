@@ -37,7 +37,7 @@ import { formatPriceValue } from '../../utils/formatters';
 
 export const GlobalSearch = () => {
   const { t } = useTranslation();
-  const { loadedNFTS, nextPageNo } = useNFTSStore();
+  const { loadedNFTS } = useNFTSStore();
   const dispatch = useAppDispatch();
   const { sortBy, searchResults } = useFilterStore();
 
@@ -60,7 +60,7 @@ export const GlobalSearch = () => {
         filterActions.getSearchResults({
           sort: sortBy,
           order: 'd',
-          page: nextPageNo,
+          page: 0,
           count: 25,
           search: value,
         }),
@@ -126,7 +126,7 @@ export const GlobalSearch = () => {
                       <ItemName>{`${nft.name} ${nft.id}`}</ItemName>
                     </ItemDetails>
                     <PriceDetails>
-                    {Boolean(nft?.wicpPrice) && (
+                      {Boolean(nft?.wicpPrice) && (
                         <WICPContainer size="small">
                           <WICPLogo src={wicpIcon} alt="wicp" />
                           <WICPText size="small">
