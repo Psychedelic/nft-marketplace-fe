@@ -1,15 +1,20 @@
-import { globalCss } from '../stitches.config';
+import { globalCss, theme, darkTheme } from '../stitches.config';
 
 export default {};
 
-export const darkThemeGlobals = globalCss({
+export const themeGlobals = globalCss({
   'html, body': {
-    background: '#141416',
-    height: '100%'
+    height: '100%',
+
+    '&.lightTheme': {
+      backgroundColor: theme.colors.backgroundColor.value,
+    },
+
+    '&.darkTheme': {
+      backgroundColor: darkTheme.colors.backgroundColor.value,
+    },
   },
 });
-
-export const isDarkTheme = (theme: string) => theme === 'darkTheme';
 
 // Prevents the protaled elements to be above the navbar
 export const portalZIndexGlobals = globalCss({
