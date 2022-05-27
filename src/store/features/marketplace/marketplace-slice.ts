@@ -97,6 +97,9 @@ export const marketplaceSlice = createSlice({
     setActor: (state, action: PayloadAction<MarketplaceActor>) => {
       state.actor = action.payload;
     },
+    setUtilizedAllowance: (state, action: PayloadAction<number>) => {
+      state.utilizedAllowance = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(makeListing.fulfilled, (state, action) => {
