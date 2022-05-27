@@ -14,8 +14,8 @@ export const AlertsWrapper = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
   padding: '8px',
-  background: '$alertsBackground',
-  color: '$alertsTextColor',
+  background: '$lightYellow',
+  color: '$paleYellow',
 });
 
 export const MessageContainer = styled('div', {
