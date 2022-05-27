@@ -45,7 +45,7 @@ export const TableStrings = ({
   hideColumns,
 }: TableStringsProps) => (
   <td>
-    <SkeletonBox type={!hideColumns ? type : undefined} />
+    <SkeletonBox size={!hideColumns ? type : undefined} />
   </td>
 );
 
