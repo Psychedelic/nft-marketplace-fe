@@ -16,6 +16,8 @@ import {
   makeOffer,
   getFloorPrice,
   getCollections,
+  getAssetsToWithdraw,
+  withdrawFungible,
 } from './async-thunks';
 
 export type MakeListing = {
@@ -71,6 +73,7 @@ type InitialState = {
   tokenOffers: any[];
   recentlyMadeOffers: any[];
   recentlyPurchasedTokens: any[];
+  recentlyWithdrawnAssets: any[];
 };
 
 const initialState: InitialState = {
@@ -82,6 +85,7 @@ const initialState: InitialState = {
   tokenOffers: [],
   recentlyMadeOffers: [],
   recentlyPurchasedTokens: [],
+  recentlyWithdrawnAssets: [],
 };
 
 export const marketplaceSlice = createSlice({
@@ -140,6 +144,11 @@ export const marketplaceSlice = createSlice({
 
       state.recentlyPurchasedTokens.push(action.payload);
     });
+    builder.addCase(withdrawFungible.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.recentlyWithdrawnAssets.push(action.payload);
+    });
   },
 });
 
@@ -156,6 +165,8 @@ export const marketplaceActions = {
   makeOffer,
   getFloorPrice,
   getCollections,
+  getAssetsToWithdraw,
+  withdrawFungible,
 };
 
 export default marketplaceSlice.reducer;

@@ -4,6 +4,15 @@ export const Container = styled('div', {
   width: '100%',
   paddingTop: '72px',
   backgroundColor: '$backgroundColor',
+
+  // variants
+  variants: {
+    showAlerts: {
+      true: {
+        paddingTop: '110px',
+      },
+    },
+  },
 });
 
 export const TitleWrapper = styled('div', {

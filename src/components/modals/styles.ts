@@ -72,6 +72,15 @@ export const AcceptOfferModalTrigger = styled('div', {
   height: '33px',
 });
 
+export const WithdrawModalTrigger = styled('div', {
+  fontSize: '16px',
+  fontWeight: '500',
+  lineHeight: '22px',
+  marginLeft: '5px',
+  textDecoration: 'underline',
+  cursor: 'pointer',
+});
+
 export const ModalOverlayContainer = styled(DialogPrimitive.Overlay, {
   backgroundColor: '$modalOverlay',
   position: 'fixed',
@@ -149,8 +158,16 @@ export const ModalDescription = styled(DialogPrimitive.Description, {
   fontSize: '18px',
   fontWeight: '500',
   lineHeight: '20px',
-  color: '#767D8E',
+  color: '$greyMid',
   margin: '0px',
+
+  variants: {
+    size: {
+      medium: {
+        maxWidth: '396px',
+      },
+    },
+  },
 });
 
 export const SaleContentWrapper = styled('div', {
@@ -219,6 +236,12 @@ export const ItemDetailsWrapper = styled('div', {
         marginTop: '35px',
       },
     },
+
+    type: {
+      withdraw: {
+        padding: '0px 0px 32px',
+      },
+    },
   },
 });
 
@@ -228,11 +251,27 @@ export const ItemDetails = styled('div', {
   alignItems: 'center',
 });
 
+export const ItemStatus = styled('div', {
+  fontSize: '18px',
+  fontWeight: '500',
+  lineHeight: '20px',
+  color: '$modalText',
+});
+
 export const ItemLogo = styled('img', {
   width: '48px',
   height: '48px',
   borderRadius: '10px',
   marginRight: '12px',
+
+  // variants
+  variants: {
+    withoutBorderRadius: {
+      true: {
+        borderRadius: '0px',
+      },
+    },
+  },
 });
 
 export const ItemName = styled('div', {
