@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CardOptionsDropdown } from '../../dropdown';
@@ -203,7 +203,10 @@ export const NftCard = React.memo(
               <CardOptionsDropdown data={data} />
             </Flex>
             <MediaWrapper>
-              {previewCard ? (
+              <PreviewDetails>
+                <PreviewImage src={data?.preview} alt="nft-card" />
+              </PreviewDetails>
+              {/* {previewCard ? (
                 <PreviewCardVideo
                   src={data.location}
                   poster={data?.preview}
@@ -225,7 +228,7 @@ export const NftCard = React.memo(
                   // Next line is a validation for null value
                   hoverTarget={containerRef.current || undefined}
                 />
-              )}
+              )} */}
             </MediaWrapper>
             <Flex>
               <NftDataHeader>{data?.name}</NftDataHeader>
@@ -250,7 +253,7 @@ export const NftCard = React.memo(
                   <>
                     <img src={wicpLogo} alt="" />
                     <NumberTooltip>
-                      {previewCardAmount ? previewCardAmount : ''}
+                      {previewCardAmount || ''}
                     </NumberTooltip>
                   </>
                 )}

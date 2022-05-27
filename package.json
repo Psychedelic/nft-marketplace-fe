@@ -32,6 +32,7 @@
     "lodash.throttle": "^4.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-cool-virtual": "^0.7.0",
     "react-hover-video-player": "^9.4.0",
     "react-i18next": "^11.15.3",
     "react-infinite-scroller": "^1.2.6",

@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import InfiniteScroll from 'react-infinite-scroller';
 import { NftCard } from '../core/cards/nft-card';
-import { NftSkeletonList } from '../nft-skeleton-list';
-import { InfiniteScrollWrapper } from './styles';
 import {
   useNFTSStore,
   useFilterStore,
@@ -10,7 +9,7 @@ import {
   usePlugStore,
   nftsActions,
 } from '../../store';
-import { EmptyState } from '../core';
+import { EmptyState, NftSkeleton, VirtualizedGrid } from '../core';
 import { ButtonType } from '../../constants/empty-states';
 import {
   usePriceValues,
@@ -55,7 +54,7 @@ export const NftList = () => {
   const { sortBy } = useFilterStore();
 
   const loadMoreNFTS = () => {
-    if (loadingNFTs || !hasMoreNFTs) return;
+    if (loadingNFTs || !hasMoreNFTs || nextPageNo <= 0) return;
 
     dispatch(
       nftsActions.getNFTs({
@@ -114,27 +113,30 @@ export const NftList = () => {
   }
 
   return (
-    <InfiniteScrollWrapper
+    <InfiniteScroll
       pageStart={0}
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      loadMore={nextPageNo > 0 ? loadMoreNFTS : () => {}}
+      loadMore={loadMoreNFTS}
       hasMore={hasMoreNFTs}
-      loader={<NftSkeletonList />}
-      useWindow={true || false}
-      threshold={250 * 5}
+      useWindow
+      threshold={500}
       className="infinite-loader"
     >
-      {loadedNFTS?.map((nft) => (
-        <NftCard
-          data={nft}
-          key={nft.id}
-          owned={isNFTOwner({
-            isConnected,
-            owner: nft?.owner,
-            principalId,
-          })}
-        />
-      ))}
-    </InfiniteScrollWrapper>
+      <VirtualizedGrid
+        loadingMore={hasMoreNFTs}
+        items={loadedNFTS}
+        ItemRenderer={React.memo((nft) => (
+          <NftCard
+            data={nft}
+            key={nft.id}
+            owned={isNFTOwner({
+              isConnected,
+              owner: nft?.owner,
+              principalId,
+            })}
+          />
+        ))}
+        Skeleton={NftSkeleton}
+      />
+    </InfiniteScroll>
   );
 };
