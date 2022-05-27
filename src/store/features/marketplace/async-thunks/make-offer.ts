@@ -2,7 +2,7 @@ import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';
-import { MakeOffer, UtilizedAllowance } from '../marketplace-slice';
+import { MakeOffer } from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
@@ -11,16 +11,17 @@ import { parseAmountToE8S } from '../../../../utils/formatters';
 import { errorMessageHandler } from '../../../../utils/error';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 
-export type MakeOfferProps = DefaultCallbacks &
-  MakeOffer &
-  UtilizedAllowance;
+export type MakeOfferProps = DefaultCallbacks & MakeOffer;
 
 export const makeOffer = createAsyncThunk<
   MakeOffer | undefined,
   MakeOfferProps
->('marketplace/makeOffer', async (params, { dispatch }) => {
-  const { id, amount, utilizedAllowance, onSuccess, onFailure } =
-    params;
+>('marketplace/makeOffer', async (params, { dispatch, getState }) => {
+  const { id, amount, onSuccess, onFailure } = params;
+
+  const {
+    marketplace: { sumOfUserAllowance },
+  }: any = getState();
 
   const mkpContractAddress = Principal.fromText(
     config.marketplaceCanisterId,
@@ -34,8 +35,8 @@ export const makeOffer = createAsyncThunk<
   // default allowance amount
   let allowanceAmount = BigInt(9_223_372_036_854_775_807);
 
-  if (utilizedAllowance && amount) {
-    const calculatedAllowance = utilizedAllowance + Number(amount);
+  if (sumOfUserAllowance && amount) {
+    const calculatedAllowance = sumOfUserAllowance + Number(amount);
 
     // updated allowance amount based on offers made by users already
     allowanceAmount = parseAmountToE8S(

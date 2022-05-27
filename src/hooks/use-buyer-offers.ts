@@ -30,18 +30,18 @@ export const useBuyerOffers = () => {
         onSuccess: (offers) => {
           if (!offers.length) return;
 
-          // calculate utilizedAllowance
-          let utilizedAllowance = 0;
+          // calculate sumOfUserAllowance
+          let sumOfUserAllowance = 0;
           offers.map((offer: OffersTableItem) => {
-            utilizedAllowance =
-              utilizedAllowance +
+            sumOfUserAllowance =
+              sumOfUserAllowance +
               Number(parseE8SAmountToWICP(offer.price));
           });
 
-          // update utilizedAllowance value in store
+          // update sumOfUserAllowance value in store
           dispatch(
-            marketplaceActions.setUtilizedAllowance(
-              utilizedAllowance,
+            marketplaceActions.setSumOfUserAllowance(
+              sumOfUserAllowance,
             ),
           );
         },

@@ -57,10 +57,6 @@ export type GetBuyerOffers = {
   userPrincipalId: string;
 };
 
-export type UtilizedAllowance = {
-  utilizedAllowance: number;
-};
-
 type RecentyListedForSale = MakeListing[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
@@ -78,7 +74,7 @@ type InitialState = {
   recentlyMadeOffers: any[];
   recentlyPurchasedTokens: any[];
   recentlyWithdrawnAssets: any[];
-  utilizedAllowance: number;
+  sumOfUserAllowance: number;
 };
 
 const initialState: InitialState = {
@@ -91,7 +87,7 @@ const initialState: InitialState = {
   recentlyMadeOffers: [],
   recentlyPurchasedTokens: [],
   recentlyWithdrawnAssets: [],
-  utilizedAllowance: 0,
+  sumOfUserAllowance: 0,
 };
 
 export const marketplaceSlice = createSlice({
@@ -101,8 +97,8 @@ export const marketplaceSlice = createSlice({
     setActor: (state, action: PayloadAction<MarketplaceActor>) => {
       state.actor = action.payload;
     },
-    setUtilizedAllowance: (state, action: PayloadAction<number>) => {
-      state.utilizedAllowance = action.payload;
+    setSumOfUserAllowance: (state, action: PayloadAction<number>) => {
+      state.sumOfUserAllowance = action.payload;
     },
   },
   extraReducers: (builder) => {

@@ -5,14 +5,9 @@ import {
   useNavigate,
   useLocation,
 } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed } from '../core';
-import {
-  useAppDispatch,
-  marketplaceActions,
-  RootState,
-} from '../../store';
+import { useAppDispatch, marketplaceActions } from '../../store';
 import {
   ModalContent,
   Container,
@@ -70,10 +65,6 @@ export const BuyNowModal = ({
     return BigInt(tid);
   }, [id, actionTextId]);
 
-  const utilizedAllowance = useSelector(
-    (state: RootState) => state.marketplace.utilizedAllowance,
-  );
-
   const handleModalOpen = (status: boolean) => {
     setModalStep(DirectBuyStatusCodes.Pending);
     setModalOpened(status);
@@ -96,7 +87,6 @@ export const BuyNowModal = ({
     dispatch(
       marketplaceActions.directBuy({
         tokenId: tokenId as bigint,
-        utilizedAllowance,
         price,
         onSuccess: () => {
           // TODO: the get all listings is used to get data from the canister

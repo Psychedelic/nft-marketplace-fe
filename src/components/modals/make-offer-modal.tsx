@@ -1,6 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
@@ -24,11 +23,7 @@ import {
 import { ModalOverlay } from './modal-overlay';
 
 import { ListingStatusCodes } from '../../constants/listing';
-import {
-  useAppDispatch,
-  marketplaceActions,
-  RootState,
-} from '../../store';
+import { useAppDispatch, marketplaceActions } from '../../store';
 import { AppLog } from '../../utils/log';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { ThemeRootElement } from '../../constants/common';
@@ -70,10 +65,6 @@ export const MakeOfferModal = ({
 
   const tokenId = useMemo(() => id || nftTokenId, [id, nftTokenId]);
 
-  const utilizedAllowance = useSelector(
-    (state: RootState) => state.marketplace.utilizedAllowance,
-  );
-
   useEffect(() => {
     if (!offerPrice || !modalOpened) return;
 
@@ -104,7 +95,6 @@ export const MakeOfferModal = ({
       marketplaceActions.makeOffer({
         id: tokenId,
         amount,
-        utilizedAllowance,
         onSuccess: () => {
           setModalStep(ListingStatusCodes.Submitted);
         },

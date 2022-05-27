@@ -2,7 +2,7 @@ import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';
-import { DirectBuy, UtilizedAllowance } from '../marketplace-slice';
+import { DirectBuy } from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
@@ -11,16 +11,17 @@ import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 
-type DirectBuyProps = DefaultCallbacks &
-  DirectBuy &
-  UtilizedAllowance;
+type DirectBuyProps = DefaultCallbacks & DirectBuy;
 
 export const directBuy = createAsyncThunk<
   DirectBuy | undefined,
   DirectBuyProps
->('marketplace/directBuy', async (params, { dispatch }) => {
-  const { tokenId, utilizedAllowance, price, onSuccess, onFailure } =
-    params;
+>('marketplace/directBuy', async (params, { dispatch, getState }) => {
+  const { tokenId, price, onSuccess, onFailure } = params;
+
+  const {
+    marketplace: { sumOfUserAllowance },
+  }: any = getState();
 
   const marketplaceCanisterId = Principal.fromText(
     config.marketplaceCanisterId,
@@ -33,8 +34,8 @@ export const directBuy = createAsyncThunk<
     // default allowance amount
     let allowanceAmount = BigInt(9_223_372_036_854_775_807);
 
-    if (utilizedAllowance && price) {
-      const calculatedAllowance = utilizedAllowance + Number(price);
+    if (sumOfUserAllowance && price) {
+      const calculatedAllowance = sumOfUserAllowance + Number(price);
 
       // updated allowance amount based on offers made by users already
       allowanceAmount = parseAmountToE8S(
