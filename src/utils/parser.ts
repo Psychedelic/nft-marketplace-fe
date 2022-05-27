@@ -18,6 +18,13 @@ type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
 >;
 
+type AssetToWithdraw = {
+  principalId: string;
+  amount: string;
+};
+
+type AssetsToWithdraw = AssetToWithdraw[];
+
 export type GetAllListingsDataParsed = {
   tokenId: BigInt;
   listing: Listing;
@@ -293,6 +300,22 @@ export const parseGetCollectionsResponse = (data: Array<any>) => {
 
     return [...accParent, collection];
   }, [] as Array<any>);
+
+  return parsed;
+};
+
+// TODO: update data type while using collection details
+export const parseBalanceResponse = (data: Array<any>) => {
+  const parsed = data.reduce((accParent, currParent) => {
+    const assetsToWithdraw: AssetToWithdraw = {
+      principalId: Principal.fromUint8Array(
+        currParent[0]._arr,
+      ).toString(),
+      amount: parseE8SAmountToWICP(currParent[1]),
+    };
+
+    return [...accParent, assetsToWithdraw];
+  }, [] as AssetsToWithdraw);
 
   return parsed;
 };

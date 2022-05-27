@@ -46,6 +46,7 @@ export const {
       iconGrey: '#767D8F',
       lightYellow: '#ffd71926',
       paleYellow: '#987E00',
+      toastBackground: '#FFFFFF',
     },
     space: {},
     fonts: {},

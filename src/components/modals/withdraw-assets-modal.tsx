@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton } from '../core';
+import { ActionButton, Pending, Completed } from '../core';
 import wicpIcon from '../../assets/wicp.svg';
 import {
   WithdrawModalTrigger,
@@ -13,7 +13,6 @@ import {
   SaleContentWrapper,
   ItemDetailsWrapper,
   ItemDetails,
-  ItemStatus,
   ItemLogo,
   ItemName,
   ModalButtonsList,
@@ -22,6 +21,13 @@ import {
 
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
+import {
+  useSettingsStore,
+  useAppDispatch,
+  marketplaceActions,
+} from '../../store';
+import { ListingStatusCodes } from '../../constants/listing';
+import { AppLog } from '../../utils/log';
 
 /* --------------------------------------------------------------------------
  * Withdraw Assets Modal Component
@@ -29,15 +35,48 @@ import { ThemeRootElement } from '../../constants/common';
 
 export const WithdrawAssetsModal = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
+  // Withdraw Assets modal steps: withdrawInfo/pending/completed
+  const [modalStep, setModalStep] = useState<string>(
+    ListingStatusCodes.WithdrawInfo,
+  );
+
+  const { assetsToWithdraw } = useSettingsStore();
 
   const handleModalOpen = (modalOpenedStatus: boolean) => {
     setModalOpened(modalOpenedStatus);
+    setModalStep(ListingStatusCodes.WithdrawInfo);
   };
 
   const handleModalClose = () => {
     setModalOpened(false);
+  };
+
+  const handleWithdrawAssets = async () => {
+    if (
+      !assetsToWithdraw.length ||
+      !assetsToWithdraw[0].principalId
+    ) {
+      AppLog.warn('Oops! Missing principalId to withdraw');
+
+      return;
+    }
+
+    setModalStep(ListingStatusCodes.Pending);
+
+    dispatch(
+      marketplaceActions.withdrawFungible({
+        principalId: assetsToWithdraw[0].principalId,
+        onSuccess: () => {
+          setModalStep(ListingStatusCodes.Completed);
+        },
+        onFailure: () => {
+          setModalStep(ListingStatusCodes.WithdrawInfo);
+        },
+      }),
+    );
   };
 
   return (
@@ -77,62 +116,138 @@ export const WithdrawAssetsModal = () => {
             event.preventDefault();
           }}
         >
-          <Container>
-            {/*
+          {/*
+          ---------------------------------
+          Step: 1 -> Assets to withdraw
+          ---------------------------------
+        */}
+          {modalStep === ListingStatusCodes.WithdrawInfo && (
+            <Container>
+              {/*
+            ---------------------------------
+            Header
+            ---------------------------------
+          */}
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.withdrawAssets')}
+                </ModalTitle>
+                <ModalDescription size="medium">
+                  {t('translation:modals.description.withdrawAssets')}
+                </ModalDescription>
+              </ModalHeader>
+              {/*
+            ---------------------------------
+            Non Fungibles details
+            ---------------------------------
+          */}
+              <SaleContentWrapper>
+                {assetsToWithdraw?.map((asset) => (
+                  <ItemDetailsWrapper type="withdraw">
+                    <ItemDetails>
+                      <ItemLogo
+                        src={wicpIcon}
+                        alt="wicp"
+                        withoutBorderRadius
+                      />
+                      <ItemName>{asset.amount} WICP</ItemName>
+                    </ItemDetails>
+                  </ItemDetailsWrapper>
+                ))}
+              </SaleContentWrapper>
+              {/*
+            ---------------------------------
+            Action Buttons
+            ---------------------------------
+          */}
+              <ModalButtonsList>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="primary"
+                    onClick={handleWithdrawAssets}
+                  >
+                    {t('translation:modals.buttons.retryAll')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
+            </Container>
+          )}
+          {/*
+          ---------------------------------
+          Step: 2 -> pending
+          ---------------------------------
+        */}
+          {modalStep === ListingStatusCodes.Pending && (
+            <Container>
+              {/*
+            ---------------------------------
+            Pending Header
+            ---------------------------------
+          */}
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.withdrawAssets')}
+                </ModalTitle>
+                <ModalDescription size="medium">
+                  {t('translation:modals.description.withdrawAssets')}
+                </ModalDescription>
+              </ModalHeader>
+              {/*
+            ---------------------------------
+            Pending details
+            ---------------------------------
+          */}
+              <Pending />
+            </Container>
+          )}
+          {/*
+          ---------------------------------
+          Step: 3 -> completed
+          ---------------------------------
+        */}
+          {modalStep === ListingStatusCodes.Completed && (
+            <Container>
+              {/*
               ---------------------------------
-              Header
+              Confirmed Header
               ---------------------------------
             */}
-            <ModalHeader>
-              <ModalTitle>
-                {t('translation:modals.title.withdrawAssets')}
-              </ModalTitle>
-              <ModalDescription size="medium">
-                {t('translation:modals.description.withdrawAssets')}
-              </ModalDescription>
-            </ModalHeader>
-            {/*
+              <ModalHeader>
+                <ModalTitle>
+                  {t('translation:modals.title.withdrawalSuccess')}
+                </ModalTitle>
+              </ModalHeader>
+              {/*
               ---------------------------------
-              Non Fungibles details
+              Confirmed details
               ---------------------------------
             */}
-            <SaleContentWrapper>
-              <ItemDetailsWrapper type="withdraw">
-                <ItemDetails>
-                  <ItemLogo
-                    src={wicpIcon}
-                    alt="wicp"
-                    withoutBorderRadius
-                  />
-                  <ItemName>40.21 WICP</ItemName>
-                </ItemDetails>
-                <ItemStatus>Cancelled Offer</ItemStatus>
-              </ItemDetailsWrapper>
-            </SaleContentWrapper>
-            {/*
+              <Completed />
+              {/*
               ---------------------------------
-              Action Buttons
+              Confirmed Action Buttons
               ---------------------------------
             */}
-            <ModalButtonsList>
-              <ModalButtonWrapper>
-                <ActionButton
-                  type="secondary"
-                  onClick={handleModalClose}
-                >
-                  {t('translation:modals.buttons.cancel')}
-                </ActionButton>
-              </ModalButtonWrapper>
-              <ModalButtonWrapper>
-                <ActionButton
-                  type="primary"
-                  onClick={handleModalClose}
-                >
-                  {t('translation:modals.buttons.retryAll')}
-                </ActionButton>
-              </ModalButtonWrapper>
-            </ModalButtonsList>
-          </Container>
+              <ModalButtonsList>
+                <ModalButtonWrapper fullWidth>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.close')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+              </ModalButtonsList>
+            </Container>
+          )}
         </ModalContent>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>

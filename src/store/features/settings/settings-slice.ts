@@ -2,18 +2,25 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '../../store';
 
+interface AlertsData {
+  principalId: string;
+  amount: string;
+}
+
 export interface SettingsState {
   collapsed: boolean;
   displayPriceApplyButton: boolean;
   previouslyVisitedPath: string;
   showAlerts: boolean;
+  assetsToWithdraw: AlertsData[];
 }
 
 const initialState: SettingsState = {
   collapsed: true,
   displayPriceApplyButton: false,
   previouslyVisitedPath: '/',
-  showAlerts: true,
+  showAlerts: false,
+  assetsToWithdraw: [],
 };
 
 export const settingsSlice = createSlice({
@@ -32,8 +39,16 @@ export const settingsSlice = createSlice({
     ) => {
       state.previouslyVisitedPath = action.payload;
     },
-    setAlerts: (state, action: PayloadAction<boolean>) => {
-      state.showAlerts = action.payload;
+    setAlerts: (state, action: PayloadAction<AlertsData[]>) => {
+      const assets = action.payload;
+      state.assetsToWithdraw = assets;
+
+      if (!assets.length) {
+        state.showAlerts = false;
+        return;
+      }
+
+      state.showAlerts = true;
     },
   },
 });

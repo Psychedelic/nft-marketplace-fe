@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { NavBar, ToastHandler, Alerts } from './components';
 import CollectionView from './views/CollectionView';
 import NFTView from './views/NFTView';
@@ -11,13 +12,35 @@ import {
   portalZIndexGlobals,
 } from './utils/styles';
 import { ThemeRootElement } from './constants/common';
+import {
+  useAppDispatch,
+  usePlugStore,
+  marketplaceActions,
+  RootState,
+} from './store';
 
 const App = () => {
+  const dispatch = useAppDispatch();
+  const { isConnected, principalId: plugPrincipal } = usePlugStore();
   const [theme, themeObject] = useTheme();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   isDarkTheme(theme) && darkThemeGlobals();
   portalZIndexGlobals();
+
+  const recentlyWithdrawnAssets = useSelector(
+    (state: RootState) => state.marketplace.recentlyWithdrawnAssets,
+  );
+
+  useEffect(() => {
+    if (!isConnected || !plugPrincipal) return;
+
+    dispatch(
+      marketplaceActions.getAssetsToWithdraw({
+        userPrincipalId: plugPrincipal,
+      }),
+    );
+  }, [dispatch, isConnected, plugPrincipal, recentlyWithdrawnAssets]);
 
   return (
     <div className={themeObject} id={ThemeRootElement}>

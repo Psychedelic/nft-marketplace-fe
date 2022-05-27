@@ -204,7 +204,8 @@
       "acceptOffer": "Accept Offer",
       "offerAccepted": "Offer Accepted!",
       "editOffer": "Edit Offer",
-      "withdrawAssets": "Withdraw Assets"
+      "withdrawAssets": "Withdraw Assets",
+      "withdrawalSuccess": "Withdrawal Success"
     },
     "description": {
       "makeListing": "Enter the sale price you want for your NFT.",
@@ -238,7 +239,8 @@
       "cancelOffer": "Cancel Offer",
       "acceptOffer": "Accept Offer",
       "done": "Done",
-      "retryAll": "Retry All"
+      "retryAll": "Retry All",
+      "close": "Close"
     }
   },
   "nftCard": {
