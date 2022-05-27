@@ -32,17 +32,13 @@ export const makeOffer = createAsyncThunk<
   const userOwnedTokenId = BigInt(id);
   const userOfferInPrice = parseAmountToE8S(amount);
 
-  // default allowance amount
-  let allowanceAmount = BigInt(0);
+  const allowanceAmountInWICP = sumOfUserAllowance
+    ? sumOfUserAllowance + Number(amount)
+    : Number(amount);
 
-  if (sumOfUserAllowance && amount) {
-    const calculatedAllowance = sumOfUserAllowance + Number(amount);
-
-    // updated allowance amount based on offers made by users already
-    allowanceAmount = parseAmountToE8S(
-      calculatedAllowance.toString(),
-    );
-  }
+  const allowanceAmount = parseAmountToE8S(
+    allowanceAmountInWICP.toString(),
+  );
 
   try {
     const WICP_APPROVE_MARKETPLACE = {

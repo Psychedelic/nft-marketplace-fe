@@ -31,17 +31,13 @@ export const directBuy = createAsyncThunk<
   );
 
   try {
-    // default allowance amount
-    let allowanceAmount = BigInt(0);
+    const allowanceAmountInWICP = sumOfUserAllowance
+      ? sumOfUserAllowance + Number(price)
+      : Number(price);
 
-    if (sumOfUserAllowance && price) {
-      const calculatedAllowance = sumOfUserAllowance + Number(price);
-
-      // updated allowance amount based on offers made by users already
-      allowanceAmount = parseAmountToE8S(
-        calculatedAllowance.toString(),
-      );
-    }
+    const allowanceAmount = parseAmountToE8S(
+      allowanceAmountInWICP.toString(),
+    );
 
     const WICP_APPROVE = {
       idl: wicpIdlFactory,
