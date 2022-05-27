@@ -9,14 +9,19 @@ import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
+import { parseAmountToE8S } from '../../../../utils/formatters';
 
 type DirectBuyProps = DefaultCallbacks & DirectBuy;
 
 export const directBuy = createAsyncThunk<
   DirectBuy | undefined,
   DirectBuyProps
->('marketplace/directBuy', async (params, { dispatch }) => {
+>('marketplace/directBuy', async (params, { dispatch, getState }) => {
   const { tokenId, price, onSuccess, onFailure } = params;
+
+  const {
+    marketplace: { sumOfUserAllowance },
+  }: any = getState();
 
   const marketplaceCanisterId = Principal.fromText(
     config.marketplaceCanisterId,
@@ -26,7 +31,14 @@ export const directBuy = createAsyncThunk<
   );
 
   try {
-    const allowanceAmount = BigInt(9_223_372_036_854_775_807);
+    const allowanceAmountInWICP = sumOfUserAllowance
+      ? sumOfUserAllowance + Number(price)
+      : Number(price);
+
+    const allowanceAmount = parseAmountToE8S(
+      allowanceAmountInWICP.toString(),
+    );
+
     const WICP_APPROVE = {
       idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,
