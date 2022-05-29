@@ -84,8 +84,8 @@ export const makeOffer = createAsyncThunk<
 
     // We call the Cap Sync process
     // but we don't have to wait for the response
+    await new Promise(resolve => setTimeout(resolve, 5000));
     await axios.get(KyasshuUrl.getCAPSync());
-
     return {
       id,
       amount,
