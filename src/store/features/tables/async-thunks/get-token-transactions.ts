@@ -16,7 +16,8 @@ export const getTokenTransactions = createAsyncThunk<
       KyasshuUrl.getTokenTransactions({ tokenId }),
     );
 
-    if (!response || response.statusText !== 'OK' || !('Items' in response.data)) {
+    if (!response || response.status !== 200 || !('Items' in response.data)) {
+      AppLog.error(response);
       throw Error('Oops! Failed to get the token transactions');
     }
 
