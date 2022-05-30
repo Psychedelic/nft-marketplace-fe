@@ -31,6 +31,7 @@ import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { extractTraitData } from '../../store/features/filters/async-thunks/get-filter-traits';
 import TraitsListLoader from './TraitsListLoader';
 import { roundOffDecimalValue } from '../../utils/nfts';
+import NFTDetailsSkeleton from './nft-details-skeleton';
 
 // type CurrentListing = {
 //   seller: string;
@@ -204,7 +205,7 @@ export const NftDetails = () => {
           </DetailsContainer>
         </Wrapper>
       ) : (
-        <Wrapper centered>Loading...</Wrapper>
+        <NFTDetailsSkeleton />
       )}
     </Container>
   );

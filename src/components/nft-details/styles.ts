@@ -80,3 +80,17 @@ export const NFTTraitsChipSkeleton = styled(SkeletonBox, {
     },
   },
 });
+
+export const PreviewImageSkeleton = styled(SkeletonBox, {
+  width: '100%',
+  maxWidth: '480px',
+  height: '425px',
+  marginBottom: '10px',
+});
+
+export const AccordionSkeletion = styled(SkeletonBox, {
+  width: '100%',
+  maxWidth: '670px',
+  height: '214px',
+  marginBottom: '25px',
+});
