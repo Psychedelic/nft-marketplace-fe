@@ -1,10 +1,8 @@
-<div align="center" style="padding-bottom: 20px;">
-  <img src="./.repo/images/crowns-marketplace-logo.png" width="140px" height="auto"/>
-</div>
+![](https://storageapi.fleek.co/fleek-team-bucket/jelly-nft.png)
 
-# NFT Marketplace UI
+# 🍭 Jelly - Marketplace FE (V1)
 
-The NFT Marketplace UI provides you with the opportunity to sell, purchase, offer Crowns NFT collection. Crowns are a collection of 10,000 uniquely generated NFTs on the Internet Computer. With a mix of traditional and psychedelic materials.
+This is the repository for Jelly's V1 single-collection marketplace app. The FE will evolve with the protocol as it transitions to a multi-collection marketplace hub.
 
 ## 📒 Table of Contents
 
