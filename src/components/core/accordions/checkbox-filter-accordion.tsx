@@ -21,30 +21,34 @@ export type CheckboxFilterAccordionProps = {
 };
 
 export const CheckboxFilterAccordion = ({
-  id = 'item-1',
+  id,
   checkboxData,
 }: CheckboxFilterAccordionProps) => {
   const dispatch = useAppDispatch();
   const { traits } = useFilterStore();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-  const filterValueExists = (traitsValue: string) =>
+  const filterValueExists = (
+    traitsValue: string,
+    checkboxKey: string,
+  ) =>
     traits.some(
       (trait) =>
         trait.values.includes(traitsValue) &&
-        trait.key === checkboxData.key,
+        trait.key === checkboxKey,
     );
   const traitsCount = traits.find(
     (trait) => trait.name === checkboxData.name,
   )?.values?.length;
 
   const handleSelectedFilters = (e: any) => {
-    const checkFilterValueExists = filterValueExists(e.target.value);
+    const [key, value] = e.target.value.split('-');
+    const checkFilterValueExists = filterValueExists(value, key);
 
     if (checkFilterValueExists) {
       dispatch(
         filterActions.removeTraitsFilter({
-          value: e.target.value,
-          key: checkboxData.key,
+          value: value,
+          key: key,
         }),
       );
       return;
@@ -52,9 +56,9 @@ export const CheckboxFilterAccordion = ({
 
     dispatch(
       filterActions.applytraits({
-        key: checkboxData.key,
+        key: key,
         name: checkboxData.name,
-        values: [e.target.value],
+        values: [value],
       }),
     );
   };
@@ -76,7 +80,9 @@ export const CheckboxFilterAccordion = ({
         >
           <p>
             {checkboxData.key}
-            {traitsCount && <ItemCount>{`(${traitsCount})`}</ItemCount>}
+            {traitsCount && (
+              <ItemCount>{`(${traitsCount})`}</ItemCount>
+            )}
           </p>
 
           <Icon
@@ -89,12 +95,15 @@ export const CheckboxFilterAccordion = ({
           <Form>
             {checkboxData.values.map((data: any) => (
               <Checkbox
-                key={data.value}
-                value={data.value}
+                key={`${checkboxData.key}-${data.value}`}
+                value={`${checkboxData.key}-${data.value}`}
                 percentage={data.rarity}
                 occurence={data.occurance}
                 handleSelectedFilters={handleSelectedFilters}
-                filterValueExists={filterValueExists}
+                filterValueExists={filterValueExists(
+                  data.value,
+                  checkboxData.key,
+                )}
               />
             ))}
           </Form>
