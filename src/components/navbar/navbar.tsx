@@ -1,4 +1,4 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useCallback } from 'react';
 import {
@@ -30,6 +30,7 @@ export const NavBar = () => {
   const dispatch = useAppDispatch();
   const { theme } = useThemeStore();
   const { showAlerts } = useSettingsStore();
+  const { pathname } = useLocation();
   const isLightTheme = theme === 'lightTheme';
 
   const changeThemeHandler = useCallback(() => {
@@ -44,7 +45,10 @@ export const NavBar = () => {
 
   return (
     <Container showAlerts={showAlerts}>
-      <RouterLink to="/">
+      <RouterLink
+        to="/"
+        onClick={() => pathname === '/' && window.location.reload()}
+      >
         <LogoContainer>
           <LogoIcon
             src={isLightTheme ? jelly : jellyDark}
