@@ -222,11 +222,14 @@ export type TokenTransactionItem = {
   };
   type: OperationTypes;
   price: BigInt;
-  from: TablePrincipal;
-  to: TablePrincipal;
+  seller: TablePrincipal;
+  buyer: TablePrincipal;
   date: string;
   time: number;
 };
+
+const tablePrincipalHandler = (principal: TablePrincipal) =>
+  principal.raw !== 'aaaaa-aa' && principal;
 
 export const parseTokenTransactions = ({
   items,
@@ -239,7 +242,7 @@ export const parseTokenTransactions = ({
       Object.values(curr.event.caller._arr),
     );
     const fromPrincipal = Principal.fromUint8Array(parsedArr);
-    const from = {
+    const seller = {
       raw: fromPrincipal.toString(),
       formatted: formatAddress(
         Principal.fromUint8Array(parsedArr).toString(),
@@ -248,7 +251,7 @@ export const parseTokenTransactions = ({
     const toPrincipal = Principal.fromUint8Array(
       curr.event.details[3][1].Principal._arr,
     );
-    const to = {
+    const buyer = {
       raw: toPrincipal.toString(),
       formatted: formatAddress(toPrincipal.toString()),
     };
@@ -263,8 +266,8 @@ export const parseTokenTransactions = ({
         price: parseE8SAmountToWICP(curr.event.details[2][1].U64),
         // TODO: the from/to needs a bit of thought as the type of operation
         // might not provide the data (for example on makeList)
-        from,
-        to,
+        seller: tablePrincipalHandler(seller),
+        buyer: tablePrincipalHandler(buyer),
         date: formatTimestamp(BigInt(curr.event.time)),
         time: curr.event.time,
         floorDifference: '',
