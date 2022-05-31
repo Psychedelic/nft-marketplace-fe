@@ -362,7 +362,7 @@ export const Filters = () => {
                       <CheckboxFilterAccordion
                         key={checkboxData.name}
                         checkboxData={checkboxData}
-                        id={checkboxData.name}
+                        id={checkboxData.key}
                       />
                     ),
                   )

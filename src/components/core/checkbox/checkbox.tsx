@@ -5,7 +5,7 @@ import { Wrapper } from './styles';
 export type CheckboxProps = {
   title?: string;
   value: string; // Red
-  filterValueExists: (value: string) => boolean;
+  filterValueExists: boolean;
   percentage: string; // 1291 (12.9%)
   occurence: string;
   handleSelectedFilters: (
@@ -29,10 +29,10 @@ export const Checkbox = ({
         value={value}
         onClick={handleSelectedFilters}
         // checks if value exists in array and sets checked to true
-        checked={filterValueExists(value)}
+        checked={filterValueExists}
       />
       <span />
-      {value}
+      {value.split('-')[1]}
     </label>
     <span>{`${occurence} (${roundOffDecimalValue(Number(percentage), 1)}%)`}</span>
   </Wrapper>
