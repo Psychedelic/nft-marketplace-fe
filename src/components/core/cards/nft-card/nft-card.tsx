@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { CardOptionsDropdown } from '../../dropdown';
 import {
@@ -15,6 +14,7 @@ import {
   NftDataText,
   ActionText,
   PriceInActionSheet,
+  RouterLink,
 } from './styles';
 import wicpLogo from '../../../../assets/wicp.svg';
 import {
@@ -187,12 +187,16 @@ export const NftCard = React.memo(
     return (
       <CardContainer ref={containerRef}>
         <CardWrapper>
-          <RouterLink to={`/nft/${data.id}`} className="card-router">
+          <RouterLink
+            to={`/nft/${data.id}`}
+            className="card-router"
+            previewCard={previewCard}
+          >
             <Flex>
               <OwnedCardText>
                 {owned ? `${t('translation:nftCard.owned')}` : ''}
               </OwnedCardText>
-              <CardOptionsDropdown data={data} />
+              {!previewCard && <CardOptionsDropdown data={data} />}
             </Flex>
             <Media
               containerRef={containerRef}

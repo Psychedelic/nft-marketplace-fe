@@ -1,4 +1,5 @@
 import { styled, keyframes } from '../../../../stitches.config';
+import { Link } from 'react-router-dom';
 import { ImagePreload } from '../../../image-preload';
 import { NumberTooltip } from '../../../number-tooltip';
 import { VideoPreload } from '../../../video-preload';
@@ -162,4 +163,14 @@ export const HoverMessageContainer = styled('span', {
 
   backgroundColor: '$backgroundColor',
   color: '$mainTextColor',
+});
+
+export const RouterLink = styled(Link, {
+  variants: {
+    previewCard: {
+      true: {
+        pointerEvents: 'none',
+      },
+    },
+  },
 });
