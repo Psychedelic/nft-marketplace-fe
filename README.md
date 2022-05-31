@@ -77,6 +77,10 @@ yarn start staging
 
  - or -
 
+yarn start test
+
+ - or -
+
 yarn start production
 ```
 
