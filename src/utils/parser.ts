@@ -228,6 +228,9 @@ export type TokenTransactionItem = {
   time: number;
 };
 
+const tablePrincipalHandler = (principal: TablePrincipal) =>
+  principal.raw !== 'aaaaa-aa' && principal;
+
 export const parseTokenTransactions = ({
   items,
 }: {
@@ -263,8 +266,8 @@ export const parseTokenTransactions = ({
         price: parseE8SAmountToWICP(curr.event.details[2][1].U64),
         // TODO: the from/to needs a bit of thought as the type of operation
         // might not provide the data (for example on makeList)
-        seller,
-        buyer: buyer.raw !== 'aaaaa-aa' ? buyer : '-',
+        seller: tablePrincipalHandler(seller),
+        buyer: tablePrincipalHandler(buyer),
         date: formatTimestamp(BigInt(curr.event.time)),
         time: curr.event.time,
         floorDifference: '',
