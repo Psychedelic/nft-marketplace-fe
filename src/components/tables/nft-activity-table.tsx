@@ -67,9 +67,9 @@ export const NFTActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.seller'),
-        accessor: ({ from }: RowProps) => (
+        accessor: ({ seller }: RowProps) => (
           <TextLinkCell
-            text={from.formatted}
+            text={seller.formatted}
             url=""
             type="nftActivity"
           />
@@ -77,9 +77,9 @@ export const NFTActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.buyer'),
-        accessor: ({ to }: RowProps) => (
+        accessor: ({ buyer }: RowProps) => (
           <TextLinkCell
-            text={to.formatted}
+            text={buyer.formatted}
             url=""
             type="nftActivity"
           />
