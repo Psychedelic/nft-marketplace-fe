@@ -43,7 +43,8 @@
       "apply": "Apply",
       "myOffers": "My Offers",
       "disconnect": "Disconnect",
-      "editOffer": "Edit Offer"
+      "editOffer": "Edit Offer",
+      "cancel": "Cancel"
     }
   },
   "dropdown": {
@@ -289,4 +290,3 @@
     "retryMessage": "click here to retry."
   }
 }
-

@@ -85,7 +85,9 @@ export const CancelOfferModal = ({
       <DialogPrimitive.Trigger asChild>
         <CancelOfferModalTrigger largeButton={largeTriggerButton}>
           <ActionButton type="secondary" size="small">
-            {t('translation:buttons.action.cancelOffer')}
+            {largeTriggerButton
+              ? t('translation:buttons.action.cancelOffer')
+              : t('translation:buttons.action.cancel')}
           </ActionButton>
         </CancelOfferModalTrigger>
       </DialogPrimitive.Trigger>

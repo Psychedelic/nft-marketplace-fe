@@ -53,7 +53,6 @@ export const Button = styled('button', {
 
     size: {
       small: {
-        minWidth: '120px',
         fontSize: '16px',
         lineHeight: '19px',
         borderWidth: '1px',
