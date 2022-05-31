@@ -264,7 +264,7 @@ export const parseTokenTransactions = ({
         // TODO: the from/to needs a bit of thought as the type of operation
         // might not provide the data (for example on makeList)
         seller,
-        buyer,
+        buyer: buyer.raw !== 'aaaaa-aa' ? buyer : '-',
         date: formatTimestamp(BigInt(curr.event.time)),
         time: curr.event.time,
         floorDifference: '',
