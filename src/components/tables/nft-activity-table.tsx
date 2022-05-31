@@ -66,7 +66,7 @@ export const NFTActivityTable = () => {
         ),
       },
       {
-        Header: t('translation:tables.titles.from'),
+        Header: t('translation:tables.titles.seller'),
         accessor: ({ from }: RowProps) => (
           <TextLinkCell
             text={from.formatted}
@@ -76,7 +76,7 @@ export const NFTActivityTable = () => {
         ),
       },
       {
-        Header: t('translation:tables.titles.to'),
+        Header: t('translation:tables.titles.buyer'),
         accessor: ({ to }: RowProps) => (
           <TextLinkCell
             text={to.formatted}
