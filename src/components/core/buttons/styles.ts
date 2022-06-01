@@ -62,6 +62,12 @@ export const Button = styled('button', {
         padding: '8px 35px',
       },
     },
+
+    fontWeight: {
+      light: {
+        fontWeight: 500,
+      }
+    }
   },
   cursor: 'pointer',
   padding: '8px 12px',

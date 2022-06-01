@@ -21,6 +21,7 @@ export const PriceDetailsCell = ({
   <PriceDetails>
     <WICPContainer tableType={tableType}>
       <WICPText tableType={tableType}>{wicp ? wicp : '-'}</WICPText>
+      <WICPText tableType={tableType}>{wicp ? "WICP" : '-'}</WICPText>
       {wicp && <WICPLogo src={wicpIcon} alt="wicp" />}
     </WICPContainer>
     {price && <PriceText tableType={tableType}>{price}</PriceText>}

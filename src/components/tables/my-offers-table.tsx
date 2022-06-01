@@ -65,6 +65,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const ownerTokenIdentifiers = useSelector(
     (state: RootState) => state.crowns.ownerTokenIdentifiers,
   );
+
   const recentlyAcceptedOffers = useSelector(
     (state: RootState) => state.marketplace.recentlyAcceptedOffers,
   );
@@ -257,6 +258,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
               }
               offerFrom={fromDetails.address}
               nftTokenId={item.tokenId.toString()}
+              actionButtonProp="light"
             />
           </ButtonWrapper>
         ),
