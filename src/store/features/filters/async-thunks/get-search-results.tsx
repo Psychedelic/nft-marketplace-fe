@@ -12,18 +12,23 @@ import {
   parseAmountToE8S,
   parseE8SAmountToWICP,
 } from '../../../../utils/formatters';
+import { SearchResultDataState } from '../filter-slice';
 
 export type GetSearchResultsProps =
   NSKyasshuUrl.GetSearchQueryParams & {
     search: string;
+    abortController: AbortController;
   };
 
 export const getSearchResults = createAsyncThunk<
-  void,
+  SearchResultDataState[] | undefined,
   GetSearchResultsProps
 >(
   'filters/getSearchResults',
-  async ({ search, sort, order, page, count }, { dispatch }) => {
+  async (
+    { search, sort, order, page, count, abortController },
+    { dispatch },
+  ) => {
     const payload = {
       search: search.length > 0 ? search : undefined,
     };
@@ -33,6 +38,9 @@ export const getSearchResults = createAsyncThunk<
       const response = await axios.post(
         KyasshuUrl.getSearchResults({ sort, order, page, count }),
         payload,
+        {
+          signal: abortController.signal,
+        },
       );
 
       const { data } = response.data;
@@ -59,8 +67,10 @@ export const getSearchResults = createAsyncThunk<
         return searchResultData;
       });
 
-      dispatch(filterActions.setSearchResults(searchResult));
+      return searchResult;
     } catch (error) {
+      if ((error as any)?.message === 'canceled') return;
+
       AppLog.error(error);
 
       dispatch(
@@ -71,3 +81,4 @@ export const getSearchResults = createAsyncThunk<
     }
   },
 );
+

@@ -1,5 +1,6 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { styled, keyframes } from '../../stitches.config';
+import Spinner from '../core/spinner';
 
 const overlayShow = keyframes({
   '0%': {
@@ -220,4 +221,8 @@ export const SubText = styled('span', {
   '&:first-child': {
     marginRight: '10px',
   },
+});
+
+export const Loading = styled(Spinner, {
+  padding: '10px',
 });
