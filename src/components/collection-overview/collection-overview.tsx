@@ -56,9 +56,7 @@ export const CollectionOverview = () => {
               )}
             </Heading>
             <Subtext>
-              Crowns are a collection of 10,000 generated NFTs on the
-              Internet Computer. With a mix of traditional and
-              psychedelic materials.
+              {t('translation:common.crownsDescription')}
             </Subtext>
           </HeaderWrapper>
         </NftMetadataContentWrapper>

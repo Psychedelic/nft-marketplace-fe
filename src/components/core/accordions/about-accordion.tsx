@@ -127,9 +127,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
         >
           <Description>
-            {`${t(
-              'translation:accordions.about.header.description',
-            )}`}
+            {`${t('translation:common.crownsDescription')}`}
           </Description>
           <div>
             {AccordionContentMetaData.map((data) => (
