@@ -17,6 +17,7 @@ import { SearchResultDataState } from '../filter-slice';
 export type GetSearchResultsProps =
   NSKyasshuUrl.GetSearchQueryParams & {
     search: string;
+    abortController: AbortController;
   };
 
 export const getSearchResults = createAsyncThunk<
@@ -24,7 +25,10 @@ export const getSearchResults = createAsyncThunk<
   GetSearchResultsProps
 >(
   'filters/getSearchResults',
-  async ({ search, sort, order, page, count }, { dispatch }) => {
+  async (
+    { search, sort, order, page, count, abortController },
+    { dispatch },
+  ) => {
     const payload = {
       search: search.length > 0 ? search : undefined,
     };
@@ -34,6 +38,9 @@ export const getSearchResults = createAsyncThunk<
       const response = await axios.post(
         KyasshuUrl.getSearchResults({ sort, order, page, count }),
         payload,
+        {
+          signal: abortController.signal,
+        },
       );
 
       const { data } = response.data;
@@ -62,6 +69,8 @@ export const getSearchResults = createAsyncThunk<
 
       return searchResult;
     } catch (error) {
+      if ((error as any)?.message === 'canceled') return;
+
       AppLog.error(error);
 
       dispatch(

@@ -46,6 +46,8 @@ export const GlobalSearch = () => {
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState('');
+  const [currentAbortController, setCurrentAbortController] =
+    useState<AbortController>();
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -53,7 +55,7 @@ export const GlobalSearch = () => {
   };
 
   const debouncedSearchHandler = useCallback(
-    debounce((value: string) => {
+    debounce((value: string, abortController: AbortController) => {
       dispatch(
         filterActions.getSearchResults({
           sort: sortBy,
@@ -61,6 +63,7 @@ export const GlobalSearch = () => {
           page: 0,
           count: 25,
           search: value,
+          abortController,
         }),
       );
     }, DEBOUNCE_TIMEOUT_MS),
@@ -72,7 +75,14 @@ export const GlobalSearch = () => {
       return;
     }
 
-    debouncedSearchHandler(value);
+    // Abort any pending request before proceeding
+    if (currentAbortController) currentAbortController.abort();
+
+    const abortController = new AbortController();
+
+    setCurrentAbortController(abortController);
+
+    debouncedSearchHandler(value, abortController);
   };
 
   const closeDropDown = () => handleModalOpen(false);
