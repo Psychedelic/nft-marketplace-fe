@@ -50,6 +50,7 @@ export interface AcceptOfferProps {
   formattedPrice: string;
   offerFrom: string;
   nftTokenId?: string;
+  actionButtonProp?: string;
 }
 
 /* --------------------------------------------------------------------------
@@ -61,6 +62,7 @@ export const AcceptOfferModal = ({
   formattedPrice,
   offerFrom,
   nftTokenId,
+  actionButtonProp
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -145,7 +147,11 @@ export const AcceptOfferModal = ({
       */}
       <DialogPrimitive.Trigger asChild>
         <AcceptOfferModalTrigger>
-          <ActionButton type="outline" size="small">
+          <ActionButton
+            type="outline"
+            size="small"
+            fontWeight={actionButtonProp ? "light" : undefined}
+          >
             {t('translation:buttons.action.acceptOffer')}
           </ActionButton>
         </AcceptOfferModalTrigger>

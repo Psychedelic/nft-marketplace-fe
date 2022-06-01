@@ -26,6 +26,8 @@ import { FaSearch } from '@react-icons/all-files/fa/FaSearch';
 import { GoVerified } from '@react-icons/all-files/go/GoVerified';
 import { FaRegHandPaper } from '@react-icons/all-files/fa/FaRegHandPaper';
 import { IoWarningOutline } from '@react-icons/all-files/io5/IoWarningOutline';
+import { FiUpload } from '@react-icons/all-files/fi/FiUpload';
+import { FiDownload } from '@react-icons/all-files/fi/FiDownload';
 
 import { PlugIcon, AppNameIcon, SpinnerIcon } from './custom';
 
@@ -59,6 +61,8 @@ export const Icons = {
   verified: GoVerified,
   'hand-paper': FaRegHandPaper,
   spinner: SpinnerIcon,
+  upload: FiUpload,
+  download: FiDownload,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,

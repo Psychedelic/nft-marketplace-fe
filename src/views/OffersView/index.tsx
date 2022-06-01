@@ -8,9 +8,11 @@ import {
   Title,
   ButtonListWrapper,
   ButtonDetailsWrapper,
+  StyledIcons,
 } from './styles';
 import { OfferTypeStatusCodes } from '../../constants/my-offers';
 import { useSettingsStore } from '../../store';
+import { NftMetadataBackground } from '../../components/collection-overview/styles';
 
 /* --------------------------------------------------------------------------
  * Offers View Component
@@ -26,11 +28,13 @@ const OffersView = () => {
 
   return (
     <Container showAlerts={showAlerts}>
+      <NftMetadataBackground />
       <TitleWrapper>
         <Title>{t('translation:offers.myOffers')}</Title>
         <ButtonListWrapper>
           <ButtonDetailsWrapper>
             <ActionButton
+              fontWeight="light"
               type={
                 offersType === OfferTypeStatusCodes.OffersReceived
                   ? 'outline'
@@ -40,11 +44,13 @@ const OffersView = () => {
                 setOffersType(OfferTypeStatusCodes.OffersReceived);
               }}
             >
+              <StyledIcons icon="download" />
               {t('translation:offers.offersReceived')}
             </ActionButton>
           </ButtonDetailsWrapper>
           <ButtonDetailsWrapper>
             <ActionButton
+              fontWeight="light"
               type={
                 offersType === OfferTypeStatusCodes.OffersMade
                   ? 'outline'
@@ -54,6 +60,7 @@ const OffersView = () => {
                 setOffersType(OfferTypeStatusCodes.OffersMade);
               }}
             >
+              <StyledIcons icon="upload" />
               {t('translation:offers.offersMade')}
             </ActionButton>
           </ButtonDetailsWrapper>

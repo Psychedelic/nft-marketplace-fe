@@ -1,3 +1,4 @@
+import { Icon } from '../../components';
 import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
@@ -36,4 +37,8 @@ export const ButtonListWrapper = styled('div', {
 export const ButtonDetailsWrapper = styled('div', {
   height: '44px',
   marginLeft: '15px',
+});
+
+export const StyledIcons = styled(Icon, {
+  marginRight: '10px',
 });
