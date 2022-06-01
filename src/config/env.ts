@@ -76,4 +76,6 @@ const config: Config = {
 export default config[env];
 
 // eslint-disable-next-line no-console
-console.log(`Config ENV=${env}:`, config[env]);
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+env === 'development' &&
+  console.log(`Config ENV=${env}:`, config[env]);
