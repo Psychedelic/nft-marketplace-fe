@@ -46,6 +46,7 @@ export const {
       iconGrey: '#767D8F',
       lightYellow: '#ffd71926',
       paleYellow: '#987E00',
+      regentGrey: '#777E8F',
     },
     space: {},
     fonts: {},
