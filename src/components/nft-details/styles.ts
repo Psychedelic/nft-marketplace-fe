@@ -65,7 +65,7 @@ export const NFTTraitsChipSkeleton = styled(SkeletonBox, {
   boxSizing: 'border-box',
   display: 'flex',
   alignItems: 'center',
-  padding: '12px 15px',
+  padding: '12px 10px',
   borderRadius: '14px',
   minWidth: '150px',
   border: '1.5px solid $borderColor',
