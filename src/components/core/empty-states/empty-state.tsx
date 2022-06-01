@@ -44,6 +44,7 @@ export const EmptyState = ({
           </div>
         ) : (
           <ActionButton
+            size="wide"
             type="primary"
             onClick={() => {
               dispatch(
