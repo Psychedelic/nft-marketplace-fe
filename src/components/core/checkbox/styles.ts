@@ -26,7 +26,7 @@ export const Wrapper = styled('div', {
     },
 
     '& input[type="checkbox"] + span:before': {
-      content: "\\00a0",
+      content: '\\00a0',
       marginRight: '8px',
       marginLeft: '0px',
       border: '1px solid #777E8F',
@@ -57,18 +57,18 @@ export const Wrapper = styled('div', {
 
     '& input[type="checkbox"]:checked + span:after': {
       fontWeight: 'bold',
-      color: 'white'
-    },
-
-    '& span': {
-      fontStyle: 'normal',
-      fontWeight: '500',
-      fontSize: '13px',
-      lineHeight: '20px',
-      display: 'flex',
-      alignItems: 'center',
-      textAlign: 'right',
-      color: '#777E8F',
+      color: 'white',
     },
   },
+});
+
+export const RarityValue = styled('span', {
+  color: '$regentGrey',
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '14px',
+  lineHeight: '20px',
+  display: 'flex',
+  alignItems: 'center',
+  textAlign: 'right',
 });

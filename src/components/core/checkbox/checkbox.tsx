@@ -1,6 +1,6 @@
 import React from 'react';
 import { roundOffDecimalValue } from '../../../utils/nfts';
-import { Wrapper } from './styles';
+import { Wrapper, RarityValue } from './styles';
 
 export type CheckboxProps = {
   title?: string;
@@ -34,6 +34,6 @@ export const Checkbox = ({
       <span />
       {value.split('-')[1]}
     </label>
-    <span>{`${occurence} (${roundOffDecimalValue(Number(percentage), 1)}%)`}</span>
+    <RarityValue>{`${occurence} (${roundOffDecimalValue(Number(percentage), 1)}%)`}</RarityValue>
   </Wrapper>
 );
