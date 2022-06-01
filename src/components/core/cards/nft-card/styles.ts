@@ -1,5 +1,5 @@
-import { styled, keyframes } from '../../../../stitches.config';
 import { Link } from 'react-router-dom';
+import { styled, keyframes } from '../../../../stitches.config';
 import { ImagePreload } from '../../../image-preload';
 import { NumberTooltip } from '../../../number-tooltip';
 import { VideoPreload } from '../../../video-preload';
@@ -38,13 +38,12 @@ export const CardWrapper = styled('div', {
 
 export const MediaWrapper = styled('div', {
   position: 'relative',
-  minHeight: '175px',
-  height: '175px',
+  height: '207px',
   margin: '10px -15px',
 });
 
 export const PreviewDetails = styled('div', {
-  minHeight: '175px',
+  minHeight: '207px',
   width: '100%',
   height: '100%',
 });

@@ -4,11 +4,11 @@ import useVirtual from 'react-cool-virtual';
 
 const DefaultProps = {
   width: 210,
-  height: 300,
+  height: 348,
   headerOffset: 76,
   columns: 3,
-  scrollThreshold: 300,
-  rowSpacing: 1.15,
+  scrollThreshold: 348,
+  rowSpacing: 1.06,
   padding: 15,
   throttlingInterval: 300,
 };
