@@ -59,7 +59,7 @@ export const Button = styled('button', {
         borderRadius: '10px',
       },
       wide: {
-        padding: '8px 30px',
+        padding: '8px 35px',
       },
     },
   },
