@@ -1,6 +1,16 @@
 import * as Accordion from '@radix-ui/react-accordion';
-import { styled } from '../../../stitches.config';
+import { styled, keyframes } from '../../../stitches.config';
 import { SkeletonBox } from '../skeleton';
+
+const slideDown = keyframes({
+  from: { maxHeight: 0 },
+  to: { maxHeight: 'var(--radix-accordion-content-height)' },
+});
+
+const slideUp = keyframes({
+  from: { height: 'var(--radix-accordion-content-height)' },
+  to: { height: 0 },
+});
 
 export const AccordionStyle = styled(Accordion.Root, {
   border: '2px solid $borderColor',
@@ -170,6 +180,7 @@ export const FlexRight = styled('div', {
 
 export const AccordionTrigger = styled(Accordion.Trigger, {
   color: '$mainTextColor',
+
   variants: {
     backgroundColor: {
       open: {
@@ -261,13 +272,23 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
 
 export const AccordionContent = styled(Accordion.Content, {
   color: '$mainTextColor',
+  overflow: 'hidden',
+
+  '&[data-state="open"]': {
+    animation: `${slideDown} 700ms cubic-bezier(0.87, 0, 0.13, 1) forwards`,
+  },
+
+  '&[data-state="closed"]': {
+    animation: `${slideUp} 600ms cubic-bezier(0.87, 0, 0.13, 1) forwards`,
+  },
+
   variants: {
     backgroundColor: {
       open: {
         background: '$openAccordion',
       },
       notopen: {
-        backgroundColor: 'white',
+        backgroundColor: '$closeAccordion',
       },
       none: {
         backgroundColor: 'unset',
