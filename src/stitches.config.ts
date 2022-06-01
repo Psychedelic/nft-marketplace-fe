@@ -56,9 +56,17 @@ export const {
     },
   },
   media: {
+    // TODO: For responsiveness
+    // find that is best to do mobile first approach
+    // which means that you'd have min-width, instead
+    // of max-width, to allow you to provide a set of
+    // rules that fulfill a wider range
     sm: '(max-width: 640px)',
     md: '(max-width: 850px)',
     lg: '(max-width: 1140px)',
+    // TODO: considering the request above
+    // here's a temporary breakpoint
+    large: '(min-width: 1140px)',
   },
   utils: {},
 });

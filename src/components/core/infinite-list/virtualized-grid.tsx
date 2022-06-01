@@ -1,6 +1,7 @@
 import throttle from 'lodash.throttle';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import useVirtual from 'react-cool-virtual';
+import { CardListContainer } from './styles';
 
 const DefaultProps = {
   width: 210,
@@ -187,12 +188,7 @@ export const VirtualizedGrid = <T extends object>({
     rowIndex * colItems + colIndex;
 
   return (
-    <div
-      ref={wrapperRef}
-      style={{
-        width: `100%`,
-      }}
-    >
+    <CardListContainer ref={wrapperRef}>
       <div
         style={{
           width: `100%`,
@@ -246,6 +242,6 @@ export const VirtualizedGrid = <T extends object>({
           ))}
         </div>
       </div>
-    </div>
+    </CardListContainer>
   );
 };
