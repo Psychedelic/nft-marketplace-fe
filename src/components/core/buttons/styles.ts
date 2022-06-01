@@ -58,6 +58,9 @@ export const Button = styled('button', {
         borderWidth: '1px',
         borderRadius: '10px',
       },
+      wide: {
+        padding: '8px 30px',
+      },
     },
   },
   cursor: 'pointer',
