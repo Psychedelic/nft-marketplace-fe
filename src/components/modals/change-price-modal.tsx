@@ -332,11 +332,11 @@ export const ChangePriceModal = ({
             */}
               <ModalHeader>
                 <ModalTitle>
-                  {t('translation:modals.title.listingComplete')}
+                  {t('translation:modals.title.changePriceComplete')}
                 </ModalTitle>
                 <ModalDescription>
                   {t(
-                    'translation:modals.description.listingComplete',
+                    'translation:modals.description.changePriceComplete',
                   )}
                 </ModalDescription>
               </ModalHeader>
