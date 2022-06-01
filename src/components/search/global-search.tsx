@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import throttle from 'lodash.throttle';
+import debounce from 'lodash.debounce';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { SearchInput } from '../core';
@@ -22,6 +22,7 @@ import {
   WICPLogo,
   PriceText,
   SubText,
+  Loading,
 } from './styles';
 import {
   filterActions,
@@ -31,6 +32,8 @@ import {
 } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
 
+const DEBOUNCE_TIMEOUT_MS = 400;
+
 /* --------------------------------------------------------------------------
  * Global Search Component
  * --------------------------------------------------------------------------*/
@@ -39,7 +42,7 @@ export const GlobalSearch = () => {
   const { t } = useTranslation();
   const { loadedNFTS } = useNFTSStore();
   const dispatch = useAppDispatch();
-  const { sortBy, searchResults } = useFilterStore();
+  const { sortBy, searchResults, loadingSearch } = useFilterStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState('');
@@ -49,13 +52,8 @@ export const GlobalSearch = () => {
     setSearchText('');
   };
 
-  const handleSearch = useCallback(
-    throttle((value: string) => {
-      if (!value) {
-        dispatch(filterActions.setSearchResults([]));
-        return;
-      }
-
+  const debouncedSearchHandler = useCallback(
+    debounce((value: string) => {
       dispatch(
         filterActions.getSearchResults({
           sort: sortBy,
@@ -65,9 +63,17 @@ export const GlobalSearch = () => {
           search: value,
         }),
       );
-    }, 2500),
+    }, DEBOUNCE_TIMEOUT_MS),
     [loadedNFTS],
   );
+  const handleSearch = (value: string) => {
+    if (!value) {
+      dispatch(filterActions.setSearchResults([]));
+      return;
+    }
+
+    debouncedSearchHandler(value);
+  };
 
   const closeDropDown = () => handleModalOpen(false);
 
@@ -112,6 +118,7 @@ export const GlobalSearch = () => {
           />
         </SearchContainer>
         {searchText &&
+          !loadingSearch &&
           (searchResults.length ? (
             <ItemsListContainer>
               {searchResults?.map((nft) => (
@@ -153,11 +160,12 @@ export const GlobalSearch = () => {
               {t('translation:emptyStates.noNFTId')}
             </ItemsEmptyContainer>
           ))}
-        {!searchText && (
+        {!searchText && !loadingSearch && (
           <ItemsEmptyContainer>
             {t('translation:common.noRecentSearch')}
           </ItemsEmptyContainer>
         )}
+        {loadingSearch && <Loading />}
       </ModalContent>
     </DialogPrimitive.Root>
   );

@@ -42,6 +42,7 @@ export interface FilterState {
   status: string;
   searchResults: SearchResultDataState[];
   isAlreadyFetched: boolean;
+  loadingSearch: boolean;
 }
 
 const initialState: FilterState = {
@@ -54,6 +55,7 @@ const initialState: FilterState = {
   status: '',
   searchResults: [],
   isAlreadyFetched: false,
+  loadingSearch: false,
 };
 
 export const filterSlice = createSlice({
@@ -218,6 +220,25 @@ export const filterSlice = createSlice({
     setIsAlreadyFetched: (state, action: PayloadAction<boolean>) => {
       state.isAlreadyFetched = action.payload;
     },
+    setLoadingSearch: (state, action: PayloadAction<boolean>) => {
+      state.loadingSearch = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getSearchResults.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.searchResults = [...action.payload];
+      state.loadingSearch = false;
+    });
+    builder.addCase(getSearchResults.pending, (state) => {
+      state.loadingSearch = true;
+      state.searchResults = [];
+    });
+    builder.addCase(getSearchResults.rejected, (state) => {
+      state.loadingSearch = false;
+      state.searchResults = [];
+    });
   },
 });
 

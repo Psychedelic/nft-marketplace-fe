@@ -12,6 +12,7 @@ import {
   parseAmountToE8S,
   parseE8SAmountToWICP,
 } from '../../../../utils/formatters';
+import { SearchResultDataState } from '../filter-slice';
 
 export type GetSearchResultsProps =
   NSKyasshuUrl.GetSearchQueryParams & {
@@ -19,7 +20,7 @@ export type GetSearchResultsProps =
   };
 
 export const getSearchResults = createAsyncThunk<
-  void,
+  SearchResultDataState[] | undefined,
   GetSearchResultsProps
 >(
   'filters/getSearchResults',
@@ -59,7 +60,7 @@ export const getSearchResults = createAsyncThunk<
         return searchResultData;
       });
 
-      dispatch(filterActions.setSearchResults(searchResult));
+      return searchResult;
     } catch (error) {
       AppLog.error(error);
 
@@ -71,3 +72,4 @@ export const getSearchResults = createAsyncThunk<
     }
   },
 );
+
