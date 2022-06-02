@@ -22,7 +22,7 @@ import {
   WICPLogo,
   PriceText,
   SubText,
-  Loading,
+  SpinnerIcon,
 } from './styles';
 import {
   filterActions,
@@ -69,6 +69,7 @@ export const GlobalSearch = () => {
     }, DEBOUNCE_TIMEOUT_MS),
     [loadedNFTS],
   );
+
   const handleSearch = (value: string) => {
     if (!value) {
       dispatch(filterActions.setSearchResults([]));
@@ -175,7 +176,12 @@ export const GlobalSearch = () => {
             {t('translation:common.noRecentSearch')}
           </ItemsEmptyContainer>
         )}
-        {loadingSearch && <Loading />}
+        {loadingSearch && (
+          <SpinnerIcon
+            icon="spinner"
+            extraIconProps={{ size: '32px' }}
+          />
+        )}
       </ModalContent>
     </DialogPrimitive.Root>
   );
