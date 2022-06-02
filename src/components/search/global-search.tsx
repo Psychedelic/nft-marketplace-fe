@@ -22,7 +22,7 @@ import {
   WICPLogo,
   PriceText,
   SubText,
-  Loading,
+  LoadingWrapper,
 } from './styles';
 import {
   filterActions,
@@ -31,6 +31,7 @@ import {
   useNFTSStore,
 } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
+import { SpinnerIcon } from '../icons/custom';
 
 const DEBOUNCE_TIMEOUT_MS = 400;
 
@@ -69,6 +70,7 @@ export const GlobalSearch = () => {
     }, DEBOUNCE_TIMEOUT_MS),
     [loadedNFTS],
   );
+
   const handleSearch = (value: string) => {
     if (!value) {
       dispatch(filterActions.setSearchResults([]));
@@ -175,7 +177,11 @@ export const GlobalSearch = () => {
             {t('translation:common.noRecentSearch')}
           </ItemsEmptyContainer>
         )}
-        {loadingSearch && <Loading />}
+        {loadingSearch && (
+          <LoadingWrapper>
+            <SpinnerIcon />
+          </LoadingWrapper>
+        )}
       </ModalContent>
     </DialogPrimitive.Root>
   );
