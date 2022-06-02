@@ -57,7 +57,7 @@ export const NFTActivityTable = () => {
         Header: t('translation:tables.titles.price'),
         accessor: ({ price }: RowProps) => (
           <PriceDetailsCell
-            wicp={`${price} WICP`}
+            wicp={`${price}`}
             // Obs: we don't know the historical market price at time of direct buy
             // so we are not going to display it, as by computing the current market price
             // would be misleading
