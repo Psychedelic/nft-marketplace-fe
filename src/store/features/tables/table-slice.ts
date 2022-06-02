@@ -23,7 +23,7 @@ export interface TableState {
 }
 
 export interface CapActivityParams {
-  pageCount: number;
+  pageCount: string;
   bucketId: string;
 }
 
@@ -31,8 +31,7 @@ export type TokenMetadataById = Record<string, string>;
 
 interface LoadedTableData {
   loadedCapActivityTableData: Array<object>;
-  totalPages: number;
-  total: number;
+  currentPage: string;
   nextPage: number;
 }
 
@@ -67,17 +66,21 @@ export const tableSlice = createSlice({
       state,
       action: PayloadAction<LoadedTableData>,
     ) => {
-      const { nextPage, totalPages, loadedCapActivityTableData } =
+      const { currentPage, nextPage, loadedCapActivityTableData } =
         action.payload;
+
+
       state.loadingTableData = false;
-      if (nextPage === 0) {
+
+      if (currentPage === "last") {
         state.loadedCapActivityData = loadedCapActivityTableData;
       } else {
         state.loadedCapActivityData.push(
           ...loadedCapActivityTableData,
         );
       }
-      if (nextPage > totalPages) {
+
+      if (nextPage >= 0) {
         state.hasMoreData = true;
         state.nextPageNo = nextPage;
       } else {

@@ -72,14 +72,16 @@ export const ActivityTable = () => {
   useEffect(() => {
     if (!bucketId) return;
 
-    dispatch(tableActions.getCAPActivity({ pageCount: 0, bucketId }));
+    dispatch(
+      tableActions.getCAPActivity({ pageCount: 'last', bucketId }),
+    );
   }, [dispatch, bucketId]);
 
   const loadMoreData = useCallback(() => {
     if (loadingTableData || !hasMoreData || !bucketId) return;
     dispatch(
       tableActions.getCAPActivity({
-        pageCount: nextPageNo,
+        pageCount: nextPageNo.toString(),
         bucketId,
       }),
     );
@@ -156,7 +158,7 @@ export const ActivityTable = () => {
     <InfiniteScrollWrapper
       pageStart={0}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
-      loadMore={nextPageNo > 0 ? loadMoreData : () => {}}
+      loadMore={nextPageNo >= 0 ? loadMoreData : () => {}}
       hasMore={hasMoreData}
       loader={
         <TableSkeletons

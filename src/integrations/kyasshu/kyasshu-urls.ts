@@ -66,7 +66,7 @@ export namespace NSKyasshuUrl {
   export type GetFilterTraitsQueryParams = {};
 
   export type GetCAPActivityQueryParams = {
-    pageCount: number;
+    pageCount: string;
     bucketId: string;
   };
 
