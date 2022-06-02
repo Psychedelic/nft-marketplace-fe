@@ -15,13 +15,11 @@ export const getCAPActivity = createAsyncThunk<
 >(
   'table/getCAPActivity',
   async ({ pageCount, bucketId }, { dispatch }) => {
-    if (pageCount === 0) {
-      dispatch(tableActions.setIsTableDataLoading(true));
-    }
+    dispatch(tableActions.setIsTableDataLoading(true));
 
     try {
       const response = await axios.get(
-        KyasshuUrl.getCAPActivity({ pageCount, bucketId }),
+        KyasshuUrl.getCAPActivity({ pageCount: pageCount, bucketId }),
       );
       const { Items, Count } = response.data;
       let pageNo;
@@ -69,9 +67,8 @@ export const getCAPActivity = createAsyncThunk<
 
       const actionPayload = {
         loadedCapActivityTableData,
-        totalPages: pageNo ? parseInt(pageNo, 10) : 0,
-        total: Count ? parseInt(Count, 10) : 0,
-        nextPage: Count === 64 ? pageCount + 1 : pageCount,
+        currentPage: pageCount,
+        nextPage: Number(pageNo) - 1,
       };
 
       dispatch(tableActions.setCapActivityTable(actionPayload));
