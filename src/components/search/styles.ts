@@ -1,6 +1,5 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { styled, keyframes } from '../../stitches.config';
-import { Icon } from '../icons';
 
 const overlayShow = keyframes({
   '0%': {
@@ -223,7 +222,7 @@ export const SubText = styled('span', {
   },
 });
 
-export const SpinnerIcon = styled(Icon, {
+export const LoadingWrapper = styled('div', {
   position: 'absolute',
   top: '50%',
   left: '50%',

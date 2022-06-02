@@ -22,7 +22,7 @@ import {
   WICPLogo,
   PriceText,
   SubText,
-  SpinnerIcon,
+  LoadingWrapper,
 } from './styles';
 import {
   filterActions,
@@ -31,6 +31,7 @@ import {
   useNFTSStore,
 } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
+import { SpinnerIcon } from '../icons/custom';
 
 const DEBOUNCE_TIMEOUT_MS = 400;
 
@@ -177,10 +178,9 @@ export const GlobalSearch = () => {
           </ItemsEmptyContainer>
         )}
         {loadingSearch && (
-          <SpinnerIcon
-            icon="spinner"
-            extraIconProps={{ size: '32px' }}
-          />
+          <LoadingWrapper>
+            <SpinnerIcon />
+          </LoadingWrapper>
         )}
       </ModalContent>
     </DialogPrimitive.Root>
