@@ -237,42 +237,41 @@ export const parseTokenTransactions = ({
   items: any[];
 }) => {
   const parsed = items.reduce((acc: any, curr: any) => {
-    const parsedArr = Uint8Array.from(
-      // eslint-disable-next-line no-underscore-dangle
-      Object.values(curr.event.caller._arr),
-    );
-    const fromPrincipal = Principal.fromUint8Array(parsedArr);
-    const seller = {
-      raw: fromPrincipal.toString(),
-      formatted: formatAddress(
-        Principal.fromUint8Array(parsedArr).toString(),
-      ),
-    };
-    const toPrincipal = Principal.fromUint8Array(
-      curr.event.details[3][1].Principal._arr,
-    );
-    const buyer = {
-      raw: toPrincipal.toString(),
-      formatted: formatAddress(toPrincipal.toString()),
-    };
+    const details = Object.fromEntries(curr.event.details);
+    var buyer, seller;
 
-    acc = [
-      ...acc,
-      {
-        item: {
-          name: `CAP Crowns #${curr.event.details[0][1].U64}`,
-        },
-        type: getOperationType(curr.event.operation),
-        price: parseE8SAmountToWICP(curr.event.details[2][1].U64),
-        // TODO: the from/to needs a bit of thought as the type of operation
-        // might not provide the data (for example on makeList)
-        seller: tablePrincipalHandler(seller),
-        buyer: tablePrincipalHandler(buyer),
-        date: formatTimestamp(BigInt(curr.event.time)),
-        time: curr.event.time,
-        floorDifference: '',
+    if (details.seller) {
+      const sellerPrincipal = parseTablePrincipal(details.seller?.Principal._arr);
+      if (sellerPrincipal) {
+        seller = {
+          raw: sellerPrincipal.toString(),
+          formatted: formatAddress(sellerPrincipal.toString()),
+        };
+      }
+    }
+
+    if (details.buyer) {
+      const buyerPrincipal = parseTablePrincipal(details.buyer?.Principal._arr);
+      if (buyerPrincipal) {
+        buyer = {
+          raw: buyerPrincipal.toString(),
+          formatted: formatAddress(buyerPrincipal.toString()),
+        };
+      }
+    }
+
+    acc.push({
+      item: {
+        name: `CAP Crowns #${details.token_id.U64}`,
       },
-    ];
+      type: getOperationType(curr.event.operation),
+      price: parseE8SAmountToWICP(details.price.U64),
+      seller: seller ? tablePrincipalHandler(seller) : {},
+      buyer: buyer ? tablePrincipalHandler(buyer) : {},
+      date: formatTimestamp(BigInt(curr.event.time)),
+      time: curr.event.time,
+      floorDifference: '',
+    });
 
     const sortedTransactionsByTime = sortTransactionsByTime(acc);
 
