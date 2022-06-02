@@ -84,6 +84,12 @@ export const ItemsListContainer = styled('div', {
   padding: '0px 0px 10px',
   maxHeight: '325px',
   overflow: 'scroll',
+  msOverflowStyle: 'none',
+  scrollbarWidth: 'none',
+
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
 });
 
 export const ItemDetailsWrapper = styled('div', {
