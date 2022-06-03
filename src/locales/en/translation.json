@@ -9,7 +9,8 @@
   "offers": {
     "myOffers": "My Offers",
     "offersReceived": "Offers Received",
-    "offersMade": "Offers Made"
+    "offersMade": "Offers Made",
+    "offers": "Offers"
   },
   "buttons": {
     "placeholder": {
@@ -292,4 +293,3 @@
     "retryMessage": "click here to retry."
   }
 }
-

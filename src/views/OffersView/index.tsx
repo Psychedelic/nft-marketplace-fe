@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { MyOffersTable } from '../../components/tables';
 import { ActionButton } from '../../components/core';
@@ -11,8 +12,9 @@ import {
   StyledIcons,
 } from './styles';
 import { OfferTypeStatusCodes } from '../../constants/my-offers';
-import { useSettingsStore } from '../../store';
+import { useSettingsStore, usePlugStore } from '../../store';
 import { NftMetadataBackground } from '../../components/collection-overview/styles';
+import { isNFTOwner } from '../../integrations/kyasshu/utils';
 
 /* --------------------------------------------------------------------------
  * Offers View Component
@@ -26,11 +28,26 @@ const OffersView = () => {
 
   const { showAlerts } = useSettingsStore();
 
+  const { isConnected, principalId: connectedPlugUser } =
+    usePlugStore();
+
+  const { id: plugPrincipal } = useParams();
+
+  const isConnectedOwner = isNFTOwner({
+    isConnected,
+    owner: connectedPlugUser,
+    principalId: plugPrincipal,
+  });
+
   return (
     <Container showAlerts={showAlerts}>
       <NftMetadataBackground />
       <TitleWrapper>
-        <Title>{t('translation:offers.myOffers')}</Title>
+        <Title>
+          {isConnectedOwner
+            ? t('translation:offers.myOffers')
+            : t('translation:offers.offers')}
+        </Title>
         <ButtonListWrapper>
           <ButtonDetailsWrapper>
             <ActionButton

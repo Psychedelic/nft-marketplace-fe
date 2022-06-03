@@ -33,6 +33,7 @@ import {
   formatPriceValue,
   parseE8SAmountToWICP,
 } from '../../utils/formatters';
+import { isNFTOwner } from '../../integrations/kyasshu/utils';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -53,7 +54,8 @@ export type TableDetails = {
 export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { isConnected } = usePlugStore();
+  const { isConnected, principalId: connectedPlugUser } =
+    usePlugStore();
   const [columnsToHide, setColumnsToHide] = useState<Array<string>>(
     [],
   );
@@ -76,6 +78,12 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
   const { id: plugPrincipal } = useParams();
 
+  const isConnectedOwner = isNFTOwner({
+    isConnected,
+    owner: connectedPlugUser,
+    principalId: plugPrincipal,
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -86,11 +94,26 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   }, [offersType]);
 
   useEffect(() => {
+    // hide offersReceivedAction & offersMadeAction
+    // when user not connected to plug
+    if (!isConnectedOwner) {
+      if (
+        !columnsToHide.includes(
+          OffersTableHeaders.OffersReceivedAction,
+        )
+      ) {
+        setColumnsToHide((oldColumns) => [
+          ...oldColumns,
+          OffersTableHeaders.OffersReceivedAction,
+          OffersTableHeaders.OffersMadeAction,
+        ]);
+      }
+
+      return;
+    }
+
     // hide offersMadeAction if offersType = OffersReceived
-    if (
-      offersType === OfferTypeStatusCodes.OffersReceived &&
-      !columnsToHide.includes(OffersTableHeaders.OffersMadeAction)
-    ) {
+    if (offersType === OfferTypeStatusCodes.OffersReceived) {
       const newColumns = columnsToHide.filter(
         (header) =>
           header !== OffersTableHeaders.OffersReceivedAction,
@@ -104,10 +127,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     }
 
     // hide offersReceivedAction if offersType = OffersMade
-    if (
-      offersType === OfferTypeStatusCodes.OffersMade &&
-      !columnsToHide.includes(OffersTableHeaders.OffersReceivedAction)
-    ) {
+    if (offersType === OfferTypeStatusCodes.OffersMade) {
       const newColumns = columnsToHide.filter(
         (header) => header !== OffersTableHeaders.OffersMadeAction,
       );
@@ -117,7 +137,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       ]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offersType]);
+  }, [offersType, isConnectedOwner]);
 
   // TODO: Update mockedetails configured below
   // with original details while doing integration
