@@ -4,6 +4,7 @@ import { actorInstanceHandler } from '../../../../integrations/actor';
 import { marketplaceSlice } from '../marketplace-slice';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
+import { errorMessageHandler } from '../../../../utils/error';
 
 type Fungible = {
   principalId: string;
@@ -34,16 +35,22 @@ export const withdrawFungible = createAsyncThunk<
       fungibleStandard,
     );
 
-    if (typeof onSuccess === 'function') {
-      onSuccess(withdrawResponse);
-    }
+    if ('Err' in withdrawResponse)
+      throw new Error(errorMessageHandler(withdrawResponse.Err));
+
+    if (typeof onSuccess !== 'function') return;
+
+    onSuccess();
 
     return withdrawResponse;
-  } catch (err) {
+  } catch (err: any) {
     AppLog.error(err);
+
+    const defaultErrorMessage = `Oops! Failed to withdraw assets`;
+
     thunkAPI.dispatch(
       notificationActions.setErrorMessage(
-        `Oops! Failed to withdraw assets`,
+        err?.message || defaultErrorMessage,
       ),
     );
     if (typeof onFailure === 'function') {
