@@ -7,6 +7,7 @@ import config from '../../../../config/env';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
+import { errorMessageHandler } from '../../../../utils/error';
 
 export type CancelOfferProps = DefaultCallbacks & CancelOffer;
 
@@ -27,7 +28,14 @@ export const cancelOffer = createAsyncThunk<
       canisterId: config.marketplaceCanisterId,
       methodName: 'cancelOffer',
       args: [nonFungibleContractAddress, userOwnedTokenId],
-      onSuccess,
+      onSuccess: (res: any) => {
+        if ('Err' in res)
+          throw new Error(errorMessageHandler(res.Err));
+
+        if (typeof onSuccess !== 'function') return;
+
+        onSuccess();
+      },
       onFail: (res: any) => {
         throw res;
       },
@@ -48,11 +56,14 @@ export const cancelOffer = createAsyncThunk<
     return {
       id,
     };
-  } catch (err) {
+  } catch (err: any) {
     AppLog.error(err);
+
+    const defaultErrorMessage = `Oops! Failed to cancel offer`;
+
     dispatch(
       notificationActions.setErrorMessage(
-        'Oops! Failed to cancel offer',
+        err?.message || defaultErrorMessage,
       ),
     );
     if (typeof onFailure === 'function') {
@@ -60,4 +71,3 @@ export const cancelOffer = createAsyncThunk<
     }
   }
 });
-

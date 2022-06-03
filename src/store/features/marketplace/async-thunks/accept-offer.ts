@@ -9,6 +9,7 @@ import crownsIdlFactory from '../../../../declarations/nft.did';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
+import { errorMessageHandler } from '../../../../utils/error';
 
 export type AcceptOfferProps = DefaultCallbacks & AcceptOffer;
 
@@ -50,7 +51,14 @@ export const acceptOffer = createAsyncThunk<
         userOwnedTokenId,
         offerInPrice,
       ],
-      onSuccess,
+      onSuccess: (res: any) => {
+        if ('Err' in res)
+          throw new Error(errorMessageHandler(res.Err));
+
+        if (typeof onSuccess !== 'function') return;
+
+        onSuccess();
+      },
       onFail: (res: any) => {
         throw res;
       },
@@ -65,7 +73,14 @@ export const acceptOffer = createAsyncThunk<
         userOwnedTokenId,
         buyerAddress,
       ],
-      onSuccess,
+      onSuccess: (res: any) => {
+        if ('Err' in res)
+          throw new Error(errorMessageHandler(res.Err));
+
+        if (typeof onSuccess !== 'function') return;
+
+        onSuccess();
+      },
       onFail: (res: any) => {
         throw res;
       },
@@ -92,11 +107,14 @@ export const acceptOffer = createAsyncThunk<
       buyerPrincipalId,
       offerPrice,
     };
-  } catch (err) {
+  } catch (err: any) {
     AppLog.error(err);
+
+    const defaultErrorMessage = `Oops! Failed to accept offer`;
+
     dispatch(
       notificationActions.setErrorMessage(
-        `Oops! Failed to make listing`,
+        err?.message || defaultErrorMessage,
       ),
     );
     if (typeof onFailure === 'function') {
