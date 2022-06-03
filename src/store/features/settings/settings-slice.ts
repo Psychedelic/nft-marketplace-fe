@@ -11,6 +11,7 @@ export interface SettingsState {
   collapsed: boolean;
   displayPriceApplyButton: boolean;
   previouslyVisitedPath: string;
+  allVisitedPaths: Array<string>;
   showAlerts: boolean;
   assetsToWithdraw: AlertsData[];
 }
@@ -19,6 +20,7 @@ const initialState: SettingsState = {
   collapsed: true,
   displayPriceApplyButton: false,
   previouslyVisitedPath: '/',
+  allVisitedPaths: [],
   showAlerts: false,
   assetsToWithdraw: [],
 };
@@ -38,6 +40,16 @@ export const settingsSlice = createSlice({
       action: PayloadAction<string>,
     ) => {
       state.previouslyVisitedPath = action.payload;
+    },
+    setIsVisitedPath: (state, action: PayloadAction<string>) => {
+      if (!state.allVisitedPaths.includes(action.payload))
+        state.allVisitedPaths = [
+          ...state.allVisitedPaths,
+          action.payload,
+        ];
+    },
+    removeLastVisitedPath: (state) => {
+      state.allVisitedPaths = state.allVisitedPaths.slice(0, -1);
     },
     setAlerts: (state, action: PayloadAction<AlertsData[]>) => {
       const assets = action.payload;

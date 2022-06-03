@@ -11,6 +11,7 @@ export const useLocationResolver = () => {
 
   useEffect(() => {
     pathRef.current = pathname;
+    dispatch(settingsActions.setIsVisitedPath(pathname));
   }, [pathname]); // Only re-run if pathname changes
 
   // update store with previous pathname

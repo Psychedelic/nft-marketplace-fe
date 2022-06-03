@@ -15,7 +15,12 @@ import {
   ButtonWrapper,
 } from './styles';
 
-import { usePlugStore, useSettingsStore } from '../../store';
+import {
+  settingsActions,
+  useAppDispatch,
+  usePlugStore,
+  useSettingsStore,
+} from '../../store';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { Icon } from '../icons';
 
@@ -55,9 +60,10 @@ export const NftActionBar = ({
   showNFTActionButtons,
 }: NftActionBarProps) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
-  const { previouslyVisitedPath } = useSettingsStore();
+  const { allVisitedPaths } = useSettingsStore();
 
   const isConnectedOwner = isNFTOwner({
     isConnected,
@@ -66,13 +72,18 @@ export const NftActionBar = ({
   });
 
   const toLocation = {
-    pathname: previouslyVisitedPath,
+    pathname: allVisitedPaths[allVisitedPaths.length - 2],
   };
 
   return (
     <Container>
       <NftActionBarWrapper>
-        <RouterLink to={toLocation}>
+        <RouterLink
+          to={toLocation}
+          onClick={() => {
+            dispatch(settingsActions.removeLastVisitedPath());
+          }}
+        >
           <ActionText>
             <Icon icon="arrow-left-circle" paddingRight />
             {t('translation:buttons.links.back')}
