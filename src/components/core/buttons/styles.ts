@@ -1,5 +1,20 @@
 import { styled } from '../../../stitches.config';
 
+export const Wrapper = styled('div', {
+  width: '100%',
+  height: '100%',
+  minWidth: '98px',
+  minHeight: '33px',
+
+  variants: {
+    disabled: {
+      true: {
+        cursor: 'not-allowed',
+      },
+    },
+  },
+});
+
 export const Button = styled('button', {
   // base styles
   width: '100%',
@@ -66,8 +81,8 @@ export const Button = styled('button', {
     fontWeight: {
       light: {
         fontWeight: 500,
-      }
-    }
+      },
+    },
   },
   cursor: 'pointer',
   padding: '8px 12px',
