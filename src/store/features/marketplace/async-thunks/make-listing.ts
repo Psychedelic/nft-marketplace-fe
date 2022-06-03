@@ -9,6 +9,7 @@ import { MakeListing } from '../marketplace-slice';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
+import { errorMessageHandler } from '../../../../utils/error';
 
 type MakeListingProps = DefaultCallbacks & MakeListing;
 
@@ -48,7 +49,14 @@ export const makeListing = createAsyncThunk<
           userOwnedTokenId,
           userListForPrice,
         ],
-        onSuccess,
+        onSuccess: (res: any) => {
+          if ('Err' in res)
+            throw new Error(errorMessageHandler(res.Err));
+
+          if (typeof onSuccess !== 'function') return;
+
+          onSuccess();
+        },
         onFail: (res: any) => {
           throw res;
         },
@@ -71,11 +79,14 @@ export const makeListing = createAsyncThunk<
         id,
         amount,
       };
-    } catch (err) {
+    } catch (err: any) {
       AppLog.error(err);
+
+      const defaultErrorMessage = `Oops! Failed to make listing`;
+
       dispatch(
         notificationActions.setErrorMessage(
-          'Oops! Failed to make listing',
+          err?.message || defaultErrorMessage,
         ),
       );
       if (typeof onFailure === 'function') {
