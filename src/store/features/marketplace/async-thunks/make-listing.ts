@@ -35,6 +35,10 @@ export const makeListing = createAsyncThunk<
         canisterId: config.nftCollectionId,
         methodName: 'approve',
         args: [marketplaceCanisterId, userOwnedTokenId],
+        onSuccess: (res: any) => {
+          if ('Err' in res)
+            throw new Error(errorMessageHandler(res.Err));
+        },
         onFail: (res: any) => {
           throw res;
         },
@@ -72,7 +76,6 @@ export const makeListing = createAsyncThunk<
       }
 
       // We call the Cap Sync process
-      // but we don't have to wait for the response
       await axios.get(KyasshuUrl.getCAPSync());
 
       return {

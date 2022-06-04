@@ -44,6 +44,11 @@ export const directBuy = createAsyncThunk<
       canisterId: config.wICPCanisterId,
       methodName: 'approve',
       args: [marketplaceCanisterId, allowanceAmount],
+      onSuccess: (res: any) => {
+        // check if error
+        if ('Err' in res)
+          throw new Error(errorMessageHandler(res.Err));
+      },
       onFail: (res: any) => {
         throw res;
       },
@@ -78,7 +83,6 @@ export const directBuy = createAsyncThunk<
     }
 
     // We call the Cap Sync process
-    // but we don't have to wait for the response
     await axios.get(KyasshuUrl.getCAPSync());
 
     return {
