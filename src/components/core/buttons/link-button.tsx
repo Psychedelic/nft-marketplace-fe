@@ -23,6 +23,7 @@ export const LinkButton = ({
     role="link"
     tabIndex={0}
     onKeyDown={(event: any) => {
+      // Keyboard accessibility
       if (event.keyCode === 13 && handleClick) handleClick();
     }}
   >
