@@ -19,7 +19,6 @@ import {
   ActionButtonsContainer,
 } from './styles';
 import { Icon } from '../icons';
-import { useLocationResolver } from '../../hooks/use-location-resolver';
 
 /* --------------------------------------------------------------------------
  * NavBar Component
@@ -40,8 +39,6 @@ export const NavBar = () => {
       ),
     );
   }, [isLightTheme, dispatch]);
-
-  useLocationResolver();
 
   return (
     <Container showAlerts={showAlerts}>
