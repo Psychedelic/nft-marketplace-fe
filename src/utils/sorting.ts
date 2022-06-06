@@ -1,3 +1,4 @@
+import { OffersTableItem } from '../declarations/legacy';
 import { ParsedTokenOffers, TokenTransactionItem } from './parser';
 
 export const sortTokenOffersByPrice = (offers: ParsedTokenOffers) => {
@@ -11,9 +12,9 @@ export const sortTokenOffersByPrice = (offers: ParsedTokenOffers) => {
 };
 
 export const sortTransactionsByTime = (
-  transactions: TokenTransactionItem[],
+  transactions: TokenTransactionItem[] | OffersTableItem[],
 ) => {
-  return transactions.sort((a, b) => {
+  return transactions.sort((a: any, b: any) => {
     const transactionATimestamp = a.time;
     const transactionBTimestamp = b.time;
 

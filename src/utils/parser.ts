@@ -93,6 +93,7 @@ interface ParseOffersMadeParams {
   currencyMarketPrice?: number;
 }
 
+
 export const parseGetTokenOffersResponse = ({
   data,
   floorDifferencePrice,
@@ -136,7 +137,7 @@ export const parseGetTokenOffersResponse = ({
             floorDifferencePrice,
           }),
           fromDetails,
-          time: formatTimestamp(created),
+          time: created.toString(),
           computedCurrencyPrice,
         };
 
@@ -194,12 +195,14 @@ export const parseOffersMadeResponse = ({
         floorDifferencePrice,
       }),
       fromDetails,
-      time: formatTimestamp(created),
+      time: created.toString(),
       computedCurrencyPrice,
     };
 
     return offerTableItem;
   });
+
+  sortTransactionsByTime(parsedOffersMade);
 
   return parsedOffersMade;
 };
@@ -241,7 +244,9 @@ export const parseTokenTransactions = ({
     var buyer, seller;
 
     if (details.seller) {
-      const sellerPrincipal = parseTablePrincipal(details.seller?.Principal._arr);
+      const sellerPrincipal = parseTablePrincipal(
+        details.seller?.Principal._arr,
+      );
       if (sellerPrincipal) {
         seller = {
           raw: sellerPrincipal.toString(),
@@ -251,7 +256,9 @@ export const parseTokenTransactions = ({
     }
 
     if (details.buyer) {
-      const buyerPrincipal = parseTablePrincipal(details.buyer?.Principal._arr);
+      const buyerPrincipal = parseTablePrincipal(
+        details.buyer?.Principal._arr,
+      );
       if (buyerPrincipal) {
         buyer = {
           raw: buyerPrincipal.toString(),
