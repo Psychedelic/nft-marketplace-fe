@@ -26,6 +26,7 @@ export const ActionText = styled('p', {
   display: 'flex',
   margin: '0',
   textTransform: 'capitalize',
+  cursor: 'pointer',
 
   '& img': {
     marginRight: '5px',
