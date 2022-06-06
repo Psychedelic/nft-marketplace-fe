@@ -1,12 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import history from 'history/browser';
+import { useHistoryBack } from '../../hooks/use-history-back';
 import {
   CancelListingModal,
   ChangePriceModal,
   SellModal,
 } from '../modals';
-
 import {
   Container,
   NftActionBarWrapper,
@@ -55,7 +54,6 @@ export const NftActionBar = ({
   showNFTActionButtons,
 }: NftActionBarProps) => {
   const { t } = useTranslation();
-
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
   const isConnectedOwner = isNFTOwner({
@@ -64,10 +62,12 @@ export const NftActionBar = ({
     principalId: plugPrincipal,
   });
 
+  const goBack = useHistoryBack();
+
   return (
     <Container>
       <NftActionBarWrapper>
-        <ActionText onClick={() => history.back()}>
+        <ActionText onClick={() => goBack()}>
           <Icon icon="arrow-left-circle" paddingRight />
           {t('translation:buttons.links.back')}
         </ActionText>
