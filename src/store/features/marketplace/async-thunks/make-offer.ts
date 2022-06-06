@@ -47,6 +47,10 @@ export const makeOffer = createAsyncThunk<
       canisterId: config.wICPCanisterId,
       methodName: 'approve',
       args: [mkpContractAddress, allowanceAmount],
+      onSuccess: (res: any) => {
+        if ('Err' in res)
+          throw new Error(errorMessageHandler(res.Err));
+      },
       onFail: (res: any) => {
         throw res;
       },

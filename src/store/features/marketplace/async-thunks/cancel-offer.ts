@@ -50,7 +50,6 @@ export const cancelOffer = createAsyncThunk<
     }
 
     // We call the Cap Sync process
-    // but we don't have to wait for the response
     await axios.get(KyasshuUrl.getCAPSync());
 
     return {

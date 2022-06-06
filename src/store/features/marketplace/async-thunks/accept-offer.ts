@@ -37,27 +37,10 @@ export const acceptOffer = createAsyncThunk<
       canisterId: config.nftCollectionId,
       methodName: 'approve',
       args: [marketplaceCanisterId, userOwnedTokenId],
-      onFail: (res: any) => {
-        throw res;
-      },
-    };
-
-    const MKP_MAKE_LISTING = {
-      idl: marketplaceIdlFactory,
-      canisterId: config.marketplaceCanisterId,
-      methodName: 'makeListing',
-      args: [
-        nonFungibleContractAddress,
-        userOwnedTokenId,
-        offerInPrice,
-      ],
       onSuccess: (res: any) => {
+        // check if error
         if ('Err' in res)
           throw new Error(errorMessageHandler(res.Err));
-
-        if (typeof onSuccess !== 'function') return;
-
-        onSuccess();
       },
       onFail: (res: any) => {
         throw res;
@@ -90,7 +73,6 @@ export const acceptOffer = createAsyncThunk<
       window as any
     )?.ic?.plug?.batchTransactions([
       CROWNS_APPROVE_MARKETPLACE,
-      MKP_MAKE_LISTING,
       MKP_ACCEPT_OFFER,
     ]);
 
@@ -99,7 +81,6 @@ export const acceptOffer = createAsyncThunk<
     }
 
     // We call the Cap Sync process
-    // but we don't have to wait for the response
     await axios.get(KyasshuUrl.getCAPSync());
 
     return {
