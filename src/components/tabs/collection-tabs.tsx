@@ -12,9 +12,11 @@ import {
 } from './styles';
 import { Filters } from '../filters';
 import { Icon } from '../icons';
+import { settingsActions, useAppDispatch } from '../../store';
 
 export const CollectionTabs = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -40,7 +42,10 @@ export const CollectionTabs = () => {
         <TabsTrigger
           value="items"
           status={itemsStatus}
-          onClick={() => navigate('/', { replace: true })}
+          onClick={() => {
+            navigate('/', { replace: true });
+            dispatch(settingsActions.removeLastVisitedPath());
+          }}
         >
           <Icon icon="grid" paddingRight />
           {t('translation:tabs.items')}
@@ -48,7 +53,10 @@ export const CollectionTabs = () => {
         <TabsTrigger
           value="activity"
           status={activityStatus}
-          onClick={() => navigate('/activity', { replace: true })}
+          onClick={() => {
+            navigate('/activity', { replace: true });
+            dispatch(settingsActions.removeLastVisitedPath());
+          }}
         >
           <Icon icon="activity" paddingRight />
           {t('translation:tabs.activity')}

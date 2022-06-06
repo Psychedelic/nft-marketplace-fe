@@ -6,6 +6,7 @@ import {
   themeActions,
   useAppDispatch,
   useSettingsStore,
+  settingsActions,
 } from '../../store';
 import { LinkButton } from '../core';
 import { GlobalSearch } from '../search';
@@ -47,7 +48,10 @@ export const NavBar = () => {
     <Container showAlerts={showAlerts}>
       <RouterLink
         to="/"
-        onClick={() => pathname === '/' && window.location.reload()}
+        onClick={() => {
+          dispatch(settingsActions.removeLastVisitedPath());
+          pathname === '/' && window.location.reload();
+        }}
       >
         <LogoContainer>
           <LogoIcon
