@@ -6,8 +6,8 @@ export interface TextLinkCellProps {
   type: any;
 }
 
-export const TextLinkCell = ({ text, type }: TextLinkCellProps) => (
-  <TextLinkDetails type={type} target="_blank">
+export const TextLinkCell = ({ text, type, url }: TextLinkCellProps) => (
+  <TextLinkDetails type={type} href={url} target="_blank">
     {text ? text : '-'}
   </TextLinkDetails>
 );
