@@ -85,7 +85,7 @@ export const ModalOverlayContainer = styled(DialogPrimitive.Overlay, {
   backgroundColor: '$modalOverlay',
   position: 'fixed',
   inset: 0,
-  zIndex: 3,
+  zIndex: 5,
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
   },
@@ -101,7 +101,7 @@ export const ModalContent = styled(DialogPrimitive.Content, {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   padding: 45,
-  zIndex: 4,
+  zIndex: 6,
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
   },
