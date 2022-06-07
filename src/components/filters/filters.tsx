@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, DOMElement } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
@@ -70,6 +70,17 @@ export const Filters = () => {
       });
     }
   }, [displayPriceApplyButton]);
+
+  useEffect(() => {
+    console.log('[debug] collapsed', collapsed);
+
+    // Triggering the resize event twice
+    // is intentional, as required by list view
+    // virtualized list when
+    // the filter returns from collapsed
+    window.dispatchEvent(new Event('resize'));
+    window.dispatchEvent(new Event('resize'));
+  }, [collapsed]);
 
   const filterExists = (filterName: string) =>
     defaultFilters.some(
@@ -161,8 +172,6 @@ export const Filters = () => {
         priceFilterValue,
       );
     }
-
-    return;
   };
 
   return (
