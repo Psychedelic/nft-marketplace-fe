@@ -165,6 +165,8 @@ export const ActivityTable = () => {
           loaderDetails={{
             showItemDetails: true,
             showTypeDetails: true,
+            type: 'large',
+            infiniteLoader: true,
           }}
         />
       }

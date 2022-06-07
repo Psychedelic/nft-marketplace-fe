@@ -1,5 +1,5 @@
 import { SkeletonBox } from '../core/skeleton';
-import { TableSkeletonsWrapper, Flex } from './styles';
+import { TableSkeletonsWrapper, Flex, Container } from './styles';
 
 export type TableSkeletonProps = {
   loaderDetails: {
@@ -7,6 +7,7 @@ export type TableSkeletonProps = {
     showTypeDetails?: boolean;
     type?: any;
     hideColumns?: boolean;
+    infiniteLoader?: boolean;
   };
 };
 
@@ -55,19 +56,38 @@ const TableSkeletons = ({
     showTypeDetails = true,
     type = 'large',
     hideColumns,
+    infiniteLoader,
   },
-}: TableSkeletonProps) => (
-  <TableSkeletonsWrapper type={type} role="row">
-    {showItemDetails && <ItemDetail />}
-    {showTypeDetails && <TypeDetail />}
-    <TableStrings type={type} hideColumns={hideColumns} />
-    <TableStrings type={type} hideColumns={hideColumns} />
-    <TableStrings type={type} hideColumns={hideColumns} />
-    <TableStrings type={type} hideColumns={hideColumns} />
-    {hideColumns === false && (
+}: TableSkeletonProps) =>
+  infiniteLoader ? (
+    <Container>
+      <table>
+        <tbody>
+          <TableSkeletonsWrapper type={type} role="row">
+            {showItemDetails && <ItemDetail />}
+            {showTypeDetails && <TypeDetail />}
+            <TableStrings type={type} hideColumns={hideColumns} />
+            <TableStrings type={type} hideColumns={hideColumns} />
+            <TableStrings type={type} hideColumns={hideColumns} />
+            <TableStrings type={type} hideColumns={hideColumns} />
+            {hideColumns === false && (
+              <TableStrings type={type} hideColumns={hideColumns} />
+            )}
+          </TableSkeletonsWrapper>
+        </tbody>
+      </table>
+    </Container>
+  ) : (
+    <TableSkeletonsWrapper type={type} role="row">
+      {showItemDetails && <ItemDetail />}
+      {showTypeDetails && <TypeDetail />}
       <TableStrings type={type} hideColumns={hideColumns} />
-    )}
-  </TableSkeletonsWrapper>
-);
-
+      <TableStrings type={type} hideColumns={hideColumns} />
+      <TableStrings type={type} hideColumns={hideColumns} />
+      <TableStrings type={type} hideColumns={hideColumns} />
+      {hideColumns === false && (
+        <TableStrings type={type} hideColumns={hideColumns} />
+      )}
+    </TableSkeletonsWrapper>
+  );
 export default TableSkeletons;
