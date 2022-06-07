@@ -186,10 +186,28 @@ export const ButtonWrapper = styled('div', {
 });
 
 export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
-  width: '100%',
+
+  table: {
+    width: 'inherit',
+
+    tr: {
+      td: {
+        padding: '25px 0px 25px 10px',
+
+        '&:first-child': {
+          paddingLeft: '80px',
+        },
+      },
+    },
+  },
+
+  '&:hover': {
+    background: '$tableRowHoverColor',
+  },
 });
 
 export const TableSkeletonsWrapper = styled('tr', {
+
   // variants
   variants: {
     type: {

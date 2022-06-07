@@ -312,6 +312,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
               loaderDetails={{
                 showItemDetails: true,
                 showTypeDetails: true,
+                infiniteLoader: true,
               }}
             />
           }
