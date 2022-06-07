@@ -1,5 +1,6 @@
-import { useState, useEffect, DOMElement } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { triggerWindowResizeEvent } from '../../utils/window';
 import {
   useFilterStore,
   filterActions,
@@ -72,14 +73,14 @@ export const Filters = () => {
   }, [displayPriceApplyButton]);
 
   useEffect(() => {
-    console.log('[debug] collapsed', collapsed);
-
     // Triggering the resize event twice
     // is intentional, as required by list view
-    // virtualized list when
-    // the filter returns from collapsed
-    window.dispatchEvent(new Event('resize'));
-    window.dispatchEvent(new Event('resize'));
+    // virtualized list when the filter returns from collapsed
+    triggerWindowResizeEvent();
+    // The second resize call is only required when NOT collapsed
+    // this is when going from collapse to NOT collapsed
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    !collapsed && triggerWindowResizeEvent();
   }, [collapsed]);
 
   const filterExists = (filterName: string) =>
@@ -176,16 +177,16 @@ export const Filters = () => {
 
   return (
     <Container>
-      <CloseFilterContainer opened={!collapsed}>
+      <CloseFilterContainer opened={collapsed}>
         <IconActionButton
           handleClick={() => {
             dispatch(settingsActions.setFilterCollapsed(!collapsed));
           }}
         >
-          <CollapseIcon icon="arrow-left" rotate={!collapsed} />
+          <CollapseIcon icon="arrow-left" rotate={collapsed} />
         </IconActionButton>
       </CloseFilterContainer>
-      {collapsed && (
+      {!collapsed && (
         <FiltersContainer>
           <FilterHeader>
             <Heading>Filters</Heading>
