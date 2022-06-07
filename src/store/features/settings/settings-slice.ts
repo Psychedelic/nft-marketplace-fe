@@ -10,7 +10,6 @@ interface AlertsData {
 export interface SettingsState {
   collapsed: boolean;
   displayPriceApplyButton: boolean;
-  previouslyVisitedPath: string;
   showAlerts: boolean;
   assetsToWithdraw: AlertsData[];
 }
@@ -18,7 +17,6 @@ export interface SettingsState {
 const initialState: SettingsState = {
   collapsed: true,
   displayPriceApplyButton: false,
-  previouslyVisitedPath: '/',
   showAlerts: false,
   assetsToWithdraw: [],
 };
@@ -32,12 +30,6 @@ export const settingsSlice = createSlice({
     },
     setPriceApplyButton: (state, action: PayloadAction<boolean>) => {
       state.displayPriceApplyButton = action.payload;
-    },
-    setPreviouslyVisitedPath: (
-      state,
-      action: PayloadAction<string>,
-    ) => {
-      state.previouslyVisitedPath = action.payload;
     },
     setAlerts: (state, action: PayloadAction<AlertsData[]>) => {
       const assets = action.payload;
