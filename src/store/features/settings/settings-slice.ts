@@ -15,7 +15,7 @@ export interface SettingsState {
 }
 
 const initialState: SettingsState = {
-  collapsed: true,
+  collapsed: false,
   displayPriceApplyButton: false,
   showAlerts: false,
   assetsToWithdraw: [],
