@@ -10,7 +10,6 @@ import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { errorMessageHandler } from '../../../../utils/error';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
-import { delayAction } from '../../../../utils/delay-action';
 
 export type MakeOfferProps = DefaultCallbacks & MakeOffer;
 
@@ -89,7 +88,6 @@ export const makeOffer = createAsyncThunk<
 
     // We call the Cap Sync process
     // but we don't have to wait for the response
-    await delayAction(5000);
     await axios.get(KyasshuUrl.getCAPSync());
     return {
       id,
