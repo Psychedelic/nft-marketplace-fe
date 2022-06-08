@@ -186,7 +186,6 @@ export const ButtonWrapper = styled('div', {
 });
 
 export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
-
   table: {
     width: 'inherit',
 
@@ -207,7 +206,6 @@ export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
 });
 
 export const TableSkeletonsWrapper = styled('tr', {
-
   // variants
   variants: {
     type: {
@@ -242,7 +240,7 @@ export const EmptyStateContainer = styled('th', {
   border: 'none !important',
 });
 
-export const EmptyStateMessage = styled('td', {
+export const EmptyStateMessage = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

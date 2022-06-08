@@ -89,18 +89,21 @@ export const TableLayout = ({
             );
           })}
         </tbody>
-        {!loading && isTableDataEmpty && (
-          <EmptyStateContainer
-            colSpan={headerGroups[0]?.headers.length}
-          >
-            <EmptyStateMessage
-              colSpan={headerGroups[0]?.headers.length}
-              type="mediumTable"
-            >
-              {emptyMessage}
-            </EmptyStateMessage>
-          </EmptyStateContainer>
-        )}
+        <thead>
+          <tr>
+            {!loading && isTableDataEmpty && (
+              <EmptyStateContainer
+                colSpan={headerGroups[0]?.headers.length}
+              >
+                <EmptyStateMessage
+                  type="mediumTable"
+                >
+                  {emptyMessage}
+                </EmptyStateMessage>
+              </EmptyStateContainer>
+            )}
+          </tr>
+        </thead>
       </table>
     </TableWrapper>
   );
