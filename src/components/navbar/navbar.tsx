@@ -19,6 +19,7 @@ import {
   ActionButtonsContainer,
 } from './styles';
 import { Icon } from '../icons';
+import { useBuyerOffers } from '../../hooks/use-buyer-offers';
 
 /* --------------------------------------------------------------------------
  * NavBar Component
@@ -39,6 +40,8 @@ export const NavBar = () => {
       ),
     );
   }, [isLightTheme, dispatch]);
+
+  useBuyerOffers();
 
   return (
     <Container showAlerts={showAlerts}>
