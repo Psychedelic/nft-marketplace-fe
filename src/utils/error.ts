@@ -6,7 +6,7 @@ export const errorMessageHandler = (Err: Record<string, any>) => {
     case 'InsufficientFungibleBalance':
       return 'Oops! Insufficient fungible balance';
     case 'Unauthorized':
-      return 'Oops! You are not authorized';
+      return 'Oops! Marketplace is not authorized to perform the transaction';
     default:
       return 'Oops! Unknown error';
   }
