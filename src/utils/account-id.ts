@@ -106,4 +106,4 @@ export const getAccountId = (
 };
 
 export const getICAccountLink = (principalId: string): string =>
-  `${config.icExplorer}/${principalId}`;
+  `${config.icScan}/${principalId}`;

@@ -10,7 +10,7 @@ type ConfigParams = {
   host: string;
   nftCollectionId: string;
   kyasshuMarketplaceAPI: string;
-  icExplorer: string;
+  icScan: string;
   marketplaceCanisterId: string;
   wICPCanisterId: string;
   capRouterId: string;
@@ -28,7 +28,7 @@ const config: Config = {
   production: {
     host: 'http://127.0.0.1:8000',
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
-    icExplorer: 'https://icscan.io/principal',
+    icScan: 'https://icscan.io/principal',
     nftCollectionId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
@@ -41,7 +41,7 @@ const config: Config = {
   staging: {
     host: 'http://44.228.128.46:8000',
     kyasshuMarketplaceAPI: 'http://44.228.128.46:3000/local',
-    icExplorer: 'https://icscan.io/principal',
+    icScan: 'https://icscan.io/principal',
     nftCollectionId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
@@ -55,7 +55,7 @@ const config: Config = {
   test: {
     host: 'https://mainnet.dfinity.network',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
-    icExplorer: 'https://icscan.io/principal',
+    icScan: 'https://icscan.io/principal',
     nftCollectionId: 'iqvo2-7qaaa-aaaam-qacxa-cai',
     marketplaceCanisterId: 'o3ios-jaaaa-aaaag-qakqq-cai',
     wICPCanisterId: 'lassd-pqaaa-aaaag-qakpq-cai',
@@ -65,7 +65,7 @@ const config: Config = {
   development: {
     host: 'http://127.0.0.1:8000',
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
-    icExplorer: 'https://icscan.io/principal',
+    icScan: 'https://icscan.io/principal',
     nftCollectionId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
