@@ -174,7 +174,7 @@ export const WithdrawAssetsModal = () => {
                     type="primary"
                     onClick={handleWithdrawAssets}
                   >
-                    {t('translation:modals.buttons.retryAll')}
+                    {t('translation:modals.buttons.withdraw')}
                   </ActionButton>
                 </ModalButtonWrapper>
               </ModalButtonsList>
