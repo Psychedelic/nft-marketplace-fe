@@ -7,6 +7,7 @@ import {
   ModalInput,
   Pending,
   Completed,
+  NftCard,
 } from '../core';
 import {
   ChangePriceModalTrigger,
@@ -25,6 +26,10 @@ import {
   ModalButtonWrapper,
   InfoIcon,
   ActionText,
+  NFTCardPreview,
+  NFTPreviewText,
+  SellModalPreviewWrapper,
+  SellModalPreviewContainer,
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
@@ -33,6 +38,7 @@ import {
   useAppDispatch,
   nftsActions,
   marketplaceActions,
+  usePlugStore,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
@@ -40,6 +46,7 @@ import { AppLog } from '../../utils/log';
 import { isTokenId } from '../../utils/nfts';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
+import { isNFTOwner } from '../../integrations/kyasshu/utils';
 
 /* --------------------------------------------------------------------------
  * Change Price Modal Component
@@ -65,6 +72,7 @@ export const ChangePriceModal = ({
   const { id } = useParams();
   const { loadedNFTS } = useNFTSStore();
   const navigate = useNavigate();
+  const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // ChangePrice modal steps: listingInfo/pending/confirmed
@@ -75,10 +83,11 @@ export const ChangePriceModal = ({
 
   const tokenId = useMemo(() => id || nftTokenId, [id, nftTokenId]);
 
-  const nftDetails: NFTMetadata | undefined = useMemo(
-    () => loadedNFTS.find((nft) => nft.id === id),
-    [loadedNFTS, id],
-  );
+  const nftDetails: NFTMetadata | undefined = useMemo(() => {
+    const details = loadedNFTS.find((nft) => nft.id === tokenId);
+
+    return details;
+  }, [loadedNFTS, tokenId]);
 
   const tokenPrice = useMemo(
     () =>
@@ -151,6 +160,12 @@ export const ChangePriceModal = ({
     setModalOpened(false);
   };
 
+  const isOwner = isNFTOwner({
+    isConnected,
+    owner: nftDetails?.owner,
+    principalId: plugPrincipal,
+  });
+
   return (
     <DialogPrimitive.Root
       open={modalOpened}
@@ -204,89 +219,104 @@ export const ChangePriceModal = ({
           ---------------------------------
         */}
           {modalStep === ListingStatusCodes.ListingInfo && (
-            <Container>
-              {/*
-              ---------------------------------
-              Listing Header
-              ---------------------------------
-            */}
-              <ModalHeader>
-                <ModalTitle>
-                  {t('translation:modals.title.changePrice')}
-                </ModalTitle>
-                <ModalDescription>
-                  {t('translation:modals.description.changePrice')}
-                </ModalDescription>
-              </ModalHeader>
-              {/*
-              ---------------------------------
-              Listing input details
-              ---------------------------------
-            */}
-              <SaleContentWrapper>
-                <ModalInput
-                  placeholder={t(
-                    'translation:inputField.placeholder.amount',
-                  )}
-                  value={amount}
-                  onChange={(e) => setAmount(e.currentTarget.value)}
-                />
-                <FeeContainer>
-                  <FeeDetails>
-                    <FeeLabelContainer>
-                      <FeeLabel>
-                        {t('translation:modals.labels.listingFee')}
-                      </FeeLabel>
-                      <InfoIcon icon="info" />
-                    </FeeLabelContainer>
-                    <FeePercent>
-                      {t(
-                        'translation:modals.labels.listingFeePercent',
-                      )}
-                    </FeePercent>
-                  </FeeDetails>
-                  <FeeDetails>
-                    <FeeLabelContainer>
-                      <FeeLabel>
+            <SellModalPreviewWrapper>
+              <SellModalPreviewContainer>
+                {/*
+                  ---------------------------------
+                  Listing Header
+                  ---------------------------------
+                */}
+                <ModalHeader>
+                  <ModalTitle>
+                    {t('translation:modals.title.changePrice')}
+                  </ModalTitle>
+                  <ModalDescription>
+                    {t('translation:modals.description.changePrice')}
+                  </ModalDescription>
+                </ModalHeader>
+                {/*
+                  ---------------------------------
+                  Listing input details
+                  ---------------------------------
+                */}
+                <SaleContentWrapper>
+                  <ModalInput
+                    placeholder={t(
+                      'translation:inputField.placeholder.amount',
+                    )}
+                    value={amount}
+                    onChange={(e) => setAmount(e.currentTarget.value)}
+                  />
+                  <FeeContainer>
+                    <FeeDetails>
+                      <FeeLabelContainer>
+                        <FeeLabel>
+                          {t('translation:modals.labels.listingFee')}
+                        </FeeLabel>
+                        <InfoIcon icon="info" />
+                      </FeeLabelContainer>
+                      <FeePercent>
                         {t(
-                          'translation:modals.labels.creatorRoyalityFee',
+                          'translation:modals.labels.listingFeePercent',
                         )}
-                      </FeeLabel>
-                      <InfoIcon icon="info" />
-                    </FeeLabelContainer>
-                    <FeePercent>
+                      </FeePercent>
+                    </FeeDetails>
+                    <FeeDetails>
+                      <FeeLabelContainer>
+                        <FeeLabel>
+                          {t(
+                            'translation:modals.labels.creatorRoyalityFee',
+                          )}
+                        </FeeLabel>
+                        <InfoIcon icon="info" />
+                      </FeeLabelContainer>
+                      <FeePercent>
+                        {t(
+                          'translation:modals.labels.creatorRoyalityFeePercent',
+                        )}
+                      </FeePercent>
+                    </FeeDetails>
+                  </FeeContainer>
+                </SaleContentWrapper>
+                {/*
+                  ---------------------------------
+                  Listing Action Buttons
+                  ---------------------------------
+                */}
+                <ModalButtonsList>
+                  <ModalButtonWrapper>
+                    <ActionButton
+                      type="secondary"
+                      onClick={handleModalClose}
+                    >
+                      {t('translation:modals.buttons.cancel')}
+                    </ActionButton>
+                  </ModalButtonWrapper>
+                  <ModalButtonWrapper>
+                    <ActionButton
+                      type="primary"
+                      onClick={handleListing}
+                      disabled={!amount || Number(amount) <= 0}
+                    >
                       {t(
-                        'translation:modals.labels.creatorRoyalityFeePercent',
+                        'translation:modals.buttons.completeListing',
                       )}
-                    </FeePercent>
-                  </FeeDetails>
-                </FeeContainer>
-              </SaleContentWrapper>
-              {/*
-              ---------------------------------
-              Listing Action Buttons
-              ---------------------------------
-            */}
-              <ModalButtonsList>
-                <ModalButtonWrapper>
-                  <ActionButton
-                    type="secondary"
-                    onClick={handleModalClose}
-                  >
-                    {t('translation:modals.buttons.cancel')}
-                  </ActionButton>
-                </ModalButtonWrapper>
-                <ModalButtonWrapper>
-                  <ActionButton
-                    type="primary"
-                    onClick={handleListing}
-                    disabled={!amount || Number(amount) <= 0}
-                  >
-                    {t('translation:modals.buttons.completeListing')}
-                  </ActionButton>
-                </ModalButtonWrapper>
-              </ModalButtonsList>
-            </Container>
+                    </ActionButton>
+                  </ModalButtonWrapper>
+                </ModalButtonsList>
+              </SellModalPreviewContainer>
+              <NFTCardPreview>
+                <NFTPreviewText>
+                  {t('translation:modals.labels.preview')}
+                </NFTPreviewText>
+                <NftCard
+                  data={nftDetails}
+                  owned={isOwner}
+                  previewCardAmount={amount}
+                  previewCard
+                />
+              </NFTCardPreview>
+            </SellModalPreviewWrapper>
           )}
           {/*
           ---------------------------------

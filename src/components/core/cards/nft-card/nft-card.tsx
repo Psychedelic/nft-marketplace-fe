@@ -215,7 +215,7 @@ export const NftCard = React.memo(
             <Flex>
               <NftDataText>{data?.id}</NftDataText>
               <NftDataText>
-                {isForSale && (
+                {isForSale && !previewCard && (
                   <>
                     <img src={wicpLogo} alt="" />
                     <NumberTooltip>
