@@ -24,7 +24,8 @@ export const LinkButton = ({
     tabIndex={0}
     onKeyDown={(event: any) => {
       // Keyboard accessibility
-      if (event.keyCode === 13 && handleClick) handleClick();
+      if (event.keyCode === 13 && typeof handleClick === 'function')
+        handleClick();
     }}
   >
     {children}

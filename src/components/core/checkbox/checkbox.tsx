@@ -25,7 +25,10 @@ export const Checkbox = ({
     tabIndex={0}
     onKeyDown={(event: any) => {
       // Keyboard accessibility
-      if (event.keyCode === 13 && handleSelectedFilters) {
+      if (
+        event.keyCode === 13 &&
+        typeof handleSelectedFilters === 'function'
+      ) {
         event.target.value = value;
         handleSelectedFilters(event);
       }

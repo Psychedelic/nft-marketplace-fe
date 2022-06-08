@@ -193,8 +193,7 @@ export const NftCard = React.memo(
         tabIndex={0}
         onKeyDown={(event: any) => {
           // Keyboard accessibility
-          if (event.keyCode === 13)
-            navigate(`/nft/${data.id}`, { replace: true });
+          if (event.keyCode === 13) navigate(`/nft/${data.id}`);
         }}
       >
         <CardWrapper>
