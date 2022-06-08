@@ -58,7 +58,7 @@ const config: Config = {
     icScan: 'https://icscan.io/principal',
     nftCollectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
     marketplaceCanisterId: 'o3ios-jaaaa-aaaag-qakqq-cai',
-    wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai"',
+    wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
     capRouterId: 'lj532-6iaaa-aaaah-qcc7a-cai',
   },
   // The local development environment settings
