@@ -272,7 +272,13 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
 
 export const AccordionContent = styled(Accordion.Content, {
   color: '$mainTextColor',
-  overflow: 'hidden',
+  overflow: 'scroll',
+  msOverflowStyle: 'none',
+  scrollbarWidth: 'none',
+
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
 
   '&[data-state="open"]': {
     animation: `${slideDown} 700ms cubic-bezier(0.87, 0, 0.13, 1) forwards`,
