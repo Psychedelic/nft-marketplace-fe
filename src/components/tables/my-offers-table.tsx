@@ -34,6 +34,7 @@ import {
   parseE8SAmountToWICP,
 } from '../../utils/formatters';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
+import { formatTimestamp } from '../../integrations/functions/date';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -255,7 +256,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       {
         Header: t('translation:tables.titles.time'),
         accessor: ({ time }: OffersTableItem) => (
-          <TextCell text={time} type="activityTime" />
+          <TextCell text={formatTimestamp(BigInt(time))} type="activityTime" />
         ),
       },
       {

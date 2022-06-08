@@ -1,4 +1,7 @@
+import { OffersTableItem } from '../declarations/legacy';
 import { ParsedTokenOffers, TokenTransactionItem } from './parser';
+
+type TnxTimestamp = TokenTransactionItem | OffersTableItem;
 
 export const sortTokenOffersByPrice = (offers: ParsedTokenOffers) => {
   return offers.sort((a, b) => {
@@ -11,13 +14,11 @@ export const sortTokenOffersByPrice = (offers: ParsedTokenOffers) => {
 };
 
 export const sortTransactionsByTime = (
-  transactions: TokenTransactionItem[],
+  transactions: TokenTransactionItem[] | OffersTableItem[],
 ) => {
-  return transactions.sort((a, b) => {
-    const transactionATimestamp = a.time;
-    const transactionBTimestamp = b.time;
-
-    // sort type: Ascending
-    return transactionBTimestamp - transactionATimestamp;
-  });
+  return transactions.sort(
+    (a: TnxTimestamp, b: TnxTimestamp) => {
+      return Number(b.time.toString()) - Number(a.time.toString())
+    }
+  );
 };

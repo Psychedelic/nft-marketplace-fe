@@ -23,6 +23,7 @@ import {
 } from '../../utils/formatters';
 import { isTokenId } from '../../utils/nfts';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
+import { formatTimestamp } from '../../integrations/functions/date';
 
 /* --------------------------------------------------------------------------
  * NFT Offers Table Component
@@ -162,7 +163,7 @@ export const NFTOffersTable = ({
       {
         Header: t('translation:tables.titles.time'),
         accessor: ({ time }: OffersTableItem) => (
-          <TextCell text={time} type="activityTime" />
+          <TextCell text={formatTimestamp(BigInt(time))} type="activityTime" />
         ),
       },
       {
