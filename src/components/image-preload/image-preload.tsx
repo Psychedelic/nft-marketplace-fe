@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { forwardRef, useMemo, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { ImageCache } from '../../utils/image-cache';
 import { AppLog } from '../../utils/log';
 import { SkeletonBox } from '../core';
@@ -14,13 +14,15 @@ export const ImagePreload = React.memo(
     ({ src, ...props }, ref) => {
       const [loaded, setLoaded] = useState(false);
 
-      useMemo(() => {
+      useEffect(() => {
+        let isMounted = true;
+
         if (src) {
           const image = ImageCache.get(src);
 
           if (!image) {
             ImageCache.store(src)
-              .then(() => setLoaded(true))
+              .then(() => isMounted && setLoaded(true))
               .catch((err) =>
                 AppLog.warn('Failed to load image', err),
               );
@@ -28,7 +30,11 @@ export const ImagePreload = React.memo(
             setLoaded(true);
           }
         }
-      }, [src, setLoaded]);
+
+        return () => {
+          isMounted = false;
+        };
+      }, [src]);
 
       if (!loaded) {
         return (
