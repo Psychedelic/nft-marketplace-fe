@@ -66,10 +66,10 @@ const config: Config = {
     host: 'http://127.0.0.1:8000',
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
     icScan: 'https://icscan.io/principal',
-    nftCollectionId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
-    marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
+    nftCollectionId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
+    marketplaceCanisterId: 'qoctq-giaaa-aaaaa-aaaea-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
-    capRouterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
+    capRouterId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
   },
 };
 
