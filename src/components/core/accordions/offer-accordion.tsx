@@ -44,6 +44,7 @@ import {
   parseE8SAmountToWICP,
   formatPriceValue,
 } from '../../../utils/formatters';
+import { isTokenId } from '../../..//utils/nfts';
 
 export type OfferAccordionProps = {
   lastSalePrice?: string;
@@ -209,11 +210,11 @@ export const OfferAccordion = ({
 
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
-    if (!id || !plugPrincipal) return;
+    if (!isTokenId(id)) return;
 
     dispatch(
       marketplaceActions.getTokenOffers({
-        ownerTokenIdentifiers: [BigInt(id)],
+        ownerTokenIdentifiers: [BigInt(id as string)],
 
         onSuccess: () => {
           setLoadingOffers(false);
