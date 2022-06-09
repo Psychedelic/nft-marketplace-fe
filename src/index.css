@@ -25,3 +25,7 @@ input[type='number'] {
 a {
   text-decoration: none;
 }
+
+* :focus-visible {
+  outline: -webkit-focus-ring-color auto 1px !important;
+}

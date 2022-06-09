@@ -20,7 +20,20 @@ export const Checkbox = ({
   filterValueExists,
   handleSelectedFilters,
 }: CheckboxProps) => (
-  <Wrapper>
+  <Wrapper
+    role="checkbox"
+    tabIndex={0}
+    onKeyDown={(event: any) => {
+      // Keyboard accessibility
+      if (
+        event.keyCode === 13 &&
+        typeof handleSelectedFilters === 'function'
+      ) {
+        event.target.value = value;
+        handleSelectedFilters(event);
+      }
+    }}
+  >
     <label htmlFor={value}>
       <input
         type="checkbox"
@@ -34,6 +47,9 @@ export const Checkbox = ({
       <span />
       {value.split('-')[1]}
     </label>
-    <RarityValue>{`${occurence} (${roundOffDecimalValue(Number(percentage), 1)}%)`}</RarityValue>
+    <RarityValue>{`${occurence} (${roundOffDecimalValue(
+      Number(percentage),
+      1,
+    )}%)`}</RarityValue>
   </Wrapper>
 );

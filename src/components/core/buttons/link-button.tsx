@@ -20,6 +20,13 @@ export const LinkButton = ({
     href={url}
     target="_blank"
     onClick={handleClick}
+    role="link"
+    tabIndex={0}
+    onKeyDown={(event: any) => {
+      // Keyboard accessibility
+      if (event.keyCode === 13 && typeof handleClick === 'function')
+        handleClick();
+    }}
   >
     {children}
   </LinkButtonStyles>
