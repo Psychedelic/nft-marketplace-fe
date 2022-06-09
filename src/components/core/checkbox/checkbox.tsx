@@ -43,6 +43,7 @@ export const Checkbox = ({
         onClick={handleSelectedFilters}
         // checks if value exists in array and sets checked to true
         checked={filterValueExists}
+        readOnly
       />
       <span />
       {value.split('-')[1]}

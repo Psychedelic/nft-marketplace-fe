@@ -2,6 +2,7 @@ import React, { useMemo, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Principal } from '@dfinity/principal';
+import { v4 as uuid } from 'uuid';
 import {
   useThemeStore,
   useAppDispatch,
@@ -60,6 +61,7 @@ export const ActivityTable = () => {
   const bucketId = useSelector(
     (state: RootState) => state.cap.bucketId,
   );
+  const tableSkeletonId = uuid();
 
   useEffect(() => {
     dispatch(
@@ -168,6 +170,7 @@ export const ActivityTable = () => {
             type: 'large',
             infiniteLoader: true,
           }}
+          key={tableSkeletonId}
         />
       }
       useWindow={true || false}

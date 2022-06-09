@@ -44,6 +44,7 @@
     "react-table": "^7.7.0",
     "react-tsparticles": "^2.0.6",
     "tsparticles": "^2.0.6",
+    "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.2"
   },
   "scripts": {
