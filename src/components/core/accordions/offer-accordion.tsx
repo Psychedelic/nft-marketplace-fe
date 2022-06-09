@@ -209,7 +209,7 @@ export const OfferAccordion = ({
 
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
-    if (!id || !plugPrincipal) return;
+    if (!id) return;
 
     dispatch(
       marketplaceActions.getTokenOffers({
