@@ -24,6 +24,7 @@ import {
 import { isTokenId } from '../../utils/nfts';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { formatTimestamp } from '../../integrations/functions/date';
+import { getICAccountLink } from '../../utils/account-id';
 
 /* --------------------------------------------------------------------------
  * NFT Offers Table Component
@@ -141,20 +142,21 @@ export const NFTOffersTable = ({
         Header: t('translation:tables.titles.from'),
         accessor: ({
           fromDetails,
-          callerDfinityExplorerUrl,
         }: OffersTableItem) => {
           const isOwner = isNFTOwner({
             isConnected,
             owner: fromDetails.address,
             principalId: plugPrincipal,
           });
+          const url = getICAccountLink(fromDetails.address);
+
           return (
             <TextLinkCell
               text={
                 (isOwner && t('translation:tables.labels.you')) ||
                 fromDetails.formattedAddress
               }
-              url={callerDfinityExplorerUrl}
+              url={url}
               type="offers"
             />
           );
@@ -163,7 +165,10 @@ export const NFTOffersTable = ({
       {
         Header: t('translation:tables.titles.time'),
         accessor: ({ time }: OffersTableItem) => (
-          <TextCell text={formatTimestamp(BigInt(time))} type="activityTime" />
+          <TextCell
+            text={formatTimestamp(BigInt(time))}
+            type="activityTime"
+          />
         ),
       },
       {

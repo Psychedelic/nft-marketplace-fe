@@ -245,9 +245,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         Header: t('translation:tables.titles.from'),
         accessor: ({
           fromDetails,
-          callerDfinityExplorerUrl,
         }: OffersTableItem) => {
-          console.log(callerDfinityExplorerUrl, fromDetails);
           const url = getICAccountLink(fromDetails.address);
 
           return (
