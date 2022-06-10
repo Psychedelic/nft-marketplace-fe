@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useMemo, useState } from 'react';
 import { VideoCache } from '../../utils/video-cache';
 import { AppLog } from '../../utils/log';
 import { SkeletonBox } from '../core';
@@ -19,19 +19,15 @@ export const VideoPreload = React.memo(
       const [loaded, setLoaded] = useState(false);
       const [videoBlob, setVideoBlob] = useState<Blob>();
 
-      useEffect(() => {
-        let isMounted = true;
-
+      useMemo(() => {
         if (src) {
           const blob = VideoCache.get(src);
 
           if (!blob) {
             VideoCache.store(src)
               .then((newBlob) => {
-                if (isMounted) {
-                  setLoaded(true);
-                  setVideoBlob(newBlob);
-                }
+                setLoaded(true);
+                setVideoBlob(newBlob);
               })
               .catch((err) =>
                 AppLog.warn('Failed to load video', err),
@@ -41,10 +37,6 @@ export const VideoPreload = React.memo(
             setVideoBlob(blob);
           }
         }
-
-        return () => {
-          isMounted = false;
-        };
       }, [src, setLoaded]);
 
       if (!loaded && !props.poster) {
