@@ -35,6 +35,7 @@ import {
 } from '../../utils/formatters';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { formatTimestamp } from '../../integrations/functions/date';
+import { getICAccountLink } from '../../utils/account-id';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -244,19 +245,25 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         Header: t('translation:tables.titles.from'),
         accessor: ({
           fromDetails,
-          callerDfinityExplorerUrl,
-        }: OffersTableItem) => (
-          <TextLinkCell
-            text={fromDetails.formattedAddress}
-            url={callerDfinityExplorerUrl}
-            type=""
-          />
-        ),
+        }: OffersTableItem) => {
+          const url = getICAccountLink(fromDetails.address);
+
+          return (
+            <TextLinkCell
+              text={fromDetails.formattedAddress}
+              url={url}
+              type=""
+            />
+          );
+        },
       },
       {
         Header: t('translation:tables.titles.time'),
         accessor: ({ time }: OffersTableItem) => (
-          <TextCell text={formatTimestamp(BigInt(time))} type="activityTime" />
+          <TextCell
+            text={formatTimestamp(BigInt(time))}
+            type="activityTime"
+          />
         ),
       },
       {

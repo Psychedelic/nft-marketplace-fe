@@ -18,6 +18,7 @@ import { TableLayout } from './table-layout';
 import { TokenTransactionItem } from '../../utils/parser';
 import { Container } from './styles';
 import { recentNFTUpdatesCount } from '../../hooks/use-marketplace-store';
+import { getICAccountLink } from '../../utils/account-id';
 
 type RowProps = TokenTransactionItem;
 
@@ -67,23 +68,31 @@ export const NFTActivityTable = () => {
       },
       {
         Header: t('translation:tables.titles.seller'),
-        accessor: ({ seller }: RowProps) => (
-          <TextLinkCell
-            text={seller.formatted}
-            url=""
-            type="nftActivity"
-          />
-        ),
+        accessor: ({ seller }: RowProps) => {
+          const url = getICAccountLink(seller.raw);
+
+          return (
+            <TextLinkCell
+              text={seller.formatted}
+              url={url}
+              type="nftActivity"
+            />
+          );
+        },
       },
       {
         Header: t('translation:tables.titles.buyer'),
-        accessor: ({ buyer }: RowProps) => (
-          <TextLinkCell
-            text={buyer.formatted}
-            url=""
-            type="nftActivity"
-          />
-        ),
+        accessor: ({ buyer }: RowProps) => {
+          const url = getICAccountLink(buyer.raw);
+
+          return (
+            <TextLinkCell
+              text={buyer.formatted}
+              url={url}
+              type="nftActivity"
+            />
+          );
+        },
       },
       {
         Header: t('translation:tables.titles.date'),
