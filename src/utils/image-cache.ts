@@ -10,12 +10,22 @@ export class ImageCache {
 
     return new Promise((resolve, reject) => {
       const image = new Image();
+
+      image.addEventListener(
+        'load',
+        () => {
+          this.cache[src] = image;
+          resolve(image);
+        },
+        /* the listener is removed automatically after invoked */
+        {
+          once: true,
+        },
+      );
+
+      image.addEventListener('error', reject);
+
       image.src = src;
-      image.onload = () => {
-        this.cache[src] = image;
-        resolve(image);
-      };
-      image.onerror = reject;
     });
   }
 
