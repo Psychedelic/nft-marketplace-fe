@@ -58,7 +58,9 @@ export class ImageCache {
     });
   }
 
-  static get(url: string): HTMLImageElement | undefined {
+  static get(url?: string): HTMLImageElement | undefined {
+    if (!url) return;
+
     return this.cache[url];
   }
 
