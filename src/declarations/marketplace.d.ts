@@ -26,16 +26,19 @@ export type ListingStatus =
   | { Uninitialized: null }
   | { Created: null };
 export type MPApiError =
+  | { TransferFromFungibleError: string }
   | { NonExistentCollection: null }
   | { NoDeposit: null }
   | { InvalidListingStatus: null }
   | { InsufficientFungibleBalance: null }
   | { InvalidListing: null }
+  | { TransferFromNonFungibleError: string }
   | { TransferNonFungibleError: null }
   | { Unauthorized: null }
   | { InsufficientFungibleAllowance: null }
   | { TransferFungibleError: null }
   | { InvalidOffer: null }
+  | { InvalidOwner: null }
   | { Other: string }
   | { InsufficientNonFungibleBalance: null }
   | { InvalidOfferStatus: null }
@@ -79,6 +82,7 @@ export interface _SERVICE {
   cancelListing: ActorMethod<[Principal, bigint], Result>;
   cancelOffer: ActorMethod<[Principal, bigint], Result>;
   denyOffer: ActorMethod<[Principal, bigint, Principal], Result>;
+  dfxInfo: ActorMethod<[], string>;
   directBuy: ActorMethod<[Principal, bigint], Result>;
   getAllBalances: ActorMethod<
     [],
@@ -93,8 +97,10 @@ export interface _SERVICE {
     [Principal, Array<bigint>],
     Array<[bigint, Array<Offer>]>
   >;
+  gitCommitHash: ActorMethod<[], string>;
   makeListing: ActorMethod<[Principal, bigint, bigint], Result>;
   makeOffer: ActorMethod<[Principal, bigint, bigint], Result>;
+  rustToolchainInfo: ActorMethod<[], string>;
   setProtocolFee: ActorMethod<[bigint], Result>;
   withdrawFungible: ActorMethod<
     [Principal, FungibleStandard],

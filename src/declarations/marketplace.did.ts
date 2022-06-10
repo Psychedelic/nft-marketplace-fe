@@ -1,16 +1,19 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export default ({ IDL }: { IDL: any }) => {
   const MPApiError = IDL.Variant({
+    TransferFromFungibleError: IDL.Text,
     NonExistentCollection: IDL.Null,
     NoDeposit: IDL.Null,
     InvalidListingStatus: IDL.Null,
     InsufficientFungibleBalance: IDL.Null,
     InvalidListing: IDL.Null,
+    TransferFromNonFungibleError: IDL.Text,
     TransferNonFungibleError: IDL.Null,
     Unauthorized: IDL.Null,
     InsufficientFungibleAllowance: IDL.Null,
     TransferFungibleError: IDL.Null,
     InvalidOffer: IDL.Null,
+    InvalidOwner: IDL.Null,
     Other: IDL.Text,
     InsufficientNonFungibleBalance: IDL.Null,
     InvalidOfferStatus: IDL.Null,
@@ -96,6 +99,7 @@ export default ({ IDL }: { IDL: any }) => {
       [Result],
       [],
     ),
+    dfxInfo: IDL.Func([], [IDL.Text], ['query']),
     directBuy: IDL.Func([IDL.Principal, IDL.Nat], [Result], []),
     getAllBalances: IDL.Func(
       [],
@@ -128,6 +132,7 @@ export default ({ IDL }: { IDL: any }) => {
       [IDL.Vec(IDL.Tuple(IDL.Nat, IDL.Vec(Offer)))],
       ['query'],
     ),
+    gitCommitHash: IDL.Func([], [IDL.Text], ['query']),
     makeListing: IDL.Func(
       [IDL.Principal, IDL.Nat, IDL.Nat],
       [Result],
@@ -138,6 +143,7 @@ export default ({ IDL }: { IDL: any }) => {
       [Result],
       [],
     ),
+    rustToolchainInfo: IDL.Func([], [IDL.Text], ['query']),
     setProtocolFee: IDL.Func([IDL.Nat], [Result], []),
     withdrawFungible: IDL.Func(
       [IDL.Principal, FungibleStandard],
