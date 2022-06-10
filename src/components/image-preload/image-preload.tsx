@@ -19,27 +19,22 @@ export const ImagePreload = React.memo(
     ({ src, ...props }, ref) => {
       const [loaded, setLoaded] = useState(false);
       const image = src && ImageCache.get(src);
-      const onLoad = () => null;
 
-      useMemo(() => {
-        if (!src) return;
-
-        if (!image) {
-          ImageCache.store(src, onLoad).catch((err) =>
-            AppLog.warn('Failed to load image', err),
-          );
-        } else {
-          setLoaded(true);
-        }
-      }, [src, setLoaded, image]);
+      const onLoad = () => setLoaded(true);
 
       useEffect(() => {
         if (!src) return;
 
+        try {
+          ImageCache.store(src, onLoad);
+        } catch (err) {
+          AppLog.warn('Failed to load image', err);
+        }
+
         return () => {
           ImageCache.removeListener(src);
         };
-      }, [src]);
+      }, [src, image]);
 
       if (!loaded) {
         return (

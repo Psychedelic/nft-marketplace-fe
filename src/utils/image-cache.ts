@@ -15,8 +15,18 @@ export class ImageCache {
     // It doesn't need to wait garbage collect result
     this.garbageCollect();
 
+    const hasCachedImage = this.get(src);
+
     return new Promise((resolve, reject) => {
+      if (hasCachedImage && typeof cb === 'function') {
+        cb();
+        resolve(hasCachedImage);
+
+        return;
+      }
+
       const image = new Image();
+
       const listener = () => {
         this.cache[src] = image;
         resolve(image);
@@ -26,6 +36,13 @@ export class ImageCache {
         cb();
       };
 
+      // References
+      this.listeners[src] = {
+        image,
+        listener,
+      };
+
+      // Listeners
       image.addEventListener(
         'load',
         listener,
@@ -34,14 +51,10 @@ export class ImageCache {
           once: true,
         },
       );
-
       image.addEventListener('error', reject);
 
+      // Pass source
       image.src = src;
-      this.listeners[src] = {
-        image,
-        listener,
-      };
     });
   }
 
@@ -55,6 +68,8 @@ export class ImageCache {
     const { image, listener } = this.listeners[src];
 
     image.removeEventListener('load', listener);
+
+    delete this.listeners[src];
   }
 
   static garbageCollect(): Promise<void> {
