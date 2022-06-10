@@ -32,7 +32,8 @@ export const FiltersContainer = styled('div', {
   borderTop: '1px solid $borderColor',
   position: 'sticky',
   top: '0',
-  overflow: 'scroll',
+  overflowY: 'scroll',
+  overflowX: 'hidden',
   msOverflowStyle: 'none',
   scrollbarWidth: 'none',
 
