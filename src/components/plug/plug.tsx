@@ -27,6 +27,7 @@ const {
   nftCollectionId,
   marketplaceCanisterId,
   wICPCanisterId,
+  capRouterId,
   host,
 } = config;
 
@@ -34,6 +35,7 @@ const whitelist = [
   nftCollectionId,
   marketplaceCanisterId,
   wICPCanisterId,
+  capRouterId,
 ];
 
 export const Plug = () => {
