@@ -146,6 +146,7 @@ export const Filters = () => {
 
       return;
     }
+
     if (priceFilterValue.max === '') {
       dispatch(
         notificationActions.setErrorMessage(
@@ -155,6 +156,7 @@ export const Filters = () => {
 
       return;
     }
+
     if (priceFilterValue.min === '' && priceFilterValue.max !== '') {
       setPriceFilterValue((prevState) => ({
         ...prevState,
@@ -167,6 +169,7 @@ export const Filters = () => {
 
       return;
     }
+
     if (priceFilterValue.min !== '' && priceFilterValue.max !== '') {
       applyFilter(
         `${t('translation:filters.priceRange')}`,
@@ -324,41 +327,43 @@ export const Filters = () => {
                   </FilterButtonWrapper>
                 </Flex>
               </FilterGroup>
-              <FilterGroup>
-                <Subheadings>Price Range</Subheadings>
-                <Flex justify="spaceBetween">
-                  <FilterInput
-                    placeholder={t(
-                      'translation:inputField.placeholder.priceMin',
-                    )}
-                    inputValue={priceFilterValue.min}
-                    setValue={(value) => {
-                      applyPriceFilter(value, false);
-                    }}
-                  />
-                  <Subtext margin="rightAndLeft" color="secondary">
-                    to
-                  </Subtext>
-                  <FilterInput
-                    placeholder={t(
-                      'translation:inputField.placeholder.priceMax',
-                    )}
-                    inputValue={priceFilterValue.max}
-                    setValue={(value) => {
-                      applyPriceFilter(value, true);
-                    }}
-                  />
-                </Flex>
-                <br />
-                {displayPriceApplyButton && (
-                  <ActionButton
-                    type="secondary"
-                    onClick={handlePriceFilter}
-                  >
-                    {t('translation:buttons.action.apply')}
-                  </ActionButton>
-                )}
-              </FilterGroup>
+              {Boolean(status.length) && (
+                <FilterGroup>
+                  <Subheadings>Price Range</Subheadings>
+                  <Flex justify="spaceBetween">
+                    <FilterInput
+                      placeholder={t(
+                        'translation:inputField.placeholder.priceMin',
+                      )}
+                      inputValue={priceFilterValue.min}
+                      setValue={(value) => {
+                        applyPriceFilter(value, false);
+                      }}
+                    />
+                    <Subtext margin="rightAndLeft" color="secondary">
+                      to
+                    </Subtext>
+                    <FilterInput
+                      placeholder={t(
+                        'translation:inputField.placeholder.priceMax',
+                      )}
+                      inputValue={priceFilterValue.max}
+                      setValue={(value) => {
+                        applyPriceFilter(value, true);
+                      }}
+                    />
+                  </Flex>
+                  <br />
+                  {displayPriceApplyButton && (
+                    <ActionButton
+                      type="secondary"
+                      onClick={handlePriceFilter}
+                    >
+                      {t('translation:buttons.action.apply')}
+                    </ActionButton>
+                  )}
+                </FilterGroup>
+              )}
             </FilterSection>
             <Heading>Traits</Heading>
             <FilterSection>
