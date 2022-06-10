@@ -18,8 +18,6 @@ export const ImagePreload = React.memo(
   forwardRef<HTMLImageElement, ImagePreloadProps>(
     ({ src, ...props }, ref) => {
       const [loaded, setLoaded] = useState(false);
-      const image = ImageCache.get(src);
-
       const onLoad = () => setLoaded(true);
 
       useEffect(() => {
@@ -34,7 +32,7 @@ export const ImagePreload = React.memo(
         return () => {
           ImageCache.removeListener(src);
         };
-      }, [src, image]);
+      }, [src]);
 
       if (!loaded) {
         return (
