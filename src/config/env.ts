@@ -26,13 +26,13 @@ type Config = {
 const config: Config = {
   // The production version
   production: {
-    host: 'http://127.0.0.1:8000',
-    kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    host: 'https://mainnet.dfinity.network',
+    kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
     icScan: 'https://icscan.io/principal',
-    nftCollectionId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
-    marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
-    wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
-    capRouterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
+    nftCollectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
+    marketplaceCanisterId: 'getti-aiaaa-aaaah-abkkq-cai',
+    wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
+    capRouterId: 'lj532-6iaaa-aaaah-qcc7a-cai',
   },
   // Staging (serverless, local-replica)
   // Is similar to the process we have for local development
