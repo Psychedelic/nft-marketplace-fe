@@ -75,7 +75,7 @@ type InitialState = {
   recentlyPurchasedTokens: any[];
   recentlyWithdrawnAssets: any[];
   sumOfUserAllowance: number;
-  recentlyFailedTransactions: any[];
+  recentlyFailedTransactions: string[];
 };
 
 const initialState: InitialState = {
