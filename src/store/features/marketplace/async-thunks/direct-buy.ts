@@ -10,6 +10,7 @@ import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 import { parseAmountToE8S } from '../../../../utils/formatters';
+import { marketplaceActions } from '../marketplace-slice';
 
 type DirectBuyProps = DefaultCallbacks & DirectBuy;
 
@@ -102,5 +103,8 @@ export const directBuy = createAsyncThunk<
     if (typeof onFailure === 'function') {
       onFailure(err);
     }
+    dispatch(
+      marketplaceActions.setFailedTransactions(defaultErrorMessage),
+    );
   }
 });

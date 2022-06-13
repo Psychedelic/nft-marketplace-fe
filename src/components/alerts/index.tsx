@@ -7,6 +7,7 @@ import {
 } from './styles';
 import { Icon } from '../icons';
 import { WithdrawAssetsModal } from '../modals';
+import { useAssetsToWithdraw } from '../../hooks/use-assets-to-withdraw';
 
 /* --------------------------------------------------------------------------
  * Alerts Component
@@ -14,6 +15,8 @@ import { WithdrawAssetsModal } from '../modals';
 
 export const Alerts = () => {
   const { t } = useTranslation();
+
+  useAssetsToWithdraw();
 
   return (
     <AlertsContainer>

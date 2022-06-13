@@ -10,6 +10,7 @@ import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
+import { marketplaceActions } from '../marketplace-slice';
 
 export type AcceptOfferProps = DefaultCallbacks & AcceptOffer;
 
@@ -101,5 +102,8 @@ export const acceptOffer = createAsyncThunk<
     if (typeof onFailure === 'function') {
       onFailure(err);
     }
+    dispatch(
+      marketplaceActions.setFailedTransactions(defaultErrorMessage),
+    );
   }
 });
