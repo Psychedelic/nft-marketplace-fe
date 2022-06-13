@@ -12,9 +12,11 @@ export type ServiceName = 'marketplace' | 'crowns' | 'wicp' | 'cap';
 export const createActor = async ({
   serviceName = 'marketplace',
   plugIsConnected = false,
+  asPlugInstance = true,
 }: {
   serviceName?: ServiceName;
   plugIsConnected?: boolean;
+  asPlugInstance?: boolean;
 }) => {
   let canisterId: string;
   let interfaceFactory: IDL.InterfaceFactory;
@@ -38,7 +40,7 @@ export const createActor = async ({
       break;
   }
 
-  if (plugIsConnected) {
+  if (plugIsConnected && asPlugInstance) {
     return window.ic?.plug?.createActor({
       canisterId,
       interfaceFactory,
@@ -90,9 +92,12 @@ export const actorInstanceHandler = async <T>({
   if (!actor || isAnotherAgent) {
     AppLog.warn(`Creating new actor instance for ${serviceName}`);
 
+    const asPlugInstance = serviceName !== 'cap';
+
     const newActor = (await createActor({
       serviceName,
       plugIsConnected,
+      asPlugInstance,
     })) as ActorSubclass<T>;
 
     // Set actor state
