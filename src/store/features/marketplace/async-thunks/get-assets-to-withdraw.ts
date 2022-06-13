@@ -36,6 +36,8 @@ export const getAssetsToWithdraw = createAsyncThunk<
         ? []
         : parseBalanceResponse(balanceResponse);
 
+    if (!assetsToWithdraw.length) return;
+
     thunkAPI.dispatch(settingsActions.setAlerts(assetsToWithdraw));
 
     return assetsToWithdraw;
