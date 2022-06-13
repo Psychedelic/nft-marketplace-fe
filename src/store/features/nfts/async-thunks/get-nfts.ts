@@ -14,9 +14,19 @@ export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
 };
 
+let cancelToken: any;
+
 export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
   'nfts/getNFTs',
   async ({ payload, sort, order, page, count }, { dispatch }) => {
+    //Check if there are any previous pending requests
+    if (typeof cancelToken != typeof undefined) {
+      cancelToken.cancel('Operation canceled due to new request.');
+    }
+
+    //Save the cancel token for the current request
+    cancelToken = axios.CancelToken.source();
+
     // set loading NFTS state to true
     if (page === 0) {
       dispatch(nftsActions.setIsNFTSLoading(true));
@@ -30,6 +40,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
       const response = await axios.post(
         KyasshuUrl.getNFTs({ sort, order, page, count }),
         payload,
+        { cancelToken: cancelToken.token }, //Pass the cancel token to the current request
       );
 
       if (response.status !== 200) {
