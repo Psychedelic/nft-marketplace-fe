@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import {
   AlertsContainer,
   AlertsWrapper,
@@ -9,46 +7,16 @@ import {
 } from './styles';
 import { Icon } from '../icons';
 import { WithdrawAssetsModal } from '../modals';
-import {
-  useAppDispatch,
-  usePlugStore,
-  marketplaceActions,
-  RootState,
-} from '../../store';
+import { useAssetsToWithdraw } from '../../hooks/use-assets-to-withdraw';
 
 /* --------------------------------------------------------------------------
  * Alerts Component
  * --------------------------------------------------------------------------*/
 
 export const Alerts = () => {
-  const dispatch = useAppDispatch();
-  const { isConnected, principalId: plugPrincipal } = usePlugStore();
   const { t } = useTranslation();
 
-  const recentlyFailedTransactions = useSelector(
-    (state: RootState) =>
-      state.marketplace.recentlyFailedTransactions,
-  );
-
-  const recentlyWithdrawnAssets = useSelector(
-    (state: RootState) => state.marketplace.recentlyWithdrawnAssets,
-  );
-
-  useEffect(() => {
-    if (!isConnected || !plugPrincipal) return;
-
-    dispatch(
-      marketplaceActions.getAssetsToWithdraw({
-        userPrincipalId: plugPrincipal,
-      }),
-    );
-  }, [
-    dispatch,
-    isConnected,
-    plugPrincipal,
-    recentlyWithdrawnAssets,
-    recentlyFailedTransactions,
-  ]);
+  useAssetsToWithdraw();
 
   return (
     <AlertsContainer>
