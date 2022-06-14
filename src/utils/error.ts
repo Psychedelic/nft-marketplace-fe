@@ -18,9 +18,7 @@ const extractErrorKey = (err: Err) => {
 
   if (!keys.length) return;
 
-  const errorKey = keys[0];
-
-  return errorKey ?? '';
+  return keys[0];
 };
 
 const otherErrorParser = (err: Err) => {
@@ -36,7 +34,10 @@ const otherErrorParser = (err: Err) => {
 const parseError = (err: Err) => {
   const errorKey = extractErrorKey(err);
 
-  if (!errorKey || err[errorKey]) {
+  // If the value of error[key] is a string
+  // then we need to compute the Other(string)
+  // otherwise we return errorKey
+  if (!errorKey || typeof err[errorKey] === 'string') {
     return otherErrorParser(err);
   }
 
