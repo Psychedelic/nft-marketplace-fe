@@ -31,11 +31,14 @@ export const cancelListing = createAsyncThunk<
       onFail: (res: any) => {
         throw res;
       },
-      onSuccess: (res: any) => {
+      onSuccess: async (res: any) => {
         if ('Err' in res)
           throw new Error(errorMessageHandler(res.Err));
 
         if (typeof onSuccess !== 'function') return;
+
+        // We call the Cap Sync process
+        await axios.get(KyasshuUrl.getCAPSync());
 
         onSuccess();
       },
@@ -48,10 +51,6 @@ export const cancelListing = createAsyncThunk<
     if (!batchTxRes) {
       throw new Error('Empty response');
     }
-
-    // We call the Cap Sync process
-    // but we don't have to wait for the response
-    axios.get(KyasshuUrl.getCAPSync());
 
     return {
       id,
