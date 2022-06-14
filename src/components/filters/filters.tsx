@@ -125,11 +125,17 @@ export const Filters = () => {
   const applyPriceFilter = (value: string, isMax: boolean) => {
     const key = isMax ? 'max' : 'min';
     const altKey = isMax ? 'min' : 'max';
-    if (value === '' && priceFilterValue[altKey] === '') {
+    if (
+      (value === '' && priceFilterValue[altKey] === '') ||
+      Number(value) < 0
+    ) {
+      dispatch(settingsActions.setPriceApplyButton(false));
+    } else if (value === '' || Number(value) < 0) {
       dispatch(settingsActions.setPriceApplyButton(false));
     } else {
       dispatch(settingsActions.setPriceApplyButton(true));
     }
+
     setPriceFilterValue((prevState) => ({
       ...prevState,
       [key]: value,

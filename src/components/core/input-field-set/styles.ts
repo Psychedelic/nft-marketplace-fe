@@ -67,7 +67,7 @@ export const Input = styled('input', {
     },
     error: {
       true: {
-        borderColor: '$error',
+        borderColor: '1.5px solid $error',
         color: '$error',
       },
     },
