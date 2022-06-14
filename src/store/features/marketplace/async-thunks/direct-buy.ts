@@ -63,11 +63,14 @@ export const directBuy = createAsyncThunk<
       onFail: (res: any) => {
         throw res;
       },
-      onSuccess: (res: any) => {
+      onSuccess: async (res: any) => {
         if ('Err' in res)
           throw new Error(errorMessageHandler(res.Err));
 
         if (typeof onSuccess !== 'function') return;
+
+        // We call the Cap Sync process
+        await axios.get(KyasshuUrl.getCAPSync());
 
         onSuccess();
       },
@@ -82,9 +85,6 @@ export const directBuy = createAsyncThunk<
     if (!batchTxRes) {
       throw new Error('Empty response');
     }
-
-    // We call the Cap Sync process
-    await axios.get(KyasshuUrl.getCAPSync());
 
     return {
       tokenId,
