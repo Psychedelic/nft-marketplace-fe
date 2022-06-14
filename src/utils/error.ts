@@ -13,30 +13,43 @@ const toErrorMessage = (errorKey: string) => {
   }
 };
 
-const otherErrorParser = (Err: Err) => {
-  const key = Object.keys(Err)[0];
-  const errorKey = Err[key];
+const extractErrorKey = (err: Err) => {
+  const keys = Object.keys(err);
+
+  if (!keys.length) return;
+
+  const errorKey = keys[0];
+
+  return errorKey ?? '';
+};
+
+const otherErrorParser = (err: Err) => {
+  const key = extractErrorKey(err);
+
+  if (!key) return;
+
+  const errorKey = err[key];
 
   return errorKey;
 };
 
-const parseError = (Err: Err) => {
-  const errorKey = Object.keys(Err)[0];
+const parseError = (err: Err) => {
+  const errorKey = extractErrorKey(err);
 
-  if (Err[errorKey]) {
-    return otherErrorParser(Err);
+  if (!errorKey || err[errorKey]) {
+    return otherErrorParser(err);
   }
 
   return errorKey;
 };
 
-export const errorMessageHandler = (Err: Err) => {
+export const errorMessageHandler = (err: Err) => {
   try {
-    const errorKey = parseError(Err);
+    const errorKey = parseError(err);
 
     return toErrorMessage(errorKey);
-  } catch (err) {
-    console.warn(err);
+  } catch (error) {
+    console.warn(error);
 
     return toErrorMessage('');
   }
