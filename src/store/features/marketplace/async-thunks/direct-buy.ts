@@ -84,7 +84,8 @@ export const directBuy = createAsyncThunk<
     }
 
     // We call the Cap Sync process
-    await axios.get(KyasshuUrl.getCAPSync());
+    // but we don't have to wait for the response
+    axios.get(KyasshuUrl.getCAPSync());
 
     return {
       tokenId,
