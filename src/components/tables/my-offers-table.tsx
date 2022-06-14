@@ -149,6 +149,11 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   useEffect(() => {
     if (!plugPrincipal) return;
 
+    setTableDetails({
+      loading: true,
+      loadedOffers: [],
+    });
+
     if (offersType === OfferTypeStatusCodes.OffersMade) {
       dispatch(
         marketplaceActions.getBuyerOffers({
@@ -179,6 +184,11 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
   useEffect(() => {
     if (!ownerTokenIdentifiers) return;
+
+    setTableDetails({
+      loading: true,
+      loadedOffers: [],
+    });
 
     dispatch(
       marketplaceActions.getTokenOffers({
@@ -243,9 +253,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       },
       {
         Header: t('translation:tables.titles.from'),
-        accessor: ({
-          fromDetails,
-        }: OffersTableItem) => {
+        accessor: ({ fromDetails }: OffersTableItem) => {
           const url = getICAccountLink(fromDetails.address);
 
           return (
