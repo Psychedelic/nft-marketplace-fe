@@ -251,13 +251,13 @@ export const ChangePriceModal = ({
                     <FeeDetails>
                       <FeeLabelContainer>
                         <FeeLabel>
-                          {t('translation:modals.labels.listingFee')}
+                          {t('translation:modals.labels.protocolFee')}
                         </FeeLabel>
                         <InfoIcon icon="info" />
                       </FeeLabelContainer>
                       <FeePercent>
                         {t(
-                          'translation:modals.labels.listingFeePercent',
+                          'translation:modals.labels.protocolFeePercent',
                         )}
                       </FeePercent>
                     </FeeDetails>
@@ -265,14 +265,14 @@ export const ChangePriceModal = ({
                       <FeeLabelContainer>
                         <FeeLabel>
                           {t(
-                            'translation:modals.labels.creatorRoyalityFee',
+                            'translation:modals.labels.collectionFee',
                           )}
                         </FeeLabel>
                         <InfoIcon icon="info" />
                       </FeeLabelContainer>
                       <FeePercent>
                         {t(
-                          'translation:modals.labels.creatorRoyalityFeePercent',
+                          'translation:modals.labels.collectionFeePercent',
                         )}
                       </FeePercent>
                     </FeeDetails>

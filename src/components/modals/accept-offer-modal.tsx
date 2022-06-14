@@ -62,7 +62,7 @@ export const AcceptOfferModal = ({
   formattedPrice,
   offerFrom,
   nftTokenId,
-  actionButtonProp
+  actionButtonProp,
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -150,7 +150,7 @@ export const AcceptOfferModal = ({
           <ActionButton
             type="outline"
             size="small"
-            fontWeight={actionButtonProp ? "light" : undefined}
+            fontWeight={actionButtonProp ? 'light' : undefined}
           >
             {t('translation:buttons.action.acceptOffer')}
           </ActionButton>
@@ -232,28 +232,26 @@ export const AcceptOfferModal = ({
                   <FeeDetails>
                     <FeeLabelContainer>
                       <FeeLabel>
-                        {t('translation:modals.labels.listingFee')}
+                        {t('translation:modals.labels.protocolFee')}
                       </FeeLabel>
                       <InfoIcon icon="info" />
                     </FeeLabelContainer>
                     <FeePercent>
                       {t(
-                        'translation:modals.labels.listingFeePercent',
+                        'translation:modals.labels.protocolFeePercent',
                       )}
                     </FeePercent>
                   </FeeDetails>
                   <FeeDetails>
                     <FeeLabelContainer>
                       <FeeLabel>
-                        {t(
-                          'translation:modals.labels.creatorRoyalityFee',
-                        )}
+                        {t('translation:modals.labels.collectionFee')}
                       </FeeLabel>
                       <InfoIcon icon="info" />
                     </FeeLabelContainer>
                     <FeePercent>
                       {t(
-                        'translation:modals.labels.creatorRoyalityFeePercent',
+                        'translation:modals.labels.collectionFeePercent',
                       )}
                     </FeePercent>
                   </FeeDetails>

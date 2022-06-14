@@ -226,10 +226,10 @@
       "withdrawAssets": "The following fungible balances remain in the canister due to an error completing a transaction. Review the assets and click retry to receive them."
     },
     "labels": {
-      "listingFee": "Listing Fee",
-      "listingFeePercent": "2.5%",
-      "creatorRoyalityFee": "Creator Royalty Fee",
-      "creatorRoyalityFeePercent": "2.5%",
+      "protocolFee": "Protocol fee",
+      "protocolFeePercent": "1%",
+      "collectionFee": "Collection fee",
+      "collectionFeePercent": "2.5%",
       "totalEarnings": "Total Earnings",
       "preview": "Preview"
     },
