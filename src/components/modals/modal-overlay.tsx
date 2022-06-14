@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { ConfettiParticles } from '../particles';
 import { ModalOverlayContainer as ModalOverlayStyled } from './styles';
 
@@ -6,11 +7,11 @@ export type ModalOverlayProps = {
   children?: React.ReactChild;
 };
 
-export const ModalOverlay: React.FC<ModalOverlayProps> = ({
-  enableParticles,
-  children = <ConfettiParticles />,
-}: ModalOverlayProps) => (
-  <ModalOverlayStyled>
+export const ModalOverlay = forwardRef<
+  HTMLDivElement,
+  ModalOverlayProps
+>(({ enableParticles, children = <ConfettiParticles /> }, ref) => (
+  <ModalOverlayStyled ref={ref}>
     {enableParticles && children}
   </ModalOverlayStyled>
-);
+));
