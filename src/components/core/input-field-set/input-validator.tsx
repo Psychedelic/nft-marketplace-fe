@@ -62,6 +62,7 @@ export const InputValidator: React.VFC<InputValidatorProps> =
           ref={ref}
           {...inputProps}
           onChange={changeValidation}
+          error={Number(inputProps.value) < 0}
         />
       );
     },
