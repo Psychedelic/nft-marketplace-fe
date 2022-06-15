@@ -17,7 +17,9 @@ export const FilterInput = forwardRef<
   ) => {
     const value = event?.target?.value;
     if (setValue) {
-      setValue(value);
+      setValue(
+        value !== '' ? Math.abs(Number(value)).toString() : value,
+      );
     }
   };
 

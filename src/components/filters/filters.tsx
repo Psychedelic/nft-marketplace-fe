@@ -163,6 +163,16 @@ export const Filters = () => {
       return;
     }
 
+    if (Number(priceFilterValue.min) > Number(priceFilterValue.max)) {
+      dispatch(
+        notificationActions.setErrorMessage(
+          `${t('translation:errorMessages.priceMinShouldBeLessThanMax')}`,
+        ),
+      );
+
+      return;
+    }
+
     if (priceFilterValue.min === '' && priceFilterValue.max !== '') {
       setPriceFilterValue((prevState) => ({
         ...prevState,
