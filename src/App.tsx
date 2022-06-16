@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { NavBar, ToastHandler, Alerts } from './components';
 import CollectionView from './views/CollectionView';
@@ -8,18 +8,12 @@ import { useTheme } from './hooks/use-theme';
 import { portalZIndexGlobals } from './utils/styles';
 import { ThemeRootElement } from './constants/common';
 import { useThemeGlobals } from './hooks';
-import { usePlugStore } from './store';
 
 const App = () => {
   const [theme, themeObject] = useTheme();
-  const { isConnected } = usePlugStore();
 
   useThemeGlobals(theme);
   portalZIndexGlobals();
-
-  useEffect(() => {
-    console.log('[debug] isConnected', isConnected);
-  }, [isConnected]);
 
   return (
     <div className={themeObject} id={ThemeRootElement}>
