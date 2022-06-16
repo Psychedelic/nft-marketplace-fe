@@ -13,13 +13,13 @@ import { ResponseStatus } from '../../../../constants/response-status';
 
 export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
-  abortController: AbortController;
+  controller?: AbortController;
 };
 
 export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
   'nfts/getNFTs',
   async (
-    { payload, sort, order, page, count, abortController },
+    { payload, sort, order, page, count, controller },
     { dispatch },
   ) => {
     // set loading NFTS state to true
@@ -29,6 +29,12 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
 
     if (!isEmptyObject(payload)) {
       dispatch(nftsActions.setCollectionDataLoading());
+    }
+
+    let abortController = new AbortController();
+
+    if (typeof controller !== 'undefined') {
+      abortController = controller;
     }
 
     try {

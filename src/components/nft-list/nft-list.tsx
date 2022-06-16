@@ -63,7 +63,6 @@ export const NftList = () => {
         order: 'd',
         page: nextPageNo,
         count: 25,
-        abortController: new AbortController(),
       }),
     );
   };
