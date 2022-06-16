@@ -63,7 +63,7 @@ export const useNFTSFetcher = () => {
         order: 'd',
         page: 0,
         count: 25,
-        controller: abortController,
+        abortController,
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
