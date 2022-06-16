@@ -14,11 +14,16 @@ export class VideoCache {
     src: string,
     cb: () => void,
   ): Promise<HTMLVideoElement> {
+    this.garbageCollect();
+
     const hasCachedVideo = this.get(src);
 
-    const response = await axios.get(src);
-    const video = response.data;
-    this.cache[src] = video;
+    if (!hasCachedVideo) {
+      axios.get(src).then((res) => {
+        const video = res.data;
+        this.cache[src] = video;
+      });
+    }
 
     return new Promise((resolve, reject) => {
       if (hasCachedVideo && typeof cb === 'function') {
@@ -63,9 +68,9 @@ export class VideoCache {
 
     const { video, listener } = this.listeners[src];
 
-    console.log('works', video, this.listeners[src]);
-
     video.removeEventListener('load', listener);
+
+    video.removeEventListener('error', listener);
 
     delete this.listeners[src];
   }
