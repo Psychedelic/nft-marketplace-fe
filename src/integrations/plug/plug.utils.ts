@@ -1,6 +1,7 @@
 type RequestConnectArgs = {
   whitelist?: string[];
   host?: string;
+  onConnectionUpdate?: () => void;
 };
 
 export const requestConnectToPlug = (args?: RequestConnectArgs) =>

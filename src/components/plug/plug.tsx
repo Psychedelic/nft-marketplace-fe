@@ -16,6 +16,7 @@ import {
   getPrincipal,
   formatAddress,
 } from '../../integrations/plug';
+import { disconnectPlug } from '../../integrations/plug/plug.utils';
 import {
   PLUG_WALLET_WEBSITE_URL,
   PlugStatusCodes,
@@ -116,6 +117,16 @@ export const Plug = () => {
     }
   }, [isConnected, dispatch]);
 
+  const onConnectionUpdate = () => {
+    // TODO: Rehydrate the data for the switched account
+    disconnectPlug();
+
+    // connected to plug
+    dispatch(plugActions.setIsConnected(false));
+
+    console.warn('Oops! Disconnected, switched Plug user account');
+  };
+
   const handleConnect = async () => {
     // Is plug installed
     if (!hasPlug) {
@@ -135,6 +146,7 @@ export const Plug = () => {
       const connected = await requestConnectToPlug({
         whitelist,
         host,
+        onConnectionUpdate,
       });
 
       if (!connected) {
