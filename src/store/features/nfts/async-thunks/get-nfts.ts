@@ -9,14 +9,19 @@ import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { findLastAction } from '../../../../utils/nfts';
 import { isEmptyObject } from '../../../../utils/common';
+import { ResponseStatus } from '../../../../constants/response-status';
 
 export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
+  abortController?: AbortController;
 };
 
 export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
   'nfts/getNFTs',
-  async ({ payload, sort, order, page, count }, { dispatch }) => {
+  async (
+    { payload, sort, order, page, count, abortController },
+    { dispatch },
+  ) => {
     // set loading NFTS state to true
     if (page === 0) {
       dispatch(nftsActions.setIsNFTSLoading(true));
@@ -26,10 +31,19 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
       dispatch(nftsActions.setCollectionDataLoading());
     }
 
+    let axiosParams = {};
+
+    if (abortController) {
+      axiosParams = {
+        signal: abortController.signal,
+      };
+    }
+
     try {
       const response = await axios.post(
         KyasshuUrl.getNFTs({ sort, order, page, count }),
         payload,
+        axiosParams,
       );
 
       if (response.status !== 200) {
@@ -103,7 +117,9 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
 
         dispatch(nftsActions.setCollectionData(collectionPayload));
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.message === ResponseStatus.Canceled) return;
+
       AppLog.error(error);
 
       // set NFTS failed to load
