@@ -124,7 +124,9 @@ export const Plug = () => {
     // connected to plug
     dispatch(plugActions.setIsConnected(false));
 
-    console.warn('Oops! Disconnected, switched Plug user account');
+    console.warn(
+      'Oops! Disconnected Plug user, as Plug account was switched',
+    );
   };
 
   const handleConnect = async () => {
