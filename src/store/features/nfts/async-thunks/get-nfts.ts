@@ -33,7 +33,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
 
     let axiosParams = {};
 
-    if (typeof abortController !== 'undefined') {
+    if (abortController) {
       axiosParams = {
         signal: abortController.signal,
       };
