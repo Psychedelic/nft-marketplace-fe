@@ -9,6 +9,7 @@ import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { findLastAction } from '../../../../utils/nfts';
 import { isEmptyObject } from '../../../../utils/common';
+import { ResponseStatus } from '../../../../constants/response-status';
 
 export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -110,7 +111,9 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
 
         dispatch(nftsActions.setCollectionData(collectionPayload));
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.message === ResponseStatus.Canceled) return;
+
       AppLog.error(error);
 
       // set NFTS failed to load
