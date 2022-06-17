@@ -78,6 +78,10 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     (state: RootState) => state.marketplace.recentlyCancelledOffers,
   );
 
+  const tokenOffers = useSelector(
+    (state: RootState) => state.marketplace.tokenOffers,
+  );
+
   const { id: plugPrincipal } = useParams();
 
   const isConnectedOwner = isNFTOwner({
@@ -194,20 +198,22 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       marketplaceActions.getTokenOffers({
         // TODO: handle offers data gracefully
         ownerTokenIdentifiers,
-        onSuccess: (offers) => {
-          if (offersType === OfferTypeStatusCodes.OffersReceived) {
-            setTableDetails({
-              loading: false,
-              loadedOffers: offers,
-            });
-          }
-        },
+
         onFailure: () => {
           // TODO: handle failure messages
         },
       }),
     );
   }, [ownerTokenIdentifiers, dispatch, recentlyAcceptedOffers]);
+
+  useEffect(() => {
+    if (offersType === OfferTypeStatusCodes.OffersReceived) {
+      setTableDetails({
+        loading: false,
+        loadedOffers: tokenOffers,
+      });
+    }
+  }, [tokenOffers]);
 
   const loadMoreData = () => {
     // TODO: Add logic to load more data
