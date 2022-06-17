@@ -66,6 +66,10 @@ export const NFTOffersTable = ({
     (state: RootState) => state.marketplace.recentlyCancelledOffers,
   );
 
+  const tokenOffers = useSelector(
+    (state: RootState) => state.marketplace.tokenOffers,
+  );
+
   const { id: tokenId } = useParams();
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
@@ -93,12 +97,7 @@ export const NFTOffersTable = ({
       marketplaceActions.getTokenOffers({
         // TODO: update ownerTokenIdentifiers naming convention
         ownerTokenIdentifiers: [BigInt(tokenId as string)],
-        onSuccess: (offers: any) => {
-          setTableDetails({
-            loading: false,
-            loadedOffers: offers,
-          });
-        },
+
         onFailure: () => {
           // TODO: handle failure messages
         },
@@ -110,6 +109,13 @@ export const NFTOffersTable = ({
     recentlyMadeOffers,
     recentlyCancelledOffers,
   ]);
+
+  useEffect(() => {
+    setTableDetails({
+      loading: false,
+      loadedOffers: tokenOffers,
+    });
+  }, [tokenOffers]);
 
   const columns = useMemo(
     () => [

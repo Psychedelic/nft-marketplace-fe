@@ -23,7 +23,6 @@ export const VideoPreload = React.memo(
     ({ src, ...props }, ref) => {
       const [loaded, setLoaded] = useState(false);
       const onLoad = () => setLoaded(true);
-
       useEffect(() => {
         if (!src) return;
 

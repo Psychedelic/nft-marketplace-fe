@@ -3,6 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { actorInstanceHandler } from '../../../../integrations/actor';
 import {
   GetUserReceivedOffer,
+  marketplaceActions,
   marketplaceSlice,
 } from '../marketplace-slice';
 import config from '../../../../config/env';
@@ -31,6 +32,8 @@ export const getTokenOffers = createAsyncThunk<
       serviceName: 'marketplace',
       slice: marketplaceSlice,
     });
+
+    thunkAPI.dispatch(marketplaceActions.setOffersLoaded(false));
 
     try {
       let floorDifferencePrice;
@@ -71,6 +74,8 @@ export const getTokenOffers = createAsyncThunk<
       if (typeof onSuccess === 'function') {
         onSuccess(parsedTokenOffers);
       }
+
+      thunkAPI.dispatch(marketplaceActions.setOffersLoaded(true));
 
       return parsedTokenOffers;
     } catch (err) {

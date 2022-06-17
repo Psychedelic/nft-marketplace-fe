@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export class VideoCache {
   private static readonly maxSize = 25;
 
@@ -17,13 +15,6 @@ export class VideoCache {
     this.garbageCollect();
 
     const hasCachedVideo = this.get(src);
-
-    if (!hasCachedVideo) {
-      axios.get(src).then((res) => {
-        const video = res.data;
-        this.cache[src] = video;
-      });
-    }
 
     return new Promise((resolve, reject) => {
       if (hasCachedVideo && typeof cb === 'function') {
