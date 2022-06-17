@@ -24,7 +24,7 @@ export const TypeDetailsCell = ({
 }: TypeDetailsCellProps) => {
   const { t } = useTranslation();
   return (
-    <TypeDetails>
+    <TypeDetails data-event-type={type}>
       {type && Object.keys(EventIcon).includes(type) && (
         <Icon icon={EventIcon[type]} paddingRight />
       )}
