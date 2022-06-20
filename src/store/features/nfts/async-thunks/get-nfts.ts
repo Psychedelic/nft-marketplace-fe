@@ -23,9 +23,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
     { dispatch },
   ) => {
     // set loading NFTS state to true
-    if (page === 0) {
-      dispatch(nftsActions.setIsNFTSLoading(true));
-    }
+    dispatch(nftsActions.setIsNFTSLoading(true));
 
     if (!isEmptyObject(payload)) {
       dispatch(nftsActions.setCollectionDataLoading());
