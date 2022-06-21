@@ -63,7 +63,7 @@
     "web-vitals": "^2.1.2"
   },
   "scripts": {
-    "start": "startScript() { REACT_APP_NODE_ENV=$1 DISABLE_ESLINT_PLUGIN=true react-scripts start; }; startScript",
+    "start": ".scripts/start.sh",
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "DISABLE_ESLINT_PLUGIN=true react-scripts test",
     "eject": "react-scripts eject",
