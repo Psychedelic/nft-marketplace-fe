@@ -14,6 +14,7 @@ type ConfigParams = {
   marketplaceCanisterId: string;
   wICPCanisterId: string;
   capRouterId: string;
+  logsAppToken: string;
 };
 
 type Config = {
@@ -22,6 +23,8 @@ type Config = {
   development: ConfigParams;
   test: ConfigParams;
 };
+
+const logsAppToken = process.env.REACT_APP_LOGS_APP_TOKEN || '';
 
 const config: Config = {
   // The production version
@@ -33,6 +36,7 @@ const config: Config = {
     marketplaceCanisterId: 'getti-aiaaa-aaaah-abkkq-cai',
     wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
     capRouterId: 'lj532-6iaaa-aaaah-qcc7a-cai',
+    logsAppToken,
   },
   // Staging (serverless, local-replica)
   // Is similar to the process we have for local development
@@ -46,6 +50,7 @@ const config: Config = {
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
     capRouterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
+    logsAppToken,
   },
   // Mainnet test environment
   // Provides the Service Canisters published to the Mainnet
@@ -60,6 +65,7 @@ const config: Config = {
     marketplaceCanisterId: 'o3ios-jaaaa-aaaag-qakqq-cai',
     wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
     capRouterId: 'lj532-6iaaa-aaaah-qcc7a-cai',
+    logsAppToken,
   },
   // The local development environment settings
   development: {
@@ -70,6 +76,7 @@ const config: Config = {
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
     capRouterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
+    logsAppToken,
   },
 };
 
