@@ -61,7 +61,7 @@ printf "🤖 Mint process will mint a count of %s tokens\n\n" "$numberOfTokens"
 (
   cd ./nft-marketplace/crowns/mocks || exit 1
 
-  USER_PRINCIPALS="[ \"$whoami\", \"$alice\", \"$bob\" ]" MAX_CHUNKS=$max_chunks node mint-crowns.js
+  USER_PRINCIPALS="[ \"$whoami\", \"$alice\", \"$bob\" ]" MAX_CHUNKS=$max_chunks CROWNS_ID=$(cd ../../crowns && dfx canister id crowns) WICP_ID=$(cd ../../wicp && dfx canister id wicp) node mint-crowns.js
 )
 
 printf "👍 Mint process completed!\n\n"
