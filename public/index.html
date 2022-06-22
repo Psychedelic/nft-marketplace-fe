@@ -76,9 +76,14 @@
         DD_LOGS.init({
           clientToken: '%REACT_APP_DATADOG_CLIENT_TOKEN%',
           site: 'datadoghq.eu',
-          forwardErrorsToLogs: true,
+          forwardErrorsToLogs: false,
+          forwardConsoleLogs: [],
           sampleRate: 100,
+          service: 'env:%REACT_APP_NODE_ENV%:jelly_web_client',
         });
+      DD_LOGS.onReady(function () {
+        window.DD_LOGS_IS_READY = true;
+      });
     </script>
     <!-- datadog: end -->
   </head>
