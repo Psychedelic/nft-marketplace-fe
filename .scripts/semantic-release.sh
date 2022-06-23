@@ -2,6 +2,6 @@
 
 echo "🤖 Semantic release"
 
-npm install
+yarn install
 
 npx semantic-release
