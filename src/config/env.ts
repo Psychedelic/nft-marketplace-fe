@@ -86,4 +86,6 @@ const config: Config = {
   },
 };
 
+console.log('[debug] env, config[env]:', env, config[env]);
+
 export default config[env];
