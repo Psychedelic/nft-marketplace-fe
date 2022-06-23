@@ -1,5 +1,6 @@
 import { Actor, ActorSubclass, HttpAgent } from '@dfinity/agent';
 import { IDL } from '@dfinity/candid';
+import fetch from 'isomorphic-fetch';
 import crownsIdlFactory from '../../declarations/nft.did';
 import wicpIdlFactory from '../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
@@ -49,14 +50,27 @@ export const createActor = async ({
   }
 
   console.log(
-    '[debug] actor.utils.ts, serviceName, config.host',
+    '[debug] actor.utils.ts, serviceName, config.host, nodeEnv',
     serviceName,
     config.host,
+    process.env.NODE_ENV,
   );
 
   const agent = new HttpAgent({
     host: config.host,
+    fetch,
   });
+
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      await agent.fetchRootKey();
+    } catch (err) {
+      console.warn(
+        'Oops! Unable to fetch root key, is the local replica running?',
+      );
+      console.error(err);
+    }
+  }
 
   return Actor.createActor(interfaceFactory, {
     agent,
