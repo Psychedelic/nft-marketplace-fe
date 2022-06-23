@@ -19,4 +19,5 @@ jobs:
         run: .scripts/semantic-release.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PAT: ${{ secrets.PAT }}
 
