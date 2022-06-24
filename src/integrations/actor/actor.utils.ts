@@ -48,13 +48,6 @@ export const createActor = async ({
     });
   }
 
-  console.log(
-    '[debug] actor.utils.ts, serviceName, config.host, nodeEnv',
-    serviceName,
-    config.host,
-    process.env.NODE_ENV,
-  );
-
   const agent = new HttpAgent({
     host: config.host,
   });
