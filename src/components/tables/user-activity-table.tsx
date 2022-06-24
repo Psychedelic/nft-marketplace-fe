@@ -52,9 +52,9 @@ export const UserActivityTable = () => {
   const { theme } = useThemeStore();
   const {
     loadedUserActivityData,
-    hasMoreData,
-    loadingTableData,
-    nextPageNo,
+    hasMoreUserActivities,
+    loadingUserTableData,
+    nextUserActivityPageNo,
   } = useTableStore();
   const dispatch = useAppDispatch();
   const bucketId = useSelector(
@@ -77,7 +77,7 @@ export const UserActivityTable = () => {
 
     dispatch(
       tableActions.getUserActivity({
-        pageCount: 'last',
+        pageCount: 0,
         bucketId,
         plugPrincipal,
       }),
@@ -86,24 +86,24 @@ export const UserActivityTable = () => {
 
   const loadMoreData = useCallback(() => {
     if (
-      loadingTableData ||
-      !hasMoreData ||
+      loadingUserTableData ||
+      !hasMoreUserActivities ||
       !bucketId ||
       !plugPrincipal
     )
       return;
     dispatch(
       tableActions.getUserActivity({
-        pageCount: nextPageNo.toString(),
+        pageCount: nextUserActivityPageNo,
         bucketId,
         plugPrincipal,
       }),
     );
   }, [
     dispatch,
-    loadingTableData,
-    hasMoreData,
-    nextPageNo,
+    loadingUserTableData,
+    hasMoreUserActivities,
+    nextUserActivityPageNo,
     bucketId,
     plugPrincipal,
   ]);
@@ -174,8 +174,8 @@ export const UserActivityTable = () => {
     <InfiniteScrollWrapper
       pageStart={0}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
-      loadMore={nextPageNo >= 0 ? loadMoreData : () => {}}
-      hasMore={hasMoreData}
+      loadMore={nextUserActivityPageNo >= 0 ? loadMoreData : () => {}}
+      hasMore={hasMoreUserActivities}
       loader={
         <TableSkeletons
           loaderDetails={{
@@ -196,7 +196,7 @@ export const UserActivityTable = () => {
           columns={columns}
           data={loadedUserActivityData}
           tableType="activity"
-          loading={loadingTableData}
+          loading={loadingUserTableData}
           loaderDetails={{
             showItemDetails: true,
             showTypeDetails: true,

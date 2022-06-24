@@ -22,6 +22,9 @@ export interface TableState {
   loadingTokenTransactions: boolean;
   tokenMetadataById: TokenMetadataById;
   loadedUserActivityData: Array<object>;
+  loadingUserTableData: boolean;
+  hasMoreUserActivities: boolean;
+  nextUserActivityPageNo: number;
 }
 
 export interface CapActivityParams {
@@ -30,7 +33,7 @@ export interface CapActivityParams {
 }
 
 export interface UserActivityParams {
-  pageCount: string;
+  pageCount: number;
   bucketId: string;
   plugPrincipal: string;
 }
@@ -45,7 +48,7 @@ interface LoadedTableData {
 
 interface LoadedUserTableData {
   loadedUserActivityData: Array<object>;
-  currentPage: string;
+  currentPage: number;
   nextPage: number;
 }
 
@@ -62,6 +65,9 @@ const initialState: TableState = {
   loadingTokenTransactions: true,
   tokenMetadataById: {},
   loadedUserActivityData: [],
+  loadingUserTableData: true,
+  hasMoreUserActivities: false,
+  nextUserActivityPageNo: 0,
 };
 
 export const tableSlice = createSlice({
@@ -101,6 +107,12 @@ export const tableSlice = createSlice({
         state.hasMoreData = false;
       }
     },
+    setIsUserTableDataLoading: (
+      state,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.loadingUserTableData = action.payload;
+    },
     setUserActivityTable: (
       state,
       action: PayloadAction<LoadedUserTableData>,
@@ -108,19 +120,19 @@ export const tableSlice = createSlice({
       const { currentPage, nextPage, loadedUserActivityData } =
         action.payload;
 
-      state.loadingTableData = false;
+      state.loadingUserTableData = false;
 
-      if (currentPage === 'last') {
+      if (currentPage < 1) {
         state.loadedUserActivityData = loadedUserActivityData;
       } else {
         state.loadedUserActivityData.push(...loadedUserActivityData);
       }
 
-      if (nextPage >= 0) {
-        state.hasMoreData = true;
-        state.nextPageNo = nextPage;
+      if (loadedUserActivityData.length > 0) {
+        state.hasMoreUserActivities = true;
+        state.nextUserActivityPageNo = nextPage;
       } else {
-        state.hasMoreData = false;
+        state.hasMoreUserActivities = false;
       }
     },
     setFailedToLoadTableData: (
