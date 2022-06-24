@@ -16,9 +16,13 @@ export const sortTokenOffersByPrice = (offers: ParsedTokenOffers) => {
 export const sortTransactionsByTime = (
   transactions: TokenTransactionItem[] | OffersTableItem[],
 ) => {
-  return transactions.sort(
-    (a: TnxTimestamp, b: TnxTimestamp) => {
-      return Number(b.time.toString()) - Number(a.time.toString())
-    }
-  );
+  return transactions.sort((a: TnxTimestamp, b: TnxTimestamp) => {
+    return Number(b.time.toString()) - Number(a.time.toString());
+  });
+};
+
+export const sortActivitiesByTime = (activities: any) => {
+  return activities.sort((a: any, b: any) => {
+    return Number(b.time.toString()) - Number(a.time.toString());
+  });
 };
