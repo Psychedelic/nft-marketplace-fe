@@ -10,6 +10,7 @@ import {
   parseTablePrincipal,
 } from '../../../../utils/parser';
 import config from '../../../../config/env';
+import { sortActivitiesByTime } from '../../../../utils/sorting';
 
 export type GetUserActivityProps = UserActivityParams;
 
@@ -31,10 +32,13 @@ export const getUserActivity = createAsyncThunk<
 
       const response = await capRoot.get_user_transactions({
         user: userAddress,
+        page: pageCount,
         witness: false,
       });
 
-      const { data: activities, page: pageNo } = response;
+      const { data, page: pageNo } = response;
+
+      const activities = sortActivitiesByTime(data);
 
       const result = activities.map((activity: any) => {
         const capData = {
@@ -81,7 +85,7 @@ export const getUserActivity = createAsyncThunk<
       const actionPayload = {
         loadedUserActivityData,
         currentPage: pageCount,
-        nextPage: Number(pageNo) - 1,
+        nextPage: pageNo + 1,
       };
 
       dispatch(tableActions.setUserActivityTable(actionPayload));
