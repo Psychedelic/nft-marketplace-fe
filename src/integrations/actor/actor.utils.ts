@@ -1,6 +1,5 @@
 import { Actor, ActorSubclass, HttpAgent } from '@dfinity/agent';
 import { IDL } from '@dfinity/candid';
-import fetch from 'isomorphic-fetch';
 import crownsIdlFactory from '../../declarations/nft.did';
 import wicpIdlFactory from '../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
@@ -58,7 +57,6 @@ export const createActor = async ({
 
   const agent = new HttpAgent({
     host: config.host,
-    fetch,
   });
 
   if (process.env.NODE_ENV !== 'production') {
