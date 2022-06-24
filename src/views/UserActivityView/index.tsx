@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { UserActivityTable } from '../../components/tables';
 import { Container, TitleWrapper, Title } from './styles';
 import { useSettingsStore, usePlugStore } from '../../store';
 import { NftMetadataBackground } from '../../components/collection-overview/styles';
@@ -35,6 +36,7 @@ const UserActivityView = () => {
             : t('translation:activity.userActivity')}
         </Title>
       </TitleWrapper>
+      <UserActivityTable />
     </Container>
   );
 };
