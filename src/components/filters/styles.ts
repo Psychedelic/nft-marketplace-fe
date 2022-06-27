@@ -1,13 +1,13 @@
 import { styled, keyframes } from '../../stitches.config';
 import { Icon } from '../icons';
 
-const openArrowBounce = keyframes({
+const closeArrowBounce = keyframes({
   '50%': {
     transform: 'translateX(-3px)',
   },
 });
 
-const closeArrowBounce = keyframes({
+const openArrowBounce = keyframes({
   '50%': {
     transform: 'rotate(-180deg) translateX(-3px)',
   },
@@ -182,12 +182,12 @@ export const CollapseIcon = styled(Icon, {
     opened: {
       true: {
         '&:hover': {
-          animation: `${closeArrowBounce} 1600ms linear infinite`,
+          animation: `${openArrowBounce} 1600ms linear infinite`,
         },
       },
       false: {
         '&:hover': {
-          animation: `${openArrowBounce} 1600ms linear infinite`,
+          animation: `${closeArrowBounce} 1600ms linear infinite`,
         },
       },
     },
