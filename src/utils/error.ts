@@ -7,7 +7,7 @@ const toErrorMessage = (errorKey: string) => {
   switch (errorKey) {
     case 'InsufficientFungibleBalance':
     case 'InsufficientBalance':
-      return 'Oops! Insufficient fungible balance';
+      return 'Oops! It looks like the buyer does not have enough fungible balance to complete the sale';
     case 'Unauthorized':
       return 'Oops! Marketplace is not authorized to perform the transaction';
     case 'InvalidOperator':
