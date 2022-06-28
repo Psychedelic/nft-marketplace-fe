@@ -2,7 +2,12 @@ import { useCallback, useLayoutEffect, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, plugActions } from '../../store';
+import {
+  useAppDispatch,
+  plugActions,
+  filterActions,
+  useFilterStore,
+} from '../../store';
 import { disconnectPlug } from '../../integrations/plug';
 import {
   PlugButtonContainer,
@@ -35,6 +40,7 @@ export const PlugButton = ({
 }: PlugButtonProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { isMyNfts, defaultFilters } = useFilterStore();
   const [theme, themeObject] = useTheme();
   const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -80,6 +86,27 @@ export const PlugButton = ({
     }
   }, [handleConnect, isConnected, openDropdown]);
 
+  const filterExists = (filterName: string) =>
+    defaultFilters.some(
+      (appliedFilter) => appliedFilter.filterName === filterName,
+    );
+
+  const setMyNfts = () => {
+    dispatch(filterActions.setMyNfts(!isMyNfts));
+    !filterExists(t('translation:buttons.action.myNfts'))
+      ? dispatch(
+          filterActions.applyFilter({
+            filterName: `${t('translation:buttons.action.myNfts')}`,
+            filterCategory: 'Display',
+          }),
+        )
+      : dispatch(
+          filterActions.removeFilter(
+            t('translation:buttons.action.myNfts'),
+          ),
+        );
+  };
+
   return (
     <Popover.Root open={openDropdown}>
       <PopoverTrigger asChild>
@@ -119,6 +146,10 @@ export const PlugButton = ({
             <ListItem onClick={myActivityHandler}>
               <Icon icon="activity" paddingRight />
               <p>{t('translation:buttons.action.myActivity')}</p>
+            </ListItem>
+            <ListItem onClick={setMyNfts}>
+              <Icon icon="myNfts" paddingRight />
+              <p>{t('translation:buttons.action.myNfts')}</p>
             </ListItem>
             <ListItem onClick={disconnectHandler}>
               <Icon icon="disconnect" paddingRight />
