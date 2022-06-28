@@ -1,5 +1,17 @@
-import { styled } from '../../stitches.config';
+import { styled, keyframes } from '../../stitches.config';
 import { Icon } from '../icons';
+
+const closeArrowBounce = keyframes({
+  '50%': {
+    transform: 'translateX(-3px)',
+  },
+});
+
+const openArrowBounce = keyframes({
+  '50%': {
+    transform: 'rotate(-180deg) translateX(-3px)',
+  },
+});
 
 export const Container = styled('div', {
   position: 'relative',
@@ -165,6 +177,21 @@ export const CollapseIcon = styled(Icon, {
   color: '$mainTextColor',
   width: '24px',
   height: '24px',
+
+  variants: {
+    opened: {
+      true: {
+        '&:hover': {
+          animation: `${openArrowBounce} 1600ms linear infinite`,
+        },
+      },
+      false: {
+        '&:hover': {
+          animation: `${closeArrowBounce} 1600ms linear infinite`,
+        },
+      },
+    },
+  },
 });
 
 export const FilterHeader = styled('div', {
