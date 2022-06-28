@@ -201,6 +201,7 @@ export const UserActivityTable = () => {
             showItemDetails: true,
             showTypeDetails: true,
           }}
+          emptyMessage={t('translation:emptyStates.nftActivity')}
         />
       </Container>
     </InfiniteScrollWrapper>
