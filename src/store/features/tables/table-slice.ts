@@ -4,6 +4,7 @@ import {
   getCAPActivity,
   getTokenMetadata,
   getTokenTransactions,
+  getUserActivity,
 } from './async-thunks';
 
 interface LoadedTableMetaData {
@@ -20,6 +21,10 @@ export interface TableState {
   tokenTransactions: any;
   loadingTokenTransactions: boolean;
   tokenMetadataById: TokenMetadataById;
+  loadedUserActivityData: Array<object>;
+  loadingUserTableData: boolean;
+  hasMoreUserActivities: boolean;
+  nextUserActivityPageNo: number;
 }
 
 export interface CapActivityParams {
@@ -27,11 +32,23 @@ export interface CapActivityParams {
   bucketId: string;
 }
 
+export interface UserActivityParams {
+  pageCount: number;
+  bucketId: string;
+  plugPrincipal: string;
+}
+
 export type TokenMetadataById = Record<string, string>;
 
 interface LoadedTableData {
   loadedCapActivityTableData: Array<object>;
   currentPage: string;
+  nextPage: number;
+}
+
+interface LoadedUserTableData {
+  loadedUserActivityData: Array<object>;
+  currentPage: number;
   nextPage: number;
 }
 
@@ -47,6 +64,10 @@ const initialState: TableState = {
   tokenTransactions: [],
   loadingTokenTransactions: true,
   tokenMetadataById: {},
+  loadedUserActivityData: [],
+  loadingUserTableData: true,
+  hasMoreUserActivities: false,
+  nextUserActivityPageNo: 0,
 };
 
 export const tableSlice = createSlice({
@@ -69,10 +90,9 @@ export const tableSlice = createSlice({
       const { currentPage, nextPage, loadedCapActivityTableData } =
         action.payload;
 
-
       state.loadingTableData = false;
 
-      if (currentPage === "last") {
+      if (currentPage === 'last') {
         state.loadedCapActivityData = loadedCapActivityTableData;
       } else {
         state.loadedCapActivityData.push(
@@ -85,6 +105,34 @@ export const tableSlice = createSlice({
         state.nextPageNo = nextPage;
       } else {
         state.hasMoreData = false;
+      }
+    },
+    setIsUserTableDataLoading: (
+      state,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.loadingUserTableData = action.payload;
+    },
+    setUserActivityTable: (
+      state,
+      action: PayloadAction<LoadedUserTableData>,
+    ) => {
+      const { currentPage, nextPage, loadedUserActivityData } =
+        action.payload;
+
+      state.loadingUserTableData = false;
+
+      if (currentPage < 1) {
+        state.loadedUserActivityData = loadedUserActivityData;
+      } else {
+        state.loadedUserActivityData.push(...loadedUserActivityData);
+      }
+
+      if (loadedUserActivityData.length > 0) {
+        state.hasMoreUserActivities = true;
+        state.nextUserActivityPageNo = nextPage;
+      } else {
+        state.hasMoreUserActivities = false;
       }
     },
     setFailedToLoadTableData: (
@@ -131,6 +179,7 @@ export const tableActions = {
   getCAPActivity,
   getTokenMetadata,
   getTokenTransactions,
+  getUserActivity,
 };
 
 export const selectTableState = (state: RootState) => state.table;

@@ -12,6 +12,10 @@
     "offersMade": "Offers Made",
     "offers": "Offers"
   },
+  "activity": {
+    "myActivity": "My Activity",
+    "userActivity": "Activity"
+  },
   "buttons": {
     "placeholder": {
       "primary": "Primary",
@@ -46,7 +50,8 @@
       "myOffers": "My Offers",
       "disconnect": "Disconnect",
       "editOffer": "Edit Offer",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "myActivity": "My Activity"
     }
   },
   "dropdown": {

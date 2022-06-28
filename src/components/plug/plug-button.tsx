@@ -51,6 +51,11 @@ export const PlugButton = ({
     setOpenDropdown(false);
   }, [navigate, userPrincipal]);
 
+  const myActivityHandler = useCallback(() => {
+    navigate(`/activity/${userPrincipal}`);
+    setOpenDropdown(false);
+  }, [navigate, userPrincipal]);
+
   useLayoutEffect(() => {
     if (openDropdown) {
       // Add class after portal is added to the DOM
@@ -110,6 +115,10 @@ export const PlugButton = ({
             <ListItem onClick={myOffersHandler}>
               <Icon icon="offer" paddingRight />
               <p>{t('translation:buttons.action.myOffers')}</p>
+            </ListItem>
+            <ListItem onClick={myActivityHandler}>
+              <Icon icon="activity" paddingRight />
+              <p>{t('translation:buttons.action.myActivity')}</p>
             </ListItem>
             <ListItem onClick={disconnectHandler}>
               <Icon icon="disconnect" paddingRight />
