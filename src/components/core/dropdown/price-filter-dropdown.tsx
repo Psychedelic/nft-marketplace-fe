@@ -16,6 +16,7 @@ import { AppLog } from '../../../utils/log';
 import { Icon } from '../../icons';
 import { useTheme } from '../../../hooks';
 
+// TODO: Add low to high and high to low sorting
 export const SortByFilterDropdown = React.memo(() => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
