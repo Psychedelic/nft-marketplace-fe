@@ -224,7 +224,7 @@ export const NftCard = React.memo(
               </NftDataHeader>
             </Flex>
             <Flex>
-              <NftDataText>{data?.id}</NftDataText>
+              <NftDataText>#{data?.id}</NftDataText>
               <NftDataText>
                 {isForSale && !previewCard && (
                   <>
