@@ -2,7 +2,12 @@ import { useCallback, useLayoutEffect, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, plugActions } from '../../store';
+import {
+  useAppDispatch,
+  plugActions,
+  filterActions,
+  useFilterStore,
+} from '../../store';
 import { disconnectPlug } from '../../integrations/plug';
 import { openSonicURL } from '../../utils/ handle-redirect-urls';
 import {
@@ -38,6 +43,7 @@ export const PlugButton = ({
 }: PlugButtonProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { isMyNfts, defaultFilters } = useFilterStore();
   const [theme, themeObject] = useTheme();
   const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -82,6 +88,22 @@ export const PlugButton = ({
       handleConnect();
     }
   }, [handleConnect, isConnected, openDropdown]);
+
+  const filterExists = (filterName: string) =>
+    defaultFilters.some(
+      (appliedFilter) => appliedFilter.filterName === filterName,
+    );
+
+  const setMyNfts = () => {
+    dispatch(filterActions.setMyNfts(true));
+    if (filterExists(t('translation:buttons.action.myNfts'))) return;
+    dispatch(
+      filterActions.applyFilter({
+        filterName: `${t('translation:buttons.action.myNfts')}`,
+        filterCategory: 'Display',
+      }),
+    );
+  };
 
   return (
     <Popover.Root open={openDropdown}>
@@ -129,6 +151,10 @@ export const PlugButton = ({
                 alt={t('translation:logoAlts.wicp')}
               />
               <p>{t('translation:buttons.action.getWicp')}</p>
+              </ListItem>
+            <ListItem onClick={setMyNfts}>
+              <Icon icon="myNfts" paddingRight />
+              <p>{t('translation:buttons.action.myNfts')}</p>
             </ListItem>
             <ListItem onClick={disconnectHandler}>
               <Icon icon="disconnect" paddingRight />
