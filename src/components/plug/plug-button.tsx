@@ -9,6 +9,7 @@ import {
   useFilterStore,
 } from '../../store';
 import { disconnectPlug } from '../../integrations/plug';
+import { openSonicURL } from '../../utils/ handle-redirect-urls';
 import {
   PlugButtonContainer,
   PlugButtonText,
@@ -17,9 +18,11 @@ import {
   ListItem,
   PopoverTrigger,
   PlugIconStyled,
+  WICPLogo,
 } from './styles';
 import { useTheme } from '../../hooks';
 import { Icon } from '../icons';
+import wicpImage from '../../assets/wicp.svg';
 
 export type PlugButtonProps = {
   handleConnect: () => void;
@@ -142,6 +145,13 @@ export const PlugButton = ({
               <Icon icon="activity" paddingRight />
               <p>{t('translation:buttons.action.myActivity')}</p>
             </ListItem>
+            <ListItem onClick={openSonicURL}>
+              <WICPLogo
+                src={wicpImage}
+                alt={t('translation:logoAlts.wicp')}
+              />
+              <p>{t('translation:buttons.action.getWicp')}</p>
+              </ListItem>
             <ListItem onClick={setMyNfts}>
               <Icon icon="myNfts" paddingRight />
               <p>{t('translation:buttons.action.myNfts')}</p>

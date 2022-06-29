@@ -71,12 +71,7 @@ export const ListItem = styled('div', {
   fontSize: '16px',
   lineHeight: '19px',
   cursor: 'pointer',
-
   transition: 'background-color 0.2s ease-in-out',
-
-  '& img': {
-    marginRight: '15px',
-  },
 
   '& p': {
     margin: '0px',
@@ -100,4 +95,10 @@ export const PlugIconStyled = styled(Icon, {
 export const PlugArrowDownIcon = styled(Icon, {
   marginLeft: '10px',
   fontSize: '11px',
+});
+
+export const WICPLogo = styled('img', {
+  width: '15px',
+  height: '15px',
+  paddingRight: '0.5rem',
 });
