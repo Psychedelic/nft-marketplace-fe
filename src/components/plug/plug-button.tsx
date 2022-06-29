@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, plugActions } from '../../store';
 import { disconnectPlug } from '../../integrations/plug';
-import { getWicp } from '../../utils/getWicp';
+import { openSonicURL } from '../../utils/ handle-redirect-urls';
 import {
   PlugButtonContainer,
   PlugButtonText,
@@ -123,8 +123,11 @@ export const PlugButton = ({
               <Icon icon="activity" paddingRight />
               <p>{t('translation:buttons.action.myActivity')}</p>
             </ListItem>
-            <ListItem onClick={getWicp}>
-              <WICPLogo src={wicpImage} alt={t('translation:logoAlts.wicp')} />
+            <ListItem onClick={openSonicURL}>
+              <WICPLogo
+                src={wicpImage}
+                alt={t('translation:logoAlts.wicp')}
+              />
               <p>{t('translation:buttons.action.getWicp')}</p>
             </ListItem>
             <ListItem onClick={disconnectHandler}>
