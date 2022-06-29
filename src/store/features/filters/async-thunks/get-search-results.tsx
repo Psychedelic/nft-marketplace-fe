@@ -13,6 +13,7 @@ import {
   parseE8SAmountToWICP,
 } from '../../../../utils/formatters';
 import { SearchResultDataState } from '../filter-slice';
+import { SortOptions } from '../../../../constants/sort-options';
 
 export type GetSearchResultsProps =
   NSKyasshuUrl.GetSearchQueryParams & {
@@ -33,10 +34,31 @@ export const getSearchResults = createAsyncThunk<
       search: search.length > 0 ? search : undefined,
     };
 
+    let sortingDetails = {
+      sortBy: sort,
+      orderBy: order,
+    };
+
+    if (
+      sort === SortOptions.PriceLowToHigh ||
+      sort === SortOptions.PriceHighToLow
+    ) {
+      sortingDetails.sortBy = SortOptions.CurrentPrice;
+    }
+
+    if (sort === SortOptions.PriceLowToHigh) {
+      sortingDetails.orderBy = 'a';
+    }
+
     try {
       let priceInUSD: number;
       const response = await axios.post(
-        KyasshuUrl.getSearchResults({ sort, order, page, count }),
+        KyasshuUrl.getSearchResults({
+          sort: sortingDetails.sortBy,
+          order: sortingDetails.orderBy,
+          page,
+          count,
+        }),
         payload,
         {
           signal: abortController.signal,
@@ -81,4 +103,3 @@ export const getSearchResults = createAsyncThunk<
     }
   },
 );
-
