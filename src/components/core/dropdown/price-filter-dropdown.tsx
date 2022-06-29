@@ -51,6 +51,14 @@ export const SortByFilterDropdown = React.memo(() => {
         'translation:dropdown.priceFilter.highestLastOffer',
       )}`,
     },
+    {
+      key: 'priceLowToHigh',
+      value: `${t('translation:dropdown.priceFilter.lowToHigh')}`,
+    },
+    {
+      key: 'priceHighToLow',
+      value: `${t('translation:dropdown.priceFilter.highToLow')}`,
+    },
   ];
 
   const setSortBy = (key: string) => {

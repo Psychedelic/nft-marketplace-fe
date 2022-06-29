@@ -56,8 +56,8 @@
   },
   "dropdown": {
     "priceFilter": {
-      "lowToHigh": "Price: Low to High",
-      "highToHigh": "Price: High to High",
+      "lowToHigh": "Price Low to High",
+      "highToLow": "Price High to Low",
       "highestLastSale": "Highest Last Sale",
       "recentlySold": "Recently Sold",
       "recentlyListed": "Recently Listed",
