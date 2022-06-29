@@ -1,9 +1,17 @@
-import { useCallback, useLayoutEffect, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, plugActions } from '../../store';
-import { disconnectPlug } from '../../integrations/plug';
+import {
+  disconnectPlug,
+  getPlugWalletBalance,
+} from '../../integrations/plug';
 import {
   PlugButtonContainer,
   PlugButtonText,
@@ -37,6 +45,7 @@ export const PlugButton = ({
   const dispatch = useAppDispatch();
   const [theme, themeObject] = useTheme();
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [wicpBalance, setWicpBalance] = useState('');
 
   const navigate = useNavigate();
 
@@ -80,6 +89,22 @@ export const PlugButton = ({
     }
   }, [handleConnect, isConnected, openDropdown]);
 
+  const getPlugWICPBalance = async () => {
+    const allPlugBalance = await getPlugWalletBalance();
+
+    const wicpBalance = allPlugBalance.find(
+      (balance: any) => balance?.name === 'Wrapped ICP',
+    );
+
+    return wicpBalance?.amount;
+  };
+
+  useEffect(() => {
+    getPlugWICPBalance().then((data) => {
+      setWicpBalance(data);
+    });
+  }, [wicpBalance]);
+
   return (
     <Popover.Root open={openDropdown}>
       <PopoverTrigger asChild>
@@ -87,6 +112,7 @@ export const PlugButton = ({
           onClick={handleClick}
           className="plug-button"
         >
+          <>{wicpBalance}</>
           <PlugButtonText className="plug-button-text">
             {isConnected && (
               <PlugIconStyled
