@@ -15,6 +15,7 @@ import {
 import { AppLog } from '../../../utils/log';
 import { Icon } from '../../icons';
 import { useTheme } from '../../../hooks';
+import { SortOptions } from '../../../constants/sort-options';
 
 export const SortByFilterDropdown = React.memo(() => {
   const { t } = useTranslation();
@@ -27,36 +28,35 @@ export const SortByFilterDropdown = React.memo(() => {
   const [, themeObject] = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
-  // TODO: move all the keys to constant variable file
   const sortOptions = [
     {
-      key: 'lastModified',
+      key: SortOptions.LastModified,
       value: `${t(
         'translation:dropdown.priceFilter.recentlyListed',
       )}`,
     },
     {
-      key: 'lastSale',
+      key: SortOptions.LastSale,
       value: `${t('translation:dropdown.priceFilter.recentlySold')}`,
     },
     {
-      key: 'lastSalePrice',
+      key: SortOptions.LastSalePrice,
       value: `${t(
         'translation:dropdown.priceFilter.highestLastSale',
       )}`,
     },
     {
-      key: 'lastOfferPrice',
+      key: SortOptions.LastOfferPrice,
       value: `${t(
         'translation:dropdown.priceFilter.highestLastOffer',
       )}`,
     },
     {
-      key: 'priceLowToHigh',
+      key: SortOptions.PriceLowToHigh,
       value: `${t('translation:dropdown.priceFilter.lowToHigh')}`,
     },
     {
-      key: 'priceHighToLow',
+      key: SortOptions.PriceHighToLow,
       value: `${t('translation:dropdown.priceFilter.highToLow')}`,
     },
   ];

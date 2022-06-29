@@ -10,6 +10,7 @@ import { AppLog } from '../../../../utils/log';
 import { findLastAction } from '../../../../utils/nfts';
 import { isEmptyObject } from '../../../../utils/common';
 import { ResponseStatus } from '../../../../constants/response-status';
+import { SortOptions } from '../../../../constants/sort-options';
 
 export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -42,11 +43,14 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
       orderBy: order,
     };
 
-    if (sort === 'priceLowToHigh' || sort === 'priceHighToLow') {
-      sortingDetails.sortBy = 'currentPrice';
+    if (
+      sort === SortOptions.PriceLowToHigh ||
+      sort === SortOptions.PriceHighToLow
+    ) {
+      sortingDetails.sortBy = SortOptions.CurrentPrice;
     }
 
-    if (sort === 'priceLowToHigh') {
+    if (sort === SortOptions.PriceLowToHigh) {
       sortingDetails.orderBy = 'a';
     }
 
