@@ -51,7 +51,8 @@
       "disconnect": "Disconnect",
       "editOffer": "Edit Offer",
       "cancel": "Cancel",
-      "myActivity": "My Activity"
+      "myActivity": "My Activity",
+      "getWicp": "Get WICP"
     }
   },
   "dropdown": {

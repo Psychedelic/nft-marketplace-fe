@@ -11,6 +11,7 @@ type ConfigParams = {
   nftCollectionId: string;
   kyasshuMarketplaceAPI: string;
   icScan: string;
+  getWicp: string;
   marketplaceCanisterId: string;
   wICPCanisterId: string;
   capRouterId: string;
@@ -41,6 +42,7 @@ const config: Config = {
     host: 'https://mainnet.dfinity.network',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
     icScan: 'https://icscan.io/principal',
+    getWicp: 'https://app.sonic.ooo/swap?from=ICP&to=utozz-siaaa-aaaam-qaaxq-cai',
     nftCollectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
     marketplaceCanisterId: 'getti-aiaaa-aaaah-abkkq-cai',
     wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
@@ -54,6 +56,7 @@ const config: Config = {
     host: 'http://44.228.128.46:8000',
     kyasshuMarketplaceAPI: 'http://44.228.128.46:3000/local',
     icScan: 'https://icscan.io/principal',
+    getWicp: 'https://app.sonic.ooo/swap?from=ICP&to=utozz-siaaa-aaaam-qaaxq-cai',
     nftCollectionId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
     marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
@@ -68,6 +71,7 @@ const config: Config = {
     host: 'https://mainnet.dfinity.network',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
     icScan: 'https://icscan.io/principal',
+    getWicp: 'https://app.sonic.ooo/swap?from=ICP&to=utozz-siaaa-aaaam-qaaxq-cai',
     nftCollectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
     marketplaceCanisterId: 'o3ios-jaaaa-aaaag-qakqq-cai',
     wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
@@ -78,6 +82,7 @@ const config: Config = {
     host: 'http://127.0.0.1:8000',
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
     icScan: 'https://icscan.io/principal',
+    getWicp: 'https://app.sonic.ooo/swap?from=ICP&to=utozz-siaaa-aaaam-qaaxq-cai',
     nftCollectionId: process.env.REACT_APP_CROWNS_ID as string,
     marketplaceCanisterId: process.env
       .REACT_APP_MARKETPLACE_ID as string,

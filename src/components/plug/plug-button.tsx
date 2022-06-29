@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAppDispatch, plugActions } from '../../store';
 import { disconnectPlug } from '../../integrations/plug';
+import { getWicp } from '../../utils/getWicp';
 import {
   PlugButtonContainer,
   PlugButtonText,
@@ -12,9 +13,11 @@ import {
   ListItem,
   PopoverTrigger,
   PlugIconStyled,
+  WICPLogo,
 } from './styles';
 import { useTheme } from '../../hooks';
 import { Icon } from '../icons';
+import wicpImage from '../../assets/wicp.svg';
 
 export type PlugButtonProps = {
   handleConnect: () => void;
@@ -119,6 +122,10 @@ export const PlugButton = ({
             <ListItem onClick={myActivityHandler}>
               <Icon icon="activity" paddingRight />
               <p>{t('translation:buttons.action.myActivity')}</p>
+            </ListItem>
+            <ListItem onClick={getWicp}>
+              <WICPLogo src={wicpImage} alt={t('translation:logoAlts.wicp')} />
+              <p>{t('translation:buttons.action.getWicp')}</p>
             </ListItem>
             <ListItem onClick={disconnectHandler}>
               <Icon icon="disconnect" paddingRight />
