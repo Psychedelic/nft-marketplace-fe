@@ -23,7 +23,7 @@ export const SortByFilterDropdown = React.memo(() => {
   const { sortBy } = useFilterStore();
 
   const [selectedValue, setSelectedValue] = useState(
-    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
+    `${t('translation:dropdown.priceFilter.recentlyActioned')}`,
   );
   const [, themeObject] = useTheme();
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +32,7 @@ export const SortByFilterDropdown = React.memo(() => {
     {
       key: SortOptions.LastModified,
       value: `${t(
-        'translation:dropdown.priceFilter.recentlyListed',
+        'translation:dropdown.priceFilter.recentlyActioned',
       )}`,
     },
     {
