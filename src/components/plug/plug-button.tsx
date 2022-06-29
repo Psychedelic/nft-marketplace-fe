@@ -92,19 +92,14 @@ export const PlugButton = ({
     );
 
   const setMyNfts = () => {
-    dispatch(filterActions.setMyNfts(!isMyNfts));
-    !filterExists(t('translation:buttons.action.myNfts'))
-      ? dispatch(
-          filterActions.applyFilter({
-            filterName: `${t('translation:buttons.action.myNfts')}`,
-            filterCategory: 'Display',
-          }),
-        )
-      : dispatch(
-          filterActions.removeFilter(
-            t('translation:buttons.action.myNfts'),
-          ),
-        );
+    dispatch(filterActions.setMyNfts(true));
+    if (filterExists(t('translation:buttons.action.myNfts'))) return;
+    dispatch(
+      filterActions.applyFilter({
+        filterName: `${t('translation:buttons.action.myNfts')}`,
+        filterCategory: 'Display',
+      }),
+    );
   };
 
   return (
