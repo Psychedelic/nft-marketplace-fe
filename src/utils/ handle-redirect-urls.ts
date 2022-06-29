@@ -1,5 +1,5 @@
-import { Routes } from '../constants/routes';
+import { Urls } from '../constants/urls';
 
 export const openSonicURL = () => {
-  window.open(Routes.routeToSonic, '_blank');
+  window.open(Urls.routeToSonic, '_blank');
 };
