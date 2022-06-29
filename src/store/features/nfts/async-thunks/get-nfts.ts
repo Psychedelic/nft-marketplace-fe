@@ -37,9 +37,27 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
       };
     }
 
+    let sortingDetails = {
+      sortBy: sort,
+      orderBy: order,
+    };
+
+    if (sort === 'priceLowToHigh' || sort === 'priceHighToLow') {
+      sortingDetails.sortBy = 'currentPrice';
+    }
+
+    if (sort === 'priceLowToHigh') {
+      sortingDetails.orderBy = 'a';
+    }
+
     try {
       const response = await axios.post(
-        KyasshuUrl.getNFTs({ sort, order, page, count }),
+        KyasshuUrl.getNFTs({
+          sort: sortingDetails.sortBy,
+          order: sortingDetails.orderBy,
+          page,
+          count,
+        }),
         payload,
         axiosParams,
       );
