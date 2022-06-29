@@ -28,6 +28,7 @@ import { FaRegHandPaper } from '@react-icons/all-files/fa/FaRegHandPaper';
 import { IoWarningOutline } from '@react-icons/all-files/io5/IoWarningOutline';
 import { FiUpload } from '@react-icons/all-files/fi/FiUpload';
 import { FiDownload } from '@react-icons/all-files/fi/FiDownload';
+import { AiFillPicture } from '@react-icons/all-files/ai/AiFillPicture';
 
 import { PlugIcon, AppNameIcon, SpinnerIcon } from './custom';
 
@@ -63,6 +64,7 @@ export const Icons = {
   spinner: SpinnerIcon,
   upload: FiUpload,
   download: FiDownload,
+  myNfts: AiFillPicture,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,
