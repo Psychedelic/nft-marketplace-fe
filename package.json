@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@dfinity/agent": "0.10.3",
-    "@dfinity/candid": "0.10.3",
-    "@dfinity/identity": "0.10.3",
-    "@dfinity/principal": "0.10.3",
+    "@dfinity/agent": "0.10.1",
+    "@dfinity/candid": "0.10.1",
+    "@dfinity/identity": "0.10.1",
+    "@dfinity/principal": "0.10.1",
     "@psychedelic/plug-connect": "^0.1.4",
     "@psychedelic/cap-js": "^0.0.7",
     "@radix-ui/react-accordion": "^0.1.5",
@@ -160,3 +160,4 @@
     ]
   }
 }
+
