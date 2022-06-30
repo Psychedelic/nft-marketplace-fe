@@ -206,29 +206,21 @@ export const NFTOffersTable = ({
   const { loading, loadedOffers } = tableDetails;
 
   return (
-    <>
-      {(loading || (!loading && loadedOffers.length > 0)) && (
-        <Container>
-          <TableLayout
-            columns={columns}
-            data={loadedOffers}
-            tableType="offers"
-            columnsToHide={columnsToHide}
-            loading={loading}
-            loaderDetails={{
-              showItemDetails: false,
-              showTypeDetails: false,
-              type: 'small',
-              hideColumns,
-            }}
-          />
-        </Container>
-      )}
-      {!loading && loadedOffers.length === 0 && (
-        <EmptyStateMessage type="smallTable">
-          {t('translation:emptyStates.noOffersYet')}
-        </EmptyStateMessage>
-      )}
-    </>
+    <Container>
+      <TableLayout
+        columns={columns}
+        data={loadedOffers}
+        tableType="offers"
+        columnsToHide={columnsToHide}
+        loading={loading}
+        loaderDetails={{
+          showItemDetails: false,
+          showTypeDetails: false,
+          type: 'small',
+          hideColumns,
+        }}
+        emptyMessage={t('translation:emptyStates.noOffersYet')}
+      />
+    </Container>
   );
 };

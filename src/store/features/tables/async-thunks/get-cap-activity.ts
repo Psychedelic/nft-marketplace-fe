@@ -5,7 +5,10 @@ import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { AppLog } from '../../../../utils/log';
 import { notificationActions } from '../../notifications';
 import { CapActivityParams, tableActions } from '../table-slice';
-import { getOperationType, parseTablePrincipal } from '../../../../utils/parser';
+import {
+  getOperationType,
+  parseTablePrincipal,
+} from '../../../../utils/parser';
 
 export type GetCAPActivityProps = CapActivityParams;
 
@@ -43,9 +46,13 @@ export const getCAPActivity = createAsyncThunk<
       const loadedCapActivityTableData = result.map(
         (tableData: any) => {
           // eslint-disable-next-line no-underscore-dangle
-          const seller = parseTablePrincipal(tableData.seller.Principal._arr);
+          const seller = parseTablePrincipal(
+            tableData.seller.Principal._arr,
+          );
           // eslint-disable-next-line no-underscore-dangle
-          const buyer = tableData?.buyer && parseTablePrincipal(tableData.buyer.Principal._arr);
+          const buyer =
+            tableData?.buyer &&
+            parseTablePrincipal(tableData.buyer.Principal._arr);
 
           const data = {
             item: {

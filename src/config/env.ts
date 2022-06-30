@@ -23,6 +23,18 @@ type Config = {
   test: ConfigParams;
 };
 
+if (
+  env === 'development' &&
+  !(
+    process.env.REACT_APP_MARKETPLACE_ID ||
+    process.env.REACT_APP_CROWNS_ID ||
+    process.env.REACT_APP_WICP_ID ||
+    process.env.REACT_APP_CAP_ID
+  )
+) {
+  throw Error('Oops! Missing local replica service canister ids');
+}
+
 const config: Config = {
   // The production version
   production: {
@@ -66,10 +78,11 @@ const config: Config = {
     host: 'http://127.0.0.1:8000',
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
     icScan: 'https://icscan.io/principal',
-    nftCollectionId: 'rkp4c-7iaaa-aaaaa-aaaca-cai',
-    marketplaceCanisterId: 'rdmx6-jaaaa-aaaaa-aaadq-cai',
-    wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
-    capRouterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
+    nftCollectionId: process.env.REACT_APP_CROWNS_ID as string,
+    marketplaceCanisterId: process.env
+      .REACT_APP_MARKETPLACE_ID as string,
+    wICPCanisterId: process.env.REACT_APP_WICP_ID as string,
+    capRouterId: process.env.REACT_APP_CAP_ID as string,
   },
 };
 

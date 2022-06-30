@@ -1,6 +1,7 @@
 type RequestConnectArgs = {
   whitelist?: string[];
   host?: string;
+  onConnectionUpdate?: () => void;
 };
 
 export const requestConnectToPlug = (args?: RequestConnectArgs) =>
@@ -36,3 +37,5 @@ export const formatAddress = (address: string) => {
 export const hasPlugAgent = () => window.ic?.plug?.agent;
 
 export const disconnectPlug = () => window.ic?.plug?.disconnect();
+
+export const getPlugWalletBalance = () => window.ic?.plug?.requestBalance();

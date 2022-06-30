@@ -166,7 +166,9 @@ export const Filters = () => {
     if (Number(priceFilterValue.min) > Number(priceFilterValue.max)) {
       dispatch(
         notificationActions.setErrorMessage(
-          `${t('translation:errorMessages.priceMinShouldBeLessThanMax')}`,
+          `${t(
+            'translation:errorMessages.priceMinShouldBeLessThanMax',
+          )}`,
         ),
       );
 
@@ -202,7 +204,7 @@ export const Filters = () => {
             dispatch(settingsActions.setFilterCollapsed(!collapsed));
           }}
         >
-          <CollapseIcon icon="arrow-left" rotate={collapsed} />
+          <CollapseIcon icon="arrow-left" rotate={collapsed} opened={collapsed} />
         </IconActionButton>
       </CloseFilterContainer>
       {!collapsed && (

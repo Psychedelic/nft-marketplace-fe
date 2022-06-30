@@ -9,27 +9,61 @@ import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { findLastAction } from '../../../../utils/nfts';
 import { isEmptyObject } from '../../../../utils/common';
+import { ResponseStatus } from '../../../../constants/response-status';
+import { SortOptions } from '../../../../constants/sort-options';
 
 export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
+  abortController?: AbortController;
 };
 
 export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
   'nfts/getNFTs',
-  async ({ payload, sort, order, page, count }, { dispatch }) => {
+  async (
+    { payload, sort, order, page, count, abortController },
+    { dispatch },
+  ) => {
     // set loading NFTS state to true
-    if (page === 0) {
-      dispatch(nftsActions.setIsNFTSLoading(true));
-    }
+    dispatch(nftsActions.setIsNFTSLoading(true));
 
     if (!isEmptyObject(payload)) {
       dispatch(nftsActions.setCollectionDataLoading());
     }
 
+    let axiosParams = {};
+
+    if (abortController) {
+      axiosParams = {
+        signal: abortController.signal,
+      };
+    }
+
+    let sortingDetails = {
+      sortBy: sort,
+      orderBy: order,
+    };
+
+    if (
+      sort === SortOptions.PriceLowToHigh ||
+      sort === SortOptions.PriceHighToLow
+    ) {
+      sortingDetails.sortBy = SortOptions.CurrentPrice;
+    }
+
+    if (sort === SortOptions.PriceLowToHigh) {
+      sortingDetails.orderBy = 'a';
+    }
+
     try {
       const response = await axios.post(
-        KyasshuUrl.getNFTs({ sort, order, page, count }),
+        KyasshuUrl.getNFTs({
+          sort: sortingDetails.sortBy,
+          order: sortingDetails.orderBy,
+          page,
+          count,
+        }),
         payload,
+        axiosParams,
       );
 
       if (response.status !== 200) {
@@ -103,7 +137,9 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
 
         dispatch(nftsActions.setCollectionData(collectionPayload));
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.message === ResponseStatus.Canceled) return;
+
       AppLog.error(error);
 
       // set NFTS failed to load

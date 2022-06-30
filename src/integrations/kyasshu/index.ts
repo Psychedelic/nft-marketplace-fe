@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useUpdateEffect } from '../../hooks';
 
@@ -13,6 +13,8 @@ import { useTraitsPayload, usePriceValues } from './utils';
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
+  const [currentAbortController, setCurrentAbortController] =
+    useState<AbortController>();
   const { traits, isMyNfts, status } = useFilterStore();
   const { principalId } = usePlugStore();
   const traitsPayload = useTraitsPayload();
@@ -47,6 +49,13 @@ export const useNFTSFetcher = () => {
   }, [traits, isMyNfts, priceValues, sortBy, status]);
 
   useEffect(() => {
+    // Abort any pending request before proceeding
+    if (currentAbortController) currentAbortController.abort();
+
+    const abortController = new AbortController();
+
+    setCurrentAbortController(abortController);
+
     dispatch(
       nftsActions.getNFTs({
         payload,
@@ -54,6 +63,7 @@ export const useNFTSFetcher = () => {
         order: 'd',
         page: 0,
         count: 25,
+        abortController,
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

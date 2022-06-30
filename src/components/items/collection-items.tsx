@@ -135,7 +135,7 @@ export const CollectionItems = () => {
               {!loadingCollectionData && totalVolume > 0 && (
                 <FilteredCountChip
                   label={t('translation:chips.labels.totalVolume')}
-                  count={totalVolume}
+                  count={Number(totalVolume.toFixed(2))}
                   showLogo
                 />
               )}
