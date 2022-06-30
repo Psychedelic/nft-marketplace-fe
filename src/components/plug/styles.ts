@@ -103,7 +103,7 @@ export const WICPLogo = styled('img', {
   paddingRight: '0.5rem',
 });
 
-export const WICPBalance = styled('div', {
+export const PlugWICPBalance = styled('div', {
   minWidth: '120px',
   height: '40px',
   padding: '2px 10px 2px 0px',

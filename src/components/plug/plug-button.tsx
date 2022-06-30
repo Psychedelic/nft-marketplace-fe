@@ -10,15 +10,11 @@ import { useTranslation } from 'react-i18next';
 import {
   useAppDispatch,
   plugActions,
-  notificationActions,
-  RootState,
   useFilterStore,
   filterActions,
 } from '../../store';
-import { useSelector } from 'react-redux';
 import {
   disconnectPlug,
-  getPlugWalletBalance,
 } from '../../integrations/plug';
 import { openSonicURL } from '../../utils/ handle-redirect-urls';
 import {
@@ -29,15 +25,12 @@ import {
   ListItem,
   PopoverTrigger,
   PlugIconStyled,
-  WICPBalance,
   WICPLogo,
 } from './styles';
 import { useTheme } from '../../hooks';
 import { Icon } from '../icons';
-import { SpinnerIcon } from '../icons/custom';
-import { AppLog } from '../../utils/log';
 import wicpImage from '../../assets/wicp.svg';
-import { roundOffDecimalValue } from '../../utils/nfts';
+import PlugBalance from './plug-balance';
 
 export type PlugButtonProps = {
   handleConnect: () => void;
@@ -58,21 +51,11 @@ export const PlugButton = ({
 }: PlugButtonProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { isMyNfts, defaultFilters } = useFilterStore();
+  const { defaultFilters } = useFilterStore();
   const [theme, themeObject] = useTheme();
   const [openDropdown, setOpenDropdown] = useState(false);
-  const [wicpBalance, setWicpBalance] = useState('');
-  const [loadingWicpBalance, setLoadingWicpBalance] = useState(false);
 
   const navigate = useNavigate();
-
-  const recentlyPurchasedTokens = useSelector(
-    (state: RootState) => state.marketplace.recentlyPurchasedTokens,
-  );
-
-  const recentlyMadeOffers = useSelector(
-    (state: RootState) => state.marketplace.recentlyMadeOffers,
-  );
 
   const disconnectHandler = useCallback(() => {
     dispatch(plugActions.setIsConnected(false));
@@ -114,32 +97,6 @@ export const PlugButton = ({
     }
   }, [handleConnect, isConnected, openDropdown]);
 
-  useEffect(() => {
-    if (!isConnected) return;
-
-    (async () => {
-      setLoadingWicpBalance(true);
-      try {
-        const allPlugBalance = await getPlugWalletBalance();
-
-        const wicpWalletBalance = allPlugBalance?.find(
-          (balance: any) => balance?.name === 'Wrapped ICP',
-        );
-
-        setWicpBalance(wicpWalletBalance?.amount);
-        setLoadingWicpBalance(false);
-      } catch (err) {
-        setLoadingWicpBalance(false);
-        AppLog.error(err);
-        dispatch(
-          notificationActions.setErrorMessage(
-            t('translation:errorMessages.unableToGetBalance'),
-          ),
-        );
-      }
-    })();
-  }, [isConnected, recentlyPurchasedTokens, recentlyMadeOffers]);
-
   const filterExists = (filterName: string) =>
     defaultFilters.some(
       (appliedFilter) => appliedFilter.filterName === filterName,
@@ -158,19 +115,7 @@ export const PlugButton = ({
 
   return (
     <Popover.Root open={openDropdown}>
-      {isConnected && (
-        <WICPBalance>
-          <WICPLogo
-            src={wicpImage}
-            alt={t('translation:logoAlts.wicp')}
-          />
-          {wicpBalance !== '' && !loadingWicpBalance ? (
-            `${roundOffDecimalValue(Number(wicpBalance), 2)} WICP`
-          ) : (
-            <SpinnerIcon />
-          )}
-        </WICPBalance>
-      )}
+      <PlugBalance isConnected={isConnected} />
       <PopoverTrigger asChild>
         <PlugButtonContainer
           onClick={handleClick}
