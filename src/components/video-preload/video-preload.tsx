@@ -22,22 +22,31 @@ export const VideoPreload = React.memo(
   forwardRef<HTMLVideoElement, VideoPreloadProps>(
     ({ src, ...props }, ref) => {
       const [loaded, setLoaded] = useState(false);
+      const [video, setVideo] = useState<HTMLVideoElement>();
       const onLoad = () => setLoaded(true);
+
       useEffect(() => {
         if (!src) return;
+        const videoElement = VideoCache.get(src);
 
-        try {
-          VideoCache.store(src, onLoad).then(() => {
-            setLoaded(true);
-          });
-        } catch (err) {
-          AppLog.warn('Failed to load video', err);
+        if (!videoElement) {
+          VideoCache.store(src, onLoad)
+            .then((videoEl) => {
+              setLoaded(true);
+              setVideo(videoEl);
+            })
+            .catch((err) => {
+              AppLog.warn('Failed to load video', err);
+            });
+        } else {
+          setLoaded(true);
+          setVideo(videoElement);
         }
 
         return () => {
           VideoCache.removeListener(src);
         };
-      }, [src]);
+      }, [src, setLoaded]);
 
       if (!loaded && !props.poster) {
         return (
@@ -53,8 +62,12 @@ export const VideoPreload = React.memo(
           style={props.style}
           className={props.className}
         >
-          <VideoPreloadStyles src={src} {...props} ref={ref} />
-          {(!loaded || !src) && (
+          <VideoPreloadStyles
+            src={video && video.src}
+            {...props}
+            ref={ref}
+          />
+          {(!loaded || !video) && (
             <VideoPreloadSpinner
               icon="spinner"
               extraIconProps={{ size: '60px' }}
