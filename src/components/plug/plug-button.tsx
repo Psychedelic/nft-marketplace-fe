@@ -1,14 +1,20 @@
-import { useCallback, useLayoutEffect, useState } from 'react';
+import {
+  useCallback,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   useAppDispatch,
   plugActions,
-  filterActions,
   useFilterStore,
+  filterActions,
 } from '../../store';
-import { disconnectPlug } from '../../integrations/plug';
+import {
+  disconnectPlug,
+} from '../../integrations/plug';
 import { openSonicURL } from '../../utils/ handle-redirect-urls';
 import {
   PlugButtonContainer,
@@ -23,6 +29,7 @@ import {
 import { useTheme } from '../../hooks';
 import { Icon } from '../icons';
 import wicpImage from '../../assets/wicp.svg';
+import PlugBalance from './plug-balance';
 
 export type PlugButtonProps = {
   handleConnect: () => void;
@@ -43,7 +50,7 @@ export const PlugButton = ({
 }: PlugButtonProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { isMyNfts, defaultFilters } = useFilterStore();
+  const { defaultFilters } = useFilterStore();
   const [theme, themeObject] = useTheme();
   const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -107,6 +114,7 @@ export const PlugButton = ({
 
   return (
     <Popover.Root open={openDropdown}>
+      {isConnected && <PlugBalance />}
       <PopoverTrigger asChild>
         <PlugButtonContainer
           onClick={handleClick}
@@ -151,7 +159,7 @@ export const PlugButton = ({
                 alt={t('translation:logoAlts.wicp')}
               />
               <p>{t('translation:buttons.action.getWicp')}</p>
-              </ListItem>
+            </ListItem>
             <ListItem onClick={setMyNfts}>
               <Icon icon="myNfts" paddingRight />
               <p>{t('translation:buttons.action.myNfts')}</p>
