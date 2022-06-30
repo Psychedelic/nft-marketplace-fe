@@ -37,6 +37,7 @@ import { Icon } from '../icons';
 import { SpinnerIcon } from '../icons/custom';
 import { AppLog } from '../../utils/log';
 import wicpImage from '../../assets/wicp.svg';
+import { roundOffDecimalValue } from '../../utils/nfts';
 
 export type PlugButtonProps = {
   handleConnect: () => void;
@@ -137,11 +138,7 @@ export const PlugButton = ({
         );
       }
     })();
-  }, [
-    isConnected,
-    recentlyPurchasedTokens,
-    recentlyMadeOffers,
-  ]);
+  }, [isConnected, recentlyPurchasedTokens, recentlyMadeOffers]);
 
   const filterExists = (filterName: string) =>
     defaultFilters.some(
@@ -168,7 +165,7 @@ export const PlugButton = ({
             alt={t('translation:logoAlts.wicp')}
           />
           {wicpBalance !== '' && !loadingWicpBalance ? (
-            `${wicpBalance} WICP`
+            `${roundOffDecimalValue(Number(wicpBalance), 2)} WICP`
           ) : (
             <SpinnerIcon />
           )}
@@ -218,7 +215,7 @@ export const PlugButton = ({
                 alt={t('translation:logoAlts.wicp')}
               />
               <p>{t('translation:buttons.action.getWicp')}</p>
-              </ListItem>
+            </ListItem>
             <ListItem onClick={setMyNfts}>
               <Icon icon="myNfts" paddingRight />
               <p>{t('translation:buttons.action.myNfts')}</p>
