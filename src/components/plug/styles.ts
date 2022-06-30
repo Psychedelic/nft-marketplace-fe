@@ -101,3 +101,28 @@ export const PlugArrowDownIcon = styled(Icon, {
   marginLeft: '10px',
   fontSize: '11px',
 });
+
+export const WICPLogo = styled('img', {
+  width: '15px',
+  height: '15px',
+  paddingRight: '0.5rem',
+});
+
+export const WICPBalance = styled('div', {
+  minWidth: '120px',
+  height: '40px',
+  padding: '2px 10px 2px 8px',
+  position: 'relative',
+  right: '-10px',
+  zIndex: '-1',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: '14px 0px 0px 14px',
+  borderLeft: '1.5px solid $borderColor',
+  borderTop: '1.5px solid $borderColor',
+  borderBottom: '1.5px solid $borderColor',
+  color: '$mainTextColor',
+  fontSize: '16px',
+  fontWeight: '500',
+});

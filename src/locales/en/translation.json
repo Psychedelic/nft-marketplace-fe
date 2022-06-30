@@ -289,7 +289,8 @@
     "priceEmptyField": "You need to fill in both values",
     "unableToConnectToPlug": "Oops! Unable to connect to plug",
     "unableToFetchNFTS": "Oops! Unable to fetch NFTs",
-    "priceMinShouldBeLessThanMax": "Max value must be greater than min value"
+    "priceMinShouldBeLessThanMax": "Max value must be greater than min value",
+    "unableToGetBalance": "Oops! Unable to get wallet balance"
   },
   "successMessages": {
     "copyToClipboard": "Copied to clipboard!"
