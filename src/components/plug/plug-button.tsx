@@ -1,6 +1,5 @@
 import {
   useCallback,
-  useEffect,
   useLayoutEffect,
   useState,
 } from 'react';
@@ -115,7 +114,7 @@ export const PlugButton = ({
 
   return (
     <Popover.Root open={openDropdown}>
-      <PlugBalance isConnected={isConnected} />
+      {isConnected && <PlugBalance />}
       <PopoverTrigger asChild>
         <PlugButtonContainer
           onClick={handleClick}

@@ -14,11 +14,7 @@ import wicpImage from '../../assets/wicp.svg';
 import { roundOffDecimalValue } from '../../utils/nfts';
 import { getPlugWalletBalance } from '../../integrations/plug';
 
-export type PlugBalanceProps = {
-  isConnected: boolean;
-};
-
-const PlugBalance = ({ isConnected }: PlugBalanceProps) => {
+const PlugBalance = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [plugWicpBalance, setPlugWicpBalance] = useState('');
@@ -34,8 +30,6 @@ const PlugBalance = ({ isConnected }: PlugBalanceProps) => {
   );
 
   useEffect(() => {
-    if (!isConnected) return;
-
     (async () => {
       setPlugLoadingWicpBalance(true);
       try {
@@ -57,25 +51,21 @@ const PlugBalance = ({ isConnected }: PlugBalanceProps) => {
         );
       }
     })();
-  }, [isConnected, recentlyPurchasedTokens, recentlyMadeOffers]);
+  }, [recentlyPurchasedTokens, recentlyMadeOffers]);
 
   return (
-    <>
-      {isConnected && (
-        <PlugWICPBalance>
-          <WICPLogo
-            src={wicpImage}
-            alt={t('translation:logoAlts.wicp')}
-          />
-          {plugWicpBalance !== '' && !plugLoadingWicpBalance ? (
-            `${roundOffDecimalValue(Number(plugWicpBalance), 2)}`
-          ) : (
-            <SpinnerIcon />
-          )}
-          <WICPText>WICP</WICPText>
-        </PlugWICPBalance>
+    <PlugWICPBalance>
+      <WICPLogo
+        src={wicpImage}
+        alt={t('translation:logoAlts.wicp')}
+      />
+      {plugWicpBalance !== '' && !plugLoadingWicpBalance ? (
+        `${roundOffDecimalValue(Number(plugWicpBalance), 2)}`
+      ) : (
+        <SpinnerIcon />
       )}
-    </>
+      <WICPText>WICP</WICPText>
+    </PlugWICPBalance>
   );
 };
 
