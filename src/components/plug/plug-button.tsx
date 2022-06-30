@@ -12,12 +12,15 @@ import {
   plugActions,
   notificationActions,
   RootState,
+  useFilterStore,
+  filterActions,
 } from '../../store';
 import { useSelector } from 'react-redux';
 import {
   disconnectPlug,
   getPlugWalletBalance,
 } from '../../integrations/plug';
+import { openSonicURL } from '../../utils/ handle-redirect-urls';
 import {
   PlugButtonContainer,
   PlugButtonText,
@@ -54,6 +57,7 @@ export const PlugButton = ({
 }: PlugButtonProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { isMyNfts, defaultFilters } = useFilterStore();
   const [theme, themeObject] = useTheme();
   const [openDropdown, setOpenDropdown] = useState(false);
   const [wicpBalance, setWicpBalance] = useState('');
@@ -139,6 +143,22 @@ export const PlugButton = ({
     recentlyMadeOffers,
   ]);
 
+  const filterExists = (filterName: string) =>
+    defaultFilters.some(
+      (appliedFilter) => appliedFilter.filterName === filterName,
+    );
+
+  const setMyNfts = () => {
+    dispatch(filterActions.setMyNfts(true));
+    if (filterExists(t('translation:buttons.action.myNfts'))) return;
+    dispatch(
+      filterActions.applyFilter({
+        filterName: `${t('translation:buttons.action.myNfts')}`,
+        filterCategory: 'Display',
+      }),
+    );
+  };
+
   return (
     <Popover.Root open={openDropdown}>
       {isConnected && (
@@ -191,6 +211,17 @@ export const PlugButton = ({
             <ListItem onClick={myActivityHandler}>
               <Icon icon="activity" paddingRight />
               <p>{t('translation:buttons.action.myActivity')}</p>
+            </ListItem>
+            <ListItem onClick={openSonicURL}>
+              <WICPLogo
+                src={wicpImage}
+                alt={t('translation:logoAlts.wicp')}
+              />
+              <p>{t('translation:buttons.action.getWicp')}</p>
+              </ListItem>
+            <ListItem onClick={setMyNfts}>
+              <Icon icon="myNfts" paddingRight />
+              <p>{t('translation:buttons.action.myNfts')}</p>
             </ListItem>
             <ListItem onClick={disconnectHandler}>
               <Icon icon="disconnect" paddingRight />
