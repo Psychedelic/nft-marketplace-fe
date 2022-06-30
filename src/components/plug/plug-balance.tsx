@@ -22,7 +22,8 @@ const PlugBalance = ({ isConnected }: PlugBalanceProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [plugWicpBalance, setPlugWicpBalance] = useState('');
-  const [plugLoadingWicpBalance, setPlugLoadingWicpBalance] = useState(false);
+  const [plugLoadingWicpBalance, setPlugLoadingWicpBalance] =
+    useState(false);
 
   const recentlyPurchasedTokens = useSelector(
     (state: RootState) => state.marketplace.recentlyPurchasedTokens,
@@ -67,10 +68,11 @@ const PlugBalance = ({ isConnected }: PlugBalanceProps) => {
             alt={t('translation:logoAlts.wicp')}
           />
           {plugWicpBalance !== '' && !plugLoadingWicpBalance ? (
-            `${roundOffDecimalValue(Number(plugWicpBalance), 2)} WICP`
+            `${roundOffDecimalValue(Number(plugWicpBalance), 2)}`
           ) : (
             <SpinnerIcon />
           )}
+          WICP
         </PlugWICPBalance>
       )}
     </>
