@@ -7,8 +7,8 @@
     "@dfinity/candid": "0.10.1",
     "@dfinity/identity": "0.10.1",
     "@dfinity/principal": "0.10.1",
-    "@psychedelic/plug-connect": "^0.1.4",
     "@psychedelic/cap-js": "^0.0.7",
+    "@psychedelic/plug-connect": "^0.1.4",
     "@radix-ui/react-accordion": "^0.1.5",
     "@radix-ui/react-checkbox": "^0.1.4",
     "@radix-ui/react-dialog": "^0.1.5",
@@ -48,7 +48,6 @@
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.0",
     "i18next": "^21.6.6",
-    "isomorphic-fetch": "^3.0.0",
     "json-bigint": "^1.0.0",
     "lodash.debounce": "^4.0.8",
     "lodash.throttle": "^4.1.1",
@@ -160,4 +159,3 @@
     ]
   }
 }
-
