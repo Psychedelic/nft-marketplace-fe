@@ -7,7 +7,7 @@ import {
   useAppDispatch,
 } from '../../store';
 
-import { PlugWICPBalance, WICPLogo } from './styles';
+import { PlugWICPBalance, WICPLogo, WICPText } from './styles';
 import { SpinnerIcon } from '../icons/custom';
 import { AppLog } from '../../utils/log';
 import wicpImage from '../../assets/wicp.svg';
@@ -72,7 +72,7 @@ const PlugBalance = ({ isConnected }: PlugBalanceProps) => {
           ) : (
             <SpinnerIcon />
           )}
-          WICP
+          <WICPText>WICP</WICPText>
         </PlugWICPBalance>
       )}
     </>

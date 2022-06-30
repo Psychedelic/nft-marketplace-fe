@@ -121,3 +121,7 @@ export const PlugWICPBalance = styled('div', {
   fontSize: '16px',
   fontWeight: '500',
 });
+
+export const WICPText = styled('span', {
+  marginLeft: '5px',
+});
