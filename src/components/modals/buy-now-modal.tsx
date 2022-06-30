@@ -125,6 +125,7 @@ export const BuyNowModal = ({
         Modal Trigger
         ---------------------------------
       */}
+      {/* TODO: disable buy now button based on operator details */}
       {isTriggerVisible && (
         <DialogPrimitive.Trigger asChild>
           {actionText ? (
