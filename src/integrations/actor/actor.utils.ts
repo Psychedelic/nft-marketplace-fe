@@ -52,6 +52,17 @@ export const createActor = async ({
     host: config.host,
   });
 
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      await agent.fetchRootKey();
+    } catch (err) {
+      console.warn(
+        'Oops! Unable to fetch root key, is the local replica running?',
+      );
+      console.error(err);
+    }
+  }
+
   return Actor.createActor(interfaceFactory, {
     agent,
     canisterId,

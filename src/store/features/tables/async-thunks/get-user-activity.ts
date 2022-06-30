@@ -31,7 +31,9 @@ export const getUserActivity = createAsyncThunk<
       });
 
       const response = await capRoot.get_user_transactions({
-        user: userAddress,
+        // Obs: type diff in Principal typedef in packages
+        // current @dfinity/principal and cap-js @dfinity/principal
+        user: userAddress as any,
         page: pageCount,
         witness: false,
       });
@@ -58,14 +60,16 @@ export const getUserActivity = createAsyncThunk<
       const loadedUserActivityData = result.map((tableData: any) => {
         // eslint-disable-next-line no-underscore-dangle
         const seller = parseTablePrincipal(
+          // eslint-disable-next-line no-underscore-dangle
           tableData.seller.Principal._arr,
         );
         // eslint-disable-next-line no-underscore-dangle
         const buyer =
           tableData?.buyer &&
+          // eslint-disable-next-line no-underscore-dangle
           parseTablePrincipal(tableData.buyer.Principal._arr);
 
-        const data = {
+        return {
           item: {
             name: `CAP Crowns #${tableData.token_id}`,
             token_id: tableData.token_id,
@@ -78,8 +82,6 @@ export const getUserActivity = createAsyncThunk<
           callerDfinityExplorerUrl:
             tableData.callerDfinityExplorerUrl,
         };
-
-        return data;
       });
 
       const actionPayload = {
@@ -99,3 +101,4 @@ export const getUserActivity = createAsyncThunk<
     }
   },
 );
+
