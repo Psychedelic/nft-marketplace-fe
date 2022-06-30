@@ -27,8 +27,6 @@ export const getBuyerOffers = createAsyncThunk<
     slice: marketplaceSlice,
   });
 
-  console.log('[debug] actorInstance', actorInstance);
-
   const { userPrincipalId, onSuccess, onFailure } = params;
 
   try {
