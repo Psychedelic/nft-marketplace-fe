@@ -40,7 +40,7 @@ export class VideoCache {
         listener,
       };
 
-      video.addEventListener('load', listener, {
+      video.addEventListener('loadeddata', listener, {
         once: true,
       });
 
@@ -59,7 +59,7 @@ export class VideoCache {
 
     const { video, listener } = this.listeners[src];
 
-    video.removeEventListener('load', listener);
+    video.removeEventListener('loadeddata', listener);
 
     video.removeEventListener('error', listener);
 
