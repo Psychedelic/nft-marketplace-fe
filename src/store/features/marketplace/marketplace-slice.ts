@@ -76,6 +76,7 @@ type InitialState = {
   recentlyWithdrawnAssets: any[];
   sumOfUserAllowance: number;
   recentlyFailedTransactions: string[];
+  isInsufficientBalanceModal: boolean;
 };
 
 const initialState: InitialState = {
@@ -90,6 +91,7 @@ const initialState: InitialState = {
   recentlyWithdrawnAssets: [],
   sumOfUserAllowance: 0,
   recentlyFailedTransactions: [],
+  isInsufficientBalanceModal: false,
 };
 
 export const marketplaceSlice = createSlice({
@@ -106,6 +108,9 @@ export const marketplaceSlice = createSlice({
       if (!action.payload) return;
 
       state.recentlyFailedTransactions.push(action.payload);
+    },
+    setInsufficientBalanceModal: (state, action: PayloadAction<boolean>) => {
+      state.isInsufficientBalanceModal = action.payload;
     },
   },
   extraReducers: (builder) => {

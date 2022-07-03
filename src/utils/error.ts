@@ -1,4 +1,11 @@
+import { marketplaceActions } from '../store';
+
 type Err = Record<string, any>;
+
+type ErrState = {
+  err: Record<string, any>;
+  dispatch?: any;
+};
 
 const toErrorMessage = (errorKey: string) => {
   console.warn(errorKey);
@@ -58,9 +65,16 @@ const parseError = (err: Err) => {
   return errorKey;
 };
 
-export const errorMessageHandler = (err: Err) => {
+export const errorMessageHandler = ({ err, dispatch }: ErrState) => {
   try {
     const errorKey = parseError(err);
+
+    if (
+      errorKey === 'InsufficientFungibleBalance' ||
+      'InsufficientBalance'
+    ) {
+      dispatch(marketplaceActions.setInsufficientBalanceModal(true));
+    }
 
     return toErrorMessage(errorKey);
   } catch (error) {
@@ -69,4 +83,3 @@ export const errorMessageHandler = (err: Err) => {
     return toErrorMessage('');
   }
 };
-

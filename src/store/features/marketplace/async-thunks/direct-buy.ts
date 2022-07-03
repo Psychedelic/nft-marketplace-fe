@@ -65,7 +65,9 @@ export const directBuy = createAsyncThunk<
       },
       onSuccess: async (res: any) => {
         if ('Err' in res)
-          throw new Error(errorMessageHandler(res.Err));
+          throw new Error(
+            errorMessageHandler({ err: res.Err, dispatch }),
+          );
 
         if (typeof onSuccess !== 'function') return;
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { useSelector } from 'react-redux';
 import { ActionButton } from '../core';
 import {
   ModalContent,
@@ -14,27 +15,39 @@ import {
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
 import { openSonicURL } from '../../utils/ handle-redirect-urls';
+import {
+  marketplaceActions,
+  RootState,
+  useAppDispatch,
+} from '../../store';
 
 export const InsufficientBalance = () => {
   const { t } = useTranslation();
-
-  const [modalOpened, setModalOpened] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const isInsufficientBalanceModal = useSelector(
+    (state: RootState) =>
+      state.marketplace.isInsufficientBalanceModal,
+  );
   const handleModalOpen = (modalOpenedStatus: boolean) => {
-    setModalOpened(modalOpenedStatus);
+    dispatch(
+      marketplaceActions.setInsufficientBalanceModal(
+        modalOpenedStatus,
+      ),
+    );
   };
 
   const handleModalClose = () => {
-    setModalOpened(false);
+    dispatch(marketplaceActions.setInsufficientBalanceModal(false));
   };
+
+  console.log(isInsufficientBalanceModal);
 
   return (
     <DialogPrimitive.Root
-      open={modalOpened}
+      open={isInsufficientBalanceModal}
       onOpenChange={handleModalOpen}
     >
-      <DialogPrimitive.Trigger asChild>
-        <ActionButton>Open</ActionButton>
-      </DialogPrimitive.Trigger>
+      <DialogPrimitive.Trigger />
       <DialogPrimitive.Portal
         container={document.getElementById(ThemeRootElement)}
       >
