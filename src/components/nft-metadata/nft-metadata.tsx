@@ -23,7 +23,7 @@ export const NFTMetaData = ({ id }: NFTMetaDataProps) => {
   return (
     <CollectionMetadataWrapper>
       <div>
-        <Heading>{id}</Heading>
+        <Heading>#{id}</Heading>
         <Subtext>
           Crowns
           <VerifiedIcon icon="verified" paddingLeft />

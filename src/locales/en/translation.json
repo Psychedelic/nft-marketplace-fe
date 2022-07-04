@@ -12,6 +12,10 @@
     "offersMade": "Offers Made",
     "offers": "Offers"
   },
+  "activity": {
+    "myActivity": "My Activity",
+    "userActivity": "Activity"
+  },
   "buttons": {
     "placeholder": {
       "primary": "Primary",
@@ -46,16 +50,18 @@
       "myOffers": "My Offers",
       "disconnect": "Disconnect",
       "editOffer": "Edit Offer",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "myActivity": "My Activity",
+      "getWicp": "Get WICP"
     }
   },
   "dropdown": {
     "priceFilter": {
-      "lowToHigh": "Price: Low to High",
-      "highToHigh": "Price: High to High",
+      "lowToHigh": "Price Low to High",
+      "highToLow": "Price High to Low",
       "highestLastSale": "Highest Last Sale",
       "recentlySold": "Recently Sold",
-      "recentlyListed": "Recently Listed",
+      "recentlyActioned": "Recently Actioned",
       "highestLastOffer": "Highest Last Offer"
     },
     "moreOptions": {
@@ -284,7 +290,8 @@
     "priceEmptyField": "You need to fill in both values",
     "unableToConnectToPlug": "Oops! Unable to connect to plug",
     "unableToFetchNFTS": "Oops! Unable to fetch NFTs",
-    "priceMinShouldBeLessThanMax": "Max value must be greater than min value"
+    "priceMinShouldBeLessThanMax": "Max value must be greater than min value",
+    "unableToGetBalance": "Oops! Unable to get wallet balance"
   },
   "successMessages": {
     "copyToClipboard": "Copied to clipboard!"

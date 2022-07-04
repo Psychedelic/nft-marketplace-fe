@@ -1,9 +1,21 @@
-import { useCallback, useLayoutEffect, useState } from 'react';
+import {
+  useCallback,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAppDispatch, plugActions } from '../../store';
-import { disconnectPlug } from '../../integrations/plug';
+import {
+  useAppDispatch,
+  plugActions,
+  useFilterStore,
+  filterActions,
+} from '../../store';
+import {
+  disconnectPlug,
+} from '../../integrations/plug';
+import { openSonicURL } from '../../utils/ handle-redirect-urls';
 import {
   PlugButtonContainer,
   PlugButtonText,
@@ -12,9 +24,12 @@ import {
   ListItem,
   PopoverTrigger,
   PlugIconStyled,
+  WICPLogo,
 } from './styles';
 import { useTheme } from '../../hooks';
 import { Icon } from '../icons';
+import wicpImage from '../../assets/wicp.svg';
+import PlugBalance from './plug-balance';
 
 export type PlugButtonProps = {
   handleConnect: () => void;
@@ -35,6 +50,7 @@ export const PlugButton = ({
 }: PlugButtonProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { defaultFilters } = useFilterStore();
   const [theme, themeObject] = useTheme();
   const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -48,6 +64,11 @@ export const PlugButton = ({
 
   const myOffersHandler = useCallback(() => {
     navigate(`/offers/${userPrincipal}`);
+    setOpenDropdown(false);
+  }, [navigate, userPrincipal]);
+
+  const myActivityHandler = useCallback(() => {
+    navigate(`/activity/${userPrincipal}`);
     setOpenDropdown(false);
   }, [navigate, userPrincipal]);
 
@@ -75,8 +96,25 @@ export const PlugButton = ({
     }
   }, [handleConnect, isConnected, openDropdown]);
 
+  const filterExists = (filterName: string) =>
+    defaultFilters.some(
+      (appliedFilter) => appliedFilter.filterName === filterName,
+    );
+
+  const setMyNfts = () => {
+    dispatch(filterActions.setMyNfts(true));
+    if (filterExists(t('translation:buttons.action.myNfts'))) return;
+    dispatch(
+      filterActions.applyFilter({
+        filterName: `${t('translation:buttons.action.myNfts')}`,
+        filterCategory: 'Display',
+      }),
+    );
+  };
+
   return (
     <Popover.Root open={openDropdown}>
+      {isConnected && <PlugBalance />}
       <PopoverTrigger asChild>
         <PlugButtonContainer
           onClick={handleClick}
@@ -110,6 +148,21 @@ export const PlugButton = ({
             <ListItem onClick={myOffersHandler}>
               <Icon icon="offer" paddingRight />
               <p>{t('translation:buttons.action.myOffers')}</p>
+            </ListItem>
+            <ListItem onClick={myActivityHandler}>
+              <Icon icon="activity" paddingRight />
+              <p>{t('translation:buttons.action.myActivity')}</p>
+            </ListItem>
+            <ListItem onClick={openSonicURL}>
+              <WICPLogo
+                src={wicpImage}
+                alt={t('translation:logoAlts.wicp')}
+              />
+              <p>{t('translation:buttons.action.getWicp')}</p>
+            </ListItem>
+            <ListItem onClick={setMyNfts}>
+              <Icon icon="myNfts" paddingRight />
+              <p>{t('translation:buttons.action.myNfts')}</p>
             </ListItem>
             <ListItem onClick={disconnectHandler}>
               <Icon icon="disconnect" paddingRight />
