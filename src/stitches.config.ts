@@ -47,6 +47,8 @@ export const {
       lightYellow: '#ffd71926',
       paleYellow: '#987E00',
       regentGrey: '#777E8F',
+      black: '#000000',
+      white: '#FFFFFF',
     },
     space: {},
     fonts: {},
@@ -104,6 +106,8 @@ export const darkTheme = createTheme({
     success: '#00AC7C',
     modalText: '#767D8E',
     toastBackground: '#1e1e1e',
+    black: '#FFFFFF',
+    white: '#000000',
   },
   shadows: {
     default: 'none',
