@@ -1,3 +1,18 @@
+# [1.1.0](https://github.com/Psychedelic/nft-marketplace-fe/compare/v1.0.0...v1.1.0) (2022-07-04)
+
+
+### Bug Fixes
+
+* 🐛 local dev and post plug 0.5.2.2 release tweaks ([#404](https://github.com/Psychedelic/nft-marketplace-fe/issues/404)) ([4ea93b8](https://github.com/Psychedelic/nft-marketplace-fe/commit/4ea93b83e1b607d796ffd8dc82cdc30ed40eaa83))
+
+
+### Features
+
+* 🎸 allow routing to sonic to get wicp ([#420](https://github.com/Psychedelic/nft-marketplace-fe/issues/420)) ([9fc94ef](https://github.com/Psychedelic/nft-marketplace-fe/commit/9fc94ef2a693dae3a9f6e136f72408b280e8a83e))
+* 🎸 display wallet balance ([#422](https://github.com/Psychedelic/nft-marketplace-fe/issues/422)) ([fbd0660](https://github.com/Psychedelic/nft-marketplace-fe/commit/fbd0660f3adcda0d1fc6c65af9d6fc9d3abfbab1))
+* 🎸 sort by price ([#419](https://github.com/Psychedelic/nft-marketplace-fe/issues/419)) ([14601ed](https://github.com/Psychedelic/nft-marketplace-fe/commit/14601edc9709d4292d05860239da162b40aabc39))
+* 🎸 user activity details ([#410](https://github.com/Psychedelic/nft-marketplace-fe/issues/410)) ([1f665dc](https://github.com/Psychedelic/nft-marketplace-fe/commit/1f665dc6752f0226fcdd2d5b140086f19f017cde))
+
 # 1.0.0 (2022-06-23)
 
 
