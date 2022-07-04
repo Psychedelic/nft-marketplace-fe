@@ -148,11 +148,23 @@ export const BuyNowModal = ({
               </ActionTextWrapper>
             </Tooltip>
           ) : (
-            <BuyNowModalTrigger>
-              <ActionButton type="primary" onClick={handleDirectBuy}>
-                {t('translation:buttons.action.buyNow')}
-              </ActionButton>
-            </BuyNowModalTrigger>
+            <Tooltip
+              text={
+                (!isNFTOperatedByMKP &&
+                  t('translation:tooltip.disabledBuyNowText')) ||
+                ''
+              }
+            >
+              <BuyNowModalTrigger>
+                <ActionButton
+                  type="primary"
+                  onClick={handleDirectBuy}
+                  disabled={!isNFTOperatedByMKP}
+                >
+                  {t('translation:buttons.action.buyNow')}
+                </ActionButton>
+              </BuyNowModalTrigger>
+            </Tooltip>
           )}
         </DialogPrimitive.Trigger>
       )}
