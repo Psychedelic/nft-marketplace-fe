@@ -20,10 +20,12 @@ export const Tooltip = ({ children, text }: TooltipProps) => {
       <TooltipPrimitive.Trigger asChild>
         <div>{children}</div>
       </TooltipPrimitive.Trigger>
-      <StyledContent sideOffset={5} className={themeObject}>
-        {text}
-        <StyledArrow />
-      </StyledContent>
+      {text && (
+        <StyledContent sideOffset={5} className={themeObject}>
+          {text}
+          <StyledArrow />
+        </StyledContent>
+      )}
     </TooltipPrimitive.Root>
   );
 };
