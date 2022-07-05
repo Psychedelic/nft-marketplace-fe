@@ -30,7 +30,7 @@ import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 import { NFTActionStatuses } from '../../../../constants/common';
 import { NumberTooltip } from '../../../number-tooltip';
 import { Media } from './media';
-import { isNFTOperatorIsMKP } from '../../../../utils/nfts';
+import { isOperatorMarketplace } from '../../../../utils/nfts';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -96,7 +96,7 @@ const OnConnected = ({
               (price && parseE8SAmountToWICP(BigInt(price))) || ''
             }
             isTriggerVisible={isForSale}
-            isNFTOperatedByMKP={isNFTOperatorIsMKP({ operator })}
+            isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
           />
           <MakeOfferModal
             actionText={`${t('translation:nftCard.forOffer')}`}

@@ -53,8 +53,8 @@ export const StyledContent = styled(TooltipPrimitive.Content, {
   padding: '10px 15px',
   fontSize: 15,
   lineHeight: 1,
-  color: '$white',
-  backgroundColor: '$black',
+  color: '$defaultTxtColour',
+  backgroundColor: '$defaultBackgroundColour',
   boxShadow: `${boxShadowOne}, ${boxShadowTwo}`,
   '@media (prefers-reduced-motion: no-preference)': {
     animationDuration: '100ms',
@@ -78,5 +78,5 @@ export const StyledContent = styled(TooltipPrimitive.Content, {
 });
 
 export const StyledArrow = styled(TooltipPrimitive.Arrow, {
-  fill: '$black',
+  fill: '$defaultBackgroundColour',
 });

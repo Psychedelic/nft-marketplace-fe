@@ -44,7 +44,10 @@ import {
   parseE8SAmountToWICP,
   formatPriceValue,
 } from '../../../utils/formatters';
-import { isTokenId, isNFTOperatorIsMKP } from '../../..//utils/nfts';
+import {
+  isTokenId,
+  isOperatorMarketplace,
+} from '../../..//utils/nfts';
 
 export type OfferAccordionProps = {
   lastSalePrice?: string;
@@ -140,7 +143,7 @@ const OnConnected = ({
         <BuyNowModal
           price={price?.toString()}
           isTriggerVisible={showNonOwnerButtons && isListed}
-          isNFTOperatedByMKP={isNFTOperatorIsMKP({ operator })}
+          isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
         />
       </ButtonDetailsWrapper>
       <ButtonDetailsWrapper>

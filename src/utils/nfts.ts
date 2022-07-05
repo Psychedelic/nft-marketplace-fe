@@ -1,5 +1,5 @@
 import { NFTActionStatuses } from '../constants/common';
-import { TokenMetadataById } from '../store/features/tables/table-slice';
+import{ TokenMetadataById } from '../store/features/tables/table-slice';
 import config from '../config/env';
 
 type NFTParams = {
@@ -10,7 +10,7 @@ type NFTParams = {
   currentPrice?: string;
 };
 
-export type CheckNFTOperatorParams = {
+type CheckNFTOperatorParams = {
   operator?: string;
 };
 
@@ -34,34 +34,25 @@ export const findLastAction = (nft: NFTParams) => {
 export const isTokenId = (id: any) => {
   const parsedId = Number(id);
 
-  return (
-    typeof id !== 'undefined' && !isNaN(parsedId) && parsedId >= 0
-  );
-};
+  return typeof id !== 'undefined' && !isNaN(parsedId) && parsedId >= 0;
+}
 
 export const getTokenMetadataThumbnail = ({
   tokendId,
   tokenMetadataById,
 }: {
-  tokendId: string | number;
-  tokenMetadataById: TokenMetadataById;
+  tokendId?: string | number,
+  tokenMetadataById: TokenMetadataById,
 }) => typeof tokendId !== 'undefined' && tokenMetadataById[tokendId];
 
-export const roundOffDecimalValue = (
-  value: number,
-  decimalPlace: number,
-) => {
+export const roundOffDecimalValue = (value: number, decimalPlace: number) => {
   return value.toFixed(decimalPlace);
-};
+}
 
-export const isNFTOperatorIsMKP = (
+export const isOperatorMarketplace = (
   params: CheckNFTOperatorParams,
 ) => {
   const { operator } = params;
 
-  if (!operator) return false;
-
-  if (operator !== config.marketplaceCanisterId) return false;
-
-  return true;
+  return operator === config.marketplaceCanisterId;
 };
