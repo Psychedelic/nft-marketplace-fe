@@ -113,6 +113,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
           status: nft?.status,
           owner: nft?.owner,
           lastActionTaken: findLastAction(nft),
+          operator: nft?.operator,
         };
         return metadata;
       });

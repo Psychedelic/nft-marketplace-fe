@@ -6,7 +6,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton, Pending, Completed } from '../core';
+import { ActionButton, Pending, Completed, Tooltip } from '../core';
 import { useAppDispatch, marketplaceActions } from '../../store';
 import {
   ModalContent,
@@ -16,6 +16,7 @@ import {
   ModalDescription,
   ModalButtonsList,
   ModalButtonWrapper,
+  ActionTextWrapper,
   ActionText,
   BuyNowModalTrigger,
 } from './styles';
@@ -35,6 +36,7 @@ export type BuyNowModalProps = {
   actionTextId?: number;
   price?: string;
   isTriggerVisible?: boolean;
+  isNFTOperatedByMKP?: boolean;
 };
 
 export const BuyNowModal = ({
@@ -43,6 +45,7 @@ export const BuyNowModal = ({
   actionTextId,
   price = '',
   isTriggerVisible,
+  isNFTOperatedByMKP,
 }: BuyNowModalProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -128,15 +131,40 @@ export const BuyNowModal = ({
       {isTriggerVisible && (
         <DialogPrimitive.Trigger asChild>
           {actionText ? (
-            <ActionText onClick={handleDirectBuy}>
-              {actionText}
-            </ActionText>
+            <Tooltip
+              text={
+                (!isNFTOperatedByMKP &&
+                  t('translation:tooltip.disabledBuyNowText')) ||
+                ''
+              }
+            >
+              <ActionTextWrapper isDisabled={!isNFTOperatedByMKP}>
+                <ActionText
+                  onClick={handleDirectBuy}
+                  isDisabled={!isNFTOperatedByMKP}
+                >
+                  {actionText}
+                </ActionText>
+              </ActionTextWrapper>
+            </Tooltip>
           ) : (
-            <BuyNowModalTrigger>
-              <ActionButton type="primary" onClick={handleDirectBuy}>
-                {t('translation:buttons.action.buyNow')}
-              </ActionButton>
-            </BuyNowModalTrigger>
+            <Tooltip
+              text={
+                (!isNFTOperatedByMKP &&
+                  t('translation:tooltip.disabledBuyNowText')) ||
+                ''
+              }
+            >
+              <BuyNowModalTrigger>
+                <ActionButton
+                  type="primary"
+                  onClick={handleDirectBuy}
+                  disabled={!isNFTOperatedByMKP}
+                >
+                  {t('translation:buttons.action.buyNow')}
+                </ActionButton>
+              </BuyNowModalTrigger>
+            </Tooltip>
           )}
         </DialogPrimitive.Trigger>
       )}

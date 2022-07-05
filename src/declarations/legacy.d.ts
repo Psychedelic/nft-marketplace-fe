@@ -10,6 +10,7 @@ export type NFTMetadata = {
   isOwner?: boolean;
   isListed?: boolean;
   owner?: string;
+  operator?: string;
 };
 
 export interface MetadataPart {

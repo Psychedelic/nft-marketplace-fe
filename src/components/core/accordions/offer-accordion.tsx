@@ -44,13 +44,17 @@ import {
   parseE8SAmountToWICP,
   formatPriceValue,
 } from '../../../utils/formatters';
-import { isTokenId } from '../../..//utils/nfts';
+import {
+  isTokenId,
+  isOperatorMarketplace,
+} from '../../..//utils/nfts';
 
 export type OfferAccordionProps = {
   lastSalePrice?: string;
   isListed?: boolean;
   owner?: string;
   showNFTActionButtons: boolean;
+  operator?: string;
 };
 
 type ConnectedProps = {
@@ -58,6 +62,7 @@ type ConnectedProps = {
   isOwner?: boolean;
   price?: string;
   showNFTActionButtons: boolean;
+  operator?: string;
 };
 
 type DisconnectedProps = {
@@ -71,6 +76,7 @@ const OnConnected = ({
   isOwner,
   price,
   showNFTActionButtons,
+  operator,
 }: ConnectedProps) => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -137,6 +143,7 @@ const OnConnected = ({
         <BuyNowModal
           price={price?.toString()}
           isTriggerVisible={showNonOwnerButtons && isListed}
+          isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
         />
       </ButtonDetailsWrapper>
       <ButtonDetailsWrapper>
@@ -181,6 +188,7 @@ export const OfferAccordion = ({
   isListed,
   owner,
   showNFTActionButtons,
+  operator,
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -319,6 +327,7 @@ export const OfferAccordion = ({
             isOwner={isOwner}
             price={lastSalePrice}
             showNFTActionButtons={showNFTActionButtons}
+            operator={operator}
           />
         )) || <OnDisconnected connectionStatus={connectionStatus} />}
       </AccordionHead>
