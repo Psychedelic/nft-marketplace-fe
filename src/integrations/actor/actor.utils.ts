@@ -4,21 +4,29 @@ import crownsIdlFactory from '../../declarations/nft.did';
 import wicpIdlFactory from '../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
 import capIdlFactory from '../../declarations/cap.did';
+import capRootIdlFactory from '../../declarations/cap-root.did';
 import config from '../../config/env';
 import { AppLog } from '../../utils/log';
 
-export type ServiceName = 'marketplace' | 'crowns' | 'wicp' | 'cap';
+export type ServiceName =
+  | 'marketplace'
+  | 'crowns'
+  | 'wicp'
+  | 'cap'
+  | 'capRoot';
 
 export const createActor = async ({
   serviceName = 'marketplace',
   plugIsConnected = false,
   asPlugInstance = true,
+  data,
 }: {
   serviceName?: ServiceName;
   plugIsConnected?: boolean;
   asPlugInstance?: boolean;
+  data?: Record<string, any>;
 }) => {
-  let canisterId: string;
+  let canisterId: string | undefined = data?.canisterId;
   let interfaceFactory: IDL.InterfaceFactory;
 
   switch (serviceName) {
@@ -34,11 +42,19 @@ export const createActor = async ({
       canisterId = config.capRouterId;
       interfaceFactory = capIdlFactory;
       break;
+    case 'capRoot':
+      if (!data?.bucketId) throw Error('Oops! Missing bucket id');
+
+      canisterId = data.bucketId;
+      interfaceFactory = capRootIdlFactory;
+      break;
     default:
       canisterId = config.marketplaceCanisterId;
       interfaceFactory = marketplaceIdlFactory;
       break;
   }
+
+  if (!canisterId) throw Error('Oops! Missing canister id');
 
   if (plugIsConnected && asPlugInstance) {
     return window.ic?.plug?.createActor({
@@ -75,12 +91,14 @@ export const actorInstanceHandler = async <T>({
   thunkAPI,
   serviceName,
   slice,
+  data,
 }: {
   // TODO: Where is GetThunkAPI typedef?
   thunkAPI: any;
   serviceName: ServiceName;
   // Slice should have a `setActor` action
   slice: any;
+  data?: Record<string, any>;
 }) => {
   const {
     [serviceName]: { actor },
@@ -103,12 +121,13 @@ export const actorInstanceHandler = async <T>({
   if (!actor || isAnotherAgent) {
     AppLog.warn(`Creating new actor instance for ${serviceName}`);
 
-    const asPlugInstance = serviceName !== 'cap';
+    const asPlugInstance = !['cap', 'capRoot'].includes(serviceName);
 
     const newActor = (await createActor({
       serviceName,
       plugIsConnected,
       asPlugInstance,
+      data,
     })) as ActorSubclass<T>;
 
     // Set actor state

@@ -1,15 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Principal } from '@dfinity/principal';
-import { CapRoot } from '@psychedelic/cap-js';
+// import { CapRoot } from '@psychedelic/cap-js';
 import { formatTimestamp } from '../../../../integrations/functions/date';
 import { AppLog } from '../../../../utils/log';
 import { notificationActions } from '../../notifications';
 import { UserActivityParams, tableActions } from '../table-slice';
+import { capRootSlice } from '../../cap/cap-root-slice';
 import {
   getOperationType,
   parseTablePrincipal,
 } from '../../../../utils/parser';
-import config from '../../../../config/env';
+import { actorInstanceHandler } from '../../../../integrations/actor';
 import { sortActivitiesByTime } from '../../../../utils/sorting';
 
 export type GetUserActivityProps = UserActivityParams;
@@ -19,22 +20,27 @@ export const getUserActivity = createAsyncThunk<
   GetUserActivityProps
 >(
   'table/getUserActivity',
-  async ({ pageCount, bucketId, plugPrincipal }, { dispatch }) => {
-    dispatch(tableActions.setIsTableDataLoading(true));
+  async ({ pageCount, bucketId, plugPrincipal }, thunkAPI) => {
+    thunkAPI.dispatch(tableActions.setIsTableDataLoading(true));
+
+    // TODO: Call get user transactions from capRoot store
+
+    // Checks if an actor instance exists already
+    // otherwise creates a new instance
+    const actorInstance = await actorInstanceHandler({
+      thunkAPI,
+      serviceName: 'capRoot',
+      slice: capRootSlice,
+      data: {
+        bucketId,
+      },
+    });
 
     try {
-      const userAddress = Principal.fromText(plugPrincipal);
-
-      const capRoot = await CapRoot.init({
-        host: config.host,
-        canisterId: bucketId.toString(),
-      });
-
-      const response = await capRoot.get_user_transactions({
-        // Obs: type diff in Principal typedef in packages
-        // current @dfinity/principal and cap-js @dfinity/principal
-        user: userAddress as any,
-        page: pageCount,
+      const response = await actorInstance.get_user_transactions({
+        bucketId: Principal.fromText(bucketId),
+        page: [pageCount],
+        user: Principal.fromText(plugPrincipal),
         witness: false,
       });
 
@@ -90,10 +96,12 @@ export const getUserActivity = createAsyncThunk<
         nextPage: pageNo + 1,
       };
 
-      dispatch(tableActions.setUserActivityTable(actionPayload));
+      thunkAPI.dispatch(
+        tableActions.setUserActivityTable(actionPayload),
+      );
     } catch (error) {
       AppLog.error(error);
-      dispatch(
+      thunkAPI.dispatch(
         notificationActions.setErrorMessage(
           'Oops! Unable to fetch user activity table data',
         ),
