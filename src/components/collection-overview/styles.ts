@@ -25,6 +25,7 @@ export const NftMetadataContent = styled('div', {
 
   '@md': {
     justifyContent: 'center',
+    padding: '0px 14px 0px',
   },
 });
 
@@ -34,6 +35,11 @@ export const NftMetadataContentWrapper = styled('div', {
   justifyContent: 'space-between',
   marginBottom: '25px',
   position: 'relative',
+
+  '@md': {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export const NftProfilePictureWrapper = styled('div', {
@@ -56,6 +62,10 @@ export const NftProfilePictureWrapper = styled('div', {
     width: '85%',
     position: 'relative',
   },
+
+  '@md': {
+    top: '-85px',
+  },
 });
 
 export const Heading = styled('h2', {
@@ -71,6 +81,10 @@ export const Heading = styled('h2', {
   '& img': {
     marginLeft: '10px',
   },
+
+  '@md': {
+    textAlign: 'center',
+  },
 });
 
 export const Subtext = styled('p', {
@@ -81,6 +95,10 @@ export const Subtext = styled('p', {
   color: '#777E90',
   maxWidth: '600px',
   marginBottom: '0px',
+
+  '@md': {
+    textAlign: 'center',
+  },
 });
 
 export const ButtonsWrapper = styled('div', {
@@ -91,8 +109,37 @@ export const ButtonsWrapper = styled('div', {
 
 export const HeaderWrapper = styled('div', {
   marginLeft: '140px',
+
+  '@md': {
+    marginLeft: '0px',
+    marginTop: '50px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
 });
 
 export const VerifiedIcon = styled(Icon, {
   color: '$primary',
+});
+
+export const FilteredCountChipsWrapper = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  margin: '0px 25px 15px',
+});
+
+export const Divider = styled('div', {
+  height: '1px',
+  width: '100%',
+  background: '$borderColor',
+  margin: '20px 0px 40px',
+});
+
+export const FilteredCountChips = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  marginBottom: '25px',
 });

@@ -26,6 +26,7 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^8.0.4",
     "@stitches/react": "^1.2.6",
+    "@tabler/icons": "^1.72.0",
     "@types/buffer-crc32": "^0.2.0",
     "@types/crypto-js": "^4.1.1",
     "@types/jest": "^27.4.0",
