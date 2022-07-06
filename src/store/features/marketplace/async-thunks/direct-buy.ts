@@ -2,7 +2,7 @@ import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';
-import { DirectBuy } from '../marketplace-slice';
+import { DirectBuy, marketplaceActions } from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
@@ -10,7 +10,9 @@ import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 import { parseAmountToE8S } from '../../../../utils/formatters';
-import { marketplaceActions } from '../marketplace-slice';
+import type { RootState } from '../../../store';
+
+import { log, getLogDescription } from '../../../../utils/datadog';
 
 type DirectBuyProps = DefaultCallbacks & DirectBuy;
 
@@ -19,6 +21,16 @@ export const directBuy = createAsyncThunk<
   DirectBuyProps
 >('marketplace/directBuy', async (params, { dispatch, getState }) => {
   const { tokenId, price, onSuccess, onFailure } = params;
+
+  const {
+    plug: { principalId: plugPrincipal },
+  } = getState() as RootState;
+
+  const tokenIdTxt = tokenId.toString();
+  const logDescription = getLogDescription({
+    operation: 'directBuy',
+    parts: [tokenIdTxt, plugPrincipal || 'n/a'],
+  });
 
   const {
     marketplace: { sumOfUserAllowance },
@@ -61,11 +73,32 @@ export const directBuy = createAsyncThunk<
       methodName: 'directBuy',
       args: [nonFungibleContractAddress, tokenId],
       onFail: (res: any) => {
+        log({
+          type: 'error',
+          description: logDescription,
+          data: {
+            tokenIdTxt,
+            plugPrincipal,
+            error: res.Err,
+          },
+        });
+
         throw res;
       },
       onSuccess: async (res: any) => {
-        if ('Err' in res)
+        if ('Err' in res) {
+          log({
+            type: 'error',
+            description: logDescription,
+            data: {
+              tokenIdTxt,
+              plugPrincipal,
+              error: res.Err,
+            },
+          });
+
           throw new Error(errorMessageHandler(res.Err));
+        }
 
         if (typeof onSuccess !== 'function') return;
 
@@ -78,12 +111,23 @@ export const directBuy = createAsyncThunk<
 
     const batchTxRes = await window.ic?.plug?.batchTransactions([
       WICP_APPROVE,
-      // MKP_DEPOSIT_WICP,
       MKP_DIRECT_BUY,
     ]);
 
     if (!batchTxRes) {
-      throw new Error('Empty response');
+      const errorMsg = 'Empty response';
+
+      log({
+        type: 'error',
+        description: logDescription,
+        data: {
+          tokenIdTxt,
+          plugPrincipal,
+          error: errorMsg,
+        },
+      });
+
+      throw new Error(errorMsg);
     }
 
     return {
