@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
 import { getUserTransactions } from './async-thunks';
-import capRootIdlService from '../../../declarations/cap-root';
+import capRootIdlService, {
+  GetTransactionsResponseBorrowed,
+} from '../../../declarations/cap-root';
 
 type CapRootActor = ActorSubclass<capRootIdlService>;
 
@@ -9,6 +11,7 @@ type CapRootState = {
   actor?: CapRootActor;
   bucketId: string;
   loading: boolean;
+  response?: GetTransactionsResponseBorrowed;
 };
 
 // Define the initial state using that type
@@ -18,7 +21,7 @@ const initialState: CapRootState = {
 };
 
 export const capRootSlice = createSlice({
-  name: 'cap',
+  name: 'capRoot',
   initialState,
   reducers: {
     setActor: (state, action: PayloadAction<CapRootActor>) => {
@@ -37,7 +40,7 @@ export const capRootSlice = createSlice({
       (state, action) => {
         if (!action.payload) return;
 
-        state.bucketId = action.payload;
+        state.response = action.payload;
       },
     );
   },

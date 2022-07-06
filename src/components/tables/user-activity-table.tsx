@@ -207,3 +207,4 @@ export const UserActivityTable = () => {
     </InfiniteScrollWrapper>
   );
 };
+
