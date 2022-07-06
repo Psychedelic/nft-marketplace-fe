@@ -23,6 +23,8 @@ export const getUserActivity = createAsyncThunk<
   async ({ pageCount, bucketId, plugPrincipal }, thunkAPI) => {
     thunkAPI.dispatch(tableActions.setIsTableDataLoading(true));
 
+    // TODO: Call get user transactions from capRoot store
+
     // Checks if an actor instance exists already
     // otherwise creates a new instance
     const actorInstance = await actorInstanceHandler({
