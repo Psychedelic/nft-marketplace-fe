@@ -25,8 +25,6 @@ export const getTokenContractRootBucket = createAsyncThunk<
       slice: capSlice,
     });
 
-    console.log('[debug] actorInstance', actorInstance);
-
     try {
       const result =
         await actorInstance.get_token_contract_root_bucket({

@@ -11,6 +11,7 @@ import crownsReducer from './features/crowns/crowns-slice';
 import wicpReducer from './features/wicp';
 import tableReducer from './features/tables/table-slice';
 import capReducer from './features/cap/cap-slice';
+import capRootReducer from './features/cap/cap-root-slice';
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ export const store = configureStore({
     wicp: wicpReducer,
     table: tableReducer,
     cap: capReducer,
+    capRoot: capRootReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

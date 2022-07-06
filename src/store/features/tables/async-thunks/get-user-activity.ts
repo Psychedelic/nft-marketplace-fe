@@ -21,7 +21,13 @@ export const getUserActivity = createAsyncThunk<
 >(
   'table/getUserActivity',
   async ({ pageCount, bucketId, plugPrincipal }, thunkAPI) => {
+    console.log('[debug] getUserActivity');
+
+    console.log(0);
+
     thunkAPI.dispatch(tableActions.setIsTableDataLoading(true));
+
+    console.log(1);
 
     // Checks if an actor instance exists already
     // otherwise creates a new instance
@@ -33,6 +39,8 @@ export const getUserActivity = createAsyncThunk<
         bucketId,
       },
     });
+
+    console.log(2);
 
     console.log('[debug] actorInstance', actorInstance);
 
@@ -52,11 +60,14 @@ export const getUserActivity = createAsyncThunk<
       //   witness: false,
       // });
 
-      const response = await actorInstance.getUserTransactions({
+      const response = await actorInstance.get_user_transactions({
         bucketId: Principal.fromText(bucketId),
-        page: pageCount,
-        plugPrincipal,
+        page: [pageCount],
+        user: Principal.fromText(plugPrincipal),
+        witness: false,
       });
+
+      console.log('[debug] response', response);
 
       const { data, page: pageNo } = response;
 
