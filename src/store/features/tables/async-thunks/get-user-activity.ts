@@ -21,13 +21,7 @@ export const getUserActivity = createAsyncThunk<
 >(
   'table/getUserActivity',
   async ({ pageCount, bucketId, plugPrincipal }, thunkAPI) => {
-    console.log('[debug] getUserActivity');
-
-    console.log(0);
-
     thunkAPI.dispatch(tableActions.setIsTableDataLoading(true));
-
-    console.log(1);
 
     // Checks if an actor instance exists already
     // otherwise creates a new instance
@@ -40,34 +34,13 @@ export const getUserActivity = createAsyncThunk<
       },
     });
 
-    console.log(2);
-
-    console.log('[debug] actorInstance', actorInstance);
-
     try {
-      // const userAddress = Principal.fromText(plugPrincipal);
-
-      // const capRoot = await CapRoot.init({
-      //   host: config.host,
-      //   canisterId: bucketId.toString(),
-      // });
-
-      // const response = await capRoot.get_user_transactions({
-      //   // Obs: type diff in Principal typedef in packages
-      //   // current @dfinity/principal and cap-js @dfinity/principal
-      //   user: userAddress as any,
-      //   page: pageCount,
-      //   witness: false,
-      // });
-
       const response = await actorInstance.get_user_transactions({
         bucketId: Principal.fromText(bucketId),
         page: [pageCount],
         user: Principal.fromText(plugPrincipal),
         witness: false,
       });
-
-      console.log('[debug] response', response);
 
       const { data, page: pageNo } = response;
 

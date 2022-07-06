@@ -29,8 +29,6 @@ export const createActor = async ({
   let canisterId: string | undefined = data?.canisterId;
   let interfaceFactory: IDL.InterfaceFactory;
 
-  console.log('[debug] createActor', serviceName, canisterId, data);
-
   switch (serviceName) {
     case 'crowns':
       canisterId = config.nftCollectionId;
@@ -46,8 +44,6 @@ export const createActor = async ({
       break;
     case 'capRoot':
       if (!data?.bucketId) throw Error('Oops! Missing bucket id');
-
-      console.log('[debug] capRoot instance');
 
       canisterId = data.bucketId;
       interfaceFactory = capRootIdlFactory;
@@ -104,35 +100,28 @@ export const actorInstanceHandler = async <T>({
   slice: any;
   data?: Record<string, any>;
 }) => {
-  console.log('[debug] data-->', data);
-  console.log('[debug] actor', 1);
   const {
     [serviceName]: { actor },
     plug: { isConnected: plugIsConnected },
   } = thunkAPI.getState();
-  console.log('[debug] actor', 2);
+
   const currentAgent = actor && Actor.agentOf(actor);
   const currentAgentPrincipal =
     currentAgent && (await currentAgent.getPrincipal());
-  console.log('[debug] actor', 3);
+
   const plugAgent = plugIsConnected && window.ic?.plug?.agent;
   const plugAgentPrincipal =
     plugAgent && (await plugAgent.getPrincipal());
-  console.log('[debug] actor', 4);
+
   const isAnotherAgent =
     !currentAgentPrincipal ||
     (plugAgentPrincipal &&
       currentAgentPrincipal !== plugAgentPrincipal);
-  console.log('[debug] actor', 5);
+
   if (!actor || isAnotherAgent) {
     AppLog.warn(`Creating new actor instance for ${serviceName}`);
 
     const asPlugInstance = !['cap', 'capRoot'].includes(serviceName);
-    console.log(
-      '[debug] actor: asPlugInstance',
-      asPlugInstance,
-      data,
-    );
 
     const newActor = (await createActor({
       serviceName,
