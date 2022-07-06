@@ -17,6 +17,7 @@ import {
   LogoContainer,
   LogoIcon,
   ActionButtonsContainer,
+  MobileMenuContainer,
 } from './styles';
 import { Icon } from '../icons';
 import { useBuyerOffers } from '../../hooks/use-buyer-offers';
@@ -63,6 +64,10 @@ export const NavBar = () => {
         </LinkButton>
         <Plug />
       </ActionButtonsContainer>
+      <MobileMenuContainer>
+        <Icon icon="search" size="md" paddingRight />
+        <Icon icon="hamburger" size="lg" paddingLeft />
+      </MobileMenuContainer>
     </Container>
   );
 };

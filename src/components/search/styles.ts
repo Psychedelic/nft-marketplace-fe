@@ -26,6 +26,10 @@ export const SearchModalTrigger = styled('div', {
   width: '100%',
   maxWidth: '600px',
   marginRight: '7px',
+
+  '@md': {
+    display: 'none',
+  },
 });
 
 export const ModalOverlay = styled(DialogPrimitive.Overlay, {
