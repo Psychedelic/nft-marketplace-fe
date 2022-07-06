@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
-// import { getUserTransactions } from './async-thunks';
+import { getUserTransactions } from './async-thunks/get-user-transactions';
 import capRootIdlService, {
   GetTransactionsResponseBorrowed,
 } from '../../../declarations/cap-root';
@@ -34,21 +34,21 @@ export const capRootSlice = createSlice({
       state.loading = action.payload;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(
-  //     getUserTransactions.fulfilled,
-  //     (state, action) => {
-  //       if (!action.payload) return;
+  extraReducers: (builder) => {
+    builder.addCase(
+      getUserTransactions.fulfilled,
+      (state, action) => {
+        if (!action.payload) return;
 
-  //       state.response = action.payload;
-  //     },
-  //   );
-  // },
+        state.response = action.payload;
+      },
+    );
+  },
 });
 
 export const capRootActions = {
   ...capRootSlice.actions,
-  // getUserTransactions,
+  getUserTransactions,
 };
 
 export default capRootSlice.reducer;

@@ -31,8 +31,6 @@ export const getUserTransactions = createAsyncThunk<
       },
     });
 
-    console.log('[debug] actorInstance', actorInstance);
-
     try {
       const userAddress = Principal.fromText(plugPrincipal);
       const response = (await actorInstance.get_user_transactions({
