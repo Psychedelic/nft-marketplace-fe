@@ -23,10 +23,6 @@ export const Container = styled('div', {
       },
     },
   },
-
-  '@md': {
-    padding: '14px',
-  },
 });
 
 export const LogoContainer = styled('div', {
@@ -37,10 +33,6 @@ export const LogoContainer = styled('div', {
 export const LogoIcon = styled('img', {
   width: '100px',
   marginRight: '7px',
-
-  '@md': {
-    width: '80px',
-  },
 });
 
 export const LogoName = styled(Icon, {
@@ -53,18 +45,4 @@ export const ActionButtonsContainer = styled('div', {
   // base styles
   display: 'flex',
   alignItems: 'center',
-
-  '@md': {
-    display: 'none',
-  },
-});
-
-export const MobileMenuContainer = styled('div', {
-  display: 'none',
-
-  '@md': {
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'pointer',
-  },
 });
