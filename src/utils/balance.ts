@@ -1,11 +1,11 @@
-type IsBalanceInSufficientParams = {
+type IsBalanceInsufficientParams = {
   loadingWICPBalance: boolean;
   amountRequired: number;
   walletsWICPBalance: number;
 };
 
-export const IsBalanceInSufficient = (
-  params: IsBalanceInSufficientParams,
+export const isBalanceInsufficient = (
+  params: IsBalanceInsufficientParams,
 ) => {
   const { loadingWICPBalance, amountRequired, walletsWICPBalance } =
     params;

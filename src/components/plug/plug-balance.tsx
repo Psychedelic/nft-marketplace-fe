@@ -65,7 +65,7 @@ const PlugBalance = () => {
         src={wicpImage}
         alt={t('translation:logoAlts.wicp')}
       />
-      {plugWicpBalance !== '' && !loadingWICPBalance ? (
+      {!loadingWICPBalance ? (
         `${roundOffDecimalValue(Number(plugWicpBalance), 2)}`
       ) : (
         <SpinnerIcon />

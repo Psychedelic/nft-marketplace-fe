@@ -30,7 +30,7 @@ import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
 import { InsufficientBalance } from './steps/insufficient-balance';
-import { IsBalanceInSufficient } from '../../utils/balance';
+import { isBalanceInsufficient } from '../../utils/balance';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
@@ -89,7 +89,7 @@ export const BuyNowModal = ({
     handleModalOpen(true);
 
     if (
-      IsBalanceInSufficient({
+      isBalanceInsufficient({
         loadingWICPBalance,
         amountRequired: Number(price),
         walletsWICPBalance,
