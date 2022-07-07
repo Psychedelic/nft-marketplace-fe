@@ -1,7 +1,7 @@
 import { Actor, HttpAgent } from '@dfinity/agent';
 import { Principal } from '@dfinity/principal';
 import { Secp256k1KeyIdentity } from '@dfinity/identity';
-import fetch from 'isomorphic-fetch';
+import fetch from 'cross-fetch';
 import capRootIdlFactory from './cap-root-idl-factory.mjs';
 
 (async () => {
