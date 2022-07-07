@@ -1,11 +1,13 @@
 type NodeEnv = 'development' | 'production' | 'test';
 
 // eslint-disable-next-line operator-linebreak
-const env: NodeEnv =
-  // eslint-disable-next-line operator-linebreak
-  (process.env.REACT_APP_NODE_ENV as unknown as NodeEnv) ||
-  'development';
+// const env: NodeEnv =
+//   // eslint-disable-next-line operator-linebreak
+//   (process.env.REACT_APP_NODE_ENV as unknown as NodeEnv) ||
+//   'development';
 
+const env: NodeEnv = 'development';
+ 
 type ConfigParams = {
   host: string;
   nftCollectionId: string;
@@ -23,17 +25,17 @@ type Config = {
   test: ConfigParams;
 };
 
-if (
-  env === 'development' &&
-  !(
-    process.env.REACT_APP_MARKETPLACE_ID ||
-    process.env.REACT_APP_CROWNS_ID ||
-    process.env.REACT_APP_WICP_ID ||
-    process.env.REACT_APP_CAP_ID
-  )
-) {
-  throw Error('Oops! Missing local replica service canister ids');
-}
+// if (
+//   env === 'development' &&
+//   !(
+//     process.env.REACT_APP_MARKETPLACE_ID ||
+//     process.env.REACT_APP_CROWNS_ID ||
+//     process.env.REACT_APP_WICP_ID ||
+//     process.env.REACT_APP_CAP_ID
+//   )
+// ) {
+//   throw Error('Oops! Missing local replica service canister ids');
+// }
 
 const config: Config = {
   // The production version
@@ -75,14 +77,13 @@ const config: Config = {
   },
   // The local development environment settings
   development: {
-    host: 'http://127.0.0.1:8000',
-    kyasshuMarketplaceAPI: 'http://localhost:3000/local',
+    host: 'https://mainnet.dfinity.network',
+    kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
     icScan: 'https://icscan.io/principal',
-    nftCollectionId: process.env.REACT_APP_CROWNS_ID as string,
-    marketplaceCanisterId: process.env
-      .REACT_APP_MARKETPLACE_ID as string,
-    wICPCanisterId: process.env.REACT_APP_WICP_ID as string,
-    capRouterId: process.env.REACT_APP_CAP_ID as string,
+    nftCollectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
+    marketplaceCanisterId: 'getti-aiaaa-aaaah-abkkq-cai',
+    wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
+    capRouterId: 'lj532-6iaaa-aaaah-qcc7a-cai',
   },
 };
 

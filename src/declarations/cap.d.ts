@@ -2,19 +2,6 @@
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
 
-export interface CanisterStatusResponse {
-  status: Status;
-  memory_size: bigint;
-  cycles: bigint;
-  settings: DefiniteCanisterSettings;
-  module_hash: [] | [Array<number>];
-}
-export interface DefiniteCanisterSettings {
-  freezing_threshold: bigint;
-  controllers: Array<Principal>;
-  memory_allocation: bigint;
-  compute_allocation: bigint;
-}
 export interface GetIndexCanistersResponse {
   witness: [] | [Witness];
   canisters: Array<Principal>;
@@ -35,11 +22,6 @@ export interface GetUserRootBucketsResponse {
   witness: [] | [Witness];
   contracts: Array<Principal>;
 }
-export type Result = { Ok: CanisterStatusResponse } | { Err: string };
-export type Status =
-  | { stopped: null }
-  | { stopping: null }
-  | { running: null };
 export interface WithWitnessArg {
   witness: boolean;
 }
@@ -48,11 +30,6 @@ export interface Witness {
   tree: Array<number>;
 }
 export interface _SERVICE {
-  bucket_status: ActorMethod<[Principal], Result>;
-  custom_upgrade_root_bucket: ActorMethod<
-    [Principal, [] | [Array<number>]],
-    string
-  >;
   deploy_plug_bucket: ActorMethod<[Principal, bigint], undefined>;
   get_index_canisters: ActorMethod<
     [WithWitnessArg],
@@ -66,18 +43,12 @@ export interface _SERVICE {
     [GetUserRootBucketsArg],
     GetUserRootBucketsResponse
   >;
-  git_commit_hash: ActorMethod<[], string>;
   insert_new_users: ActorMethod<
     [Principal, Array<Principal>],
     undefined
   >;
   install_bucket_code: ActorMethod<[Principal], undefined>;
-  root_buckets_to_upgrade: ActorMethod<
-    [],
-    [bigint, Array<Principal>]
-  >;
-  trigger_upgrade: ActorMethod<[string], undefined>;
+  trigger_upgrade: ActorMethod<[], undefined>;
 }
 
 export default _SERVICE;
-
