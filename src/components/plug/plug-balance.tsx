@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import {
   notificationActions,
   RootState,
+  plugActions,
   useAppDispatch,
 } from '../../store';
 
@@ -41,6 +42,11 @@ const PlugBalance = () => {
 
         setPlugWicpBalance(wicpWalletBalance?.amount);
         setPlugLoadingWicpBalance(false);
+        dispatch(
+          plugActions.setWalletsWICPBalance(
+            wicpWalletBalance?.amount,
+          ),
+        );
       } catch (err) {
         setPlugLoadingWicpBalance(false);
         AppLog.error(err);
