@@ -30,13 +30,13 @@ import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
 import { InsufficientBalance } from './steps/insufficient-balance';
+import { IsBalanceInSufficient } from '../../utils/balance';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
  * --------------------------------------------------------------------------*/
 
 export type BuyNowModalProps = {
-  onClose?: () => void;
   actionText?: string;
   actionTextId?: number;
   price?: string;
@@ -45,7 +45,6 @@ export type BuyNowModalProps = {
 };
 
 export const BuyNowModal = ({
-  onClose,
   actionText,
   actionTextId,
   price = '',
@@ -89,8 +88,13 @@ export const BuyNowModal = ({
 
     handleModalOpen(true);
 
-    // TODO: handle loadingWICPBalance gracefully
-    if (!loadingWICPBalance && Number(price) > walletsWICPBalance) {
+    if (
+      IsBalanceInSufficient({
+        loadingWICPBalance,
+        amountRequired: Number(price),
+        walletsWICPBalance,
+      })
+    ) {
       setModalStep(DirectBuyStatusCodes.InsufficientBalance);
 
       return;
