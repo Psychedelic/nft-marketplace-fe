@@ -20,6 +20,8 @@ import {
   MobileMenuContainer,
   NavBarWrapper,
   MobileNavbarIcons,
+  BackIcon,
+  MobileSearchBarActions,
 } from './styles';
 import { Icon } from '../icons';
 import { useBuyerOffers } from '../../hooks/use-buyer-offers';
@@ -36,7 +38,9 @@ export const NavBar = () => {
   const { showAlerts } = useSettingsStore();
   const { pathname } = useLocation();
   const isLightTheme = theme === 'lightTheme';
-  const [openMobileNavbar, setOpenMobileNavbar] = useState(true);
+  const [openMobileNavbar, setOpenMobileNavbar] = useState(false);
+  const [openMobileSearchbar, setOpenMobileSearchbar] =
+    useState(false);
 
   const changeThemeHandler = useCallback(() => {
     dispatch(
@@ -49,35 +53,68 @@ export const NavBar = () => {
   useBuyerOffers();
 
   return (
-    <Container showAlerts={showAlerts} openMobileNavbar={openMobileNavbar}>
+    <Container
+      showAlerts={showAlerts}
+      openMobileNavbar={openMobileNavbar}
+    >
       <NavBarWrapper>
-        <RouterLink
-          to="/"
-          onClick={() => pathname === '/' && window.location.reload()}
-        >
-          <LogoContainer>
-            <LogoIcon
-              src={isLightTheme ? jelly : jellyDark}
-              alt={t('translation:common.collectionName')}
+        {openMobileSearchbar ? (
+          <MobileSearchBarActions>
+            <BackIcon
+              icon="back"
+              openMobileSearchbar={openMobileSearchbar}
+              size="lg"
+              onClick={() => setOpenMobileSearchbar(false)}
             />
-          </LogoContainer>
-        </RouterLink>
-        <GlobalSearch />
+            <GlobalSearch openMobileSearchbar={openMobileSearchbar} />
+          </MobileSearchBarActions>
+        ) : (
+          <>
+            <RouterLink
+              to="/"
+              onClick={() =>
+                pathname === '/' && window.location.reload()
+              }
+            >
+              <LogoContainer
+                openMobileSearchbar={openMobileSearchbar}
+              >
+                <LogoIcon
+                  src={isLightTheme ? jelly : jellyDark}
+                  alt={t('translation:common.collectionName')}
+                />
+              </LogoContainer>
+            </RouterLink>
+            <GlobalSearch />
+          </>
+        )}
         <ActionButtonsContainer>
           <LinkButton handleClick={changeThemeHandler}>
             <Icon icon={isLightTheme ? 'moon' : 'sun'} />
           </LinkButton>
           <Plug />
         </ActionButtonsContainer>
-        <MobileMenuContainer>
-          <MobileNavbarIcons icon="search" size="md" paddingRight />
-          <MobileNavbarIcons
-            icon="hamburger"
-            size="lg"
-            paddingLeft
-            onClick={() => setOpenMobileNavbar(!openMobileNavbar)}
-          />
-        </MobileMenuContainer>
+        {!openMobileSearchbar && (
+          <MobileMenuContainer
+            openMobileSearchbar={openMobileSearchbar}
+          >
+            <MobileNavbarIcons
+              icon="search"
+              size="md"
+              paddingRight
+              onClick={() => {
+                setOpenMobileSearchbar(true);
+                setOpenMobileNavbar(false);
+              }}
+            />
+            <MobileNavbarIcons
+              icon="hamburger"
+              size="lg"
+              paddingLeft
+              onClick={() => setOpenMobileNavbar(!openMobileNavbar)}
+            />
+          </MobileMenuContainer>
+        )}
       </NavBarWrapper>
       <MobileNavBar
         openMobileNavbar={openMobileNavbar}

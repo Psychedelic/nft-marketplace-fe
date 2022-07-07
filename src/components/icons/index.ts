@@ -31,6 +31,7 @@ import { FiDownload } from '@react-icons/all-files/fi/FiDownload';
 import { AiFillPicture } from '@react-icons/all-files/ai/AiFillPicture';
 import { IoMenuSharp } from '@react-icons/all-files/io5/IoMenuSharp';
 import { IoIosMoon } from '@react-icons/all-files/io/IoIosMoon';
+import { IoArrowBackOutline } from '@react-icons/all-files/io5/IoArrowBackOutline';
 
 import { PlugIcon, AppNameIcon, SpinnerIcon } from './custom';
 
@@ -69,6 +70,7 @@ export const Icons = {
   myNfts: AiFillPicture,
   hamburger: IoMenuSharp,
   nightMode: IoIosMoon,
+  back: IoArrowBackOutline,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,

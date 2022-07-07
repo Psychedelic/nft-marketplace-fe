@@ -1,6 +1,30 @@
-import { styled } from '../../stitches.config';
+import { styled, keyframes } from '../../stitches.config';
 import * as Switch from '@radix-ui/react-switch';
 import { Icon } from '../icons';
+
+const slideOutRight = keyframes({
+  '0%': { right: '0%' },
+  '100%': { right: '-100%' },
+});
+
+const slideInLeft = keyframes({
+  '0%': { left: '-100%' },
+  '100%': { left: '0%' },
+});
+
+const fadeOut = keyframes({
+  '0%': { opacity: 1 },
+  '100%': { opacity: 0 },
+});
+
+const fadeIn = keyframes({
+  '0%': {
+    opacity: 0,
+  },
+  '100%': {
+    opacity: 1,
+  },
+});
 
 export const Container = styled('div', {
   // base styles
@@ -44,6 +68,14 @@ export const NavBarWrapper = styled('div', {
 export const LogoContainer = styled('div', {
   // base styles
   display: 'flex',
+
+  variants: {
+    openMobileSearchbar: {
+      true: {
+        animation: `${fadeOut} 1s ease-out forwards`,
+      },
+    },
+  },
 });
 
 export const LogoIcon = styled('img', {
@@ -52,6 +84,24 @@ export const LogoIcon = styled('img', {
 
   '@md': {
     width: '80px',
+  },
+});
+
+export const BackIcon = styled(Icon, {
+  display: 'none',
+
+  '@md': {
+    display: 'flex',
+    position: 'relative',
+    color: '$mainTextColor',
+  },
+
+  variants: {
+    openMobileSearchbar: {
+      true: {
+        animation: `${slideInLeft} 1s ease-in-out forwards`,
+      },
+    },
   },
 });
 
@@ -77,12 +127,32 @@ export const MobileMenuContainer = styled('div', {
   '@md': {
     display: 'flex',
     alignItems: 'center',
-    cursor: 'pointer',
+    position: 'relative',
+  },
+
+  variants: {
+    openMobileSearchbar: {
+      true: {
+        animation: `${slideOutRight} 1s ease-out forwards`,
+      },
+    },
   },
 });
 
 export const MobileMenuContentWrapper = styled('div', {
   display: 'none',
+  transition: 'transform 0.3s ease-in-out',
+
+  variants: {
+    openMobileNavbar: {
+      true: {
+        transform: 'translateY(0%)',
+      },
+      false: {
+        transform: 'translateY(-100%)',
+      },
+    },
+  },
 
   '@md': {
     display: 'block',
@@ -90,10 +160,7 @@ export const MobileMenuContentWrapper = styled('div', {
   },
 });
 
-export const NavItemContent = styled('div', {
-  transition: 'all 0.2s ease-in-out',
-});
-
+export const NavItemContent = styled('div', {});
 export const WICPLogo = styled('img', {
   width: '15px',
   height: '15px',
@@ -214,7 +281,16 @@ export const MobileNavbarIcons = styled(Icon, {
   color: '$mainTextColor',
 });
 
+export const CloseIcon = styled(MobileNavbarIcons, {
+  animation: `${fadeIn} 1s ease-out forwards`,
+});
+
 export const StyledIcon = styled(Icon, {
   color: '$mobileStyledIconColor',
   paddingRight: '1rem',
+});
+
+export const MobileSearchBarActions = styled('div', {
+  display: 'flex',
+  width: '100%',
 });

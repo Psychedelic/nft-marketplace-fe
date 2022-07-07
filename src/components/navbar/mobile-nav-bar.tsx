@@ -93,7 +93,7 @@ export const MobileNavBar = ({
   }, [dispatch]);
 
   return (
-    <MobileMenuContentWrapper>
+    <MobileMenuContentWrapper openMobileNavbar={openMobileNavbar}>
       {openMobileNavbar && (
         <NavItemContent>
           {isConnected && (

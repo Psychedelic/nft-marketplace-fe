@@ -1,28 +1,15 @@
 import React, { useState, useCallback } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import debounce from 'lodash.debounce';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { SearchInput } from '../core';
-import wicpIcon from '../../assets/wicp.svg';
 import {
   SearchModalTrigger,
   ModalOverlay,
   ModalContent,
   SearchContainer,
-  ItemsEmptyContainer,
-  ItemsListContainer,
-  ItemDetailsWrapper,
-  ItemDetails,
-  ItemLogo,
-  ItemName,
-  PriceDetails,
-  WICPContainer,
-  WICPText,
-  WICPLogo,
-  PriceText,
-  SubText,
-  LoadingWrapper,
+  SearchResultsWrapper,
+  CloseIcon,
 } from './styles';
 import {
   filterActions,
@@ -30,8 +17,8 @@ import {
   useFilterStore,
   useNFTSStore,
 } from '../../store';
-import { formatPriceValue } from '../../utils/formatters';
-import { SpinnerIcon } from '../icons/custom';
+import useMediaQuery from '../../hooks/use-media-query';
+import SearchResults from './search-results';
 
 const DEBOUNCE_TIMEOUT_MS = 400;
 
@@ -39,16 +26,23 @@ const DEBOUNCE_TIMEOUT_MS = 400;
  * Global Search Component
  * --------------------------------------------------------------------------*/
 
-export const GlobalSearch = () => {
+type GlobalSearchTypes = {
+  openMobileSearchbar?: boolean;
+};
+
+export const GlobalSearch = ({
+  openMobileSearchbar,
+}: GlobalSearchTypes) => {
   const { t } = useTranslation();
   const { loadedNFTS } = useNFTSStore();
   const dispatch = useAppDispatch();
-  const { sortBy, searchResults, loadingSearch } = useFilterStore();
+  const { sortBy } = useFilterStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState('');
   const [currentAbortController, setCurrentAbortController] =
     useState<AbortController>();
+  const isMobileScreen = useMediaQuery('(max-width: 850px');
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -89,6 +83,45 @@ export const GlobalSearch = () => {
 
   const closeDropDown = () => handleModalOpen(false);
 
+  if (isMobileScreen) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+        }}
+      >
+        <SearchModalTrigger openMobileSearchbar={openMobileSearchbar}>
+          <SearchInput
+            placeholder={t(
+              'translation:inputField.placeholder.searchCollection',
+            )}
+            setValue={(value) => {
+              setSearchText(value);
+            }}
+            handleSearch={handleSearch}
+            openMobileSearchbar={openMobileSearchbar}
+          />
+          {Boolean(searchText.length) && (
+            <CloseIcon
+              icon="close"
+              size="lg"
+              isMobileScreen={isMobileScreen}
+            />
+          )}
+        </SearchModalTrigger>
+        {searchText && (
+          <SearchResultsWrapper>
+            <SearchResults
+              searchText={searchText}
+              closeDropDown={closeDropDown}
+            />
+          </SearchResultsWrapper>
+        )}
+      </div>
+    );
+  }
   return (
     <DialogPrimitive.Root
       open={modalOpened}
@@ -100,11 +133,12 @@ export const GlobalSearch = () => {
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <SearchModalTrigger>
+        <SearchModalTrigger openMobileSearchbar={openMobileSearchbar}>
           <SearchInput
             placeholder={t(
               'translation:inputField.placeholder.searchCollection',
             )}
+            openMobileSearchbar={openMobileSearchbar}
           />
         </SearchModalTrigger>
       </DialogPrimitive.Trigger>
@@ -129,59 +163,10 @@ export const GlobalSearch = () => {
             handleSearch={handleSearch}
           />
         </SearchContainer>
-        {searchText &&
-          !loadingSearch &&
-          (searchResults.length ? (
-            <ItemsListContainer>
-              {searchResults?.map((nft) => (
-                <RouterLink
-                  to={`/nft/${nft.id}`}
-                  onClick={closeDropDown}
-                  key={nft.id}
-                >
-                  <ItemDetailsWrapper>
-                    <ItemDetails>
-                      <ItemLogo src={nft.preview} alt="crowns" />
-                      <ItemName>{`${nft.name} ${nft.id}`}</ItemName>
-                    </ItemDetails>
-                    <PriceDetails>
-                      {Boolean(nft?.wicpPrice) && (
-                        <WICPContainer size="small">
-                          <WICPLogo src={wicpIcon} alt="wicp" />
-                          <WICPText size="small">
-                            {nft.wicpPrice}
-                            WICP
-                          </WICPText>
-                        </WICPContainer>
-                      )}
-                      {Boolean(nft?.price) && (
-                        <PriceText>
-                          <SubText>$</SubText>
-                          <SubText>{`${formatPriceValue(
-                            nft.price.toString(),
-                          )}`}</SubText>
-                        </PriceText>
-                      )}
-                    </PriceDetails>
-                  </ItemDetailsWrapper>
-                </RouterLink>
-              ))}
-            </ItemsListContainer>
-          ) : (
-            <ItemsEmptyContainer>
-              {t('translation:emptyStates.noNFTId')}
-            </ItemsEmptyContainer>
-          ))}
-        {!searchText && !loadingSearch && (
-          <ItemsEmptyContainer>
-            {t('translation:common.noRecentSearch')}
-          </ItemsEmptyContainer>
-        )}
-        {loadingSearch && (
-          <LoadingWrapper>
-            <SpinnerIcon />
-          </LoadingWrapper>
-        )}
+        <SearchResults
+          searchText={searchText}
+          closeDropDown={closeDropDown}
+        />
       </ModalContent>
     </DialogPrimitive.Root>
   );
