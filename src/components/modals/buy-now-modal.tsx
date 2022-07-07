@@ -7,7 +7,11 @@ import {
 } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending, Completed, Tooltip } from '../core';
-import { useAppDispatch, marketplaceActions } from '../../store';
+import {
+  useAppDispatch,
+  marketplaceActions,
+  usePlugStore,
+} from '../../store';
 import {
   ModalContent,
   Container,
@@ -25,6 +29,7 @@ import { isTokenId } from '../../utils/nfts';
 import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
+import { InsufficientBalance } from './steps/insufficient-balance';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
@@ -58,6 +63,8 @@ export const BuyNowModal = ({
     DirectBuyStatusCodes.Pending,
   );
 
+  const { loadingWICPBalance, walletsWICPBalance } = usePlugStore();
+
   const tokenId = useMemo(() => {
     const tid = Number(id ?? actionTextId);
 
@@ -81,6 +88,13 @@ export const BuyNowModal = ({
     }
 
     handleModalOpen(true);
+
+    // TODO: handle loadingWICPBalance gracefully
+    if (!loadingWICPBalance && Number(price) > walletsWICPBalance) {
+      setModalStep(DirectBuyStatusCodes.InsufficientBalance);
+
+      return;
+    }
 
     dispatch(
       marketplaceActions.directBuy({
@@ -261,6 +275,17 @@ export const BuyNowModal = ({
                 </ModalButtonWrapper>
               </ModalButtonsList>
             </Container>
+          )}
+
+          {/*
+          ---------------------------------
+          Step: -> insufficient balance
+          ---------------------------------
+        */}
+          {modalStep === DirectBuyStatusCodes.InsufficientBalance && (
+            <InsufficientBalance
+              onCancel={() => handleModalOpen(false)}
+            />
           )}
         </ModalContent>
       </DialogPrimitive.Portal>

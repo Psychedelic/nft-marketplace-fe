@@ -1,8 +1,4 @@
-import {
-  useCallback,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -12,10 +8,8 @@ import {
   useFilterStore,
   filterActions,
 } from '../../store';
-import {
-  disconnectPlug,
-} from '../../integrations/plug';
-import { openSonicURL } from '../../utils/ handle-redirect-urls';
+import { disconnectPlug } from '../../integrations/plug';
+import { openSonicURL } from '../../utils/handle-redirect-urls';
 import {
   PlugButtonContainer,
   PlugButtonText,
