@@ -214,7 +214,8 @@
       "offerAccepted": "Offer Accepted!",
       "editOffer": "Edit Offer",
       "withdrawAssets": "Withdraw Assets",
-      "withdrawalSuccess": "Withdrawal Success"
+      "withdrawalSuccess": "Withdrawal Success",
+      "notEnoughFunds": "Not enough funds"
     },
     "description": {
       "makeListing": "Enter the sale price you want for your NFT.",
@@ -229,7 +230,8 @@
       "cancelOffer": "Are you sure you want to cancel this Offer?",
       "acceptOffer": "Review the following offer and accept the bid.",
       "offerAccepted": "Congrats, you successfully accepted an offer.",
-      "withdrawAssets": "The following fungible balances remain in the canister due to an error completing a transaction. Review the assets and click retry to receive them."
+      "withdrawAssets": "The following fungible balances remain in the canister due to an error completing a transaction. Review the assets and click retry to receive them.",
+      "notEnoughFunds": "Transfer funds to your wallet to continue with the purchase of this NFT. If you have another asset you would like to swap for WICP you can use Sonic."
     },
     "labels": {
       "protocolFee": "Protocol fee",
@@ -250,7 +252,8 @@
       "acceptOffer": "Accept Offer",
       "done": "Done",
       "withdraw": "Withdraw",
-      "close": "Close"
+      "close": "Close",
+      "swapOnSonic": "Swap on Sonic"
     }
   },
   "nftCard": {
