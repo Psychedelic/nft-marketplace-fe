@@ -47,6 +47,8 @@ export const {
       lightYellow: '#ffd71926',
       paleYellow: '#987E00',
       regentGrey: '#777E8F',
+      mobilePrincipalIdGrey: '#23262F99',
+      mobileStyledIconColor: '#23262F',
     },
     space: {},
     fonts: {},
@@ -104,6 +106,8 @@ export const darkTheme = createTheme({
     success: '#00AC7C',
     modalText: '#767D8E',
     toastBackground: '#1e1e1e',
+    mobilePrincipalIdGrey: '#FFFFFF99',
+    mobileStyledIconColor: '#727273',
   },
   shadows: {
     default: 'none',

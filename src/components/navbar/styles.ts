@@ -1,4 +1,5 @@
 import { styled } from '../../stitches.config';
+import * as Switch from '@radix-ui/react-switch';
 import { Icon } from '../icons';
 
 export const Container = styled('div', {
@@ -7,10 +8,6 @@ export const Container = styled('div', {
   top: '0px',
   left: '0px',
   right: '0px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  padding: '14px 20px',
   backgroundColor: '$navBackgroundColor',
   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.08)',
   zIndex: 2,
@@ -22,7 +19,22 @@ export const Container = styled('div', {
         top: '38px',
       },
     },
+    openMobileNavbar: {
+      true: {
+        background: 'rgba(0, 0, 0, 0.6)',
+        height: '100%',
+      },
+    },
   },
+});
+
+export const NavBarWrapper = styled('div', {
+  // base styles
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '14px 20px',
+  background: '$navBackgroundColor',
 
   '@md': {
     padding: '14px',
@@ -67,4 +79,142 @@ export const MobileMenuContainer = styled('div', {
     alignItems: 'center',
     cursor: 'pointer',
   },
+});
+
+export const MobileMenuContentWrapper = styled('div', {
+  display: 'none',
+
+  '@md': {
+    display: 'block',
+    background: '$backgroundColor',
+  },
+});
+
+export const NavItemContent = styled('div', {
+  transition: 'all 0.2s ease-in-out',
+});
+
+export const WICPLogo = styled('img', {
+  width: '15px',
+  height: '15px',
+  paddingRight: '1rem',
+
+  variants: {
+    paddingLeft: {
+      true: {
+        paddingLeft: '0.5rem',
+        paddingRight: '0',
+      },
+    },
+  },
+});
+
+export const NavItem = styled('div', {
+  borderTop: '1.5px solid $borderColor',
+  padding: '9px 14px',
+  display: 'flex',
+  alignItems: 'center',
+  color: '$mainTextColor',
+  fontSize: '16px',
+
+  '& p': {
+    fontWeight: '500',
+  },
+});
+
+export const PlugLogo = styled('img', {
+  paddingRight: '1rem',
+});
+
+export const PrincipalAddress = styled('p', {
+  color: '$mobilePrincipalIdGrey',
+  fontSize: '14px',
+});
+
+export const Flex = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+
+  variants: {
+    justifyBetween: {
+      true: {
+        justifyContent: 'space-between',
+        width: '100%',
+      },
+    },
+    justifyEnd: {
+      true: {
+        justifyContent: 'end',
+      },
+    },
+    directionColumn: {
+      true: {
+        flexDirection: 'column',
+      },
+    },
+  },
+});
+
+export const TotalWICPBalanceTitle = styled('span', {
+  color: '#9EA6B5',
+  fontSize: '14px',
+  fontWeight: '500',
+});
+
+export const TotalWICPBalanceAmount = styled('p', {
+  fontSize: '18px',
+  fontWeight: '500',
+  margin: '0',
+});
+
+export const StyledSwitch = styled(Switch.Root, {
+  all: 'unset',
+  width: 42,
+  height: 25,
+  backgroundColor: '#E3E1E1',
+  borderRadius: '9999px',
+  position: 'relative',
+  WebkitTapHighlightColor: '#E3E1E1',
+  '&[data-state="checked"]': { backgroundColor: '#3574F4' },
+});
+
+export const StyledThumb = styled(Switch.Thumb, {
+  display: 'block',
+  width: 21,
+  height: 21,
+  backgroundColor: '#EFEEEE',
+  borderRadius: '9999px',
+  transition: 'transform 100ms',
+  transform: 'translateX(2px)',
+  willChange: 'transform',
+  '&[data-state="checked"]': { transform: 'translateX(19px)' },
+});
+
+export const Divider = styled('div', {
+  height: '1px',
+  background: '$borderColor',
+});
+
+export const NotConnectedMessageWrapper = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  padding: '30px 0',
+});
+
+export const NotConnectedMessage = styled('p', {
+  textAlign: 'center',
+  maxWidth: '270px',
+  color: 'rgba(35, 38, 47, 0.6)',
+  fontSize: '16px',
+  margin: '0 0 20px',
+});
+
+export const MobileNavbarIcons = styled(Icon, {
+  color: '$mainTextColor',
+});
+
+export const StyledIcon = styled(Icon, {
+  color: '$mobileStyledIconColor',
+  paddingRight: '1rem',
 });

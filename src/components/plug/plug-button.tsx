@@ -1,8 +1,4 @@
-import {
-  useCallback,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -12,9 +8,7 @@ import {
   useFilterStore,
   filterActions,
 } from '../../store';
-import {
-  disconnectPlug,
-} from '../../integrations/plug';
+import { disconnectPlug } from '../../integrations/plug';
 import { openSonicURL } from '../../utils/ handle-redirect-urls';
 import {
   PlugButtonContainer,
@@ -32,7 +26,7 @@ import wicpImage from '../../assets/wicp.svg';
 import PlugBalance from './plug-balance';
 
 export type PlugButtonProps = {
-  handleConnect: () => void;
+  handleConnect: (dispatch: any) => void;
   text: string;
   isConnected: boolean;
   principalId?: string;
@@ -92,7 +86,7 @@ export const PlugButton = ({
     if (isConnected) {
       setOpenDropdown(!openDropdown);
     } else {
-      handleConnect();
+      handleConnect({ dispatch, t });
     }
   }, [handleConnect, isConnected, openDropdown]);
 
