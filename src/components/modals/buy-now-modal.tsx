@@ -73,11 +73,6 @@ export const BuyNowModal = ({
     setModalOpened(status);
   };
 
-  const handleModalClose = () => {
-    setModalOpened(false);
-    if (onClose) onClose();
-  };
-
   const handleDirectBuy = () => {
     if (!isTokenId(tokenId)) {
       AppLog.warn('Oops! Missing id param');
@@ -85,7 +80,7 @@ export const BuyNowModal = ({
       return;
     }
 
-    setModalStep(DirectBuyStatusCodes.Pending);
+    handleModalOpen(true);
 
     dispatch(
       marketplaceActions.directBuy({
