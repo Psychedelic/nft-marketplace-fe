@@ -21,12 +21,6 @@ export const getUserActivity = createAsyncThunk<
 >(
   'table/getUserActivity',
   async ({ pageCount, bucketId, plugPrincipal }, thunkAPI) => {
-    console.log('[debug] bucketId', {
-      bucketId,
-    });
-
-    console.log(0);
-
     thunkAPI.dispatch(tableActions.setIsTableDataLoading(true));
 
     // TODO: Call get user transactions from capRoot store
@@ -41,18 +35,14 @@ export const getUserActivity = createAsyncThunk<
         bucketId,
       },
     });
-    console.log(1);
+
     try {
-      console.log(2);
-
-      console.log('[debug] typeof pageCount ->', typeof pageCount);
-
       const response = await actorInstance.get_user_transactions({
         page: [pageCount],
         user: Principal.fromText(plugPrincipal),
         witness: false,
       });
-      console.log(3);
+
       const { data, page: pageNo } = response;
 
       const activities = sortActivitiesByTime(data);
@@ -109,9 +99,8 @@ export const getUserActivity = createAsyncThunk<
         tableActions.setUserActivityTable(actionPayload),
       );
     } catch (error) {
-      console.log(error);
-
       AppLog.error(error);
+
       thunkAPI.dispatch(
         notificationActions.setErrorMessage(
           'Oops! Unable to fetch user activity table data',
