@@ -6,6 +6,7 @@ import {
   ModalButtonWrapper,
   ActionText,
   PlugButtonContainer,
+  ActionTextWrapper,
 } from './styles';
 import { Plug } from '../plug';
 import { usePlugStore } from '../../store';
@@ -48,7 +49,9 @@ export const ConnectToPlugModal = ({
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <ActionText>{actionText}</ActionText>
+        <ActionTextWrapper>
+          <ActionText>{actionText}</ActionText>
+        </ActionTextWrapper>
       </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal
         container={document.getElementById(ThemeRootElement)}

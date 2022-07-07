@@ -7,3 +7,4 @@ export * from './make-offer-modal';
 export * from './accept-offer-modal';
 export * from './connect-to-plug-modal';
 export * from './withdraw-assets-modal';
+export * from './insufficient-balance-modal';
