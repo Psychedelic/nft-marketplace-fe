@@ -1,6 +1,7 @@
 import React from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { StyledContent, StyledArrow } from './styles';
+import { useTheme } from '../../../hooks';
 
 /* --------------------------------------------------------------------------
  * Tooltip Component
@@ -11,14 +12,20 @@ export type TooltipProps = {
   text?: string;
 };
 
-export const Tooltip = ({ children, text }: TooltipProps) => (
-  <TooltipPrimitive.Root>
-    <TooltipPrimitive.Trigger asChild>
-      <div>{children}</div>
-    </TooltipPrimitive.Trigger>
-    <StyledContent sideOffset={5}>
-      {text}
-      <StyledArrow />
-    </StyledContent>
-  </TooltipPrimitive.Root>
-);
+export const Tooltip = ({ children, text }: TooltipProps) => {
+  const [, themeObject] = useTheme();
+
+  return (
+    <TooltipPrimitive.Root delayDuration={300}>
+      <TooltipPrimitive.Trigger asChild>
+        <div>{children}</div>
+      </TooltipPrimitive.Trigger>
+      {text && (
+        <StyledContent sideOffset={5} className={themeObject}>
+          {text}
+          <StyledArrow />
+        </StyledContent>
+      )}
+    </TooltipPrimitive.Root>
+  );
+};

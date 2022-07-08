@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { VideoCache } from '../../../../utils/video-cache';
 import {
   MediaWrapper,
@@ -26,29 +26,35 @@ export const Media = ({
   const [previewTriggered, setPreviewTriggered] =
     useState(previewCard);
   const [startedHovering, setStartedHovering] = useState(false);
+  let triggerTimeout = useRef<NodeJS.Timeout>();
+
+  const resetTimeout = () => {
+    clearTimeout(triggerTimeout.current);
+    triggerTimeout.current = undefined;
+  };
+
+  const hoverInCallback = () => {
+    setStartedHovering(true);
+
+    if (location !== '' && VideoCache.get(location)) {
+      return setPreviewTriggered(true);
+    }
+
+    if (!previewTriggered && !triggerTimeout.current) {
+      triggerTimeout.current = setTimeout(() => {
+        setPreviewTriggered(true);
+      }, videoLoadDelay);
+    }
+  };
+
+  const hoverOutCallback = () => {
+    setPreviewTriggered(false);
+    setStartedHovering(false);
+    resetTimeout();
+  };
 
   useEffect(() => {
     if (!previewCard && containerRef.current) {
-      let triggerTimeout: NodeJS.Timeout;
-      const hoverInCallback = () => {
-        setStartedHovering(true);
-
-        if (location !== '' && VideoCache.get(location)) {
-          return setPreviewTriggered(true);
-        }
-
-        if (!previewTriggered) {
-          triggerTimeout = setTimeout(() => {
-            setPreviewTriggered(true);
-          }, videoLoadDelay);
-        }
-      };
-      const hoverOutCallback = () => {
-        clearTimeout(triggerTimeout);
-        setPreviewTriggered(false);
-        setStartedHovering(false);
-      };
-
       containerRef.current.addEventListener(
         'mouseenter',
         hoverInCallback,
@@ -59,6 +65,7 @@ export const Media = ({
       );
 
       return () => {
+        resetTimeout();
         if (containerRef.current) {
           containerRef.current.removeEventListener(
             'mouseenter',

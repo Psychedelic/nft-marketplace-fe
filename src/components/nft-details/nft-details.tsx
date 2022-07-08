@@ -200,6 +200,7 @@ export const NftDetails = () => {
               isListed={isListed}
               owner={owner}
               showNFTActionButtons={showNFTActionButtons}
+              operator={nftDetails?.operator}
             />
             <AboutAccordion owner={owner} />
           </DetailsContainer>

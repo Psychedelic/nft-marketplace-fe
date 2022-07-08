@@ -19,6 +19,7 @@ import {
   ModalButtonsList,
   ModalButtonWrapper,
   ActionText,
+  ActionTextWrapper,
 } from './styles';
 import { ModalOverlay } from './modal-overlay';
 
@@ -123,7 +124,9 @@ export const MakeOfferModal = ({
       {isTriggerVisible && (
         <DialogPrimitive.Trigger asChild>
           {actionText ? (
-            <ActionText>{actionText}</ActionText>
+            <ActionTextWrapper>
+              <ActionText>{actionText}</ActionText>
+            </ActionTextWrapper>
           ) : (
             <MakeOfferModalTrigger>
               <ActionButton

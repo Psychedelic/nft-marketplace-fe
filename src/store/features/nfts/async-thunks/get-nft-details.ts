@@ -60,6 +60,7 @@ export const getNFTDetails = createAsyncThunk<
         },
       },
       owner: responseData?.owner,
+      operator: responseData?.operator,
     };
 
     // TODO: If user connected to plug

@@ -6,8 +6,12 @@ import {
   useLocation,
 } from 'react-router-dom';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton, Pending, Completed } from '../core';
-import { useAppDispatch, marketplaceActions } from '../../store';
+import { ActionButton, Pending, Completed, Tooltip } from '../core';
+import {
+  useAppDispatch,
+  marketplaceActions,
+  usePlugStore,
+} from '../../store';
 import {
   ModalContent,
   Container,
@@ -16,6 +20,7 @@ import {
   ModalDescription,
   ModalButtonsList,
   ModalButtonWrapper,
+  ActionTextWrapper,
   ActionText,
   BuyNowModalTrigger,
 } from './styles';
@@ -24,25 +29,27 @@ import { isTokenId } from '../../utils/nfts';
 import { DirectBuyStatusCodes } from '../../constants/direct-buy';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
+import { InsufficientBalance } from './steps/insufficient-balance';
+import { isBalanceInsufficient } from '../../utils/balance';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
  * --------------------------------------------------------------------------*/
 
 export type BuyNowModalProps = {
-  onClose?: () => void;
   actionText?: string;
   actionTextId?: number;
   price?: string;
   isTriggerVisible?: boolean;
+  isNFTOperatedByMKP?: boolean;
 };
 
 export const BuyNowModal = ({
-  onClose,
   actionText,
   actionTextId,
   price = '',
   isTriggerVisible,
+  isNFTOperatedByMKP,
 }: BuyNowModalProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -54,6 +61,8 @@ export const BuyNowModal = ({
   const [modalStep, setModalStep] = useState<DirectBuyStatusCodes>(
     DirectBuyStatusCodes.Pending,
   );
+
+  const { loadingWICPBalance, walletsWICPBalance } = usePlugStore();
 
   const tokenId = useMemo(() => {
     const tid = Number(id ?? actionTextId);
@@ -70,11 +79,6 @@ export const BuyNowModal = ({
     setModalOpened(status);
   };
 
-  const handleModalClose = () => {
-    setModalOpened(false);
-    if (onClose) onClose();
-  };
-
   const handleDirectBuy = () => {
     if (!isTokenId(tokenId)) {
       AppLog.warn('Oops! Missing id param');
@@ -82,7 +86,19 @@ export const BuyNowModal = ({
       return;
     }
 
-    setModalStep(DirectBuyStatusCodes.Pending);
+    handleModalOpen(true);
+
+    if (
+      isBalanceInsufficient({
+        loadingWICPBalance,
+        amountRequired: Number(price),
+        walletsWICPBalance,
+      })
+    ) {
+      setModalStep(DirectBuyStatusCodes.InsufficientBalance);
+
+      return;
+    }
 
     dispatch(
       marketplaceActions.directBuy({
@@ -128,15 +144,40 @@ export const BuyNowModal = ({
       {isTriggerVisible && (
         <DialogPrimitive.Trigger asChild>
           {actionText ? (
-            <ActionText onClick={handleDirectBuy}>
-              {actionText}
-            </ActionText>
+            <Tooltip
+              text={
+                (!isNFTOperatedByMKP &&
+                  t('translation:tooltip.disabledBuyNowText')) ||
+                ''
+              }
+            >
+              <ActionTextWrapper isDisabled={!isNFTOperatedByMKP}>
+                <ActionText
+                  onClick={handleDirectBuy}
+                  isDisabled={!isNFTOperatedByMKP}
+                >
+                  {actionText}
+                </ActionText>
+              </ActionTextWrapper>
+            </Tooltip>
           ) : (
-            <BuyNowModalTrigger>
-              <ActionButton type="primary" onClick={handleDirectBuy}>
-                {t('translation:buttons.action.buyNow')}
-              </ActionButton>
-            </BuyNowModalTrigger>
+            <Tooltip
+              text={
+                (!isNFTOperatedByMKP &&
+                  t('translation:tooltip.disabledBuyNowText')) ||
+                ''
+              }
+            >
+              <BuyNowModalTrigger>
+                <ActionButton
+                  type="primary"
+                  onClick={handleDirectBuy}
+                  disabled={!isNFTOperatedByMKP}
+                >
+                  {t('translation:buttons.action.buyNow')}
+                </ActionButton>
+              </BuyNowModalTrigger>
+            </Tooltip>
           )}
         </DialogPrimitive.Trigger>
       )}
@@ -238,6 +279,17 @@ export const BuyNowModal = ({
                 </ModalButtonWrapper>
               </ModalButtonsList>
             </Container>
+          )}
+
+          {/*
+          ---------------------------------
+          Step: -> insufficient balance
+          ---------------------------------
+        */}
+          {modalStep === DirectBuyStatusCodes.InsufficientBalance && (
+            <InsufficientBalance
+              onCancel={() => handleModalOpen(false)}
+            />
           )}
         </ModalContent>
       </DialogPrimitive.Portal>
