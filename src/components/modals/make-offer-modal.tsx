@@ -111,6 +111,8 @@ export const MakeOfferModal = ({
     setModalOpened(false);
   };
 
+  // TODO: add step to handle insufficient balance in UI
+
   return (
     <DialogPrimitive.Root
       open={modalOpened}
