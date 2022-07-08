@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/Psychedelic/nft-marketplace-fe/compare/v1.1.0...v1.1.1) (2022-07-08)
+
+
+### Bug Fixes
+
+* 🐛 disable buy now button based on operator details ([#421](https://github.com/Psychedelic/nft-marketplace-fe/issues/421)) ([7b7528c](https://github.com/Psychedelic/nft-marketplace-fe/commit/7b7528cde6a9080ad9ccf8a49432ffb345652179))
+* 🐛 type conversion error browserlist ([#437](https://github.com/Psychedelic/nft-marketplace-fe/issues/437)) ([ac8ffc1](https://github.com/Psychedelic/nft-marketplace-fe/commit/ac8ffc16faa2e2875cb3f79f1834d024a8fc76d6))
+
 # [1.1.0](https://github.com/Psychedelic/nft-marketplace-fe/compare/v1.0.0...v1.1.0) (2022-07-04)
 
 
