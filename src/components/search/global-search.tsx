@@ -94,9 +94,7 @@ export const GlobalSearch = ({
           width: '100%',
         }}
       >
-        <SearchModalTrigger
-          startAnimation={startAnimation}
-        >
+        <SearchModalTrigger startAnimation={startAnimation}>
           <SearchInput
             placeholder={t(
               'translation:inputField.placeholder.searchCollection',
@@ -104,6 +102,7 @@ export const GlobalSearch = ({
             setValue={(value) => {
               setSearchText(value);
             }}
+            value={searchText}
             handleSearch={handleSearch}
             openMobileSearchbar={openMobileSearchbar}
           />
@@ -112,6 +111,7 @@ export const GlobalSearch = ({
               icon="close"
               size="lg"
               isMobileScreen={isMobileScreen}
+              onClick={() => setSearchText('')}
             />
           )}
         </SearchModalTrigger>

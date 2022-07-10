@@ -142,7 +142,7 @@ export const MobileMenuContainer = styled('div', {
     startAnimation: {
       true: {
         animation: `${slideOutRight} 1s ease-out forwards`,
-        display: 'flex',
+        display: 'none',
       },
     },
     stopAnimation: {

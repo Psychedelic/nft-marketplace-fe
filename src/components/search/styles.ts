@@ -308,8 +308,9 @@ export const StyledRouterLink = styled(RouterLink, {
 
 export const CloseIcon = styled(Icon, {
   color: '$mainTextColor',
-  right: '0px',
-  top: '0px',
+  position: 'absolute',
+  right: '14px',
+  top: '14px',
   display: 'none',
 
   variants: {
