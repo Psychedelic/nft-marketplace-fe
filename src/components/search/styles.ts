@@ -34,9 +34,9 @@ export const SearchModalTrigger = styled('div', {
   },
 
   variants: {
-    openMobileSearchbar: {
+    startAnimation: {
       true: {
-        animation: `${fadeIn} 3s ease-in-out forwards`,
+        animation: `${fadeIn} 900ms ease-in-out forwards`,
         display: 'flex',
         justifyContent: 'space-between',
         alignContent: 'center',

@@ -28,10 +28,12 @@ const DEBOUNCE_TIMEOUT_MS = 400;
 
 type GlobalSearchTypes = {
   openMobileSearchbar?: boolean;
+  startAnimation?: boolean;
 };
 
 export const GlobalSearch = ({
   openMobileSearchbar,
+  startAnimation,
 }: GlobalSearchTypes) => {
   const { t } = useTranslation();
   const { loadedNFTS } = useNFTSStore();
@@ -92,7 +94,9 @@ export const GlobalSearch = ({
           width: '100%',
         }}
       >
-        <SearchModalTrigger openMobileSearchbar={openMobileSearchbar}>
+        <SearchModalTrigger
+          startAnimation={startAnimation}
+        >
           <SearchInput
             placeholder={t(
               'translation:inputField.placeholder.searchCollection',
@@ -133,7 +137,7 @@ export const GlobalSearch = ({
         ---------------------------------
       */}
       <DialogPrimitive.Trigger asChild>
-        <SearchModalTrigger openMobileSearchbar={openMobileSearchbar}>
+        <SearchModalTrigger startAnimation={startAnimation}>
           <SearchInput
             placeholder={t(
               'translation:inputField.placeholder.searchCollection',

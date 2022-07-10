@@ -22,6 +22,7 @@ import {
   MobileNavbarIcons,
   BackIcon,
   MobileSearchBarActions,
+  StyleRouter,
 } from './styles';
 import { Icon } from '../icons';
 import { useBuyerOffers } from '../../hooks/use-buyer-offers';
@@ -41,6 +42,8 @@ export const NavBar = () => {
   const [openMobileNavbar, setOpenMobileNavbar] = useState(false);
   const [openMobileSearchbar, setOpenMobileSearchbar] =
     useState(false);
+  const [startAnimation, setStartAnimation] = useState(false);
+  const [stopAnimation, setStopAnimation] = useState(false);
 
   const changeThemeHandler = useCallback(() => {
     dispatch(
@@ -58,63 +61,64 @@ export const NavBar = () => {
       openMobileNavbar={openMobileNavbar}
     >
       <NavBarWrapper>
-        {openMobileSearchbar ? (
-          <MobileSearchBarActions>
-            <BackIcon
-              icon="back"
-              openMobileSearchbar={openMobileSearchbar}
-              size="lg"
-              onClick={() => setOpenMobileSearchbar(false)}
+        <StyleRouter
+          to="/"
+          onClick={() => pathname === '/' && window.location.reload()}
+          startAnimation={startAnimation}
+        >
+          <LogoContainer>
+            <LogoIcon
+              src={isLightTheme ? jelly : jellyDark}
+              alt={t('translation:common.collectionName')}
             />
-            <GlobalSearch openMobileSearchbar={openMobileSearchbar} />
-          </MobileSearchBarActions>
-        ) : (
-          <>
-            <RouterLink
-              to="/"
-              onClick={() =>
-                pathname === '/' && window.location.reload()
-              }
-            >
-              <LogoContainer
-                openMobileSearchbar={openMobileSearchbar}
-              >
-                <LogoIcon
-                  src={isLightTheme ? jelly : jellyDark}
-                  alt={t('translation:common.collectionName')}
-                />
-              </LogoContainer>
-            </RouterLink>
-            <GlobalSearch />
-          </>
-        )}
+          </LogoContainer>
+        </StyleRouter>
+        <MobileSearchBarActions>
+          <BackIcon
+            icon="back"
+            startAnimation={startAnimation}
+            stopAnimation={stopAnimation}
+            size="lg"
+            onClick={() => {
+              setTimeout(() => {
+                setOpenMobileSearchbar(false);
+                setStartAnimation(false);
+              }, 700);
+              setStopAnimation(true);
+            }}
+          />
+        </MobileSearchBarActions>
+        <GlobalSearch
+          openMobileSearchbar={openMobileSearchbar}
+          startAnimation={startAnimation}
+        />
         <ActionButtonsContainer>
           <LinkButton handleClick={changeThemeHandler}>
             <Icon icon={isLightTheme ? 'moon' : 'sun'} />
           </LinkButton>
           <Plug />
         </ActionButtonsContainer>
-        {!openMobileSearchbar && (
-          <MobileMenuContainer
-            openMobileSearchbar={openMobileSearchbar}
-          >
-            <MobileNavbarIcons
-              icon="search"
-              size="md"
-              paddingRight
-              onClick={() => {
-                setOpenMobileSearchbar(true);
-                setOpenMobileNavbar(false);
-              }}
-            />
-            <MobileNavbarIcons
-              icon="hamburger"
-              size="lg"
-              paddingLeft
-              onClick={() => setOpenMobileNavbar(!openMobileNavbar)}
-            />
-          </MobileMenuContainer>
-        )}
+        <MobileMenuContainer
+          startAnimation={startAnimation}
+          stopAnimation={stopAnimation}
+        >
+          <MobileNavbarIcons
+            icon="search"
+            size="md"
+            paddingRight
+            onClick={() => {
+              setOpenMobileSearchbar(true);
+              setStartAnimation(true);
+              stopAnimation && setStopAnimation(false);
+            }}
+          />
+          <MobileNavbarIcons
+            icon="hamburger"
+            size="lg"
+            paddingLeft
+            onClick={() => setOpenMobileNavbar(!openMobileNavbar)}
+          />
+        </MobileMenuContainer>
       </NavBarWrapper>
       <MobileNavBar
         openMobileNavbar={openMobileNavbar}

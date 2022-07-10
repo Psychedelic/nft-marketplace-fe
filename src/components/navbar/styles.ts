@@ -1,4 +1,5 @@
 import { styled, keyframes } from '../../stitches.config';
+import { Link as RouterLink } from 'react-router-dom';
 import * as Switch from '@radix-ui/react-switch';
 import { Icon } from '../icons';
 
@@ -7,9 +8,19 @@ const slideOutRight = keyframes({
   '100%': { right: '-100%' },
 });
 
+const slideInRight = keyframes({
+  '0%': { right: '-100%' },
+  '100%': { right: '0%' },
+});
+
 const slideInLeft = keyframes({
   '0%': { left: '-100%' },
   '100%': { left: '0%' },
+});
+
+const slideOutLeft = keyframes({
+  '0%': { left: '0%' },
+  '100%': { left: '-100%' },
 });
 
 const fadeOut = keyframes({
@@ -68,14 +79,6 @@ export const NavBarWrapper = styled('div', {
 export const LogoContainer = styled('div', {
   // base styles
   display: 'flex',
-
-  variants: {
-    openMobileSearchbar: {
-      true: {
-        animation: `${fadeOut} 1s ease-out forwards`,
-      },
-    },
-  },
 });
 
 export const LogoIcon = styled('img', {
@@ -91,15 +94,20 @@ export const BackIcon = styled(Icon, {
   display: 'none',
 
   '@md': {
-    display: 'flex',
     position: 'relative',
     color: '$mainTextColor',
   },
 
   variants: {
-    openMobileSearchbar: {
+    startAnimation: {
       true: {
-        animation: `${slideInLeft} 1s ease-in-out forwards`,
+        animation: `${slideInLeft} 100ms ease-in forwards`,
+        display: 'flex',
+      },
+    },
+    stopAnimation: {
+      true: {
+        animation: `${slideOutLeft} 100ms ease-out forwards`,
       },
     },
   },
@@ -131,9 +139,15 @@ export const MobileMenuContainer = styled('div', {
   },
 
   variants: {
-    openMobileSearchbar: {
+    startAnimation: {
       true: {
         animation: `${slideOutRight} 1s ease-out forwards`,
+        display: 'flex',
+      },
+    },
+    stopAnimation: {
+      true: {
+        animation: `${slideInRight} 1s ease-in forwards`,
       },
     },
   },
@@ -291,6 +305,23 @@ export const StyledIcon = styled(Icon, {
 });
 
 export const MobileSearchBarActions = styled('div', {
-  display: 'flex',
-  width: '100%',
+  // display: 'flex',
+  // width: '100%',
+});
+
+export const StyleRouter = styled(RouterLink, {
+  '&md': {},
+
+  variants: {
+    startAnimation: {
+      true: {
+        animation: `${fadeOut} 100ms ease-out forwards`,
+        display: 'none',
+      },
+      false: {
+        animation: `${fadeIn} 100ms ease-in forwards`,
+        display: 'block',
+      },
+    },
+  },
 });
