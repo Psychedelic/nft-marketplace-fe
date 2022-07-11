@@ -49,6 +49,8 @@ export const {
       regentGrey: '#777E8F',
       mobilePrincipalIdGrey: '#23262F99',
       mobileStyledIconColor: '#23262F',
+      defaultBackgroundColour: '#000000',
+      defaultTxtColour: '#FFFFFF',
     },
     space: {},
     fonts: {},
