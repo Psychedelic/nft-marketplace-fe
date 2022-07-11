@@ -1,5 +1,6 @@
 import { NFTActionStatuses } from '../constants/common';
 import{ TokenMetadataById } from '../store/features/tables/table-slice';
+import config from '../config/env';
 
 type NFTParams = {
   lastSalePrice?: string;
@@ -7,6 +8,10 @@ type NFTParams = {
   lastModified?: string;
   lastOfferPrice?: string;
   currentPrice?: string;
+};
+
+type CheckNFTOperatorParams = {
+  operator?: string;
 };
 
 export const findLastAction = (nft: NFTParams) => {
@@ -36,10 +41,18 @@ export const getTokenMetadataThumbnail = ({
   tokendId,
   tokenMetadataById,
 }: {
-  tokendId: string | number,
+  tokendId?: string | number,
   tokenMetadataById: TokenMetadataById,
 }) => typeof tokendId !== 'undefined' && tokenMetadataById[tokendId];
 
 export const roundOffDecimalValue = (value: number, decimalPlace: number) => {
   return value.toFixed(decimalPlace);
 }
+
+export const isOperatorMarketplace = (
+  params: CheckNFTOperatorParams,
+) => {
+  const { operator } = params;
+
+  return operator === config.marketplaceCanisterId;
+};

@@ -302,5 +302,8 @@
   "alerts": {
     "transactionsMessage": "You have unfinished or failed transactions,",
     "retryMessage": "click here to withdraw."
+  },
+  "tooltip": {
+    "disabledBuyNowText": "Oops! Can't be purchased, possibly because token was transferred outside Jelly marketplace to a new wallet"
   }
 }

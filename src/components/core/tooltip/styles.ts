@@ -53,11 +53,11 @@ export const StyledContent = styled(TooltipPrimitive.Content, {
   padding: '10px 15px',
   fontSize: 15,
   lineHeight: 1,
-  color: '#FFFFFF',
-  backgroundColor: '#000000',
+  color: '$defaultTxtColour',
+  backgroundColor: '$defaultBackgroundColour',
   boxShadow: `${boxShadowOne}, ${boxShadowTwo}`,
   '@media (prefers-reduced-motion: no-preference)': {
-    animationDuration: '200ms',
+    animationDuration: '100ms',
     animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
     willChange: 'transform, opacity',
     '&[data-state="delayed-open"]': {
@@ -78,5 +78,5 @@ export const StyledContent = styled(TooltipPrimitive.Content, {
 });
 
 export const StyledArrow = styled(TooltipPrimitive.Arrow, {
-  fill: '#000000',
+  fill: '$defaultBackgroundColour',
 });

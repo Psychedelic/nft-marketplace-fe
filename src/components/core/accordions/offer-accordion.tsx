@@ -44,13 +44,17 @@ import {
   parseE8SAmountToWICP,
   formatPriceValue,
 } from '../../../utils/formatters';
-import { isTokenId } from '../../..//utils/nfts';
+import {
+  isTokenId,
+  isOperatorMarketplace,
+} from '../../..//utils/nfts';
 
 export type OfferAccordionProps = {
   lastSalePrice?: string;
   isListed?: boolean;
   owner?: string;
   showNFTActionButtons: boolean;
+  operator?: string;
 };
 
 type ConnectedProps = {
@@ -58,6 +62,7 @@ type ConnectedProps = {
   isOwner?: boolean;
   price?: string;
   showNFTActionButtons: boolean;
+  operator?: string;
 };
 
 type DisconnectedProps = {
@@ -71,10 +76,10 @@ const OnConnected = ({
   isOwner,
   price,
   showNFTActionButtons,
+  operator,
 }: ConnectedProps) => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
   const { principalId: plugPrincipalId } = usePlugStore();
 
   const recentlyAcceptedOffers = useSelector(
@@ -103,6 +108,10 @@ const OnConnected = ({
     [id, tokenOffers, plugPrincipalId],
   );
 
+  const offersLoaded = useSelector(
+    (state: RootState) => state.marketplace.offersLoaded,
+  );
+
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
     if (!id || !plugPrincipalId) return;
@@ -110,10 +119,6 @@ const OnConnected = ({
     dispatch(
       marketplaceActions.getTokenOffers({
         ownerTokenIdentifiers: [BigInt(id)],
-
-        onSuccess: () => {
-          setLoadingOffers(false);
-        },
 
         onFailure: () => {
           // TODO: handle failure messages
@@ -137,13 +142,14 @@ const OnConnected = ({
         <BuyNowModal
           price={price?.toString()}
           isTriggerVisible={showNonOwnerButtons && isListed}
+          isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
         />
       </ButtonDetailsWrapper>
       <ButtonDetailsWrapper>
         <MakeOfferModal
           isNFTListed={isListed}
           isTriggerVisible={Boolean(
-            showNonOwnerButtons && !loadingOffers && !userMadeOffer,
+            showNonOwnerButtons && !offersLoaded && !userMadeOffer,
           )}
         />
       </ButtonDetailsWrapper>
@@ -153,11 +159,11 @@ const OnConnected = ({
           isNFTListed={isListed}
           offerPrice={userMadeOffer?.price}
           isTriggerVisible={Boolean(
-            showNonOwnerButtons && !loadingOffers && userMadeOffer,
+            showNonOwnerButtons && !offersLoaded && userMadeOffer,
           )}
         />
       </ButtonDetailsWrapper>
-      {showNonOwnerButtons && !loadingOffers && userMadeOffer && (
+      {showNonOwnerButtons && !offersLoaded && userMadeOffer && (
         <ButtonDetailsWrapper>
           <CancelOfferModal
             item={userMadeOffer?.item}
@@ -181,17 +187,21 @@ export const OfferAccordion = ({
   isListed,
   owner,
   showNFTActionButtons,
+  operator,
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
   // TODO: On loading and awaiting for token offers response
   // should display a small loader in the place of price
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [marketPrice, setMarketPrice] = useState<
     string | undefined
   >();
+
+  const offersLoaded = useSelector(
+    (state: RootState) => state.marketplace.offersLoaded,
+  );
 
   const {
     isConnected,
@@ -215,10 +225,6 @@ export const OfferAccordion = ({
     dispatch(
       marketplaceActions.getTokenOffers({
         ownerTokenIdentifiers: [BigInt(id as string)],
-
-        onSuccess: () => {
-          setLoadingOffers(false);
-        },
 
         onFailure: () => {
           // TODO: handle failure messages
@@ -292,7 +298,7 @@ export const OfferAccordion = ({
                 <OfferLabel>
                   {t('translation:accordions.offer.header.topOffer')}
                 </OfferLabel>
-                {(!loadingOffers && (
+                {(!offersLoaded && (
                   <OfferPrice>
                     {(topOffer?.price &&
                       `${parseE8SAmountToWICP(
@@ -319,6 +325,7 @@ export const OfferAccordion = ({
             isOwner={isOwner}
             price={lastSalePrice}
             showNFTActionButtons={showNFTActionButtons}
+            operator={operator}
           />
         )) || <OnDisconnected connectionStatus={connectionStatus} />}
       </AccordionHead>
