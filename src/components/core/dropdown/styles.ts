@@ -27,6 +27,11 @@ export const DropdownStyle = styled(DropdownMenu.Trigger, {
   '&:focus': {
     outline: 'none',
   },
+
+  '@md': {
+    marginLeft: '10px',
+    height: '41px',
+  },
 });
 
 export const DropdownButtonContainer = styled('div', {
