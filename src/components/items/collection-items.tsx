@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
@@ -13,6 +13,7 @@ import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
 import { NftSkeletonList } from '../nft-skeleton-list';
 import {
+  ActionButton,
   FilteredCountChip,
   FilteredTraitsChip,
   SortByFilterDropdown,
@@ -26,11 +27,14 @@ import {
   SkeletonListWrapper,
   ClearButton,
 } from './styles';
+import useMediaQuery from '../../hooks/use-media-query';
+import { Icon } from '../icons';
 
 export const CollectionItems = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
+  const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
   const {
     loadingNFTs,
@@ -107,39 +111,51 @@ export const CollectionItems = () => {
     <Container>
       <FilteredContainer>
         <ContentWrapper>
-          <Flex withMargin justifyContent>
-            <ContentFlex>
-              {!loadingCollectionData && totalNFTSCount > 0 && (
-                <FilteredCountChip
-                  label={t('translation:chips.labels.itemsLabel')}
-                  count={totalNFTSCount}
-                  showLogo={false}
-                />
-              )}
-              {!loadingCollectionData && totalOwnersCount > 0 && (
-                <FilteredCountChip
-                  label={t('translation:chips.labels.OwnersLabel')}
-                  count={totalOwnersCount}
-                  showLogo={false}
-                />
-              )}
-              {!loadingCollectionData && floorPrice > 0 && (
-                <FilteredCountChip
-                  label={t(
-                    'translation:chips.labels.FloorPriceLabel',
-                  )}
-                  count={floorPrice}
-                  showLogo
-                />
-              )}
-              {!loadingCollectionData && totalVolume > 0 && (
-                <FilteredCountChip
-                  label={t('translation:chips.labels.totalVolume')}
-                  count={Number(totalVolume.toFixed(2))}
-                  showLogo
-                />
-              )}
-            </ContentFlex>
+          <Flex
+            withMargin
+            justifyContent={!isMobileScreen}
+            isMobileScreen
+          >
+            {!isMobileScreen ? (
+              <ContentFlex>
+                {!loadingCollectionData && totalNFTSCount > 0 && (
+                  <FilteredCountChip
+                    label={t('translation:chips.labels.itemsLabel')}
+                    count={totalNFTSCount}
+                    showLogo={false}
+                  />
+                )}
+                {!loadingCollectionData && totalOwnersCount > 0 && (
+                  <FilteredCountChip
+                    label={t('translation:chips.labels.OwnersLabel')}
+                    count={totalOwnersCount}
+                    showLogo={false}
+                  />
+                )}
+                {!loadingCollectionData && floorPrice > 0 && (
+                  <FilteredCountChip
+                    label={t(
+                      'translation:chips.labels.FloorPriceLabel',
+                    )}
+                    count={floorPrice}
+                    showLogo
+                  />
+                )}
+                {!loadingCollectionData && totalVolume > 0 && (
+                  <FilteredCountChip
+                    label={t('translation:chips.labels.totalVolume')}
+                    count={Number(totalVolume.toFixed(2))}
+                    showLogo
+                  />
+                )}
+              </ContentFlex>
+            ) : (
+              <ContentFlex>
+                <ActionButton type="secondary" size="wide">
+                  Filters <Icon icon="filter" paddingLeft/>
+                </ActionButton>
+              </ContentFlex>
+            )}
             <ContentFlex>
               <SortByFilterDropdown />
             </ContentFlex>
