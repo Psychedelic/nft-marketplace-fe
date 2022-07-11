@@ -175,6 +175,7 @@ export const MobileMenuContentWrapper = styled('div', {
 });
 
 export const NavItemContent = styled('div', {});
+
 export const WICPLogo = styled('img', {
   width: '15px',
   height: '15px',
@@ -304,14 +305,9 @@ export const StyledIcon = styled(Icon, {
   paddingRight: '1rem',
 });
 
-export const MobileSearchBarActions = styled('div', {
-  // display: 'flex',
-  // width: '100%',
-});
+export const MobileSearchBarActions = styled('div', {});
 
 export const StyleRouter = styled(RouterLink, {
-  '&md': {},
-
   variants: {
     startAnimation: {
       true: {

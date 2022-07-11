@@ -75,7 +75,7 @@ export const Input = styled('input', {
         color: '$error',
       },
     },
-    openMobileSearchbar: {
+    isMobileScreen: {
       true: {
         border: 'none',
 

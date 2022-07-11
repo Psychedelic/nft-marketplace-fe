@@ -7,7 +7,6 @@ export type SearchInputProps = {
   setValue?: (value: string) => void;
   handleClick?: () => void;
   handleSearch?: (value: string) => void;
-  openMobileSearchbar?: boolean;
   value?: string;
 };
 
@@ -21,7 +20,6 @@ export const SearchInput = forwardRef<
       setValue,
       handleClick,
       handleSearch,
-      openMobileSearchbar,
       value,
     },
     ref,
@@ -49,7 +47,7 @@ export const SearchInput = forwardRef<
           type="text"
           placeholder={placeholder}
           onChange={handleValueChange}
-          openMobileSearchbar={openMobileSearchbar}
+          isMobileScreen={isMobileScreen}
         />
       </Container>
     );

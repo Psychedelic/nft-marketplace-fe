@@ -104,7 +104,6 @@ export const GlobalSearch = ({
             }}
             value={searchText}
             handleSearch={handleSearch}
-            openMobileSearchbar={openMobileSearchbar}
           />
           {Boolean(searchText.length) && (
             <CloseIcon
@@ -142,7 +141,6 @@ export const GlobalSearch = ({
             placeholder={t(
               'translation:inputField.placeholder.searchCollection',
             )}
-            openMobileSearchbar={openMobileSearchbar}
           />
         </SearchModalTrigger>
       </DialogPrimitive.Trigger>
