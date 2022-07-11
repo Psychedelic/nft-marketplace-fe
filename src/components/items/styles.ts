@@ -45,6 +45,12 @@ export const Flex = styled('div', {
         justifyContent: 'center',
       },
     },
+
+    isMobileScreen: {
+      true: {
+        justifyContent: 'center',
+      },
+    },
   },
 });
 
