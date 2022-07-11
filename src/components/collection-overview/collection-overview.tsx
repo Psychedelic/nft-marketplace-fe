@@ -26,6 +26,7 @@ import {
 import crown from '../../assets/crown.svg';
 import { Icon } from '../icons';
 import useMediaQuery from '../../hooks/use-media-query';
+import { Website } from '../icons/custom/website';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
@@ -75,7 +76,7 @@ export const CollectionOverview = () => {
         <ButtonsWrapper>
           {isMobileScreen ? (
             <LinkButton url="https://crowns.ooo/">
-              <Icon icon="website" />
+              <Website />
             </LinkButton>
           ) : (
             <LinkButton type="textBtn" url="https://crowns.ooo/">
