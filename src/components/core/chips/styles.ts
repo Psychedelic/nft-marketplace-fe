@@ -9,6 +9,10 @@ export const CountContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   margin: '0px 25px 0px 0px',
+
+  '@md': {
+    margin: '0px',
+  },
 });
 
 export const CountLabel = styled('div', {

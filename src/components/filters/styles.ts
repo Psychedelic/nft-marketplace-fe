@@ -15,6 +15,10 @@ const openArrowBounce = keyframes({
 
 export const Container = styled('div', {
   position: 'relative',
+
+  '@md': {
+    display: 'none',
+  },
 });
 
 export const CloseFilterContainer = styled('div', {
