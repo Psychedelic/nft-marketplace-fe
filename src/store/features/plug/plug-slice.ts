@@ -9,7 +9,6 @@ interface PlugState {
   principalId?: string;
   connectionStatus: PlugStatusCodes;
   walletsWICPBalance: number;
-  loadingWICPBalance: boolean;
   wicpBalance: string;
   loadingWicpBalance: boolean;
 }
@@ -20,7 +19,6 @@ const initialState: PlugState = {
   principalId: undefined,
   connectionStatus: 'verifying' as PlugStatusCodes,
   walletsWICPBalance: 0,
-  loadingWICPBalance: true,
   wicpBalance: '',
   loadingWicpBalance: true,
 };
@@ -50,12 +48,6 @@ export const plugSlice = createSlice({
     },
     setWalletsWICPBalance: (state, action: PayloadAction<number>) => {
       state.walletsWICPBalance = action.payload;
-    },
-    setLoadingWICPBalance: (
-      state,
-      action: PayloadAction<boolean>,
-    ) => {
-      state.loadingWICPBalance = action.payload;
     },
     setWICPBalance: (state, action: PayloadAction<string>) => {
       state.wicpBalance = action.payload;
