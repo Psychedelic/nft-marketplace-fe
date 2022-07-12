@@ -8,6 +8,8 @@ interface PlugState {
   isConnected: boolean;
   principalId?: string;
   connectionStatus: PlugStatusCodes;
+  wicpBalance: string;
+  loadingWicpBalance: boolean;
 }
 
 // Define the initial state using that type
@@ -15,6 +17,8 @@ const initialState: PlugState = {
   isConnected: false,
   principalId: undefined,
   connectionStatus: 'verifying' as PlugStatusCodes,
+  wicpBalance: '',
+  loadingWicpBalance: true,
 };
 
 export const plugSlice = createSlice({
@@ -39,6 +43,10 @@ export const plugSlice = createSlice({
       action: PayloadAction<PlugStatusCodes>,
     ) => {
       state.connectionStatus = action.payload;
+    },
+    setWICPBalance: (state, action: PayloadAction<string>) => {
+      state.wicpBalance = action.payload;
+      state.loadingWicpBalance = false;
     },
   },
 });

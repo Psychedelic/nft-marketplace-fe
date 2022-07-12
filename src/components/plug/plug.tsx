@@ -5,20 +5,17 @@ import {
   usePlugStore,
   plugActions,
   useAppDispatch,
-  notificationActions,
 } from '../../store';
 import {
   isPlugInstalled,
-  requestConnectToPlug,
   hasPlugAgent,
   createPlugAgent,
   checkIsConnected,
   getPrincipal,
   formatAddress,
 } from '../../integrations/plug';
-import { disconnectPlug } from '../../integrations/plug/plug.utils';
+import { handleConnect } from '../../integrations/plug/plug.utils';
 import {
-  PLUG_WALLET_WEBSITE_URL,
   PlugStatusCodes,
 } from '../../constants';
 import config from '../../config/env';
@@ -117,66 +114,6 @@ export const Plug = () => {
     }
   }, [isConnected, dispatch]);
 
-  const onConnectionUpdate = () => {
-    // TODO: Rehydrate the data for the switched account
-    disconnectPlug();
-
-    // connected to plug
-    dispatch(plugActions.setIsConnected(false));
-
-    console.warn(
-      'Oops! Disconnected Plug user, as Plug account was switched',
-    );
-  };
-
-  const handleConnect = async () => {
-    // Is plug installed
-    if (!hasPlug) {
-      // Ask user to install plug
-      window.open(PLUG_WALLET_WEBSITE_URL, '_blank');
-      return;
-    }
-
-    // connect to plug if installed
-    try {
-      // verifying plug connection
-      dispatch(
-        plugActions.setConnectionStatus(PlugStatusCodes.Connecting),
-      );
-
-      // request app to connect with plug
-      const connected = await requestConnectToPlug({
-        whitelist,
-        host,
-        onConnectionUpdate,
-      });
-
-      if (!connected) {
-        throw Error('Oops! Failed to connect to plug.');
-      }
-
-      const agentCreated = await createPlugAgent({
-        whitelist,
-        host,
-      });
-
-      if (!agentCreated) {
-        throw Error('Oops! Failed to create plug agent.');
-      }
-
-      // connected to plug
-      dispatch(plugActions.setIsConnected(true));
-    } catch (err) {
-      // failed to connect plug
-      AppLog.error(err);
-      dispatch(
-        notificationActions.setErrorMessage(
-          t('translation:errorMessages.unableToConnectToPlug'),
-        ),
-      );
-      dispatch(plugActions.setIsConnected(false));
-    }
-  };
   return (
     <>
       {isVerifying && (

@@ -3,8 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import {
   notificationActions,
+  plugActions,
   RootState,
   useAppDispatch,
+  usePlugStore,
 } from '../../store';
 
 import { PlugWICPBalance, WICPLogo, WICPText } from './styles';
@@ -17,9 +19,7 @@ import { getPlugWalletBalance } from '../../integrations/plug';
 const PlugBalance = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const [plugWicpBalance, setPlugWicpBalance] = useState('');
-  const [plugLoadingWicpBalance, setPlugLoadingWicpBalance] =
-    useState(false);
+  const { wicpBalance, loadingWicpBalance } = usePlugStore();
 
   const recentlyPurchasedTokens = useSelector(
     (state: RootState) => state.marketplace.recentlyPurchasedTokens,
@@ -31,7 +31,6 @@ const PlugBalance = () => {
 
   useEffect(() => {
     (async () => {
-      setPlugLoadingWicpBalance(true);
       try {
         const allPlugBalance = await getPlugWalletBalance();
 
@@ -39,10 +38,10 @@ const PlugBalance = () => {
           (balance: any) => balance?.name === 'Wrapped ICP',
         );
 
-        setPlugWicpBalance(wicpWalletBalance?.amount);
-        setPlugLoadingWicpBalance(false);
+        dispatch(
+          plugActions.setWICPBalance(wicpWalletBalance?.amount),
+        );
       } catch (err) {
-        setPlugLoadingWicpBalance(false);
         AppLog.error(err);
         dispatch(
           notificationActions.setErrorMessage(
@@ -59,8 +58,8 @@ const PlugBalance = () => {
         src={wicpImage}
         alt={t('translation:logoAlts.wicp')}
       />
-      {plugWicpBalance !== '' && !plugLoadingWicpBalance ? (
-        `${roundOffDecimalValue(Number(plugWicpBalance), 2)}`
+      {wicpBalance !== '' && !loadingWicpBalance ? (
+        `${roundOffDecimalValue(Number(wicpBalance), 2)}`
       ) : (
         <SpinnerIcon />
       )}
