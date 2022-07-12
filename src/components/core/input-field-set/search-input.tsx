@@ -8,6 +8,7 @@ export type SearchInputProps = {
   handleClick?: () => void;
   handleSearch?: (value: string) => void;
   value?: string;
+  isMobileScreen?: boolean;
 };
 
 export const SearchInput = forwardRef<
@@ -21,6 +22,7 @@ export const SearchInput = forwardRef<
       handleClick,
       handleSearch,
       value,
+      isMobileScreen,
     },
     ref,
   ) => {
@@ -35,7 +37,6 @@ export const SearchInput = forwardRef<
       // eslint-disable-next-line
       handleSearch && handleSearch(value);
     };
-    const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
     return (
       <Container name="searchInput" onClick={handleClick}>

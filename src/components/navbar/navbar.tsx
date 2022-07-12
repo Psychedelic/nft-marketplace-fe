@@ -27,6 +27,7 @@ import {
 import { Icon } from '../icons';
 import { useBuyerOffers } from '../../hooks/use-buyer-offers';
 import { MobileNavBar } from './mobile-nav-bar';
+import useMediaQuery from '../../hooks/use-media-query';
 
 /* --------------------------------------------------------------------------
  * NavBar Component
@@ -44,6 +45,7 @@ export const NavBar = () => {
     useState(false);
   const [startAnimation, setStartAnimation] = useState(false);
   const [stopAnimation, setStopAnimation] = useState(false);
+  const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
   const changeThemeHandler = useCallback(() => {
     dispatch(
@@ -89,42 +91,48 @@ export const NavBar = () => {
           />
         </MobileSearchBarActions>
         <GlobalSearch
-          openMobileSearchbar={openMobileSearchbar}
           startAnimation={startAnimation}
+          isMobileScreen={isMobileScreen}
         />
-        <ActionButtonsContainer>
-          <LinkButton handleClick={changeThemeHandler}>
-            <Icon icon={isLightTheme ? 'moon' : 'sun'} />
-          </LinkButton>
-          <Plug />
-        </ActionButtonsContainer>
-        <MobileMenuContainer
-          startAnimation={startAnimation}
-          stopAnimation={stopAnimation}
-        >
-          <MobileNavbarIcons
-            icon="search"
-            size="md"
-            paddingRight
-            onClick={() => {
-              setOpenMobileSearchbar(true);
-              setStartAnimation(true);
-              stopAnimation && setStopAnimation(false);
-            }}
-          />
-          <MobileNavbarIcons
-            icon="hamburger"
-            size="lg"
-            paddingLeft
-            onClick={() => setOpenMobileNavbar(!openMobileNavbar)}
-          />
-        </MobileMenuContainer>
+        {!isMobileScreen && (
+          <ActionButtonsContainer>
+            <LinkButton handleClick={changeThemeHandler}>
+              <Icon icon={isLightTheme ? 'moon' : 'sun'} />
+            </LinkButton>
+            <Plug />
+          </ActionButtonsContainer>
+        )}
+        {isMobileScreen && (
+          <MobileMenuContainer
+            startAnimation={startAnimation}
+            stopAnimation={stopAnimation}
+          >
+            <MobileNavbarIcons
+              icon="search"
+              size="md"
+              paddingRight
+              onClick={() => {
+                setOpenMobileSearchbar(true);
+                setStartAnimation(true);
+                stopAnimation && setStopAnimation(false);
+              }}
+            />
+            <MobileNavbarIcons
+              icon="hamburger"
+              size="lg"
+              paddingLeft
+              onClick={() => setOpenMobileNavbar(!openMobileNavbar)}
+            />
+          </MobileMenuContainer>
+        )}
       </NavBarWrapper>
-      <MobileNavBar
-        openMobileNavbar={openMobileNavbar}
-        setOpenMobileNavbar={setOpenMobileNavbar}
-        changeThemeHandler={changeThemeHandler}
-      />
+      {isMobileScreen && (
+        <MobileNavBar
+          openMobileNavbar={openMobileNavbar}
+          setOpenMobileNavbar={setOpenMobileNavbar}
+          changeThemeHandler={changeThemeHandler}
+        />
+      )}
     </Container>
   );
 };

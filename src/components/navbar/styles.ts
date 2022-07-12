@@ -123,15 +123,9 @@ export const ActionButtonsContainer = styled('div', {
   // base styles
   display: 'flex',
   alignItems: 'center',
-
-  '@md': {
-    display: 'none',
-  },
 });
 
 export const MobileMenuContainer = styled('div', {
-  display: 'none',
-
   '@md': {
     display: 'flex',
     alignItems: 'center',
@@ -142,7 +136,6 @@ export const MobileMenuContainer = styled('div', {
     startAnimation: {
       true: {
         animation: `${slideOutRight} 1s ease-out forwards`,
-        display: 'none',
       },
     },
     stopAnimation: {
@@ -154,7 +147,6 @@ export const MobileMenuContainer = styled('div', {
 });
 
 export const MobileMenuContentWrapper = styled('div', {
-  display: 'none',
   transition: 'transform 0.3s ease-in-out',
 
   variants: {
@@ -169,7 +161,6 @@ export const MobileMenuContentWrapper = styled('div', {
   },
 
   '@md': {
-    display: 'block',
     background: '$backgroundColor',
   },
 });

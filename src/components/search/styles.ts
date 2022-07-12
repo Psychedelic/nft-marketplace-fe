@@ -40,7 +40,7 @@ export const SearchModalTrigger = styled('div', {
         display: 'flex',
         justifyContent: 'space-between',
         alignContent: 'center',
-        width: '100%'
+        width: '100%',
       },
     },
   },
@@ -320,4 +320,10 @@ export const CloseIcon = styled(Icon, {
       },
     },
   },
+});
+
+export const MobileSearchBar = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
 });

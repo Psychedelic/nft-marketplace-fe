@@ -10,6 +10,7 @@ import {
   SearchContainer,
   SearchResultsWrapper,
   CloseIcon,
+  MobileSearchBar,
 } from './styles';
 import {
   filterActions,
@@ -17,7 +18,6 @@ import {
   useFilterStore,
   useNFTSStore,
 } from '../../store';
-import useMediaQuery from '../../hooks/use-media-query';
 import SearchResults from './search-results';
 
 const DEBOUNCE_TIMEOUT_MS = 400;
@@ -27,13 +27,13 @@ const DEBOUNCE_TIMEOUT_MS = 400;
  * --------------------------------------------------------------------------*/
 
 type GlobalSearchTypes = {
-  openMobileSearchbar?: boolean;
   startAnimation?: boolean;
+  isMobileScreen?: boolean;
 };
 
 export const GlobalSearch = ({
-  openMobileSearchbar,
   startAnimation,
+  isMobileScreen,
 }: GlobalSearchTypes) => {
   const { t } = useTranslation();
   const { loadedNFTS } = useNFTSStore();
@@ -44,7 +44,6 @@ export const GlobalSearch = ({
   const [searchText, setSearchText] = useState('');
   const [currentAbortController, setCurrentAbortController] =
     useState<AbortController>();
-  const isMobileScreen = useMediaQuery('(max-width: 850px');
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -87,13 +86,7 @@ export const GlobalSearch = ({
 
   if (isMobileScreen) {
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-        }}
-      >
+      <MobileSearchBar>
         <SearchModalTrigger startAnimation={startAnimation}>
           <SearchInput
             placeholder={t(
@@ -104,6 +97,7 @@ export const GlobalSearch = ({
             }}
             value={searchText}
             handleSearch={handleSearch}
+            isMobileScreen={isMobileScreen}
           />
           {Boolean(searchText.length) && (
             <CloseIcon
@@ -122,7 +116,7 @@ export const GlobalSearch = ({
             />
           </SearchResultsWrapper>
         )}
-      </div>
+      </MobileSearchBar>
     );
   }
   return (
@@ -163,6 +157,7 @@ export const GlobalSearch = ({
             )}
             setValue={(value) => setSearchText(value)}
             handleSearch={handleSearch}
+            isMobileScreen={isMobileScreen}
           />
         </SearchContainer>
         <SearchResults
