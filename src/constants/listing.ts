@@ -9,4 +9,5 @@ export enum ListingStatusCodes {
   CancelOffer = 'cancelOffer',
   WithdrawInfo = 'withdrawInfo',
   Completed = 'completed',
+  InsufficientBalance = 'insufficientBalance',
 }
