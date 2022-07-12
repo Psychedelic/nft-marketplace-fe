@@ -24,10 +24,15 @@ import {
 import { ModalOverlay } from './modal-overlay';
 
 import { ListingStatusCodes } from '../../constants/listing';
-import { useAppDispatch, marketplaceActions } from '../../store';
+import {
+  useAppDispatch,
+  marketplaceActions,
+  usePlugStore,
+} from '../../store';
 import { AppLog } from '../../utils/log';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { ThemeRootElement } from '../../constants/common';
+import { isBalanceInsufficient } from '../../utils/balance';
 
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
@@ -66,6 +71,8 @@ export const MakeOfferModal = ({
 
   const tokenId = useMemo(() => id || nftTokenId, [id, nftTokenId]);
 
+  const { loadingWICPBalance, walletsWICPBalance } = usePlugStore();
+
   useEffect(() => {
     if (!offerPrice || !modalOpened) return;
 
@@ -86,6 +93,18 @@ export const MakeOfferModal = ({
   const handleSubmitOffer = async () => {
     if (!tokenId) {
       AppLog.warn('Oops! Missing NFT id param');
+
+      return;
+    }
+
+    if (
+      isBalanceInsufficient({
+        loadingWICPBalance,
+        amountRequired: Number(amount),
+        walletsWICPBalance,
+      })
+    ) {
+      setModalStep(ListingStatusCodes.InsufficientBalance);
 
       return;
     }
