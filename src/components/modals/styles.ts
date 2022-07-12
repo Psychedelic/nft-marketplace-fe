@@ -385,16 +385,35 @@ export const ModalButtonWrapper = styled('div', {
   },
 });
 
+export const ActionTextWrapper = styled('span', {
+  cursor: 'pointer',
+
+  variants: {
+    isDisabled: {
+      true: {
+        cursor: 'not-allowed',
+      },
+    },
+  },
+});
+
 export const ActionText = styled('span', {
   fontStyle: 'normal',
   fontWeight: '500',
   fontSize: '14px',
   lineHeight: '20px',
   color: '$primary',
-  cursor: 'pointer',
 
   '&:hover': {
     opacity: '60%',
+  },
+
+  variants: {
+    isDisabled: {
+      true: {
+        pointerEvents: 'none',
+      },
+    },
   },
 });
 

@@ -110,6 +110,8 @@ export const darkTheme = createTheme({
     toastBackground: '#1e1e1e',
     mobilePrincipalIdGrey: '#FFFFFF99',
     mobileStyledIconColor: '#727273',
+    defaultBackgroundColour: '#FFFFFF',
+    defaultTxtColour: '#000000',
   },
   shadows: {
     default: 'none',

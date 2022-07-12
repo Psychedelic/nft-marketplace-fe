@@ -30,6 +30,7 @@ import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 import { NFTActionStatuses } from '../../../../constants/common';
 import { NumberTooltip } from '../../../number-tooltip';
 import { Media } from './media';
+import { isOperatorMarketplace } from '../../../../utils/nfts';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -44,6 +45,7 @@ type ConnectedProps = {
   isForSale?: boolean;
   tokenId: string;
   price?: bigint;
+  operator?: string;
 };
 
 type DisconnectedProps = {
@@ -61,6 +63,7 @@ const OnConnected = ({
   isForSale,
   tokenId,
   price,
+  operator,
 }: ConnectedProps) => {
   const { t } = useTranslation();
   const showBuyerOptions = !owned;
@@ -93,6 +96,7 @@ const OnConnected = ({
               (price && parseE8SAmountToWICP(BigInt(price))) || ''
             }
             isTriggerVisible={isForSale}
+            isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
           />
           <MakeOfferModal
             actionText={`${t('translation:nftCard.forOffer')}`}
@@ -253,6 +257,7 @@ export const NftCard = React.memo(
                   isForSale={isForSale}
                   tokenId={data.id}
                   price={data?.price}
+                  operator={data?.operator}
                 />
               )) || <OnDisconnected isForSale={isForSale} />}
               <LastActionTakenDetails

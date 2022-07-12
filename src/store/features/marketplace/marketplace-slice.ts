@@ -76,6 +76,7 @@ type InitialState = {
   recentlyWithdrawnAssets: any[];
   sumOfUserAllowance: number;
   recentlyFailedTransactions: string[];
+  offersLoaded: boolean;
 };
 
 const initialState: InitialState = {
@@ -90,6 +91,7 @@ const initialState: InitialState = {
   recentlyWithdrawnAssets: [],
   sumOfUserAllowance: 0,
   recentlyFailedTransactions: [],
+  offersLoaded: false,
 };
 
 export const marketplaceSlice = createSlice({
@@ -106,6 +108,11 @@ export const marketplaceSlice = createSlice({
       if (!action.payload) return;
 
       state.recentlyFailedTransactions.push(action.payload);
+    },
+    setOffersLoaded: (state, action: PayloadAction<boolean>) => {
+      if (!action.payload) return;
+
+      state.offersLoaded = action.payload;
     },
   },
   extraReducers: (builder) => {
