@@ -11,6 +11,7 @@ export const Container = styled('div', {
 
   '@sm': {
     padding: '0px 15px 15px',
+    overflowX: 'hidden',
   },
 });
 
