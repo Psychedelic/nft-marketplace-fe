@@ -33,6 +33,7 @@ import { AppLog } from '../../utils/log';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { ThemeRootElement } from '../../constants/common';
 import { isBalanceInsufficient } from '../../utils/balance';
+import { InsufficientBalance } from './steps/insufficient-balance';
 
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
@@ -319,6 +320,18 @@ export const MakeOfferModal = ({
                 </ModalButtonWrapper>
               </ModalButtonsList>
             </Container>
+          )}
+          {/*
+          ---------------------------------
+          Step: -> insufficient balance
+          ---------------------------------
+        */}
+          {modalStep === ListingStatusCodes.InsufficientBalance && (
+            <InsufficientBalance
+              onCancel={() =>
+                setModalStep(ListingStatusCodes.ListingInfo)
+              }
+            />
           )}
         </ModalContent>
       </DialogPrimitive.Portal>
