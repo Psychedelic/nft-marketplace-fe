@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/Psychedelic/nft-marketplace-fe/compare/v1.1.1...v1.1.2) (2022-07-12)
+
+
+### Bug Fixes
+
+* 🐛 rename kyasshu start script cap canister name ([a4c6f0d](https://github.com/Psychedelic/nft-marketplace-fe/commit/a4c6f0d32d12b1bc471a4d9dadf210da1c301b55))
+* 🐛 show top offers and make offer action buttons in NFT details page ([#445](https://github.com/Psychedelic/nft-marketplace-fe/issues/445)) ([d2a1438](https://github.com/Psychedelic/nft-marketplace-fe/commit/d2a14388a32b118d730dfc6c5f21b8ba58e74109))
+* 🐛 start script cap router name ([#442](https://github.com/Psychedelic/nft-marketplace-fe/issues/442)) ([5265d7f](https://github.com/Psychedelic/nft-marketplace-fe/commit/5265d7ffec286d51dc94a84a7635e1657267e97f))
+
 ## [1.1.1](https://github.com/Psychedelic/nft-marketplace-fe/compare/v1.1.0...v1.1.1) (2022-07-08)
 
 
