@@ -231,7 +231,8 @@
       "acceptOffer": "Review the following offer and accept the bid.",
       "offerAccepted": "Congrats, you successfully accepted an offer.",
       "withdrawAssets": "The following fungible balances remain in the canister due to an error completing a transaction. Review the assets and click retry to receive them.",
-      "notEnoughFunds": "Transfer funds to your wallet to continue with the purchase of this NFT. If you have another asset you would like to swap for WICP you can use Sonic."
+      "notEnoughFundsToPurchase": "Transfer funds to your wallet to continue with the purchase of this NFT. If you have another asset you would like to swap for WICP you can use Sonic.",
+      "notEnoughFundsToMakeOffer": "Transfer funds to your wallet to continue make offer over this NFT. If you have another asset you would like to swap for WICP you can use Sonic."
     },
     "labels": {
       "protocolFee": "Protocol fee",

@@ -290,7 +290,7 @@ export const BuyNowModal = ({
             <InsufficientBalance
               onCancel={() => handleModalOpen(false)}
               message={t(
-                'translation:modals.description.notEnoughFunds',
+                'translation:modals.description.notEnoughFundsToPurchase',
               )}
             />
           )}

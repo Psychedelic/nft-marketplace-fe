@@ -331,6 +331,9 @@ export const MakeOfferModal = ({
               onCancel={() =>
                 setModalStep(ListingStatusCodes.ListingInfo)
               }
+              message={t(
+                'translation:modals.description.notEnoughFundsToMakeOffer',
+              )}
             />
           )}
         </ModalContent>
