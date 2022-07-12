@@ -80,6 +80,7 @@ const OnConnected = ({
 }: ConnectedProps) => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
   const { principalId: plugPrincipalId } = usePlugStore();
 
   const recentlyAcceptedOffers = useSelector(
@@ -108,10 +109,6 @@ const OnConnected = ({
     [id, tokenOffers, plugPrincipalId],
   );
 
-  const offersLoaded = useSelector(
-    (state: RootState) => state.marketplace.offersLoaded,
-  );
-
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
     if (!id || !plugPrincipalId) return;
@@ -119,6 +116,10 @@ const OnConnected = ({
     dispatch(
       marketplaceActions.getTokenOffers({
         ownerTokenIdentifiers: [BigInt(id)],
+
+        onSuccess: () => {
+          setLoadingOffers(false);
+        },
 
         onFailure: () => {
           // TODO: handle failure messages
@@ -149,7 +150,7 @@ const OnConnected = ({
         <MakeOfferModal
           isNFTListed={isListed}
           isTriggerVisible={Boolean(
-            showNonOwnerButtons && !offersLoaded && !userMadeOffer,
+            showNonOwnerButtons && !loadingOffers && !userMadeOffer,
           )}
         />
       </ButtonDetailsWrapper>
@@ -159,11 +160,11 @@ const OnConnected = ({
           isNFTListed={isListed}
           offerPrice={userMadeOffer?.price}
           isTriggerVisible={Boolean(
-            showNonOwnerButtons && !offersLoaded && userMadeOffer,
+            showNonOwnerButtons && !loadingOffers && userMadeOffer,
           )}
         />
       </ButtonDetailsWrapper>
-      {showNonOwnerButtons && !offersLoaded && userMadeOffer && (
+      {showNonOwnerButtons && !loadingOffers && userMadeOffer && (
         <ButtonDetailsWrapper>
           <CancelOfferModal
             item={userMadeOffer?.item}
@@ -192,16 +193,13 @@ export const OfferAccordion = ({
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
   // TODO: On loading and awaiting for token offers response
   // should display a small loader in the place of price
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [marketPrice, setMarketPrice] = useState<
     string | undefined
   >();
-
-  const offersLoaded = useSelector(
-    (state: RootState) => state.marketplace.offersLoaded,
-  );
 
   const {
     isConnected,
@@ -225,6 +223,10 @@ export const OfferAccordion = ({
     dispatch(
       marketplaceActions.getTokenOffers({
         ownerTokenIdentifiers: [BigInt(id as string)],
+
+        onSuccess: () => {
+          setLoadingOffers(false);
+        },
 
         onFailure: () => {
           // TODO: handle failure messages
@@ -298,7 +300,7 @@ export const OfferAccordion = ({
                 <OfferLabel>
                   {t('translation:accordions.offer.header.topOffer')}
                 </OfferLabel>
-                {(!offersLoaded && (
+                {(!loadingOffers && (
                   <OfferPrice>
                     {(topOffer?.price &&
                       `${parseE8SAmountToWICP(
