@@ -41,6 +41,12 @@ export const Flex = styled('div', {
         justifyContent: 'space-between',
       },
     },
+
+    isMobileScreen: {
+      true: {
+        justifyContent: 'center',
+      },
+    },
   },
 });
 
