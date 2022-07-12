@@ -4,7 +4,8 @@
     "collectionName": "Crowns",
     "noRecentSearch": "No recent searches",
     "comingSoon": "Coming soon!",
-    "crownsDescription": "Crowns are a collection of 10,000 procedurally generated traditional & psychedelic 3D crowns on the Internet Computer, backed by asset provenance from CAP."
+    "crownsDescription": "Crowns are a collection of 10,000 procedurally generated traditional & psychedelic 3D crowns on the Internet Computer, backed by asset provenance from CAP.",
+    "notConnectedMessage": "You’re not connected to Plug yet. Click the button below to connect."
   },
   "offers": {
     "myOffers": "My Offers",
@@ -52,7 +53,8 @@
       "editOffer": "Edit Offer",
       "cancel": "Cancel",
       "myActivity": "My Activity",
-      "getWicp": "Get WICP"
+      "getWicp": "Get WICP",
+      "nigthMode": "Night Mode"
     }
   },
   "dropdown": {
@@ -161,7 +163,8 @@
   },
   "logoAlts": {
     "wicp": "WICP",
-    "close": "close"
+    "close": "close",
+    "plug": "plug"
   },
   "tables": {
     "placeholder": "Table",

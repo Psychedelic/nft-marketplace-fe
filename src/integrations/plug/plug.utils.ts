@@ -1,9 +1,25 @@
 import { formatICNSName } from '../../utils/icns';
+import {
+  PlugStatusCodes,
+  PLUG_WALLET_WEBSITE_URL,
+} from '../../constants';
+import { notificationActions, plugActions } from '../../store';
+import { AppLog } from '../../utils/log';
+import config from '../../config/env';
 
 type RequestConnectArgs = {
   whitelist?: string[];
   host?: string;
-  onConnectionUpdate?: () => void;
+  onConnectionUpdate?: (dispatch: any) => void;
+};
+
+type ConnectionUpdateTypes = {
+  dispatch: any;
+};
+
+type HandleConnectTypes = {
+  dispatch: any;
+  t: any;
 };
 
 type PlugButtonTextParams = {
@@ -59,4 +75,84 @@ export const getPlugButtonText = (params: PlugButtonTextParams) => {
   if (icnsName) return formatICNSName(icnsName as string);
 
   return formatAddress(principalId as string);
+}
+
+export const onConnectionUpdate = ({
+  dispatch,
+}: ConnectionUpdateTypes) => {
+  // TODO: Rehydrate the data for the switched account
+  disconnectPlug();
+
+  // connected to plug
+  dispatch(plugActions.setIsConnected(false));
+
+  console.warn(
+    'Oops! Disconnected Plug user, as Plug account was switched',
+  );
+};
+
+export const handleConnect = async ({
+  dispatch,
+  t,
+}: HandleConnectTypes) => {
+  const {
+    nftCollectionId,
+    marketplaceCanisterId,
+    wICPCanisterId,
+    host,
+  } = config;
+
+  const whitelist = [
+    nftCollectionId,
+    marketplaceCanisterId,
+    wICPCanisterId,
+  ];
+
+  // Is plug installed
+  const hasPlug = isPlugInstalled();
+  if (!hasPlug) {
+    // Ask user to install plug
+    window.open(PLUG_WALLET_WEBSITE_URL, '_blank');
+    return;
+  }
+
+  // connect to plug if installed
+  try {
+    // verifying plug connection
+    dispatch(
+      plugActions.setConnectionStatus(PlugStatusCodes.Connecting),
+    );
+
+    // request app to connect with plug
+    const connected = await requestConnectToPlug({
+      whitelist,
+      host,
+      onConnectionUpdate,
+    });
+
+    if (!connected) {
+      throw Error('Oops! Failed to connect to plug.');
+    }
+
+    const agentCreated = await createPlugAgent({
+      whitelist,
+      host,
+    });
+
+    if (!agentCreated) {
+      throw Error('Oops! Failed to create plug agent.');
+    }
+
+    // connected to plug
+    dispatch(plugActions.setIsConnected(true));
+  } catch (err) {
+    // failed to connect plug
+    AppLog.error(err);
+    dispatch(
+      notificationActions.setErrorMessage(
+        t('translation:errorMessages.unableToConnectToPlug'),
+      ),
+    );
+    dispatch(plugActions.setIsConnected(false));
+  }
 };

@@ -26,7 +26,7 @@ import wicpImage from '../../assets/wicp.svg';
 import PlugBalance from './plug-balance';
 
 export type PlugButtonProps = {
-  handleConnect: () => void;
+  handleConnect: (dispatch: any) => void;
   text: string;
   isConnected: boolean;
   principalId?: string;
@@ -86,7 +86,7 @@ export const PlugButton = ({
     if (isConnected) {
       setOpenDropdown(!openDropdown);
     } else {
-      handleConnect();
+      handleConnect({ dispatch, t });
     }
   }, [handleConnect, isConnected, openDropdown]);
 
