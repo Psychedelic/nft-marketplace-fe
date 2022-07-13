@@ -430,7 +430,7 @@ export const Filters = ({
               </CheckboxFilters>
             </FilterSection>
           </FiltersWrapper>
-          {isOpenFiltersMenu && (
+          {isMobileScreen && (
             <FilterMobileActions>
               <ButtonWrapper>
                 <ActionButton
