@@ -26,7 +26,8 @@ export const Container = styled('div', {
   position: 'relative',
 
   '@md': {
-    display: 'none',
+    position: 'absolute',
+    zIndex: '100',
   },
 });
 
