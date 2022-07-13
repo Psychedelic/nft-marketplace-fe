@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
@@ -26,15 +26,18 @@ import {
   ContentFlex,
   SkeletonListWrapper,
   ClearButton,
+  AppliedFilters,
 } from './styles';
 import useMediaQuery from '../../hooks/use-media-query';
 import { Icon } from '../icons';
+import { Filters } from '../filters';
 
 export const CollectionItems = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
   const isMobileScreen = useMediaQuery('(max-width: 850px)');
+  const [isOpenFiltersMenu, setIsOpenFiltersMenu] = useState(false);
 
   const {
     loadingNFTs,
@@ -107,14 +110,21 @@ export const CollectionItems = () => {
     }
   };
 
+  console.log(isMobileScreen);
+
   return (
     <Container>
+      {isMobileScreen && (
+        <Filters
+          setIsOpenFiltersMenu={setIsOpenFiltersMenu}
+          isOpenFiltersMenu={isOpenFiltersMenu}
+        />
+      )}
       <FilteredContainer>
         <ContentWrapper>
           <Flex
             withMargin
-            justifyContent={!isMobileScreen}
-            isMobileScreen
+            justifyContent={isMobileScreen ? 'center' : 'spaceBetween'}
           >
             {!isMobileScreen ? (
               <ContentFlex>
@@ -151,8 +161,21 @@ export const CollectionItems = () => {
               </ContentFlex>
             ) : (
               <ContentFlex>
-                <ActionButton type="secondary" size="wide">
-                  Filters <Icon icon="filter" paddingLeft/>
+                <ActionButton
+                  type="secondary"
+                  size="wide"
+                  onClick={() => {
+                    setIsOpenFiltersMenu(true);
+                  }}
+                >
+                  Filter
+                  {appliedFilters.defaultFilters.length > 0 ? (
+                    <AppliedFilters>
+                      {appliedFilters.defaultFilters.length}
+                    </AppliedFilters>
+                  ) : (
+                    <Icon icon="filter" paddingLeft />
+                  )}
                 </ActionButton>
               </ContentFlex>
             )}
@@ -160,75 +183,89 @@ export const CollectionItems = () => {
               <SortByFilterDropdown />
             </ContentFlex>
           </Flex>
-          <Flex>
-            <ContentFlex>
-              {appliedFilters.defaultFilters.map((appliedFilter) => {
-                if (!Array.isArray(appliedFilter.filterName)) {
-                  if (
-                    appliedFilters.isMyNfts &&
-                    isConnected &&
-                    !loadedNFTS.length &&
-                    appliedFilter?.filterName ===
-                      t('translation:buttons.action.myNfts')
-                  )
-                    return;
-                  return (
-                    <FilteredTraitsChip
-                      key={appliedFilter.filterName}
-                      name={
-                        appliedFilter.filterCategory !==
-                        `${t('translation:filters.priceRange')}`
-                          ? appliedFilter.filterName
-                          : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`
-                      }
-                      rim={`${appliedFilter.filterCategory}`}
-                      appliedFilterValue={appliedFilter}
-                      removeFilter={() => {
-                        if (
-                          appliedFilter.filterName ===
-                          `${t('translation:buttons.action.myNfts')}`
-                        ) {
-                          dispatch(filterActions.setMyNfts(false));
-                        } else if (
-                          appliedFilter.filterName ===
-                          `${t('translation:buttons.action.buyNow')}`
-                        ) {
-                          dispatch(filterActions.setStatusFilter(''));
-                        } else if (
-                          appliedFilter.filterName ===
-                          `${t(
-                            'translation:buttons.action.hasOffers',
-                          )}`
-                        ) {
-                          dispatch(filterActions.setStatusFilter(''));
-                        }
-                        handleRemoveFilter(appliedFilter);
-                      }}
-                    />
-                  );
-                }
-                return appliedFilter.filterName.map((value) => {
-                  return (
-                    <FilteredTraitsChip
-                      key={value}
-                      name={value}
-                      rim={`${appliedFilter.filterCategory}`}
-                      appliedFilterValue={appliedFilter}
-                      removeFilter={() => {
-                        dispatch(
-                          filterActions.removeTraitsFilter({
-                            value,
-                            key: appliedFilter.filterCategory,
-                          }),
-                        );
-                      }}
-                    />
-                  );
-                });
-              })}
-              {displayClearButton()}
-            </ContentFlex>
-          </Flex>
+          {!isMobileScreen && (
+            <Flex>
+              <ContentFlex>
+                {appliedFilters.defaultFilters.map(
+                  (appliedFilter) => {
+                    if (!Array.isArray(appliedFilter.filterName)) {
+                      if (
+                        appliedFilters.isMyNfts &&
+                        isConnected &&
+                        !loadedNFTS.length &&
+                        appliedFilter?.filterName ===
+                          t('translation:buttons.action.myNfts')
+                      )
+                        return;
+                      return (
+                        <FilteredTraitsChip
+                          key={appliedFilter.filterName}
+                          name={
+                            appliedFilter.filterCategory !==
+                            `${t('translation:filters.priceRange')}`
+                              ? appliedFilter.filterName
+                              : `WICP: ${appliedFilter.filterName.min} - ${appliedFilter.filterName.max}`
+                          }
+                          rim={`${appliedFilter.filterCategory}`}
+                          appliedFilterValue={appliedFilter}
+                          removeFilter={() => {
+                            if (
+                              appliedFilter.filterName ===
+                              `${t(
+                                'translation:buttons.action.myNfts',
+                              )}`
+                            ) {
+                              dispatch(
+                                filterActions.setMyNfts(false),
+                              );
+                            } else if (
+                              appliedFilter.filterName ===
+                              `${t(
+                                'translation:buttons.action.buyNow',
+                              )}`
+                            ) {
+                              dispatch(
+                                filterActions.setStatusFilter(''),
+                              );
+                            } else if (
+                              appliedFilter.filterName ===
+                              `${t(
+                                'translation:buttons.action.hasOffers',
+                              )}`
+                            ) {
+                              dispatch(
+                                filterActions.setStatusFilter(''),
+                              );
+                            }
+                            handleRemoveFilter(appliedFilter);
+                          }}
+                        />
+                      );
+                    }
+                    return appliedFilter.filterName.map((value) => {
+                      return (
+                        <FilteredTraitsChip
+                          key={value}
+                          name={value}
+                          rim={`${appliedFilter.filterCategory}`}
+                          appliedFilterValue={appliedFilter}
+                          removeFilter={() => {
+                            dispatch(
+                              filterActions.removeTraitsFilter({
+                                value,
+                                key: appliedFilter.filterCategory,
+                              }),
+                            );
+                          }}
+                        />
+                      );
+                    });
+                  },
+                )}
+                {displayClearButton()}
+              </ContentFlex>
+            </Flex>
+          )}
         </ContentWrapper>
         {loadingNFTs && loadedNFTS.length === 0 ? (
           <SkeletonListWrapper>
