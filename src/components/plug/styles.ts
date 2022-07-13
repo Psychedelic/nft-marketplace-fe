@@ -36,6 +36,8 @@ export const PlugButtonText = styled('div', {
 });
 
 export const PopoverTrigger = styled(Popover.Trigger, {
+  zIndex: '2',
+
   '&:focus': {
     outline: 'none',
   },
@@ -109,7 +111,7 @@ export const PlugWICPBalance = styled('div', {
   padding: '2px 10px 2px 0px',
   position: 'relative',
   right: '-10px',
-  zIndex: '-1',
+  zIndex: '1',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
