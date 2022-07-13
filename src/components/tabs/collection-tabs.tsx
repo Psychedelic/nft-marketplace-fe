@@ -12,12 +12,14 @@ import {
 } from './styles';
 import { Filters } from '../filters';
 import { Icon } from '../icons';
+import useMediaQuery from '../../hooks/use-media-query';
 
 export const CollectionTabs = () => {
   const { t } = useTranslation();
 
   const location = useLocation();
   const navigate = useNavigate();
+  const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
   const selectedTab = useMemo(
     () => location.pathname.split('/').pop() || 'items',
@@ -56,7 +58,7 @@ export const CollectionTabs = () => {
       </TabsList>
       <TabsContent value="items">
         <TabsContentWrapper>
-          <Filters />
+          {!isMobileScreen && <Filters />}
           <CollectionItems />
         </TabsContentWrapper>
       </TabsContent>

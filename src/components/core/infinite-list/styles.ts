@@ -6,5 +6,8 @@ export const CardListContainer = styled('div', {
   '@large': {
     width: '100%',
   },
-});
 
+  '@sm': {
+    width: '390px',
+  },
+});
