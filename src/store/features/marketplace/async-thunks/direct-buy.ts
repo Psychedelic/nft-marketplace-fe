@@ -2,7 +2,7 @@ import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';
-import { DirectBuy } from '../marketplace-slice';
+import { DirectBuy, marketplaceActions } from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
@@ -10,7 +10,6 @@ import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 import { parseAmountToE8S } from '../../../../utils/formatters';
-import { marketplaceActions } from '../marketplace-slice';
 
 type DirectBuyProps = DefaultCallbacks & DirectBuy;
 
@@ -70,7 +69,7 @@ export const directBuy = createAsyncThunk<
         if (typeof onSuccess !== 'function') return;
 
         // We call the Cap Sync process
-        await axios.get(KyasshuUrl.getCAPSync());
+        await axios.get(KyasshuUrl.getCAPJellySync());
 
         onSuccess();
       },

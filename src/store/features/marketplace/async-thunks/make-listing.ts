@@ -60,7 +60,7 @@ export const makeListing = createAsyncThunk<
           if (typeof onSuccess !== 'function') return;
 
           // We call the Cap Sync process
-          await axios.get(KyasshuUrl.getCAPSync());
+          await axios.get(KyasshuUrl.getCAPJellySync());
 
           onSuccess();
         },

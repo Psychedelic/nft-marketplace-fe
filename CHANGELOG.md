@@ -1,3 +1,35 @@
+## [1.1.2](https://github.com/Psychedelic/nft-marketplace-fe/compare/v1.1.1...v1.1.2) (2022-07-12)
+
+
+### Bug Fixes
+
+* 🐛 rename kyasshu start script cap canister name ([a4c6f0d](https://github.com/Psychedelic/nft-marketplace-fe/commit/a4c6f0d32d12b1bc471a4d9dadf210da1c301b55))
+* 🐛 show top offers and make offer action buttons in NFT details page ([#445](https://github.com/Psychedelic/nft-marketplace-fe/issues/445)) ([d2a1438](https://github.com/Psychedelic/nft-marketplace-fe/commit/d2a14388a32b118d730dfc6c5f21b8ba58e74109))
+* 🐛 start script cap router name ([#442](https://github.com/Psychedelic/nft-marketplace-fe/issues/442)) ([5265d7f](https://github.com/Psychedelic/nft-marketplace-fe/commit/5265d7ffec286d51dc94a84a7635e1657267e97f))
+
+## [1.1.1](https://github.com/Psychedelic/nft-marketplace-fe/compare/v1.1.0...v1.1.1) (2022-07-08)
+
+
+### Bug Fixes
+
+* 🐛 disable buy now button based on operator details ([#421](https://github.com/Psychedelic/nft-marketplace-fe/issues/421)) ([7b7528c](https://github.com/Psychedelic/nft-marketplace-fe/commit/7b7528cde6a9080ad9ccf8a49432ffb345652179))
+* 🐛 type conversion error browserlist ([#437](https://github.com/Psychedelic/nft-marketplace-fe/issues/437)) ([ac8ffc1](https://github.com/Psychedelic/nft-marketplace-fe/commit/ac8ffc16faa2e2875cb3f79f1834d024a8fc76d6))
+
+# [1.1.0](https://github.com/Psychedelic/nft-marketplace-fe/compare/v1.0.0...v1.1.0) (2022-07-04)
+
+
+### Bug Fixes
+
+* 🐛 local dev and post plug 0.5.2.2 release tweaks ([#404](https://github.com/Psychedelic/nft-marketplace-fe/issues/404)) ([4ea93b8](https://github.com/Psychedelic/nft-marketplace-fe/commit/4ea93b83e1b607d796ffd8dc82cdc30ed40eaa83))
+
+
+### Features
+
+* 🎸 allow routing to sonic to get wicp ([#420](https://github.com/Psychedelic/nft-marketplace-fe/issues/420)) ([9fc94ef](https://github.com/Psychedelic/nft-marketplace-fe/commit/9fc94ef2a693dae3a9f6e136f72408b280e8a83e))
+* 🎸 display wallet balance ([#422](https://github.com/Psychedelic/nft-marketplace-fe/issues/422)) ([fbd0660](https://github.com/Psychedelic/nft-marketplace-fe/commit/fbd0660f3adcda0d1fc6c65af9d6fc9d3abfbab1))
+* 🎸 sort by price ([#419](https://github.com/Psychedelic/nft-marketplace-fe/issues/419)) ([14601ed](https://github.com/Psychedelic/nft-marketplace-fe/commit/14601edc9709d4292d05860239da162b40aabc39))
+* 🎸 user activity details ([#410](https://github.com/Psychedelic/nft-marketplace-fe/issues/410)) ([1f665dc](https://github.com/Psychedelic/nft-marketplace-fe/commit/1f665dc6752f0226fcdd2d5b140086f19f017cde))
+
 # 1.0.0 (2022-06-23)
 
 
