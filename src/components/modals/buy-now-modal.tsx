@@ -90,7 +90,7 @@ export const BuyNowModal = ({
 
     if (
       isBalanceInsufficient({
-        loadingWICPBalance,
+        loadingWicpBalance,
         amountRequired: Number(price),
         walletsWICPBalance,
       })
