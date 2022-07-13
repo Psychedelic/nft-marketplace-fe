@@ -22,4 +22,6 @@ printf "🤖 Starting kyasshu with the $host services...\n\n"
 [[ ! -z $NFT_CANISTER_STANDARD ]] && printf "  Using NFT_CANISTER_STANDARD: $NFT_CANISTER_STANDARD\n\n"
 
 cd kyasshu
-yarn dev
+
+# The Crowns canister id is a required environment var
+MARKETPLACE_ALLOWED_CANISTERS="{ \"$NFT_CANISTER_ID\": \"DIP721v2\" }" yarn dev
