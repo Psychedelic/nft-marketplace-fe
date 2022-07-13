@@ -8,6 +8,6 @@ export const CardListContainer = styled('div', {
   },
 
   '@sm': {
-    width: '390px',
+    width: '100%',
   },
 });
