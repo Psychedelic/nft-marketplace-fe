@@ -38,13 +38,10 @@ export const Flex = styled('div', {
     },
 
     justifyContent: {
-      true: {
+      spaceBetween: {
         justifyContent: 'space-between',
       },
-    },
-
-    isMobileScreen: {
-      true: {
+      center: {
         justifyContent: 'center',
       },
     },
@@ -75,4 +72,17 @@ export const ClearButton = styled('div', {
   '&:hover': {
     cursor: 'pointer',
   },
+});
+
+export const AppliedFilters = styled('span', {
+  width: '18px',
+  height: '18px',
+  borderRadius: '100%',
+  background: '$primary',
+  color: '#ffffff',
+  fontSize: '12px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginLeft: '10px',
 });
