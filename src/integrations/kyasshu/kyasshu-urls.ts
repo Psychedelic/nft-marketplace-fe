@@ -27,8 +27,8 @@ export class KyasshuUrl {
     return `${config.kyasshuMarketplaceAPI}/cap/txns/${bucketId}/?page=${pageCount}`;
   }
 
-  static getCAPSync(): string {
-    return `${config.kyasshuMarketplaceAPI}/cap/capSync`;
+  static getCAPJellySync(): string {
+    return `${config.kyasshuMarketplaceAPI}/cap/capJellySync`;
   }
 
   static getCollectionData(): string {

@@ -2,7 +2,7 @@ import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';
-import { MakeOffer } from '../marketplace-slice';
+import { MakeOffer, marketplaceActions } from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
@@ -10,7 +10,6 @@ import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { errorMessageHandler } from '../../../../utils/error';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
-import { marketplaceActions } from '../marketplace-slice';
 
 export type MakeOfferProps = DefaultCallbacks & MakeOffer;
 
@@ -72,7 +71,7 @@ export const makeOffer = createAsyncThunk<
         if (typeof onSuccess !== 'function') return;
 
         // We call the Cap Sync process
-        await axios.get(KyasshuUrl.getCAPSync());
+        await axios.get(KyasshuUrl.getCAPJellySync());
 
         onSuccess();
       },
