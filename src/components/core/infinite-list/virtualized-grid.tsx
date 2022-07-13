@@ -6,12 +6,12 @@ import { CardListContainer } from './styles';
 
 const DefaultProps = {
   width: 210,
-  mobileWidth: 185,
+  mobileWidth: 155,
   height: 348,
   headerOffset: 76,
   columns: 3,
   scrollThreshold: 348,
-  rowSpacing: 1.06,
+  rowSpacing: 0.95,
   padding: 15,
   throttlingInterval: 300,
 };
@@ -93,7 +93,7 @@ export const VirtualizedGrid = <T extends object>({
 
       // Update column items state
       setColItems(newColItems);
-      setSpacingCoefficient(newSpacingCoefficient + 1);
+      setSpacingCoefficient(0.08 + 1);
     };
     resizeListener();
 
@@ -200,10 +200,10 @@ export const VirtualizedGrid = <T extends object>({
       <div
         style={{
           width: `100%`,
-          margin: `-${padding}px`,
-          paddingTop: `${padding}px`,
-          paddingLeft: `${isMobileScreen ? '10px' : `${padding}px`}`,
-          paddingRight: `${padding}px`,
+          // margin: `-${padding}px`,
+          // paddingTop: `${padding}px`,
+          // paddingLeft: `${isMobileScreen ? '10px' : `${padding}px`}`,
+          // paddingRight: `${padding}px`,
           paddingBottom: `${scrollThreshold}px`,
         }}
         ref={(el) => {
@@ -212,7 +212,9 @@ export const VirtualizedGrid = <T extends object>({
         }}
       >
         <div
-          style={{ position: 'relative' }}
+          style={{
+            position: 'relative',
+          }}
           ref={(el) => {
             row.innerRef.current = el;
             col.innerRef.current = el;
@@ -226,11 +228,11 @@ export const VirtualizedGrid = <T extends object>({
                   style={{
                     position: 'absolute',
                     height: `${rowItem.size}px`,
-                    width: `${colItem.size}px`,
+                    minWidth: `${colItem.size}px`,
                     transform: `translateX(${
                       colItem.start * spacingCoefficient
                     }px) translateY(${rowItem.start * rowSpacing}px)`,
-                    overflow: 'hidden',
+                    // overflow: 'hidden',
                   }}
                 >
                   {items[
