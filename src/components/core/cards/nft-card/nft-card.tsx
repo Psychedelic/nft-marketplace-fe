@@ -31,6 +31,7 @@ import { NFTActionStatuses } from '../../../../constants/common';
 import { NumberTooltip } from '../../../number-tooltip';
 import { Media } from './media';
 import { isOperatorMarketplace } from '../../../../utils/nfts';
+import useMediaQuery from '../../../../hooks/use-media-query';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -186,6 +187,7 @@ export const NftCard = React.memo(
     const { isConnected } = usePlugStore();
     const navigate = useNavigate();
     const containerRef = useRef<HTMLDivElement>(null);
+    const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
     // TODO: Move any status code as constant
     const isForSale = data.status === 'forSale';
@@ -207,12 +209,14 @@ export const NftCard = React.memo(
             previewCard={previewCard}
             tabIndex={-1}
           >
-            <Flex>
-              <OwnedCardText>
-                {owned ? `${t('translation:nftCard.owned')}` : ''}
-              </OwnedCardText>
-              {!previewCard && <CardOptionsDropdown data={data} />}
-            </Flex>
+            {!isMobileScreen && (
+              <Flex>
+                <OwnedCardText>
+                  {owned ? `${t('translation:nftCard.owned')}` : ''}
+                </OwnedCardText>
+                {!previewCard && <CardOptionsDropdown data={data} />}
+              </Flex>
+            )}
             <Media
               containerRef={containerRef}
               location={data?.location}

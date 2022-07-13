@@ -1,10 +1,12 @@
 import throttle from 'lodash.throttle';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import useVirtual from 'react-cool-virtual';
+import useMediaQuery from '../../../hooks/use-media-query';
 import { CardListContainer } from './styles';
 
 const DefaultProps = {
   width: 210,
+  mobileWidth: 185,
   height: 348,
   headerOffset: 76,
   columns: 3,
@@ -29,6 +31,7 @@ export const VirtualizedGrid = <T extends object>({
   loadingMore,
   Skeleton,
   width = DefaultProps.width,
+  mobileWidth = DefaultProps.mobileWidth,
   height = DefaultProps.height,
   headerOffset = DefaultProps.headerOffset,
   columns = DefaultProps.columns,
@@ -43,6 +46,10 @@ export const VirtualizedGrid = <T extends object>({
   const [spacingCoefficient, setSpacingCoefficient] =
     useState(rowSpacing);
 
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
+
+  const colItemWidth = isMobileScreen ? mobileWidth : width;
+
   const row = useVirtual<HTMLDivElement, HTMLDivElement>({
     itemCount:
       Math.ceil(items.length / colItems) + (loadingMore ? 2 : 0),
@@ -52,26 +59,27 @@ export const VirtualizedGrid = <T extends object>({
   const col = useVirtual<HTMLDivElement, HTMLDivElement>({
     horizontal: true,
     itemCount: colItems,
-    itemSize: width,
+    itemSize: colItemWidth,
   });
 
   // Calculate the total amount of columns and spacing
   useEffect(() => {
     const wrapperReference = wrapperRef.current;
-    if (!wrapperReference || width <= 0) return;
+    if (!wrapperReference || colItemWidth <= 0) return;
 
     // Event listener for column items
     const resizeListener = () => {
       // Calculate the possible amount of columns
       const wrapperWidth =
         wrapperReference.getBoundingClientRect().width;
-      let newColItems = Math.floor(wrapperWidth / width);
+      let newColItems = Math.floor(wrapperWidth / colItemWidth);
 
       // Calculate the column spacing coefficient
       const getSpacingCoefficient = () =>
-        (wrapperWidth - width * newColItems) /
+        (wrapperWidth - colItemWidth * newColItems) /
         (newColItems - 1) /
-        width;
+        colItemWidth;
+
       let newSpacingCoefficient = getSpacingCoefficient();
 
       // Decrease the column number if the space between columns is too small
@@ -98,7 +106,7 @@ export const VirtualizedGrid = <T extends object>({
     return () => {
       window.removeEventListener('resize', resizeListenerThrottled);
     };
-  }, [wrapperRef, width, throttlingInterval, padding]);
+  }, [wrapperRef, colItemWidth, throttlingInterval, padding]);
 
   useEffect(() => {
     const scrollerReference = row.outerRef.current;
@@ -193,9 +201,10 @@ export const VirtualizedGrid = <T extends object>({
         style={{
           width: `100%`,
           margin: `-${padding}px`,
-          padding: `${padding}px`,
+          paddingTop: `${padding}px`,
+          paddingLeft: `${isMobileScreen ? '10px' : `${padding}px`}`,
+          paddingRight: `${padding}px`,
           paddingBottom: `${scrollThreshold}px`,
-          overflow: 'hidden',
         }}
         ref={(el) => {
           row.outerRef.current = el;
@@ -221,6 +230,7 @@ export const VirtualizedGrid = <T extends object>({
                     transform: `translateX(${
                       colItem.start * spacingCoefficient
                     }px) translateY(${rowItem.start * rowSpacing}px)`,
+                    overflow: 'hidden',
                   }}
                 >
                   {items[

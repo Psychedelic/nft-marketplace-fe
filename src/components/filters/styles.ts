@@ -13,11 +13,21 @@ const openArrowBounce = keyframes({
   },
 });
 
+const slideUp = keyframes({
+  '0%': {
+    transform: 'translateY(100%)',
+  },
+  '100%': {
+    transform: 'translateY(0%)',
+  },
+});
+
 export const Container = styled('div', {
   position: 'relative',
 
   '@md': {
-    display: 'none',
+    position: 'absolute',
+    zIndex: '100',
   },
 });
 
@@ -52,9 +62,28 @@ export const FiltersContainer = styled('div', {
   overflowX: 'hidden',
   msOverflowStyle: 'none',
   scrollbarWidth: 'none',
+  transition: 'transform 0.3s ease-in-out',
 
   '&::-webkit-scrollbar': {
     display: 'none',
+  },
+
+  '@md': {
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    left: '0',
+    top: '0',
+    display: 'none',
+  },
+
+  variants: {
+    isOpenFiltersMenu: {
+      true: {
+        display: 'block',
+        animation: `${slideUp} 700ms ease-in`,
+      },
+    },
   },
 });
 
@@ -162,10 +191,6 @@ export const Subheadings = styled('p', {
 
 export const CheckboxFilters = styled('div', {
   margin: '0px 0px 15px',
-
-  // '.checkbox-accordian': {
-  //   marginBottom: '0px',
-  // },
 });
 
 export const FilterButtonWrapper = styled('div', {
@@ -208,4 +233,32 @@ export const FilterHeader = styled('div', {
   top: '0',
   padding: '32px 20px 20px',
   zIndex: '5',
+
+  '@md': {
+    justifyContent: 'space-between',
+    width: 'unset',
+  },
+});
+
+export const FilterMobileActions = styled('div', {
+  position: 'fixed',
+  backgroundColor: 'white',
+  width: '100%',
+  height: '5%',
+  boxShadow: '0px 0px 8px 2px rgba(0, 0, 0, 0.08)',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '15px 0',
+  bottom: '0',
+  display: 'none',
+
+  '@md': {
+    display: 'flex'
+  }
+});
+
+export const ButtonWrapper = styled('div', {
+  '&:nth-child(1)': {
+    marginRight: '15px',
+  },
 });

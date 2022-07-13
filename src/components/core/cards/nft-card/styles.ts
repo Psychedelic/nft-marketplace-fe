@@ -34,12 +34,24 @@ export const CardWrapper = styled('div', {
   '&:hover': {
     boxShadow: '$active',
   },
+
+  '@sm': {
+    minWidth: '185px',
+  },
+
+  '@md': {
+    padding: '0px 15px 10px 15px',
+  },
 });
 
 export const MediaWrapper = styled('div', {
   position: 'relative',
   height: '207px',
   margin: '10px -15px',
+  
+  '@md': {
+    margin: '0px -15px 10px -15px',
+  },
 });
 
 export const PreviewDetails = styled('div', {
