@@ -30,6 +30,7 @@ import {
   InfoIcon,
   NFTCardPreview,
   NFTPreviewText,
+  ActionTextWrapper,
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
@@ -171,7 +172,9 @@ export const SellModal = ({
       {isTriggerVisible && (
         <DialogPrimitive.Trigger asChild>
           {actionText ? (
-            <ActionText>{actionText}</ActionText>
+            <ActionTextWrapper>
+              <ActionText>{actionText}</ActionText>
+            </ActionTextWrapper>
           ) : (
             <SellModalTrigger>
               <ActionButton type="primary">

@@ -9,7 +9,7 @@ import {
   filterActions,
 } from '../../store';
 import { disconnectPlug } from '../../integrations/plug';
-import { openSonicURL } from '../../utils/ handle-redirect-urls';
+import { openSonicURL } from '../../utils/handle-redirect-urls';
 import {
   PlugButtonContainer,
   PlugButtonText,

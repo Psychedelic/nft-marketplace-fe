@@ -30,6 +30,7 @@ import {
   NFTPreviewText,
   SellModalPreviewWrapper,
   SellModalPreviewContainer,
+  ActionTextWrapper,
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
@@ -179,7 +180,9 @@ export const ChangePriceModal = ({
       {isTriggerVisible && (
         <DialogPrimitive.Trigger asChild>
           {actionText ? (
-            <ActionText>{actionText}</ActionText>
+            <ActionTextWrapper>
+              <ActionText>{actionText}</ActionText>
+            </ActionTextWrapper>
           ) : (
             <ChangePriceModalTrigger>
               <ActionButton type="primary">
