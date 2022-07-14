@@ -125,12 +125,6 @@ export const NftList = () => {
       useWindow
       threshold={500}
       className="infinite-loader"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
     >
       <VirtualizedGrid
         loadingMore={hasMoreNFTs}
