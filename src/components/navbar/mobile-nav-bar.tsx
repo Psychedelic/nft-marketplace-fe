@@ -30,7 +30,7 @@ import {
   usePlugStore,
   useThemeStore,
 } from '../../store';
-import { openSonicURL } from '../../utils/ handle-redirect-urls';
+import { openSonicURL } from '../../utils/handle-redirect-urls';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { Plug } from '../plug';
