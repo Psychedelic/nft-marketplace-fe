@@ -35,12 +35,8 @@ export const CardWrapper = styled('div', {
     boxShadow: '$active',
   },
 
-  '@sm': {
-    minWidth: '185px',
-  },
-
   '@md': {
-    padding: '0px 15px 10px 15px',
+    minWidth: 'unset',
   },
 });
 
@@ -48,10 +44,6 @@ export const MediaWrapper = styled('div', {
   position: 'relative',
   height: '207px',
   margin: '10px -15px',
-  
-  '@md': {
-    margin: '0px -15px 10px -15px',
-  },
 });
 
 export const PreviewDetails = styled('div', {
@@ -139,6 +131,11 @@ export const ActionDetails = styled('span', {
 
 export const ActionText = styled('span', {
   marginRight: '5px',
+
+  '@md': {
+    fontSize: '12px',
+    marginRight: '2px',
+  },
 });
 
 export const NFTCardOptions = styled('div', {
@@ -160,6 +157,10 @@ export const PriceInActionSheet = styled(NumberTooltip, {
   fontSize: '14px',
   fontWeight: '700',
   color: '$mainTextColor',
+
+  '@md': {
+    fontSize: '12px',
+  },
 });
 
 export const HoverMessageContainer = styled('span', {
