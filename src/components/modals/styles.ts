@@ -415,6 +415,10 @@ export const ActionText = styled('span', {
       },
     },
   },
+
+  '@md': {
+    fontSize: '12px',
+  },
 });
 
 export const PlugButtonContainer = styled('div', {

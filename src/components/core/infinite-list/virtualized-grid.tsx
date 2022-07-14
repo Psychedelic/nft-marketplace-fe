@@ -6,12 +6,13 @@ import { CardListContainer } from './styles';
 
 const DefaultProps = {
   width: 210,
-  mobileWidth: 155,
+  mediumMobileWidth: 185,
+  smallMobileWidth: 170,
   height: 348,
   headerOffset: 76,
   columns: 3,
   scrollThreshold: 348,
-  rowSpacing: 0.95,
+  rowSpacing: 1.06,
   padding: 15,
   throttlingInterval: 300,
 };
@@ -31,7 +32,8 @@ export const VirtualizedGrid = <T extends object>({
   loadingMore,
   Skeleton,
   width = DefaultProps.width,
-  mobileWidth = DefaultProps.mobileWidth,
+  mediumMobileWidth = DefaultProps.mediumMobileWidth,
+  smallMobileWidth = DefaultProps.smallMobileWidth,
   height = DefaultProps.height,
   headerOffset = DefaultProps.headerOffset,
   columns = DefaultProps.columns,
@@ -43,12 +45,15 @@ export const VirtualizedGrid = <T extends object>({
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const [colItems, setColItems] = useState(columns);
+  const isMediumMobileScreen = useMediaQuery('(max-width: 850px)');
+  const isSmallMobileScreen = useMediaQuery('(max-width: 400px)');
+  const colItemWidth = (() => {
+    if (isSmallMobileScreen) return smallMobileWidth;
+    if (isMediumMobileScreen) return mediumMobileWidth;
+    return width;
+  })();
   const [spacingCoefficient, setSpacingCoefficient] =
     useState(rowSpacing);
-
-  const isMobileScreen = useMediaQuery('(max-width: 640px)');
-
-  const colItemWidth = isMobileScreen ? mobileWidth : width;
 
   const row = useVirtual<HTMLDivElement, HTMLDivElement>({
     itemCount:
@@ -85,7 +90,7 @@ export const VirtualizedGrid = <T extends object>({
       // Decrease the column number if the space between columns is too small
       if (
         (newSpacingCoefficient * wrapperWidth) / newColItems <
-        padding
+        (isMediumMobileScreen || isSmallMobileScreen ? 0 : padding)
       ) {
         newColItems -= 1;
         newSpacingCoefficient = getSpacingCoefficient();
@@ -93,7 +98,7 @@ export const VirtualizedGrid = <T extends object>({
 
       // Update column items state
       setColItems(newColItems);
-      setSpacingCoefficient(0.08 + 1);
+      setSpacingCoefficient(newSpacingCoefficient + 1);
     };
     resizeListener();
 
@@ -200,10 +205,10 @@ export const VirtualizedGrid = <T extends object>({
       <div
         style={{
           width: `100%`,
-          // margin: `-${padding}px`,
-          // paddingTop: `${padding}px`,
-          // paddingLeft: `${isMobileScreen ? '10px' : `${padding}px`}`,
-          // paddingRight: `${padding}px`,
+          margin: `-${padding}px`,
+          paddingTop: `${padding}px`,
+          paddingLeft: `${padding}px`,
+          paddingRight: `${padding}px`,
           paddingBottom: `${scrollThreshold}px`,
         }}
         ref={(el) => {
@@ -228,11 +233,10 @@ export const VirtualizedGrid = <T extends object>({
                   style={{
                     position: 'absolute',
                     height: `${rowItem.size}px`,
-                    minWidth: `${colItem.size}px`,
+                    width: `${colItem.size}px`,
                     transform: `translateX(${
                       colItem.start * spacingCoefficient
                     }px) translateY(${rowItem.start * rowSpacing}px)`,
-                    // overflow: 'hidden',
                   }}
                 >
                   {items[

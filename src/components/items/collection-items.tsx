@@ -124,7 +124,7 @@ export const CollectionItems = () => {
         <ContentWrapper>
           <Flex
             withMargin
-            justifyContent={isMobileScreen ? 'center' : 'spaceBetween'}
+            justifyContent='spaceBetween'
           >
             {!isMobileScreen ? (
               <ContentFlex>
