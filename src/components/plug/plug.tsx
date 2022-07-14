@@ -1,5 +1,6 @@
 import React, { useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ICNSReverseController } from '@psychedelic/icns-js';
 import { PlugButton } from './plug-button';
 import {
   usePlugStore,
@@ -15,6 +16,7 @@ import {
   checkIsConnected,
   getPrincipal,
   formatAddress,
+  getICNSInfo,
 } from '../../integrations/plug';
 import { disconnectPlug } from '../../integrations/plug/plug.utils';
 import {
@@ -43,6 +45,8 @@ export const Plug = () => {
     usePlugStore();
   const dispatch = useAppDispatch();
   const hasPlug = isPlugInstalled();
+
+  const reverseNameActor = new ICNSReverseController();
 
   const isVerifying = useMemo(
     () => connectionStatus === PlugStatusCodes.Verifying,
@@ -102,7 +106,18 @@ export const Plug = () => {
         // TODO: get ICNS name of pluggedIn user from getICNSInfo
         // TODO: For other users create util method to get ICNS name
         // by passing principal Id by using ICNS-js
-
+        const icnsName = await getICNSInfo();
+        const reverseName = await reverseNameActor.getReverseName(
+          principal,
+        );
+        console.log(
+          'ICNS name from Plug: (using getICNSInfo())',
+          icnsName,
+        );
+        console.log(
+          'ICNS name from ICNS-js using principalId: (using getReverseName(principalId))',
+          reverseName,
+        );
         if (principal) {
           if (typeof principal === 'string') {
             dispatch(

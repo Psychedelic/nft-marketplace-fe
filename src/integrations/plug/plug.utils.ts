@@ -38,4 +38,7 @@ export const hasPlugAgent = () => window.ic?.plug?.agent;
 
 export const disconnectPlug = () => window.ic?.plug?.disconnect();
 
-export const getPlugWalletBalance = () => window.ic?.plug?.requestBalance();
+export const getPlugWalletBalance = () =>
+  window.ic?.plug?.requestBalance();
+
+export const getICNSInfo = () => window.ic?.plug?.getICNSInfo();

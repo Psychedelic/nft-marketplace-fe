@@ -8,6 +8,7 @@
     "@dfinity/identity": "0.10.1",
     "@dfinity/principal": "0.10.1",
     "@psychedelic/cap-js": "^0.0.7",
+    "@psychedelic/icns-js": "^0.1.11",
     "@psychedelic/plug-connect": "^0.1.4",
     "@radix-ui/react-accordion": "^0.1.5",
     "@radix-ui/react-checkbox": "^0.1.4",
