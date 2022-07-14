@@ -30,6 +30,8 @@ import {
 import { getICAccountLink } from '../../utils/account-id';
 import config from '../../config/env';
 import { OperationType } from '../../constants';
+import useMediaQuery from '../../hooks/use-media-query';
+import MobileActivityTable from './mobile-activity-table';
 
 interface RowProps {
   item: {
@@ -62,6 +64,7 @@ export const ActivityTable = () => {
     (state: RootState) => state.cap.bucketId,
   );
   const tableSkeletonId = uuid();
+  const isMobileScreen = useMediaQuery('(max-width: 640px');
 
   useEffect(() => {
     dispatch(
@@ -156,6 +159,33 @@ export const ActivityTable = () => {
     [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  const mobileColumns = useMemo(
+    () => [
+      {
+        Header: t('translation:tables.titles.item'),
+        // eslint-disable-next-line
+        accessor: ({ item }: RowProps) => (
+          <ItemDetailsCell
+            name={item.name}
+            id={item.token_id}
+            logo={item.logo}
+          />
+        ),
+      },
+      {
+        Header: t('translation:tables.titles.type'),
+        accessor: ({ type, price, time }: RowProps) => (
+          <MobileActivityTable
+            type={type}
+            price={price}
+            time={time}
+          />
+        ),
+      },
+    ],
+    [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
   return (
     <InfiniteScrollWrapper
       pageStart={0}
@@ -169,6 +199,7 @@ export const ActivityTable = () => {
             showTypeDetails: true,
             type: 'large',
             infiniteLoader: true,
+            isMobileScreen,
           }}
           key={tableSkeletonId}
         />
@@ -179,13 +210,14 @@ export const ActivityTable = () => {
     >
       <Container>
         <TableLayout
-          columns={columns}
+          columns={isMobileScreen ? mobileColumns : columns}
           data={loadedCapActivityData}
           tableType="activity"
           loading={isTableLoading}
           loaderDetails={{
             showItemDetails: true,
             showTypeDetails: true,
+            isMobileScreen,
           }}
         />
       </Container>

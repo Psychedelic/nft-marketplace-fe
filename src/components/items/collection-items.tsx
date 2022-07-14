@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useFilterStore,
@@ -6,7 +6,6 @@ import {
   useAppDispatch,
   useNFTSStore,
   settingsActions,
-  nftsActions,
   usePlugStore,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
@@ -50,15 +49,6 @@ export const CollectionItems = () => {
   } = useNFTSStore();
 
   const { isConnected } = usePlugStore();
-
-  const appliedFiltersCount =
-    appliedFilters?.defaultFilters.length || 0;
-
-  useEffect(() => {
-    if (appliedFiltersCount > 0) return;
-
-    dispatch(nftsActions.getCollectionData());
-  }, [appliedFiltersCount]);
 
   useNFTSFetcher();
 
@@ -124,7 +114,9 @@ export const CollectionItems = () => {
         <ContentWrapper>
           <Flex
             withMargin
-            justifyContent={isMobileScreen ? 'center' : 'spaceBetween'}
+            justifyContent={
+              isMobileScreen ? 'center' : 'spaceBetween'
+            }
           >
             {!isMobileScreen ? (
               <ContentFlex>

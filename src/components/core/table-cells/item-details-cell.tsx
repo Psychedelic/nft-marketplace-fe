@@ -15,7 +15,9 @@ import {
   ItemLogo,
   ItemName,
   ThumbnailSkeleton,
+  ItemTokenId,
 } from './styles';
+import useMediaQuery from '../../../hooks/use-media-query';
 
 export interface ItemDetailsCellProps {
   name?: string;
@@ -28,6 +30,7 @@ export const ItemDetailsCell = ({
   id,
 }: ItemDetailsCellProps) => {
   const dispatch = useAppDispatch();
+  const isMobileScreen = useMediaQuery('(max-width: 640px');
   const tokenMetadataById = useSelector(
     (state: RootState) => state.table.tokenMetadataById,
   );
@@ -49,6 +52,10 @@ export const ItemDetailsCell = ({
     );
   }, [dispatch, id, hasThumbnail]);
 
+  const itemNameArray = name?.split(' ');
+  itemNameArray?.pop();
+  const newItemName = itemNameArray?.join(' ');
+
   return (
     <RouterLink to={`/nft/${id}`}>
       <ItemDetails>
@@ -57,7 +64,13 @@ export const ItemDetailsCell = ({
         ) : (
           <ItemLogo src={hasThumbnail} alt="crowns" />
         )}
-        <ItemName className="item-name">{name}</ItemName>
+        <ItemName className="item-name">
+          {isMobileScreen ? newItemName : name}
+          {isMobileScreen && <br />}
+          <ItemTokenId className="item-name">
+            {isMobileScreen && `#${id}`}
+          </ItemTokenId>
+        </ItemName>
       </ItemDetails>
     </RouterLink>
   );
