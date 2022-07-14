@@ -9,6 +9,7 @@ if [[ -z $host || "$host" == "local" ]]; then
   export MARKETPLACE_CANISTER_ID=$(cd nft-marketplace && dfx canister id marketplace)
   export NFT_CANISTER_ID=$(cd nft-marketplace/crowns && dfx canister id crowns)
   export NFT_CANISTER_STANDARD='DIP721v2'
+  export MARKETPLACE_ALLOWED_CANISTERS="{ \"$NFT_CANISTER_ID\": \"DIP721v2\" }"
 elif [[ "$host" != 'mainnet' ]]; then
   printf "usage: yarn kyasshu:start [service cluster: local | mainnet]\n"
   exit 1
@@ -22,4 +23,5 @@ printf "🤖 Starting kyasshu with the $host services...\n\n"
 [[ ! -z $NFT_CANISTER_STANDARD ]] && printf "  Using NFT_CANISTER_STANDARD: $NFT_CANISTER_STANDARD\n\n"
 
 cd kyasshu
+
 yarn dev
