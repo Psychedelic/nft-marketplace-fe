@@ -99,6 +99,9 @@ export const Plug = () => {
     if (isConnected) {
       const getPrincipalId = async () => {
         const principal = await getPrincipal();
+        // TODO: get ICNS name of pluggedIn user from getICNSInfo
+        // TODO: For other users create util method to get ICNS name
+        // by passing principal Id by using ICNS-js
 
         if (principal) {
           if (typeof principal === 'string') {
