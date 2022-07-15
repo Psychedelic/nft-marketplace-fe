@@ -162,6 +162,7 @@ export const NFTOffersTable = ({
               }
               url={url}
               type="offers"
+              principalId={fromDetails.address}
             />
           );
         },
