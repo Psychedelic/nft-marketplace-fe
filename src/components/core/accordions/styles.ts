@@ -65,50 +65,32 @@ export const AccordionHeadContent = styled('div', {
       },
     },
   },
+});
 
-  '& h3': {
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: '32px',
-    lineHeight: '39px',
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'right',
-    color: '$mainTextColor',
-    margin: '0',
-  },
+export const MetaDataDetails = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+});
 
-  '& h4': {
-    margin: '5px 0 0',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: '32px',
-    lineHeight: '39px',
-    display: 'flex',
-    alignitems: 'center',
-    color: '$mainTextColor',
-  },
+export const MetaDataTitle = styled('span', {
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '14px',
+  lineHeight: '17px',
+  display: 'flex',
+  alignitems: 'center',
+  color: '$greyMid',
+});
 
-  '& span': {
-    fontStyle: 'normal',
-    fontWeight: '500',
-    fontSize: '14px',
-    lineHeight: '17px',
-    display: 'flex',
-    alignitems: 'center',
-    color: '#767D8E',
-  },
-
-  '& p': {
-    margin: '5px 0 0',
-    fontStyle: 'normal',
-    fontWeight: '500',
-    fontSize: '18px',
-    lineHeight: '22px',
-    display: 'flex',
-    alignitems: 'center',
-    color: '$mainTextColor',
-  },
+export const MetaDataDescription = styled('p', {
+  margin: '5px 0 0',
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '18px',
+  lineHeight: '22px',
+  display: 'flex',
+  alignitems: 'center',
+  color: '$mainTextColor',
 });
 
 export const PriceWrapper = styled('div', {
