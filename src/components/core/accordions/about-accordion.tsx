@@ -94,8 +94,12 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
 
   useEffect(() => {
     (async () => {
-      if (isOwner)
-        return t('translation:accordions.about.header.you');
+      if (isOwner) {
+        setUserAddress(t('translation:accordions.about.header.you'));
+        setLoadingOwnerAddress(false);
+
+        return;
+      }
 
       setLoadingOwnerAddress(true);
 
