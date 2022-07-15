@@ -76,6 +76,7 @@ export const NFTActivityTable = () => {
               text={seller.formatted}
               url={url}
               type="nftActivity"
+              principalId={seller.raw}
             />
           );
         },
@@ -90,6 +91,7 @@ export const NFTActivityTable = () => {
               text={buyer.formatted}
               url={url}
               type="nftActivity"
+              principalId={buyer.raw}
             />
           );
         },
