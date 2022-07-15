@@ -267,6 +267,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
               text={fromDetails.formattedAddress}
               url={url}
               type=""
+              principalId={fromDetails.address}
             />
           );
         },
