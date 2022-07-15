@@ -122,10 +122,7 @@ export const CollectionItems = () => {
       )}
       <FilteredContainer>
         <ContentWrapper>
-          <Flex
-            withMargin
-            justifyContent={isMobileScreen ? 'center' : 'spaceBetween'}
-          >
+          <Flex withMargin justifyContent="spaceBetween">
             {!isMobileScreen ? (
               <ContentFlex>
                 {!loadingCollectionData && totalNFTSCount > 0 && (

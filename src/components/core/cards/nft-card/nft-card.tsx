@@ -209,14 +209,12 @@ export const NftCard = React.memo(
             previewCard={previewCard}
             tabIndex={-1}
           >
-            {!isMobileScreen && (
-              <Flex>
-                <OwnedCardText>
-                  {owned ? `${t('translation:nftCard.owned')}` : ''}
-                </OwnedCardText>
-                {!previewCard && <CardOptionsDropdown data={data} />}
-              </Flex>
-            )}
+            <Flex>
+              <OwnedCardText>
+                {owned ? `${t('translation:nftCard.owned')}` : ''}
+              </OwnedCardText>
+              {!previewCard && <CardOptionsDropdown data={data} />}
+            </Flex>
             <Media
               containerRef={containerRef}
               location={data?.location}
