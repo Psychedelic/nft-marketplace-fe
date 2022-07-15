@@ -1,7 +1,15 @@
+import { formatICNSName } from '../../utils/icns';
+
 type RequestConnectArgs = {
   whitelist?: string[];
   host?: string;
   onConnectionUpdate?: () => void;
+};
+
+type PlugButtonTextParams = {
+  icnsName?: string;
+  principalId?: string;
+  loadingText: string;
 };
 
 export const requestConnectToPlug = (args?: RequestConnectArgs) =>
@@ -38,4 +46,17 @@ export const hasPlugAgent = () => window.ic?.plug?.agent;
 
 export const disconnectPlug = () => window.ic?.plug?.disconnect();
 
-export const getPlugWalletBalance = () => window.ic?.plug?.requestBalance();
+export const getPlugWalletBalance = () =>
+  window.ic?.plug?.requestBalance();
+
+export const getICNSInfo = () => window.ic?.plug?.getICNSInfo();
+
+export const getPlugButtonText = (params: PlugButtonTextParams) => {
+  const { icnsName, principalId, loadingText } = params;
+
+  if (!principalId) return loadingText;
+
+  if (icnsName) return formatICNSName(icnsName as string);
+
+  return formatAddress(principalId as string);
+};

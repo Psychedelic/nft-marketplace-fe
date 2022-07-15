@@ -15,8 +15,12 @@ import {
   checkIsConnected,
   getPrincipal,
   formatAddress,
+  getICNSInfo,
 } from '../../integrations/plug';
-import { disconnectPlug } from '../../integrations/plug/plug.utils';
+import {
+  disconnectPlug,
+  getPlugButtonText,
+} from '../../integrations/plug/plug.utils';
 import {
   PLUG_WALLET_WEBSITE_URL,
   PlugStatusCodes,
@@ -39,7 +43,7 @@ const whitelist = [
 
 export const Plug = () => {
   const { t } = useTranslation();
-  const { isConnected, connectionStatus, principalId } =
+  const { isConnected, connectionStatus, principalId, icnsName } =
     usePlugStore();
   const dispatch = useAppDispatch();
   const hasPlug = isPlugInstalled();
@@ -99,6 +103,13 @@ export const Plug = () => {
     if (isConnected) {
       const getPrincipalId = async () => {
         const principal = await getPrincipal();
+        const icnsInfo = await getICNSInfo();
+
+        if (icnsInfo?.reverseResolvedName) {
+          dispatch(
+            plugActions.setICNSName(icnsInfo?.reverseResolvedName),
+          );
+        }
 
         if (principal) {
           if (typeof principal === 'string') {
@@ -212,11 +223,11 @@ export const Plug = () => {
           handleConnect={() => {
             AppLog.warn('Already connected to plug!');
           }}
-          text={
-            principalId
-              ? formatAddress(principalId as string)
-              : t('translation:buttons.action.loading')
-          }
+          text={getPlugButtonText({
+            principalId,
+            icnsName,
+            loadingText: t('translation:buttons.action.loading'),
+          })}
           isConnected={isConnected}
           principalId={principalId}
         />

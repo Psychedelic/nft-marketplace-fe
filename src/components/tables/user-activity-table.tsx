@@ -143,7 +143,14 @@ export const UserActivityTable = () => {
           const short = formatAddress(principalText);
           const url = getICAccountLink(principalText);
 
-          return <TextLinkCell text={short} url={url} type="" />;
+          return (
+            <TextLinkCell
+              text={short}
+              url={url}
+              type=""
+              principalId={principalText}
+            />
+          );
         },
       },
       {
@@ -157,7 +164,14 @@ export const UserActivityTable = () => {
           const short = formatAddress(principalText);
           const url = getICAccountLink(principalText);
 
-          return <TextLinkCell text={short} url={url} type="" />;
+          return (
+            <TextLinkCell
+              text={short}
+              url={url}
+              type=""
+              principalId={principalText}
+            />
+          );
         },
       },
       {

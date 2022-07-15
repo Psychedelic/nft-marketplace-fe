@@ -1,13 +1,63 @@
+import React, { useState, useEffect } from 'react';
+import { SkeletonBox } from '../skeleton';
 import { TextLinkDetails } from './styles';
+import { getICNSName, formatICNSName } from '../../../utils/icns';
+import { AppLog } from '../../../utils/log';
 
 export interface TextLinkCellProps {
   text?: string;
   url?: string;
   type: any;
+  principalId?: string;
 }
 
-export const TextLinkCell = ({ text, type, url }: TextLinkCellProps) => (
-  <TextLinkDetails type={type} href={url} target="_blank">
-    {text ? text : '-'}
-  </TextLinkDetails>
-);
+export const TextLinkCell = ({
+  text,
+  type,
+  url,
+  principalId,
+}: TextLinkCellProps) => {
+  const [icnsName, setICNSName] = useState<string>('');
+  const [icnsNameLoadingStatus, setICNSNameLoadingStatus] =
+    useState<boolean>(true);
+
+  useEffect(() => {
+    (async () => {
+      if (!principalId) {
+        setICNSNameLoadingStatus(false);
+
+        return;
+      }
+
+      setICNSNameLoadingStatus(true);
+
+      try {
+        const icnsName = await getICNSName(principalId);
+
+        setICNSName(icnsName);
+        setICNSNameLoadingStatus(false);
+      } catch (error) {
+        setICNSNameLoadingStatus(false);
+        AppLog.error(error);
+      }
+    })();
+  }, [principalId]);
+
+  if (icnsNameLoadingStatus) {
+    return <SkeletonBox />;
+  }
+
+  if (icnsName) {
+    return (
+      <TextLinkDetails type={type} href={url} target="_blank">
+        {formatICNSName(icnsName)}
+      </TextLinkDetails>
+    );
+  }
+
+  return (
+    <TextLinkDetails type={type} href={url} target="_blank">
+      {text ? text : '-'}
+    </TextLinkDetails>
+  );
+};

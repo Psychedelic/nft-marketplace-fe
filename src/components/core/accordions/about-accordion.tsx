@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
 import { useAppDispatch, usePlugStore } from '../../../store';
 import { LinkButton } from '../buttons';
+import { SkeletonBox } from '../skeleton';
 import {
   AccordionStyle,
   AccordionTrigger,
@@ -16,14 +17,18 @@ import {
   Flex,
   Subtext,
   LogoWrapper,
+  MetaDataDetails,
+  MetaDataTitle,
+  MetaDataDescription,
 } from './styles';
 import plugIcon from '../../../assets/plug-circle.svg';
 
 import { isNFTOwner } from '../../../integrations/kyasshu/utils';
-import { formatAddress } from '../../../utils/formatters';
 import { Icon } from '../../icons';
 import { notificationActions } from '../../../store/features/notifications';
 import config from '../../../config/env';
+import { formatUserAddress } from '../../../utils/addresses';
+import { AppLog } from '../../../utils/log';
 
 export type AboutAccordionProps = {
   owner?: string;
@@ -34,6 +39,10 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+
+  const [ownerAddress, setOwnerAddress] = useState<string>('');
+  const [loadingOwnerAddress, setLoadingOwnerAddress] =
+    useState<boolean>(true);
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
@@ -56,13 +65,6 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
       heading: 'Creator',
       // TODO: replace with creator url after integration is done
       image: 'https://psychedelic.ooo/images/11-2.svg',
-    },
-    {
-      subheading: isOwner
-        ? `${t('translation:accordions.about.header.you')}`
-        : (owner && formatAddress(owner)) || '',
-      heading: 'Owner',
-      image: plugIcon,
     },
   ];
 
@@ -90,6 +92,29 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
     [config, id],
   );
 
+  useEffect(() => {
+    (async () => {
+      if (isOwner) {
+        setOwnerAddress(t('translation:accordions.about.header.you'));
+        setLoadingOwnerAddress(false);
+
+        return;
+      }
+
+      setLoadingOwnerAddress(true);
+
+      try {
+        const formattedOwnerAddress = await formatUserAddress(owner);
+
+        setOwnerAddress(formattedOwnerAddress);
+        setLoadingOwnerAddress(false);
+      } catch (error) {
+        setLoadingOwnerAddress(false);
+        AppLog.error(error);
+      }
+    })();
+  }, [owner]);
+
   return (
     <AccordionStyle type="single" collapsible width="medium">
       <AccordionHead>
@@ -98,12 +123,31 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
             <LogoWrapper
               style={{ backgroundImage: `url(${data.image})` }}
             />
-            <div>
-              <span>{data.heading}</span>
-              <p>{data.subheading}</p>
-            </div>
+            <MetaDataDetails>
+              <MetaDataTitle>{data.heading}</MetaDataTitle>
+              <MetaDataDescription>
+                {data.subheading}
+              </MetaDataDescription>
+            </MetaDataDetails>
           </AccordionHeadContent>
         ))}
+        <AccordionHeadContent>
+          <LogoWrapper
+            style={{ backgroundImage: `url(${plugIcon})` }}
+          />
+          <MetaDataDetails>
+            <MetaDataTitle>
+              {t('translation:accordions.about.header.owner')}
+            </MetaDataTitle>
+            <MetaDataDescription>
+              {loadingOwnerAddress ? (
+                <SkeletonBox style={{ width: '80px' }} />
+              ) : (
+                ownerAddress
+              )}
+            </MetaDataDescription>
+          </MetaDataDetails>
+        </AccordionHeadContent>
       </AccordionHead>
       <Accordion.Item value="item-1">
         <AccordionTrigger
