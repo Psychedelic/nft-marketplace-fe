@@ -40,7 +40,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
   const { id } = useParams();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
 
-  const [userAddress, setUserAddress] = useState<string>('');
+  const [ownerAddress, setOwnerAddress] = useState<string>('');
   const [loadingOwnerAddress, setLoadingOwnerAddress] =
     useState<boolean>(true);
 
@@ -95,7 +95,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
   useEffect(() => {
     (async () => {
       if (isOwner) {
-        setUserAddress(t('translation:accordions.about.header.you'));
+        setOwnerAddress(t('translation:accordions.about.header.you'));
         setLoadingOwnerAddress(false);
 
         return;
@@ -106,7 +106,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
       try {
         const formattedOwnerAddress = await formatUserAddress(owner);
 
-        setUserAddress(formattedOwnerAddress);
+        setOwnerAddress(formattedOwnerAddress);
         setLoadingOwnerAddress(false);
       } catch (error) {
         setLoadingOwnerAddress(false);
@@ -143,7 +143,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
               {loadingOwnerAddress ? (
                 <SkeletonBox style={{ width: '80px' }} />
               ) : (
-                userAddress
+                ownerAddress
               )}
             </MetaDataDescription>
           </MetaDataDetails>
