@@ -27,7 +27,7 @@ import { isNFTOwner } from '../../../integrations/kyasshu/utils';
 import { Icon } from '../../icons';
 import { notificationActions } from '../../../store/features/notifications';
 import config from '../../../config/env';
-import { showUserAddress } from '../../../utils/addresses';
+import { formatUserAddress } from '../../../utils/addresses';
 import { AppLog } from '../../../utils/log';
 
 export type AboutAccordionProps = {
@@ -104,7 +104,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
       setLoadingOwnerAddress(true);
 
       try {
-        const formattedOwnerAddress = await showUserAddress(owner);
+        const formattedOwnerAddress = await formatUserAddress(owner);
 
         setUserAddress(formattedOwnerAddress);
         setLoadingOwnerAddress(false);

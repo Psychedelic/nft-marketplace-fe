@@ -1,7 +1,7 @@
 import { getICNSName, formatICNSName } from './icns';
 import { formatAddress } from './formatters';
 
-export const showUserAddress = async (principal?: string) => {
+export const formatUserAddress = async (principal?: string) => {
   if (!principal) return '';
 
   const icnsName = await getICNSName(principal);
