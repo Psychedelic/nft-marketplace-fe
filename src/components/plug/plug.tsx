@@ -1,6 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ICNSReverseController } from '@psychedelic/icns-js';
 import { PlugButton } from './plug-button';
 import {
   usePlugStore,
@@ -18,7 +17,10 @@ import {
   formatAddress,
   getICNSInfo,
 } from '../../integrations/plug';
-import { disconnectPlug } from '../../integrations/plug/plug.utils';
+import {
+  disconnectPlug,
+  getPlugButtonText,
+} from '../../integrations/plug/plug.utils';
 import {
   PLUG_WALLET_WEBSITE_URL,
   PlugStatusCodes,
@@ -41,12 +43,10 @@ const whitelist = [
 
 export const Plug = () => {
   const { t } = useTranslation();
-  const { isConnected, connectionStatus, principalId } =
+  const { isConnected, connectionStatus, principalId, icnsName } =
     usePlugStore();
   const dispatch = useAppDispatch();
   const hasPlug = isPlugInstalled();
-
-  const reverseNameActor = new ICNSReverseController();
 
   const isVerifying = useMemo(
     () => connectionStatus === PlugStatusCodes.Verifying,
@@ -103,21 +103,14 @@ export const Plug = () => {
     if (isConnected) {
       const getPrincipalId = async () => {
         const principal = await getPrincipal();
-        // TODO: get ICNS name of pluggedIn user from getICNSInfo
-        // TODO: For other users create util method to get ICNS name
-        // by passing principal Id by using ICNS-js
-        const icnsName = await getICNSInfo();
-        const reverseName = await reverseNameActor.getReverseName(
-          principal,
-        );
-        console.log(
-          'ICNS name from Plug: (using getICNSInfo())',
-          icnsName,
-        );
-        console.log(
-          'ICNS name from ICNS-js using principalId: (using getReverseName(principalId))',
-          reverseName,
-        );
+        const icnsInfo = await getICNSInfo();
+
+        if (icnsInfo?.reverseResolvedName) {
+          dispatch(
+            plugActions.setICNSName(icnsInfo?.reverseResolvedName),
+          );
+        }
+
         if (principal) {
           if (typeof principal === 'string') {
             dispatch(
@@ -230,11 +223,11 @@ export const Plug = () => {
           handleConnect={() => {
             AppLog.warn('Already connected to plug!');
           }}
-          text={
-            principalId
-              ? formatAddress(principalId as string)
-              : t('translation:buttons.action.loading')
-          }
+          text={getPlugButtonText({
+            principalId,
+            icnsName,
+            loadingText: t('translation:buttons.action.loading'),
+          })}
           isConnected={isConnected}
           principalId={principalId}
         />

@@ -10,6 +10,7 @@ interface PlugState {
   connectionStatus: PlugStatusCodes;
   walletsWICPBalance: number;
   loadingWICPBalance: boolean;
+  icnsName?: string;
 }
 
 // Define the initial state using that type
@@ -19,6 +20,7 @@ const initialState: PlugState = {
   connectionStatus: 'verifying' as PlugStatusCodes,
   walletsWICPBalance: 0,
   loadingWICPBalance: true,
+  icnsName: undefined,
 };
 
 export const plugSlice = createSlice({
@@ -37,6 +39,9 @@ export const plugSlice = createSlice({
     },
     setPrincipalId: (state, action: PayloadAction<string>) => {
       state.principalId = action.payload;
+    },
+    setICNSName: (state, action: PayloadAction<string>) => {
+      state.icnsName = action.payload;
     },
     setConnectionStatus: (
       state,
