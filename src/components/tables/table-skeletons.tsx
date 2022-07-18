@@ -8,6 +8,7 @@ export type TableSkeletonProps = {
     type?: any;
     hideColumns?: boolean;
     infiniteLoader?: boolean;
+    isMobileScreen?: boolean;
   };
 };
 
@@ -16,18 +17,22 @@ export type TableStringsProps = {
   hideColumns?: boolean;
 };
 
+export type TypeDetailProps = {
+  isMobileScreen?: boolean;
+};
+
 export const ItemDetail = () => (
   <td>
     <Flex>
       <SkeletonBox style={{ width: '48px', height: '48px' }} />
-      <SkeletonBox style={{ width: '160px' }} />
+      <SkeletonBox size="large" />
     </Flex>
   </td>
 );
 
-export const TypeDetail = () => (
+export const TypeDetail = ({ isMobileScreen }: TypeDetailProps) => (
   <td>
-    <Flex>
+    <Flex isMobileScreen={isMobileScreen}>
       <SkeletonBox style={{ width: '20px', height: '20px' }} />
       <SkeletonBox />
     </Flex>
@@ -57,21 +62,36 @@ const TableSkeletons = ({
     type = 'large',
     hideColumns,
     infiniteLoader,
+    isMobileScreen,
   },
-}: TableSkeletonProps) =>
-  infiniteLoader ? (
+}: TableSkeletonProps) => {
+  return infiniteLoader ? (
     <Container>
       <table>
         <tbody>
           <TableSkeletonsWrapper type={type} role="row">
-            {showItemDetails && <ItemDetail />}
-            {showTypeDetails && <TypeDetail />}
-            <TableStrings type={type} hideColumns={hideColumns} />
-            <TableStrings type={type} hideColumns={hideColumns} />
-            <TableStrings type={type} hideColumns={hideColumns} />
-            <TableStrings type={type} hideColumns={hideColumns} />
-            {hideColumns === false && (
-              <TableStrings type={type} hideColumns={hideColumns} />
+            {isMobileScreen ? (
+              <>
+                {showItemDetails && <ItemDetail />}
+                {showTypeDetails && (
+                  <TypeDetail isMobileScreen={isMobileScreen} />
+                )}
+              </>
+            ) : (
+              <>
+                {showItemDetails && <ItemDetail />}
+                {showTypeDetails && <TypeDetail />}
+                <TableStrings type={type} hideColumns={hideColumns} />
+                <TableStrings type={type} hideColumns={hideColumns} />
+                <TableStrings type={type} hideColumns={hideColumns} />
+                <TableStrings type={type} hideColumns={hideColumns} />
+                {hideColumns === false && (
+                  <TableStrings
+                    type={type}
+                    hideColumns={hideColumns}
+                  />
+                )}
+              </>
             )}
           </TableSkeletonsWrapper>
         </tbody>
@@ -79,15 +99,27 @@ const TableSkeletons = ({
     </Container>
   ) : (
     <TableSkeletonsWrapper type={type} role="row">
-      {showItemDetails && <ItemDetail />}
-      {showTypeDetails && <TypeDetail />}
-      <TableStrings type={type} hideColumns={hideColumns} />
-      <TableStrings type={type} hideColumns={hideColumns} />
-      <TableStrings type={type} hideColumns={hideColumns} />
-      <TableStrings type={type} hideColumns={hideColumns} />
-      {hideColumns === false && (
-        <TableStrings type={type} hideColumns={hideColumns} />
+      {isMobileScreen ? (
+        <>
+          {showItemDetails && <ItemDetail />}
+          {showTypeDetails && (
+            <TypeDetail isMobileScreen={isMobileScreen} />
+          )}
+        </>
+      ) : (
+        <>
+          {showItemDetails && <ItemDetail />}
+          {showTypeDetails && <TypeDetail />}
+          <TableStrings type={type} hideColumns={hideColumns} />
+          <TableStrings type={type} hideColumns={hideColumns} />
+          <TableStrings type={type} hideColumns={hideColumns} />
+          <TableStrings type={type} hideColumns={hideColumns} />
+          {hideColumns === false && (
+            <TableStrings type={type} hideColumns={hideColumns} />
+          )}
+        </>
       )}
     </TableSkeletonsWrapper>
   );
+};
 export default TableSkeletons;

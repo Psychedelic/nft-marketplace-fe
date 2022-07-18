@@ -15,7 +15,9 @@ import {
   ItemLogo,
   ItemName,
   ThumbnailSkeleton,
+  ItemTokenId,
 } from './styles';
+import useMediaQuery from '../../../hooks/use-media-query';
 
 export interface ItemDetailsCellProps {
   name?: string;
@@ -28,6 +30,7 @@ export const ItemDetailsCell = ({
   id,
 }: ItemDetailsCellProps) => {
   const dispatch = useAppDispatch();
+  const isMobileScreen = useMediaQuery('(max-width: 640px');
   const tokenMetadataById = useSelector(
     (state: RootState) => state.table.tokenMetadataById,
   );
@@ -57,7 +60,12 @@ export const ItemDetailsCell = ({
         ) : (
           <ItemLogo src={hasThumbnail} alt="crowns" />
         )}
-        <ItemName className="item-name">{name}</ItemName>
+        <ItemName className="item-name">
+          {isMobileScreen ? 'Cap Crowns' : name}
+          <ItemTokenId className="item-name">
+            {isMobileScreen && `#${id}`}
+          </ItemTokenId>
+        </ItemName>
       </ItemDetails>
     </RouterLink>
   );
