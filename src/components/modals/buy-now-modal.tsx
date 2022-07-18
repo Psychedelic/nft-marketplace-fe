@@ -289,6 +289,9 @@ export const BuyNowModal = ({
           {modalStep === DirectBuyStatusCodes.InsufficientBalance && (
             <InsufficientBalance
               onCancel={() => handleModalOpen(false)}
+              message={t(
+                'translation:modals.description.notEnoughFundsToPurchase',
+              )}
             />
           )}
         </ModalContent>

@@ -24,10 +24,16 @@ import {
 import { ModalOverlay } from './modal-overlay';
 
 import { ListingStatusCodes } from '../../constants/listing';
-import { useAppDispatch, marketplaceActions } from '../../store';
+import {
+  useAppDispatch,
+  marketplaceActions,
+  usePlugStore,
+} from '../../store';
 import { AppLog } from '../../utils/log';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { ThemeRootElement } from '../../constants/common';
+import { isBalanceInsufficient } from '../../utils/balance';
+import { InsufficientBalance } from './steps/insufficient-balance';
 
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
@@ -66,6 +72,8 @@ export const MakeOfferModal = ({
 
   const tokenId = useMemo(() => id || nftTokenId, [id, nftTokenId]);
 
+  const { loadingWICPBalance, walletsWICPBalance } = usePlugStore();
+
   useEffect(() => {
     if (!offerPrice || !modalOpened) return;
 
@@ -90,6 +98,18 @@ export const MakeOfferModal = ({
       return;
     }
 
+    if (
+      isBalanceInsufficient({
+        loadingWICPBalance,
+        amountRequired: Number(amount),
+        walletsWICPBalance,
+      })
+    ) {
+      setModalStep(ListingStatusCodes.InsufficientBalance);
+
+      return;
+    }
+
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
@@ -110,6 +130,8 @@ export const MakeOfferModal = ({
     navigate(`/nft/${tokenId}`, { replace: true });
     setModalOpened(false);
   };
+
+  // TODO: add step to handle insufficient balance in UI
 
   return (
     <DialogPrimitive.Root
@@ -298,6 +320,21 @@ export const MakeOfferModal = ({
                 </ModalButtonWrapper>
               </ModalButtonsList>
             </Container>
+          )}
+          {/*
+          ---------------------------------
+          Step: -> insufficient balance
+          ---------------------------------
+        */}
+          {modalStep === ListingStatusCodes.InsufficientBalance && (
+            <InsufficientBalance
+              onCancel={() =>
+                setModalStep(ListingStatusCodes.ListingInfo)
+              }
+              message={t(
+                'translation:modals.description.notEnoughFundsToMakeOffer',
+              )}
+            />
           )}
         </ModalContent>
       </DialogPrimitive.Portal>

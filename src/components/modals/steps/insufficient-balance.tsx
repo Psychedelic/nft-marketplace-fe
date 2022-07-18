@@ -17,10 +17,12 @@ import { openSonicURL } from '../../../utils/handle-redirect-urls';
 
 export type InsufficientBalanceProps = {
   onCancel?: () => void;
+  message: string;
 };
 
 export const InsufficientBalance = ({
   onCancel,
+  message,
 }: InsufficientBalanceProps) => {
   const { t } = useTranslation();
 
@@ -30,9 +32,7 @@ export const InsufficientBalance = ({
         <ModalTitle>
           {t('translation:modals.title.notEnoughFunds')}
         </ModalTitle>
-        <ModalDescription size="medium">
-          {t('translation:modals.description.notEnoughFunds')}
-        </ModalDescription>
+        <ModalDescription size="medium">{message}</ModalDescription>
       </ModalHeader>
       <ModalButtonsList>
         <ModalButtonWrapper>
