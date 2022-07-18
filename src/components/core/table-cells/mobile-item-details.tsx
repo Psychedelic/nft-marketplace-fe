@@ -1,19 +1,19 @@
 import React from 'react';
-import { OperationType } from '../../constants';
-import { parseE8SAmountToWICP } from '../../utils/formatters';
-import { PriceDetailsCell, TextCell, TypeDetailsCell } from '../core';
+import { OperationType } from '../../../constants';
+import { parseE8SAmountToWICP } from '../../../utils/formatters';
+import { PriceDetailsCell, TextCell, TypeDetailsCell } from '..';
 
-type MobileActivityTableProps = {
+type MobileItemDetailsProps = {
   type: OperationType;
   price?: string;
   time?: string;
 };
 
-const MobileActivityTable = ({
+const MobileItemDetails = ({
   type,
   price,
   time,
-}: MobileActivityTableProps) => {
+}: MobileItemDetailsProps) => {
   return (
     <div>
       <TypeDetailsCell type={type} tableType="" />
@@ -26,4 +26,4 @@ const MobileActivityTable = ({
   );
 };
 
-export default MobileActivityTable;
+export default MobileItemDetails;

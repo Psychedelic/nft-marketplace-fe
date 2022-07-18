@@ -65,8 +65,6 @@ const TableSkeletons = ({
     isMobileScreen,
   },
 }: TableSkeletonProps) => {
-  console.log(isMobileScreen);
-
   return infiniteLoader ? (
     <Container>
       <table>
