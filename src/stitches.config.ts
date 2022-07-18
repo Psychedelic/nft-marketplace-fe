@@ -113,7 +113,7 @@ export const darkTheme = createTheme({
     mobileStyledIconColor: '#727273',
     defaultBackgroundColour: '#FFFFFF',
     defaultTxtColour: '#000000',
-    subTextGrey: '#777E90',
+    textNeutralColor: '#777E90',
   },
   shadows: {
     default: 'none',

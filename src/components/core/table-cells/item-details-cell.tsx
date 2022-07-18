@@ -52,10 +52,6 @@ export const ItemDetailsCell = ({
     );
   }, [dispatch, id, hasThumbnail]);
 
-  const itemNameArray = name?.split(' ');
-  itemNameArray?.pop();
-  const newItemName = itemNameArray?.join(' ');
-
   return (
     <RouterLink to={`/nft/${id}`}>
       <ItemDetails>
@@ -65,8 +61,7 @@ export const ItemDetailsCell = ({
           <ItemLogo src={hasThumbnail} alt="crowns" />
         )}
         <ItemName className="item-name">
-          {isMobileScreen ? newItemName : name}
-          {isMobileScreen && <br />}
+          {isMobileScreen ? 'Cap Crowns' : name}
           <ItemTokenId className="item-name">
             {isMobileScreen && `#${id}`}
           </ItemTokenId>
