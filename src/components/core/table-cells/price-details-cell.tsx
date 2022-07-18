@@ -1,4 +1,5 @@
 import wicpIcon from '../../../assets/wicp.svg';
+import useMediaQuery from '../../../hooks/use-media-query';
 import {
   PriceDetails,
   WICPContainer,
@@ -8,7 +9,7 @@ import {
 } from './styles';
 
 export interface PriceDetailsCellProps {
-  wicp: string;
+  wicp?: string;
   price?: string;
   tableType: any;
 }
@@ -17,13 +18,21 @@ export const PriceDetailsCell = ({
   wicp,
   price,
   tableType,
-}: PriceDetailsCellProps) => (
-  <PriceDetails>
-    <WICPContainer tableType={tableType}>
-      <WICPText tableType={tableType}>{wicp ? wicp : '-'}</WICPText>
-      <WICPText tableType={tableType}>{wicp ? "WICP" : '-'}</WICPText>
-      {wicp && <WICPLogo src={wicpIcon} alt="wicp" />}
-    </WICPContainer>
-    {price && <PriceText tableType={tableType}>{price}</PriceText>}
-  </PriceDetails>
-);
+}: PriceDetailsCellProps) => {
+  const isMobileScreen = useMediaQuery('(max-width: 640px');
+
+  return (
+    <PriceDetails>
+      <WICPContainer tableType={tableType}>
+        <WICPText tableType={tableType}>{wicp ? wicp : '-'}</WICPText>
+        {!isMobileScreen && (
+          <WICPText tableType={tableType}>
+            {wicp ? 'WICP' : '-'}
+          </WICPText>
+        )}
+        {wicp && <WICPLogo src={wicpIcon} alt="wicp" />}
+      </WICPContainer>
+      {price && <PriceText tableType={tableType}>{price}</PriceText>}
+    </PriceDetails>
+  );
+};

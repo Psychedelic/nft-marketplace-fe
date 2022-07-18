@@ -17,6 +17,7 @@ export interface TableLayoutProps {
     showTypeDetails?: boolean;
     type?: string;
     hideColumns?: boolean;
+    isMobileScreen?: boolean;
   };
   loadingTableRows?: boolean;
   emptyMessage?: string;
@@ -51,19 +52,20 @@ export const TableLayout = ({
     <TableWrapper type={tableType}>
       <table {...getTableProps()}>
         <thead>
-          {headerGroups.map((headerGroup, idx) => (
-            <tr
-              {...headerGroup.getHeaderGroupProps()}
-              // eslint-disable-next-line react/no-array-index-key
-              key={idx}
-            >
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()} key={column.id}>
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
+          {!loaderDetails.isMobileScreen &&
+            headerGroups.map((headerGroup, idx) => (
+              <tr
+                {...headerGroup.getHeaderGroupProps()}
+                // eslint-disable-next-line react/no-array-index-key
+                key={idx}
+              >
+                {headerGroup.headers.map((column) => (
+                  <th {...column.getHeaderProps()} key={column.id}>
+                    {column.render('Header')}
+                  </th>
+                ))}
+              </tr>
+            ))}
         </thead>
         <tbody {...getTableBodyProps()}>
           {loading && isTableDataEmpty && (
@@ -95,9 +97,7 @@ export const TableLayout = ({
               <EmptyStateContainer
                 colSpan={headerGroups[0]?.headers.length}
               >
-                <EmptyStateMessage
-                  type="mediumTable"
-                >
+                <EmptyStateMessage type="mediumTable">
                   {emptyMessage}
                 </EmptyStateMessage>
               </EmptyStateContainer>

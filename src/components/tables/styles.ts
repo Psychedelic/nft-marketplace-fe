@@ -56,6 +56,15 @@ export const TableWrapper = styled('div', {
 
           '&:first-child': {
             paddingLeft: '80px',
+
+            '@sm': {
+              paddingLeft: '25px',
+            },
+          },
+
+          '@sm': {
+            borderTop: '1px solid $borderColor',
+            padding: '20px 0px 20px 10px',
           },
         },
         '&:hover': {
@@ -211,6 +220,10 @@ export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
 
         '&:first-child': {
           paddingLeft: '80px',
+
+          '@sm': {
+            paddingLeft: '25px',
+          },
         },
       },
     },
@@ -244,12 +257,25 @@ export const TableSkeletonsWrapper = styled('tr', {
       },
     },
   },
+
+  '@sm': {
+    padding: '5px 25px',
+  },
 });
 
 export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '10px',
+
+  variants: {
+    isMobileScreen: {
+      true: {
+        justifyContent: 'flex-end',
+        paddingRight: '25px',
+      },
+    },
+  },
 });
 
 export const EmptyStateContainer = styled('th', {
