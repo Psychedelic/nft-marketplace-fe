@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { OperationType } from '../../../constants';
-import { Icon, Icons } from '../../icons';
-import { TypeDetails, TypeName } from './styles';
+import { Icons } from '../../icons';
+import { TypeDetails, TypeName, StyledIcon } from './styles';
 
 export interface TypeDetailsCellProps {
   type: OperationType;
@@ -26,7 +26,7 @@ export const TypeDetailsCell = ({
   return (
     <TypeDetails data-event-type={type}>
       {type && Object.keys(EventIcon).includes(type) && (
-        <Icon icon={EventIcon[type]} paddingRight />
+        <StyledIcon icon={EventIcon[type]} paddingRight />
       )}
       <TypeName tableType={tableType}>
         {t(`translation:tables.eventType.${type}`)}

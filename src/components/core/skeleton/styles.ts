@@ -25,6 +25,12 @@ export const SkeletonBox = styled('div', {
       small: {
         width: '85px',
       },
+      large: {
+        width: '160px',
+        '@sm': {
+          width: '90px',
+        },
+      },
     },
   },
 });
