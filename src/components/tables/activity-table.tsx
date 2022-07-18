@@ -31,7 +31,7 @@ import { getICAccountLink } from '../../utils/account-id';
 import config from '../../config/env';
 import { OperationType } from '../../constants';
 import useMediaQuery from '../../hooks/use-media-query';
-import MobileActivityTable from '../core/table-cells/mobile-item-details';
+import MobileItemDetails from '../core/table-cells/mobile-item-details';
 
 interface RowProps {
   item: {
@@ -175,7 +175,7 @@ export const ActivityTable = () => {
       {
         Header: t('translation:tables.titles.type'),
         accessor: ({ type, price, time }: RowProps) => (
-          <MobileActivityTable
+          <MobileItemDetails
             type={type}
             price={price}
             time={time}
