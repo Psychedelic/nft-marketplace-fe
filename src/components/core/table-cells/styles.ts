@@ -1,10 +1,12 @@
 import { styled } from '../../../stitches.config';
+import { Icon } from '../../icons';
 import { SkeletonBox } from '../skeleton';
 
 export const ItemDetails = styled('div', {
   // base styles
   display: 'flex',
   alignItems: 'center',
+  flexWrap: 'wrap',
 });
 
 export const ThumbnailSkeleton = styled(SkeletonBox, {
@@ -26,12 +28,40 @@ export const ItemName = styled('div', {
   fontWeight: '500',
   lineHeight: '20px',
   color: '$mainTextColor',
+
+  '@sm': {
+    fontWeight: '600',
+  },
+});
+
+export const ItemTokenId = styled('div', {
+  fontSize: '16px',
+  fontWeight: '500',
+  lineHeight: '20px',
+  color: '$mainTextColor',
+
+  '@sm': {
+    fontWeight: '600',
+  },
 });
 
 export const TypeDetails = styled('div', {
   color: '$mainTextColor',
   display: 'flex',
   alignItems: 'center',
+
+  '@sm': {
+    paddingRight: '25px',
+    justifyContent: 'flex-end',
+    flexDirection: 'column',
+    alignItems: 'end',
+  },
+});
+
+export const StyledIcon = styled(Icon, {
+  '@sm': {
+    display: 'none',
+  },
 });
 
 export const TypeLogo = styled('img', {
@@ -67,12 +97,22 @@ export const TypeName = styled('div', {
       },
     },
   },
+
+  '@sm': {
+    color: '$textNeutralColor',
+    fontWeight: '600',
+  },
 });
 
 export const PriceDetails = styled('div', {
   // base styles
   display: 'flex',
   flexDirection: 'column',
+
+  '@sm': {
+    paddingRight: '25px',
+    alignItems: 'end',
+  },
 });
 
 export const WICPContainer = styled('div', {
@@ -119,11 +159,20 @@ export const WICPText = styled('div', {
       },
     },
   },
+
+  '@sm': {
+    order: '1',
+    fontWeight: '600',
+  },
 });
 
 export const WICPLogo = styled('img', {
   width: '15px',
   height: '15px',
+
+  '@sm': {
+    paddingRight: '5px',
+  },
 });
 
 export const PriceText = styled('div', {
@@ -177,6 +226,12 @@ export const TextDetails = styled('div', {
         color: '$tableTextColor',
       },
     },
+  },
+
+  '@sm': {
+    paddingRight: '25px',
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 });
 
