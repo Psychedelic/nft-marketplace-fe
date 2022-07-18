@@ -58,12 +58,22 @@ export const TraitChipContainer = styled('div', {
         '&:nth-child(3)': {
           marginRight: '0px',
         },
+
+        '@sm': {
+          '&:nth-child(3)': {
+            marginRight: '15px',
+          },
+        },
       },
     },
   },
 
   '&:last-child': {
     marginRight: '0px',
+  },
+
+  '@sm': {
+    marginRight: '15px',
   },
 });
 

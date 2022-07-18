@@ -6,6 +6,10 @@ export const Container = styled('div', {
   // background: '#FAFBFD',
   background: '$backgroundColor',
   paddingBottom: '30px',
+
+  '@sm': {
+    paddingBottom: '0px',
+  },
 });
 
 export const NftActionBarWrapper = styled('div', {
@@ -37,8 +41,21 @@ export const ButtonListWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   marginLeft: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+    margin: '20px 0px',
+    justifyContent: 'space-between',
+  },
 });
 
 export const ButtonWrapper = styled('div', {
   marginLeft: '0px',
+
+  '@sm': {
+    '&:nth-child(2)': {
+      flex: '1',
+      marginLeft: '5px',
+    },
+  },
 });

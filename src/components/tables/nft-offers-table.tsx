@@ -139,7 +139,8 @@ export const NFTOffersTable = ({
         ),
       },
       {
-        Header: t('translation:tables.titles.floorDifference'),
+        // Header: t('translation:tables.titles.floorDifference'),
+        Header: 'Floor Dif.',
         accessor: ({ floorDifference }: OffersTableItem) => (
           <TextCell text={floorDifference} type="offers" />
         ),

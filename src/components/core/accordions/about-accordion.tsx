@@ -27,9 +27,13 @@ import config from '../../../config/env';
 
 export type AboutAccordionProps = {
   owner?: string;
+  isMobileScreen?: boolean;
 };
 
-export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
+export const AboutAccordion = ({
+  owner,
+  isMobileScreen,
+}: AboutAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -92,24 +96,27 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
-      <AccordionHead>
-        {AccordionHeadContentData.map((data) => (
-          <AccordionHeadContent key={data.heading}>
-            <LogoWrapper
-              style={{ backgroundImage: `url(${data.image})` }}
-            />
-            <div>
-              <span>{data.heading}</span>
-              <p>{data.subheading}</p>
-            </div>
-          </AccordionHeadContent>
-        ))}
-      </AccordionHead>
+      {!isMobileScreen && (
+        <AccordionHead>
+          {AccordionHeadContentData.map((data) => (
+            <AccordionHeadContent key={data.heading}>
+              <LogoWrapper
+                style={{ backgroundImage: `url(${data.image})` }}
+              />
+              <div>
+                <span>{data.heading}</span>
+                <p>{data.subheading}</p>
+              </div>
+            </AccordionHeadContent>
+          ))}
+        </AccordionHead>
+      )}
       <Accordion.Item value="item-1">
         <AccordionTrigger
-          padding="medium"
+          padding={isMobileScreen ? 'small' : 'medium'}
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
-          borderTop="borderSet"
+          borderTop={isMobileScreen ? 'none' : 'borderSet'}
+          // borderType={isMobileScreen ? 'full' : 'none'}
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
@@ -123,7 +130,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
           <Icon icon="chevron-up" rotate={isAccordionOpen} />
         </AccordionTrigger>
         <AccordionContent
-          padding="medium"
+          padding={isMobileScreen ? 'small' : 'medium'}
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
         >
           <Description>

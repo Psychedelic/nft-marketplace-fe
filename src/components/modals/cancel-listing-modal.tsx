@@ -27,7 +27,13 @@ import { ThemeRootElement } from '../../constants/common';
  * Cancel Listing Modal Component
  * --------------------------------------------------------------------------*/
 
-export const CancelListingModal = () => {
+export type CancelListingModalProps = {
+  isMobileScreen?: boolean;
+};
+
+export const CancelListingModal = ({
+  isMobileScreen,
+}: CancelListingModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
@@ -87,7 +93,10 @@ export const CancelListingModal = () => {
       */}
       <DialogPrimitive.Trigger asChild>
         <CancelListingModalTrigger>
-          <ActionButton type="secondary">
+          <ActionButton
+            type="secondary"
+            size={isMobileScreen ? 'wide' : ''}
+          >
             {t('translation:buttons.action.cancelListing')}
           </ActionButton>
         </CancelListingModalTrigger>

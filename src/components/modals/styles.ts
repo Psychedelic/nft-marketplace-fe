@@ -32,6 +32,12 @@ export const ChangePriceModalTrigger = styled('div', {
   width: '155px',
   height: '50px',
   marginLeft: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const BuyNowModalTrigger = styled('div', {
@@ -50,6 +56,12 @@ export const CancelListingModalTrigger = styled('div', {
   width: '155px',
   height: '50px',
   marginLeft: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const CancelOfferModalTrigger = styled('div', {

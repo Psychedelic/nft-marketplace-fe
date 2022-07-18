@@ -215,6 +215,13 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
         borderBottom: 'none',
       },
     },
+    borderType: {
+      full: {
+        borderRadius: '14px',
+        border: '1.5px solid $borderColor',
+      },
+      none: {},
+    },
   },
   display: 'flex',
   alignItems: 'center',
@@ -331,6 +338,10 @@ export const Description = styled('p', {
   color: '#777E90',
   margin: '0',
   padding: '15px 0 25px',
+
+  '@sm': {
+    fontSize: '14px',
+  },
 });
 
 export const Flex = styled('div', {
@@ -350,6 +361,10 @@ export const Subtext = styled('p', {
   '&:last-child': {
     fontWeight: 'bold',
     color: '$mainTextColor',
+  },
+
+  '@sm': {
+    fontSize: '14px',
   },
 });
 

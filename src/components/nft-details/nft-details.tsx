@@ -32,6 +32,7 @@ import { extractTraitData } from '../../store/features/filters/async-thunks/get-
 import TraitsListLoader from './TraitsListLoader';
 import { roundOffDecimalValue } from '../../utils/nfts';
 import NFTDetailsSkeleton from './nft-details-skeleton';
+import useMediaQuery from '../../hooks/use-media-query';
 
 // type CurrentListing = {
 //   seller: string;
@@ -81,6 +82,7 @@ export const NftDetails = () => {
     (nftDetails?.price &&
       parseE8SAmountToWICP(BigInt(nftDetails.price)));
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
   // TODO: We need more control, plus the
   // kyasshu calls should be placed as a thunk/action
@@ -192,17 +194,42 @@ export const NftDetails = () => {
                 </>
               )}
             </NFTTraitsContainer>
+            {isMobileScreen && (
+              <>
+                <OfferAccordion
+                  lastSalePrice={lastSalePrice?.toString()}
+                  isListed={isListed}
+                  owner={owner}
+                  showNFTActionButtons={showNFTActionButtons}
+                  operator={nftDetails?.operator}
+                  isMobileScreen={isMobileScreen}
+                />
+                <AboutAccordion
+                  owner={owner}
+                  isMobileScreen={isMobileScreen}
+                />
+              </>
+            )}
           </PreviewContainer>
           <DetailsContainer>
-            <NFTMetaData id={id} />
-            <OfferAccordion
-              lastSalePrice={lastSalePrice?.toString()}
-              isListed={isListed}
+            <NFTMetaData
+              id={id}
               owner={owner}
+              isListed={isListed}
               showNFTActionButtons={showNFTActionButtons}
-              operator={nftDetails?.operator}
             />
-            <AboutAccordion owner={owner} />
+            {!isMobileScreen && (
+              <>
+                <OfferAccordion
+                  lastSalePrice={lastSalePrice?.toString()}
+                  isListed={isListed}
+                  owner={owner}
+                  showNFTActionButtons={showNFTActionButtons}
+                  operator={nftDetails?.operator}
+                />
+                <AboutAccordion owner={owner} />
+              </>
+            )}
           </DetailsContainer>
         </Wrapper>
       ) : (

@@ -55,6 +55,7 @@ export type OfferAccordionProps = {
   owner?: string;
   showNFTActionButtons: boolean;
   operator?: string;
+  isMobileScreen?: boolean;
 };
 
 type ConnectedProps = {
@@ -189,6 +190,7 @@ export const OfferAccordion = ({
   owner,
   showNFTActionButtons,
   operator,
+  isMobileScreen,
 }: OfferAccordionProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -260,83 +262,92 @@ export const OfferAccordion = ({
 
   return (
     <AccordionStyle type="single" collapsible width="medium">
-      <AccordionHead flexDirection="column">
-        {isListed ? (
-          <PriceWrapper>
-            <CurrentPriceWrapper>
-              <LogoWrapper
-                size="large"
-                style={{
-                  backgroundImage: `url(${wicpIcon})`,
-                }}
-              />
-              <div>
-                <OfferLabel>
-                  {t(
-                    'translation:accordions.offer.header.currentPrice',
-                  )}
-                </OfferLabel>
-                <OfferPrice>
-                  {(isListedWithPrice && `${lastSalePrice} WICP`) || (
-                    <UndefinedPrice>--</UndefinedPrice>
-                  )}
-                </OfferPrice>
-              </div>
-            </CurrentPriceWrapper>
-            <MarketPrice>
-              {isListedWithPrice && marketPrice}
-            </MarketPrice>
-          </PriceWrapper>
-        ) : (
-          <PriceWrapper>
-            <CurrentPriceWrapper>
-              <LogoWrapper
-                size="large"
-                style={{
-                  backgroundImage: `url(${wicpIcon})`,
-                }}
-              />
-              <div>
-                <OfferLabel>
-                  {t('translation:accordions.offer.header.topOffer')}
-                </OfferLabel>
-                {(!loadingOffers && (
+      {!isMobileScreen && (
+        <AccordionHead flexDirection="column">
+          {isListed ? (
+            <PriceWrapper>
+              <CurrentPriceWrapper>
+                <LogoWrapper
+                  size="large"
+                  style={{
+                    backgroundImage: `url(${wicpIcon})`,
+                  }}
+                />
+                <div>
+                  <OfferLabel>
+                    {t(
+                      'translation:accordions.offer.header.currentPrice',
+                    )}
+                  </OfferLabel>
                   <OfferPrice>
-                    {(topOffer?.price &&
-                      `${parseE8SAmountToWICP(
-                        topOffer.price,
-                      )} WICP`) ||
-                      t(
-                        'translation:accordions.offer.emptyStates.noOffer',
-                      )}
+                    {(isListedWithPrice &&
+                      `${lastSalePrice} WICP`) || (
+                      <UndefinedPrice>--</UndefinedPrice>
+                    )}
                   </OfferPrice>
-                )) || <UndefinedPrice>--</UndefinedPrice>}
-              </div>
-            </CurrentPriceWrapper>
-            <MarketPrice>
-              {(topOffer?.computedCurrencyPrice &&
-                `US$${formatPriceValue(
-                  topOffer.computedCurrencyPrice.toString(),
-                )}`) || <UndefinedPrice>--</UndefinedPrice>}
-            </MarketPrice>
-          </PriceWrapper>
-        )}
-        {(isConnected && (
-          <OnConnected
-            isListed={isListed}
-            isOwner={isOwner}
-            price={lastSalePrice}
-            showNFTActionButtons={showNFTActionButtons}
-            operator={operator}
-          />
-        )) || <OnDisconnected connectionStatus={connectionStatus} />}
-      </AccordionHead>
-      {isConnected && showNFTActionButtons && (
+                </div>
+              </CurrentPriceWrapper>
+              <MarketPrice>
+                {isListedWithPrice && marketPrice}
+              </MarketPrice>
+            </PriceWrapper>
+          ) : (
+            <PriceWrapper>
+              <CurrentPriceWrapper>
+                <LogoWrapper
+                  size="large"
+                  style={{
+                    backgroundImage: `url(${wicpIcon})`,
+                  }}
+                />
+                <div>
+                  <OfferLabel>
+                    {t(
+                      'translation:accordions.offer.header.topOffer',
+                    )}
+                  </OfferLabel>
+                  {(!loadingOffers && (
+                    <OfferPrice>
+                      {(topOffer?.price &&
+                        `${parseE8SAmountToWICP(
+                          topOffer.price,
+                        )} WICP`) ||
+                        t(
+                          'translation:accordions.offer.emptyStates.noOffer',
+                        )}
+                    </OfferPrice>
+                  )) || <UndefinedPrice>--</UndefinedPrice>}
+                </div>
+              </CurrentPriceWrapper>
+              <MarketPrice>
+                {(topOffer?.computedCurrencyPrice &&
+                  `US$${formatPriceValue(
+                    topOffer.computedCurrencyPrice.toString(),
+                  )}`) || <UndefinedPrice>--</UndefinedPrice>}
+              </MarketPrice>
+            </PriceWrapper>
+          )}
+          {(isConnected && (
+            <OnConnected
+              isListed={isListed}
+              isOwner={isOwner}
+              price={lastSalePrice}
+              showNFTActionButtons={showNFTActionButtons}
+              operator={operator}
+            />
+          )) || (
+            <OnDisconnected connectionStatus={connectionStatus} />
+          )}
+        </AccordionHead>
+      )}
+      {/* {isConnected && showNFTActionButtons && ( */}
+      {showNFTActionButtons && (
         <Accordion.Item value="item-1">
           <AccordionTrigger
-            padding="medium"
+            padding={isMobileScreen ? 'small' : 'medium'}
             backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
-            borderTop="borderSet"
+            borderTop={isMobileScreen ? 'none' : 'borderSet'}
+            borderType={isMobileScreen ? 'full' : 'none'}
             onClick={() => setIsAccordionOpen(!isAccordionOpen)}
           >
             <div>

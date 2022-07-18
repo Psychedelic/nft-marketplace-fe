@@ -89,6 +89,14 @@ export const TableWrapper = styled('div', {
                 '&:first-child': {
                   paddingLeft: '20px',
                 },
+
+                '@sm': {
+                  padding: '10px 5px',
+
+                  '&:first-child': {
+                    paddingLeft: '10px',
+                  },
+                },
               },
             },
           },
@@ -104,6 +112,14 @@ export const TableWrapper = styled('div', {
                 borderBottom: '1px solid $borderColor',
                 '&:first-child': {
                   paddingLeft: '20px',
+                },
+
+                '@sm': {
+                  padding: '10px 5px',
+
+                  '&:first-child': {
+                    paddingLeft: '10px',
+                  },
                 },
               },
               '&:last-child': {

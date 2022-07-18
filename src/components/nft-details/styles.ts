@@ -20,11 +20,19 @@ export const Wrapper = styled('div', {
       },
     },
   },
+
+  '@sm': {
+    flexWrap: 'wrap',
+  },
 });
 
 export const PreviewContainer = styled('div', {
   width: '100%',
   maxWidth: '480px',
+
+  '@sm': {
+    order: 2,
+  },
 });
 
 export const Video = styled(VideoPreload, {
@@ -35,6 +43,12 @@ export const Video = styled(VideoPreload, {
   maxHeight: '100%',
   minHeight: '470px',
   marginBottom: '10px',
+
+  '@sm': {
+    minHeight: 'unset',
+    maxHeight: 'unset',
+    marginTop: '10px',
+  },
 });
 
 export const NFTPreview = styled('img', {
@@ -46,6 +60,10 @@ export const NFTPreview = styled('img', {
 export const NFTTraitsContainer = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
+
+  '@sm': {
+    flexWrap: 'unset',
+  },
 });
 
 export const DetailsContainer = styled('div', {
@@ -54,6 +72,11 @@ export const DetailsContainer = styled('div', {
   flexDirection: 'column',
   alignItems: 'flex-end',
   padding: '0px 0px 0px 30px',
+
+  '@sm': {
+    order: '1',
+    padding: '0px',
+  },
 });
 
 export const TraitsListLoaderSkeletonWrapper = styled('div', {
