@@ -99,7 +99,7 @@ export const TypeName = styled('div', {
   },
 
   '@sm': {
-    color: '$subTextGrey',
+    color: '$textNeutralColor',
     fontWeight: '600',
   },
 });

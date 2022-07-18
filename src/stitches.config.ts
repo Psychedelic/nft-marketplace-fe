@@ -51,7 +51,7 @@ export const {
       mobileStyledIconColor: '#23262F',
       defaultBackgroundColour: '#000000',
       defaultTxtColour: '#FFFFFF',
-      subTextGrey: '#777E90',
+      textNeutralColor: '#777E90',
     },
     space: {},
     fonts: {},
