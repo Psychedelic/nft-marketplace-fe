@@ -290,12 +290,14 @@ export const OfferAccordionHeader = ({
       {isListed ? (
         <PriceWrapper>
           <CurrentPriceWrapper>
-            <LogoWrapper
-              size="large"
-              style={{
-                backgroundImage: `url(${wicpIcon})`,
-              }}
-            />
+            {!isMobileScreen && (
+              <LogoWrapper
+                size={isMobileScreen ? 'small' : 'large'}
+                style={{
+                  backgroundImage: `url(${wicpIcon})`,
+                }}
+              />
+            )}
             <div>
               <OfferLabel>
                 {t(
@@ -303,6 +305,14 @@ export const OfferAccordionHeader = ({
                 )}
               </OfferLabel>
               <OfferPrice>
+                {isMobileScreen && (
+                  <LogoWrapper
+                    size={isMobileScreen ? 'small' : 'large'}
+                    style={{
+                      backgroundImage: `url(${wicpIcon})`,
+                    }}
+                  />
+                )}
                 {(isListedWithPrice && `${lastSalePrice} WICP`) || (
                   <UndefinedPrice>--</UndefinedPrice>
                 )}

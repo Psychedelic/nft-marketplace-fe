@@ -167,12 +167,12 @@ export const AboutAccordion = ({
             ))}
             <ButtonWrapper>
               {isMobileScreen ? (
-                <LinkButton url="https://crowns.ooo/">
-                  <Website />
-                </LinkButton>
-              ) : (
                 <LinkButton type="textBtn" url="https://crowns.ooo/">
                   {t('translation:buttons.links.website')}
+                </LinkButton>
+              ) : (
+                <LinkButton url="https://crowns.ooo/">
+                  <Website />
                 </LinkButton>
               )}
               <LinkButton url="https://discord.gg/yVEcEzmrgm">

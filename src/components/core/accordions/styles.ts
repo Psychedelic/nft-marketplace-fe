@@ -169,6 +169,10 @@ export const OfferPrice = styled('div', {
   display: 'flex',
   alignItems: 'center',
   color: '$mainTextColor',
+
+  '@sm': {
+    fontSize: '28px',
+  },
 });
 
 export const MarketPrice = styled('div', {
