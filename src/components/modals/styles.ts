@@ -11,6 +11,16 @@ const overlayShow = keyframes({
   },
 });
 
+export const ModalRoot = styled(DialogPrimitive.Root, {
+  variants: {
+    isTriggerVisible: {
+      true: {
+        display: 'none',
+      },
+    },
+  },
+});
+
 const contentShow = keyframes({
   '0%': {
     opacity: 0,
@@ -28,7 +38,6 @@ export const SellModalTrigger = styled('div', {
   marginLeft: '10px',
 
   '@sm': {
-    width: '50%',
     marginLeft: '0px',
   },
 });

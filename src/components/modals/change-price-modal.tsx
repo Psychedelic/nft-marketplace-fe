@@ -59,7 +59,6 @@ export type ChangePriceModalProps = {
   nftTokenId?: string;
   nftPrice?: bigint;
   isTriggerVisible?: boolean;
-  isMobileScreen?: boolean;
 };
 
 export const ChangePriceModal = ({
@@ -68,7 +67,6 @@ export const ChangePriceModal = ({
   nftTokenId,
   nftPrice,
   isTriggerVisible,
-  isMobileScreen,
 }: ChangePriceModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -187,10 +185,7 @@ export const ChangePriceModal = ({
             </ActionTextWrapper>
           ) : (
             <ChangePriceModalTrigger>
-              <ActionButton
-                type="primary"
-                size={isMobileScreen ? 'wide' : ''}
-              >
+              <ActionButton type="primary">
                 {t('translation:buttons.action.changePrice')}
               </ActionButton>
             </ChangePriceModalTrigger>

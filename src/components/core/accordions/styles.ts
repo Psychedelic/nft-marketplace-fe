@@ -454,9 +454,18 @@ export const ButtonListWrapper = styled('div', {
 export const ButtonDetailsWrapper = styled('div', {
   marginLeft: '0px',
 
-  '@sm': {
-    flex: '0.5',
-    marginLeft: '5px',
+  variants: {
+    isTriggerVisible: {
+      true: {
+        '@sm': {
+          flex: '0.5',
+          marginLeft: '5px',
+        },
+      },
+      false: {
+        display: 'none',
+      },
+    },
   },
 });
 

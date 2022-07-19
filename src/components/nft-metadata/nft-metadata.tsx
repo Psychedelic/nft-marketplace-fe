@@ -74,10 +74,7 @@ export const NFTMetaData = ({
         <div>
           {showNFTActionButtons &&
             (isConnectedOwner ? (
-              <ActionBarOnConnected
-                isListed={isListed}
-                isMobileScreen={isMobileScreen}
-              />
+              <ActionBarOnConnected isListed={isListed} />
             ) : (
               <ActionBarOnDisconnected />
             ))}

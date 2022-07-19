@@ -8,30 +8,23 @@ import { ButtonListWrapper, ButtonWrapper } from './styles';
 
 type ConnectedProps = {
   isListed?: boolean;
-  isMobileScreen?: boolean;
 };
 
 export const ActionBarOnConnected = ({
   isListed,
-  isMobileScreen,
 }: ConnectedProps) => (
   <ButtonListWrapper>
     {isListed && (
-      <ButtonWrapper>
-        <CancelListingModal isMobileScreen={isMobileScreen} />
+      <ButtonWrapper isTriggerVisible={isListed}>
+        <CancelListingModal />
       </ButtonWrapper>
     )}
-    <ButtonWrapper>
-      <ChangePriceModal
-        isTriggerVisible={isListed}
-        isMobileScreen={isMobileScreen}
-      />
+    <ButtonWrapper isTriggerVisible={isListed}>
+      <ChangePriceModal isTriggerVisible={isListed} />
     </ButtonWrapper>
-    {!isListed && (
-      <ButtonWrapper>
-        <SellModal isTriggerVisible={!isListed} />
-      </ButtonWrapper>
-    )}
+    <ButtonWrapper isTriggerVisible={!isListed}>
+      <SellModal isTriggerVisible={!isListed} />
+    </ButtonWrapper>
   </ButtonListWrapper>
 );
 

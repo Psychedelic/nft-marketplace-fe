@@ -151,39 +151,47 @@ export const OnConnected = ({
 
   return (
     <ButtonListWrapper>
-      {showNonOwnerButtons && isListed && (
-        <ButtonDetailsWrapper>
-          <BuyNowModal
-            price={price?.toString()}
-            isTriggerVisible={showNonOwnerButtons && isListed}
-            isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
-          />
-        </ButtonDetailsWrapper>
-      )}
-      {!userMadeOffer && (
-        <ButtonDetailsWrapper>
-          <MakeOfferModal
-            isNFTListed={isListed}
-            isTriggerVisible={Boolean(
-              showNonOwnerButtons && !loadingOffers && !userMadeOffer,
-            )}
-          />
-        </ButtonDetailsWrapper>
-      )}
-      {userMadeOffer && (
-        <ButtonDetailsWrapper>
-          <MakeOfferModal
-            isOfferEditing
-            isNFTListed={isListed}
-            offerPrice={userMadeOffer?.price}
-            isTriggerVisible={Boolean(
-              showNonOwnerButtons && !loadingOffers && userMadeOffer,
-            )}
-          />
-        </ButtonDetailsWrapper>
-      )}
+      <ButtonDetailsWrapper
+        isTriggerVisible={showNonOwnerButtons && isListed}
+      >
+        <BuyNowModal
+          price={price?.toString()}
+          isTriggerVisible={showNonOwnerButtons && isListed}
+          isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
+        />
+      </ButtonDetailsWrapper>
+      <ButtonDetailsWrapper
+        isTriggerVisible={Boolean(
+          showNonOwnerButtons && !loadingOffers && !userMadeOffer,
+        )}
+      >
+        <MakeOfferModal
+          isNFTListed={isListed}
+          isTriggerVisible={Boolean(
+            showNonOwnerButtons && !loadingOffers && !userMadeOffer,
+          )}
+        />
+      </ButtonDetailsWrapper>
+      <ButtonDetailsWrapper
+        isTriggerVisible={Boolean(
+          showNonOwnerButtons && !loadingOffers && userMadeOffer,
+        )}
+      >
+        <MakeOfferModal
+          isOfferEditing
+          isNFTListed={isListed}
+          offerPrice={userMadeOffer?.price}
+          isTriggerVisible={Boolean(
+            showNonOwnerButtons && !loadingOffers && userMadeOffer,
+          )}
+        />
+      </ButtonDetailsWrapper>
       {showNonOwnerButtons && !loadingOffers && userMadeOffer && (
-        <ButtonDetailsWrapper>
+        <ButtonDetailsWrapper
+          isTriggerVisible={Boolean(
+            showNonOwnerButtons && !loadingOffers && userMadeOffer,
+          )}
+        >
           <CancelOfferModal
             item={userMadeOffer?.item}
             largeTriggerButton
