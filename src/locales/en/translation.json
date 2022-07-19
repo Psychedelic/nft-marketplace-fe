@@ -215,7 +215,7 @@
       "editOffer": "Edit Offer",
       "withdrawAssets": "Withdraw Assets",
       "withdrawalSuccess": "Withdrawal Success",
-      "notEnoughFunds": "Not enough funds"
+      "notEnoughFunds": "Insufficient Funds"
     },
     "description": {
       "makeListing": "Enter the sale price you want for your NFT.",
@@ -232,7 +232,7 @@
       "offerAccepted": "Congrats, you successfully accepted an offer.",
       "withdrawAssets": "The following fungible balances remain in the canister due to an error completing a transaction. Review the assets and click retry to receive them.",
       "notEnoughFundsToPurchase": "Transfer funds to your wallet to continue with the purchase of this NFT. If you have another asset you would like to swap for WICP you can use Sonic.",
-      "notEnoughFundsToMakeOffer": "Transfer funds to your wallet to continue make offer over this NFT. If you have another asset you would like to swap for WICP you can use Sonic."
+      "notEnoughFundsToMakeOffer": "Your wallet does not have the minimum required funds to make this offer. Please acquire the funds and try again."
     },
     "labels": {
       "protocolFee": "Protocol fee",
