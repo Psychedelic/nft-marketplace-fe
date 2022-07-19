@@ -5,6 +5,10 @@ import { VideoPreload } from '../video-preload';
 export const Container = styled('div', {
   width: '100%',
   marginBottom: '20px',
+
+  '@sm': {
+    overflowX: 'hidden',
+  },
 });
 
 export const Wrapper = styled('div', {
@@ -32,6 +36,9 @@ export const PreviewContainer = styled('div', {
 
   '@sm': {
     order: 2,
+    padding: '0px 14px',
+    maxWidth: 'unset',
+    overflowX: 'hidden',
   },
 });
 
@@ -63,6 +70,13 @@ export const NFTTraitsContainer = styled('div', {
 
   '@sm': {
     flexWrap: 'unset',
+    overflowX: 'scroll',
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
   },
 });
 
@@ -75,7 +89,7 @@ export const DetailsContainer = styled('div', {
 
   '@sm': {
     order: '1',
-    padding: '0px',
+    padding: '0px 14px',
   },
 });
 
@@ -116,4 +130,45 @@ export const AccordionSkeletion = styled(SkeletonBox, {
   maxWidth: '670px',
   height: '214px',
   marginBottom: '25px',
+});
+
+export const Divider = styled('div', {
+  height: '1px',
+  background: '$borderColor',
+  width: '100%',
+  margin: '5px 0px 20px',
+});
+
+export const OfferAccordionDetails = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '0px',
+  flexWrap: 'wrap',
+
+  // variants
+  variants: {
+    flexDirection: {
+      column: {
+        flexDirection: 'column',
+      },
+    },
+  },
+});
+
+export const AboutAccordionDetails = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '0px',
+  flexWrap: 'wrap',
+
+  '@sm': {
+    flexWrap: 'unset',
+    overflowX: 'scroll',
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+  },
 });

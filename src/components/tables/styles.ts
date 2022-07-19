@@ -147,6 +147,11 @@ export const TableWrapper = styled('div', {
           border: '1.5px solid $borderColor',
           boxSizing: 'border-box',
           borderRadius: '15px',
+          '@sm': {
+            borderTopRightRadius: 'unset',
+            borderTopLeftRadius: 'unset',
+          },
+
           thead: {
             tr: {
               th: {
@@ -160,6 +165,15 @@ export const TableWrapper = styled('div', {
 
                 '&:first-child': {
                   paddingLeft: '20px',
+                },
+
+                '@sm': {
+                  background: 'white',
+                  color: '$mainTextColor',
+                  fontSize: '20px',
+                  lineHeight: '24px',
+                  fontWeight: '600',
+                  padding: '25px 0',
                 },
               },
             },
@@ -177,6 +191,9 @@ export const TableWrapper = styled('div', {
                 '&:first-child': {
                   paddingLeft: '20px',
                 },
+                '@sm': {
+                  padding: '14px 20px',
+                },
               },
               '&:last-child': {
                 borderRadius: '15px',
@@ -184,11 +201,26 @@ export const TableWrapper = styled('div', {
                   borderBottom: 'initial',
                   '&:first-child': {
                     borderRadius: '15px',
+
+                    '@sm': {
+                      borderRadius: 'unset',
+                    },
                   },
                   '&:last-child': {
                     borderRadius: '15px',
+
+                    '@sm': {
+                      borderRadius: 'unset',
+                    },
+                  },
+                  '@sm': {
+                    borderBottom: 'unset',
                   },
                 },
+              },
+
+              '@sm': {
+                background: 'white',
               },
             },
           },

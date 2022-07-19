@@ -21,6 +21,6 @@ export const NFTDetailsWrapper = styled('div', {
   padding: '10px 30px 30px',
 
   '@sm': {
-    padding: '10px 14px 30px',
+    padding: '10px 0px 0px',
   },
 });

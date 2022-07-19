@@ -74,6 +74,7 @@ export const TraitChipContainer = styled('div', {
 
   '@sm': {
     marginRight: '15px',
+    filter: 'drop-shadow(2px 3px 6px rgba(0, 0, 0, 0.16))',
   },
 });
 

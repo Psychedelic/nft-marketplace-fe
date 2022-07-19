@@ -1,28 +1,27 @@
 import React from 'react';
 import { OperationType } from '../../../constants';
-import { parseE8SAmountToWICP } from '../../../utils/formatters';
 import { PriceDetailsCell, TextCell, TypeDetailsCell } from '..';
+import { MobileItemDetailsWrapper } from './styles';
 
 type MobileItemDetailsProps = {
   type: OperationType;
   price?: string;
   time?: string;
+  tableType: any;
 };
 
 const MobileItemDetails = ({
   type,
   price,
   time,
+  tableType,
 }: MobileItemDetailsProps) => {
   return (
-    <div>
-      <TypeDetailsCell type={type} tableType="" />
-      <PriceDetailsCell
-        wicp={price && parseE8SAmountToWICP(BigInt(price))}
-        tableType=""
-      />
+    <MobileItemDetailsWrapper tableType={tableType}>
+      <TypeDetailsCell type={type} />
+      <PriceDetailsCell wicp={price && price} tableType={tableType} />
       <TextCell text={time} type="activityTime" />
-    </div>
+    </MobileItemDetailsWrapper>
   );
 };
 

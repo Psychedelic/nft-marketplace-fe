@@ -26,6 +26,11 @@ export const SellModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
   marginLeft: '10px',
+
+  '@sm': {
+    width: '50%',
+    marginLeft: '0px',
+  },
 });
 
 export const ChangePriceModalTrigger = styled('div', {
@@ -44,12 +49,24 @@ export const BuyNowModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
   marginRight: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const MakeOfferModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
   marginRight: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const CancelListingModalTrigger = styled('div', {
@@ -74,6 +91,10 @@ export const CancelOfferModalTrigger = styled('div', {
       true: {
         width: '140px',
         height: '50px',
+
+        '@sm': {
+          width: '100%',
+        },
       },
     },
   },

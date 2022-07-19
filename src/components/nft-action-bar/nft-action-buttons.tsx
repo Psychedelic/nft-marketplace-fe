@@ -11,7 +11,10 @@ type ConnectedProps = {
   isMobileScreen?: boolean;
 };
 
-export const OnConnected = ({ isListed, isMobileScreen }: ConnectedProps) => (
+export const ActionBarOnConnected = ({
+  isListed,
+  isMobileScreen,
+}: ConnectedProps) => (
   <ButtonListWrapper>
     {isListed && (
       <ButtonWrapper>
@@ -19,14 +22,19 @@ export const OnConnected = ({ isListed, isMobileScreen }: ConnectedProps) => (
       </ButtonWrapper>
     )}
     <ButtonWrapper>
-      <ChangePriceModal isTriggerVisible={isListed} isMobileScreen={isMobileScreen} />
+      <ChangePriceModal
+        isTriggerVisible={isListed}
+        isMobileScreen={isMobileScreen}
+      />
     </ButtonWrapper>
-    <ButtonWrapper>
-      <SellModal isTriggerVisible={!isListed} />
-    </ButtonWrapper>
+    {!isListed && (
+      <ButtonWrapper>
+        <SellModal isTriggerVisible={!isListed} />
+      </ButtonWrapper>
+    )}
   </ButtonListWrapper>
 );
 
 // TODO: On disconnected users should display a particular state
 // also, for the users which are not "ownersOf"
-export const OnDisconnected = () => null;
+export const ActionBarOnDisconnected = () => null;

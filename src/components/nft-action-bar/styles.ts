@@ -8,7 +8,8 @@ export const Container = styled('div', {
   paddingBottom: '30px',
 
   '@sm': {
-    paddingBottom: '0px',
+    padding: '0px 14px',
+    width: 'unset',
   },
 });
 
@@ -53,9 +54,7 @@ export const ButtonWrapper = styled('div', {
   marginLeft: '0px',
 
   '@sm': {
-    '&:nth-child(2)': {
-      flex: '1',
-      marginLeft: '5px',
-    },
+    flex: '0.5',
+    marginLeft: '5px',
   },
 });

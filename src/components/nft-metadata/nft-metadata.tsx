@@ -6,7 +6,11 @@ import {
   useAppDispatch,
   usePlugStore,
 } from '../../store';
-import { LinkButton, OnConnected, OnDisconnected } from '../core';
+import {
+  LinkButton,
+  ActionBarOnConnected,
+  ActionBarOnDisconnected,
+} from '../core';
 
 import {
   CollectionMetadataWrapper,
@@ -70,11 +74,14 @@ export const NFTMetaData = ({
         <div>
           {showNFTActionButtons &&
             (isConnectedOwner ? (
-              <OnConnected isListed={isListed} isMobileScreen={isMobileScreen} />
+              <ActionBarOnConnected
+                isListed={isListed}
+                isMobileScreen={isMobileScreen}
+              />
             ) : (
-              <OnDisconnected />
+              <ActionBarOnDisconnected />
             ))}
-            <Divider />
+          <Divider />
         </div>
       )}
     </Container>

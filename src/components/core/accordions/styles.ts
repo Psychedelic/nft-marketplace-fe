@@ -63,6 +63,16 @@ export const AccordionHeadContent = styled('div', {
         justifyContent: 'space-between',
         width: '100%',
       },
+      about: {
+        '@sm': {
+          justifyContent: 'space-between',
+          border: '1.5px solid $borderColor',
+          padding: '15px',
+          marginRight: '15px',
+          marginBottom: '25px',
+          borderRadius: '8px',
+        },
+      },
     },
   },
 
@@ -97,6 +107,11 @@ export const AccordionHeadContent = styled('div', {
     display: 'flex',
     alignitems: 'center',
     color: '#767D8E',
+
+    '@sm': {
+      fontWeight: '600',
+      display: 'block',
+    },
   },
 
   '& p': {
@@ -108,6 +123,12 @@ export const AccordionHeadContent = styled('div', {
     display: 'flex',
     alignitems: 'center',
     color: '$mainTextColor',
+
+    '@sm': {
+      minWidth: '135px',
+      fontWeight: '600',
+      display: 'block',
+    },
   },
 });
 
@@ -115,6 +136,10 @@ export const PriceWrapper = styled('div', {
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
+
+  '@sm': {
+    alignItems: 'flex-end',
+  },
 });
 
 export const CurrentPriceWrapper = styled('div', {
@@ -128,6 +153,11 @@ export const OfferLabel = styled('div', {
   fontSize: '16px',
   lineHeight: '18px',
   color: '$greyMid',
+
+  '@sm': {
+    fontSize: '14px',
+    lineHeight: '17px',
+  },
 });
 
 export const OfferPrice = styled('div', {
@@ -137,7 +167,7 @@ export const OfferPrice = styled('div', {
   fontSize: '32px',
   lineHeight: '39px',
   display: 'flex',
-  alignitems: 'center',
+  alignItems: 'center',
   color: '$mainTextColor',
 });
 
@@ -151,6 +181,12 @@ export const MarketPrice = styled('div', {
   textAlign: 'right',
   color: '$mainTextColor',
   margin: '0',
+
+  '@sm': {
+    color: '$greyMid',
+    fontSize: '20px',
+    lineHeight: '24px',
+  },
 });
 
 export const LogoWrapper = styled('div', {
@@ -167,6 +203,10 @@ export const LogoWrapper = styled('div', {
       large: {
         width: '60px',
         height: '60px',
+      },
+      small: {
+        width: '30px',
+        height: '30px',
       },
     },
   },
@@ -186,6 +226,11 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
       open: {
         background: '$openAccordion',
         borderRadius: '0px',
+
+        '@sm': {
+          borderTopLeftRadius: '15px',
+          borderTopRightRadius: '15px',
+        },
       },
       notopen: {
         background: '$closeAccordion',
@@ -214,13 +259,10 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
         borderLeft: 'none',
         borderBottom: 'none',
       },
-    },
-    borderType: {
       full: {
-        borderRadius: '14px',
-        border: '1.5px solid $borderColor',
+        border: 'none',
+        borderRadius: '15px',
       },
-      none: {},
     },
   },
   display: 'flex',
@@ -380,6 +422,10 @@ export const PlugButtonWrapper = styled('div', {
   '.plug-button': {
     marginLeft: '0px',
   },
+
+  '@sm': {
+    padding: '20px 0',
+  },
 });
 
 export const UndefinedPrice = styled('div', {
@@ -395,10 +441,23 @@ export const ButtonListWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   paddingTop: '30px',
+
+  '@sm': {
+    padding: '0px',
+    marginLeft: '0px',
+    margin: '20px 0px',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
 });
 
 export const ButtonDetailsWrapper = styled('div', {
   marginLeft: '0px',
+
+  '@sm': {
+    flex: '0.5',
+    marginLeft: '5px',
+  },
 });
 
 export const CheckboxSkeletonWrapper = styled(SkeletonBox, {

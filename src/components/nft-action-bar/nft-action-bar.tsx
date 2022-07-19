@@ -1,17 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistoryBack } from '../../hooks/use-history-back';
-import {
-  Container,
-  NftActionBarWrapper,
-  ActionText,
-} from './styles';
+import { Container, NftActionBarWrapper, ActionText } from './styles';
 
 import { usePlugStore } from '../../store';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { Icon } from '../icons';
 import useMediaQuery from '../../hooks/use-media-query';
-import { OnConnected, OnDisconnected } from './nft-action-buttons';
+import {
+  ActionBarOnConnected,
+  ActionBarOnDisconnected,
+} from './nft-action-buttons';
 
 export type NftActionBarProps = {
   isListed?: boolean;
@@ -45,9 +44,11 @@ export const NftActionBar = ({
         </ActionText>
         {showNFTActionButtons &&
           (isConnectedOwner ? (
-            !isMobileScreen && <OnConnected isListed={isListed} />
+            !isMobileScreen && (
+              <ActionBarOnConnected isListed={isListed} />
+            )
           ) : (
-            <OnDisconnected />
+            <ActionBarOnDisconnected />
           ))}
       </NftActionBarWrapper>
     </Container>

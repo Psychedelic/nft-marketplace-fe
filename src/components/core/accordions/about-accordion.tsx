@@ -24,21 +24,18 @@ import { formatAddress } from '../../../utils/formatters';
 import { Icon } from '../../icons';
 import { notificationActions } from '../../../store/features/notifications';
 import config from '../../../config/env';
+import { Website } from '../../icons/custom/website';
 
 export type AboutAccordionProps = {
   owner?: string;
   isMobileScreen?: boolean;
 };
 
-export const AboutAccordion = ({
+export const AboutAccordionHeader = ({
   owner,
   isMobileScreen,
 }: AboutAccordionProps) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-  const { id } = useParams();
-  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
   const isOwner = isNFTOwner({
@@ -70,6 +67,35 @@ export const AboutAccordion = ({
     },
   ];
 
+  return (
+    <>
+      {AccordionHeadContentData.map((data) => (
+        <AccordionHeadContent
+          key={data.heading}
+          flexProperties="about"
+        >
+          <LogoWrapper
+            style={{ backgroundImage: `url(${data.image})` }}
+          />
+          <div>
+            <span>{data.heading}</span>
+            <p>{data.subheading}</p>
+          </div>
+        </AccordionHeadContent>
+      ))}
+    </>
+  );
+};
+
+export const AboutAccordion = ({
+  owner,
+  isMobileScreen,
+}: AboutAccordionProps) => {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+
   const AccordionContentMetaData = useMemo(
     () => [
       {
@@ -95,28 +121,24 @@ export const AboutAccordion = ({
   );
 
   return (
-    <AccordionStyle type="single" collapsible width="medium">
+    <AccordionStyle
+      type="single"
+      collapsible
+      width={isMobileScreen ? 'small' : 'medium'}
+    >
       {!isMobileScreen && (
         <AccordionHead>
-          {AccordionHeadContentData.map((data) => (
-            <AccordionHeadContent key={data.heading}>
-              <LogoWrapper
-                style={{ backgroundImage: `url(${data.image})` }}
-              />
-              <div>
-                <span>{data.heading}</span>
-                <p>{data.subheading}</p>
-              </div>
-            </AccordionHeadContent>
-          ))}
+          <AboutAccordionHeader
+            owner={owner}
+            isMobileScreen={isMobileScreen}
+          />
         </AccordionHead>
       )}
       <Accordion.Item value="item-1">
         <AccordionTrigger
           padding={isMobileScreen ? 'small' : 'medium'}
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
-          borderTop={isMobileScreen ? 'none' : 'borderSet'}
-          // borderType={isMobileScreen ? 'full' : 'none'}
+          borderTop={isMobileScreen ? 'full' : 'borderSet'}
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
@@ -144,10 +166,15 @@ export const AboutAccordion = ({
               </Flex>
             ))}
             <ButtonWrapper>
-              <LinkButton type="textBtn" url="https://crowns.ooo/">
-                {t('translation:buttons.links.website')}
-              </LinkButton>
-
+              {isMobileScreen ? (
+                <LinkButton url="https://crowns.ooo/">
+                  <Website />
+                </LinkButton>
+              ) : (
+                <LinkButton type="textBtn" url="https://crowns.ooo/">
+                  {t('translation:buttons.links.website')}
+                </LinkButton>
+              )}
               <LinkButton url="https://discord.gg/yVEcEzmrgm">
                 <Icon icon="discord" />
               </LinkButton>
