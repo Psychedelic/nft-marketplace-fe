@@ -96,6 +96,7 @@ export const PlugButton = ({
     );
 
   const setMyNfts = () => {
+    navigate('/');
     dispatch(filterActions.setMyNfts(true));
     if (filterExists(t('translation:buttons.action.myNfts'))) return;
     dispatch(
