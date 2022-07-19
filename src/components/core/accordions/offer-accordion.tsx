@@ -151,21 +151,25 @@ export const OnConnected = ({
 
   return (
     <ButtonListWrapper>
-      <ButtonDetailsWrapper>
-        <BuyNowModal
-          price={price?.toString()}
-          isTriggerVisible={showNonOwnerButtons && isListed}
-          isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
-        />
-      </ButtonDetailsWrapper>
-      <ButtonDetailsWrapper>
-        <MakeOfferModal
-          isNFTListed={isListed}
-          isTriggerVisible={Boolean(
-            showNonOwnerButtons && !loadingOffers && !userMadeOffer,
-          )}
-        />
-      </ButtonDetailsWrapper>
+      {showNonOwnerButtons && isListed && (
+        <ButtonDetailsWrapper>
+          <BuyNowModal
+            price={price?.toString()}
+            isTriggerVisible={showNonOwnerButtons && isListed}
+            isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
+          />
+        </ButtonDetailsWrapper>
+      )}
+      {!userMadeOffer && (
+        <ButtonDetailsWrapper>
+          <MakeOfferModal
+            isNFTListed={isListed}
+            isTriggerVisible={Boolean(
+              showNonOwnerButtons && !loadingOffers && !userMadeOffer,
+            )}
+          />
+        </ButtonDetailsWrapper>
+      )}
       {userMadeOffer && (
         <ButtonDetailsWrapper>
           <MakeOfferModal
