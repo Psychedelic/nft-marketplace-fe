@@ -9,7 +9,7 @@ type MobileItemDetailsProps = {
   type: OperationType;
   price?: string;
   time?: string;
-  tableType: any;
+  tableType?: any;
 };
 
 const MobileItemDetails = ({
@@ -20,7 +20,7 @@ const MobileItemDetails = ({
 }: MobileItemDetailsProps) => {
   return (
     <MobileItemDetailsWrapper tableType={tableType}>
-      <TypeDetailsCell type={type} />
+      <TypeDetailsCell type={type} tableType={tableType} />
       <PriceDetailsCell wicp={price} tableType={tableType} />
       <TextCell text={time} type="activityTime" />
     </MobileItemDetailsWrapper>
