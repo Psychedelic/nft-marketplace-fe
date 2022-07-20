@@ -20,6 +20,7 @@ import {
   ModalButtonWrapper,
   ActionText,
   ActionTextWrapper,
+  ModalRoot,
 } from './styles';
 import { ModalOverlay } from './modal-overlay';
 
@@ -112,9 +113,10 @@ export const MakeOfferModal = ({
   };
 
   return (
-    <DialogPrimitive.Root
+    <ModalRoot
       open={modalOpened}
       onOpenChange={handleModalOpen}
+      isTriggerVisible={isTriggerVisible}
     >
       {/*
         ---------------------------------
@@ -301,6 +303,6 @@ export const MakeOfferModal = ({
           )}
         </ModalContent>
       </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+    </ModalRoot>
   );
 };

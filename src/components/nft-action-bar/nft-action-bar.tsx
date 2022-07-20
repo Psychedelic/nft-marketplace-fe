@@ -1,52 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistoryBack } from '../../hooks/use-history-back';
-import {
-  CancelListingModal,
-  ChangePriceModal,
-  SellModal,
-} from '../modals';
-import {
-  Container,
-  NftActionBarWrapper,
-  ActionText,
-  ButtonListWrapper,
-  ButtonWrapper,
-} from './styles';
+import { Container, NftActionBarWrapper, ActionText } from './styles';
 
 import { usePlugStore } from '../../store';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { Icon } from '../icons';
+import useMediaQuery from '../../hooks/use-media-query';
+import {
+  ActionBarOnConnected,
+  ActionBarOnDisconnected,
+} from './nft-action-buttons';
 
 export type NftActionBarProps = {
   isListed?: boolean;
   owner?: string;
   showNFTActionButtons: boolean;
 };
-
-type ConnectedProps = {
-  isListed?: boolean;
-};
-
-const OnConnected = ({ isListed }: ConnectedProps) => (
-  <ButtonListWrapper>
-    {isListed && (
-      <ButtonWrapper>
-        <CancelListingModal />
-      </ButtonWrapper>
-    )}
-    <ButtonWrapper>
-      <ChangePriceModal isTriggerVisible={isListed} />
-    </ButtonWrapper>
-    <ButtonWrapper>
-      <SellModal isTriggerVisible={!isListed} />
-    </ButtonWrapper>
-  </ButtonListWrapper>
-);
-
-// TODO: On disconnected users should display a particular state
-// also, for the users which are not "ownersOf"
-const OnDisconnected = () => null;
 
 export const NftActionBar = ({
   isListed,
@@ -55,6 +25,7 @@ export const NftActionBar = ({
 }: NftActionBarProps) => {
   const { t } = useTranslation();
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
   const isConnectedOwner = isNFTOwner({
     isConnected,
@@ -73,9 +44,11 @@ export const NftActionBar = ({
         </ActionText>
         {showNFTActionButtons &&
           (isConnectedOwner ? (
-            <OnConnected isListed={isListed} />
+            !isMobileScreen && (
+              <ActionBarOnConnected isListed={isListed} />
+            )
           ) : (
-            <OnDisconnected />
+            <ActionBarOnDisconnected />
           ))}
       </NftActionBarWrapper>
     </Container>

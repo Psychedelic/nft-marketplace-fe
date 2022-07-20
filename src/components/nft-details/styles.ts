@@ -5,6 +5,10 @@ import { VideoPreload } from '../video-preload';
 export const Container = styled('div', {
   width: '100%',
   marginBottom: '20px',
+
+  '@sm': {
+    overflowX: 'hidden',
+  },
 });
 
 export const Wrapper = styled('div', {
@@ -20,11 +24,22 @@ export const Wrapper = styled('div', {
       },
     },
   },
+
+  '@sm': {
+    flexWrap: 'wrap',
+  },
 });
 
 export const PreviewContainer = styled('div', {
   width: '100%',
   maxWidth: '480px',
+
+  '@sm': {
+    order: 2,
+    padding: '0px 14px',
+    maxWidth: 'unset',
+    overflowX: 'hidden',
+  },
 });
 
 export const Video = styled(VideoPreload, {
@@ -35,6 +50,12 @@ export const Video = styled(VideoPreload, {
   maxHeight: '100%',
   minHeight: '470px',
   marginBottom: '10px',
+
+  '@sm': {
+    minHeight: 'unset',
+    maxHeight: 'unset',
+    marginTop: '10px',
+  },
 });
 
 export const NFTPreview = styled('img', {
@@ -46,6 +67,17 @@ export const NFTPreview = styled('img', {
 export const NFTTraitsContainer = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
+
+  '@sm': {
+    flexWrap: 'unset',
+    overflowX: 'scroll',
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+  },
 });
 
 export const DetailsContainer = styled('div', {
@@ -54,6 +86,11 @@ export const DetailsContainer = styled('div', {
   flexDirection: 'column',
   alignItems: 'flex-end',
   padding: '0px 0px 0px 30px',
+
+  '@sm': {
+    order: '1',
+    padding: '0px 14px',
+  },
 });
 
 export const TraitsListLoaderSkeletonWrapper = styled('div', {
@@ -93,4 +130,45 @@ export const AccordionSkeletion = styled(SkeletonBox, {
   maxWidth: '670px',
   height: '214px',
   marginBottom: '25px',
+});
+
+export const Divider = styled('div', {
+  height: '1px',
+  background: '$borderColor',
+  width: '100%',
+  margin: '5px 0px 20px',
+});
+
+export const OfferAccordionDetails = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '0px',
+  flexWrap: 'wrap',
+
+  // variants
+  variants: {
+    flexDirection: {
+      column: {
+        flexDirection: 'column',
+      },
+    },
+  },
+});
+
+export const AboutAccordionDetails = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '0px',
+  flexWrap: 'wrap',
+
+  '@sm': {
+    flexWrap: 'unset',
+    overflowX: 'scroll',
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+  },
 });

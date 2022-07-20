@@ -24,17 +24,18 @@ import { formatAddress } from '../../../utils/formatters';
 import { Icon } from '../../icons';
 import { notificationActions } from '../../../store/features/notifications';
 import config from '../../../config/env';
+import { Website } from '../../icons/custom/website';
 
 export type AboutAccordionProps = {
   owner?: string;
+  isMobileScreen?: boolean;
 };
 
-export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
+export const AboutAccordionHeader = ({
+  owner,
+  isMobileScreen,
+}: AboutAccordionProps) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-  const { id } = useParams();
-  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
   const isOwner = isNFTOwner({
@@ -66,6 +67,35 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
     },
   ];
 
+  return (
+    <>
+      {AccordionHeadContentData.map((data) => (
+        <AccordionHeadContent
+          key={data.heading}
+          flexProperties="about"
+        >
+          <LogoWrapper
+            style={{ backgroundImage: `url(${data.image})` }}
+          />
+          <div>
+            <span>{data.heading}</span>
+            <p>{data.subheading}</p>
+          </div>
+        </AccordionHeadContent>
+      ))}
+    </>
+  );
+};
+
+export const AboutAccordion = ({
+  owner,
+  isMobileScreen,
+}: AboutAccordionProps) => {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+
   const AccordionContentMetaData = useMemo(
     () => [
       {
@@ -91,25 +121,24 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
   );
 
   return (
-    <AccordionStyle type="single" collapsible width="medium">
-      <AccordionHead>
-        {AccordionHeadContentData.map((data) => (
-          <AccordionHeadContent key={data.heading}>
-            <LogoWrapper
-              style={{ backgroundImage: `url(${data.image})` }}
-            />
-            <div>
-              <span>{data.heading}</span>
-              <p>{data.subheading}</p>
-            </div>
-          </AccordionHeadContent>
-        ))}
-      </AccordionHead>
+    <AccordionStyle
+      type="single"
+      collapsible
+      width={isMobileScreen ? 'small' : 'medium'}
+    >
+      {!isMobileScreen && (
+        <AccordionHead>
+          <AboutAccordionHeader
+            owner={owner}
+            isMobileScreen={isMobileScreen}
+          />
+        </AccordionHead>
+      )}
       <Accordion.Item value="item-1">
         <AccordionTrigger
-          padding="medium"
+          padding={isMobileScreen ? 'small' : 'medium'}
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
-          borderTop="borderSet"
+          borderTop={isMobileScreen ? 'full' : 'borderSet'}
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
@@ -123,7 +152,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
           <Icon icon="chevron-up" rotate={isAccordionOpen} />
         </AccordionTrigger>
         <AccordionContent
-          padding="medium"
+          padding={isMobileScreen ? 'small' : 'medium'}
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
         >
           <Description>
@@ -137,10 +166,15 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
               </Flex>
             ))}
             <ButtonWrapper>
-              <LinkButton type="textBtn" url="https://crowns.ooo/">
-                {t('translation:buttons.links.website')}
-              </LinkButton>
-
+              {isMobileScreen ? (
+                <LinkButton type="textBtn" url="https://crowns.ooo/">
+                  {t('translation:buttons.links.website')}
+                </LinkButton>
+              ) : (
+                <LinkButton url="https://crowns.ooo/">
+                  <Website />
+                </LinkButton>
+              )}
               <LinkButton url="https://discord.gg/yVEcEzmrgm">
                 <Icon icon="discord" />
               </LinkButton>

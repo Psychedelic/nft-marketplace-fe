@@ -11,6 +11,16 @@ const overlayShow = keyframes({
   },
 });
 
+export const ModalRoot = styled(DialogPrimitive.Root, {
+  variants: {
+    isTriggerVisible: {
+      true: {
+        display: 'none',
+      },
+    },
+  },
+});
+
 const contentShow = keyframes({
   '0%': {
     opacity: 0,
@@ -26,30 +36,58 @@ export const SellModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
   marginLeft: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+  },
 });
 
 export const ChangePriceModalTrigger = styled('div', {
   width: '155px',
   height: '50px',
   marginLeft: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const BuyNowModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
   marginRight: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const MakeOfferModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
   marginRight: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const CancelListingModalTrigger = styled('div', {
   width: '155px',
   height: '50px',
   marginLeft: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const CancelOfferModalTrigger = styled('div', {
@@ -62,6 +100,10 @@ export const CancelOfferModalTrigger = styled('div', {
       true: {
         width: '140px',
         height: '50px',
+
+        '@sm': {
+          width: '100%',
+        },
       },
       false: {
         '@sm': {

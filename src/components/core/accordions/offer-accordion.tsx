@@ -55,6 +55,7 @@ export type OfferAccordionProps = {
   owner?: string;
   showNFTActionButtons: boolean;
   operator?: string;
+  isMobileScreen?: boolean;
 };
 
 type ConnectedProps = {
@@ -63,20 +64,31 @@ type ConnectedProps = {
   price?: string;
   showNFTActionButtons: boolean;
   operator?: string;
+  isMobileScreen?: boolean;
 };
 
 type DisconnectedProps = {
   connectionStatus: string;
 };
 
+type OfferAccordionHeaderProps = {
+  isListed?: boolean;
+  lastSalePrice?: string;
+  owner?: string;
+  showNFTActionButtons: boolean;
+  operator?: string;
+  isMobileScreen: boolean | undefined;
+};
+
 // TODO: move OnConnected component to seperate file
 // to avoid more no of lines of code in a single file
-const OnConnected = ({
+export const OnConnected = ({
   isListed,
   isOwner,
   price,
   showNFTActionButtons,
   operator,
+  isMobileScreen,
 }: ConnectedProps) => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
@@ -139,14 +151,20 @@ const OnConnected = ({
 
   return (
     <ButtonListWrapper>
-      <ButtonDetailsWrapper>
+      <ButtonDetailsWrapper
+        isTriggerVisible={showNonOwnerButtons && isListed}
+      >
         <BuyNowModal
           price={price?.toString()}
           isTriggerVisible={showNonOwnerButtons && isListed}
           isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
         />
       </ButtonDetailsWrapper>
-      <ButtonDetailsWrapper>
+      <ButtonDetailsWrapper
+        isTriggerVisible={Boolean(
+          showNonOwnerButtons && !loadingOffers && !userMadeOffer,
+        )}
+      >
         <MakeOfferModal
           isNFTListed={isListed}
           isTriggerVisible={Boolean(
@@ -154,7 +172,11 @@ const OnConnected = ({
           )}
         />
       </ButtonDetailsWrapper>
-      <ButtonDetailsWrapper>
+      <ButtonDetailsWrapper
+        isTriggerVisible={Boolean(
+          showNonOwnerButtons && !loadingOffers && userMadeOffer,
+        )}
+      >
         <MakeOfferModal
           isOfferEditing
           isNFTListed={isListed}
@@ -165,7 +187,11 @@ const OnConnected = ({
         />
       </ButtonDetailsWrapper>
       {showNonOwnerButtons && !loadingOffers && userMadeOffer && (
-        <ButtonDetailsWrapper>
+        <ButtonDetailsWrapper
+          isTriggerVisible={Boolean(
+            showNonOwnerButtons && !loadingOffers && userMadeOffer,
+          )}
+        >
           <CancelOfferModal
             item={userMadeOffer?.item}
             largeTriggerButton
@@ -176,36 +202,37 @@ const OnConnected = ({
   );
 };
 
-const OnDisconnected = ({ connectionStatus }: DisconnectedProps) =>
+export const OnDisconnected = ({
+  connectionStatus,
+}: DisconnectedProps) =>
   connectionStatus !== PlugStatusCodes.Verifying ? (
     <PlugButtonWrapper>
       <Plug />
     </PlugButtonWrapper>
   ) : null;
 
-export const OfferAccordion = ({
-  lastSalePrice,
+export const OfferAccordionHeader = ({
   isListed,
+  lastSalePrice,
   owner,
   showNFTActionButtons,
   operator,
-}: OfferAccordionProps) => {
+  isMobileScreen,
+}: OfferAccordionHeaderProps) => {
   const { t } = useTranslation();
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
-  // TODO: On loading and awaiting for token offers response
-  // should display a small loader in the place of price
-  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
-  const [marketPrice, setMarketPrice] = useState<
-    string | undefined
-  >();
 
   const {
     isConnected,
     principalId: plugPrincipal,
     connectionStatus,
   } = usePlugStore();
+
+  const [marketPrice, setMarketPrice] = useState<
+    string | undefined
+  >();
 
   const tokenOffers = useSelector(
     (state: RootState) => state.marketplace.tokenOffers,
@@ -259,84 +286,144 @@ export const OfferAccordion = ({
   });
 
   return (
-    <AccordionStyle type="single" collapsible width="medium">
-      <AccordionHead flexDirection="column">
-        {isListed ? (
-          <PriceWrapper>
-            <CurrentPriceWrapper>
+    <>
+      {isListed ? (
+        <PriceWrapper>
+          <CurrentPriceWrapper>
+            {!isMobileScreen && (
               <LogoWrapper
-                size="large"
+                size={isMobileScreen ? 'small' : 'large'}
                 style={{
                   backgroundImage: `url(${wicpIcon})`,
                 }}
               />
-              <div>
-                <OfferLabel>
-                  {t(
-                    'translation:accordions.offer.header.currentPrice',
-                  )}
-                </OfferLabel>
+            )}
+            <div>
+              <OfferLabel>
+                {t(
+                  'translation:accordions.offer.header.currentPrice',
+                )}
+              </OfferLabel>
+              <OfferPrice>
+                {isMobileScreen && (
+                  <LogoWrapper
+                    size={isMobileScreen ? 'small' : 'large'}
+                    style={{
+                      backgroundImage: `url(${wicpIcon})`,
+                    }}
+                  />
+                )}
+                {(isListedWithPrice && `${lastSalePrice} WICP`) || (
+                  <UndefinedPrice>--</UndefinedPrice>
+                )}
+              </OfferPrice>
+            </div>
+          </CurrentPriceWrapper>
+          <MarketPrice>
+            {isListedWithPrice && marketPrice}
+          </MarketPrice>
+        </PriceWrapper>
+      ) : (
+        <PriceWrapper>
+          <CurrentPriceWrapper>
+            {!isMobileScreen && (
+              <LogoWrapper
+                size={isMobileScreen ? 'small' : 'large'}
+                style={{
+                  backgroundImage: `url(${wicpIcon})`,
+                }}
+              />
+            )}
+            <div>
+              <OfferLabel>
+                {t('translation:accordions.offer.header.topOffer')}
+              </OfferLabel>
+              {(!loadingOffers && (
                 <OfferPrice>
-                  {(isListedWithPrice && `${lastSalePrice} WICP`) || (
-                    <UndefinedPrice>--</UndefinedPrice>
+                  {isMobileScreen && (
+                    <LogoWrapper
+                      size={isMobileScreen ? 'small' : 'large'}
+                      style={{
+                        backgroundImage: `url(${wicpIcon})`,
+                      }}
+                    />
                   )}
+                  {(topOffer?.price &&
+                    `${parseE8SAmountToWICP(topOffer.price)} WICP`) ||
+                    t(
+                      'translation:accordions.offer.emptyStates.noOffer',
+                    )}
                 </OfferPrice>
-              </div>
-            </CurrentPriceWrapper>
-            <MarketPrice>
-              {isListedWithPrice && marketPrice}
-            </MarketPrice>
-          </PriceWrapper>
-        ) : (
-          <PriceWrapper>
-            <CurrentPriceWrapper>
-              <LogoWrapper
-                size="large"
-                style={{
-                  backgroundImage: `url(${wicpIcon})`,
-                }}
-              />
-              <div>
-                <OfferLabel>
-                  {t('translation:accordions.offer.header.topOffer')}
-                </OfferLabel>
-                {(!loadingOffers && (
-                  <OfferPrice>
-                    {(topOffer?.price &&
-                      `${parseE8SAmountToWICP(
-                        topOffer.price,
-                      )} WICP`) ||
-                      t(
-                        'translation:accordions.offer.emptyStates.noOffer',
-                      )}
-                  </OfferPrice>
-                )) || <UndefinedPrice>--</UndefinedPrice>}
-              </div>
-            </CurrentPriceWrapper>
-            <MarketPrice>
-              {(topOffer?.computedCurrencyPrice &&
-                `US$${formatPriceValue(
-                  topOffer.computedCurrencyPrice.toString(),
-                )}`) || <UndefinedPrice>--</UndefinedPrice>}
-            </MarketPrice>
-          </PriceWrapper>
-        )}
-        {(isConnected && (
-          <OnConnected
+              )) || <UndefinedPrice>--</UndefinedPrice>}
+            </div>
+          </CurrentPriceWrapper>
+          <MarketPrice>
+            {(topOffer?.computedCurrencyPrice &&
+              `US$${formatPriceValue(
+                topOffer.computedCurrencyPrice.toString(),
+              )}`) || <UndefinedPrice>--</UndefinedPrice>}
+          </MarketPrice>
+        </PriceWrapper>
+      )}
+      {(isConnected && (
+        <OnConnected
+          isListed={isListed}
+          isOwner={isOwner}
+          price={lastSalePrice}
+          showNFTActionButtons={showNFTActionButtons}
+          operator={operator}
+          isMobileScreen={isMobileScreen}
+        />
+      )) || <OnDisconnected connectionStatus={connectionStatus} />}
+    </>
+  );
+};
+
+export const OfferAccordion = ({
+  lastSalePrice,
+  isListed,
+  owner,
+  showNFTActionButtons,
+  operator,
+  isMobileScreen,
+}: OfferAccordionProps) => {
+  const { t } = useTranslation();
+  // TODO: On loading and awaiting for token offers response
+  // should display a small loader in the place of price
+  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+
+  const { isConnected, principalId: plugPrincipal } = usePlugStore();
+
+  const tokenOffers = useSelector(
+    (state: RootState) => state.marketplace.tokenOffers,
+  );
+
+  const isOwner = isNFTOwner({
+    isConnected,
+    owner,
+    principalId: plugPrincipal,
+  });
+
+  return (
+    <AccordionStyle type="single" collapsible width="medium">
+      {!isMobileScreen && (
+        <AccordionHead flexDirection="column">
+          <OfferAccordionHeader
             isListed={isListed}
-            isOwner={isOwner}
-            price={lastSalePrice}
+            lastSalePrice={lastSalePrice}
+            owner={owner}
             showNFTActionButtons={showNFTActionButtons}
             operator={operator}
+            isMobileScreen={isMobileScreen}
           />
-        )) || <OnDisconnected connectionStatus={connectionStatus} />}
-      </AccordionHead>
+        </AccordionHead>
+      )}
       {isConnected && showNFTActionButtons && (
         <Accordion.Item value="item-1">
           <AccordionTrigger
-            padding="medium"
+            padding={isMobileScreen ? 'small' : 'medium'}
             backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
-            borderTop="borderSet"
+            borderTop={isMobileScreen ? 'full' : 'borderSet'}
             onClick={() => setIsAccordionOpen(!isAccordionOpen)}
           >
             <div>

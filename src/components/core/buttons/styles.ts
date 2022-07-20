@@ -86,6 +86,10 @@ export const Button = styled('button', {
   },
   cursor: 'pointer',
   padding: '8px 12px',
+
+  '@sm': {
+    fontSize: '16px',
+  },
 });
 
 export const LinkButtonStyles = styled('a', {
