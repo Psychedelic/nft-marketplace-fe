@@ -182,7 +182,9 @@
       "date": "Date",
       "floorDifference": "Floor Difference",
       "expiration": "Expiration",
-      "action": "Action"
+      "action": "Action",
+      "itemActivity": "Item Activity",
+      "floorDif": "Floor Dif."
     },
     "eventType": {
       "makeListing": "List",

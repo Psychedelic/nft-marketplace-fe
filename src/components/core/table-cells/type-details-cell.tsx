@@ -5,7 +5,8 @@ import { TypeDetails, TypeName, StyledIcon } from './styles';
 
 export interface TypeDetailsCellProps {
   type: OperationType;
-  tableType: any;
+  tableType?: any;
+  showIcon?: boolean;
 }
 
 const EventIcon: { [key in OperationType]: keyof typeof Icons } = {
@@ -21,12 +22,17 @@ const EventIcon: { [key in OperationType]: keyof typeof Icons } = {
 export const TypeDetailsCell = ({
   type,
   tableType,
+  showIcon,
 }: TypeDetailsCellProps) => {
   const { t } = useTranslation();
   return (
     <TypeDetails data-event-type={type}>
       {type && Object.keys(EventIcon).includes(type) && (
-        <StyledIcon icon={EventIcon[type]} paddingRight />
+        <StyledIcon
+          icon={EventIcon[type]}
+          paddingRight
+          showIcon={showIcon}
+        />
       )}
       <TypeName tableType={tableType}>
         {t(`translation:tables.eventType.${type}`)}

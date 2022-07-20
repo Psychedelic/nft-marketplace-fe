@@ -100,8 +100,6 @@ export const CollectionItems = () => {
     }
   };
 
-  console.log(isMobileScreen);
-
   return (
     <Container>
       {isMobileScreen && (

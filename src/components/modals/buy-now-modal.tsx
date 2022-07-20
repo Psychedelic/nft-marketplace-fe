@@ -23,6 +23,7 @@ import {
   ActionTextWrapper,
   ActionText,
   BuyNowModalTrigger,
+  ModalRoot,
 } from './styles';
 import { AppLog } from '../../utils/log';
 import { isTokenId } from '../../utils/nfts';
@@ -132,9 +133,10 @@ export const BuyNowModal = ({
   };
 
   return (
-    <DialogPrimitive.Root
+    <ModalRoot
       open={modalOpened}
       onOpenChange={handleModalOpen}
+      isTriggerVisible={isTriggerVisible}
     >
       {/*
         ---------------------------------
@@ -296,6 +298,6 @@ export const BuyNowModal = ({
           )}
         </ModalContent>
       </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+    </ModalRoot>
   );
 };
