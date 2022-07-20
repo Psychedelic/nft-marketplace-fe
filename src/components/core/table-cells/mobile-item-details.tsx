@@ -1,6 +1,8 @@
 import React from 'react';
 import { OperationType } from '../../../constants';
-import { PriceDetailsCell, TextCell, TypeDetailsCell } from '..';
+import { PriceDetailsCell } from './price-details-cell';
+import { TextCell } from './text-cell';
+import { TypeDetailsCell } from './type-details-cell';
 import { MobileItemDetailsWrapper } from './styles';
 
 type MobileItemDetailsProps = {
@@ -19,7 +21,7 @@ const MobileItemDetails = ({
   return (
     <MobileItemDetailsWrapper tableType={tableType}>
       <TypeDetailsCell type={type} />
-      <PriceDetailsCell wicp={price && price} tableType={tableType} />
+      <PriceDetailsCell wicp={price} tableType={tableType} />
       <TextCell text={time} type="activityTime" />
     </MobileItemDetailsWrapper>
   );
