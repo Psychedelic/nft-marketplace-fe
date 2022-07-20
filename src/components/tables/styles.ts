@@ -36,8 +36,19 @@ export const TableWrapper = styled('div', {
           borderBottom: '1px solid $borderColor',
           minWidth: '100px',
 
+          '@sm': {
+            padding: '16px 0px',
+            textAlign: 'center',
+            minWidth: '80px',
+          },
+
           '&:first-child': {
             paddingLeft: '80px',
+            textAlign: 'start',
+
+            '@sm': {
+              paddingLeft: '15px',
+            },
           },
         },
       },
@@ -58,13 +69,15 @@ export const TableWrapper = styled('div', {
             paddingLeft: '80px',
 
             '@sm': {
-              paddingLeft: '25px',
+              paddingLeft: '15px',
+              textAlign: 'start',
             },
           },
 
           '@sm': {
             borderTop: '1px solid $borderColor',
-            padding: '20px 0px 20px 10px',
+            padding: '20px 0px 20px 0px',
+            textAlign: 'center',
           },
         },
         '&:hover': {
@@ -192,7 +205,7 @@ export const TableWrapper = styled('div', {
                   paddingLeft: '20px',
                 },
                 '@sm': {
-                  padding: '14px 20px',
+                  padding: '14px 0px',
                 },
               },
               '&:last-child': {
@@ -226,6 +239,25 @@ export const TableWrapper = styled('div', {
           },
         },
       },
+
+      activity: {
+        table: {
+          thead: {
+            '@sm': {
+              display: 'none',
+            },
+          },
+        },
+      },
+    },
+    loadingTable: {
+      true: {
+        table: {
+          thead: {
+            display: 'none',
+          },
+        },
+      },
     },
     dontShowTableRows: {
       true: {
@@ -240,6 +272,14 @@ export const TableWrapper = styled('div', {
 export const ButtonWrapper = styled('div', {
   width: '98px',
   height: '33px',
+
+  '@sm': {
+    width: '100%',
+    height: 'unset',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
@@ -247,14 +287,44 @@ export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
     width: 'inherit',
 
     tr: {
+      th: {
+        '&:first-child': {
+          paddingLeft: '80px',
+
+          '@sm': {
+            paddingLeft: '15px',
+          },
+        },
+      },
+
       td: {
         padding: '25px 0px 25px 10px',
+        variants: {
+          activity: {
+            '&:first-child': {
+              paddingLeft: '80px',
+
+              '@sm': {
+                paddingLeft: '25px',
+              },
+            },
+          },
+          nftActivity: {
+            '&:first-child': {
+              paddingLeft: '80px',
+
+              '@sm': {
+                paddingLeft: '25px',
+              },
+            },
+          },
+        },
 
         '&:first-child': {
           paddingLeft: '80px',
 
           '@sm': {
-            paddingLeft: '25px',
+            paddingLeft: '15px',
           },
         },
       },
@@ -305,6 +375,11 @@ export const Flex = styled('div', {
       true: {
         justifyContent: 'flex-end',
         paddingRight: '25px',
+      },
+    },
+    tableType: {
+      myOffers: {
+        paddingRight: 'unset',
       },
     },
   },

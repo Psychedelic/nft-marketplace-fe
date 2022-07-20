@@ -14,12 +14,21 @@ export const Container = styled('div', {
       },
     },
   },
+
+  '@sm': {
+    overflow: 'hidden',
+  },
 });
 
 export const TitleWrapper = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   margin: '32px 80px',
+
+  '@sm': {
+    margin: '32px 0px',
+    paddingLeft: '15px',
+  },
 });
 
 export const Title = styled('h2', {
@@ -27,6 +36,11 @@ export const Title = styled('h2', {
   fontWeight: '700',
   color: '$mainTextColor',
   margin: '0px',
+
+  '@sm': {
+    fontSize: '24px',
+    lineHeight: '29px',
+  },
 });
 
 export const ButtonListWrapper = styled('div', {

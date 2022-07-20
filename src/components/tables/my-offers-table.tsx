@@ -36,6 +36,7 @@ import {
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { formatTimestamp } from '../../integrations/functions/date';
 import { getICAccountLink } from '../../utils/account-id';
+import useMediaQuery from '../../hooks/use-media-query';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -219,6 +220,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     // TODO: Add logic to load more data
   };
 
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
+
   const columns = useMemo(
     () => [
       {
@@ -252,7 +255,11 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         ),
       },
       {
-        Header: t('translation:tables.titles.floorDifference'),
+        Header: t(
+          !isMobileScreen
+            ? 'translation:tables.titles.floorDifference'
+            : 'translation:tables.titles.floorDif',
+        ),
         accessor: ({ floorDifference }: OffersTableItem) => (
           <TextCell text={floorDifference} type="offers" />
         ),
@@ -277,7 +284,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         accessor: ({ time }: OffersTableItem) => (
           <TextCell
             text={formatTimestamp(BigInt(time))}
-            type="activityTime"
+            type="myOffersActivityTime"
+            tableType="myOffers"
           />
         ),
       },
@@ -320,6 +328,90 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     [t, columnsToHide], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  const mobileColumns = useMemo(
+    () => [
+      {
+        Header: t('translation:tables.titles.price'),
+        accessor: ({
+          price,
+          computedCurrencyPrice,
+        }: OffersTableItem) => (
+          <PriceDetailsCell
+            wicp={parseE8SAmountToWICP(price)}
+            price={
+              (computedCurrencyPrice &&
+                `$${formatPriceValue(
+                  computedCurrencyPrice.toString(),
+                )}`) ||
+              ''
+            }
+            tableType="myOffers"
+          />
+        ),
+      },
+      {
+        Header: t(
+          !isMobileScreen
+            ? 'translation:tables.titles.floorDifference'
+            : 'translation:tables.titles.floorDif',
+        ),
+        accessor: ({ floorDifference }: OffersTableItem) => (
+          <TextCell text={floorDifference} tableType="myOffers" />
+        ),
+      },
+      {
+        Header: t('translation:tables.titles.time'),
+        accessor: ({ time }: OffersTableItem) => (
+          <TextCell
+            text={formatTimestamp(BigInt(time))}
+            type="myOffersActivityTime"
+          />
+        ),
+      },
+      {
+        id: OffersTableHeaders.OffersReceivedAction,
+        Header: t('translation:tables.titles.action'),
+        // TODO: Update formatted price and offerFrom with dynamic fields
+        accessor: ({
+          price,
+          fromDetails,
+          item,
+          computedCurrencyPrice,
+        }: OffersTableItem) => (
+          <ButtonWrapper>
+            <AcceptOfferModal
+              price={parseE8SAmountToWICP(price)}
+              formattedPrice={
+                (computedCurrencyPrice &&
+                  computedCurrencyPrice.toString()) ||
+                ''
+              }
+              offerFrom={fromDetails.address}
+              nftTokenId={item.tokenId.toString()}
+              actionButtonProp="light"
+              actionText={t('translation:buttons.action.acceptOffer')}
+              isMobileScreen={isMobileScreen}
+            />
+          </ButtonWrapper>
+        ),
+      },
+      {
+        id: OffersTableHeaders.OffersMadeAction,
+        Header: t('translation:tables.titles.action'),
+        // TODO: Update cancel offer modal
+        accessor: ({ item }: OffersTableItem) => (
+          <ButtonWrapper>
+            <CancelOfferModal
+              item={item}
+              actionText={t('translation:buttons.action.cancel')}
+            />
+          </ButtonWrapper>
+        ),
+      },
+    ],
+    [t, columnsToHide], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
   const { loading, loadedOffers } = tableDetails;
 
   return (
@@ -336,6 +428,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
                 showItemDetails: true,
                 showTypeDetails: true,
                 infiniteLoader: true,
+                isMobileScreen,
+                tableType: 'myOffers',
               }}
             />
           }
@@ -345,14 +439,16 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         >
           <Container>
             <TableLayout
-              columns={columns}
+              columns={isMobileScreen ? mobileColumns : columns}
               data={loadedOffers}
-              tableType="activity"
+              tableType=""
               columnsToHide={columnsToHide}
               loading={loading}
               loaderDetails={{
                 showItemDetails: true,
                 showTypeDetails: true,
+                isMobileScreen,
+                tableType: 'myOffers',
               }}
             />
           </Container>

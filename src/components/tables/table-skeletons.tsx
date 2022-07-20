@@ -9,6 +9,7 @@ export type TableSkeletonProps = {
     hideColumns?: boolean;
     infiniteLoader?: boolean;
     isMobileScreen?: boolean;
+    tableType?: any;
   };
 };
 
@@ -19,6 +20,7 @@ export type TableStringsProps = {
 
 export type TypeDetailProps = {
   isMobileScreen?: boolean;
+  tableType?: any;
 };
 
 export const ItemDetail = () => (
@@ -30,11 +32,18 @@ export const ItemDetail = () => (
   </td>
 );
 
-export const TypeDetail = ({ isMobileScreen }: TypeDetailProps) => (
+export const TypeDetail = ({
+  isMobileScreen,
+  tableType,
+}: TypeDetailProps) => (
   <td>
-    <Flex isMobileScreen={isMobileScreen}>
+    <Flex isMobileScreen={isMobileScreen} tableType={tableType}>
       <SkeletonBox style={{ width: '20px', height: '20px' }} />
-      <SkeletonBox />
+      <SkeletonBox
+        isMobileScreen={Boolean(
+          isMobileScreen && tableType === 'myOffers',
+        )}
+      />
     </Flex>
   </td>
 );
@@ -63,6 +72,7 @@ const TableSkeletons = ({
     hideColumns,
     infiniteLoader,
     isMobileScreen,
+    tableType,
   },
 }: TableSkeletonProps) => {
   return infiniteLoader ? (
@@ -74,7 +84,10 @@ const TableSkeletons = ({
               <>
                 {showItemDetails && <ItemDetail />}
                 {showTypeDetails && (
-                  <TypeDetail isMobileScreen={isMobileScreen} />
+                  <TypeDetail
+                    isMobileScreen={isMobileScreen}
+                    tableType={tableType}
+                  />
                 )}
               </>
             ) : (
@@ -103,7 +116,10 @@ const TableSkeletons = ({
         <>
           {showItemDetails && <ItemDetail />}
           {showTypeDetails && (
-            <TypeDetail isMobileScreen={isMobileScreen} />
+            <TypeDetail
+              isMobileScreen={isMobileScreen}
+              tableType={tableType}
+            />
           )}
         </>
       ) : (

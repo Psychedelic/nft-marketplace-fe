@@ -15,6 +15,8 @@ import { OfferTypeStatusCodes } from '../../constants/my-offers';
 import { useSettingsStore, usePlugStore } from '../../store';
 import { NftMetadataBackground } from '../../components/collection-overview/styles';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
+import useMediaQuery from '../../hooks/use-media-query';
+import { MobileMyOffersTab } from '../../components/tabs/mobile-my-offers-tab';
 
 /* --------------------------------------------------------------------------
  * Offers View Component
@@ -39,6 +41,8 @@ const OffersView = () => {
     principalId: plugPrincipal,
   });
 
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
+
   return (
     <Container showAlerts={showAlerts}>
       <NftMetadataBackground />
@@ -48,42 +52,48 @@ const OffersView = () => {
             ? t('translation:offers.myOffers')
             : t('translation:offers.offers')}
         </Title>
-        <ButtonListWrapper>
-          <ButtonDetailsWrapper>
-            <ActionButton
-              fontWeight="light"
-              type={
-                offersType === OfferTypeStatusCodes.OffersReceived
-                  ? 'outline'
-                  : 'secondary'
-              }
-              onClick={() => {
-                setOffersType(OfferTypeStatusCodes.OffersReceived);
-              }}
-            >
-              <StyledIcons icon="download" />
-              {t('translation:offers.offersReceived')}
-            </ActionButton>
-          </ButtonDetailsWrapper>
-          <ButtonDetailsWrapper>
-            <ActionButton
-              fontWeight="light"
-              type={
-                offersType === OfferTypeStatusCodes.OffersMade
-                  ? 'outline'
-                  : 'secondary'
-              }
-              onClick={() => {
-                setOffersType(OfferTypeStatusCodes.OffersMade);
-              }}
-            >
-              <StyledIcons icon="upload" />
-              {t('translation:offers.offersMade')}
-            </ActionButton>
-          </ButtonDetailsWrapper>
-        </ButtonListWrapper>
+        {!isMobileScreen && (
+          <ButtonListWrapper>
+            <ButtonDetailsWrapper>
+              <ActionButton
+                fontWeight="light"
+                type={
+                  offersType === OfferTypeStatusCodes.OffersReceived
+                    ? 'outline'
+                    : 'secondary'
+                }
+                onClick={() => {
+                  setOffersType(OfferTypeStatusCodes.OffersReceived);
+                }}
+              >
+                <StyledIcons icon="download" />
+                {t('translation:offers.offersReceived')}
+              </ActionButton>
+            </ButtonDetailsWrapper>
+            <ButtonDetailsWrapper>
+              <ActionButton
+                fontWeight="light"
+                type={
+                  offersType === OfferTypeStatusCodes.OffersMade
+                    ? 'outline'
+                    : 'secondary'
+                }
+                onClick={() => {
+                  setOffersType(OfferTypeStatusCodes.OffersMade);
+                }}
+              >
+                <StyledIcons icon="upload" />
+                {t('translation:offers.offersMade')}
+              </ActionButton>
+            </ButtonDetailsWrapper>
+          </ButtonListWrapper>
+        )}
       </TitleWrapper>
-      <MyOffersTable offersType={offersType} />
+      {isMobileScreen ? (
+        <MobileMyOffersTab />
+      ) : (
+        <MyOffersTable offersType={offersType} />
+      )}
     </Container>
   );
 };

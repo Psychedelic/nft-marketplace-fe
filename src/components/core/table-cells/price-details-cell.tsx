@@ -22,7 +22,7 @@ export const PriceDetailsCell = ({
   const isMobileScreen = useMediaQuery('(max-width: 640px');
 
   return (
-    <PriceDetails>
+    <PriceDetails tableType={tableType}>
       <WICPContainer tableType={tableType}>
         <WICPText tableType={tableType}>{wicp ? wicp : '-'}</WICPText>
         {!isMobileScreen && (

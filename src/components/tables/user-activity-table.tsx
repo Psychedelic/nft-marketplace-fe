@@ -30,6 +30,8 @@ import {
 import { getICAccountLink } from '../../utils/account-id';
 import config from '../../config/env';
 import { OperationType } from '../../constants';
+import MobileItemDetails from '../core/table-cells/mobile-item-details';
+import useMediaQuery from '../../hooks/use-media-query';
 
 interface RowProps {
   item: {
@@ -63,6 +65,8 @@ export const UserActivityTable = () => {
   const tableSkeletonId = uuid();
 
   const { id: plugPrincipal } = useParams();
+
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
   useEffect(() => {
     dispatch(
@@ -184,6 +188,29 @@ export const UserActivityTable = () => {
     [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  const mobileColumns = useMemo(
+    () => [
+      {
+        Header: t('translation:tables.titles.item'),
+        // eslint-disable-next-line
+        accessor: ({ item }: RowProps) => (
+          <ItemDetailsCell
+            name={item.name}
+            id={item.token_id}
+            logo={item.logo}
+          />
+        ),
+      },
+      {
+        Header: t('translation:tables.titles.type'),
+        accessor: ({ type, price, time }: RowProps) => (
+          <MobileItemDetails type={type} price={price} time={time} />
+        ),
+      },
+    ],
+    [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
   return (
     <InfiniteScrollWrapper
       pageStart={0}
@@ -197,6 +224,7 @@ export const UserActivityTable = () => {
             showTypeDetails: true,
             type: 'large',
             infiniteLoader: true,
+            isMobileScreen,
           }}
           key={tableSkeletonId}
         />
@@ -207,13 +235,14 @@ export const UserActivityTable = () => {
     >
       <Container>
         <TableLayout
-          columns={columns}
+          columns={isMobileScreen ? mobileColumns : columns}
           data={loadedUserActivityData}
           tableType="activity"
           loading={loadingUserTableData}
           loaderDetails={{
             showItemDetails: true,
             showTypeDetails: true,
+            isMobileScreen,
           }}
           emptyMessage={t('translation:emptyStates.nftActivity')}
         />
