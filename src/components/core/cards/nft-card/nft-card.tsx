@@ -135,7 +135,7 @@ const LastActionTakenDetails = ({
   if (data?.lastActionTaken === NFTActionStatuses.Sold) {
     return (
       <ActionDetails>
-        {data?.lastOffer && (
+        {data?.lastSale && (
           <>
             <ActionText>
               {t('translation:nftCard.lastSale')}
