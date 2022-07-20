@@ -64,6 +64,12 @@ export const TypeDetails = styled('div', {
           alignItems: 'end',
         },
       },
+      nftActivity: {
+        '@sm': {
+          paddingRight: '25px',
+          alignItems: 'unset',
+        },
+      },
     },
   },
 
@@ -141,6 +147,12 @@ export const PriceDetails = styled('div', {
         },
       },
       activity: {
+        '@sm': {
+          paddingRight: '25px',
+          alignItems: 'end',
+        },
+      },
+      nftActivity: {
         '@sm': {
           paddingRight: '25px',
           alignItems: 'end',

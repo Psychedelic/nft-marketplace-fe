@@ -111,7 +111,10 @@ export const AboutAccordionHeader = ({
           </MetaDataDetails>
         </AccordionHeadContent>
       ))}
-      <AccordionHeadContent>
+      <AccordionHeadContent
+        key={t('translation:accordions.about.header.owner')}
+        flexProperties="about"
+      >
         <LogoWrapper
           style={{ backgroundImage: `url(${plugIcon})` }}
         />
