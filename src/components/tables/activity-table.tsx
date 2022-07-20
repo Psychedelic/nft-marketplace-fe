@@ -177,8 +177,9 @@ export const ActivityTable = () => {
         accessor: ({ type, price, time }: RowProps) => (
           <MobileItemDetails
             type={type}
-            price={price}
+            price={parseE8SAmountToWICP(BigInt(price))}
             time={time}
+            tableType="activity"
           />
         ),
       },

@@ -49,18 +49,19 @@ export const TypeDetails = styled('div', {
   color: '$mainTextColor',
   display: 'flex',
   alignItems: 'center',
-
-  '@sm': {
-    paddingRight: '25px',
-    justifyContent: 'flex-end',
-    flexDirection: 'column',
-    alignItems: 'end',
-  },
 });
 
 export const StyledIcon = styled(Icon, {
   '@sm': {
     display: 'none',
+  },
+
+  variants: {
+    showIcon: {
+      true: {
+        display: 'flex',
+      },
+    },
   },
 });
 
@@ -109,9 +110,15 @@ export const PriceDetails = styled('div', {
   display: 'flex',
   flexDirection: 'column',
 
-  '@sm': {
-    paddingRight: '25px',
-    alignItems: 'end',
+  variants: {
+    tableType: {
+      activity: {
+        '@sm': {
+          paddingRight: '25px',
+          alignItems: 'end',
+        },
+      },
+    },
   },
 });
 
@@ -146,15 +153,12 @@ export const WICPText = styled('div', {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '22px',
-
         color: '$mainTextColor',
       },
-
       offers: {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '19px',
-
         color: '$mainTextColor',
       },
     },
@@ -227,12 +231,6 @@ export const TextDetails = styled('div', {
       },
     },
   },
-
-  '@sm': {
-    paddingRight: '25px',
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
 });
 
 export const TextLinkDetails = styled('a', {
@@ -257,6 +255,30 @@ export const TextLinkDetails = styled('a', {
         fontWeight: '500',
         lineHeight: '19px',
         color: '$primary',
+      },
+    },
+  },
+});
+
+export const MobileItemDetailsWrapper = styled('div', {
+  display: 'flex',
+
+  '@sm': {
+    justifyContent: 'flex-end',
+    flexDirection: 'column',
+    alignItems: 'end',
+  },
+
+  variants: {
+    tableType: {
+      activity: {
+        '@sm': {
+          paddingRight: '25px',
+        },
+      },
+      nftActivity: {
+        '@sm': {
+        },
       },
     },
   },

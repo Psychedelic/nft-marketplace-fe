@@ -19,6 +19,8 @@ import { TokenTransactionItem } from '../../utils/parser';
 import { Container } from './styles';
 import { recentNFTUpdatesCount } from '../../hooks/use-marketplace-store';
 import { getICAccountLink } from '../../utils/account-id';
+import MobileItemDetails from '../core/table-cells/mobile-item-details';
+import useMediaQuery from '../../hooks/use-media-query';
 
 type RowProps = TokenTransactionItem;
 
@@ -26,6 +28,7 @@ export const NFTActivityTable = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
   const dispatch = useAppDispatch();
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
   const tokenTransactions = useSelector(
     (state: RootState) => state.table.tokenTransactions,
   );
@@ -104,10 +107,37 @@ export const NFTActivityTable = () => {
     [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  const mobileColumns = useMemo(
+    () => [
+      {
+        Header: t('translation:tables.titles.itemActivity'),
+        accessor: ({ type }: RowProps) => (
+          <TypeDetailsCell
+            type={type}
+            tableType="nftActivity"
+            showIcon={true}
+          />
+        ),
+      },
+      {
+        Header: ' ',
+        accessor: ({ type, price, date }: RowProps) => (
+          <MobileItemDetails
+            type={type}
+            price={`${price}`}
+            time={date}
+            tableType="nftActivity"
+          />
+        ),
+      },
+    ],
+    [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
   return (
     <Container>
       <TableLayout
-        columns={columns}
+        columns={isMobileScreen ? mobileColumns : columns}
         data={tokenTransactions}
         tableType="nftActivity"
         loadingTableRows={loadingTokenTransactions}
