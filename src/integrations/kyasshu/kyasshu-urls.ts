@@ -38,7 +38,7 @@ export class KyasshuUrl {
   static getTokenTransactions({
     tokenId,
   }: NSKyasshuUrl.GetTokenTransactions): string {
-    return `${config.kyasshuMarketplaceAPI}/cap/token/txns/${config.marketplaceCanisterId}/${tokenId}`;
+    return `${config.kyasshuMarketplaceAPI}/cap/token/txns/${config.nftCollectionId}/${tokenId}`;
   }
 
   static getSearchResults({
