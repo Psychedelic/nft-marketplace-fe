@@ -63,6 +63,12 @@ export const CancelOfferModalTrigger = styled('div', {
         width: '140px',
         height: '50px',
       },
+      false: {
+        '@sm': {
+          height: 'unset',
+          width: '100%',
+        },
+      },
     },
   },
 });
@@ -70,6 +76,10 @@ export const CancelOfferModalTrigger = styled('div', {
 export const AcceptOfferModalTrigger = styled('div', {
   width: '98px',
   height: '33px',
+
+  '@sm': {
+    height: 'unset',
+  },
 });
 
 export const WithdrawModalTrigger = styled('div', {
@@ -414,6 +424,15 @@ export const ActionText = styled('span', {
         pointerEvents: 'none',
       },
     },
+    danger: {
+      true: {
+        color: '$error',
+      },
+    },
+  },
+
+  '@sm': {
+    textDecoration: 'underline',
   },
 });
 

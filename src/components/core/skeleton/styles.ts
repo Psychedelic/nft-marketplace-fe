@@ -32,5 +32,10 @@ export const SkeletonBox = styled('div', {
         },
       },
     },
+    isMobileScreen: {
+      true: {
+        marginRight: '20px',
+      },
+    },
   },
 });

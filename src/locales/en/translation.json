@@ -10,7 +10,9 @@
   "offers": {
     "myOffers": "My Offers",
     "offersReceived": "Offers Received",
+    "received": "Received",
     "offersMade": "Offers Made",
+    "made": "Made",
     "offers": "Offers"
   },
   "activity": {
@@ -182,7 +184,8 @@
       "date": "Date",
       "floorDifference": "Floor Difference",
       "expiration": "Expiration",
-      "action": "Action"
+      "action": "Action",
+      "floorDif": "Floor Dif."
     },
     "eventType": {
       "makeListing": "List",

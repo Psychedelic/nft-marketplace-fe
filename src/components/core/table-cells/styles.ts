@@ -109,6 +109,17 @@ export const PriceDetails = styled('div', {
   display: 'flex',
   flexDirection: 'column',
 
+  variants: {
+    tableType: {
+      myOffers: {
+        '@sm': {
+          paddingRight: '0px',
+          alignItems: 'unset',
+        },
+      },
+    },
+  },
+
   '@sm': {
     paddingRight: '25px',
     alignItems: 'end',
@@ -212,18 +223,34 @@ export const TextDetails = styled('div', {
         color: '$primary',
       },
 
+      myOffersActivityTime: {
+        color: '$primary',
+        
+        '@sm': {
+          paddingRight: '0px',
+          justifyContent: 'center',
+        },
+      },
+
       nftActivityDate: {
-        fontSize: '16px',
-        fontWeight: '500',
         lineHeight: '22px',
         color: '$primary',
       },
 
       offers: {
-        fontSize: '16px',
-        fontWeight: '500',
         lineHeight: '19px',
         color: '$tableTextColor',
+      },
+    },
+    tableType: {
+      myOffers: {
+        lineHeight: '19px',
+        color: '$tableTextColor',
+
+        '@sm': {
+          paddingRight: '0px',
+          justifyContent: 'center',
+        },
       },
     },
   },

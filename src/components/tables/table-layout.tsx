@@ -18,6 +18,7 @@ export interface TableLayoutProps {
     type?: string;
     hideColumns?: boolean;
     isMobileScreen?: boolean;
+    tableType?: string;
   };
   loadingTableRows?: boolean;
   emptyMessage?: string;
@@ -49,23 +50,27 @@ export const TableLayout = ({
   const isTableDataEmpty = data.length === 0;
 
   return (
-    <TableWrapper type={tableType}>
+    <TableWrapper
+      type={tableType}
+      loadingTable={Boolean(
+        loading && isTableDataEmpty && tableType === '',
+      )}
+    >
       <table {...getTableProps()}>
         <thead>
-          {!loaderDetails.isMobileScreen &&
-            headerGroups.map((headerGroup, idx) => (
-              <tr
-                {...headerGroup.getHeaderGroupProps()}
-                // eslint-disable-next-line react/no-array-index-key
-                key={idx}
-              >
-                {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()} key={column.id}>
-                    {column.render('Header')}
-                  </th>
-                ))}
-              </tr>
-            ))}
+          {headerGroups.map((headerGroup, idx) => (
+            <tr
+              {...headerGroup.getHeaderGroupProps()}
+              // eslint-disable-next-line react/no-array-index-key
+              key={idx}
+            >
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()} key={column.id}>
+                  {column.render('Header')}
+                </th>
+              ))}
+            </tr>
+          ))}
         </thead>
         <tbody {...getTableBodyProps()}>
           {loading && isTableDataEmpty && (
