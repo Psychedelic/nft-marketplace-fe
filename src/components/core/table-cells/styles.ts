@@ -322,17 +322,4 @@ export const MobileItemDetailsWrapper = styled('div', {
     flexDirection: 'column',
     alignItems: 'end',
   },
-
-  variants: {
-    tableType: {
-      activity: {
-        '@sm': {
-          paddingRight: '25px',
-        },
-      },
-      nftActivity: {
-        '@sm': {},
-      },
-    },
-  },
 });
