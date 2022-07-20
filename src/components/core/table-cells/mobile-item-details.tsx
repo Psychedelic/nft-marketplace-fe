@@ -19,7 +19,7 @@ const MobileItemDetails = ({
   tableType,
 }: MobileItemDetailsProps) => {
   return (
-    <MobileItemDetailsWrapper tableType={tableType}>
+    <MobileItemDetailsWrapper>
       <TypeDetailsCell type={type} tableType={tableType} />
       <PriceDetailsCell wicp={price} tableType={tableType} />
       <TextCell text={time} type="activityTime" />
