@@ -10,7 +10,9 @@
   "offers": {
     "myOffers": "My Offers",
     "offersReceived": "Offers Received",
+    "received": "Received",
     "offersMade": "Offers Made",
+    "made": "Made",
     "offers": "Offers"
   },
   "activity": {

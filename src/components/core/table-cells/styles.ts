@@ -49,6 +49,28 @@ export const TypeDetails = styled('div', {
   color: '$mainTextColor',
   display: 'flex',
   alignItems: 'center',
+
+  variants: {
+    tableType: {
+      myOffers: {
+        '@sm': {
+          paddingRight: '0px',
+          alignItems: 'unset',
+        },
+      },
+      activity: {
+        '@sm': {
+          paddingRight: '25px',
+          alignItems: 'end',
+        },
+      },
+    },
+  },
+
+  '@sm': {
+    paddingRight: '25px',
+    alignItems: 'end',
+  },
 });
 
 export const StyledIcon = styled(Icon, {
@@ -112,6 +134,12 @@ export const PriceDetails = styled('div', {
 
   variants: {
     tableType: {
+      myOffers: {
+        '@sm': {
+          paddingRight: '0px',
+          alignItems: 'unset',
+        },
+      },
       activity: {
         '@sm': {
           paddingRight: '25px',
@@ -119,6 +147,11 @@ export const PriceDetails = styled('div', {
         },
       },
     },
+  },
+
+  '@sm': {
+    paddingRight: '25px',
+    alignItems: 'end',
   },
 });
 
@@ -214,20 +247,41 @@ export const TextDetails = styled('div', {
     type: {
       activityTime: {
         color: '$primary',
+
+        '@sm': {
+          paddingRight: '25px',
+          justifyContent: 'center',
+        },
+      },
+
+      myOffersActivityTime: {
+        color: '$primary',
+
+        '@sm': {
+          paddingRight: '0px',
+          justifyContent: 'center',
+        },
       },
 
       nftActivityDate: {
-        fontSize: '16px',
-        fontWeight: '500',
         lineHeight: '22px',
         color: '$primary',
       },
 
       offers: {
-        fontSize: '16px',
-        fontWeight: '500',
         lineHeight: '19px',
         color: '$tableTextColor',
+      },
+    },
+    tableType: {
+      myOffers: {
+        lineHeight: '19px',
+        color: '$tableTextColor',
+
+        '@sm': {
+          paddingRight: '0px',
+          justifyContent: 'center',
+        },
       },
     },
   },
@@ -277,8 +331,7 @@ export const MobileItemDetailsWrapper = styled('div', {
         },
       },
       nftActivity: {
-        '@sm': {
-        },
+        '@sm': {},
       },
     },
   },

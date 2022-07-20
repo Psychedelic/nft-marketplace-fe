@@ -13,11 +13,14 @@ import {
   ModalDescription,
   ModalButtonsList,
   ModalButtonWrapper,
+  ActionTextWrapper,
+  ActionText,
 } from './styles';
 import { ModalOverlay } from './modal-overlay';
 
 import { ListingStatusCodes } from '../../constants/listing';
 import { ThemeRootElement } from '../../constants/common';
+import useMediaQuery from '../../hooks/use-media-query';
 
 /* --------------------------------------------------------------------------
  * Cancel Offer Modal Component
@@ -26,11 +29,13 @@ import { ThemeRootElement } from '../../constants/common';
 export type CancelOfferModalProps = {
   item: OfferItem;
   largeTriggerButton?: boolean;
+  actionText?: string;
 };
 
 export const CancelOfferModal = ({
   item,
   largeTriggerButton = false,
+  actionText,
 }: CancelOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -72,6 +77,8 @@ export const CancelOfferModal = ({
     );
   };
 
+  const isMobileScreen = useMediaQuery('(max-width: 640px)')
+
   return (
     <DialogPrimitive.Root
       open={modalOpened}
@@ -84,15 +91,21 @@ export const CancelOfferModal = ({
       */}
       <DialogPrimitive.Trigger asChild>
         <CancelOfferModalTrigger largeButton={largeTriggerButton}>
-          <ActionButton
-            type="secondary"
-            size="small"
-            fontWeight={largeTriggerButton ? undefined : 'light'}
-          >
-            {largeTriggerButton
-              ? t('translation:buttons.action.cancelOffer')
-              : t('translation:buttons.action.cancel')}
-          </ActionButton>
+          {actionText ? (
+            <ActionTextWrapper>
+              <ActionText danger={isMobileScreen}>{actionText}</ActionText>
+            </ActionTextWrapper>
+          ) : (
+            <ActionButton
+              type="secondary"
+              size="small"
+              fontWeight={largeTriggerButton ? undefined : 'light'}
+            >
+              {largeTriggerButton
+                ? t('translation:buttons.action.cancelOffer')
+                : t('translation:buttons.action.cancel')}
+            </ActionButton>
+          )}
         </CancelOfferModalTrigger>
       </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal

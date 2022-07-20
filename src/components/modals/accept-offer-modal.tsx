@@ -29,6 +29,8 @@ import {
   ModalButtonsList,
   ModalButtonWrapper,
   InfoIcon,
+  ActionTextWrapper,
+  ActionText,
 } from './styles';
 
 import { totalPriceCalculator } from '../../integrations/marketplace/price.utils';
@@ -51,6 +53,8 @@ export interface AcceptOfferProps {
   offerFrom: string;
   nftTokenId?: string;
   actionButtonProp?: string;
+  actionText?: string;
+  isMobileScreen?: boolean;
 }
 
 /* --------------------------------------------------------------------------
@@ -63,6 +67,8 @@ export const AcceptOfferModal = ({
   offerFrom,
   nftTokenId,
   actionButtonProp,
+  actionText,
+  isMobileScreen,
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -147,13 +153,19 @@ export const AcceptOfferModal = ({
       */}
       <DialogPrimitive.Trigger asChild>
         <AcceptOfferModalTrigger>
-          <ActionButton
-            type="outline"
-            size="small"
-            fontWeight={actionButtonProp ? 'light' : undefined}
-          >
-            {t('translation:buttons.action.acceptOffer')}
-          </ActionButton>
+          {actionText && isMobileScreen ? (
+            <ActionTextWrapper>
+              <ActionText>{actionText}</ActionText>
+            </ActionTextWrapper>
+          ) : (
+            <ActionButton
+              type="outline"
+              size="small"
+              fontWeight={actionButtonProp ? 'light' : undefined}
+            >
+              {t('translation:buttons.action.acceptOffer')}
+            </ActionButton>
+          )}
         </AcceptOfferModalTrigger>
       </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal
