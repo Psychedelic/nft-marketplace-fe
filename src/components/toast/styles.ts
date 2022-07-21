@@ -1,5 +1,6 @@
 import * as ToastPrimitive from '@radix-ui/react-toast';
 import { styled, keyframes } from '../../stitches.config';
+import { Icon } from '../icons';
 
 const VIEWPORT_PADDING = 25;
 
@@ -45,6 +46,14 @@ export const ToastViewport = styled(ToastPrimitive.Viewport, {
   margin: 0,
   listStyle: 'none',
   zIndex: 2147483647,
+
+  '@sm': {
+    top: '80px',
+    width: '100%',
+    padding: '25px 0px',
+    flexDirection: 'unset',
+    justifyContent: 'center',
+  },
 });
 
 export const Toast = styled(ToastPrimitive.Root, {
@@ -58,13 +67,27 @@ export const Toast = styled(ToastPrimitive.Root, {
   justifyContent: 'space-between',
   alignItems: 'center',
 
+  '@sm': {
+    width: '85%',
+  },
+
   variants: {
     state: {
       success: {
         color: '$success',
+
+        '@sm': {
+          background: '$success',
+          color: '#ffffff',
+        },
       },
       error: {
         color: '$error',
+
+        '@sm': {
+          background: '$error',
+          color: '#ffffff',
+        },
       },
     },
   },
@@ -99,4 +122,32 @@ export const ToastDescription = styled(ToastPrimitive.Description, {
 
 export const ToastDescriptionText = styled('p', {
   margin: '0px',
+});
+
+export const StyledIconWrapper = styled('div', {
+  variants: {
+    state: {
+      success: {
+        '@sm': {
+          color: '$success',
+        },
+      },
+      error: {
+        '@sm': {
+          color: '$error',
+        },
+      },
+    },
+  },
+});
+
+export const StyledIcon = styled(Icon, {
+  '@sm': {
+    top: '-45px',
+    right: '-15px',
+    position: 'relative',
+    borderRadius: '100%',
+    background: 'white',
+    boxShadow: '0px 3px 4px rgba(0, 0, 0, 0.16)',
+  },
 });

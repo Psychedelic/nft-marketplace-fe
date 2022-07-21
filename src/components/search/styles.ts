@@ -162,7 +162,7 @@ export const ItemDetailsContainer = styled('div', {
   },
 
   '@md': {
-    width: '90%',
+    width: '95%',
     borderRadius: 'unset',
     margin: '0px',
     padding: '24px 10px',
@@ -317,6 +317,9 @@ export const CloseIcon = styled(Icon, {
     isMobileScreen: {
       true: {
         display: 'flex',
+        top: 'unset',
+        alignItems: 'center',
+        alignSelf: 'center'
       },
     },
   },

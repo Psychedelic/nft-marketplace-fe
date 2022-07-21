@@ -63,6 +63,8 @@ export const Button = styled('button', {
     danger: {
       true: {
         backgroundColor: '#EF4444',
+        color: '#ffffff',
+        border: 'none',
       },
     },
 

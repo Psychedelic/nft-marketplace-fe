@@ -96,6 +96,10 @@ export const DetailsContainer = styled('div', {
 export const TraitsListLoaderSkeletonWrapper = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
+
+  '@sm': {
+    flexWrap: 'unset',
+  },
 });
 
 export const NFTTraitsChipSkeleton = styled(SkeletonBox, {

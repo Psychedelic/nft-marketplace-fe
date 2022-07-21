@@ -21,6 +21,10 @@ export const Container = styled('div', {
       modalInput: {
         width: '430px',
         height: '56px',
+
+        '@sm': {
+          margin: '0px 15px',
+        },
       },
     },
   },

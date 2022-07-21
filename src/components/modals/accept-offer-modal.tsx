@@ -31,6 +31,7 @@ import {
   InfoIcon,
   ActionTextWrapper,
   ActionText,
+  ItemTokenId,
 } from './styles';
 
 import { totalPriceCalculator } from '../../integrations/marketplace/price.utils';
@@ -226,9 +227,17 @@ export const AcceptOfferModal = ({
                         alt="crowns"
                       />
                     )}
-                    <ItemName>{`CAP Crowns #${
-                      nftTokenId ?? nftDetails?.id
-                    }`}</ItemName>
+                    <ItemName>
+                      {isMobileScreen
+                        ? `CAP Crowns #${
+                            nftTokenId ?? nftDetails?.id
+                          }`
+                        : 'CAP Crowns'}
+                      <ItemTokenId>
+                        {
+                          `#${nftTokenId ?? nftDetails?.id}`}
+                      </ItemTokenId>
+                    </ItemName>
                   </ItemDetails>
                   <PriceDetails>
                     <WICPContainer size="small">

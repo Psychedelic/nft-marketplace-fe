@@ -197,6 +197,10 @@ export const FilterButtonWrapper = styled('div', {
   width: '135px',
   height: '44px',
 
+  '@sm': {
+    flex: '0.5',
+  },
+
   button: {
     fontWeight: '500',
   },
@@ -253,12 +257,19 @@ export const FilterMobileActions = styled('div', {
   display: 'none',
 
   '@md': {
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 });
 
 export const ButtonWrapper = styled('div', {
+  flex: '0.5',
+
   '&:nth-child(1)': {
+    marginRight: '10px',
+    marginLeft: '15px',
+  },
+
+  '&:nth-child(2)': {
     marginRight: '15px',
   },
 });

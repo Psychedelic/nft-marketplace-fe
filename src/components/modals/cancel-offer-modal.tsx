@@ -166,7 +166,7 @@ export const CancelOfferModal = ({
                 </ModalButtonWrapper>
                 <ModalButtonWrapper>
                   <ActionButton
-                    type="primary"
+                    type={isMobileScreen ? "danger" : "primary"}
                     onClick={handleCancelOffer}
                     danger
                   >
