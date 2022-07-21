@@ -254,7 +254,12 @@ export const parseTokenTransactions = ({
     const details = Object.fromEntries(curr.event.details);
     let buyer;
     let seller;
-    const isMint = curr.event.operation === 'mint';
+    const operationType = getOperationType(curr.event.operation);
+    const isMint = operationType === 'mint';
+
+    // We're only interested in user relevant operation types
+    // e.g. directBuy, makeListing, makeOffer, etc
+    if (!operationType) return acc;
 
     if (details.seller) {
       const sellerPrincipal = parseTablePrincipal(
@@ -291,7 +296,7 @@ export const parseTokenTransactions = ({
       item: {
         name: `CAP Crowns #${parsedTokenId}`,
       },
-      type: getOperationType(curr.event.operation),
+      type: operationType,
       price:
         details?.price?.U64 &&
         parseE8SAmountToWICP(details.price.U64),
