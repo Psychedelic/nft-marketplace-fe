@@ -6,6 +6,7 @@ export enum OperationTypes {
   cancelOffer = 'cancelOffer',
   cancelListing = 'cancelListing',
   acceptOffer = 'acceptOffer',
+  mint = 'mint',
 }
 
 export type OperationType = keyof typeof OperationTypes;
