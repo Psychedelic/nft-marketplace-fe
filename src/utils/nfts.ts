@@ -1,5 +1,6 @@
 import { NFTActionStatuses } from '../constants/common';
-import{ TokenMetadataById } from '../store/features/tables/table-slice';
+import { TokenMetadataById } from '../store/features/tables/table-slice';
+import { OperationType } from '../constants';
 import config from '../config/env';
 
 type NFTParams = {
@@ -34,20 +35,23 @@ export const findLastAction = (nft: NFTParams) => {
 export const isTokenId = (id: any) => {
   const parsedId = Number(id);
 
-  return typeof id !== 'undefined' && !isNaN(parsedId) && parsedId >= 0;
-}
+  return (
+    typeof id !== 'undefined' && !isNaN(parsedId) && parsedId >= 0
+  );
+};
 
 export const getTokenMetadataThumbnail = ({
   tokendId,
   tokenMetadataById,
 }: {
-  tokendId?: string | number,
-  tokenMetadataById: TokenMetadataById,
+  tokendId?: string | number;
+  tokenMetadataById: TokenMetadataById;
 }) => typeof tokendId !== 'undefined' && tokenMetadataById[tokendId];
 
-export const roundOffDecimalValue = (value: number, decimalPlace: number) => {
-  return value.toFixed(decimalPlace);
-}
+export const roundOffDecimalValue = (
+  value: number,
+  decimalPlace: number,
+) => value.toFixed(decimalPlace);
 
 export const isOperatorMarketplace = (
   params: CheckNFTOperatorParams,
@@ -56,3 +60,9 @@ export const isOperatorMarketplace = (
 
   return operator === config.marketplaceCanisterId;
 };
+
+const userRelevantDirectContractOps = ['mint', 'transfer'];
+export const checkIfDirectContractEvent = (
+  operationType: OperationType,
+) => userRelevantDirectContractOps.includes(operationType);
+
