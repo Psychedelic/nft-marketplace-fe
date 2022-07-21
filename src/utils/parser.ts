@@ -279,6 +279,18 @@ export const parseTokenTransactions = ({
       }
     }
 
+    if (isMint) {
+      const buyerPrincipal = parseTablePrincipal(
+        details.to?.Principal._arr,
+      );
+      if (buyerPrincipal) {
+        buyer = {
+          raw: buyerPrincipal.toString(),
+          formatted: formatAddress(buyerPrincipal.toString()),
+        };
+      }
+    }
+
     acc.push({
       item: {
         name: `CAP Crowns #${details.token_id.U64}`,
