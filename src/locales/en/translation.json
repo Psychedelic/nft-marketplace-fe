@@ -189,7 +189,8 @@
       "cancelOffer": "Cancel Offer",
       "cancelListing": "Cancel Listing",
       "acceptOffer": "Sale",
-      "mint": "mint"
+      "mint": "mint",
+      "transfer": "transfer"
     },
     "labels": {
       "you": "You"
