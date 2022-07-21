@@ -251,6 +251,7 @@ export const parseTokenTransactions = ({
     const details = Object.fromEntries(curr.event.details);
     let buyer;
     let seller;
+    const isMint = curr.event.operation === 'mint';
 
     if (details.seller) {
       const sellerPrincipal = parseTablePrincipal(
@@ -267,6 +268,18 @@ export const parseTokenTransactions = ({
     if (details.buyer) {
       const buyerPrincipal = parseTablePrincipal(
         details.buyer?.Principal._arr,
+      );
+      if (buyerPrincipal) {
+        buyer = {
+          raw: buyerPrincipal.toString(),
+          formatted: formatAddress(buyerPrincipal.toString()),
+        };
+      }
+    }
+
+    if (isMint) {
+      const buyerPrincipal = parseTablePrincipal(
+        details.to?.Principal._arr,
       );
       if (buyerPrincipal) {
         buyer = {
