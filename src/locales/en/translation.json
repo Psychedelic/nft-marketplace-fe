@@ -188,7 +188,8 @@
       "denyOffer": "Deny Offer",
       "cancelOffer": "Cancel Offer",
       "cancelListing": "Cancel Listing",
-      "acceptOffer": "Sale"
+      "acceptOffer": "Sale",
+      "mint": "mint"
     },
     "labels": {
       "you": "You"
@@ -308,3 +309,4 @@
     "disabledBuyNowText": "Oops! Can't be purchased, possibly because token was transferred outside Jelly marketplace to a new wallet"
   }
 }
+

@@ -93,7 +93,6 @@ interface ParseOffersMadeParams {
   currencyMarketPrice?: number;
 }
 
-
 export const parseGetTokenOffersResponse = ({
   data,
   floorDifferencePrice,
@@ -234,6 +233,15 @@ export type TokenTransactionItem = {
 const tablePrincipalHandler = (principal: TablePrincipal) =>
   principal.raw !== 'aaaaa-aa' && principal;
 
+export const parseTablePrincipal = (
+  arr: Record<number, number>,
+): Principal | undefined => {
+  const parsedArr = Uint8Array.from(Object.values(arr));
+  const pid = Principal.fromUint8Array(parsedArr);
+
+  return pid;
+};
+
 export const parseTokenTransactions = ({
   items,
 }: {
@@ -241,7 +249,8 @@ export const parseTokenTransactions = ({
 }) => {
   const parsed = items.reduce((acc: any, curr: any) => {
     const details = Object.fromEntries(curr.event.details);
-    var buyer, seller;
+    let buyer;
+    let seller;
 
     if (details.seller) {
       const sellerPrincipal = parseTablePrincipal(
@@ -267,12 +276,20 @@ export const parseTokenTransactions = ({
       }
     }
 
+    console.log('[debug] details: ', details);
+    console.log(
+      '[debug] curr.event.operation: ',
+      curr.event.operation,
+    );
+
     acc.push({
       item: {
         name: `CAP Crowns #${details.token_id.U64}`,
       },
       type: getOperationType(curr.event.operation),
-      price: parseE8SAmountToWICP(details.price.U64),
+      price:
+        details?.price?.U64 &&
+        parseE8SAmountToWICP(details.price.U64),
       seller: seller ? tablePrincipalHandler(seller) : {},
       buyer: buyer ? tablePrincipalHandler(buyer) : {},
       date: formatTimestamp(BigInt(curr.event.time)),
@@ -286,15 +303,6 @@ export const parseTokenTransactions = ({
   }, [] as TokenTransactionItem[]);
 
   return parsed;
-};
-
-export const parseTablePrincipal = (
-  arr: Record<number, number>,
-): Principal | undefined => {
-  const parsedArr = Uint8Array.from(Object.values(arr));
-  const pid = Principal.fromUint8Array(parsedArr);
-
-  return pid;
 };
 
 // TODO: update data type while using collection details
