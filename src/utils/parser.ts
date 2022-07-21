@@ -279,6 +279,12 @@ export const parseTokenTransactions = ({
       }
     }
 
+    console.log('[debug] details: ', details);
+    console.log(
+      '[debug] curr.event.operation: ',
+      curr.event.operation,
+    );
+
     acc.push({
       item: {
         name: `CAP Crowns #${details.token_id.U64}`,
