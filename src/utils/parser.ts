@@ -32,6 +32,9 @@ export type GetAllListingsDataParsed = {
 
 export type GetAllListingsDataParsedObj = Record<number, Listing>;
 
+export const parseTokenId = (val: String) =>
+  parseInt(val.replaceAll('_', ''), 10);
+
 export const parseAllListingResponse = (
   data: GetAllListingsDataResponse,
 ) => {
@@ -279,9 +282,14 @@ export const parseTokenTransactions = ({
       }
     }
 
+    const tokenIdFieldAs =
+      details?.token_identifier ?? details?.token_id;
+    const parsedTokenId =
+      tokenIdFieldAs?.U64 ?? parseTokenId(tokenIdFieldAs?.Text);
+
     acc.push({
       item: {
-        name: `CAP Crowns #${details.token_id.U64}`,
+        name: `CAP Crowns #${parsedTokenId}`,
       },
       type: getOperationType(curr.event.operation),
       price:
