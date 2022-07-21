@@ -265,26 +265,16 @@ export const parseTokenTransactions = ({
       }
     }
 
-    if (details.buyer) {
-      const buyerPrincipal = parseTablePrincipal(
-        details.buyer?.Principal._arr,
-      );
-      if (buyerPrincipal) {
-        buyer = {
-          raw: buyerPrincipal.toString(),
-          formatted: formatAddress(buyerPrincipal.toString()),
-        };
-      }
-    }
+    const buyerPrincipalAs = isMint
+      ? details.to?.Principal._arr
+      : details.buyer?.Principal._arr;
 
-    if (isMint) {
-      const buyerPrincipal = parseTablePrincipal(
-        details.to?.Principal._arr,
-      );
-      if (buyerPrincipal) {
+    if (buyerPrincipalAs) {
+      const principal = parseTablePrincipal(buyerPrincipalAs);
+      if (principal) {
         buyer = {
-          raw: buyerPrincipal.toString(),
-          formatted: formatAddress(buyerPrincipal.toString()),
+          raw: principal.toString(),
+          formatted: formatAddress(principal.toString()),
         };
       }
     }
