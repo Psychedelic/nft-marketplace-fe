@@ -50,16 +50,15 @@ const LandingPageView = () => {
         <IntroDetailsContainer>
           <IntroDetailsWrapper>
             <IntroDetailsTitle>
-              Sweet NFT Tools & Infra
+              {t('translation:landingPage.introTitle')}
             </IntroDetailsTitle>
             <IntroDetailsDescription>
-              Allowing creators, curators, or collectors to create
-              their own curated marketplaces, all hooked up to the
-              same trustless canister, with interoperable data across
-              all frontends
+              {t('translation:landingPage.introDescription')}
             </IntroDetailsDescription>
             <ViewCollectionButtonWrapper>
-              <ActionButton type="primary">View Crowns</ActionButton>
+              <ActionButton type="primary">
+                {t('translation:landingPage.viewCrowns')}
+              </ActionButton>
             </ViewCollectionButtonWrapper>
           </IntroDetailsWrapper>
         </IntroDetailsContainer>
@@ -69,38 +68,50 @@ const LandingPageView = () => {
       </IntroContainer>
       <FeaturesContainer>
         <FeaturesWrapper>
-          <FeaturesTitle>Not the same old marketplace</FeaturesTitle>
+          <FeaturesTitle>
+            {t('translation:landingPage.featuresTitle')}
+          </FeaturesTitle>
           <FeaturesList>
             <FeaturesListItem borderTheme="green">
               <FeatureIcon iconTheme="green" />
-              <FeatureTitle>Jelly Protocol</FeatureTitle>
+              <FeatureTitle>
+                {t('translation:landingPage.jellyFeatureTitle')}
+              </FeatureTitle>
               <FeatureDescription>
-                Permissionless NFT and marketplace protocol with
-                unified listings, offers, and collection data.
+                {t('translation:landingPage.jellyFeatureDescription')}
               </FeatureDescription>
             </FeaturesListItem>
             <FeaturesListItem borderTheme="pink">
               <FeatureIcon iconTheme="pink" />
-              <FeatureTitle>Aggregator Marketplace</FeatureTitle>
+              <FeatureTitle>
+                {t('translation:landingPage.aggregatorFeatureTitle')}
+              </FeatureTitle>
               <FeatureDescription>
-                Jelly's Marketplace, where all supported collections
-                on the protocol are listed & tradable.
+                {t(
+                  'translation:landingPage.aggregatorFeatureDescription',
+                )}
               </FeatureDescription>
             </FeaturesListItem>
             <FeaturesListItem borderTheme="blue">
               <FeatureIcon iconTheme="blue" />
-              <FeatureTitle>Curator Marketplace</FeatureTitle>
+              <FeatureTitle>
+                {t('translation:landingPage.curatorFeatureTitle')}
+              </FeatureTitle>
               <FeatureDescription>
-                External marketplaces created by curators using Jelly,
-                earning fees for the sales they drive in the protocol.
+                {t(
+                  'translation:landingPage.curatorFeatureDescription',
+                )}
               </FeatureDescription>
             </FeaturesListItem>
             <FeaturesListItem borderTheme="yellow">
               <FeatureIcon iconTheme="yellow" />
-              <FeatureTitle>Creator Tools</FeatureTitle>
+              <FeatureTitle>
+                {t('translation:landingPage.creatorFeatureTitle')}
+              </FeatureTitle>
               <FeatureDescription>
-                Jelly will build and share NFT creator tools to help
-                them launch new collections to the world.
+                {t(
+                  'translation:landingPage.creatorFeatureDescription',
+                )}
               </FeatureDescription>
             </FeaturesListItem>
           </FeaturesList>
@@ -108,12 +119,11 @@ const LandingPageView = () => {
       </FeaturesContainer>
       <MultichainContainer>
         <MultichainWrapper>
-          <MultichainTitle>A multi-chain NFT hub</MultichainTitle>
+          <MultichainTitle>
+            {t('translation:landingPage.multichainHubTitle')}
+          </MultichainTitle>
           <MultichainDescription>
-            By integrating to Terabethia's upcoming magic bridge for
-            ERC721, and Threshold Signatures, Jelly can open the door
-            to both supporting bridged assets and natively interacting
-            with NFTs on other chains.
+            {t('translation:landingPage.multichainHubDescription')}
           </MultichainDescription>
           <MultichainHubList>
             <MultichainHubListItem src={ethereumLogo} />

@@ -315,5 +315,21 @@
   },
   "tooltip": {
     "disabledBuyNowText": "Oops! Can't be purchased, possibly because token was transferred outside Jelly marketplace to a new wallet"
+  },
+  "landingPage": {
+    "introTitle": "Sweet NFT Tools & Infra",
+    "introDescription": "Allowing creators, curators, or collectors to create their own curated marketplaces, all hooked up to the same trustless canister, with interoperable data across all frontends",
+    "viewCrowns": "View Crowns",
+    "featuresTitle": "Not the same old marketplace",
+    "jellyFeatureTitle": "Jelly Protocol",
+    "jellyFeatureDescription": "Permissionless NFT and marketplace protocol with unified listings, offers, and collection data.",
+    "aggregatorFeatureTitle": "Aggregator Marketplace",
+    "aggregatorFeatureDescription": "Jelly's Marketplace, where all supported collections on the protocol are listed & tradable.",
+    "curatorFeatureTitle": "Curator Marketplace",
+    "curatorFeatureDescription": "External marketplaces created by curators using Jelly, earning fees for the sales they drive in the protocol.",
+    "creatorFeatureTitle": "Creator Tools",
+    "creatorFeatureDescription": "Jelly will build and share NFT creator tools to help them launch new collections to the world.",
+    "multichainHubTitle": "A multi-chain NFT hub",
+    "multichainHubDescription": "By integrating to Terabethia's upcoming magic bridge for ERC721, and Threshold Signatures, Jelly can open the door to both supporting bridged assets and natively interacting with NFTs on other chains."
   }
 }
