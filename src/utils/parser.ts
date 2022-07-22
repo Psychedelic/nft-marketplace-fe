@@ -13,6 +13,7 @@ import {
   sortTransactionsByTime,
 } from './sorting';
 import { OperationTypes, OperationType } from '../constants';
+import { checkIfDirectContractEvent } from './nfts';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
@@ -31,6 +32,9 @@ export type GetAllListingsDataParsed = {
 };
 
 export type GetAllListingsDataParsedObj = Record<number, Listing>;
+
+export const parseTokenId = (val: String) =>
+  parseInt(val.replaceAll('_', ''), 10);
 
 export const parseAllListingResponse = (
   data: GetAllListingsDataResponse,
@@ -92,7 +96,6 @@ interface ParseOffersMadeParams {
   floorDifferencePrice?: string;
   currencyMarketPrice?: number;
 }
-
 
 export const parseGetTokenOffersResponse = ({
   data,
@@ -234,6 +237,15 @@ export type TokenTransactionItem = {
 const tablePrincipalHandler = (principal: TablePrincipal) =>
   principal.raw !== 'aaaaa-aa' && principal;
 
+export const parseTablePrincipal = (
+  arr: Record<number, number>,
+): Principal | undefined => {
+  const parsedArr = Uint8Array.from(Object.values(arr));
+  const pid = Principal.fromUint8Array(parsedArr);
+
+  return pid;
+};
+
 export const parseTokenTransactions = ({
   items,
 }: {
@@ -241,12 +253,22 @@ export const parseTokenTransactions = ({
 }) => {
   const parsed = items.reduce((acc: any, curr: any) => {
     const details = Object.fromEntries(curr.event.details);
-    var buyer, seller;
+    let buyer;
+    let seller;
+    const operationType = getOperationType(curr.event.operation);
+    const isDirectContractEvent =
+      checkIfDirectContractEvent(operationType);
 
-    if (details.seller) {
-      const sellerPrincipal = parseTablePrincipal(
-        details.seller?.Principal._arr,
-      );
+    // We're only interested in user relevant operation types
+    // e.g. directBuy, makeListing, makeOffer, etc
+    if (!operationType) return acc;
+
+    const sellerPrincipalAs = isDirectContractEvent
+      ? curr.event.caller._arr
+      : details.seller?.Principal._arr;
+
+    if (sellerPrincipalAs) {
+      const sellerPrincipal = parseTablePrincipal(sellerPrincipalAs);
       if (sellerPrincipal) {
         seller = {
           raw: sellerPrincipal.toString(),
@@ -255,24 +277,33 @@ export const parseTokenTransactions = ({
       }
     }
 
-    if (details.buyer) {
-      const buyerPrincipal = parseTablePrincipal(
-        details.buyer?.Principal._arr,
-      );
-      if (buyerPrincipal) {
+    const buyerPrincipalAs = isDirectContractEvent
+      ? details.to?.Principal._arr
+      : details.buyer?.Principal._arr;
+
+    if (buyerPrincipalAs) {
+      const principal = parseTablePrincipal(buyerPrincipalAs);
+      if (principal) {
         buyer = {
-          raw: buyerPrincipal.toString(),
-          formatted: formatAddress(buyerPrincipal.toString()),
+          raw: principal.toString(),
+          formatted: formatAddress(principal.toString()),
         };
       }
     }
 
+    const tokenIdFieldAs =
+      details?.token_identifier ?? details?.token_id;
+    const parsedTokenId =
+      tokenIdFieldAs?.U64 ?? parseTokenId(tokenIdFieldAs?.Text);
+
     acc.push({
       item: {
-        name: `CAP Crowns #${details.token_id.U64}`,
+        name: `CAP Crowns #${parsedTokenId}`,
       },
-      type: getOperationType(curr.event.operation),
-      price: parseE8SAmountToWICP(details.price.U64),
+      type: operationType,
+      price:
+        details?.price?.U64 &&
+        parseE8SAmountToWICP(details.price.U64),
       seller: seller ? tablePrincipalHandler(seller) : {},
       buyer: buyer ? tablePrincipalHandler(buyer) : {},
       date: formatTimestamp(BigInt(curr.event.time)),
@@ -286,15 +317,6 @@ export const parseTokenTransactions = ({
   }, [] as TokenTransactionItem[]);
 
   return parsed;
-};
-
-export const parseTablePrincipal = (
-  arr: Record<number, number>,
-): Principal | undefined => {
-  const parsedArr = Uint8Array.from(Object.values(arr));
-  const pid = Principal.fromUint8Array(parsedArr);
-
-  return pid;
 };
 
 // TODO: update data type while using collection details
