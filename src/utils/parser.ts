@@ -13,6 +13,7 @@ import {
   sortTransactionsByTime,
 } from './sorting';
 import { OperationTypes, OperationType } from '../constants';
+import { checkIfDirectContractEvent } from './nfts';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
@@ -255,16 +256,19 @@ export const parseTokenTransactions = ({
     let buyer;
     let seller;
     const operationType = getOperationType(curr.event.operation);
-    const isMint = operationType === 'mint';
+    const isDirectContractEvent =
+      checkIfDirectContractEvent(operationType);
 
     // We're only interested in user relevant operation types
     // e.g. directBuy, makeListing, makeOffer, etc
     if (!operationType) return acc;
 
-    if (details.seller) {
-      const sellerPrincipal = parseTablePrincipal(
-        details.seller?.Principal._arr,
-      );
+    const sellerPrincipalAs = isDirectContractEvent
+      ? curr.event.caller._arr
+      : details.seller?.Principal._arr;
+
+    if (sellerPrincipalAs) {
+      const sellerPrincipal = parseTablePrincipal(sellerPrincipalAs);
       if (sellerPrincipal) {
         seller = {
           raw: sellerPrincipal.toString(),
@@ -273,7 +277,7 @@ export const parseTokenTransactions = ({
       }
     }
 
-    const buyerPrincipalAs = isMint
+    const buyerPrincipalAs = isDirectContractEvent
       ? details.to?.Principal._arr
       : details.buyer?.Principal._arr;
 

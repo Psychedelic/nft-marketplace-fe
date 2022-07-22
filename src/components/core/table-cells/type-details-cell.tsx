@@ -17,6 +17,7 @@ const EventIcon: { [key in OperationType]: keyof typeof Icons } = {
   cancelOffer: 'hand-paper',
   denyOffer: 'hand-paper',
   mint: 'mint',
+  transfer: 'transfer',
 };
 
 export const TypeDetailsCell = ({
