@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/Psychedelic/nft-marketplace-fe/compare/v1.1.2...v1.2.0) (2022-07-22)
+
+
+### Bug Fixes
+
+* 🐛 redirect to home page with my nfts filter applied from dropdown ([#456](https://github.com/Psychedelic/nft-marketplace-fe/issues/456)) ([f131dde](https://github.com/Psychedelic/nft-marketplace-fe/commit/f131dde0a85759644d1132b8ac4424f888cc7825))
+* 🐛 show last sale details in NFT card when there is no offer, but sold ([#455](https://github.com/Psychedelic/nft-marketplace-fe/issues/455)) ([35c4330](https://github.com/Psychedelic/nft-marketplace-fe/commit/35c43303cb9016f7070a224236b5d2bfd56c3aec))
+
+
+### Features
+
+* 🎸 show ICNS name by replacing Principal ID's ([#448](https://github.com/Psychedelic/nft-marketplace-fe/issues/448)) ([8e2299e](https://github.com/Psychedelic/nft-marketplace-fe/commit/8e2299e63fb4bba7dabd6c7e36512deb39d1d2d8))
+
 ## [1.1.2](https://github.com/Psychedelic/nft-marketplace-fe/compare/v1.1.1...v1.1.2) (2022-07-12)
 
 
