@@ -203,3 +203,51 @@ export const FeatureDescription = styled('p', {
   textAlign: 'left',
   color: '$secondaryTextColor',
 });
+
+export const MultichainContainer = styled('div', {
+  padding: '120px 40px',
+  position: 'relative',
+  width: '100%',
+});
+
+export const MultichainWrapper = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '20px',
+  maxWidth: '1200px',
+  margin: 'auto',
+});
+
+export const MultichainTitle = styled('h1', {
+  fontSize: '42px',
+  lineHeight: '1em',
+  fontWeight: '600',
+  margin: '0px',
+  textAlign: 'center',
+  color: '$primaryTextColor',
+});
+
+export const MultichainDescription = styled('p', {
+  fontSize: '22px',
+  lineHeight: '1.5em',
+  fontWeight: '400',
+  maxWidth: '700px',
+  margin: '0px',
+  textAlign: 'center',
+  color: '$secondaryTextColor',
+});
+
+export const MultichainHubList = styled('div', {
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '60px',
+  paddingTop: '20px',
+});
+
+export const MultichainHubListItem = styled('img', {
+  width: '100%',
+  maxWidth: '205px',
+});

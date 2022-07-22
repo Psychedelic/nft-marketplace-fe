@@ -22,9 +22,19 @@ import {
   FeatureIcon,
   FeatureTitle,
   FeatureDescription,
+  MultichainContainer,
+  MultichainWrapper,
+  MultichainTitle,
+  MultichainDescription,
+  MultichainHubList,
+  MultichainHubListItem,
 } from './styles';
 import jellyBackgroundImage from '../../assets/landingpage/jelly-background.svg';
 import collectionSampleImage from '../../assets/landingpage/collection-sample.jpg';
+import ethereumLogo from '../../assets/landingpage/ethereum.png';
+import dfinityLogo from '../../assets/landingpage/dfinity.png';
+import solanaLogo from '../../assets/landingpage/solana.png';
+import polygonLogo from '../../assets/landingpage/polygon.png';
 
 const LandingPageView = () => {
   const { t } = useTranslation();
@@ -96,6 +106,23 @@ const LandingPageView = () => {
           </FeaturesList>
         </FeaturesWrapper>
       </FeaturesContainer>
+      <MultichainContainer>
+        <MultichainWrapper>
+          <MultichainTitle>A multi-chain NFT hub</MultichainTitle>
+          <MultichainDescription>
+            By integrating to Terabethia's upcoming magic bridge for
+            ERC721, and Threshold Signatures, Jelly can open the door
+            to both supporting bridged assets and natively interacting
+            with NFTs on other chains.
+          </MultichainDescription>
+          <MultichainHubList>
+            <MultichainHubListItem src={ethereumLogo} />
+            <MultichainHubListItem src={dfinityLogo} />
+            <MultichainHubListItem src={solanaLogo} />
+            <MultichainHubListItem src={polygonLogo} />
+          </MultichainHubList>
+        </MultichainWrapper>
+      </MultichainContainer>
     </Container>
   );
 };
