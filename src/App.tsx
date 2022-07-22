@@ -16,6 +16,8 @@ const App = () => {
   useThemeGlobals(theme);
   portalZIndexGlobals();
 
+  // TODO: add landing page to route `/`
+
   return (
     <div className={themeObject} id={ThemeRootElement}>
       <BrowserRouter>
