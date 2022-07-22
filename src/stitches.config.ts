@@ -49,6 +49,8 @@ export const {
       regentGrey: '#777E8F',
       defaultBackgroundColour: '#000000',
       defaultTxtColour: '#FFFFFF',
+      primaryTextColor: '#000000',
+      secondaryTextColor: '#474747',
     },
     space: {},
     fonts: {},
@@ -108,6 +110,8 @@ export const darkTheme = createTheme({
     toastBackground: '#1e1e1e',
     defaultBackgroundColour: '#FFFFFF',
     defaultTxtColour: '#000000',
+    primaryTextColor: '#FFFFFF',
+    secondaryTextColor: '#474747',
   },
   shadows: {
     default: 'none',
