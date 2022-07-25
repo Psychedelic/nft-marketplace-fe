@@ -29,8 +29,6 @@ import {
   ModalButtonsList,
   ModalButtonWrapper,
   InfoIcon,
-  ActionTextWrapper,
-  ActionText,
   ItemTokenId,
 } from './styles';
 
@@ -54,7 +52,6 @@ export interface AcceptOfferProps {
   offerFrom: string;
   nftTokenId?: string;
   actionButtonProp?: string;
-  actionText?: string;
   isMobileScreen?: boolean;
 }
 
@@ -68,7 +65,6 @@ export const AcceptOfferModal = ({
   offerFrom,
   nftTokenId,
   actionButtonProp,
-  actionText,
   isMobileScreen,
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
@@ -154,19 +150,13 @@ export const AcceptOfferModal = ({
       */}
       <DialogPrimitive.Trigger asChild>
         <AcceptOfferModalTrigger>
-          {actionText && isMobileScreen ? (
-            <ActionTextWrapper>
-              <ActionText>{actionText}</ActionText>
-            </ActionTextWrapper>
-          ) : (
-            <ActionButton
-              type="outline"
-              size="small"
-              fontWeight={actionButtonProp ? 'light' : undefined}
-            >
-              {t('translation:buttons.action.acceptOffer')}
-            </ActionButton>
-          )}
+          <ActionButton
+            type="outline"
+            size="small"
+            fontWeight={actionButtonProp ? 'light' : undefined}
+          >
+            {t('translation:buttons.action.acceptOffer')}
+          </ActionButton>
         </AcceptOfferModalTrigger>
       </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal
@@ -234,8 +224,7 @@ export const AcceptOfferModal = ({
                           }`
                         : 'CAP Crowns'}
                       <ItemTokenId>
-                        {
-                          `#${nftTokenId ?? nftDetails?.id}`}
+                        {`#${nftTokenId ?? nftDetails?.id}`}
                       </ItemTokenId>
                     </ItemName>
                   </ItemDetails>

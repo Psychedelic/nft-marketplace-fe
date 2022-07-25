@@ -89,7 +89,7 @@ export const NftDetails = () => {
     (nftDetails?.price &&
       parseE8SAmountToWICP(BigInt(nftDetails.price)));
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
-  const isMobileScreen = useMediaQuery('(max-width: 640px)');
+  const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
   // TODO: We need more control, plus the
   // kyasshu calls should be placed as a thunk/action

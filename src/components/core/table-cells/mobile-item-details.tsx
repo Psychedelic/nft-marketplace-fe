@@ -3,9 +3,14 @@ import { OperationType } from '../../../constants';
 import { PriceDetailsCell } from './price-details-cell';
 import { TextCell } from './text-cell';
 import { TypeDetailsCell } from './type-details-cell';
-import { MobileItemDetailsWrapper } from './styles';
+import {
+  MobileItemDetailsWrapper,
+  MobileItemDetailsContainer,
+} from './styles';
+import { ItemDetailsCell } from './item-details-cell';
 
 type MobileItemDetailsProps = {
+  item?: any;
   type: OperationType;
   price?: string;
   time?: string;
@@ -13,17 +18,27 @@ type MobileItemDetailsProps = {
 };
 
 const MobileItemDetails = ({
+  item,
   type,
   price,
   time,
   tableType,
 }: MobileItemDetailsProps) => {
   return (
-    <MobileItemDetailsWrapper>
-      <TypeDetailsCell type={type} tableType={tableType} />
-      <PriceDetailsCell wicp={price} tableType={tableType} />
-      <TextCell text={time} type="activityTime" />
-    </MobileItemDetailsWrapper>
+    <MobileItemDetailsContainer tableType={tableType}>
+      {item && (
+        <ItemDetailsCell
+          name={item?.name}
+          id={item?.token_id}
+          logo={item?.logo}
+        />
+      )}
+      <MobileItemDetailsWrapper>
+        <TypeDetailsCell type={type} tableType={tableType} />
+        <PriceDetailsCell wicp={price} tableType={tableType} />
+        <TextCell text={time} type="activityTime" />
+      </MobileItemDetailsWrapper>
+    </MobileItemDetailsContainer>
   );
 };
 

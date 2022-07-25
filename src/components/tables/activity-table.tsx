@@ -176,25 +176,59 @@ export const ActivityTable = () => {
   const mobileColumns = useMemo(
     () => [
       {
-        Header: t('translation:tables.titles.item'),
-        // eslint-disable-next-line
-        accessor: ({ item }: RowProps) => (
-          <ItemDetailsCell
-            name={item.name}
-            id={item.token_id}
-            logo={item.logo}
-          />
-        ),
-      },
-      {
         Header: t('translation:tables.titles.type'),
-        accessor: ({ type, price, time }: RowProps) => (
+        accessor: ({ type, price, time, item }: RowProps) => (
           <MobileItemDetails
             type={type}
             price={parseE8SAmountToWICP(BigInt(price))}
             time={time}
             tableType="activity"
+            item={item}
           />
+        ),
+      },
+      {
+        Header: t('translation:tables.titles.seller'),
+        accessor: ({ seller }: RowProps) => {
+          const principalText = seller.toText();
+          const short = formatAddress(principalText);
+          const url = getICAccountLink(principalText);
+
+          return (
+            <TextLinkCell
+              text={short}
+              url={url}
+              type=""
+              principalId={principalText}
+            />
+          );
+        },
+      },
+      {
+        Header: t('translation:tables.titles.buyer'),
+        accessor: ({ buyer }: RowProps) => {
+          if (!buyer) {
+            return <TextLinkCell text="-" type="" />;
+          }
+
+          const principalText = buyer.toText();
+          const short = formatAddress(principalText);
+          const url = getICAccountLink(principalText);
+
+          return (
+            <TextLinkCell
+              text={short}
+              url={url}
+              type=""
+              principalId={principalText}
+            />
+          );
+        },
+      },
+      {
+        Header: t('translation:tables.titles.time'),
+        accessor: ({ time }: RowProps) => (
+          <TextCell text={time} type="activityTime" />
         ),
       },
     ],

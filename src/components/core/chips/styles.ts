@@ -59,7 +59,7 @@ export const TraitChipContainer = styled('div', {
           marginRight: '0px',
         },
 
-        '@sm': {
+        '@md': {
           '&:nth-child(3)': {
             marginRight: '15px',
           },
@@ -72,7 +72,7 @@ export const TraitChipContainer = styled('div', {
     marginRight: '0px',
   },
 
-  '@sm': {
+  '@md': {
     marginRight: '15px',
     filter: 'drop-shadow(2px 3px 6px rgba(0, 0, 0, 0.16))',
   },

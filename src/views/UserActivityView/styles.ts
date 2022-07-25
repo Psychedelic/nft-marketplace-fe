@@ -4,6 +4,7 @@ export const Container = styled('div', {
   width: '100%',
   paddingTop: '72px',
   backgroundColor: '$backgroundColor',
+  overflow: 'hidden',
 
   // variants
   variants: {
@@ -20,7 +21,7 @@ export const TitleWrapper = styled('div', {
   justifyContent: 'space-between',
   margin: '32px 80px',
 
-  '@sm': {
+  '@md': {
     margin: '32px 0px',
     paddingLeft: '25px',
   },

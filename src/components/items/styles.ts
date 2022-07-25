@@ -1,4 +1,5 @@
 import { styled } from '../../stitches.config';
+import { SkeletonBox } from '../core';
 
 export const Container = styled('div', {
   position: 'relative',
@@ -60,6 +61,11 @@ export const SkeletonListWrapper = styled('div', {
   gridTemplateColumns: 'repeat(auto-fill,minmax(185px, 1fr))',
   gridAutoFlow: 'row dense',
   gridGap: '35px 50px',
+
+  '@sm': {
+    gridTemplateColumns: '1fr 1fr',
+    gridGap: '10px',
+  },
 });
 
 export const ClearButton = styled('div', {
@@ -84,5 +90,20 @@ export const AppliedFilters = styled('span', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  marginLeft: '10px',
+});
+
+export const FiltersButtonSkeleton = styled(SkeletonBox, {
+  width: '100%',
+  height: '100%',
+  minWidth: '134px',
+  minHeight: '41px',
+});
+
+export const SortButtonSkeleton = styled(SkeletonBox, {
+  width: '100%',
+  height: '100%',
+  minWidth: '210px',
+  minHeight: '41px',
   marginLeft: '10px',
 });

@@ -15,7 +15,7 @@ export const Container = styled('div', {
     },
   },
 
-  '@sm': {
+  '@md': {
     overflow: 'hidden',
   },
 });
@@ -29,6 +29,10 @@ export const TitleWrapper = styled('div', {
     margin: '32px 0px',
     paddingLeft: '15px',
   },
+
+  '@md': {
+    margin: '32px 15px',
+  },
 });
 
 export const Title = styled('h2', {
@@ -37,7 +41,7 @@ export const Title = styled('h2', {
   color: '$mainTextColor',
   margin: '0px',
 
-  '@sm': {
+  '@md': {
     fontSize: '24px',
     lineHeight: '29px',
   },

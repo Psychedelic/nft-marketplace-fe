@@ -30,6 +30,7 @@ import config from '../../../config/env';
 import { formatUserAddress } from '../../../utils/addresses';
 import { AppLog } from '../../../utils/log';
 import { Website } from '../../icons/custom/website';
+import { useTheme } from '../../../hooks';
 
 export type AboutAccordionProps = {
   owner?: string;
@@ -143,6 +144,7 @@ export const AboutAccordion = ({
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+  const [theme] = useTheme();
 
   const AccordionContentMetaData = useMemo(
     () => [
@@ -215,12 +217,15 @@ export const AboutAccordion = ({
             ))}
             <ButtonWrapper>
               {isMobileScreen ? (
-                <LinkButton type="textBtn" url="https://crowns.ooo/">
-                  {t('translation:buttons.links.website')}
+                <LinkButton url="https://crowns.ooo/">
+                  <Icon
+                    icon="website"
+                    extraIconProps={{ dark: theme === 'darkTheme' }}
+                  />
                 </LinkButton>
               ) : (
-                <LinkButton url="https://crowns.ooo/">
-                  <Website />
+                <LinkButton type="textBtn" url="https://crowns.ooo/">
+                  {t('translation:buttons.links.website')}
                 </LinkButton>
               )}
               <LinkButton url="https://discord.gg/yVEcEzmrgm">

@@ -179,7 +179,7 @@ export const NFTOffersTable = ({
         accessor: ({ time }: OffersTableItem) => (
           <TextCell
             text={formatTimestamp(BigInt(time))}
-            type="activityTime"
+            type="offersActivityTime"
           />
         ),
       },
@@ -226,6 +226,7 @@ export const NFTOffersTable = ({
           showTypeDetails: false,
           type: 'small',
           hideColumns,
+          isMobileScreen,
         }}
         emptyMessage={t('translation:emptyStates.noOffersYet')}
       />

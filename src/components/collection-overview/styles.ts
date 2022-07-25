@@ -1,6 +1,7 @@
 import { styled } from '../../stitches.config';
 import background from '../../assets/nft-background.png';
 import { Icon } from '../icons';
+import { SkeletonBox } from '../core';
 
 export const NftMetadataWrapper = styled('div', {
   display: 'block',
@@ -129,6 +130,14 @@ export const FilteredCountChipsWrapper = styled('div', {
   justifyContent: 'center',
   flexDirection: 'column',
   margin: '0px 25px 15px',
+
+  '@md': {
+    margin: '0px 80px 15px',
+  },
+
+  '@sm': {
+    margin: '0px 25px 15px',
+  },
 });
 
 export const Divider = styled('div', {
@@ -142,4 +151,9 @@ export const FilteredCountChips = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   marginBottom: '25px',
+});
+
+export const FilterChipSkeleton = styled(SkeletonBox, {
+  width: '130px',
+  height: '30px',
 });

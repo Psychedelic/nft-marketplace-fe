@@ -25,11 +25,12 @@ export const PriceDetailsCell = ({
     <PriceDetails tableType={tableType}>
       <WICPContainer tableType={tableType}>
         <WICPText tableType={tableType}>{wicp ? wicp : '-'}</WICPText>
-        {!isMobileScreen && (
-          <WICPText tableType={tableType}>
-            {wicp ? 'WICP' : '-'}
-          </WICPText>
-        )}
+        {tableType !== 'activity' ||
+          (tableType !== 'nftActivity' && (
+            <WICPText tableType={tableType}>
+              {wicp ? 'WICP' : '-'}
+            </WICPText>
+          ))}
         {wicp && <WICPLogo src={wicpIcon} alt="wicp" />}
       </WICPContainer>
       {price && <PriceText tableType={tableType}>{price}</PriceText>}

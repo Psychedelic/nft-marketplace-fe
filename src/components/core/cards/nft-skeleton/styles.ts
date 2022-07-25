@@ -14,12 +14,20 @@ export const CardWrapper = styled('div', {
   padding: '10px',
   cursor: 'pointer',
   transition: 'all 0.5s ease-in-out',
+
+  '@xs': {
+    height: '450px',
+  },
 });
 
 export const SkeletonLarge = styled(SkeletonBox, {
   height: '200px',
   width: '100%',
   margin: '10px 0px',
+
+  '@xs': {
+    flex: '1',
+  },
 });
 
 export const SkeletonSmall = styled(SkeletonBox, {

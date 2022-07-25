@@ -44,6 +44,10 @@ export const MediaWrapper = styled('div', {
   position: 'relative',
   height: '207px',
   margin: '10px -15px',
+
+  '@xs': {
+    height: '356px',
+  },
 });
 
 export const PreviewDetails = styled('div', {

@@ -197,7 +197,7 @@ export const FilterButtonWrapper = styled('div', {
   width: '135px',
   height: '44px',
 
-  '@sm': {
+  '@md': {
     flex: '0.5',
   },
 

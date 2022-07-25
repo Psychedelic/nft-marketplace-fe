@@ -7,7 +7,7 @@ export const Container = styled('div', {
   background: '$backgroundColor',
   paddingBottom: '30px',
 
-  '@sm': {
+  '@md': {
     padding: '0px 14px',
     width: 'unset',
   },
@@ -43,7 +43,7 @@ export const ButtonListWrapper = styled('div', {
   alignItems: 'center',
   marginLeft: '10px',
 
-  '@sm': {
+  '@md': {
     marginLeft: '0px',
     margin: '20px 0px',
     justifyContent: 'space-between',
@@ -56,7 +56,7 @@ export const ButtonWrapper = styled('div', {
   variants: {
     isTriggerVisible: {
       true: {
-        '@sm': {
+        '@md': {
           flex: '0.5',
           marginLeft: '5px',
         },

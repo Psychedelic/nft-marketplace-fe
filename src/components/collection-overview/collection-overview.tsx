@@ -26,11 +26,13 @@ import {
 import crown from '../../assets/crown.svg';
 import { Icon } from '../icons';
 import useMediaQuery from '../../hooks/use-media-query';
-import { Website } from '../icons/custom/website';
+import { FilterChipsSkeleton } from './filter-chips-skeleton';
+import { useTheme } from '../../hooks';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const [theme] = useTheme();
 
   const { loadingTableData } = useTableStore();
   const {
@@ -76,7 +78,10 @@ export const CollectionOverview = () => {
         <ButtonsWrapper>
           {isMobileScreen ? (
             <LinkButton url="https://crowns.ooo/">
-              <Website />
+              <Icon
+                icon="website"
+                extraIconProps={{ dark: theme === 'darkTheme' }}
+              />
             </LinkButton>
           ) : (
             <LinkButton type="textBtn" url="https://crowns.ooo/">
@@ -109,35 +114,43 @@ export const CollectionOverview = () => {
         <FilteredCountChipsWrapper>
           <Divider />
           <FilteredCountChips>
-            {!loadingCollectionData && totalNFTSCount > 0 && (
+            {!loadingCollectionData && totalNFTSCount > 0 ? (
               <FilteredCountChip
                 label={t('translation:chips.labels.itemsLabel')}
                 count={totalNFTSCount}
                 showLogo={false}
               />
+            ) : (
+              <FilterChipsSkeleton />
             )}
-            {!loadingCollectionData && totalOwnersCount > 0 && (
+            {!loadingCollectionData && totalOwnersCount > 0 ? (
               <FilteredCountChip
                 label={t('translation:chips.labels.OwnersLabel')}
                 count={totalOwnersCount}
                 showLogo={false}
               />
+            ) : (
+              <FilterChipsSkeleton />
             )}
           </FilteredCountChips>
           <FilteredCountChips>
-            {!loadingCollectionData && floorPrice > 0 && (
+            {!loadingCollectionData && floorPrice > 0 ? (
               <FilteredCountChip
                 label={t('translation:chips.labels.FloorPriceLabel')}
                 count={floorPrice}
                 showLogo
               />
+            ) : (
+              <FilterChipsSkeleton />
             )}
-            {!loadingCollectionData && totalVolume > 0 && (
+            {!loadingCollectionData && totalVolume > 0 ? (
               <FilteredCountChip
                 label={t('translation:chips.labels.totalVolume')}
                 count={Number(totalVolume.toFixed(2))}
                 showLogo
               />
+            ) : (
+              <FilterChipsSkeleton />
             )}
           </FilteredCountChips>
         </FilteredCountChipsWrapper>

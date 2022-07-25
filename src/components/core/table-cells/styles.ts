@@ -6,7 +6,6 @@ export const ItemDetails = styled('div', {
   // base styles
   display: 'flex',
   alignItems: 'center',
-  flexWrap: 'wrap',
 });
 
 export const ThumbnailSkeleton = styled(SkeletonBox, {
@@ -55,7 +54,7 @@ export const TypeDetails = styled('div', {
       myOffers: {
         '@sm': {
           paddingRight: '0px',
-          alignItems: 'unset',
+          alignItems: 'center',
         },
       },
       activity: {
@@ -143,7 +142,13 @@ export const PriceDetails = styled('div', {
       myOffers: {
         '@sm': {
           paddingRight: '0px',
-          alignItems: 'unset',
+          alignItems: 'start',
+        },
+      },
+      offers: {
+        '@sm': {
+          paddingRight: '10px',
+          alignItems: 'start',
         },
       },
       activity: {
@@ -163,7 +168,7 @@ export const PriceDetails = styled('div', {
 
   '@sm': {
     paddingRight: '25px',
-    alignItems: 'end',
+    alignItems: 'start',
   },
 });
 
@@ -205,6 +210,9 @@ export const WICPText = styled('div', {
         fontWeight: '500',
         lineHeight: '19px',
         color: '$mainTextColor',
+      },
+      myOffers: {
+        order: 'unset',
       },
     },
   },
@@ -275,6 +283,15 @@ export const TextDetails = styled('div', {
         },
       },
 
+      offersActivityTime: {
+        color: '$primary',
+
+        '@sm': {
+          paddingRight: '10px',
+          justifyContent: 'center',
+        },
+      },
+
       nftActivityDate: {
         lineHeight: '22px',
         color: '$primary',
@@ -333,5 +350,21 @@ export const MobileItemDetailsWrapper = styled('div', {
     justifyContent: 'flex-end',
     flexDirection: 'column',
     alignItems: 'end',
+  },
+});
+
+export const MobileItemDetailsContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  width: '390px',
+  justifyContent: 'space-between',
+
+  variants: {
+    tableType: {
+      nftActivity: {
+        width: 'unset',
+        justifyContent: 'end',
+      },
+    },
   },
 });

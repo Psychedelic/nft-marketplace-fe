@@ -13,8 +13,6 @@ import {
   ModalDescription,
   ModalButtonsList,
   ModalButtonWrapper,
-  ActionTextWrapper,
-  ActionText,
 } from './styles';
 import { ModalOverlay } from './modal-overlay';
 
@@ -35,7 +33,6 @@ export type CancelOfferModalProps = {
 export const CancelOfferModal = ({
   item,
   largeTriggerButton = false,
-  actionText,
 }: CancelOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -77,7 +74,7 @@ export const CancelOfferModal = ({
     );
   };
 
-  const isMobileScreen = useMediaQuery('(max-width: 640px)')
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
   return (
     <DialogPrimitive.Root
@@ -91,21 +88,15 @@ export const CancelOfferModal = ({
       */}
       <DialogPrimitive.Trigger asChild>
         <CancelOfferModalTrigger largeButton={largeTriggerButton}>
-          {actionText ? (
-            <ActionTextWrapper>
-              <ActionText danger={isMobileScreen}>{actionText}</ActionText>
-            </ActionTextWrapper>
-          ) : (
-            <ActionButton
-              type="secondary"
-              size="small"
-              fontWeight={largeTriggerButton ? undefined : 'light'}
-            >
-              {largeTriggerButton
-                ? t('translation:buttons.action.cancelOffer')
-                : t('translation:buttons.action.cancel')}
-            </ActionButton>
-          )}
+          <ActionButton
+            type="secondary"
+            size="small"
+            fontWeight={largeTriggerButton ? undefined : 'light'}
+          >
+            {largeTriggerButton
+              ? t('translation:buttons.action.cancelOffer')
+              : t('translation:buttons.action.cancel')}
+          </ActionButton>
         </CancelOfferModalTrigger>
       </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal
@@ -166,7 +157,7 @@ export const CancelOfferModal = ({
                 </ModalButtonWrapper>
                 <ModalButtonWrapper>
                   <ActionButton
-                    type={isMobileScreen ? "danger" : "primary"}
+                    type={isMobileScreen ? 'danger' : 'primary'}
                     onClick={handleCancelOffer}
                     danger
                   >

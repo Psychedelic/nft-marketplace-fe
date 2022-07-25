@@ -6,7 +6,7 @@ export const Container = styled('div', {
   width: '100%',
   marginBottom: '20px',
 
-  '@sm': {
+  '@md': {
     overflowX: 'hidden',
   },
 });
@@ -25,7 +25,7 @@ export const Wrapper = styled('div', {
     },
   },
 
-  '@sm': {
+  '@md': {
     flexWrap: 'wrap',
   },
 });
@@ -34,7 +34,7 @@ export const PreviewContainer = styled('div', {
   width: '100%',
   maxWidth: '480px',
 
-  '@sm': {
+  '@md': {
     order: 2,
     padding: '0px 14px',
     maxWidth: 'unset',
@@ -51,7 +51,7 @@ export const Video = styled(VideoPreload, {
   minHeight: '470px',
   marginBottom: '10px',
 
-  '@sm': {
+  '@md': {
     minHeight: 'unset',
     maxHeight: 'unset',
     marginTop: '10px',
@@ -68,7 +68,7 @@ export const NFTTraitsContainer = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
 
-  '@sm': {
+  '@md': {
     flexWrap: 'unset',
     overflowX: 'scroll',
     msOverflowStyle: 'none',
@@ -87,7 +87,7 @@ export const DetailsContainer = styled('div', {
   alignItems: 'flex-end',
   padding: '0px 0px 0px 30px',
 
-  '@sm': {
+  '@md': {
     order: '1',
     padding: '0px 14px',
   },
@@ -97,7 +97,7 @@ export const TraitsListLoaderSkeletonWrapper = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
 
-  '@sm': {
+  '@md': {
     flexWrap: 'unset',
   },
 });
@@ -165,7 +165,7 @@ export const AboutAccordionDetails = styled('div', {
   padding: '0px',
   flexWrap: 'wrap',
 
-  '@sm': {
+  '@md': {
     flexWrap: 'unset',
     overflowX: 'scroll',
     msOverflowStyle: 'none',

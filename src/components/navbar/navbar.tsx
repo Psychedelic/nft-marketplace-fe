@@ -65,7 +65,10 @@ export const NavBar = () => {
       <NavBarWrapper>
         <StyleRouter
           to="/"
-          onClick={() => pathname === '/' && window.location.reload()}
+          onClick={() => {
+            pathname === '/' && window.location.reload();
+            setOpenMobileNavbar(false);
+          }}
           startAnimation={startAnimation}
         >
           <LogoContainer>

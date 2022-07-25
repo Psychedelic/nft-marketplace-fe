@@ -4,6 +4,7 @@ export const Container = styled('div', {
   width: '100%',
   paddingTop: '72px',
   background: '$backgroundColor',
+  overflow: 'hidden',
 
   // variants
   variants: {

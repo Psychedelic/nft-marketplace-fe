@@ -250,7 +250,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
                 )}`) ||
               ''
             }
-            tableType="offers"
+            tableType="myOffers"
           />
         ),
       },
@@ -261,7 +261,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
             : 'translation:tables.titles.floorDif',
         ),
         accessor: ({ floorDifference }: OffersTableItem) => (
-          <TextCell text={floorDifference} type="offers" />
+          <TextCell text={floorDifference} type="myOffers" />
         ),
       },
       {
@@ -328,90 +328,6 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     [t, columnsToHide], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
-  const mobileColumns = useMemo(
-    () => [
-      {
-        Header: t('translation:tables.titles.price'),
-        accessor: ({
-          price,
-          computedCurrencyPrice,
-        }: OffersTableItem) => (
-          <PriceDetailsCell
-            wicp={parseE8SAmountToWICP(price)}
-            price={
-              (computedCurrencyPrice &&
-                `$${formatPriceValue(
-                  computedCurrencyPrice.toString(),
-                )}`) ||
-              ''
-            }
-            tableType="myOffers"
-          />
-        ),
-      },
-      {
-        Header: t(
-          !isMobileScreen
-            ? 'translation:tables.titles.floorDifference'
-            : 'translation:tables.titles.floorDif',
-        ),
-        accessor: ({ floorDifference }: OffersTableItem) => (
-          <TextCell text={floorDifference} tableType="myOffers" />
-        ),
-      },
-      {
-        Header: t('translation:tables.titles.time'),
-        accessor: ({ time }: OffersTableItem) => (
-          <TextCell
-            text={formatTimestamp(BigInt(time))}
-            type="myOffersActivityTime"
-          />
-        ),
-      },
-      {
-        id: OffersTableHeaders.OffersReceivedAction,
-        Header: t('translation:tables.titles.action'),
-        // TODO: Update formatted price and offerFrom with dynamic fields
-        accessor: ({
-          price,
-          fromDetails,
-          item,
-          computedCurrencyPrice,
-        }: OffersTableItem) => (
-          <ButtonWrapper>
-            <AcceptOfferModal
-              price={parseE8SAmountToWICP(price)}
-              formattedPrice={
-                (computedCurrencyPrice &&
-                  computedCurrencyPrice.toString()) ||
-                ''
-              }
-              offerFrom={fromDetails.address}
-              nftTokenId={item.tokenId.toString()}
-              actionButtonProp="light"
-              actionText={t('translation:buttons.action.acceptOffer')}
-              isMobileScreen={isMobileScreen}
-            />
-          </ButtonWrapper>
-        ),
-      },
-      {
-        id: OffersTableHeaders.OffersMadeAction,
-        Header: t('translation:tables.titles.action'),
-        // TODO: Update cancel offer modal
-        accessor: ({ item }: OffersTableItem) => (
-          <ButtonWrapper>
-            <CancelOfferModal
-              item={item}
-              actionText={t('translation:buttons.action.cancel')}
-            />
-          </ButtonWrapper>
-        ),
-      },
-    ],
-    [t, columnsToHide], // eslint-disable-line react-hooks/exhaustive-deps
-  );
-
   const { loading, loadedOffers } = tableDetails;
 
   return (
@@ -439,9 +355,9 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         >
           <Container>
             <TableLayout
-              columns={isMobileScreen ? mobileColumns : columns}
+              columns={columns}
               data={loadedOffers}
-              tableType=""
+              tableType="myOffers"
               columnsToHide={columnsToHide}
               loading={loading}
               loaderDetails={{

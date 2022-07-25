@@ -34,7 +34,7 @@ import { IoIosMoon } from '@react-icons/all-files/io/IoIosMoon';
 import { IoArrowBackOutline } from '@react-icons/all-files/io5/IoArrowBackOutline';
 import { IoFilterSharp } from '@react-icons/all-files/io5/IoFilterSharp';
 
-import { PlugIcon, AppNameIcon, SpinnerIcon } from './custom';
+import { PlugIcon, AppNameIcon, SpinnerIcon, Website } from './custom';
 
 export const Icons = {
   warningOutline: IoWarningOutline,
@@ -73,6 +73,7 @@ export const Icons = {
   nightMode: IoIosMoon,
   back: IoArrowBackOutline,
   filter: IoFilterSharp,
+  website: Website,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,

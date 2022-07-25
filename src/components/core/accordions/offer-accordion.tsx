@@ -88,7 +88,6 @@ export const OnConnected = ({
   price,
   showNFTActionButtons,
   operator,
-  isMobileScreen,
 }: ConnectedProps) => {
   const { id } = useParams();
   const dispatch = useAppDispatch();

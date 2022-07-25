@@ -10,6 +10,16 @@ export const TableWrapper = styled('div', {
   // marginTop: '44px', // TODO: make variant
   width: '100%',
 
+  '@md': {
+    overflowX: 'scroll',
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+  
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+  },
+
   table: {
     borderSpacing: '0',
     width: 'inherit',
@@ -36,17 +46,16 @@ export const TableWrapper = styled('div', {
           borderBottom: '1px solid $borderColor',
           minWidth: '100px',
 
-          '@sm': {
-            padding: '16px 0px',
-            textAlign: 'center',
-            minWidth: '80px',
+          '@md': {
+            padding: '16px 20px 16px 0px',
+            textAlign: 'start',
           },
 
           '&:first-child': {
             paddingLeft: '80px',
             textAlign: 'start',
 
-            '@sm': {
+            '@md': {
               paddingLeft: '15px',
             },
           },
@@ -68,16 +77,16 @@ export const TableWrapper = styled('div', {
           '&:first-child': {
             paddingLeft: '80px',
 
-            '@sm': {
+            '@md': {
               paddingLeft: '15px',
               textAlign: 'start',
             },
           },
 
-          '@sm': {
+          '@md': {
             borderTop: '1px solid $borderColor',
-            padding: '20px 0px 20px 0px',
-            textAlign: 'center',
+            padding: '20px 20px 20px 0px',
+            textAlign: 'start',
           },
         },
         '&:hover': {
@@ -112,7 +121,7 @@ export const TableWrapper = styled('div', {
                   paddingLeft: '20px',
                 },
 
-                '@sm': {
+                '@md': {
                   padding: '10px 5px',
 
                   '&:first-child': {
@@ -136,8 +145,8 @@ export const TableWrapper = styled('div', {
                   paddingLeft: '20px',
                 },
 
-                '@sm': {
-                  padding: '10px 5px',
+                '@md': {
+                  padding: '10px 8px',
 
                   '&:first-child': {
                     paddingLeft: '10px',
@@ -180,8 +189,8 @@ export const TableWrapper = styled('div', {
                   paddingLeft: '20px',
                 },
 
-                '@sm': {
-                  background: 'white',
+                '@md': {
+                  background: '$tableBackgroundColor',
                   color: '$mainTextColor',
                   fontSize: '20px',
                   lineHeight: '24px',
@@ -204,7 +213,7 @@ export const TableWrapper = styled('div', {
                 '&:first-child': {
                   paddingLeft: '20px',
                 },
-                '@sm': {
+                '@md': {
                   padding: '14px 0px',
                 },
               },
@@ -215,25 +224,25 @@ export const TableWrapper = styled('div', {
                   '&:first-child': {
                     borderRadius: '15px',
 
-                    '@sm': {
+                    '@md': {
                       borderRadius: 'unset',
                     },
                   },
                   '&:last-child': {
                     borderRadius: '15px',
 
-                    '@sm': {
+                    '@md': {
                       borderRadius: 'unset',
                     },
                   },
-                  '@sm': {
+                  '@md': {
                     borderBottom: 'unset',
                   },
                 },
               },
 
-              '@sm': {
-                background: 'white',
+              '@md': {
+                background: '$tableBackgroundColor',
               },
             },
           },
@@ -243,8 +252,35 @@ export const TableWrapper = styled('div', {
       activity: {
         table: {
           thead: {
-            '@sm': {
+            '@md': {
               display: 'none',
+            },
+          },
+          tbody: {
+            tr: {
+              td: {
+                '@md': {
+                  paddingLeft: '30px',
+                },
+              },
+            },
+          },
+        },
+      },
+
+      myOffers: {
+        table: {
+          tbody: {
+            tr: {
+              td: {
+                '&:first-child': {
+                  paddingRight: '50px',
+                },
+
+                '@md': {
+                  paddingRight: '30px',
+                },
+              },
             },
           },
         },
@@ -273,7 +309,7 @@ export const ButtonWrapper = styled('div', {
   width: '98px',
   height: '33px',
 
-  '@sm': {
+  '@md': {
     width: '100%',
     height: 'unset',
     display: 'flex',
@@ -291,7 +327,7 @@ export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
         '&:first-child': {
           paddingLeft: '80px',
 
-          '@sm': {
+          '@md': {
             paddingLeft: '15px',
           },
         },
@@ -304,7 +340,7 @@ export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
             '&:first-child': {
               paddingLeft: '80px',
 
-              '@sm': {
+              '@md': {
                 paddingLeft: '25px',
               },
             },
@@ -323,7 +359,7 @@ export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
         '&:first-child': {
           paddingLeft: '80px',
 
-          '@sm': {
+          '@md': {
             paddingLeft: '15px',
           },
         },
@@ -360,7 +396,7 @@ export const TableSkeletonsWrapper = styled('tr', {
     },
   },
 
-  '@sm': {
+  '@md': {
     padding: '5px 25px',
   },
 });

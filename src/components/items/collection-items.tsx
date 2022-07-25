@@ -26,6 +26,8 @@ import {
   SkeletonListWrapper,
   ClearButton,
   AppliedFilters,
+  FiltersButtonSkeleton,
+  SortButtonSkeleton,
 } from './styles';
 import useMediaQuery from '../../hooks/use-media-query';
 import { Icon } from '../icons';
@@ -146,26 +148,34 @@ export const CollectionItems = () => {
               </ContentFlex>
             ) : (
               <ContentFlex>
-                <ActionButton
-                  type="secondary"
-                  size="wide"
-                  onClick={() => {
-                    setIsOpenFiltersMenu(true);
-                  }}
-                >
-                  Filter
-                  {appliedFilters.defaultFilters.length > 0 ? (
-                    <AppliedFilters>
-                      {appliedFilters.defaultFilters.length}
-                    </AppliedFilters>
-                  ) : (
-                    <Icon icon="filter" paddingLeft />
-                  )}
-                </ActionButton>
+                {loadingNFTs && loadedNFTS.length === 0 ? (
+                  <FiltersButtonSkeleton />
+                ) : (
+                  <ActionButton
+                    type="secondary"
+                    size="wide"
+                    onClick={() => {
+                      setIsOpenFiltersMenu(true);
+                    }}
+                  >
+                    Filter
+                    {appliedFilters.defaultFilters.length > 0 ? (
+                      <AppliedFilters>
+                        {appliedFilters.defaultFilters.length}
+                      </AppliedFilters>
+                    ) : (
+                      <Icon icon="filter" paddingLeft />
+                    )}
+                  </ActionButton>
+                )}
               </ContentFlex>
             )}
             <ContentFlex>
-              <SortByFilterDropdown />
+              {loadingNFTs && loadedNFTS.length === 0 ? (
+                <SortButtonSkeleton />
+              ) : (
+                <SortByFilterDropdown />
+              )}
             </ContentFlex>
           </Flex>
           {!isMobileScreen && (

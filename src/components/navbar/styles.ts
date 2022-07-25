@@ -278,7 +278,7 @@ export const NotConnectedMessageWrapper = styled('div', {
 export const NotConnectedMessage = styled('p', {
   textAlign: 'center',
   maxWidth: '270px',
-  color: 'rgba(35, 38, 47, 0.6)',
+  color: '$disconnectedTextColor',
   fontSize: '16px',
   margin: '0 0 20px',
 });

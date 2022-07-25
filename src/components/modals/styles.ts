@@ -59,7 +59,7 @@ export const BuyNowModalTrigger = styled('div', {
   height: '50px',
   marginRight: '10px',
 
-  '@sm': {
+  '@md': {
     marginLeft: '0px',
     width: '100%',
     flex: '1',
@@ -71,7 +71,7 @@ export const MakeOfferModalTrigger = styled('div', {
   height: '50px',
   marginRight: '10px',
 
-  '@sm': {
+  '@md': {
     marginLeft: '0px',
     width: '100%',
     flex: '1',
@@ -83,7 +83,7 @@ export const CancelListingModalTrigger = styled('div', {
   height: '50px',
   marginLeft: '10px',
 
-  '@sm': {
+  '@md': {
     marginLeft: '0px',
     width: '100%',
     flex: '1',
@@ -101,12 +101,12 @@ export const CancelOfferModalTrigger = styled('div', {
         width: '140px',
         height: '50px',
 
-        '@sm': {
+        '@md': {
           width: '100%',
         },
       },
       false: {
-        '@sm': {
+        '@md': {
           height: 'unset',
           width: '100%',
         },
@@ -119,7 +119,7 @@ export const AcceptOfferModalTrigger = styled('div', {
   width: '98px',
   height: '33px',
 
-  '@sm': {
+  '@md': {
     height: 'unset',
   },
 });
@@ -142,7 +142,7 @@ export const ModalOverlayContainer = styled(DialogPrimitive.Overlay, {
     animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
   },
 
-  '@sm': {
+  '@md': {
     background: 'rgba(0, 0, 0, 0.6)',
   },
 });
@@ -173,6 +173,15 @@ export const ModalContent = styled(DialogPrimitive.Content, {
     borderRadius: '15px',
     animation: 'unset',
   },
+
+  '@md': {
+    width: '65%',
+    height: 'max-content',
+    bottom: '0%',
+    padding: '15px 0px 0px',
+    borderRadius: '15px',
+    animation: 'unset',
+  },
 });
 
 export const SellModalPreviewWrapper = styled('div', {
@@ -192,7 +201,7 @@ export const NFTCardPreview = styled('div', {
     cursor: 'default',
   },
 
-  '@sm': {
+  '@md': {
     display: 'none',
   },
 });
@@ -214,7 +223,7 @@ export const ModalHeader = styled('div', {
   flexDirection: 'column',
   margin: '0px 0px 30px',
 
-  '@sm': {
+  '@md': {
     margin: '0px 15px 35px',
   },
 });
@@ -256,7 +265,7 @@ export const ModalDescription = styled(DialogPrimitive.Description, {
 export const SaleContentWrapper = styled('div', {
   minWidth: '430px',
 
-  '@sm': {
+  '@md': {
     minWidth: 'unset',
     display: 'flex',
     alignItems: 'center',
@@ -270,7 +279,7 @@ export const FeeContainer = styled('div', {
   flexDirection: 'column',
   margin: '35px 0px 0px',
 
-  '@sm': {
+  '@md': {
     width: '100%',
     margin: '35px 15px',
   },
@@ -285,7 +294,7 @@ export const FeeDetails = styled('div', {
     marginBottom: '0px',
   },
 
-  '@sm': {
+  '@md': {
     width: '100%',
   },
 });
@@ -326,7 +335,7 @@ export const ItemDetailsWrapper = styled('div', {
   padding: '12px 0px 32px',
   borderBottom: '1.5px solid #E5E8EB',
 
-  '@sm': {
+  '@md': {
     width: '100%',
     margin: '0px 15px',
   },
@@ -393,7 +402,7 @@ export const ItemTokenId = styled('div', {
   color: '$mainTextColor',
   display: 'none',
 
-  '@sm': {
+  '@md': {
     fontWeight: '600',
     display: 'block',
   },
@@ -437,7 +446,7 @@ export const WICPText = styled('div', {
       small: {
         fontSize: '18px',
 
-        '@sm': {
+        '@md': {
           fontSize: '16px',
         },
       },
@@ -488,7 +497,7 @@ export const ModalButtonsList = styled('div', {
   justifyContent: 'space-between',
   marginTop: '35px',
 
-  '@sm': {
+  '@md': {
     justifyContent: 'center',
     flexWrap: 'wrap',
   },
@@ -502,12 +511,12 @@ export const ModalButtonWrapper = styled('div', {
   '&:last-child': {
     marginRight: '0px',
 
-    '@sm': {
+    '@md': {
       marginRight: '15px',
     },
   },
 
-  '@sm': {
+  '@md': {
     width: '100%',
     margin: '0px 15px 15px',
   },
@@ -555,10 +564,6 @@ export const ActionText = styled('span', {
         color: '$error',
       },
     },
-  },
-
-  '@sm': {
-    textDecoration: 'underline',
   },
 });
 

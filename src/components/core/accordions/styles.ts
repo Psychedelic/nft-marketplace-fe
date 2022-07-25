@@ -64,7 +64,7 @@ export const AccordionHeadContent = styled('div', {
         width: '100%',
       },
       about: {
-        '@sm': {
+        '@md': {
           justifyContent: 'space-between',
           border: '1.5px solid $borderColor',
           padding: '15px',
@@ -91,7 +91,7 @@ export const MetaDataTitle = styled('span', {
   alignitems: 'center',
   color: '$greyMid',
 
-  '@sm': {
+  '@md': {
     fontWeight: '600',
     display: 'block',
   },
@@ -107,7 +107,7 @@ export const MetaDataDescription = styled('p', {
   alignitems: 'center',
   color: '$mainTextColor',
 
-  '@sm': {
+  '@md': {
     minWidth: '135px',
     fontWeight: '600',
     display: 'block',
@@ -119,7 +119,7 @@ export const PriceWrapper = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
 
-  '@sm': {
+  '@md': {
     alignItems: 'flex-end',
   },
 });
@@ -136,7 +136,7 @@ export const OfferLabel = styled('div', {
   lineHeight: '18px',
   color: '$greyMid',
 
-  '@sm': {
+  '@md': {
     fontSize: '14px',
     lineHeight: '17px',
   },
@@ -168,7 +168,7 @@ export const MarketPrice = styled('div', {
   color: '$mainTextColor',
   margin: '0',
 
-  '@sm': {
+  '@md': {
     color: '$greyMid',
     fontSize: '20px',
     lineHeight: '24px',
@@ -213,7 +213,7 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
         background: '$openAccordion',
         borderRadius: '0px',
 
-        '@sm': {
+        '@md': {
           borderTopLeftRadius: '15px',
           borderTopRightRadius: '15px',
         },
@@ -409,7 +409,7 @@ export const PlugButtonWrapper = styled('div', {
     marginLeft: '0px',
   },
 
-  '@sm': {
+  '@md': {
     padding: '20px 0',
   },
 });
@@ -428,7 +428,7 @@ export const ButtonListWrapper = styled('div', {
   alignItems: 'center',
   paddingTop: '30px',
 
-  '@sm': {
+  '@md': {
     padding: '0px',
     marginLeft: '0px',
     margin: '20px 0px',
@@ -443,7 +443,7 @@ export const ButtonDetailsWrapper = styled('div', {
   variants: {
     isTriggerVisible: {
       true: {
-        '@sm': {
+        '@md': {
           flex: '0.5',
           marginLeft: '5px',
         },
