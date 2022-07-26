@@ -165,8 +165,8 @@ export const ModalContent = styled(DialogPrimitive.Content, {
     outline: 'none',
   },
 
-  '@sm': {
-    width: '95%',
+  '@md': {
+    width: '65%',
     height: 'max-content',
     bottom: '0%',
     padding: '15px 0px 0px',
@@ -174,8 +174,8 @@ export const ModalContent = styled(DialogPrimitive.Content, {
     animation: 'unset',
   },
 
-  '@md': {
-    width: '65%',
+  '@sm': {
+    width: '95%',
     height: 'max-content',
     bottom: '0%',
     padding: '15px 0px 0px',
