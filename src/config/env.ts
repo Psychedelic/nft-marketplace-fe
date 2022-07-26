@@ -39,7 +39,7 @@ const config: Config = {
   // The production version
   production: {
     host: 'https://mainnet.dfinity.network',
-    kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
+    kyasshuMarketplaceAPI: 'https://kyasshu.fleek.co',
     icScan: 'https://icscan.io/principal',
     nftCollectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
     marketplaceCanisterId: 'getti-aiaaa-aaaah-abkkq-cai',
