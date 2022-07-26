@@ -195,7 +195,9 @@
       "denyOffer": "Deny Offer",
       "cancelOffer": "Cancel Offer",
       "cancelListing": "Cancel Listing",
-      "acceptOffer": "Sale"
+      "acceptOffer": "Sale",
+      "mint": "mint",
+      "transfer": "transfer"
     },
     "labels": {
       "you": "You"
