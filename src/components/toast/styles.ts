@@ -53,6 +53,7 @@ export const ToastViewport = styled(ToastPrimitive.Viewport, {
     padding: '25px 0px',
     flexDirection: 'unset',
     justifyContent: 'center',
+    flexWrap: 'wrap',
   },
 });
 
@@ -69,6 +70,7 @@ export const Toast = styled(ToastPrimitive.Root, {
 
   '@sm': {
     width: '85%',
+    marginBottom: '25px',
   },
 
   variants: {
