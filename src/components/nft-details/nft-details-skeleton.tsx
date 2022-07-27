@@ -5,22 +5,20 @@ import {
   PreviewContainer,
   PreviewImageSkeleton,
   AccordionSkeletion,
-  Wrapper
+  Wrapper,
 } from './styles';
 
-const NFTDetailsSkeleton = () => {
-  return (
-    <Wrapper>
-      <PreviewContainer>
-        <PreviewImageSkeleton />
-        <TraitsListLoader />
-      </PreviewContainer>
-      <DetailsContainer>
-        <AccordionSkeletion />
-        <AccordionSkeletion />
-      </DetailsContainer>
-    </Wrapper>
-  );
-};
+const NFTDetailsSkeleton = () => (
+  <Wrapper>
+    <PreviewContainer>
+      <PreviewImageSkeleton />
+    </PreviewContainer>
+    <DetailsContainer>
+      <AccordionSkeletion />
+      <AccordionSkeletion />
+    </DetailsContainer>
+  </Wrapper>
+);
 
 export default NFTDetailsSkeleton;
+

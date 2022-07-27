@@ -96,7 +96,7 @@ export const NftDetails = () => {
 
     dispatch(nftsActions.getNFTDetails({ id }));
 
-    dispatch(filterActions.getFilterTraits());
+    // dispatch(filterActions.getFilterTraits());
 
     // TODO: add loading placeholders in action buttons
     // like Sell/Cancel/Edit/Make Offer/Buy Now
@@ -144,7 +144,7 @@ export const NftDetails = () => {
               poster={nftDetails.preview}
               src={nftDetails.location}
             />
-            <NFTTraitsContainer>
+            {/* <NFTTraitsContainer>
               {loadingFilterList ? (
                 <TraitsListLoader />
               ) : (
@@ -191,7 +191,7 @@ export const NftDetails = () => {
                   />
                 </>
               )}
-            </NFTTraitsContainer>
+            </NFTTraitsContainer> */}
           </PreviewContainer>
           <DetailsContainer>
             <NFTMetaData id={id} />

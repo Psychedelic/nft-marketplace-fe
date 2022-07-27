@@ -68,9 +68,9 @@ const config: Config = {
     host: 'https://mainnet.dfinity.network',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
     icScan: 'https://icscan.io/principal',
-    nftCollectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
+    nftCollectionId: 'g4vbg-2aaaa-aaaak-aahaa-cai',
     marketplaceCanisterId: 'o3ios-jaaaa-aaaag-qakqq-cai',
-    wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
+    wICPCanisterId: 'ncdty-biaaa-aaaak-aag7q-cai',
     capRouterId: 'lj532-6iaaa-aaaah-qcc7a-cai',
   },
   // The local development environment settings
