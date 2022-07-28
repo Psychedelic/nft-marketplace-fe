@@ -82,7 +82,7 @@ export const SearchResultsWrapper = styled('div', {
   border: '1.5px solid $borderColor',
   boxShadow: '0px 4px 24px rgba(0, 0, 0, 0.25)',
   position: 'fixed',
-  top: '6%',
+  top: '8%',
   left: '0px',
   right: '0px',
   zIndex: '-3',

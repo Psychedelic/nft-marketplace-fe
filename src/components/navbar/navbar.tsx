@@ -57,6 +57,14 @@ export const NavBar = () => {
 
   useBuyerOffers();
 
+  const revertMobileNavAnimation = () => {
+    setTimeout(() => {
+      setOpenMobileSearchbar(false);
+      setStartAnimation(false);
+    }, 700);
+    setStopAnimation(true);
+  };
+
   return (
     <Container
       showAlerts={showAlerts}
@@ -96,6 +104,7 @@ export const NavBar = () => {
         <GlobalSearch
           startAnimation={startAnimation}
           isMobileScreen={isMobileScreen}
+          revertMobileNavAnimation={revertMobileNavAnimation}
         />
         {!isMobileScreen && (
           <ActionButtonsContainer>
@@ -115,13 +124,14 @@ export const NavBar = () => {
               size="md"
               paddingRight
               onClick={() => {
+                setOpenMobileNavbar(false);
                 setOpenMobileSearchbar(true);
                 setStartAnimation(true);
                 stopAnimation && setStopAnimation(false);
               }}
             />
             <MobileNavbarIcons
-              icon="hamburger"
+              icon={openMobileNavbar ? 'close' : 'hamburger'}
               size="lg"
               paddingLeft
               onClick={() => setOpenMobileNavbar(!openMobileNavbar)}

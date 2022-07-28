@@ -20,7 +20,12 @@ import {
   TextLinkCell,
 } from '../core';
 import { TableLayout } from './table-layout';
-import { Container, InfiniteScrollWrapper } from './styles';
+import {
+  Container,
+  InfiniteScrollWrapper,
+  RowWrapper,
+  HeaderText,
+} from './styles';
 import { NFTMetadata } from '../../declarations/legacy';
 import TableSkeletons from './table-skeletons';
 import {
@@ -195,12 +200,15 @@ export const ActivityTable = () => {
           const url = getICAccountLink(principalText);
 
           return (
-            <TextLinkCell
-              text={short}
-              url={url}
-              type=""
-              principalId={principalText}
-            />
+            <RowWrapper>
+              <HeaderText>From:</HeaderText>
+              <TextLinkCell
+                text={short}
+                url={url}
+                type=""
+                principalId={principalText}
+              />
+            </RowWrapper>
           );
         },
       },
@@ -208,7 +216,12 @@ export const ActivityTable = () => {
         Header: t('translation:tables.titles.buyer'),
         accessor: ({ buyer }: RowProps) => {
           if (!buyer) {
-            return <TextLinkCell text="-" type="" />;
+            return (
+              <RowWrapper>
+                <HeaderText>To:</HeaderText>
+                <TextLinkCell text="-" type="" />
+              </RowWrapper>
+            );
           }
 
           const principalText = buyer.toText();
@@ -216,12 +229,15 @@ export const ActivityTable = () => {
           const url = getICAccountLink(principalText);
 
           return (
-            <TextLinkCell
-              text={short}
-              url={url}
-              type=""
-              principalId={principalText}
-            />
+            <RowWrapper>
+              <HeaderText>To:</HeaderText>
+              <TextLinkCell
+                text={short}
+                url={url}
+                type=""
+                principalId={principalText}
+              />
+            </RowWrapper>
           );
         },
       },

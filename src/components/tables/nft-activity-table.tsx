@@ -16,7 +16,7 @@ import {
 } from '../core';
 import { TableLayout } from './table-layout';
 import { TokenTransactionItem } from '../../utils/parser';
-import { Container } from './styles';
+import { Container, RowWrapper, HeaderText } from './styles';
 import { recentNFTUpdatesCount } from '../../hooks/use-marketplace-store';
 import { getICAccountLink } from '../../utils/account-id';
 import MobileItemDetails from '../core/table-cells/mobile-item-details';
@@ -116,16 +116,6 @@ export const NFTActivityTable = () => {
   const mobileColumns = useMemo(
     () => [
       {
-        Header: t('translation:tables.titles.itemActivity'),
-        accessor: ({ type }: RowProps) => (
-          <TypeDetailsCell
-            type={type}
-            tableType="nftActivity"
-            showIcon={true}
-          />
-        ),
-      },
-      {
         Header: ' ',
         accessor: ({ type, price, date }: RowProps) => (
           <MobileItemDetails
@@ -134,6 +124,48 @@ export const NFTActivityTable = () => {
             time={date}
             tableType="nftActivity"
           />
+        ),
+      },
+      {
+        Header: t('translation:tables.titles.seller'),
+        accessor: ({ seller }: RowProps) => {
+          const url = getICAccountLink(seller.raw);
+
+          return (
+            <RowWrapper>
+              <HeaderText>From:</HeaderText>
+              <TextLinkCell
+                text={seller.formatted}
+                url={url}
+                type="nftActivity"
+                principalId={seller.raw}
+              />
+            </RowWrapper>
+          );
+        },
+      },
+      {
+        Header: t('translation:tables.titles.buyer'),
+        accessor: ({ buyer }: RowProps) => {
+          const url = getICAccountLink(buyer.raw);
+
+          return (
+            <RowWrapper>
+              <HeaderText>To:</HeaderText>
+              <TextLinkCell
+                text={buyer.formatted}
+                url={url}
+                type="nftActivity"
+                principalId={buyer.raw}
+              />
+            </RowWrapper>
+          );
+        },
+      },
+      {
+        Header: t('translation:tables.titles.date'),
+        accessor: ({ date }: RowProps) => (
+          <TextCell text={date} type="nftActivityDate" />
         ),
       },
     ],

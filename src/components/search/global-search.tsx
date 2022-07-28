@@ -29,11 +29,13 @@ const DEBOUNCE_TIMEOUT_MS = 400;
 type GlobalSearchTypes = {
   startAnimation?: boolean;
   isMobileScreen?: boolean;
+  revertMobileNavAnimation?: () => void;
 };
 
 export const GlobalSearch = ({
   startAnimation,
   isMobileScreen,
+  revertMobileNavAnimation,
 }: GlobalSearchTypes) => {
   const { t } = useTranslation();
   const { loadedNFTS } = useNFTSStore();
@@ -82,7 +84,10 @@ export const GlobalSearch = ({
     debouncedSearchHandler(value, abortController);
   };
 
-  const closeDropDown = () => handleModalOpen(false);
+  const closeDropDown = () => {
+    handleModalOpen(false);
+    revertMobileNavAnimation && revertMobileNavAnimation();
+  };
 
   if (isMobileScreen) {
     return (

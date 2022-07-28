@@ -13,6 +13,14 @@ export const CollectionMetadataWrapper = styled('div', {
   maxWidth: '670px',
   marginBottom: '25px',
 
+  '@lg': {
+    maxWidth: 'unset',
+  },
+
+  '@md': {
+    alignItems: 'flex-end',
+  },
+
   '@sm': {
     marginBottom: '0px',
   },
@@ -27,6 +35,10 @@ export const Heading = styled('h3', {
   alignItems: 'center',
   color: '$mainTextColor',
   margin: '0 0 10px',
+
+  '@md': {
+    margin: '0px',
+  },
 });
 
 export const Subtext = styled('p', {

@@ -25,7 +25,7 @@ const MobileItemDetails = ({
   tableType,
 }: MobileItemDetailsProps) => {
   return (
-    <MobileItemDetailsContainer tableType={tableType}>
+    <MobileItemDetailsContainer>
       {item && (
         <ItemDetailsCell
           name={item?.name}
@@ -33,10 +33,16 @@ const MobileItemDetails = ({
           logo={item?.logo}
         />
       )}
+      {tableType === 'nftActivity' && (
+        <TypeDetailsCell
+          type={type}
+          tableType="nftActivity"
+          showIcon={true}
+        />
+      )}
       <MobileItemDetailsWrapper>
         <TypeDetailsCell type={type} tableType={tableType} />
         <PriceDetailsCell wicp={price} tableType={tableType} />
-        <TextCell text={time} type="activityTime" />
       </MobileItemDetailsWrapper>
     </MobileItemDetailsContainer>
   );

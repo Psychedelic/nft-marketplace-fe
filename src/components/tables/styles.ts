@@ -14,7 +14,7 @@ export const TableWrapper = styled('div', {
     overflowX: 'scroll',
     msOverflowStyle: 'none',
     scrollbarWidth: 'none',
-  
+
     '&::-webkit-scrollbar': {
       display: 'none',
     },
@@ -88,6 +88,10 @@ export const TableWrapper = styled('div', {
             padding: '20px 20px 20px 0px',
             textAlign: 'start',
           },
+
+          '@sm': {
+            padding: '20px 0px 20px 0px',
+          }
         },
         '&:hover': {
           background: '$tableRowHoverColor',
@@ -106,6 +110,10 @@ export const TableWrapper = styled('div', {
         height: 'initial',
         table: {
           background: '$backgroundColor',
+          '@md': {
+            background: '$backgroundColor',
+          },
+
           thead: {
             tr: {
               th: {
@@ -123,10 +131,16 @@ export const TableWrapper = styled('div', {
 
                 '@md': {
                   padding: '10px 5px',
+                  background: '$mobileTableHeader',
+                  fontSize: '16px',
 
                   '&:first-child': {
                     paddingLeft: '10px',
                   },
+                },
+
+                '@sm': {
+                  fontSize: '14px',
                 },
               },
             },
@@ -134,6 +148,10 @@ export const TableWrapper = styled('div', {
           tbody: {
             tr: {
               background: '$tableBackgroundColor',
+              '@md': {
+                background: '$backgroundColor',
+              },
+
               td: {
                 color: '$tableTextColor',
                 padding: '16px 20px',
@@ -175,6 +193,10 @@ export const TableWrapper = styled('div', {
           },
 
           thead: {
+            '@md': {
+              display: 'none',
+            },
+
             tr: {
               th: {
                 color: '$greyMid',
@@ -214,7 +236,7 @@ export const TableWrapper = styled('div', {
                   paddingLeft: '20px',
                 },
                 '@md': {
-                  padding: '14px 0px',
+                  paddingLeft: '18px',
                 },
               },
               '&:last-child': {
@@ -456,6 +478,11 @@ export const EmptyStateMessage = styled('div', {
         lineHeight: '39px',
         color: '$mainTextColor',
         margin: '150px 50px',
+
+        '@md': {
+          margin: '50px 0 0',
+          fontSize: '24px',
+        },
       },
     },
   },
@@ -466,4 +493,13 @@ export const LoadingContainer = styled('div', {
   borderRadius: '0px 0px 15px 15px',
   borderTop: '0px',
   padding: '20px 10px 20px 0px',
+});
+
+export const RowWrapper = styled('div', {});
+
+export const HeaderText = styled('p', {
+  fontSize: '14px',
+  color: '$mainTextColor',
+  margin: '0px',
+  textAlign: 'center',
 });

@@ -17,13 +17,18 @@ export const Container = styled('div', {
       filterInput: {
         width: '135px',
         height: '44px',
+
+        '@sm': {
+          flex: '0.5',
+        },
       },
       modalInput: {
         width: '430px',
         height: '56px',
 
-        '@sm': {
+        '@lg': {
           margin: '0px 15px',
+          width: '100%',
         },
       },
     },

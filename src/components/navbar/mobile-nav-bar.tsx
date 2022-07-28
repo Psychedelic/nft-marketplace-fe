@@ -18,6 +18,7 @@ import {
 } from './styles';
 import wicpImage from '../../assets/wicp.svg';
 import plugLogo from '../../assets/plug-logo.svg';
+import plugLogoDark from '../../assets/plug-logo-dark.svg';
 import {
   disconnectPlug,
   formatAddress,
@@ -98,11 +99,15 @@ export const MobileNavBar = ({
         <NavItemContent>
           {isConnected && (
             <>
-              <NavItem onClick={myOffersHandler}>
+              <NavItem>
                 <Flex justifyBetween>
                   <Flex>
                     <PlugLogo
-                      src={plugLogo}
+                      src={
+                        theme === 'darkTheme'
+                          ? plugLogoDark
+                          : plugLogo
+                      }
                       alt={t('translation:logoAlts.plug')}
                     />
                     <PrincipalAddress>
@@ -135,11 +140,11 @@ export const MobileNavBar = ({
                 </Flex>
               </NavItem>
               <NavItem onClick={myOffersHandler}>
-                <StyledIcon icon="offer" />
+                <StyledIcon icon="offer" size="md" />
                 <p>{t('translation:buttons.action.myOffers')}</p>
               </NavItem>
               <NavItem onClick={myActivityHandler}>
-                <StyledIcon icon="activity" />
+                <StyledIcon icon="activity" size="md" />
                 <p>{t('translation:buttons.action.myActivity')}</p>
               </NavItem>
               <NavItem onClick={openSonicURL}>
@@ -150,19 +155,15 @@ export const MobileNavBar = ({
                 <p>{t('translation:buttons.action.getWicp')}</p>
               </NavItem>
               <NavItem onClick={setMyNfts}>
-                <StyledIcon icon="myNfts" />
+                <StyledIcon icon="myNfts" size="md" />
                 <p>{t('translation:buttons.action.myNfts')}</p>
-              </NavItem>
-              <NavItem onClick={disconnectHandler}>
-                <StyledIcon icon="disconnect" />
-                <p>{t('translation:buttons.action.disconnect')}</p>
               </NavItem>
             </>
           )}
           <NavItem onClick={changeThemeHandler}>
             <Flex justifyBetween>
               <Flex>
-                <StyledIcon icon="nightMode" />
+                <StyledIcon icon="nightMode" size="md" />
                 <p>{t('translation:buttons.action.nigthMode')}</p>
               </Flex>
               <StyledSwitch checked={theme === 'darkTheme'}>
@@ -178,6 +179,12 @@ export const MobileNavBar = ({
               </NotConnectedMessage>
               <Plug />
             </NotConnectedMessageWrapper>
+          )}
+          {isConnected && (
+            <NavItem onClick={disconnectHandler}>
+              <StyledIcon icon="disconnect" size="md" />
+              <p>{t('translation:buttons.action.disconnect')}</p>
+            </NavItem>
           )}
         </NavItemContent>
       )}

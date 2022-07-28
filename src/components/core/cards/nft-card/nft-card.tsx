@@ -187,7 +187,6 @@ export const NftCard = React.memo(
     const { isConnected } = usePlugStore();
     const navigate = useNavigate();
     const containerRef = useRef<HTMLDivElement>(null);
-    const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
     // TODO: Move any status code as constant
     const isForSale = data.status === 'forSale';

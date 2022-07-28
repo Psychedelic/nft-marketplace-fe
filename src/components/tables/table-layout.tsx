@@ -53,7 +53,7 @@ export const TableLayout = ({
     <TableWrapper
       type={tableType}
       loadingTable={Boolean(
-        loading && isTableDataEmpty && tableType === '',
+        loading && isTableDataEmpty,
       )}
     >
       <table {...getTableProps()}>

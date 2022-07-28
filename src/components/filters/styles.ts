@@ -28,6 +28,7 @@ export const Container = styled('div', {
   '@md': {
     position: 'absolute',
     zIndex: '100',
+    top: '0',
   },
 });
 
@@ -246,7 +247,7 @@ export const FilterHeader = styled('div', {
 
 export const FilterMobileActions = styled('div', {
   position: 'fixed',
-  backgroundColor: 'white',
+  backgroundColor: '$backgroundColor',
   width: '100%',
   height: '5%',
   boxShadow: '0px 0px 8px 2px rgba(0, 0, 0, 0.08)',
@@ -272,4 +273,8 @@ export const ButtonWrapper = styled('div', {
   '&:nth-child(2)': {
     marginRight: '15px',
   },
+});
+
+export const CloseIcon = styled(Icon, {
+  color: '$mainTextColor',
 });

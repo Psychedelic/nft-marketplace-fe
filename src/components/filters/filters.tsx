@@ -33,10 +33,10 @@ import {
   FilterHeader,
   FilterMobileActions,
   ButtonWrapper,
+  CloseIcon,
 } from './styles';
 import CheckboxAccordionSkeleton from '../core/accordions/checkbox-accordion-skeleton';
 import useMediaQuery from '../../hooks/use-media-query';
-import { Icon } from '../icons';
 
 /* --------------------------------------------------------------------------
  * Filters Component
@@ -243,7 +243,7 @@ export const Filters = ({
           <FilterHeader>
             <Heading>Filters</Heading>
             {isMobileScreen ? (
-              <Icon
+              <CloseIcon
                 icon="close"
                 size="lg"
                 onClick={() =>

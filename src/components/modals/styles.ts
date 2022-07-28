@@ -193,6 +193,10 @@ export const SellModalPreviewWrapper = styled('div', {
 export const SellModalPreviewContainer = styled('div', {
   width: '100%',
   maxWidth: '430px',
+
+  '@lg': {
+    maxWidth: 'unset',
+  },
 });
 
 export const NFTCardPreview = styled('div', {
@@ -201,7 +205,7 @@ export const NFTCardPreview = styled('div', {
     cursor: 'default',
   },
 
-  '@md': {
+  '@lg': {
     display: 'none',
   },
 });
@@ -224,7 +228,7 @@ export const ModalHeader = styled('div', {
   margin: '0px 0px 30px',
 
   '@md': {
-    margin: '0px 15px 35px',
+    margin: '0px 15px 25px',
   },
 });
 
@@ -265,7 +269,7 @@ export const ModalDescription = styled(DialogPrimitive.Description, {
 export const SaleContentWrapper = styled('div', {
   minWidth: '430px',
 
-  '@md': {
+  '@lg': {
     minWidth: 'unset',
     display: 'flex',
     alignItems: 'center',
@@ -279,9 +283,9 @@ export const FeeContainer = styled('div', {
   flexDirection: 'column',
   margin: '35px 0px 0px',
 
-  '@md': {
+  '@lg': {
     width: '100%',
-    margin: '35px 15px',
+    margin: '25px 15px',
   },
 });
 
@@ -294,7 +298,7 @@ export const FeeDetails = styled('div', {
     marginBottom: '0px',
   },
 
-  '@md': {
+  '@lg': {
     width: '100%',
   },
 });
@@ -335,9 +339,10 @@ export const ItemDetailsWrapper = styled('div', {
   padding: '12px 0px 32px',
   borderBottom: '1.5px solid #E5E8EB',
 
-  '@md': {
+  '@lg': {
     width: '100%',
     margin: '0px 15px',
+    padding: '0px 0px 20px',
   },
 
   // variants
@@ -348,6 +353,10 @@ export const ItemDetailsWrapper = styled('div', {
         borderTop: '1.5px solid #E5E8EB',
         borderBottom: 'initial',
         marginTop: '35px',
+
+        '@md': {
+          marginTop: '10px',
+        },
       },
     },
 
@@ -500,6 +509,7 @@ export const ModalButtonsList = styled('div', {
   '@md': {
     justifyContent: 'center',
     flexWrap: 'wrap',
+    marginTop: '20px',
   },
 });
 

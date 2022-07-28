@@ -18,11 +18,9 @@ import {
 import {
   disconnectPlug,
   getPlugButtonText,
-  handleConnect
+  handleConnect,
 } from '../../integrations/plug/plug.utils';
-import {
-  PlugStatusCodes,
-} from '../../constants';
+import { PlugStatusCodes } from '../../constants';
 import config from '../../config/env';
 import { AppLog } from '../../utils/log';
 
@@ -39,7 +37,11 @@ const whitelist = [
   wICPCanisterId,
 ];
 
-export const Plug = () => {
+type PlugProps = {
+  isMobileScreen?: boolean;
+};
+
+export const Plug = ({ isMobileScreen }: PlugProps) => {
   const { t } = useTranslation();
   const { isConnected, connectionStatus, principalId, icnsName } =
     usePlugStore();
@@ -131,6 +133,7 @@ export const Plug = () => {
       {isVerifying && (
         <PlugButton
           handleConnect={handleConnect}
+          isMobileScreen={isMobileScreen}
           text={t('translation:buttons.action.loading')}
           isConnected={isConnected}
           principalId={principalId}
@@ -139,6 +142,7 @@ export const Plug = () => {
       {isConnecting && (
         <PlugButton
           handleConnect={handleConnect}
+          isMobileScreen={isMobileScreen}
           text={t('translation:buttons.action.connecting')}
           isConnected={isConnected}
           principalId={principalId}
@@ -147,6 +151,7 @@ export const Plug = () => {
       {!isVerifying && !isConnecting && !isConnected && (
         <PlugButton
           handleConnect={handleConnect}
+          isMobileScreen={isMobileScreen}
           text={
             hasPlug
               ? t('translation:buttons.action.connectToPlug')
@@ -161,6 +166,7 @@ export const Plug = () => {
           handleConnect={() => {
             AppLog.warn('Already connected to plug!');
           }}
+          isMobileScreen={isMobileScreen}
           text={getPlugButtonText({
             principalId,
             icnsName,

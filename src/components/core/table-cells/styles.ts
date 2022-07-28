@@ -210,6 +210,10 @@ export const WICPText = styled('div', {
         fontWeight: '500',
         lineHeight: '19px',
         color: '$mainTextColor',
+
+        '@sm': {
+          fontSize: '12px',
+        },
       },
       myOffers: {
         order: 'unset',
@@ -220,6 +224,7 @@ export const WICPText = styled('div', {
   '@sm': {
     order: '1',
     fontWeight: '600',
+    marginRight: '0px',
   },
 });
 
@@ -289,6 +294,7 @@ export const TextDetails = styled('div', {
         '@sm': {
           paddingRight: '10px',
           justifyContent: 'center',
+          fontSize: '12px',
         },
       },
 
@@ -300,6 +306,10 @@ export const TextDetails = styled('div', {
       offers: {
         lineHeight: '19px',
         color: '$tableTextColor',
+
+        '@sm': {
+          fontSize: '12px',
+        },
       },
     },
     tableType: {
@@ -338,6 +348,17 @@ export const TextLinkDetails = styled('a', {
         fontWeight: '500',
         lineHeight: '19px',
         color: '$primary',
+
+        '@sm': {
+          fontSize: '12px',
+        },
+      },
+    },
+
+    center: {
+      true: {
+        display: 'flex',
+        justifyContent: 'center',
       },
     },
   },
@@ -356,15 +377,6 @@ export const MobileItemDetailsWrapper = styled('div', {
 export const MobileItemDetailsContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
-  width: '390px',
+  width: '310px',
   justifyContent: 'space-between',
-
-  variants: {
-    tableType: {
-      nftActivity: {
-        width: 'unset',
-        justifyContent: 'end',
-      },
-    },
-  },
 });

@@ -404,7 +404,11 @@ export const OfferAccordion = ({
   });
 
   return (
-    <AccordionStyle type="single" collapsible width="medium">
+    <AccordionStyle
+      type="single"
+      collapsible
+      width={isMobileScreen ? 'small' : 'medium'}
+    >
       {!isMobileScreen && (
         <AccordionHead flexDirection="column">
           <OfferAccordionHeader

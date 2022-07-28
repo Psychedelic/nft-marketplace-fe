@@ -147,12 +147,19 @@ export const CollectionItems = () => {
                 )}
               </ContentFlex>
             ) : (
-              <ContentFlex>
+              <ContentFlex mobileBtns>
                 {loadingNFTs && loadedNFTS.length === 0 ? (
                   <FiltersButtonSkeleton />
                 ) : (
                   <ActionButton
-                    type="secondary"
+                    type={
+                      appliedFilters.defaultFilters.length > 0
+                        ? 'active'
+                        : 'secondary'
+                    }
+                    active={Boolean(
+                      appliedFilters.defaultFilters.length > 0,
+                    )}
                     size="wide"
                     onClick={() => {
                       setIsOpenFiltersMenu(true);
@@ -170,7 +177,7 @@ export const CollectionItems = () => {
                 )}
               </ContentFlex>
             )}
-            <ContentFlex>
+            <ContentFlex mobileBtns>
               {loadingNFTs && loadedNFTS.length === 0 ? (
                 <SortButtonSkeleton />
               ) : (

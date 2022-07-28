@@ -33,6 +33,16 @@ export const PlugButtonText = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
   fontFamily: 'proxima-nova, sans-serif',
+
+  variants: {
+    isMobileScreen: {
+      true: {
+        '@md': {
+          width: '250px',
+        },
+      },
+    },
+  },
 });
 
 export const PopoverTrigger = styled(Popover.Trigger, {

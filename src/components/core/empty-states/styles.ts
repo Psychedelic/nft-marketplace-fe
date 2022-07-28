@@ -15,6 +15,12 @@ export const EmptyStateMessage = styled('p', {
   lineHeight: '39px',
   color: '$mainTextColor',
   marginBottom: '12px',
+
+  '@md': {
+    textAlign: 'center',
+    fontSize: '24px',
+    fontWeight: '600',
+  },
 });
 
 export const ButtonWrapper = styled('div', {
@@ -23,5 +29,8 @@ export const ButtonWrapper = styled('div', {
 
   '.plug-button': {
     marginLeft: '0px',
+  },
+  '@md': {
+    width: '250px',
   },
 });

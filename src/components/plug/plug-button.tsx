@@ -30,6 +30,7 @@ export type PlugButtonProps = {
   text: string;
   isConnected: boolean;
   principalId?: string;
+  isMobileScreen?: boolean;
 };
 
 /* --------------------------------------------------------------------------
@@ -41,6 +42,7 @@ export const PlugButton = ({
   text,
   isConnected,
   principalId: userPrincipal,
+  isMobileScreen,
 }: PlugButtonProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -115,7 +117,10 @@ export const PlugButton = ({
           onClick={handleClick}
           className="plug-button"
         >
-          <PlugButtonText className="plug-button-text">
+          <PlugButtonText
+            className="plug-button-text"
+            isMobileScreen={isMobileScreen}
+          >
             {isConnected && (
               <PlugIconStyled
                 icon="plug"

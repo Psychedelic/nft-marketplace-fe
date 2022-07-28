@@ -8,6 +8,7 @@ import {
   EmptyStateMessage,
   ButtonWrapper,
 } from './styles';
+import useMediaQuery from '../../../hooks/use-media-query';
 
 export type EmptyStateProps = {
   message: string;
@@ -22,6 +23,7 @@ export const EmptyState = ({
 }: EmptyStateProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
   return (
     <EmptyStateWrapper>
@@ -40,7 +42,7 @@ export const EmptyState = ({
               dispatch(filterActions.setMyNfts(false));
             }}
           >
-            <Plug />
+            <Plug isMobileScreen={isMobileScreen} />
           </div>
         ) : (
           <ActionButton

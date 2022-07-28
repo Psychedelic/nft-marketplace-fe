@@ -51,6 +51,11 @@ export const Button = styled('button', {
         color: '$primary',
         border: '1.5px solid $primary',
       },
+      active: {
+        background: 'rgba(34, 83, 255, 0.12)',
+        color: '$primary',
+        border: '1.5px solid $primary',
+      },
     },
 
     disabled: {

@@ -54,6 +54,16 @@ export const ContentFlex = styled('div', {
   alignItems: 'center',
   flexWrap: 'wrap',
   marginBottom: '10px',
+
+  variants: {
+    mobileBtns: {
+      true: {
+        '@sm': {
+          flex: '1',
+        },
+      },
+    },
+  },
 });
 
 export const SkeletonListWrapper = styled('div', {
@@ -65,6 +75,10 @@ export const SkeletonListWrapper = styled('div', {
   '@sm': {
     gridTemplateColumns: '1fr 1fr',
     gridGap: '10px',
+  },
+
+  '@xs': {
+    gridTemplateColumns: '1fr',
   },
 });
 
@@ -96,14 +110,12 @@ export const AppliedFilters = styled('span', {
 export const FiltersButtonSkeleton = styled(SkeletonBox, {
   width: '100%',
   height: '100%',
-  minWidth: '134px',
   minHeight: '41px',
 });
 
 export const SortButtonSkeleton = styled(SkeletonBox, {
   width: '100%',
   height: '100%',
-  minWidth: '210px',
   minHeight: '41px',
   marginLeft: '10px',
 });

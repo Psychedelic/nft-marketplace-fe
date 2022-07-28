@@ -144,19 +144,19 @@ export const CancelListingModal = () => {
               <ModalButtonsList>
                 <ModalButtonWrapper>
                   <ActionButton
-                    type="secondary"
-                    onClick={handleModalClose}
-                  >
-                    {t('translation:modals.buttons.cancel')}
-                  </ActionButton>
-                </ModalButtonWrapper>
-                <ModalButtonWrapper>
-                  <ActionButton
-                    type={isMobileScreen ? "danger" :"primary"}
+                    type={isMobileScreen ? 'danger' : 'primary'}
                     onClick={handleCancelListing}
                     danger
                   >
                     {t('translation:modals.buttons.cancelListing')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
                   </ActionButton>
                 </ModalButtonWrapper>
               </ModalButtonsList>

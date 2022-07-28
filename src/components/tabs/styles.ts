@@ -67,6 +67,7 @@ export const TabsContentWrapper = styled('div', {
     flexWrap: 'wrap',
     justifyContent: 'center',
     borderTop: '1px solid $borderColor',
+    background: '$mobileBackgroundColor',
   },
 });
 

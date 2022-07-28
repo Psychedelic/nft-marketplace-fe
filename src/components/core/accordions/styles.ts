@@ -67,7 +67,7 @@ export const AccordionHeadContent = styled('div', {
         '@md': {
           justifyContent: 'space-between',
           border: '1.5px solid $borderColor',
-          padding: '15px',
+          padding: '10px 4px',
           marginRight: '15px',
           marginBottom: '25px',
           borderRadius: '8px',
@@ -216,6 +216,7 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
         '@md': {
           borderTopLeftRadius: '15px',
           borderTopRightRadius: '15px',
+          background: '$closeAccordion',
         },
       },
       notopen: {
@@ -327,6 +328,10 @@ export const AccordionContent = styled(Accordion.Content, {
     backgroundColor: {
       open: {
         background: '$openAccordion',
+
+        '@md': {
+          backgroundColor: '$closeAccordion',
+        },
       },
       notopen: {
         backgroundColor: '$closeAccordion',
@@ -400,6 +405,10 @@ export const ButtonWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   padding: '25px 0',
+
+  '@md': {
+    justifyContent: 'center',
+  },
 });
 
 export const PlugButtonWrapper = styled('div', {

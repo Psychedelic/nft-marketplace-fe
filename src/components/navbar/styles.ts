@@ -20,7 +20,7 @@ const slideInLeft = keyframes({
 
 const slideOutLeft = keyframes({
   '0%': { left: '0%' },
-  '100%': { left: '-100%' },
+  '100%': { left: '-100%', opacity: '0' },
 });
 
 const fadeOut = keyframes({
@@ -180,11 +180,15 @@ export const WICPLogo = styled('img', {
       },
     },
   },
+
+  '@sm': {
+    width: '1.4rem',
+  },
 });
 
 export const NavItem = styled('div', {
   borderTop: '1.5px solid $borderColor',
-  padding: '9px 14px',
+  padding: '4px 14px',
   display: 'flex',
   alignItems: 'center',
   color: '$mainTextColor',
@@ -193,10 +197,14 @@ export const NavItem = styled('div', {
   '& p': {
     fontWeight: '500',
   },
+
+  '&:first-child': {
+    padding: '9px 14px',
+  },
 });
 
 export const PlugLogo = styled('img', {
-  paddingRight: '1rem',
+  paddingRight: '0.5rem',
 });
 
 export const PrincipalAddress = styled('p', {
@@ -238,6 +246,7 @@ export const TotalWICPBalanceAmount = styled('p', {
   fontSize: '18px',
   fontWeight: '500',
   margin: '0',
+  lineHeight: '0px',
 });
 
 export const StyledSwitch = styled(Switch.Root, {

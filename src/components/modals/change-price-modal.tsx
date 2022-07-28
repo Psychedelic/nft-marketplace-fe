@@ -289,14 +289,6 @@ export const ChangePriceModal = ({
                 <ModalButtonsList>
                   <ModalButtonWrapper>
                     <ActionButton
-                      type="secondary"
-                      onClick={handleModalClose}
-                    >
-                      {t('translation:modals.buttons.cancel')}
-                    </ActionButton>
-                  </ModalButtonWrapper>
-                  <ModalButtonWrapper>
-                    <ActionButton
                       type="primary"
                       onClick={handleListing}
                       disabled={!amount || Number(amount) <= 0}
@@ -304,6 +296,14 @@ export const ChangePriceModal = ({
                       {t(
                         'translation:modals.buttons.completeListing',
                       )}
+                    </ActionButton>
+                  </ModalButtonWrapper>
+                  <ModalButtonWrapper>
+                    <ActionButton
+                      type="secondary"
+                      onClick={handleModalClose}
+                    >
+                      {t('translation:modals.buttons.cancel')}
                     </ActionButton>
                   </ModalButtonWrapper>
                 </ModalButtonsList>

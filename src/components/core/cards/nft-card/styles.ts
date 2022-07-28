@@ -113,6 +113,10 @@ export const NftDataText = styled('span', {
     marginRight: '3px',
     width: '15px',
   },
+
+  '@xs': {
+    fontSize: '16px',
+  },
 });
 
 export const NftDataHeader = styled('span', {
@@ -140,6 +144,10 @@ export const ActionText = styled('span', {
     fontSize: '12px',
     marginRight: '2px',
   },
+
+  '@xs': {
+    fontSize: '14px',
+  },
 });
 
 export const NFTCardOptions = styled('div', {
@@ -164,6 +172,10 @@ export const PriceInActionSheet = styled(NumberTooltip, {
 
   '@md': {
     fontSize: '12px',
+  },
+
+  '@xs': {
+    fontSize: '14px',
   },
 });
 
