@@ -75,6 +75,7 @@ export const directBuy = createAsyncThunk<
       },
     };
 
+    // TODO: Show transaction progress steps in UI
     const batchTxRes = await window.ic?.plug?.batchTransactions([
       WICP_APPROVE,
       // MKP_DEPOSIT_WICP,

@@ -75,6 +75,7 @@ export const acceptOffer = createAsyncThunk<
       },
     };
 
+    // TODO: Show transaction progress steps in UI
     const batchTxRes = await (
       window as any
     )?.ic?.plug?.batchTransactions([

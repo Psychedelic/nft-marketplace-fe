@@ -80,6 +80,7 @@ export const makeOffer = createAsyncThunk<
       },
     };
 
+    // TODO: Show transaction progress steps in UI
     const batchTxRes = await window.ic?.plug?.batchTransactions([
       WICP_APPROVE_MARKETPLACE,
       MKP_MAKE_OFFER_WICP,

@@ -69,6 +69,7 @@ export const makeListing = createAsyncThunk<
         },
       };
 
+      // TODO: Show transaction progress steps in UI
       const batchTxRes = await window.ic?.plug?.batchTransactions([
         CROWNS_APPROVE_MARKETPLACE,
         MKP_MAKE_LISTING,
