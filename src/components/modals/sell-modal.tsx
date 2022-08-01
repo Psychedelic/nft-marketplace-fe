@@ -31,6 +31,7 @@ import {
   NFTCardPreview,
   NFTPreviewText,
   ActionTextWrapper,
+  TransactionStepsContainer,
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
@@ -46,6 +47,10 @@ import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { NFTMetadata } from '../../declarations/legacy';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
+import { TransactionStep } from './steps/transaction-step';
+import approveIcon from '../../assets/plain-check.svg';
+import { TransactionStatus } from '../../constants/transaction-status';
+import listingIcon from '../../assets/listing.svg';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -340,7 +345,20 @@ export const SellModal = ({
               Pending details
               ---------------------------------
             */}
-              <Pending />
+              {/* <Pending /> */}
+              <TransactionStepsContainer>
+                <TransactionStep
+                  name="Approving WICP"
+                  status={TransactionStatus.Completed}
+                  iconSrc={approveIcon}
+                  nextStepAvailable
+                />
+                <TransactionStep
+                  name="Listing"
+                  status={TransactionStatus.InProgress}
+                  iconSrc={listingIcon}
+                />
+              </TransactionStepsContainer>
             </Container>
           )}
           {/*
