@@ -10,6 +10,16 @@ export const TableWrapper = styled('div', {
   // marginTop: '44px', // TODO: make variant
   width: '100%',
 
+  '@md': {
+    overflowX: 'scroll',
+    msOverflowStyle: 'none',
+    scrollbarWidth: 'none',
+
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
+  },
+
   table: {
     borderSpacing: '0',
     width: 'inherit',
@@ -36,8 +46,18 @@ export const TableWrapper = styled('div', {
           borderBottom: '1px solid $borderColor',
           minWidth: '100px',
 
+          '@md': {
+            padding: '16px 20px 16px 0px',
+            textAlign: 'start',
+          },
+
           '&:first-child': {
             paddingLeft: '80px',
+            textAlign: 'start',
+
+            '@md': {
+              paddingLeft: '15px',
+            },
           },
         },
       },
@@ -56,7 +76,22 @@ export const TableWrapper = styled('div', {
 
           '&:first-child': {
             paddingLeft: '80px',
+
+            '@md': {
+              paddingLeft: '15px',
+              textAlign: 'start',
+            },
           },
+
+          '@md': {
+            borderTop: '1px solid $borderColor',
+            padding: '20px 20px 20px 0px',
+            textAlign: 'start',
+          },
+
+          '@sm': {
+            padding: '20px 0px 20px 0px',
+          }
         },
         '&:hover': {
           background: '$tableRowHoverColor',
@@ -75,6 +110,10 @@ export const TableWrapper = styled('div', {
         height: 'initial',
         table: {
           background: '$backgroundColor',
+          '@md': {
+            background: '$backgroundColor',
+          },
+
           thead: {
             tr: {
               th: {
@@ -89,12 +128,30 @@ export const TableWrapper = styled('div', {
                 '&:first-child': {
                   paddingLeft: '20px',
                 },
+
+                '@md': {
+                  padding: '10px 5px',
+                  background: '$mobileTableHeader',
+                  fontSize: '16px',
+
+                  '&:first-child': {
+                    paddingLeft: '10px',
+                  },
+                },
+
+                '@sm': {
+                  fontSize: '14px',
+                },
               },
             },
           },
           tbody: {
             tr: {
               background: '$tableBackgroundColor',
+              '@md': {
+                background: '$backgroundColor',
+              },
+
               td: {
                 color: '$tableTextColor',
                 padding: '16px 20px',
@@ -104,6 +161,14 @@ export const TableWrapper = styled('div', {
                 borderBottom: '1px solid $borderColor',
                 '&:first-child': {
                   paddingLeft: '20px',
+                },
+
+                '@md': {
+                  padding: '10px 8px',
+
+                  '&:first-child': {
+                    paddingLeft: '10px',
+                  },
                 },
               },
               '&:last-child': {
@@ -122,7 +187,16 @@ export const TableWrapper = styled('div', {
           border: '1.5px solid $borderColor',
           boxSizing: 'border-box',
           borderRadius: '15px',
+          '@sm': {
+            borderTopRightRadius: 'unset',
+            borderTopLeftRadius: 'unset',
+          },
+
           thead: {
+            '@md': {
+              display: 'none',
+            },
+
             tr: {
               th: {
                 color: '$greyMid',
@@ -135,6 +209,15 @@ export const TableWrapper = styled('div', {
 
                 '&:first-child': {
                   paddingLeft: '20px',
+                },
+
+                '@md': {
+                  background: '$tableBackgroundColor',
+                  color: '$mainTextColor',
+                  fontSize: '20px',
+                  lineHeight: '24px',
+                  fontWeight: '600',
+                  padding: '25px 0',
                 },
               },
             },
@@ -152,6 +235,9 @@ export const TableWrapper = styled('div', {
                 '&:first-child': {
                   paddingLeft: '20px',
                 },
+                '@md': {
+                  paddingLeft: '18px',
+                },
               },
               '&:last-child': {
                 borderRadius: '15px',
@@ -159,13 +245,74 @@ export const TableWrapper = styled('div', {
                   borderBottom: 'initial',
                   '&:first-child': {
                     borderRadius: '15px',
+
+                    '@md': {
+                      borderRadius: 'unset',
+                    },
                   },
                   '&:last-child': {
                     borderRadius: '15px',
+
+                    '@md': {
+                      borderRadius: 'unset',
+                    },
+                  },
+                  '@md': {
+                    borderBottom: 'unset',
                   },
                 },
               },
+
+              '@md': {
+                background: '$tableBackgroundColor',
+              },
             },
+          },
+        },
+      },
+
+      activity: {
+        table: {
+          thead: {
+            '@md': {
+              display: 'none',
+            },
+          },
+          tbody: {
+            tr: {
+              td: {
+                '@md': {
+                  paddingLeft: '30px',
+                },
+              },
+            },
+          },
+        },
+      },
+
+      myOffers: {
+        table: {
+          tbody: {
+            tr: {
+              td: {
+                '&:first-child': {
+                  paddingRight: '50px',
+                },
+
+                '@md': {
+                  paddingRight: '30px',
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    loadingTable: {
+      true: {
+        table: {
+          thead: {
+            display: 'none',
           },
         },
       },
@@ -183,6 +330,14 @@ export const TableWrapper = styled('div', {
 export const ButtonWrapper = styled('div', {
   width: '98px',
   height: '33px',
+
+  '@md': {
+    width: '100%',
+    height: 'unset',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
@@ -190,11 +345,45 @@ export const InfiniteScrollWrapper = styled(InfiniteScroll as any, {
     width: 'inherit',
 
     tr: {
+      th: {
+        '&:first-child': {
+          paddingLeft: '80px',
+
+          '@md': {
+            paddingLeft: '15px',
+          },
+        },
+      },
+
       td: {
         padding: '25px 0px 25px 10px',
+        variants: {
+          activity: {
+            '&:first-child': {
+              paddingLeft: '80px',
+
+              '@md': {
+                paddingLeft: '25px',
+              },
+            },
+          },
+          nftActivity: {
+            '&:first-child': {
+              paddingLeft: '80px',
+
+              '@sm': {
+                paddingLeft: '25px',
+              },
+            },
+          },
+        },
 
         '&:first-child': {
           paddingLeft: '80px',
+
+          '@md': {
+            paddingLeft: '15px',
+          },
         },
       },
     },
@@ -228,12 +417,30 @@ export const TableSkeletonsWrapper = styled('tr', {
       },
     },
   },
+
+  '@md': {
+    padding: '5px 25px',
+  },
 });
 
 export const Flex = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '10px',
+
+  variants: {
+    isMobileScreen: {
+      true: {
+        justifyContent: 'flex-end',
+        paddingRight: '25px',
+      },
+    },
+    tableType: {
+      myOffers: {
+        paddingRight: 'unset',
+      },
+    },
+  },
 });
 
 export const EmptyStateContainer = styled('th', {
@@ -271,6 +478,11 @@ export const EmptyStateMessage = styled('div', {
         lineHeight: '39px',
         color: '$mainTextColor',
         margin: '150px 50px',
+
+        '@md': {
+          margin: '50px 0 0',
+          fontSize: '24px',
+        },
       },
     },
   },
@@ -281,4 +493,13 @@ export const LoadingContainer = styled('div', {
   borderRadius: '0px 0px 15px 15px',
   borderTop: '0px',
   padding: '20px 10px 20px 0px',
+});
+
+export const RowWrapper = styled('div', {});
+
+export const HeaderText = styled('p', {
+  fontSize: '14px',
+  color: '$mainTextColor',
+  margin: '0px',
+  textAlign: 'center',
 });

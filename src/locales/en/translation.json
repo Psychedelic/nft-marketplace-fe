@@ -4,12 +4,15 @@
     "collectionName": "Crowns",
     "noRecentSearch": "No recent searches",
     "comingSoon": "Coming soon!",
-    "crownsDescription": "Crowns are a collection of 10,000 procedurally generated traditional & psychedelic 3D crowns on the Internet Computer, backed by asset provenance from CAP."
+    "crownsDescription": "Crowns are a collection of 10,000 procedurally generated traditional & psychedelic 3D crowns on the Internet Computer, backed by asset provenance from CAP.",
+    "notConnectedMessage": "You’re not connected to Plug yet. Click the button below to connect."
   },
   "offers": {
     "myOffers": "My Offers",
     "offersReceived": "Offers Received",
+    "received": "Received",
     "offersMade": "Offers Made",
+    "made": "Made",
     "offers": "Offers"
   },
   "activity": {
@@ -52,7 +55,8 @@
       "editOffer": "Edit Offer",
       "cancel": "Cancel",
       "myActivity": "My Activity",
-      "getWicp": "Get WICP"
+      "getWicp": "Get WICP",
+      "nigthMode": "Night Mode"
     }
   },
   "dropdown": {
@@ -161,7 +165,8 @@
   },
   "logoAlts": {
     "wicp": "WICP",
-    "close": "close"
+    "close": "close",
+    "plug": "plug"
   },
   "tables": {
     "placeholder": "Table",
@@ -179,7 +184,9 @@
       "date": "Date",
       "floorDifference": "Floor Difference",
       "expiration": "Expiration",
-      "action": "Action"
+      "action": "Action",
+      "itemActivity": "Item Activity",
+      "floorDif": "Floor Dif."
     },
     "eventType": {
       "makeListing": "List",
@@ -310,4 +317,3 @@
     "disabledBuyNowText": "Oops! Can't be purchased, possibly because token was transferred outside Jelly marketplace to a new wallet"
   }
 }
-

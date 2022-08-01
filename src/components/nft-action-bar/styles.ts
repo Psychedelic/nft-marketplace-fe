@@ -6,6 +6,13 @@ export const Container = styled('div', {
   // background: '#FAFBFD',
   background: '$backgroundColor',
   paddingBottom: '30px',
+
+  '@md': {
+    padding: '0px 14px',
+    width: 'unset',
+    height: 'unset',
+    margin: '10px 0px 20px',
+  },
 });
 
 export const NftActionBarWrapper = styled('div', {
@@ -37,8 +44,32 @@ export const ButtonListWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   marginLeft: '10px',
+
+  '@md': {
+    marginLeft: '0px',
+    margin: '20px 0px',
+    justifyContent: 'space-between',
+  },
 });
 
 export const ButtonWrapper = styled('div', {
   marginLeft: '0px',
+
+  variants: {
+    isTriggerVisible: {
+      true: {
+        '@md': {
+          flex: '0.5',
+          marginLeft: '20px',
+
+          '&:first-child': {
+            marginLeft: 'unset',
+          },
+        },
+      },
+      false: {
+        display: 'none',
+      },
+    },
+  },
 });

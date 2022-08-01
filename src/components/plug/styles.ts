@@ -33,9 +33,21 @@ export const PlugButtonText = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
   fontFamily: 'proxima-nova, sans-serif',
+
+  variants: {
+    isMobileScreen: {
+      true: {
+        '@md': {
+          width: '250px',
+        },
+      },
+    },
+  },
 });
 
 export const PopoverTrigger = styled(Popover.Trigger, {
+  zIndex: '2',
+
   '&:focus': {
     outline: 'none',
   },
@@ -109,7 +121,7 @@ export const PlugWICPBalance = styled('div', {
   padding: '2px 10px 2px 0px',
   position: 'relative',
   right: '-10px',
-  zIndex: '-1',
+  zIndex: '1',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

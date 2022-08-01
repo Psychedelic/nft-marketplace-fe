@@ -1,6 +1,10 @@
 import { styled } from '../../stitches.config';
 import { Icon } from '../icons';
 
+export const Container = styled('div', {
+  width: '100%',
+});
+
 export const CollectionMetadataWrapper = styled('div', {
   display: 'flex',
   alignItems: 'flex-start',
@@ -8,6 +12,18 @@ export const CollectionMetadataWrapper = styled('div', {
   width: '100%',
   maxWidth: '670px',
   marginBottom: '25px',
+
+  '@lg': {
+    maxWidth: 'unset',
+  },
+
+  '@md': {
+    alignItems: 'flex-end',
+  },
+
+  '@sm': {
+    marginBottom: '0px',
+  },
 });
 
 export const Heading = styled('h3', {
@@ -19,6 +35,10 @@ export const Heading = styled('h3', {
   alignItems: 'center',
   color: '$mainTextColor',
   margin: '0 0 10px',
+
+  '@md': {
+    margin: '0px',
+  },
 });
 
 export const Subtext = styled('p', {
@@ -35,4 +55,11 @@ export const Subtext = styled('p', {
 export const VerifiedIcon = styled(Icon, {
   color: '$primary',
   width: '16px',
+});
+
+export const Divider = styled('div', {
+  height: '1px',
+  background: '$borderColor',
+  width: '100%',
+  marginTop: '20px',
 });

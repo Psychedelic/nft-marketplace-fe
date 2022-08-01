@@ -5,6 +5,8 @@ import {
   ToastDescription,
   ToastDescriptionText,
   ToastProvider,
+  StyledIcon,
+  StyledIconWrapper,
 } from './styles';
 import {
   notificationActions,
@@ -54,11 +56,13 @@ export const ToastHandler = () => {
             </div>
           </ToastDescription>
 
-          <Icon
-            size="md"
-            icon="close-circle"
-            onClick={() => handleClose(message.id)}
-          />
+          <StyledIconWrapper state={message.type}>
+            <StyledIcon
+              size="md"
+              icon="close-circle"
+              onClick={() => handleClose(message.id)}
+            />
+          </StyledIconWrapper>
         </Toast>
       ))}
       <ToastViewport />

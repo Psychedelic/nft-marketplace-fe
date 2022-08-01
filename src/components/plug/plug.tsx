@@ -5,11 +5,9 @@ import {
   usePlugStore,
   plugActions,
   useAppDispatch,
-  notificationActions,
 } from '../../store';
 import {
   isPlugInstalled,
-  requestConnectToPlug,
   hasPlugAgent,
   createPlugAgent,
   checkIsConnected,
@@ -20,11 +18,9 @@ import {
 import {
   disconnectPlug,
   getPlugButtonText,
+  handleConnect,
 } from '../../integrations/plug/plug.utils';
-import {
-  PLUG_WALLET_WEBSITE_URL,
-  PlugStatusCodes,
-} from '../../constants';
+import { PlugStatusCodes } from '../../constants';
 import config from '../../config/env';
 import { AppLog } from '../../utils/log';
 
@@ -41,7 +37,11 @@ const whitelist = [
   wICPCanisterId,
 ];
 
-export const Plug = () => {
+type PlugProps = {
+  isMobileScreen?: boolean;
+};
+
+export const Plug = ({ isMobileScreen }: PlugProps) => {
   const { t } = useTranslation();
   const { isConnected, connectionStatus, principalId, icnsName } =
     usePlugStore();
@@ -128,71 +128,12 @@ export const Plug = () => {
     }
   }, [isConnected, dispatch]);
 
-  const onConnectionUpdate = () => {
-    // TODO: Rehydrate the data for the switched account
-    disconnectPlug();
-
-    // connected to plug
-    dispatch(plugActions.setIsConnected(false));
-
-    console.warn(
-      'Oops! Disconnected Plug user, as Plug account was switched',
-    );
-  };
-
-  const handleConnect = async () => {
-    // Is plug installed
-    if (!hasPlug) {
-      // Ask user to install plug
-      window.open(PLUG_WALLET_WEBSITE_URL, '_blank');
-      return;
-    }
-
-    // connect to plug if installed
-    try {
-      // verifying plug connection
-      dispatch(
-        plugActions.setConnectionStatus(PlugStatusCodes.Connecting),
-      );
-
-      // request app to connect with plug
-      const connected = await requestConnectToPlug({
-        whitelist,
-        host,
-        onConnectionUpdate,
-      });
-
-      if (!connected) {
-        throw Error('Oops! Failed to connect to plug.');
-      }
-
-      const agentCreated = await createPlugAgent({
-        whitelist,
-        host,
-      });
-
-      if (!agentCreated) {
-        throw Error('Oops! Failed to create plug agent.');
-      }
-
-      // connected to plug
-      dispatch(plugActions.setIsConnected(true));
-    } catch (err) {
-      // failed to connect plug
-      AppLog.error(err);
-      dispatch(
-        notificationActions.setErrorMessage(
-          t('translation:errorMessages.unableToConnectToPlug'),
-        ),
-      );
-      dispatch(plugActions.setIsConnected(false));
-    }
-  };
   return (
     <>
       {isVerifying && (
         <PlugButton
           handleConnect={handleConnect}
+          isMobileScreen={isMobileScreen}
           text={t('translation:buttons.action.loading')}
           isConnected={isConnected}
           principalId={principalId}
@@ -201,6 +142,7 @@ export const Plug = () => {
       {isConnecting && (
         <PlugButton
           handleConnect={handleConnect}
+          isMobileScreen={isMobileScreen}
           text={t('translation:buttons.action.connecting')}
           isConnected={isConnected}
           principalId={principalId}
@@ -209,6 +151,7 @@ export const Plug = () => {
       {!isVerifying && !isConnecting && !isConnected && (
         <PlugButton
           handleConnect={handleConnect}
+          isMobileScreen={isMobileScreen}
           text={
             hasPlug
               ? t('translation:buttons.action.connectToPlug')
@@ -223,6 +166,7 @@ export const Plug = () => {
           handleConnect={() => {
             AppLog.warn('Already connected to plug!');
           }}
+          isMobileScreen={isMobileScreen}
           text={getPlugButtonText({
             principalId,
             icnsName,

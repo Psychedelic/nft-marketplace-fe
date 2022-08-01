@@ -16,9 +16,11 @@ import {
 } from '../core';
 import { TableLayout } from './table-layout';
 import { TokenTransactionItem } from '../../utils/parser';
-import { Container } from './styles';
+import { Container, RowWrapper, HeaderText } from './styles';
 import { recentNFTUpdatesCount } from '../../hooks/use-marketplace-store';
 import { getICAccountLink } from '../../utils/account-id';
+import MobileItemDetails from '../core/table-cells/mobile-item-details';
+import useMediaQuery from '../../hooks/use-media-query';
 
 type RowProps = TokenTransactionItem;
 
@@ -26,6 +28,7 @@ export const NFTActivityTable = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
   const dispatch = useAppDispatch();
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
   const tokenTransactions = useSelector(
     (state: RootState) => state.table.tokenTransactions,
   );
@@ -110,10 +113,69 @@ export const NFTActivityTable = () => {
     [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  const mobileColumns = useMemo(
+    () => [
+      {
+        Header: ' ',
+        accessor: ({ type, price, date }: RowProps) => (
+          <MobileItemDetails
+            type={type}
+            price={`${price}`}
+            time={date}
+            tableType="nftActivity"
+          />
+        ),
+      },
+      {
+        Header: t('translation:tables.titles.seller'),
+        accessor: ({ seller }: RowProps) => {
+          const url = getICAccountLink(seller.raw);
+
+          return (
+            <RowWrapper>
+              <HeaderText>From:</HeaderText>
+              <TextLinkCell
+                text={seller.formatted}
+                url={url}
+                type="nftActivity"
+                principalId={seller.raw}
+              />
+            </RowWrapper>
+          );
+        },
+      },
+      {
+        Header: t('translation:tables.titles.buyer'),
+        accessor: ({ buyer }: RowProps) => {
+          const url = getICAccountLink(buyer.raw);
+
+          return (
+            <RowWrapper>
+              <HeaderText>To:</HeaderText>
+              <TextLinkCell
+                text={buyer.formatted}
+                url={url}
+                type="nftActivity"
+                principalId={buyer.raw}
+              />
+            </RowWrapper>
+          );
+        },
+      },
+      {
+        Header: t('translation:tables.titles.date'),
+        accessor: ({ date }: RowProps) => (
+          <TextCell text={date} type="nftActivityDate" />
+        ),
+      },
+    ],
+    [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
   return (
     <Container>
       <TableLayout
-        columns={columns}
+        columns={isMobileScreen ? mobileColumns : columns}
         data={tokenTransactions}
         tableType="nftActivity"
         loadingTableRows={loadingTokenTransactions}

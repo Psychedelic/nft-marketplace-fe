@@ -22,6 +22,7 @@ import {
   marketplaceActions,
 } from '../../store';
 import { ThemeRootElement } from '../../constants/common';
+import useMediaQuery from '../../hooks/use-media-query';
 
 /* --------------------------------------------------------------------------
  * Cancel Listing Modal Component
@@ -31,6 +32,7 @@ export const CancelListingModal = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { id } = useParams();
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Cancel listing modal steps: cancelList/pending
@@ -142,19 +144,19 @@ export const CancelListingModal = () => {
               <ModalButtonsList>
                 <ModalButtonWrapper>
                   <ActionButton
-                    type="secondary"
-                    onClick={handleModalClose}
-                  >
-                    {t('translation:modals.buttons.cancel')}
-                  </ActionButton>
-                </ModalButtonWrapper>
-                <ModalButtonWrapper>
-                  <ActionButton
-                    type="primary"
+                    type={isMobileScreen ? 'danger' : 'primary'}
                     onClick={handleCancelListing}
                     danger
                   >
                     {t('translation:modals.buttons.cancelListing')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
                   </ActionButton>
                 </ModalButtonWrapper>
               </ModalButtonsList>

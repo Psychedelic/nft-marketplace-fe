@@ -17,6 +17,8 @@ export interface TableLayoutProps {
     showTypeDetails?: boolean;
     type?: string;
     hideColumns?: boolean;
+    isMobileScreen?: boolean;
+    tableType?: string;
   };
   loadingTableRows?: boolean;
   emptyMessage?: string;
@@ -48,7 +50,12 @@ export const TableLayout = ({
   const isTableDataEmpty = data.length === 0;
 
   return (
-    <TableWrapper type={tableType}>
+    <TableWrapper
+      type={tableType}
+      loadingTable={Boolean(
+        loading && isTableDataEmpty,
+      )}
+    >
       <table {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, idx) => (
@@ -95,9 +102,7 @@ export const TableLayout = ({
               <EmptyStateContainer
                 colSpan={headerGroups[0]?.headers.length}
               >
-                <EmptyStateMessage
-                  type="mediumTable"
-                >
+                <EmptyStateMessage type="mediumTable">
                   {emptyMessage}
                 </EmptyStateMessage>
               </EmptyStateContainer>

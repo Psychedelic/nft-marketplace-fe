@@ -36,6 +36,7 @@ import {
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { formatTimestamp } from '../../integrations/functions/date';
 import { getICAccountLink } from '../../utils/account-id';
+import useMediaQuery from '../../hooks/use-media-query';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -219,6 +220,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     // TODO: Add logic to load more data
   };
 
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
+
   const columns = useMemo(
     () => [
       {
@@ -247,14 +250,18 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
                 )}`) ||
               ''
             }
-            tableType="offers"
+            tableType="myOffers"
           />
         ),
       },
       {
-        Header: t('translation:tables.titles.floorDifference'),
+        Header: t(
+          !isMobileScreen
+            ? 'translation:tables.titles.floorDifference'
+            : 'translation:tables.titles.floorDif',
+        ),
         accessor: ({ floorDifference }: OffersTableItem) => (
-          <TextCell text={floorDifference} type="offers" />
+          <TextCell text={floorDifference} type="myOffers" />
         ),
       },
       {
@@ -277,7 +284,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         accessor: ({ time }: OffersTableItem) => (
           <TextCell
             text={formatTimestamp(BigInt(time))}
-            type="activityTime"
+            type="myOffersActivityTime"
+            tableType="myOffers"
           />
         ),
       },
@@ -336,6 +344,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
                 showItemDetails: true,
                 showTypeDetails: true,
                 infiniteLoader: true,
+                isMobileScreen,
+                tableType: 'myOffers',
               }}
             />
           }
@@ -347,12 +357,14 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
             <TableLayout
               columns={columns}
               data={loadedOffers}
-              tableType="activity"
+              tableType="myOffers"
               columnsToHide={columnsToHide}
               loading={loading}
               loaderDetails={{
                 showItemDetails: true,
                 showTypeDetails: true,
+                isMobileScreen,
+                tableType: 'myOffers',
               }}
             />
           </Container>

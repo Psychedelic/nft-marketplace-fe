@@ -1,4 +1,5 @@
 import { styled } from '../../stitches.config';
+import { SkeletonBox } from '../core';
 
 export const Container = styled('div', {
   position: 'relative',
@@ -11,6 +12,7 @@ export const Container = styled('div', {
 
   '@sm': {
     padding: '0px 15px 15px',
+    overflowX: 'hidden',
   },
 });
 
@@ -37,8 +39,11 @@ export const Flex = styled('div', {
     },
 
     justifyContent: {
-      true: {
+      spaceBetween: {
         justifyContent: 'space-between',
+      },
+      center: {
+        justifyContent: 'center',
       },
     },
   },
@@ -49,6 +54,16 @@ export const ContentFlex = styled('div', {
   alignItems: 'center',
   flexWrap: 'wrap',
   marginBottom: '10px',
+
+  variants: {
+    mobileBtns: {
+      true: {
+        '@sm': {
+          flex: '1',
+        },
+      },
+    },
+  },
 });
 
 export const SkeletonListWrapper = styled('div', {
@@ -56,6 +71,15 @@ export const SkeletonListWrapper = styled('div', {
   gridTemplateColumns: 'repeat(auto-fill,minmax(185px, 1fr))',
   gridAutoFlow: 'row dense',
   gridGap: '35px 50px',
+
+  '@sm': {
+    gridTemplateColumns: '1fr 1fr',
+    gridGap: '10px',
+  },
+
+  '@xs': {
+    gridTemplateColumns: '1fr',
+  },
 });
 
 export const ClearButton = styled('div', {
@@ -68,4 +92,30 @@ export const ClearButton = styled('div', {
   '&:hover': {
     cursor: 'pointer',
   },
+});
+
+export const AppliedFilters = styled('span', {
+  width: '18px',
+  height: '18px',
+  borderRadius: '100%',
+  background: '$primary',
+  color: '#ffffff',
+  fontSize: '12px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginLeft: '10px',
+});
+
+export const FiltersButtonSkeleton = styled(SkeletonBox, {
+  width: '100%',
+  height: '100%',
+  minHeight: '41px',
+});
+
+export const SortButtonSkeleton = styled(SkeletonBox, {
+  width: '100%',
+  height: '100%',
+  minHeight: '41px',
+  marginLeft: '10px',
 });

@@ -56,7 +56,12 @@ export const TextLinkCell = ({
   }
 
   return (
-    <TextLinkDetails type={type} href={url} target="_blank">
+    <TextLinkDetails
+      type={type}
+      href={url}
+      center={text === '-' || !text ? true : false}
+      target="_blank"
+    >
       {text ? text : '-'}
     </TextLinkDetails>
   );

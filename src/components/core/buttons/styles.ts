@@ -51,6 +51,11 @@ export const Button = styled('button', {
         color: '$primary',
         border: '1.5px solid $primary',
       },
+      active: {
+        background: 'rgba(34, 83, 255, 0.12)',
+        color: '$primary',
+        border: '1.5px solid $primary',
+      },
     },
 
     disabled: {
@@ -63,6 +68,8 @@ export const Button = styled('button', {
     danger: {
       true: {
         backgroundColor: '#EF4444',
+        color: '#ffffff',
+        border: 'none',
       },
     },
 
@@ -86,6 +93,10 @@ export const Button = styled('button', {
   },
   cursor: 'pointer',
   padding: '8px 12px',
+
+  '@sm': {
+    fontSize: '16px',
+  },
 });
 
 export const LinkButtonStyles = styled('a', {

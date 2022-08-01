@@ -5,6 +5,8 @@ import {
   OfferAccordion,
   AboutAccordion,
   NFTTraitsChip,
+  OfferAccordionHeader,
+  AboutAccordionHeader,
 } from '../core';
 import { NFTMetaData } from '../nft-metadata';
 import { NftActionBar } from '../nft-action-bar';
@@ -15,8 +17,10 @@ import {
   NFTTraitsContainer,
   DetailsContainer,
   Video,
+  Divider,
+  OfferAccordionDetails,
+  AboutAccordionDetails,
 } from './styles';
-
 import {
   useNFTSStore,
   RootState,
@@ -25,6 +29,7 @@ import {
   nftsActions,
   useFilterStore,
   filterActions,
+  usePlugStore,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
@@ -32,6 +37,7 @@ import { extractTraitData } from '../../store/features/filters/async-thunks/get-
 import TraitsListLoader from './TraitsListLoader';
 import { roundOffDecimalValue } from '../../utils/nfts';
 import NFTDetailsSkeleton from './nft-details-skeleton';
+import useMediaQuery from '../../hooks/use-media-query';
 
 // type CurrentListing = {
 //   seller: string;
@@ -66,6 +72,8 @@ export const NftDetails = () => {
     return state.marketplace.tokenListing[id];
   });
 
+  const { isConnected } = usePlugStore();
+
   const nftDetails: NFTMetadata | undefined = useMemo(() => {
     const details = loadedNFTS.find((nft) => nft.id === id);
     if (!details) return;
@@ -81,6 +89,7 @@ export const NftDetails = () => {
     (nftDetails?.price &&
       parseE8SAmountToWICP(BigInt(nftDetails.price)));
   const isListed = !!(tokenListing?.created || nftDetails?.isListed);
+  const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
   // TODO: We need more control, plus the
   // kyasshu calls should be placed as a thunk/action
@@ -144,65 +153,115 @@ export const NftDetails = () => {
               poster={nftDetails.preview}
               src={nftDetails.location}
             />
-            <NFTTraitsContainer>
-              {loadingFilterList ? (
-                <TraitsListLoader />
-              ) : (
-                <>
-                  <NFTTraitsChip
-                    label="Base"
-                    name={nftDetails?.traits?.base?.name}
-                    rimValue={`${
-                      nftDetails?.traits?.base?.occurance
-                    } (${roundOffDecimalValue(
-                      nftDetails?.traits?.base?.rarity,
-                      2,
-                    )}%)`}
+            {isMobileScreen && (
+              <NFTTraitsContainer>
+                {loadingFilterList ? (
+                  <TraitsListLoader />
+                ) : (
+                  <>
+                    <NFTTraitsChip
+                      label="Base"
+                      name={nftDetails?.traits?.base?.name}
+                      rimValue={`${
+                        nftDetails?.traits?.base?.occurance
+                      } (${roundOffDecimalValue(
+                        nftDetails?.traits?.base?.rarity,
+                        2,
+                      )}%)`}
+                    />
+                    <NFTTraitsChip
+                      label="BigGem"
+                      name={nftDetails?.traits?.biggem?.name}
+                      rimValue={`${
+                        nftDetails?.traits?.biggem?.occurance
+                      } (${roundOffDecimalValue(
+                        nftDetails?.traits?.biggem?.rarity,
+                        2,
+                      )}%)`}
+                    />
+                    <NFTTraitsChip
+                      label="Rim"
+                      name={nftDetails?.traits?.rim?.name}
+                      rimValue={`${
+                        nftDetails?.traits?.rim?.occurance
+                      } (${roundOffDecimalValue(
+                        nftDetails?.traits?.rim?.rarity,
+                        2,
+                      )}%)`}
+                    />
+                    <NFTTraitsChip
+                      label="SmallGem"
+                      name={nftDetails?.traits?.smallgem?.name}
+                      rimValue={`${
+                        nftDetails?.traits?.smallgem?.occurance
+                      } (${roundOffDecimalValue(
+                        nftDetails?.traits?.smallgem?.rarity,
+                        2,
+                      )}%)`}
+                    />
+                  </>
+                )}
+              </NFTTraitsContainer>
+            )}
+            {isMobileScreen && <Divider />}
+            {isMobileScreen && (
+              <>
+                <OfferAccordionDetails flexDirection="column">
+                  <OfferAccordionHeader
+                    isListed={isListed}
+                    lastSalePrice={lastSalePrice?.toString()}
+                    owner={owner}
+                    showNFTActionButtons={showNFTActionButtons}
+                    operator={nftDetails?.operator}
+                    isMobileScreen={isMobileScreen}
                   />
-                  <NFTTraitsChip
-                    label="BigGem"
-                    name={nftDetails?.traits?.biggem?.name}
-                    rimValue={`${
-                      nftDetails?.traits?.biggem?.occurance
-                    } (${roundOffDecimalValue(
-                      nftDetails?.traits?.biggem?.rarity,
-                      2,
-                    )}%)`}
+                </OfferAccordionDetails>
+                <AboutAccordionDetails>
+                  <AboutAccordionHeader
+                    owner={owner}
+                    isMobileScreen={isMobileScreen}
                   />
-                  <NFTTraitsChip
-                    label="Rim"
-                    name={nftDetails?.traits?.rim?.name}
-                    rimValue={`${
-                      nftDetails?.traits?.rim?.occurance
-                    } (${roundOffDecimalValue(
-                      nftDetails?.traits?.rim?.rarity,
-                      2,
-                    )}%)`}
+                </AboutAccordionDetails>
+              </>
+            )}
+            {isMobileScreen && (
+              <>
+                {isConnected && (
+                  <OfferAccordion
+                    lastSalePrice={lastSalePrice?.toString()}
+                    isListed={isListed}
+                    owner={owner}
+                    showNFTActionButtons={showNFTActionButtons}
+                    operator={nftDetails?.operator}
+                    isMobileScreen={isMobileScreen}
                   />
-                  <NFTTraitsChip
-                    label="SmallGem"
-                    name={nftDetails?.traits?.smallgem?.name}
-                    rimValue={`${
-                      nftDetails?.traits?.smallgem?.occurance
-                    } (${roundOffDecimalValue(
-                      nftDetails?.traits?.smallgem?.rarity,
-                      2,
-                    )}%)`}
-                  />
-                </>
-              )}
-            </NFTTraitsContainer>
+                )}
+                <AboutAccordion
+                  owner={owner}
+                  isMobileScreen={isMobileScreen}
+                />
+              </>
+            )}
           </PreviewContainer>
           <DetailsContainer>
-            <NFTMetaData id={id} />
-            <OfferAccordion
-              lastSalePrice={lastSalePrice?.toString()}
-              isListed={isListed}
+            <NFTMetaData
+              id={id}
               owner={owner}
+              isListed={isListed}
               showNFTActionButtons={showNFTActionButtons}
-              operator={nftDetails?.operator}
             />
-            <AboutAccordion owner={owner} />
+            {!isMobileScreen && (
+              <>
+                <OfferAccordion
+                  lastSalePrice={lastSalePrice?.toString()}
+                  isListed={isListed}
+                  owner={owner}
+                  showNFTActionButtons={showNFTActionButtons}
+                  operator={nftDetails?.operator}
+                />
+                <AboutAccordion owner={owner} />
+              </>
+            )}
           </DetailsContainer>
         </Wrapper>
       ) : (

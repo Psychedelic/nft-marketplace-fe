@@ -20,6 +20,7 @@ import {
   ModalButtonWrapper,
   ActionText,
   ActionTextWrapper,
+  ModalRoot,
 } from './styles';
 import { ModalOverlay } from './modal-overlay';
 
@@ -134,9 +135,10 @@ export const MakeOfferModal = ({
   // TODO: add step to handle insufficient balance in UI
 
   return (
-    <DialogPrimitive.Root
+    <ModalRoot
       open={modalOpened}
       onOpenChange={handleModalOpen}
+      isTriggerVisible={isTriggerVisible}
     >
       {/*
         ---------------------------------
@@ -230,19 +232,19 @@ export const MakeOfferModal = ({
               <ModalButtonsList>
                 <ModalButtonWrapper>
                   <ActionButton
-                    type="secondary"
-                    onClick={handleModalClose}
-                  >
-                    {t('translation:modals.buttons.cancel')}
-                  </ActionButton>
-                </ModalButtonWrapper>
-                <ModalButtonWrapper>
-                  <ActionButton
                     type="primary"
                     onClick={handleSubmitOffer}
                     disabled={!amount || Number(amount) <= 0}
                   >
                     {t('translation:modals.buttons.submitOffer')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
                   </ActionButton>
                 </ModalButtonWrapper>
               </ModalButtonsList>
@@ -338,6 +340,6 @@ export const MakeOfferModal = ({
           )}
         </ModalContent>
       </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+    </ModalRoot>
   );
 };

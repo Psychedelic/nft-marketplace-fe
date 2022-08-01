@@ -26,10 +26,11 @@ import wicpImage from '../../assets/wicp.svg';
 import PlugBalance from './plug-balance';
 
 export type PlugButtonProps = {
-  handleConnect: () => void;
+  handleConnect: (dispatch: any) => void;
   text: string;
   isConnected: boolean;
   principalId?: string;
+  isMobileScreen?: boolean;
 };
 
 /* --------------------------------------------------------------------------
@@ -41,6 +42,7 @@ export const PlugButton = ({
   text,
   isConnected,
   principalId: userPrincipal,
+  isMobileScreen,
 }: PlugButtonProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -86,7 +88,7 @@ export const PlugButton = ({
     if (isConnected) {
       setOpenDropdown(!openDropdown);
     } else {
-      handleConnect();
+      handleConnect({ dispatch, t });
     }
   }, [handleConnect, isConnected, openDropdown]);
 
@@ -115,7 +117,10 @@ export const PlugButton = ({
           onClick={handleClick}
           className="plug-button"
         >
-          <PlugButtonText className="plug-button-text">
+          <PlugButtonText
+            className="plug-button-text"
+            isMobileScreen={isMobileScreen}
+          >
             {isConnected && (
               <PlugIconStyled
                 icon="plug"

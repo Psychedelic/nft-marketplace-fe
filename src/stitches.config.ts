@@ -47,8 +47,14 @@ export const {
       lightYellow: '#ffd71926',
       paleYellow: '#987E00',
       regentGrey: '#777E8F',
+      mobilePrincipalIdGrey: '#23262F99',
+      mobileStyledIconColor: '#23262F',
       defaultBackgroundColour: '#000000',
       defaultTxtColour: '#FFFFFF',
+      textNeutralColor: '#777E90',
+      disconnectedTextColor: 'rgba(35, 38, 47, 0.6)',
+      mobileTableHeader: '#FBFBFB',
+      mobileBackgroundColor: '#FAFAFA',
     },
     space: {},
     fonts: {},
@@ -63,6 +69,7 @@ export const {
     // which means that you'd have min-width, instead
     // of max-width, to allow you to provide a set of
     // rules that fulfill a wider range
+    xs: '(max-width: 400px)',
     sm: '(max-width: 640px)',
     md: '(max-width: 850px)',
     lg: '(max-width: 1140px)',
@@ -106,8 +113,14 @@ export const darkTheme = createTheme({
     success: '#00AC7C',
     modalText: '#767D8E',
     toastBackground: '#1e1e1e',
+    mobilePrincipalIdGrey: '#FFFFFF99',
+    mobileStyledIconColor: '#727273',
     defaultBackgroundColour: '#FFFFFF',
     defaultTxtColour: '#000000',
+    textNeutralColor: '#777E90',
+    disconnectedTextColor: '#FFFFFF',
+    mobileTableHeader: '#141416',
+    mobileBackgroundColor: '#141416',
   },
   shadows: {
     default: 'none',

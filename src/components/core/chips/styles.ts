@@ -9,6 +9,10 @@ export const CountContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   margin: '0px 25px 0px 0px',
+
+  '@md': {
+    margin: '0px',
+  },
 });
 
 export const CountLabel = styled('div', {
@@ -54,12 +58,23 @@ export const TraitChipContainer = styled('div', {
         '&:nth-child(3)': {
           marginRight: '0px',
         },
+
+        '@md': {
+          '&:nth-child(3)': {
+            marginRight: '15px',
+          },
+        },
       },
     },
   },
 
   '&:last-child': {
     marginRight: '0px',
+  },
+
+  '@md': {
+    marginRight: '15px',
+    filter: 'drop-shadow(2px 3px 6px rgba(0, 0, 0, 0.16))',
   },
 });
 

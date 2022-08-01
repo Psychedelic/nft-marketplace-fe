@@ -29,6 +29,7 @@ import {
   ModalButtonsList,
   ModalButtonWrapper,
   InfoIcon,
+  ItemTokenId,
 } from './styles';
 
 import { totalPriceCalculator } from '../../integrations/marketplace/price.utils';
@@ -51,6 +52,7 @@ export interface AcceptOfferProps {
   offerFrom: string;
   nftTokenId?: string;
   actionButtonProp?: string;
+  isMobileScreen?: boolean;
 }
 
 /* --------------------------------------------------------------------------
@@ -63,6 +65,7 @@ export const AcceptOfferModal = ({
   offerFrom,
   nftTokenId,
   actionButtonProp,
+  isMobileScreen,
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -214,9 +217,16 @@ export const AcceptOfferModal = ({
                         alt="crowns"
                       />
                     )}
-                    <ItemName>{`CAP Crowns #${
-                      nftTokenId ?? nftDetails?.id
-                    }`}</ItemName>
+                    <ItemName>
+                      {isMobileScreen
+                        ? `CAP Crowns #${
+                            nftTokenId ?? nftDetails?.id
+                          }`
+                        : 'CAP Crowns'}
+                      <ItemTokenId>
+                        {`#${nftTokenId ?? nftDetails?.id}`}
+                      </ItemTokenId>
+                    </ItemName>
                   </ItemDetails>
                   <PriceDetails>
                     <WICPContainer size="small">
@@ -287,18 +297,18 @@ export const AcceptOfferModal = ({
               <ModalButtonsList>
                 <ModalButtonWrapper>
                   <ActionButton
-                    type="secondary"
-                    onClick={handleModalClose}
-                  >
-                    {t('translation:modals.buttons.cancel')}
-                  </ActionButton>
-                </ModalButtonWrapper>
-                <ModalButtonWrapper>
-                  <ActionButton
                     type="primary"
                     onClick={handleAcceptOffer}
                   >
                     {t('translation:modals.buttons.acceptOffer')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
                   </ActionButton>
                 </ModalButtonWrapper>
               </ModalButtonsList>

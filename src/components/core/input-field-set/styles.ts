@@ -17,10 +17,19 @@ export const Container = styled('div', {
       filterInput: {
         width: '135px',
         height: '44px',
+
+        '@sm': {
+          flex: '0.5',
+        },
       },
       modalInput: {
         width: '430px',
         height: '56px',
+
+        '@lg': {
+          margin: '0px 15px',
+          width: '100%',
+        },
       },
     },
   },
@@ -51,6 +60,10 @@ export const Input = styled('input', {
         fontSize: '16px',
         fontWeight: 500,
         lineHeight: '19px',
+
+        '@md': {
+          padding: '0px 0px 0px 15px',
+        },
       },
       filterInput: {
         padding: '13px 16px',
@@ -71,6 +84,15 @@ export const Input = styled('input', {
         color: '$error',
       },
     },
+    isMobileScreen: {
+      true: {
+        border: 'none',
+
+        '&:focus': {
+          outline: 'unset !important',
+        },
+      },
+    },
   },
 });
 
@@ -82,6 +104,14 @@ export const SearchIcon = styled(Icon, {
   left: '0px',
   top: '0px',
   padding: '14px 16px',
+
+  variants: {
+    isMobileScreen: {
+      true: {
+        display: 'none',
+      },
+    },
+  },
 });
 
 export const AmountTypeContainer = styled('div', {

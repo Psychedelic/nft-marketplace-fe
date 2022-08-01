@@ -29,8 +29,12 @@ import { IoWarningOutline } from '@react-icons/all-files/io5/IoWarningOutline';
 import { FiUpload } from '@react-icons/all-files/fi/FiUpload';
 import { FiDownload } from '@react-icons/all-files/fi/FiDownload';
 import { AiFillPicture } from '@react-icons/all-files/ai/AiFillPicture';
+import { IoMenuSharp } from '@react-icons/all-files/io5/IoMenuSharp';
+import { IoIosMoon } from '@react-icons/all-files/io/IoIosMoon';
+import { IoArrowBackOutline } from '@react-icons/all-files/io5/IoArrowBackOutline';
+import { IoFilterSharp } from '@react-icons/all-files/io5/IoFilterSharp';
 
-import { PlugIcon, AppNameIcon, SpinnerIcon } from './custom';
+import { PlugIcon, AppNameIcon, SpinnerIcon, Website } from './custom';
 
 export const Icons = {
   warningOutline: IoWarningOutline,
@@ -65,6 +69,11 @@ export const Icons = {
   upload: FiUpload,
   download: FiDownload,
   myNfts: AiFillPicture,
+  hamburger: IoMenuSharp,
+  nightMode: IoIosMoon,
+  back: IoArrowBackOutline,
+  filter: IoFilterSharp,
+  website: Website,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,

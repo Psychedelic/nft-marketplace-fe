@@ -31,14 +31,26 @@ import {
   FilterButtonWrapper,
   CollapseIcon,
   FilterHeader,
+  FilterMobileActions,
+  ButtonWrapper,
+  CloseIcon,
 } from './styles';
 import CheckboxAccordionSkeleton from '../core/accordions/checkbox-accordion-skeleton';
+import useMediaQuery from '../../hooks/use-media-query';
 
 /* --------------------------------------------------------------------------
  * Filters Component
  * --------------------------------------------------------------------------*/
 
-export const Filters = () => {
+type FiltersProps = {
+  setIsOpenFiltersMenu?: (value: boolean) => void;
+  isOpenFiltersMenu?: boolean;
+};
+
+export const Filters = ({
+  setIsOpenFiltersMenu,
+  isOpenFiltersMenu,
+}: FiltersProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const {
@@ -56,6 +68,7 @@ export const Filters = () => {
     max: '',
   });
   const myNfts = `${t('translation:buttons.action.myNfts')}`;
+  const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
   useEffect(() => {
     if (!isAlreadyFetched) {
@@ -196,39 +209,53 @@ export const Filters = () => {
     }
   };
 
+  const clearAll = () => {
+    dispatch(filterActions.clearAllFilters());
+    dispatch(settingsActions.setPriceApplyButton(false));
+    dispatch(filterActions.setMyNfts(false));
+    setPriceFilterValue({
+      min: '',
+      max: '',
+    });
+  };
+
   return (
     <Container>
-      <CloseFilterContainer opened={collapsed}>
-        <IconActionButton
-          handleClick={() => {
-            dispatch(settingsActions.setFilterCollapsed(!collapsed));
-          }}
-        >
-          <CollapseIcon icon="arrow-left" rotate={collapsed} opened={collapsed} />
-        </IconActionButton>
-      </CloseFilterContainer>
+      {!isMobileScreen && (
+        <CloseFilterContainer opened={collapsed}>
+          <IconActionButton
+            handleClick={() => {
+              dispatch(
+                settingsActions.setFilterCollapsed(!collapsed),
+              );
+            }}
+          >
+            <CollapseIcon
+              icon="arrow-left"
+              rotate={collapsed}
+              opened={collapsed}
+            />
+          </IconActionButton>
+        </CloseFilterContainer>
+      )}
       {!collapsed && (
-        <FiltersContainer>
+        <FiltersContainer isOpenFiltersMenu={isOpenFiltersMenu}>
           <FilterHeader>
             <Heading>Filters</Heading>
-            {defaultFilters.length ? (
-              <ClearButton
-                onClick={() => {
-                  dispatch(filterActions.clearAllFilters());
-                  dispatch(
-                    settingsActions.setPriceApplyButton(false),
-                  );
-                  dispatch(filterActions.setMyNfts(false));
-                  setPriceFilterValue({
-                    min: '',
-                    max: '',
-                  });
-                }}
-              >
-                {`${t('translation:filters.clearAll')}`}
-              </ClearButton>
+            {isMobileScreen ? (
+              <CloseIcon
+                icon="close"
+                size="lg"
+                onClick={() =>
+                  setIsOpenFiltersMenu && setIsOpenFiltersMenu(false)
+                }
+              />
             ) : (
-              ''
+              defaultFilters.length && (
+                <ClearButton onClick={clearAll}>
+                  {`${t('translation:filters.clearAll')}`}
+                </ClearButton>
+              )
             )}
           </FilterHeader>
           <FiltersWrapper>
@@ -403,6 +430,31 @@ export const Filters = () => {
               </CheckboxFilters>
             </FilterSection>
           </FiltersWrapper>
+          {isMobileScreen && (
+            <FilterMobileActions>
+              <ButtonWrapper>
+                <ActionButton
+                  type="secondary"
+                  size="wide"
+                  onClick={clearAll}
+                >
+                  Clear All
+                </ActionButton>
+              </ButtonWrapper>
+              <ButtonWrapper>
+                <ActionButton
+                  type="primary"
+                  size="wide"
+                  onClick={() =>
+                    setIsOpenFiltersMenu &&
+                    setIsOpenFiltersMenu(false)
+                  }
+                >
+                  Done
+                </ActionButton>
+              </ButtonWrapper>
+            </FilterMobileActions>
+          )}
         </FiltersContainer>
       )}
     </Container>

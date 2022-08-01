@@ -20,7 +20,12 @@ import {
   TextLinkCell,
 } from '../core';
 import { TableLayout } from './table-layout';
-import { Container, InfiniteScrollWrapper } from './styles';
+import {
+  Container,
+  InfiniteScrollWrapper,
+  RowWrapper,
+  HeaderText,
+} from './styles';
 import { NFTMetadata } from '../../declarations/legacy';
 import TableSkeletons from './table-skeletons';
 import {
@@ -30,6 +35,8 @@ import {
 import { getICAccountLink } from '../../utils/account-id';
 import config from '../../config/env';
 import { OperationType } from '../../constants';
+import useMediaQuery from '../../hooks/use-media-query';
+import MobileItemDetails from '../core/table-cells/mobile-item-details';
 
 interface RowProps {
   item: {
@@ -62,6 +69,7 @@ export const ActivityTable = () => {
     (state: RootState) => state.cap.bucketId,
   );
   const tableSkeletonId = uuid();
+  const isMobileScreen = useMediaQuery('(max-width: 640px');
 
   useEffect(() => {
     dispatch(
@@ -170,6 +178,79 @@ export const ActivityTable = () => {
     [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  const mobileColumns = useMemo(
+    () => [
+      {
+        Header: t('translation:tables.titles.type'),
+        accessor: ({ type, price, time, item }: RowProps) => (
+          <MobileItemDetails
+            type={type}
+            price={parseE8SAmountToWICP(BigInt(price))}
+            time={time}
+            tableType="activity"
+            item={item}
+          />
+        ),
+      },
+      {
+        Header: t('translation:tables.titles.seller'),
+        accessor: ({ seller }: RowProps) => {
+          const principalText = seller.toText();
+          const short = formatAddress(principalText);
+          const url = getICAccountLink(principalText);
+
+          return (
+            <RowWrapper>
+              <HeaderText>From:</HeaderText>
+              <TextLinkCell
+                text={short}
+                url={url}
+                type=""
+                principalId={principalText}
+              />
+            </RowWrapper>
+          );
+        },
+      },
+      {
+        Header: t('translation:tables.titles.buyer'),
+        accessor: ({ buyer }: RowProps) => {
+          if (!buyer) {
+            return (
+              <RowWrapper>
+                <HeaderText>To:</HeaderText>
+                <TextLinkCell text="-" type="" />
+              </RowWrapper>
+            );
+          }
+
+          const principalText = buyer.toText();
+          const short = formatAddress(principalText);
+          const url = getICAccountLink(principalText);
+
+          return (
+            <RowWrapper>
+              <HeaderText>To:</HeaderText>
+              <TextLinkCell
+                text={short}
+                url={url}
+                type=""
+                principalId={principalText}
+              />
+            </RowWrapper>
+          );
+        },
+      },
+      {
+        Header: t('translation:tables.titles.time'),
+        accessor: ({ time }: RowProps) => (
+          <TextCell text={time} type="activityTime" />
+        ),
+      },
+    ],
+    [t, theme], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
   return (
     <InfiniteScrollWrapper
       pageStart={0}
@@ -183,6 +264,7 @@ export const ActivityTable = () => {
             showTypeDetails: true,
             type: 'large',
             infiniteLoader: true,
+            isMobileScreen,
           }}
           key={tableSkeletonId}
         />
@@ -193,13 +275,14 @@ export const ActivityTable = () => {
     >
       <Container>
         <TableLayout
-          columns={columns}
+          columns={isMobileScreen ? mobileColumns : columns}
           data={loadedCapActivityData}
           tableType="activity"
           loading={isTableLoading}
           loaderDetails={{
             showItemDetails: true,
             showTypeDetails: true,
+            isMobileScreen,
           }}
         />
       </Container>

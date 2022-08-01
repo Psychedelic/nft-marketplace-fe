@@ -29,20 +29,46 @@ import { notificationActions } from '../../../store/features/notifications';
 import config from '../../../config/env';
 import { formatUserAddress } from '../../../utils/addresses';
 import { AppLog } from '../../../utils/log';
+import { Website } from '../../icons/custom/website';
+import { useTheme } from '../../../hooks';
 
 export type AboutAccordionProps = {
   owner?: string;
+  isMobileScreen?: boolean;
 };
 
-export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
+export const AboutAccordionHeader = ({
+  owner,
+  isMobileScreen,
+}: AboutAccordionProps) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
-  const { id } = useParams();
-  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
 
   const [ownerAddress, setOwnerAddress] = useState<string>('');
   const [loadingOwnerAddress, setLoadingOwnerAddress] =
     useState<boolean>(true);
+
+  useEffect(() => {
+    (async () => {
+      if (isOwner) {
+        setOwnerAddress(t('translation:accordions.about.header.you'));
+        setLoadingOwnerAddress(false);
+
+        return;
+      }
+
+      setLoadingOwnerAddress(true);
+
+      try {
+        const formattedOwnerAddress = await formatUserAddress(owner);
+
+        setOwnerAddress(formattedOwnerAddress);
+        setLoadingOwnerAddress(false);
+      } catch (error) {
+        setLoadingOwnerAddress(false);
+        AppLog.error(error);
+      }
+    })();
+  }, [owner]);
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
@@ -68,6 +94,58 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
     },
   ];
 
+  return (
+    <>
+      {AccordionHeadContentData.map((data) => (
+        <AccordionHeadContent
+          key={data.heading}
+          flexProperties="about"
+        >
+          <LogoWrapper
+            style={{ backgroundImage: `url(${data.image})` }}
+          />
+          <MetaDataDetails>
+            <MetaDataTitle>{data.heading}</MetaDataTitle>
+            <MetaDataDescription>
+              {data.subheading}
+            </MetaDataDescription>
+          </MetaDataDetails>
+        </AccordionHeadContent>
+      ))}
+      <AccordionHeadContent
+        key={t('translation:accordions.about.header.owner')}
+        flexProperties="about"
+      >
+        <LogoWrapper
+          style={{ backgroundImage: `url(${plugIcon})` }}
+        />
+        <MetaDataDetails>
+          <MetaDataTitle>
+            {t('translation:accordions.about.header.owner')}
+          </MetaDataTitle>
+          <MetaDataDescription>
+            {loadingOwnerAddress ? (
+              <SkeletonBox style={{ width: '80px' }} />
+            ) : (
+              ownerAddress
+            )}
+          </MetaDataDescription>
+        </MetaDataDetails>
+      </AccordionHeadContent>
+    </>
+  );
+};
+
+export const AboutAccordion = ({
+  owner,
+  isMobileScreen,
+}: AboutAccordionProps) => {
+  const { t } = useTranslation();
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const [isAccordionOpen, setIsAccordionOpen] = useState(true);
+  const [theme] = useTheme();
+
   const AccordionContentMetaData = useMemo(
     () => [
       {
@@ -92,68 +170,25 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
     [config, id],
   );
 
-  useEffect(() => {
-    (async () => {
-      if (isOwner) {
-        setOwnerAddress(t('translation:accordions.about.header.you'));
-        setLoadingOwnerAddress(false);
-
-        return;
-      }
-
-      setLoadingOwnerAddress(true);
-
-      try {
-        const formattedOwnerAddress = await formatUserAddress(owner);
-
-        setOwnerAddress(formattedOwnerAddress);
-        setLoadingOwnerAddress(false);
-      } catch (error) {
-        setLoadingOwnerAddress(false);
-        AppLog.error(error);
-      }
-    })();
-  }, [owner]);
-
   return (
-    <AccordionStyle type="single" collapsible width="medium">
-      <AccordionHead>
-        {AccordionHeadContentData.map((data) => (
-          <AccordionHeadContent key={data.heading}>
-            <LogoWrapper
-              style={{ backgroundImage: `url(${data.image})` }}
-            />
-            <MetaDataDetails>
-              <MetaDataTitle>{data.heading}</MetaDataTitle>
-              <MetaDataDescription>
-                {data.subheading}
-              </MetaDataDescription>
-            </MetaDataDetails>
-          </AccordionHeadContent>
-        ))}
-        <AccordionHeadContent>
-          <LogoWrapper
-            style={{ backgroundImage: `url(${plugIcon})` }}
+    <AccordionStyle
+      type="single"
+      collapsible
+      width={isMobileScreen ? 'small' : 'medium'}
+    >
+      {!isMobileScreen && (
+        <AccordionHead>
+          <AboutAccordionHeader
+            owner={owner}
+            isMobileScreen={isMobileScreen}
           />
-          <MetaDataDetails>
-            <MetaDataTitle>
-              {t('translation:accordions.about.header.owner')}
-            </MetaDataTitle>
-            <MetaDataDescription>
-              {loadingOwnerAddress ? (
-                <SkeletonBox style={{ width: '80px' }} />
-              ) : (
-                ownerAddress
-              )}
-            </MetaDataDescription>
-          </MetaDataDetails>
-        </AccordionHeadContent>
-      </AccordionHead>
+        </AccordionHead>
+      )}
       <Accordion.Item value="item-1">
         <AccordionTrigger
-          padding="medium"
+          padding={isMobileScreen ? 'small' : 'medium'}
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
-          borderTop="borderSet"
+          borderTop={isMobileScreen ? 'full' : 'borderSet'}
           onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         >
           <div>
@@ -167,7 +202,7 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
           <Icon icon="chevron-up" rotate={isAccordionOpen} />
         </AccordionTrigger>
         <AccordionContent
-          padding="medium"
+          padding={isMobileScreen ? 'small' : 'medium'}
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
         >
           <Description>
@@ -181,10 +216,18 @@ export const AboutAccordion = ({ owner }: AboutAccordionProps) => {
               </Flex>
             ))}
             <ButtonWrapper>
-              <LinkButton type="textBtn" url="https://crowns.ooo/">
-                {t('translation:buttons.links.website')}
-              </LinkButton>
-
+              {isMobileScreen ? (
+                <LinkButton url="https://crowns.ooo/">
+                  <Icon
+                    icon="website"
+                    extraIconProps={{ dark: theme === 'darkTheme' }}
+                  />
+                </LinkButton>
+              ) : (
+                <LinkButton type="textBtn" url="https://crowns.ooo/">
+                  {t('translation:buttons.links.website')}
+                </LinkButton>
+              )}
               <LinkButton url="https://discord.gg/yVEcEzmrgm">
                 <Icon icon="discord" />
               </LinkButton>

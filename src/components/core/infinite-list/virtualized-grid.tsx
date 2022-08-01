@@ -1,15 +1,21 @@
 import throttle from 'lodash.throttle';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import useVirtual from 'react-cool-virtual';
+import useMediaQuery from '../../../hooks/use-media-query';
 import { CardListContainer } from './styles';
 
 const DefaultProps = {
   width: 210,
+  mediumMobileWidth: 185,
+  smallMobileWidth: 360,
   height: 348,
+  smallMobileHeight: 450,
   headerOffset: 76,
   columns: 3,
   scrollThreshold: 348,
+  smallScrollThreshold: 450,
   rowSpacing: 1.06,
+  smallMobileRowSpacing: 1.16,
   padding: 15,
   throttlingInterval: 300,
 };
@@ -29,55 +35,74 @@ export const VirtualizedGrid = <T extends object>({
   loadingMore,
   Skeleton,
   width = DefaultProps.width,
+  mediumMobileWidth = DefaultProps.mediumMobileWidth,
   height = DefaultProps.height,
+  smallMobileHeight = DefaultProps.smallMobileHeight,
   headerOffset = DefaultProps.headerOffset,
   columns = DefaultProps.columns,
-  scrollThreshold = DefaultProps.scrollThreshold,
-  rowSpacing = DefaultProps.rowSpacing,
+  scrollThreshold: fullScrollThreshold = DefaultProps.scrollThreshold,
+  smallScrollThreshold = DefaultProps.smallScrollThreshold,
+  rowSpacing: fullRowSpacing = DefaultProps.rowSpacing,
+  smallMobileRowSpacing = DefaultProps.smallMobileRowSpacing,
   padding = DefaultProps.padding,
   throttlingInterval = DefaultProps.throttlingInterval,
 }: VirtualizedGridProps<T>) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const [colItems, setColItems] = useState(columns);
+  const [screenWidth, setScreenWidth] = useState<number>();
+  const isMediumMobileScreen = useMediaQuery('(max-width: 850px)');
+  const isSmallMobileScreen = useMediaQuery('(max-width: 400px)');
+  const colItemWidth = (() => {
+    if (isMediumMobileScreen) return mediumMobileWidth;
+    return width;
+  })();
+  const rowSpacing = isSmallMobileScreen
+    ? smallMobileRowSpacing
+    : fullRowSpacing;
+  const scrollThreshold = isSmallMobileScreen
+    ? smallScrollThreshold
+    : fullScrollThreshold;
   const [spacingCoefficient, setSpacingCoefficient] =
     useState(rowSpacing);
 
   const row = useVirtual<HTMLDivElement, HTMLDivElement>({
     itemCount:
       Math.ceil(items.length / colItems) + (loadingMore ? 2 : 0),
-    itemSize: height,
+    itemSize: isSmallMobileScreen ? smallMobileHeight : height,
   });
 
   const col = useVirtual<HTMLDivElement, HTMLDivElement>({
     horizontal: true,
     itemCount: colItems,
-    itemSize: width,
+    itemSize: colItemWidth,
   });
 
   // Calculate the total amount of columns and spacing
   useEffect(() => {
     const wrapperReference = wrapperRef.current;
-    if (!wrapperReference || width <= 0) return;
+    if (!wrapperReference || colItemWidth <= 0) return;
 
     // Event listener for column items
     const resizeListener = () => {
       // Calculate the possible amount of columns
       const wrapperWidth =
         wrapperReference.getBoundingClientRect().width;
-      let newColItems = Math.floor(wrapperWidth / width);
+      setScreenWidth(wrapperWidth);
+      let newColItems = Math.floor(wrapperWidth / colItemWidth);
 
       // Calculate the column spacing coefficient
       const getSpacingCoefficient = () =>
-        (wrapperWidth - width * newColItems) /
-        (newColItems - 1) /
-        width;
+        (wrapperWidth - colItemWidth * newColItems) /
+        Math.max(newColItems - 1, 1) /
+        colItemWidth;
+
       let newSpacingCoefficient = getSpacingCoefficient();
 
       // Decrease the column number if the space between columns is too small
       if (
         (newSpacingCoefficient * wrapperWidth) / newColItems <
-        padding
+        (isMediumMobileScreen || isSmallMobileScreen ? 0 : padding)
       ) {
         newColItems -= 1;
         newSpacingCoefficient = getSpacingCoefficient();
@@ -98,7 +123,7 @@ export const VirtualizedGrid = <T extends object>({
     return () => {
       window.removeEventListener('resize', resizeListenerThrottled);
     };
-  }, [wrapperRef, width, throttlingInterval, padding]);
+  }, [wrapperRef, colItemWidth, throttlingInterval, padding]);
 
   useEffect(() => {
     const scrollerReference = row.outerRef.current;
@@ -193,7 +218,9 @@ export const VirtualizedGrid = <T extends object>({
         style={{
           width: `100%`,
           margin: `-${padding}px`,
-          padding: `${padding}px`,
+          paddingTop: `${padding}px`,
+          paddingLeft: `${padding}px`,
+          paddingRight: `${padding}px`,
           paddingBottom: `${scrollThreshold}px`,
           overflow: 'hidden',
         }}
@@ -203,7 +230,9 @@ export const VirtualizedGrid = <T extends object>({
         }}
       >
         <div
-          style={{ position: 'relative' }}
+          style={{
+            position: 'relative',
+          }}
           ref={(el) => {
             row.innerRef.current = el;
             col.innerRef.current = el;
@@ -217,7 +246,9 @@ export const VirtualizedGrid = <T extends object>({
                   style={{
                     position: 'absolute',
                     height: `${rowItem.size}px`,
-                    width: `${colItem.size}px`,
+                    width: `${
+                      isSmallMobileScreen ? screenWidth : colItem.size
+                    }px`,
                     transform: `translateX(${
                       colItem.start * spacingCoefficient
                     }px) translateY(${rowItem.start * rowSpacing}px)`,

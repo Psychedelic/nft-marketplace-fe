@@ -1,4 +1,5 @@
 import { styled } from '../../../stitches.config';
+import { Icon } from '../../icons';
 import { SkeletonBox } from '../skeleton';
 
 export const ItemDetails = styled('div', {
@@ -26,12 +27,69 @@ export const ItemName = styled('div', {
   fontWeight: '500',
   lineHeight: '20px',
   color: '$mainTextColor',
+
+  '@sm': {
+    fontWeight: '600',
+  },
+});
+
+export const ItemTokenId = styled('div', {
+  fontSize: '16px',
+  fontWeight: '500',
+  lineHeight: '20px',
+  color: '$mainTextColor',
+
+  '@sm': {
+    fontWeight: '600',
+  },
 });
 
 export const TypeDetails = styled('div', {
   color: '$mainTextColor',
   display: 'flex',
   alignItems: 'center',
+
+  variants: {
+    tableType: {
+      myOffers: {
+        '@sm': {
+          paddingRight: '0px',
+          alignItems: 'center',
+        },
+      },
+      activity: {
+        '@sm': {
+          paddingRight: '25px',
+          alignItems: 'end',
+        },
+      },
+      nftActivity: {
+        '@sm': {
+          paddingRight: '25px',
+          alignItems: 'unset',
+        },
+      },
+    },
+  },
+
+  '@sm': {
+    paddingRight: '25px',
+    alignItems: 'end',
+  },
+});
+
+export const StyledIcon = styled(Icon, {
+  '@sm': {
+    display: 'none',
+  },
+
+  variants: {
+    showIcon: {
+      true: {
+        display: 'flex',
+      },
+    },
+  },
 });
 
 export const TypeLogo = styled('img', {
@@ -67,12 +125,51 @@ export const TypeName = styled('div', {
       },
     },
   },
+
+  '@sm': {
+    color: '$textNeutralColor',
+    fontWeight: '600',
+  },
 });
 
 export const PriceDetails = styled('div', {
   // base styles
   display: 'flex',
   flexDirection: 'column',
+
+  variants: {
+    tableType: {
+      myOffers: {
+        '@sm': {
+          paddingRight: '0px',
+          alignItems: 'start',
+        },
+      },
+      offers: {
+        '@sm': {
+          paddingRight: '10px',
+          alignItems: 'start',
+        },
+      },
+      activity: {
+        '@sm': {
+          paddingRight: '25px',
+          alignItems: 'end',
+        },
+      },
+      nftActivity: {
+        '@sm': {
+          paddingRight: '25px',
+          alignItems: 'end',
+        },
+      },
+    },
+  },
+
+  '@sm': {
+    paddingRight: '25px',
+    alignItems: 'start',
+  },
 });
 
 export const WICPContainer = styled('div', {
@@ -106,24 +203,38 @@ export const WICPText = styled('div', {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '22px',
-
         color: '$mainTextColor',
       },
-
       offers: {
         fontSize: '16px',
         fontWeight: '500',
         lineHeight: '19px',
-
         color: '$mainTextColor',
+
+        '@sm': {
+          fontSize: '12px',
+        },
+      },
+      myOffers: {
+        order: 'unset',
       },
     },
+  },
+
+  '@sm': {
+    order: '1',
+    fontWeight: '600',
+    marginRight: '0px',
   },
 });
 
 export const WICPLogo = styled('img', {
   width: '15px',
   height: '15px',
+
+  '@sm': {
+    paddingRight: '5px',
+  },
 });
 
 export const PriceText = styled('div', {
@@ -161,20 +272,55 @@ export const TextDetails = styled('div', {
     type: {
       activityTime: {
         color: '$primary',
+
+        '@sm': {
+          paddingRight: '25px',
+          justifyContent: 'center',
+        },
+      },
+
+      myOffersActivityTime: {
+        color: '$primary',
+
+        '@sm': {
+          paddingRight: '0px',
+          justifyContent: 'center',
+        },
+      },
+
+      offersActivityTime: {
+        color: '$primary',
+
+        '@sm': {
+          paddingRight: '10px',
+          justifyContent: 'center',
+          fontSize: '12px',
+        },
       },
 
       nftActivityDate: {
-        fontSize: '16px',
-        fontWeight: '500',
         lineHeight: '22px',
         color: '$primary',
       },
 
       offers: {
-        fontSize: '16px',
-        fontWeight: '500',
         lineHeight: '19px',
         color: '$tableTextColor',
+
+        '@sm': {
+          fontSize: '12px',
+        },
+      },
+    },
+    tableType: {
+      myOffers: {
+        lineHeight: '19px',
+        color: '$tableTextColor',
+
+        '@sm': {
+          paddingRight: '0px',
+          justifyContent: 'center',
+        },
       },
     },
   },
@@ -202,7 +348,35 @@ export const TextLinkDetails = styled('a', {
         fontWeight: '500',
         lineHeight: '19px',
         color: '$primary',
+
+        '@sm': {
+          fontSize: '12px',
+        },
+      },
+    },
+
+    center: {
+      true: {
+        display: 'flex',
+        justifyContent: 'center',
       },
     },
   },
+});
+
+export const MobileItemDetailsWrapper = styled('div', {
+  display: 'flex',
+
+  '@sm': {
+    justifyContent: 'flex-end',
+    flexDirection: 'column',
+    alignItems: 'end',
+  },
+});
+
+export const MobileItemDetailsContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  width: '310px',
+  justifyContent: 'space-between',
 });

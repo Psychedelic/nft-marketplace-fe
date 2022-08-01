@@ -18,6 +18,7 @@ import { ModalOverlay } from './modal-overlay';
 
 import { ListingStatusCodes } from '../../constants/listing';
 import { ThemeRootElement } from '../../constants/common';
+import useMediaQuery from '../../hooks/use-media-query';
 
 /* --------------------------------------------------------------------------
  * Cancel Offer Modal Component
@@ -26,6 +27,7 @@ import { ThemeRootElement } from '../../constants/common';
 export type CancelOfferModalProps = {
   item: OfferItem;
   largeTriggerButton?: boolean;
+  actionText?: string;
 };
 
 export const CancelOfferModal = ({
@@ -71,6 +73,8 @@ export const CancelOfferModal = ({
       }),
     );
   };
+
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
   return (
     <DialogPrimitive.Root
@@ -153,7 +157,7 @@ export const CancelOfferModal = ({
                 </ModalButtonWrapper>
                 <ModalButtonWrapper>
                   <ActionButton
-                    type="primary"
+                    type={isMobileScreen ? 'danger' : 'primary'}
                     onClick={handleCancelOffer}
                     danger
                   >

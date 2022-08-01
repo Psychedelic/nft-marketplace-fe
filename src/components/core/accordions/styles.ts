@@ -63,6 +63,16 @@ export const AccordionHeadContent = styled('div', {
         justifyContent: 'space-between',
         width: '100%',
       },
+      about: {
+        '@md': {
+          justifyContent: 'space-between',
+          border: '1.5px solid $borderColor',
+          padding: '10px 4px',
+          marginRight: '15px',
+          marginBottom: '25px',
+          borderRadius: '8px',
+        },
+      },
     },
   },
 });
@@ -80,6 +90,11 @@ export const MetaDataTitle = styled('span', {
   display: 'flex',
   alignitems: 'center',
   color: '$greyMid',
+
+  '@md': {
+    fontWeight: '600',
+    display: 'block',
+  },
 });
 
 export const MetaDataDescription = styled('p', {
@@ -91,12 +106,22 @@ export const MetaDataDescription = styled('p', {
   display: 'flex',
   alignitems: 'center',
   color: '$mainTextColor',
+
+  '@md': {
+    minWidth: '135px',
+    fontWeight: '600',
+    display: 'block',
+  },
 });
 
 export const PriceWrapper = styled('div', {
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
+
+  '@md': {
+    alignItems: 'flex-end',
+  },
 });
 
 export const CurrentPriceWrapper = styled('div', {
@@ -110,6 +135,11 @@ export const OfferLabel = styled('div', {
   fontSize: '16px',
   lineHeight: '18px',
   color: '$greyMid',
+
+  '@md': {
+    fontSize: '14px',
+    lineHeight: '17px',
+  },
 });
 
 export const OfferPrice = styled('div', {
@@ -119,8 +149,12 @@ export const OfferPrice = styled('div', {
   fontSize: '32px',
   lineHeight: '39px',
   display: 'flex',
-  alignitems: 'center',
+  alignItems: 'center',
   color: '$mainTextColor',
+
+  '@sm': {
+    fontSize: '28px',
+  },
 });
 
 export const MarketPrice = styled('div', {
@@ -133,6 +167,12 @@ export const MarketPrice = styled('div', {
   textAlign: 'right',
   color: '$mainTextColor',
   margin: '0',
+
+  '@md': {
+    color: '$greyMid',
+    fontSize: '20px',
+    lineHeight: '24px',
+  },
 });
 
 export const LogoWrapper = styled('div', {
@@ -149,6 +189,10 @@ export const LogoWrapper = styled('div', {
       large: {
         width: '60px',
         height: '60px',
+      },
+      small: {
+        width: '30px',
+        height: '30px',
       },
     },
   },
@@ -168,6 +212,12 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
       open: {
         background: '$openAccordion',
         borderRadius: '0px',
+
+        '@md': {
+          borderTopLeftRadius: '15px',
+          borderTopRightRadius: '15px',
+          background: '$closeAccordion',
+        },
       },
       notopen: {
         background: '$closeAccordion',
@@ -195,6 +245,10 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
         borderRight: 'none',
         borderLeft: 'none',
         borderBottom: 'none',
+      },
+      full: {
+        border: 'none',
+        borderRadius: '15px',
       },
     },
   },
@@ -274,6 +328,10 @@ export const AccordionContent = styled(Accordion.Content, {
     backgroundColor: {
       open: {
         background: '$openAccordion',
+
+        '@md': {
+          backgroundColor: '$closeAccordion',
+        },
       },
       notopen: {
         backgroundColor: '$closeAccordion',
@@ -313,6 +371,10 @@ export const Description = styled('p', {
   color: '#777E90',
   margin: '0',
   padding: '15px 0 25px',
+
+  '@sm': {
+    fontSize: '14px',
+  },
 });
 
 export const Flex = styled('div', {
@@ -333,12 +395,20 @@ export const Subtext = styled('p', {
     fontWeight: 'bold',
     color: '$mainTextColor',
   },
+
+  '@sm': {
+    fontSize: '14px',
+  },
 });
 
 export const ButtonWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   padding: '25px 0',
+
+  '@md': {
+    justifyContent: 'center',
+  },
 });
 
 export const PlugButtonWrapper = styled('div', {
@@ -346,6 +416,10 @@ export const PlugButtonWrapper = styled('div', {
 
   '.plug-button': {
     marginLeft: '0px',
+  },
+
+  '@md': {
+    padding: '20px 0',
   },
 });
 
@@ -362,10 +436,32 @@ export const ButtonListWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   paddingTop: '30px',
+
+  '@md': {
+    padding: '0px',
+    marginLeft: '0px',
+    margin: '20px 0px',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
 });
 
 export const ButtonDetailsWrapper = styled('div', {
   marginLeft: '0px',
+
+  variants: {
+    isTriggerVisible: {
+      true: {
+        '@md': {
+          flex: '0.5',
+          marginLeft: '5px',
+        },
+      },
+      false: {
+        display: 'none',
+      },
+    },
+  },
 });
 
 export const CheckboxSkeletonWrapper = styled(SkeletonBox, {

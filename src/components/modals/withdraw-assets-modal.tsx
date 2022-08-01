@@ -163,18 +163,18 @@ export const WithdrawAssetsModal = () => {
               <ModalButtonsList>
                 <ModalButtonWrapper>
                   <ActionButton
-                    type="secondary"
-                    onClick={handleModalClose}
-                  >
-                    {t('translation:modals.buttons.cancel')}
-                  </ActionButton>
-                </ModalButtonWrapper>
-                <ModalButtonWrapper>
-                  <ActionButton
                     type="primary"
                     onClick={handleWithdrawAssets}
                   >
                     {t('translation:modals.buttons.withdraw')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
                   </ActionButton>
                 </ModalButtonWrapper>
               </ModalButtonsList>

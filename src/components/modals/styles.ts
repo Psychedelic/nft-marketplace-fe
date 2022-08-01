@@ -11,6 +11,16 @@ const overlayShow = keyframes({
   },
 });
 
+export const ModalRoot = styled(DialogPrimitive.Root, {
+  variants: {
+    isTriggerVisible: {
+      true: {
+        display: 'none',
+      },
+    },
+  },
+});
+
 const contentShow = keyframes({
   '0%': {
     opacity: 0,
@@ -26,30 +36,58 @@ export const SellModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
   marginLeft: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+  },
 });
 
 export const ChangePriceModalTrigger = styled('div', {
   width: '155px',
   height: '50px',
   marginLeft: '10px',
+
+  '@sm': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const BuyNowModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
   marginRight: '10px',
+
+  '@md': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const MakeOfferModalTrigger = styled('div', {
   width: '140px',
   height: '50px',
   marginRight: '10px',
+
+  '@md': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const CancelListingModalTrigger = styled('div', {
   width: '155px',
   height: '50px',
   marginLeft: '10px',
+
+  '@md': {
+    marginLeft: '0px',
+    width: '100%',
+    flex: '1',
+  },
 });
 
 export const CancelOfferModalTrigger = styled('div', {
@@ -62,6 +100,16 @@ export const CancelOfferModalTrigger = styled('div', {
       true: {
         width: '140px',
         height: '50px',
+
+        '@md': {
+          width: '100%',
+        },
+      },
+      false: {
+        '@md': {
+          height: 'unset',
+          width: '100%',
+        },
       },
     },
   },
@@ -70,6 +118,10 @@ export const CancelOfferModalTrigger = styled('div', {
 export const AcceptOfferModalTrigger = styled('div', {
   width: '98px',
   height: '33px',
+
+  '@md': {
+    height: 'unset',
+  },
 });
 
 export const WithdrawModalTrigger = styled('div', {
@@ -88,6 +140,10 @@ export const ModalOverlayContainer = styled(DialogPrimitive.Overlay, {
   zIndex: 5,
   '@media (prefers-reduced-motion: no-preference)': {
     animation: `${overlayShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
+  },
+
+  '@md': {
+    background: 'rgba(0, 0, 0, 0.6)',
   },
 });
 
@@ -108,6 +164,24 @@ export const ModalContent = styled(DialogPrimitive.Content, {
   '&:focus': {
     outline: 'none',
   },
+
+  '@md': {
+    width: '65%',
+    height: 'max-content',
+    bottom: '0%',
+    padding: '15px 0px 0px',
+    borderRadius: '15px',
+    animation: 'unset',
+  },
+
+  '@sm': {
+    width: '95%',
+    height: 'max-content',
+    bottom: '0%',
+    padding: '15px 0px 0px',
+    borderRadius: '15px',
+    animation: 'unset',
+  },
 });
 
 export const SellModalPreviewWrapper = styled('div', {
@@ -119,12 +193,20 @@ export const SellModalPreviewWrapper = styled('div', {
 export const SellModalPreviewContainer = styled('div', {
   width: '100%',
   maxWidth: '430px',
+
+  '@lg': {
+    maxWidth: 'unset',
+  },
 });
 
 export const NFTCardPreview = styled('div', {
   width: '210px',
   '.card-router': {
     cursor: 'default',
+  },
+
+  '@lg': {
+    display: 'none',
   },
 });
 
@@ -144,6 +226,10 @@ export const ModalHeader = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   margin: '0px 0px 30px',
+
+  '@md': {
+    margin: '0px 15px 25px',
+  },
 });
 
 export const ModalTitle = styled(DialogPrimitive.Title, {
@@ -152,6 +238,12 @@ export const ModalTitle = styled(DialogPrimitive.Title, {
   lineHeight: '39px',
   color: '$mainTextColor',
   margin: '0px 0px 20px',
+
+  '@sm': {
+    margin: '0px 0px 10px',
+    fontSize: '24px',
+    lineHeight: '29px',
+  },
 });
 
 export const ModalDescription = styled(DialogPrimitive.Description, {
@@ -160,6 +252,10 @@ export const ModalDescription = styled(DialogPrimitive.Description, {
   lineHeight: '20px',
   color: '$greyMid',
   margin: '0px',
+
+  '@sm': {
+    fontSize: '16px',
+  },
 
   variants: {
     size: {
@@ -172,12 +268,25 @@ export const ModalDescription = styled(DialogPrimitive.Description, {
 
 export const SaleContentWrapper = styled('div', {
   minWidth: '430px',
+
+  '@lg': {
+    minWidth: 'unset',
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
 });
 
 export const FeeContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   margin: '35px 0px 0px',
+
+  '@lg': {
+    width: '100%',
+    margin: '25px 15px',
+  },
 });
 
 export const FeeDetails = styled('div', {
@@ -187,6 +296,10 @@ export const FeeDetails = styled('div', {
 
   '&:last-child': {
     marginBottom: '0px',
+  },
+
+  '@lg': {
+    width: '100%',
   },
 });
 
@@ -226,6 +339,12 @@ export const ItemDetailsWrapper = styled('div', {
   padding: '12px 0px 32px',
   borderBottom: '1.5px solid #E5E8EB',
 
+  '@lg': {
+    width: '100%',
+    margin: '0px 15px',
+    padding: '0px 0px 20px',
+  },
+
   // variants
   variants: {
     lastChild: {
@@ -234,6 +353,10 @@ export const ItemDetailsWrapper = styled('div', {
         borderTop: '1.5px solid #E5E8EB',
         borderBottom: 'initial',
         marginTop: '35px',
+
+        '@md': {
+          marginTop: '10px',
+        },
       },
     },
 
@@ -281,6 +404,19 @@ export const ItemName = styled('div', {
   color: '$mainTextColor',
 });
 
+export const ItemTokenId = styled('div', {
+  fontSize: '18px',
+  fontWeight: '500',
+  lineHeight: '20px',
+  color: '$mainTextColor',
+  display: 'none',
+
+  '@md': {
+    fontWeight: '600',
+    display: 'block',
+  },
+});
+
 export const PriceDetails = styled('div', {
   // base styles
   display: 'flex',
@@ -318,6 +454,10 @@ export const WICPText = styled('div', {
     size: {
       small: {
         fontSize: '18px',
+
+        '@md': {
+          fontSize: '16px',
+        },
       },
 
       large: {
@@ -365,6 +505,12 @@ export const ModalButtonsList = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
   marginTop: '35px',
+
+  '@md': {
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    marginTop: '20px',
+  },
 });
 
 export const ModalButtonWrapper = styled('div', {
@@ -374,6 +520,15 @@ export const ModalButtonWrapper = styled('div', {
 
   '&:last-child': {
     marginRight: '0px',
+
+    '@md': {
+      marginRight: '15px',
+    },
+  },
+
+  '@md': {
+    width: '100%',
+    margin: '0px 15px 15px',
   },
 
   variants: {
@@ -412,6 +567,11 @@ export const ActionText = styled('span', {
     isDisabled: {
       true: {
         pointerEvents: 'none',
+      },
+    },
+    danger: {
+      true: {
+        color: '$error',
       },
     },
   },

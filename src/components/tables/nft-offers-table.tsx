@@ -25,6 +25,7 @@ import { isTokenId } from '../../utils/nfts';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { formatTimestamp } from '../../integrations/functions/date';
 import { getICAccountLink } from '../../utils/account-id';
+import useMediaQuery from '../../hooks/use-media-query';
 
 /* --------------------------------------------------------------------------
  * NFT Offers Table Component
@@ -73,6 +74,8 @@ export const NFTOffersTable = ({
   const { id: tokenId } = useParams();
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
+
+  const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
   useEffect(() => {
     if (!isConnectedOwner && !columnsToHide.includes('action')) {
@@ -139,7 +142,11 @@ export const NFTOffersTable = ({
         ),
       },
       {
-        Header: t('translation:tables.titles.floorDifference'),
+        Header: t(
+          !isMobileScreen
+            ? 'translation:tables.titles.floorDifference'
+            : 'translation:tables.titles.floorDif',
+        ),
         accessor: ({ floorDifference }: OffersTableItem) => (
           <TextCell text={floorDifference} type="offers" />
         ),
@@ -172,7 +179,7 @@ export const NFTOffersTable = ({
         accessor: ({ time }: OffersTableItem) => (
           <TextCell
             text={formatTimestamp(BigInt(time))}
-            type="activityTime"
+            type="offersActivityTime"
           />
         ),
       },
@@ -219,6 +226,7 @@ export const NFTOffersTable = ({
           showTypeDetails: false,
           type: 'small',
           hideColumns,
+          isMobileScreen,
         }}
         emptyMessage={t('translation:emptyStates.noOffersYet')}
       />
