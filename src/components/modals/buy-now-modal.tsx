@@ -5,12 +5,14 @@ import {
   useNavigate,
   useLocation,
 } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton, Pending, Completed, Tooltip } from '../core';
+import { ActionButton, Completed, Tooltip } from '../core';
 import {
   useAppDispatch,
   marketplaceActions,
   usePlugStore,
+  RootState,
 } from '../../store';
 import {
   ModalContent,
@@ -24,6 +26,7 @@ import {
   ActionText,
   BuyNowModalTrigger,
   ModalRoot,
+  TransactionStepsContainer,
 } from './styles';
 import { AppLog } from '../../utils/log';
 import { isTokenId } from '../../utils/nfts';
@@ -32,6 +35,8 @@ import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
 import { InsufficientBalance } from './steps/insufficient-balance';
 import { isBalanceInsufficient } from '../../utils/balance';
+import { TransactionStep } from './steps/transaction-step';
+import { TransactionStatus } from '../../constants/transaction-status';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
@@ -64,6 +69,10 @@ export const BuyNowModal = ({
   );
 
   const { loadingWICPBalance, walletsWICPBalance } = usePlugStore();
+
+  const transactionSteps = useSelector(
+    (state: RootState) => state.marketplace.transactionSteps,
+  );
 
   const tokenId = useMemo(() => {
     const tid = Number(id ?? actionTextId);
@@ -236,7 +245,26 @@ export const BuyNowModal = ({
               Pending details
               ---------------------------------
             */}
-              <Pending />
+              <TransactionStepsContainer>
+                {transactionSteps?.approveWICPStatus && (
+                  <TransactionStep
+                    name="Approving WICP"
+                    status={transactionSteps.approveWICPStatus}
+                    iconName="check"
+                    nextStepAvailable
+                  />
+                )}
+                {transactionSteps?.saleStatus && (
+                  <TransactionStep
+                    name="Sale"
+                    status={
+                      transactionSteps?.saleStatus ||
+                      TransactionStatus.NotStarted
+                    }
+                    iconName="sale"
+                  />
+                )}
+              </TransactionStepsContainer>
             </Container>
           )}
           {/*
