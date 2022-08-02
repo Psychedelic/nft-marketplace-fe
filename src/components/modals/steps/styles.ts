@@ -67,7 +67,7 @@ export const TransactionLoader = styled('div', {
   zIndex: '200',
 });
 
-export const CheckedIcon = styled('img', {
+export const CheckedIcon = styled('div', {
   position: 'absolute',
   transition: 'opacity 400ms',
   zIndex: '300',
@@ -75,13 +75,15 @@ export const CheckedIcon = styled('img', {
   right: '0px',
   marginTop: '-5px',
   marginRight: '-3px',
+  width: '16px',
+  color: '#00ac7c',
 });
 
 export const TransactionIcon = styled('div', {
   width: '18px',
   zIndex: '200',
   opacity: '1',
-  color: '$mainTextColor',
+  color: '#fff',
 
   variants: {
     status: {
