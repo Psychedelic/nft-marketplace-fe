@@ -73,7 +73,7 @@ export const MakeOfferModal = ({
 
   const tokenId = useMemo(() => id || nftTokenId, [id, nftTokenId]);
 
-  const { loadingWICPBalance, walletsWICPBalance } = usePlugStore();
+  const { loadingWicpBalance, walletsWICPBalance } = usePlugStore();
 
   useEffect(() => {
     if (!offerPrice || !modalOpened) return;
@@ -101,7 +101,7 @@ export const MakeOfferModal = ({
 
     if (
       isBalanceInsufficient({
-        loadingWICPBalance,
+        loadingWicpBalance,
         amountRequired: Number(amount),
         walletsWICPBalance,
       })

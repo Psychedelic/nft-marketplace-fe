@@ -63,7 +63,7 @@ export const BuyNowModal = ({
     DirectBuyStatusCodes.Pending,
   );
 
-  const { loadingWICPBalance, walletsWICPBalance } = usePlugStore();
+  const { loadingWicpBalance, walletsWICPBalance } = usePlugStore();
 
   const tokenId = useMemo(() => {
     const tid = Number(id ?? actionTextId);
@@ -91,7 +91,7 @@ export const BuyNowModal = ({
 
     if (
       isBalanceInsufficient({
-        loadingWICPBalance,
+        loadingWicpBalance,
         amountRequired: Number(price),
         walletsWICPBalance,
       })
