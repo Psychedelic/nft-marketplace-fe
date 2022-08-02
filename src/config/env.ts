@@ -70,7 +70,7 @@ const config: Config = {
     icScan: 'https://icscan.io/principal',
     nftCollectionId: 'iqvo2-7qaaa-aaaam-qacxa-cai',
     marketplaceCanisterId: 'o3ios-jaaaa-aaaag-qakqq-cai',
-    wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
+    wICPCanisterId: 'lassd-pqaaa-aaaag-qakpq-cai',
     capRouterId: 'lj532-6iaaa-aaaah-qcc7a-cai',
   },
   // The local development environment settings
