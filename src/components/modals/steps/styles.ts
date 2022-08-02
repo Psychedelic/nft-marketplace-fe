@@ -29,7 +29,7 @@ export const TransactionIconContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: '#3d52f4',
+  background: '#5542cf',
 
   variants: {
     status: {
@@ -37,10 +37,10 @@ export const TransactionIconContainer = styled('div', {
         background: '#353535',
       },
       inProgress: {
-        background: '#3d52f4',
+        background: '#5542cf',
       },
       completed: {
-        background: '#3d52f4',
+        background: '#5542cf',
       },
     },
   },
@@ -52,7 +52,7 @@ export const TransactionLoadingOutline = styled('div', {
   borderRadius: '45px',
   position: 'absolute',
   filter: 'blur(10px)',
-  background: '#3D52F4',
+  background: '#5542cf',
 });
 
 export const TransactionLoader = styled('div', {
@@ -77,10 +77,11 @@ export const CheckedIcon = styled('img', {
   marginRight: '-3px',
 });
 
-export const TransactionIcon = styled('img', {
+export const TransactionIcon = styled('div', {
   width: '18px',
   zIndex: '200',
   opacity: '1',
+  color: '$mainTextColor',
 
   variants: {
     status: {
@@ -100,6 +101,7 @@ export const TransactionIcon = styled('img', {
 export const NextStepContainer = styled('div', {
   margin: '15px 38px',
   opacity: '1',
+  color: '$mainTextColor',
 
   variants: {
     status: {
@@ -116,9 +118,10 @@ export const NextStepContainer = styled('div', {
   },
 });
 
-export const NextStepIcon = styled('img', {
+export const NextStepIcon = styled('div', {
   width: '18px',
   zIndex: '200',
+  color: '$mainTextColor',
 });
 
 export const TransactionStepName = styled('div', {

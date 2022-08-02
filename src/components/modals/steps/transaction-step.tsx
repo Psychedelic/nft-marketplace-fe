@@ -13,8 +13,8 @@ import {
 } from './styles';
 
 import greenCheckIcon from '../../../assets/green-check.svg';
-import nextStepIcon from '../../../assets/next-step.svg';
 import { TransactionStatus } from '../../../constants/transaction-status';
+import { Icon } from '../../icons';
 
 /* --------------------------------------------------------------------------
  * Insufficient Balance Step Component
@@ -23,14 +23,14 @@ import { TransactionStatus } from '../../../constants/transaction-status';
 export type TransactionStepProps = {
   name: string;
   status: TransactionStatus;
-  iconSrc: string;
+  iconName: any;
   nextStepAvailable?: boolean;
 };
 
 export const TransactionStep = ({
   name,
   status,
-  iconSrc,
+  iconName,
   nextStepAvailable,
 }: TransactionStepProps) => {
   const { t } = useTranslation();
@@ -48,11 +48,9 @@ export const TransactionStep = ({
           {status === TransactionStatus.Completed && (
             <CheckedIcon src={greenCheckIcon} alt="checked" />
           )}
-          <TransactionIcon
-            src={iconSrc}
-            alt="transaction-logo"
-            status={status}
-          />
+          <TransactionIcon status={status}>
+            <Icon icon={iconName} />
+          </TransactionIcon>
         </TransactionIconContainer>
         <TransactionStepName status={status}>
           {name}
@@ -60,7 +58,9 @@ export const TransactionStep = ({
       </TransactionStepDetails>
       {nextStepAvailable && (
         <NextStepContainer status={status}>
-          <NextStepIcon src={nextStepIcon} alt="next-step" />
+          <NextStepIcon>
+            <Icon icon="nextStep" />
+          </NextStepIcon>
         </NextStepContainer>
       )}
     </TransactionStepContainer>

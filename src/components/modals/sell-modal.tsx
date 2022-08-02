@@ -350,13 +350,13 @@ export const SellModal = ({
                 <TransactionStep
                   name="Approving WICP"
                   status={TransactionStatus.Completed}
-                  iconSrc={approveIcon}
+                  iconName="check"
                   nextStepAvailable
                 />
                 <TransactionStep
                   name="Listing"
                   status={TransactionStatus.InProgress}
-                  iconSrc={listingIcon}
+                  iconName="list"
                 />
               </TransactionStepsContainer>
             </Container>
