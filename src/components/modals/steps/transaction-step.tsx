@@ -46,9 +46,7 @@ export const TransactionStep = ({
             <TransactionLoader />
           )}
           {status === TransactionStatus.Completed && (
-            <CheckedIcon>
-              <Icon icon="verified" />
-            </CheckedIcon>
+            <CheckedIcon src={greenCheckIcon} alt="checked" />
           )}
           <TransactionIcon status={status}>
             <Icon icon={iconName} />

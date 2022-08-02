@@ -48,9 +48,7 @@ import { NFTMetadata } from '../../declarations/legacy';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
 import { TransactionStep } from './steps/transaction-step';
-import approveIcon from '../../assets/plain-check.svg';
 import { TransactionStatus } from '../../constants/transaction-status';
-import listingIcon from '../../assets/listing.svg';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -349,13 +347,13 @@ export const SellModal = ({
               <TransactionStepsContainer>
                 <TransactionStep
                   name="Approving WICP"
-                  status={TransactionStatus.Completed}
+                  status={TransactionStatus.InProgress}
                   iconName="check"
                   nextStepAvailable
                 />
                 <TransactionStep
                   name="Listing"
-                  status={TransactionStatus.InProgress}
+                  status={TransactionStatus.NotStarted}
                   iconName="list"
                 />
               </TransactionStepsContainer>

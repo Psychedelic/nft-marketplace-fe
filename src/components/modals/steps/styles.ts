@@ -29,18 +29,18 @@ export const TransactionIconContainer = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: '#5542cf',
+  background: '$primary',
 
   variants: {
     status: {
       notStarted: {
-        background: '#353535',
+        background: '$defaultIconBackground',
       },
       inProgress: {
-        background: '#5542cf',
+        background: '$primary',
       },
       completed: {
-        background: '#5542cf',
+        background: '$primary',
       },
     },
   },
@@ -52,7 +52,7 @@ export const TransactionLoadingOutline = styled('div', {
   borderRadius: '45px',
   position: 'absolute',
   filter: 'blur(10px)',
-  background: '#5542cf',
+  background: '$primary',
 });
 
 export const TransactionLoader = styled('div', {
@@ -67,7 +67,7 @@ export const TransactionLoader = styled('div', {
   zIndex: '200',
 });
 
-export const CheckedIcon = styled('div', {
+export const CheckedIcon = styled('img', {
   position: 'absolute',
   transition: 'opacity 400ms',
   zIndex: '300',
@@ -75,8 +75,6 @@ export const CheckedIcon = styled('div', {
   right: '0px',
   marginTop: '-5px',
   marginRight: '-3px',
-  width: '16px',
-  color: '#00ac7c',
 });
 
 export const TransactionIcon = styled('div', {
@@ -101,7 +99,7 @@ export const TransactionIcon = styled('div', {
 });
 
 export const NextStepContainer = styled('div', {
-  margin: '15px 38px',
+  margin: '15px 30px',
   opacity: '1',
   color: '$mainTextColor',
 
