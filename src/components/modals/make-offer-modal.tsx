@@ -1,13 +1,9 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import {
-  ActionButton,
-  ModalInput,
-  Pending,
-  Completed,
-} from '../core';
+import { ActionButton, ModalInput, Completed } from '../core';
 import {
   MakeOfferModalTrigger,
   ModalContent,
@@ -21,6 +17,7 @@ import {
   ActionText,
   ActionTextWrapper,
   ModalRoot,
+  TransactionStepsContainer,
 } from './styles';
 import { ModalOverlay } from './modal-overlay';
 
@@ -29,12 +26,15 @@ import {
   useAppDispatch,
   marketplaceActions,
   usePlugStore,
+  RootState,
 } from '../../store';
 import { AppLog } from '../../utils/log';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
 import { ThemeRootElement } from '../../constants/common';
 import { isBalanceInsufficient } from '../../utils/balance';
 import { InsufficientBalance } from './steps/insufficient-balance';
+import { TransactionStep } from './steps/transaction-step';
+import { TransactionStatus } from '../../constants/transaction-status';
 
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
@@ -70,6 +70,10 @@ export const MakeOfferModal = ({
   );
 
   const [amount, setAmount] = useState('');
+
+  const transactionSteps = useSelector(
+    (state: RootState) => state.marketplace.transactionSteps,
+  );
 
   const tokenId = useMemo(() => id || nftTokenId, [id, nftTokenId]);
 
@@ -277,7 +281,26 @@ export const MakeOfferModal = ({
               Pending details
               ---------------------------------
             */}
-              <Pending />
+              <TransactionStepsContainer>
+                {transactionSteps?.approveWICPStatus && (
+                  <TransactionStep
+                    name="Approving WICP"
+                    status={transactionSteps.approveWICPStatus}
+                    iconName="check"
+                    nextStepAvailable
+                  />
+                )}
+                {transactionSteps?.makeOfferStatus && (
+                  <TransactionStep
+                    name="Making Offer"
+                    status={
+                      transactionSteps?.makeOfferStatus ||
+                      TransactionStatus.NotStarted
+                    }
+                    iconName="offer"
+                  />
+                )}
+              </TransactionStepsContainer>
             </Container>
           )}
           {/*

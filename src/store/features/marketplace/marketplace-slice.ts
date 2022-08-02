@@ -86,6 +86,8 @@ const defaultTransactionStatus = {
   approveWICPStatus: TransactionStatus.InProgress,
   listingStatus: TransactionStatus.NotStarted,
   makeOfferStatus: TransactionStatus.NotStarted,
+  saleStatus: TransactionStatus.NotStarted,
+  acceptOfferStatus: TransactionStatus.NotStarted,
 };
 
 const initialState: InitialState = {

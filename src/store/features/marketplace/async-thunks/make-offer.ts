@@ -10,6 +10,7 @@ import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { errorMessageHandler } from '../../../../utils/error';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
+import { TransactionStatus } from '../../../../constants/transaction-status';
 
 export type MakeOfferProps = DefaultCallbacks & MakeOffer;
 
@@ -40,6 +41,8 @@ export const makeOffer = createAsyncThunk<
     allowanceAmountInWICP.toString(),
   );
 
+  dispatch(marketplaceActions.setTransactionStepsToDefault());
+
   try {
     const WICP_APPROVE_MARKETPLACE = {
       idl: wicpIdlFactory,
@@ -49,6 +52,16 @@ export const makeOffer = createAsyncThunk<
       onSuccess: (res: any) => {
         if ('Err' in res)
           throw new Error(errorMessageHandler(res.Err));
+
+        const transactionStepStatus = {
+          approveWICPStatus: TransactionStatus.Completed,
+          makeOfferStatus: TransactionStatus.InProgress,
+        };
+        dispatch(
+          marketplaceActions.updateTransactionSteps(
+            transactionStepStatus,
+          ),
+        );
       },
       onFail: (res: any) => {
         throw res;
@@ -72,6 +85,16 @@ export const makeOffer = createAsyncThunk<
 
         // We call the Cap Sync process
         await axios.get(KyasshuUrl.getCAPJellySync());
+
+        const transactionStepStatus = {
+          approveWICPStatus: TransactionStatus.Completed,
+          makeOfferStatus: TransactionStatus.Completed,
+        };
+        dispatch(
+          marketplaceActions.updateTransactionSteps(
+            transactionStepStatus,
+          ),
+        );
 
         onSuccess();
       },
