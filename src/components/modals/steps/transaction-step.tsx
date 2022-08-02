@@ -22,7 +22,7 @@ import { Icon } from '../../icons';
 
 export type TransactionStepProps = {
   name: string;
-  status: TransactionStatus;
+  status: any;
   iconName: any;
   nextStepAvailable?: boolean;
 };

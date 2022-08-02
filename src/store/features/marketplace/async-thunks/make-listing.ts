@@ -5,11 +5,15 @@ import config from '../../../../config/env';
 import crownsIdlFactory from '../../../../declarations/nft.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { notificationActions } from '../../notifications';
-import { MakeListing } from '../marketplace-slice';
+import {
+  MakeListing,
+  marketplaceActions,
+} from '../marketplace-slice';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
+import { TransactionStatus } from '../../../../constants/transaction-status';
 
 type MakeListingProps = DefaultCallbacks & MakeListing;
 
@@ -29,6 +33,8 @@ export const makeListing = createAsyncThunk<
     const userOwnedTokenId = BigInt(id);
     const userListForPrice = parseAmountToE8S(amount);
 
+    dispatch(marketplaceActions.setTransactionStepsToDefault());
+
     try {
       const CROWNS_APPROVE_MARKETPLACE = {
         idl: crownsIdlFactory,
@@ -38,6 +44,16 @@ export const makeListing = createAsyncThunk<
         onSuccess: (res: any) => {
           if ('Err' in res)
             throw new Error(errorMessageHandler(res.Err));
+
+          const transactionStepStatus = {
+            approveWICPStatus: TransactionStatus.Completed,
+            listingStatus: TransactionStatus.InProgress,
+          };
+          dispatch(
+            marketplaceActions.updateTransactionSteps(
+              transactionStepStatus,
+            ),
+          );
         },
         onFail: (res: any) => {
           throw res;
@@ -61,6 +77,16 @@ export const makeListing = createAsyncThunk<
 
           // We call the Cap Sync process
           await axios.get(KyasshuUrl.getCAPJellySync());
+
+          const transactionStepStatus = {
+            approveWICPStatus: TransactionStatus.Completed,
+            listingStatus: TransactionStatus.Completed,
+          };
+          dispatch(
+            marketplaceActions.updateTransactionSteps(
+              transactionStepStatus,
+            ),
+          );
 
           onSuccess();
         },

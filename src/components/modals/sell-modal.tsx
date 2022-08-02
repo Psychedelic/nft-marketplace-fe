@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
   ActionButton,
   ModalInput,
-  Pending,
   Completed,
   NftCard,
 } from '../core';
@@ -41,6 +41,7 @@ import {
   marketplaceActions,
   usePlugStore,
   useNFTSStore,
+  RootState,
 } from '../../store';
 import { AppLog } from '../../utils/log';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
@@ -80,6 +81,10 @@ export const SellModal = ({
     ListingStatusCodes.ListingInfo,
   );
   const [amount, setAmount] = useState<string>('');
+
+  const transactionSteps = useSelector(
+    (state: RootState) => state.marketplace.transactionSteps,
+  );
 
   const tokenId: string | undefined = (() => {
     const tid = id ?? nftTokenId;
@@ -343,19 +348,25 @@ export const SellModal = ({
               Pending details
               ---------------------------------
             */}
-              {/* <Pending /> */}
               <TransactionStepsContainer>
-                <TransactionStep
-                  name="Approving WICP"
-                  status={TransactionStatus.InProgress}
-                  iconName="check"
-                  nextStepAvailable
-                />
-                <TransactionStep
-                  name="Listing"
-                  status={TransactionStatus.NotStarted}
-                  iconName="list"
-                />
+                {transactionSteps?.approveWICPStatus && (
+                  <TransactionStep
+                    name="Approving WICP"
+                    status={transactionSteps.approveWICPStatus}
+                    iconName="check"
+                    nextStepAvailable
+                  />
+                )}
+                {transactionSteps?.listingStatus && (
+                  <TransactionStep
+                    name="Listing"
+                    status={
+                      transactionSteps?.listingStatus ||
+                      TransactionStatus.NotStarted
+                    }
+                    iconName="list"
+                  />
+                )}
               </TransactionStepsContainer>
             </Container>
           )}
