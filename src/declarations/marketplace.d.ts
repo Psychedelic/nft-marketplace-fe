@@ -21,6 +21,13 @@ export interface Listing {
   seller: Principal;
   price: bigint;
 }
+export interface TransactionStepsStatus {
+  approveWICPStatus?: string;
+  listingStatus?: string;
+  makeOfferStatus?: string;
+  saleStatus?: string;
+  acceptOfferStatus?: string;
+}
 export type ListingStatus =
   | { Selling: null }
   | { Uninitialized: null }

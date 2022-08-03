@@ -593,3 +593,10 @@ export const PlugButtonContainer = styled('div', {
     height: '50px',
   },
 });
+
+export const TransactionStepsContainer = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: '50px',
+});

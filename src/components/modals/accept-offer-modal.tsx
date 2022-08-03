@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { ActionButton, Completed, Pending } from '../core';
+import { ActionButton, Completed } from '../core';
 import wicpIcon from '../../assets/wicp.svg';
 import {
   AcceptOfferModalTrigger,
@@ -30,6 +31,7 @@ import {
   ModalButtonWrapper,
   InfoIcon,
   ItemTokenId,
+  TransactionStepsContainer,
 } from './styles';
 
 import { totalPriceCalculator } from '../../integrations/marketplace/price.utils';
@@ -38,6 +40,7 @@ import {
   useAppDispatch,
   nftsActions,
   marketplaceActions,
+  RootState,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 import { ListingStatusCodes } from '../../constants/listing';
@@ -45,6 +48,8 @@ import { formatPriceValue } from '../../utils/formatters';
 import { isTokenId } from '../../utils/nfts';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
+import { TransactionStep } from './steps/transaction-step';
+import { TransactionStatus } from '../../constants/transaction-status';
 
 export interface AcceptOfferProps {
   price: string;
@@ -76,6 +81,10 @@ export const AcceptOfferModal = ({
   // Accept offer modal steps: offerInfo/pending/accepted
   const [modalStep, setModalStep] = useState<string>(
     ListingStatusCodes.OfferInfo,
+  );
+
+  const transactionSteps = useSelector(
+    (state: RootState) => state.marketplace.transactionSteps,
   );
 
   const tokenId = useMemo(() => nftTokenId || id, [nftTokenId, id]);
@@ -341,7 +350,26 @@ export const AcceptOfferModal = ({
               Pending details
               ---------------------------------
             */}
-              <Pending />
+              <TransactionStepsContainer>
+                {transactionSteps?.approveWICPStatus && (
+                  <TransactionStep
+                    name="Approving WICP"
+                    status={transactionSteps.approveWICPStatus}
+                    iconName="check"
+                    nextStepAvailable
+                  />
+                )}
+                {transactionSteps?.acceptOfferStatus && (
+                  <TransactionStep
+                    name="Accepting Offer"
+                    status={
+                      transactionSteps?.acceptOfferStatus ||
+                      TransactionStatus.NotStarted
+                    }
+                    iconName="offer"
+                  />
+                )}
+              </TransactionStepsContainer>
             </Container>
           )}
           {/*
