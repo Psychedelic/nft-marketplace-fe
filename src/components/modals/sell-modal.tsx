@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
   ActionButton,
   ModalInput,
-  Pending,
   Completed,
   NftCard,
 } from '../core';
@@ -31,6 +31,7 @@ import {
   NFTCardPreview,
   NFTPreviewText,
   ActionTextWrapper,
+  TransactionStepsContainer,
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
@@ -40,12 +41,15 @@ import {
   marketplaceActions,
   usePlugStore,
   useNFTSStore,
+  RootState,
 } from '../../store';
 import { AppLog } from '../../utils/log';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { NFTMetadata } from '../../declarations/legacy';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
+import { TransactionStep } from './steps/transaction-step';
+import { findTransactionStatus } from '../../utils/common';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -77,6 +81,10 @@ export const SellModal = ({
     ListingStatusCodes.ListingInfo,
   );
   const [amount, setAmount] = useState<string>('');
+
+  const transactionSteps = useSelector(
+    (state: RootState) => state.marketplace.transactionSteps,
+  );
 
   const tokenId: string | undefined = (() => {
     const tid = id ?? nftTokenId;
@@ -340,7 +348,27 @@ export const SellModal = ({
               Pending details
               ---------------------------------
             */}
-              <Pending />
+              <TransactionStepsContainer>
+                {transactionSteps?.approveWICPStatus && (
+                  <TransactionStep
+                    name="Approving WICP"
+                    status={findTransactionStatus(
+                      transactionSteps.approveWICPStatus,
+                    )}
+                    iconName="check"
+                    nextStepAvailable
+                  />
+                )}
+                {transactionSteps?.listingStatus && (
+                  <TransactionStep
+                    name="Listing"
+                    status={findTransactionStatus(
+                      transactionSteps?.listingStatus,
+                    )}
+                    iconName="list"
+                  />
+                )}
+              </TransactionStepsContainer>
             </Container>
           )}
           {/*

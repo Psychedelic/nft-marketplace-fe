@@ -5,11 +5,15 @@ import config from '../../../../config/env';
 import crownsIdlFactory from '../../../../declarations/nft.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { notificationActions } from '../../notifications';
-import { MakeListing } from '../marketplace-slice';
+import {
+  MakeListing,
+  marketplaceActions,
+} from '../marketplace-slice';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
+import { TransactionStatus } from '../../../../constants/transaction-status';
 
 type MakeListingProps = DefaultCallbacks & MakeListing;
 
@@ -29,6 +33,8 @@ export const makeListing = createAsyncThunk<
     const userOwnedTokenId = BigInt(id);
     const userListForPrice = parseAmountToE8S(amount);
 
+    dispatch(marketplaceActions.setTransactionStepsToDefault());
+
     try {
       const CROWNS_APPROVE_MARKETPLACE = {
         idl: crownsIdlFactory,
@@ -38,6 +44,16 @@ export const makeListing = createAsyncThunk<
         onSuccess: (res: any) => {
           if ('Err' in res)
             throw new Error(errorMessageHandler(res.Err));
+
+          const transactionStepStatus = {
+            approveWICPStatus: TransactionStatus.completed,
+            listingStatus: TransactionStatus.inProgress,
+          };
+          dispatch(
+            marketplaceActions.updateTransactionSteps(
+              transactionStepStatus,
+            ),
+          );
         },
         onFail: (res: any) => {
           throw res;
@@ -62,6 +78,16 @@ export const makeListing = createAsyncThunk<
           // We call the Cap Sync process
           await axios.get(KyasshuUrl.getCAPJellySync());
 
+          const transactionStepStatus = {
+            approveWICPStatus: TransactionStatus.completed,
+            listingStatus: TransactionStatus.completed,
+          };
+          dispatch(
+            marketplaceActions.updateTransactionSteps(
+              transactionStepStatus,
+            ),
+          );
+
           onSuccess();
         },
         onFail: (res: any) => {
@@ -69,6 +95,7 @@ export const makeListing = createAsyncThunk<
         },
       };
 
+      // TODO: Show transaction progress steps in UI
       const batchTxRes = await window.ic?.plug?.batchTransactions([
         CROWNS_APPROVE_MARKETPLACE,
         MKP_MAKE_LISTING,

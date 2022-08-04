@@ -10,6 +10,7 @@ import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 import { parseAmountToE8S } from '../../../../utils/formatters';
+import { TransactionStatus } from '../../../../constants/transaction-status';
 
 type DirectBuyProps = DefaultCallbacks & DirectBuy;
 
@@ -30,6 +31,8 @@ export const directBuy = createAsyncThunk<
     config.nftCollectionId,
   );
 
+  dispatch(marketplaceActions.setTransactionStepsToDefault());
+
   try {
     const allowanceAmountInWICP = sumOfUserAllowance
       ? sumOfUserAllowance + Number(price)
@@ -48,6 +51,16 @@ export const directBuy = createAsyncThunk<
         // check if error
         if ('Err' in res)
           throw new Error(errorMessageHandler(res.Err));
+
+        const transactionStepStatus = {
+          approveWICPStatus: TransactionStatus.completed,
+          saleStatus: TransactionStatus.inProgress,
+        };
+        dispatch(
+          marketplaceActions.updateTransactionSteps(
+            transactionStepStatus,
+          ),
+        );
       },
       onFail: (res: any) => {
         throw res;
@@ -71,10 +84,21 @@ export const directBuy = createAsyncThunk<
         // We call the Cap Sync process
         await axios.get(KyasshuUrl.getCAPJellySync());
 
+        const transactionStepStatus = {
+          approveWICPStatus: TransactionStatus.completed,
+          saleStatus: TransactionStatus.completed,
+        };
+        dispatch(
+          marketplaceActions.updateTransactionSteps(
+            transactionStepStatus,
+          ),
+        );
+
         onSuccess();
       },
     };
 
+    // TODO: Show transaction progress steps in UI
     const batchTxRes = await window.ic?.plug?.batchTransactions([
       WICP_APPROVE,
       // MKP_DEPOSIT_WICP,

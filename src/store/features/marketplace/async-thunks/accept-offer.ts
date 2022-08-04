@@ -13,6 +13,7 @@ import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
+import { TransactionStatus } from '../../../../constants/transaction-status';
 
 export type AcceptOfferProps = DefaultCallbacks & AcceptOffer;
 
@@ -22,6 +23,8 @@ export const acceptOffer = createAsyncThunk<
 >('marketplace/acceptOffer', async (params, { dispatch }) => {
   const { id, buyerPrincipalId, offerPrice, onSuccess, onFailure } =
     params;
+
+  dispatch(marketplaceActions.setTransactionStepsToDefault());
 
   try {
     const marketplaceCanisterId = Principal.fromText(
@@ -44,6 +47,16 @@ export const acceptOffer = createAsyncThunk<
         // check if error
         if ('Err' in res)
           throw new Error(errorMessageHandler(res.Err));
+
+        const transactionStepStatus = {
+          approveWICPStatus: TransactionStatus.completed,
+          acceptOfferStatus: TransactionStatus.inProgress,
+        };
+        dispatch(
+          marketplaceActions.updateTransactionSteps(
+            transactionStepStatus,
+          ),
+        );
       },
       onFail: (res: any) => {
         throw res;
@@ -68,6 +81,16 @@ export const acceptOffer = createAsyncThunk<
         // We call the Cap Sync process
         await axios.get(KyasshuUrl.getCAPJellySync());
 
+        const transactionStepStatus = {
+          approveWICPStatus: TransactionStatus.completed,
+          acceptOfferStatus: TransactionStatus.completed,
+        };
+        dispatch(
+          marketplaceActions.updateTransactionSteps(
+            transactionStepStatus,
+          ),
+        );
+
         onSuccess();
       },
       onFail: (res: any) => {
@@ -75,6 +98,7 @@ export const acceptOffer = createAsyncThunk<
       },
     };
 
+    // TODO: Show transaction progress steps in UI
     const batchTxRes = await (
       window as any
     )?.ic?.plug?.batchTransactions([

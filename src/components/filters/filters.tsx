@@ -251,11 +251,12 @@ export const Filters = ({
                 }
               />
             ) : (
-              defaultFilters.length && (
+              (defaultFilters.length && (
                 <ClearButton onClick={clearAll}>
                   {`${t('translation:filters.clearAll')}`}
                 </ClearButton>
-              )
+              )) ||
+              null
             )}
           </FilterHeader>
           <FiltersWrapper>

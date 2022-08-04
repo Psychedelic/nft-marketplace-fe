@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import {
   ActionButton,
   ModalInput,
-  Pending,
   Completed,
   NftCard,
 } from '../core';
@@ -31,6 +31,7 @@ import {
   SellModalPreviewWrapper,
   SellModalPreviewContainer,
   ActionTextWrapper,
+  TransactionStepsContainer,
 } from './styles';
 
 import { ListingStatusCodes } from '../../constants/listing';
@@ -40,6 +41,7 @@ import {
   nftsActions,
   marketplaceActions,
   usePlugStore,
+  RootState,
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
@@ -48,6 +50,8 @@ import { isTokenId } from '../../utils/nfts';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
+import { TransactionStep } from './steps/transaction-step';
+import { findTransactionStatus } from '../../utils/common';
 
 /* --------------------------------------------------------------------------
  * Change Price Modal Component
@@ -81,6 +85,10 @@ export const ChangePriceModal = ({
     ListingStatusCodes.ListingInfo,
   );
   const [amount, setAmount] = useState<string>('');
+
+  const transactionSteps = useSelector(
+    (state: RootState) => state.marketplace.transactionSteps,
+  );
 
   const tokenId = useMemo(() => id || nftTokenId, [id, nftTokenId]);
 
@@ -348,7 +356,27 @@ export const ChangePriceModal = ({
               Pending details
               ---------------------------------
             */}
-              <Pending />
+              <TransactionStepsContainer>
+                {transactionSteps?.approveWICPStatus && (
+                  <TransactionStep
+                    name="Approving WICP"
+                    status={findTransactionStatus(
+                      transactionSteps.approveWICPStatus,
+                    )}
+                    iconName="check"
+                    nextStepAvailable
+                  />
+                )}
+                {transactionSteps?.listingStatus && (
+                  <TransactionStep
+                    name="Listing"
+                    status={findTransactionStatus(
+                      transactionSteps?.listingStatus,
+                    )}
+                    iconName="list"
+                  />
+                )}
+              </TransactionStepsContainer>
             </Container>
           )}
           {/*

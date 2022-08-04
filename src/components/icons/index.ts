@@ -33,8 +33,14 @@ import { IoMenuSharp } from '@react-icons/all-files/io5/IoMenuSharp';
 import { IoIosMoon } from '@react-icons/all-files/io/IoIosMoon';
 import { IoArrowBackOutline } from '@react-icons/all-files/io5/IoArrowBackOutline';
 import { IoFilterSharp } from '@react-icons/all-files/io5/IoFilterSharp';
+import { IoChevronForwardSharp } from '@react-icons/all-files/io5/IoChevronForwardSharp';
 
-import { PlugIcon, AppNameIcon, SpinnerIcon, Website } from './custom';
+import {
+  PlugIcon,
+  AppNameIcon,
+  SpinnerIcon,
+  Website,
+} from './custom';
 
 export const Icons = {
   warningOutline: IoWarningOutline,
@@ -74,6 +80,7 @@ export const Icons = {
   back: IoArrowBackOutline,
   filter: IoFilterSharp,
   website: Website,
+  nextStep: IoChevronForwardSharp,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,

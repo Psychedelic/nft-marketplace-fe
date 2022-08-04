@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
 import marketplaceIdlService, {
   Listing,
+  TransactionStepsStatus,
 } from '../../../declarations/marketplace';
 import { OwnerTokenIdentifiers } from '../crowns/crowns-slice';
 import {
@@ -19,6 +20,7 @@ import {
   getAssetsToWithdraw,
   withdrawFungible,
 } from './async-thunks';
+import { TransactionStatus } from '../../../constants/transaction-status';
 
 export type MakeListing = {
   id: string;
@@ -77,6 +79,15 @@ type InitialState = {
   sumOfUserAllowance: number;
   recentlyFailedTransactions: string[];
   offersLoaded: boolean;
+  transactionSteps: TransactionStepsStatus;
+};
+
+const defaultTransactionStatus = {
+  approveWICPStatus: TransactionStatus.inProgress,
+  listingStatus: TransactionStatus.notStarted,
+  makeOfferStatus: TransactionStatus.notStarted,
+  saleStatus: TransactionStatus.notStarted,
+  acceptOfferStatus: TransactionStatus.notStarted,
 };
 
 const initialState: InitialState = {
@@ -92,6 +103,7 @@ const initialState: InitialState = {
   sumOfUserAllowance: 0,
   recentlyFailedTransactions: [],
   offersLoaded: false,
+  transactionSteps: defaultTransactionStatus,
 };
 
 export const marketplaceSlice = createSlice({
@@ -113,6 +125,18 @@ export const marketplaceSlice = createSlice({
       if (!action.payload) return;
 
       state.offersLoaded = action.payload;
+    },
+    setTransactionStepsToDefault: (state) => {
+      state.transactionSteps = defaultTransactionStatus;
+    },
+    updateTransactionSteps: (
+      state,
+      action: PayloadAction<TransactionStepsStatus>,
+    ) => {
+      state.transactionSteps = {
+        ...state.transactionSteps,
+        ...action.payload,
+      };
     },
   },
   extraReducers: (builder) => {
