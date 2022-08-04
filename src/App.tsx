@@ -23,6 +23,7 @@ const App = () => {
         <Alerts />
         <NavBar />
         <Routes>
+          <Route path="/" element={<LandingPageView />} />
           <Route path="/:collectionId" element={<CollectionView />}>
             <Route path="/:collectionId/activity" />
           </Route>
@@ -35,7 +36,6 @@ const App = () => {
             path="/activity/:id"
             element={<UserActivityView />}
           />
-          <Route path="/" element={<LandingPageView />} />
         </Routes>
       </BrowserRouter>
       <ToastHandler />
