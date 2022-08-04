@@ -5,7 +5,7 @@ import blueJellyIcon from '../../assets/landingpage/blue-jelly.png';
 import yellowJellyIcon from '../../assets/landingpage/yellow-jelly.png';
 
 export const Container = styled('div', {
-  backgroundColor: '$backgroundColor',
+  backgroundColor: '$primaryBackgroundColor',
   paddingTop: '76px',
   overflow: 'hidden',
 });

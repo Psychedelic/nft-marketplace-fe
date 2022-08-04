@@ -58,6 +58,7 @@ export const {
       lightGreyColor: '#3535354d',
       primaryTextColor: '#000000',
       secondaryTextColor: '#474747',
+      primaryBackgroundColor: '#ffffff',
       lightGreen: '#4bec78',
       lightPink: '#ee38c6',
       lightBlue: '#3ae2f8',
@@ -130,7 +131,8 @@ export const darkTheme = createTheme({
     mobileBackgroundColor: '#141416',
     lightGreyColor: '#353535',
     primaryTextColor: '#FFFFFF',
-    secondaryTextColor: '#474747',
+    secondaryTextColor: '#777e90',
+    primaryBackgroundColor: '#000000',
   },
   shadows: {
     default: 'none',

@@ -32,16 +32,20 @@ import {
   MultichainHubListItem,
 } from './styles';
 import jellyBackgroundImage from '../../assets/landingpage/jelly-background.svg';
+import jellyBackgroundImageDark from '../../assets/landingpage/jelly-background-dark.svg';
 import collectionSampleImage from '../../assets/landingpage/collection-sample.jpg';
 import ethereumLogo from '../../assets/landingpage/ethereum.png';
 import dfinityLogo from '../../assets/landingpage/dfinity.png';
 import solanaLogo from '../../assets/landingpage/solana.png';
 import polygonLogo from '../../assets/landingpage/polygon.png';
 
+import { useThemeStore } from '../../store';
+
 import config from '../../config/env';
 
 const LandingPageView = () => {
   const { t } = useTranslation();
+  const { theme } = useThemeStore();
 
   const navigate = useNavigate();
 
@@ -54,7 +58,13 @@ const LandingPageView = () => {
       <IntroContainer>
         <IntroBackgroundContainer>
           <IntroBackgroundImageWrapper>
-            <IntroBackgroundImage src={jellyBackgroundImage} />
+            <IntroBackgroundImage
+              src={
+                theme === 'darkTheme'
+                  ? jellyBackgroundImageDark
+                  : jellyBackgroundImage
+              }
+            />
           </IntroBackgroundImageWrapper>
         </IntroBackgroundContainer>
         <IntroDetailsContainer>
