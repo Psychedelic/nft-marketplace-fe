@@ -7,6 +7,7 @@ import yellowJellyIcon from '../../assets/landingpage/yellow-jelly.png';
 export const Container = styled('div', {
   backgroundColor: '$backgroundColor',
   paddingTop: '76px',
+  overflow: 'hidden',
 });
 
 export const IntroContainer = styled('div', {
@@ -38,9 +39,8 @@ export const IntroBackgroundImage = styled('img', {
 });
 
 export const IntroDetailsContainer = styled('div', {
-  padding: '80px 0px 60px 0px',
+  padding: '80px 10px 60px 10px',
   position: 'relative',
-  width: '100%',
 });
 
 export const IntroDetailsWrapper = styled('div', {
@@ -59,6 +59,16 @@ export const IntroDetailsTitle = styled('h1', {
   margin: '0px',
   textAlign: 'center',
   color: '$primaryTextColor',
+
+  '@md': {
+    fontSize: '42px',
+    lineHeight: '42px',
+  },
+
+  '@sm': {
+    fontSize: '26px',
+    lineHeight: '26px',
+  },
 });
 
 export const IntroDetailsDescription = styled('p', {
@@ -68,6 +78,10 @@ export const IntroDetailsDescription = styled('p', {
   textAlign: 'center',
   margin: '0px',
   color: '$secondaryTextColor',
+
+  '@md': {
+    fontSize: '18px',
+  },
 });
 
 export const ViewCollectionButtonWrapper = styled('div', {
@@ -95,9 +109,8 @@ export const IntroImage = styled('img', {
 });
 
 export const FeaturesContainer = styled('div', {
-  padding: '120px 0px 0px 0px',
+  padding: '120px 10px 0px 10px',
   position: 'relative',
-  width: '100%',
 });
 
 export const FeaturesWrapper = styled('div', {
@@ -117,6 +130,14 @@ export const FeaturesTitle = styled('h1', {
   margin: '0px',
   textAlign: 'center',
   color: '$primaryTextColor',
+
+  '@md': {
+    fontSize: '28px',
+  },
+
+  '@sm': {
+    fontSize: '26px',
+  },
 });
 
 export const FeaturesList = styled('div', {
@@ -205,9 +226,8 @@ export const FeatureDescription = styled('p', {
 });
 
 export const MultichainContainer = styled('div', {
-  padding: '120px 40px',
+  padding: '120px 10px',
   position: 'relative',
-  width: '100%',
 });
 
 export const MultichainWrapper = styled('div', {
@@ -226,6 +246,14 @@ export const MultichainTitle = styled('h1', {
   margin: '0px',
   textAlign: 'center',
   color: '$primaryTextColor',
+
+  '@md': {
+    fontSize: '28px',
+  },
+
+  '@sm': {
+    fontSize: '26px',
+  },
 });
 
 export const MultichainDescription = styled('p', {
@@ -236,6 +264,10 @@ export const MultichainDescription = styled('p', {
   margin: '0px',
   textAlign: 'center',
   color: '$secondaryTextColor',
+
+  '@md': {
+    fontSize: '18px',
+  },
 });
 
 export const MultichainDescriptionLink = styled('a', {
