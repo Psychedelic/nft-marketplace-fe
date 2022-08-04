@@ -21,6 +21,7 @@ import { useFilterStore } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
 import wicpIcon from '../../assets/wicp.svg';
 import { SpinnerIcon } from '../icons/custom';
+import config from '../../config/env';
 
 type SearchResultsTypes = {
   searchText: string;
@@ -42,7 +43,7 @@ const SearchResults = ({
           <ItemsListContainer>
             {searchResults?.map((nft) => (
               <StyledRouterLink
-                to={`/nft/${nft.id}`}
+                to={`/${config.nftCollectionId}/nft/${nft.id}`}
                 onClick={closeDropDown}
                 key={nft.id}
               >

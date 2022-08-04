@@ -1,4 +1,5 @@
 import { useMemo, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ActivityTable } from '../tables';
@@ -24,14 +25,18 @@ export const CollectionTabs = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const { collectionId } = useParams();
   const isMobileScreen = useMediaQuery('(max-width: 850px)');
   const dispatch = useAppDispatch();
   const appliedFilters = useFilterStore();
 
-  const selectedTab = useMemo(
-    () => location.pathname.split('/').pop() || 'items',
-    [location],
-  );
+  const selectedTab = useMemo(() => {
+    const pathName = location.pathname.split('/').pop();
+
+    if (pathName === 'activity') return pathName;
+
+    return 'items';
+  }, [location]);
 
   const [itemsStatus, activityStatus] = useMemo<
     ('active' | 'inactive')[]
@@ -58,7 +63,7 @@ export const CollectionTabs = () => {
         <TabsTrigger
           value="items"
           status={itemsStatus}
-          onClick={() => navigate('/')}
+          onClick={() => navigate(`/${collectionId}`)}
         >
           <Icon icon="grid" paddingRight />
           {t('translation:tabs.items')}
@@ -66,7 +71,7 @@ export const CollectionTabs = () => {
         <TabsTrigger
           value="activity"
           status={activityStatus}
-          onClick={() => navigate('/activity')}
+          onClick={() => navigate(`/${collectionId}/activity`)}
         >
           <Icon icon="activity" paddingRight />
           {t('translation:tabs.activity')}

@@ -74,7 +74,7 @@ export const ChangePriceModal = ({
 }: ChangePriceModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { id } = useParams();
+  const { id, collectionId } = useParams();
   const { loadedNFTS } = useNFTSStore();
   const navigate = useNavigate();
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
@@ -165,7 +165,7 @@ export const ChangePriceModal = ({
   };
 
   const handleViewNFT = () => {
-    navigate(`/nft/${tokenId}`, { replace: true });
+    navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
     setModalOpened(false);
   };
 

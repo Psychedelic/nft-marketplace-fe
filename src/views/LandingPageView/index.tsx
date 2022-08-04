@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ActionButton } from '../../components/core';
 import {
@@ -36,8 +37,16 @@ import dfinityLogo from '../../assets/landingpage/dfinity.png';
 import solanaLogo from '../../assets/landingpage/solana.png';
 import polygonLogo from '../../assets/landingpage/polygon.png';
 
+import config from '../../config/env';
+
 const LandingPageView = () => {
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
+  const handleViewCollection = () => {
+    navigate(`/${config.nftCollectionId}`, { replace: true });
+  };
 
   return (
     <Container>
@@ -56,7 +65,10 @@ const LandingPageView = () => {
               {t('translation:landingPage.introDescription')}
             </IntroDetailsDescription>
             <ViewCollectionButtonWrapper>
-              <ActionButton type="primary">
+              <ActionButton
+                type="primary"
+                onClick={handleViewCollection}
+              >
                 {t('translation:landingPage.viewCrowns')}
               </ActionButton>
             </ViewCollectionButtonWrapper>

@@ -58,7 +58,7 @@ export const BuyNowModal = ({
   isNFTOperatedByMKP,
 }: BuyNowModalProps) => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const { collectionId, id } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -136,8 +136,9 @@ export const BuyNowModal = ({
     // but instead id preceeds actionTextId
     // so maybe decide which logic is valid and reuse for both cases
     // unless there's a reason why for this
-    const tokenId = location.pathname === '/' ? actionTextId : id;
-    navigate(`/nft/${tokenId}`, { replace: true });
+    const tokenId =
+      location.pathname === `/${collectionId}` ? actionTextId : id;
+    navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
     setModalOpened(false);
   };
 
