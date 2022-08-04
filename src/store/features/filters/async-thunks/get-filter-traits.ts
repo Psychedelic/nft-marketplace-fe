@@ -27,6 +27,36 @@ export type ExtractTraitDataProps = {
   loadedFiltersList: FilterTraitsList[];
 };
 
+export const modifyTraitKey = (key: string) => {
+  let result = '';
+  Array.from(key).forEach((char, index) => {
+    if (index === 0) {
+      result += char.toUpperCase();
+    } else if (char === char.toUpperCase()) {
+      result += ` ${char.toUpperCase()}`;
+    } else {
+      result += char;
+    }
+  });
+
+  return result;
+};
+
+export const getTraitName = (key: string) => {
+  switch (key) {
+    case 'smallgem':
+      return FilterConstants.smallGem;
+    case 'biggem':
+      return FilterConstants.bigGem;
+    case 'base':
+      return FilterConstants.base;
+    case 'rim':
+      return FilterConstants.rim;
+    default:
+      return modifyTraitKey(key);
+  }
+};
+
 export const getFilterTraits = createAsyncThunk<
   void,
   GetFilterTraitsProps
@@ -41,27 +71,12 @@ export const getFilterTraits = createAsyncThunk<
 
     const responseData = response.data.traits.map(
       (res: [string, TraitsValuesProps[]]) => {
-        let key;
-        switch (res[0]) {
-          case 'smallgem':
-            key = FilterConstants.smallGem;
-            break;
-          case 'biggem':
-            key = FilterConstants.bigGem;
-            break;
-          case 'base':
-            key = FilterConstants.base;
-            break;
-          case 'rim':
-            key = FilterConstants.rim;
-            break;
-          default:
-        }
+        let key = getTraitName(res[0]);
 
         const parsedTraits = parseTraits(res[1]);
 
         const data = {
-          key,
+          key: key,
           name: res[0],
           values: [...parsedTraits],
         };

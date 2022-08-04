@@ -46,7 +46,7 @@ export const Checkbox = ({
         readOnly
       />
       <span />
-      {value.split('-')[1]}
+      {value.split('+')[1]}
     </label>
     <RarityValue>{`${occurence} (${roundOffDecimalValue(
       Number(percentage),
