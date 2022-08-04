@@ -34,7 +34,7 @@ export const TransactionIconContainer = styled('div', {
   variants: {
     status: {
       notStarted: {
-        background: '$defaultIconBackground',
+        background: '$lightGreyColor',
       },
       inProgress: {
         background: '$primary',

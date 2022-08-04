@@ -49,8 +49,8 @@ export const acceptOffer = createAsyncThunk<
           throw new Error(errorMessageHandler(res.Err));
 
         const transactionStepStatus = {
-          approveWICPStatus: TransactionStatus.Completed,
-          acceptOfferStatus: TransactionStatus.InProgress,
+          approveWICPStatus: TransactionStatus.completed,
+          acceptOfferStatus: TransactionStatus.inProgress,
         };
         dispatch(
           marketplaceActions.updateTransactionSteps(
@@ -82,8 +82,8 @@ export const acceptOffer = createAsyncThunk<
         await axios.get(KyasshuUrl.getCAPJellySync());
 
         const transactionStepStatus = {
-          approveWICPStatus: TransactionStatus.Completed,
-          acceptOfferStatus: TransactionStatus.Completed,
+          approveWICPStatus: TransactionStatus.completed,
+          acceptOfferStatus: TransactionStatus.completed,
         };
         dispatch(
           marketplaceActions.updateTransactionSteps(

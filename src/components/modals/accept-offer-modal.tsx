@@ -49,7 +49,7 @@ import { isTokenId } from '../../utils/nfts';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
 import { TransactionStep } from './steps/transaction-step';
-import { TransactionStatus } from '../../constants/transaction-status';
+import { findTransactionStatus } from '../../utils/common';
 
 export interface AcceptOfferProps {
   price: string;
@@ -354,7 +354,9 @@ export const AcceptOfferModal = ({
                 {transactionSteps?.approveWICPStatus && (
                   <TransactionStep
                     name="Approving WICP"
-                    status={transactionSteps.approveWICPStatus}
+                    status={findTransactionStatus(
+                      transactionSteps.approveWICPStatus,
+                    )}
                     iconName="check"
                     nextStepAvailable
                   />
@@ -362,10 +364,9 @@ export const AcceptOfferModal = ({
                 {transactionSteps?.acceptOfferStatus && (
                   <TransactionStep
                     name="Accepting Offer"
-                    status={
-                      transactionSteps?.acceptOfferStatus ||
-                      TransactionStatus.NotStarted
-                    }
+                    status={findTransactionStatus(
+                      transactionSteps?.acceptOfferStatus,
+                    )}
                     iconName="offer"
                   />
                 )}

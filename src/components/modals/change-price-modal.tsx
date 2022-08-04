@@ -51,7 +51,7 @@ import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { TransactionStep } from './steps/transaction-step';
-import { TransactionStatus } from '../../constants/transaction-status';
+import { findTransactionStatus } from '../../utils/common';
 
 /* --------------------------------------------------------------------------
  * Change Price Modal Component
@@ -360,7 +360,9 @@ export const ChangePriceModal = ({
                 {transactionSteps?.approveWICPStatus && (
                   <TransactionStep
                     name="Approving WICP"
-                    status={transactionSteps.approveWICPStatus}
+                    status={findTransactionStatus(
+                      transactionSteps.approveWICPStatus,
+                    )}
                     iconName="check"
                     nextStepAvailable
                   />
@@ -368,10 +370,9 @@ export const ChangePriceModal = ({
                 {transactionSteps?.listingStatus && (
                   <TransactionStep
                     name="Listing"
-                    status={
-                      transactionSteps?.listingStatus ||
-                      TransactionStatus.NotStarted
-                    }
+                    status={findTransactionStatus(
+                      transactionSteps?.listingStatus,
+                    )}
                     iconName="list"
                   />
                 )}

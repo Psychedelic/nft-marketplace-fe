@@ -53,8 +53,8 @@ export const directBuy = createAsyncThunk<
           throw new Error(errorMessageHandler(res.Err));
 
         const transactionStepStatus = {
-          approveWICPStatus: TransactionStatus.Completed,
-          saleStatus: TransactionStatus.InProgress,
+          approveWICPStatus: TransactionStatus.completed,
+          saleStatus: TransactionStatus.inProgress,
         };
         dispatch(
           marketplaceActions.updateTransactionSteps(
@@ -85,8 +85,8 @@ export const directBuy = createAsyncThunk<
         await axios.get(KyasshuUrl.getCAPJellySync());
 
         const transactionStepStatus = {
-          approveWICPStatus: TransactionStatus.Completed,
-          saleStatus: TransactionStatus.Completed,
+          approveWICPStatus: TransactionStatus.completed,
+          saleStatus: TransactionStatus.completed,
         };
         dispatch(
           marketplaceActions.updateTransactionSteps(

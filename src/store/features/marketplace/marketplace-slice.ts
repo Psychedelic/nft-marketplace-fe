@@ -83,11 +83,11 @@ type InitialState = {
 };
 
 const defaultTransactionStatus = {
-  approveWICPStatus: TransactionStatus.InProgress,
-  listingStatus: TransactionStatus.NotStarted,
-  makeOfferStatus: TransactionStatus.NotStarted,
-  saleStatus: TransactionStatus.NotStarted,
-  acceptOfferStatus: TransactionStatus.NotStarted,
+  approveWICPStatus: TransactionStatus.inProgress,
+  listingStatus: TransactionStatus.notStarted,
+  makeOfferStatus: TransactionStatus.notStarted,
+  saleStatus: TransactionStatus.notStarted,
+  acceptOfferStatus: TransactionStatus.notStarted,
 };
 
 const initialState: InitialState = {

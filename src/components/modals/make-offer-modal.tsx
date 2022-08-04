@@ -34,7 +34,7 @@ import { ThemeRootElement } from '../../constants/common';
 import { isBalanceInsufficient } from '../../utils/balance';
 import { InsufficientBalance } from './steps/insufficient-balance';
 import { TransactionStep } from './steps/transaction-step';
-import { TransactionStatus } from '../../constants/transaction-status';
+import { findTransactionStatus } from '../../utils/common';
 
 /* --------------------------------------------------------------------------
  * Make Offer Modal Component
@@ -285,7 +285,9 @@ export const MakeOfferModal = ({
                 {transactionSteps?.approveWICPStatus && (
                   <TransactionStep
                     name="Approving WICP"
-                    status={transactionSteps.approveWICPStatus}
+                    status={findTransactionStatus(
+                      transactionSteps.approveWICPStatus,
+                    )}
                     iconName="check"
                     nextStepAvailable
                   />
@@ -293,10 +295,9 @@ export const MakeOfferModal = ({
                 {transactionSteps?.makeOfferStatus && (
                   <TransactionStep
                     name="Making Offer"
-                    status={
-                      transactionSteps?.makeOfferStatus ||
-                      TransactionStatus.NotStarted
-                    }
+                    status={findTransactionStatus(
+                      transactionSteps?.makeOfferStatus,
+                    )}
                     iconName="offer"
                   />
                 )}

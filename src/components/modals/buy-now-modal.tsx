@@ -36,7 +36,7 @@ import { ThemeRootElement } from '../../constants/common';
 import { InsufficientBalance } from './steps/insufficient-balance';
 import { isBalanceInsufficient } from '../../utils/balance';
 import { TransactionStep } from './steps/transaction-step';
-import { TransactionStatus } from '../../constants/transaction-status';
+import { findTransactionStatus } from '../../utils/common';
 
 /* --------------------------------------------------------------------------
  * Buy Now Modal Component
@@ -249,7 +249,9 @@ export const BuyNowModal = ({
                 {transactionSteps?.approveWICPStatus && (
                   <TransactionStep
                     name="Approving WICP"
-                    status={transactionSteps.approveWICPStatus}
+                    status={findTransactionStatus(
+                      transactionSteps.approveWICPStatus,
+                    )}
                     iconName="check"
                     nextStepAvailable
                   />
@@ -257,10 +259,9 @@ export const BuyNowModal = ({
                 {transactionSteps?.saleStatus && (
                   <TransactionStep
                     name="Sale"
-                    status={
-                      transactionSteps?.saleStatus ||
-                      TransactionStatus.NotStarted
-                    }
+                    status={findTransactionStatus(
+                      transactionSteps?.saleStatus,
+                    )}
                     iconName="sale"
                   />
                 )}

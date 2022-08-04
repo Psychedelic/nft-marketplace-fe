@@ -49,7 +49,7 @@ import { NFTMetadata } from '../../declarations/legacy';
 import { ModalOverlay } from './modal-overlay';
 import { ThemeRootElement } from '../../constants/common';
 import { TransactionStep } from './steps/transaction-step';
-import { TransactionStatus } from '../../constants/transaction-status';
+import { findTransactionStatus } from '../../utils/common';
 
 /* --------------------------------------------------------------------------
  * Sell Modal Component
@@ -352,7 +352,9 @@ export const SellModal = ({
                 {transactionSteps?.approveWICPStatus && (
                   <TransactionStep
                     name="Approving WICP"
-                    status={transactionSteps.approveWICPStatus}
+                    status={findTransactionStatus(
+                      transactionSteps.approveWICPStatus,
+                    )}
                     iconName="check"
                     nextStepAvailable
                   />
@@ -360,10 +362,9 @@ export const SellModal = ({
                 {transactionSteps?.listingStatus && (
                   <TransactionStep
                     name="Listing"
-                    status={
-                      transactionSteps?.listingStatus ||
-                      TransactionStatus.NotStarted
-                    }
+                    status={findTransactionStatus(
+                      transactionSteps?.listingStatus,
+                    )}
                     iconName="list"
                   />
                 )}

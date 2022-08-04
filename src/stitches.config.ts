@@ -55,7 +55,7 @@ export const {
       disconnectedTextColor: 'rgba(35, 38, 47, 0.6)',
       mobileTableHeader: '#FBFBFB',
       mobileBackgroundColor: '#FAFAFA',
-      defaultIconBackground: '#3535354d',
+      lightGreyColor: '#3535354d',
     },
     space: {},
     fonts: {},
@@ -122,7 +122,7 @@ export const darkTheme = createTheme({
     disconnectedTextColor: '#FFFFFF',
     mobileTableHeader: '#141416',
     mobileBackgroundColor: '#141416',
-    defaultIconBackground: '#353535',
+    lightGreyColor: '#353535',
   },
   shadows: {
     default: 'none',
