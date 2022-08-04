@@ -27,6 +27,7 @@ import {
   MultichainWrapper,
   MultichainTitle,
   MultichainDescription,
+  MultichainDescriptionLink,
   MultichainHubList,
   MultichainHubListItem,
 } from './styles';
@@ -135,7 +136,16 @@ const LandingPageView = () => {
             {t('translation:landingPage.multichainHubTitle')}
           </MultichainTitle>
           <MultichainDescription>
-            {t('translation:landingPage.multichainHubDescription')}
+            {t(
+              'translation:landingPage.multichainHubDescriptionIntro',
+            )}
+            <MultichainDescriptionLink
+              href="https://terabethia.ooo/"
+              target="_blank"
+            >
+              {t('translation:landingPage.terabethiaTitle')}
+            </MultichainDescriptionLink>
+            {t('translation:landingPage.multichainHubDescriptionEnd')}
           </MultichainDescription>
           <MultichainHubList>
             <MultichainHubListItem src={ethereumLogo} />

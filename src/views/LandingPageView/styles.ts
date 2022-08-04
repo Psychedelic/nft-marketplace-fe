@@ -53,8 +53,8 @@ export const IntroDetailsWrapper = styled('div', {
 });
 
 export const IntroDetailsTitle = styled('h1', {
-  fontSize: '62px',
-  lineHeight: '62px',
+  fontSize: '52px',
+  lineHeight: '52px',
   fontWeight: '600',
   margin: '0px',
   textAlign: 'center',
@@ -236,6 +236,12 @@ export const MultichainDescription = styled('p', {
   margin: '0px',
   textAlign: 'center',
   color: '$secondaryTextColor',
+});
+
+export const MultichainDescriptionLink = styled('a', {
+  fontWeight: 'bold',
+  margin: '0px 5px',
+  color: '$tableLinkTextColor',
 });
 
 export const MultichainHubList = styled('div', {
