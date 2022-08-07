@@ -72,6 +72,18 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
 
       const { data, pages, items } = response.data;
 
+      const traits: any = {};
+
+      data.map((item: any) => {
+        item.metadata.properties.forEach((property: any) => {
+          traits[`${property.name}`] = {
+            name: property.value,
+            occurance: null,
+            rarity: null,
+          };
+        });
+      });
+
       // TODO: Define nft field types
       const extractedNFTSList = data.map((nft: any) => {
         const metadata = {
@@ -88,28 +100,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
             '/thumbnails/$1.png',
           ),
           location: nft?.url,
-          traits: {
-            base: {
-              name: nft?.metadata?.base?.value?.TextContent,
-              occurance: null,
-              rarity: null,
-            },
-            biggem: {
-              name: nft?.metadata?.biggem?.value?.TextContent,
-              occurance: null,
-              rarity: null,
-            },
-            rim: {
-              name: nft?.metadata?.rim?.value?.TextContent,
-              occurance: null,
-              rarity: null,
-            },
-            smallgem: {
-              name: nft?.metadata?.smallgem?.value?.TextContent,
-              occurance: null,
-              rarity: null,
-            },
-          },
+          traits: traits,
           status: nft?.status,
           owner: nft?.owner,
           lastActionTaken: findLastAction(nft),

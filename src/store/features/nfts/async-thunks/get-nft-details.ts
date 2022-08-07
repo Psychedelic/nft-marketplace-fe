@@ -7,8 +7,6 @@ import {
 } from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
-import { FilterConstants } from '../../../../constants';
-import { modifyTraitKey } from '../../filters/async-thunks';
 
 export type GetNFTDetailsProps =
   NSKyasshuUrl.GetNFTDetailsQueryParams;

@@ -33,12 +33,14 @@ import {
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
-import { extractTraitData, getTraitName } from '../../store/features/filters/async-thunks/get-filter-traits';
+import {
+  extractTraitData,
+  getTraitName,
+} from '../../store/features/filters/async-thunks/get-filter-traits';
 import TraitsListLoader from './TraitsListLoader';
 import { roundOffDecimalValue } from '../../utils/nfts';
 import NFTDetailsSkeleton from './nft-details-skeleton';
 import useMediaQuery from '../../hooks/use-media-query';
-import { modifyTraitKey } from '../../store/features/filters/async-thunks/get-filter-traits';
 
 // type CurrentListing = {
 //   seller: string;
@@ -79,7 +81,11 @@ export const NftDetails = () => {
     const details = loadedNFTS.find((nft) => nft.id === id);
     if (!details) return;
 
-    return extractTraitData({ dispatch, details, loadedFiltersList });
+    return extractTraitData({
+      dispatch,
+      details,
+      loadedFiltersList,
+    });
   }, [loadedNFTS, id, loadedFiltersList]);
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
@@ -104,9 +110,13 @@ export const NftDetails = () => {
     // TODO: handle the error gracefully when there is no id
     if (!id) return;
 
-    dispatch(nftsActions.getNFTDetails({ id }));
+    if (!loadedFiltersList.length) {
+      dispatch(filterActions.getFilterTraits());
+    }
 
-    dispatch(filterActions.getFilterTraits());
+    if (!nftDetails) {
+      dispatch(nftsActions.getNFTDetails({ id }));
+    }
 
     // TODO: add loading placeholders in action buttons
     // like Sell/Cancel/Edit/Make Offer/Buy Now
