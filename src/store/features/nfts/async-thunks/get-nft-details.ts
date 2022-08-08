@@ -26,6 +26,16 @@ export const getNFTDetails = createAsyncThunk<
 
     const responseData = response.data;
 
+    const traits: any = {};
+
+    responseData.metadata.properties.forEach((property: any) => {
+      traits[`${property.name}`] = {
+        name: property.value,
+        occurance: null,
+        rarity: null,
+      };
+    });
+
     const nftDetails = {
       // TODO: update price, lastOffer & traits values
       // TODO: Finalize object format after validating mock and kyasshu data
@@ -37,28 +47,7 @@ export const getNFTDetails = createAsyncThunk<
       preview: responseData?.metadata?.thumbnail?.value?.TextContent,
       location: responseData?.url,
       rendered: true,
-      traits: {
-        base: {
-          name: responseData?.metadata?.base?.value?.TextContent,
-          occurance: null,
-          rarity: null,
-        },
-        biggem: {
-          name: responseData?.metadata?.biggem?.value?.TextContent,
-          occurance: null,
-          rarity: null,
-        },
-        rim: {
-          name: responseData?.metadata?.rim?.value?.TextContent,
-          occurance: null,
-          rarity: null,
-        },
-        smallgem: {
-          name: responseData?.metadata?.smallgem?.value?.TextContent,
-          occurance: null,
-          rarity: null,
-        },
-      },
+      traits: traits,
       owner: responseData?.owner,
       operator: responseData?.operator,
     };

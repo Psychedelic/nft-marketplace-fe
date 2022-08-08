@@ -33,7 +33,10 @@ import {
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
-import { extractTraitData } from '../../store/features/filters/async-thunks/get-filter-traits';
+import {
+  extractTraitData,
+  getTraitName,
+} from '../../store/features/filters/async-thunks/get-filter-traits';
 import TraitsListLoader from './TraitsListLoader';
 import { roundOffDecimalValue } from '../../utils/nfts';
 import NFTDetailsSkeleton from './nft-details-skeleton';
@@ -78,7 +81,11 @@ export const NftDetails = () => {
     const details = loadedNFTS.find((nft) => nft.id === id);
     if (!details) return;
 
-    return extractTraitData({ dispatch, details, loadedFiltersList });
+    return extractTraitData({
+      dispatch,
+      details,
+      loadedFiltersList,
+    });
   }, [loadedNFTS, id, loadedFiltersList]);
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
@@ -103,9 +110,13 @@ export const NftDetails = () => {
     // TODO: handle the error gracefully when there is no id
     if (!id) return;
 
-    dispatch(nftsActions.getNFTDetails({ id }));
+    if (!loadedFiltersList.length) {
+      dispatch(filterActions.getFilterTraits());
+    }
 
-    dispatch(filterActions.getFilterTraits());
+    if (!nftDetails) {
+      dispatch(nftsActions.getNFTDetails({ id }));
+    }
 
     // TODO: add loading placeholders in action buttons
     // like Sell/Cancel/Edit/Make Offer/Buy Now
@@ -158,46 +169,19 @@ export const NftDetails = () => {
                 <TraitsListLoader />
               ) : (
                 <>
-                  <NFTTraitsChip
-                    label="Base"
-                    name={nftDetails?.traits?.base?.name}
-                    rimValue={`${
-                      nftDetails?.traits?.base?.occurance
-                    } (${roundOffDecimalValue(
-                      nftDetails?.traits?.base?.rarity,
-                      2,
-                    )}%)`}
-                  />
-                  <NFTTraitsChip
-                    label="BigGem"
-                    name={nftDetails?.traits?.biggem?.name}
-                    rimValue={`${
-                      nftDetails?.traits?.biggem?.occurance
-                    } (${roundOffDecimalValue(
-                      nftDetails?.traits?.biggem?.rarity,
-                      2,
-                    )}%)`}
-                  />
-                  <NFTTraitsChip
-                    label="Rim"
-                    name={nftDetails?.traits?.rim?.name}
-                    rimValue={`${
-                      nftDetails?.traits?.rim?.occurance
-                    } (${roundOffDecimalValue(
-                      nftDetails?.traits?.rim?.rarity,
-                      2,
-                    )}%)`}
-                  />
-                  <NFTTraitsChip
-                    label="SmallGem"
-                    name={nftDetails?.traits?.smallgem?.name}
-                    rimValue={`${
-                      nftDetails?.traits?.smallgem?.occurance
-                    } (${roundOffDecimalValue(
-                      nftDetails?.traits?.smallgem?.rarity,
-                      2,
-                    )}%)`}
-                  />
+                  {Object.keys(nftDetails.traits).map((key) => (
+                    <NFTTraitsChip
+                      label={getTraitName(key)}
+                      key={key}
+                      name={nftDetails?.traits[`${key}`].name}
+                      rimValue={`${
+                        nftDetails?.traits[`${key}`].occurance
+                      } (${roundOffDecimalValue(
+                        nftDetails?.traits[`${key}`].rarity,
+                        2,
+                      )}%)`}
+                    />
+                  ))}
                 </>
               )}
             </NFTTraitsContainer>
