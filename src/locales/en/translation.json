@@ -315,5 +315,9 @@
   },
   "tooltip": {
     "disabledBuyNowText": "Oops! Can't be purchased, possibly because token was transferred outside Jelly marketplace to a new wallet"
+  },
+  "navbar": {
+    "community": "Community",
+    "create": "Create"
   }
 }

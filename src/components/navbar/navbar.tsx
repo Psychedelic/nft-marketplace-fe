@@ -23,6 +23,9 @@ import {
   BackIcon,
   MobileSearchBarActions,
   StyleRouter,
+  LogoSearchWrapper,
+  NavText,
+  StyledChevronIcon,
 } from './styles';
 import { Icon } from '../icons';
 import { useBuyerOffers } from '../../hooks/use-buyer-offers';
@@ -71,21 +74,34 @@ export const NavBar = () => {
       openMobileNavbar={openMobileNavbar}
     >
       <NavBarWrapper>
-        <StyleRouter
-          to="/"
-          onClick={() => {
-            pathname === '/' && window.location.reload();
-            setOpenMobileNavbar(false);
-          }}
-          startAnimation={startAnimation}
-        >
-          <LogoContainer>
-            <LogoIcon
-              src={isLightTheme ? jelly : jellyDark}
-              alt={t('translation:common.collectionName')}
+        <LogoSearchWrapper>
+          <StyleRouter
+            to="/"
+            onClick={() => {
+              pathname === '/' && window.location.reload();
+              setOpenMobileNavbar(false);
+            }}
+            startAnimation={startAnimation}
+          >
+            <LogoContainer
+              style={{
+                marginRight: '15px',
+              }}
+            >
+              <LogoIcon
+                src={isLightTheme ? jelly : jellyDark}
+                alt={t('translation:common.collectionName')}
+              />
+            </LogoContainer>
+          </StyleRouter>
+          {!isMobileScreen && (
+            <GlobalSearch
+              startAnimation={startAnimation}
+              isMobileScreen={isMobileScreen}
+              revertMobileNavAnimation={revertMobileNavAnimation}
             />
-          </LogoContainer>
-        </StyleRouter>
+          )}
+        </LogoSearchWrapper>
         <MobileSearchBarActions>
           <BackIcon
             icon="back"
@@ -101,13 +117,20 @@ export const NavBar = () => {
             }}
           />
         </MobileSearchBarActions>
-        <GlobalSearch
-          startAnimation={startAnimation}
-          isMobileScreen={isMobileScreen}
-          revertMobileNavAnimation={revertMobileNavAnimation}
-        />
+        {isMobileScreen && (
+          <GlobalSearch
+            startAnimation={startAnimation}
+            isMobileScreen={isMobileScreen}
+            revertMobileNavAnimation={revertMobileNavAnimation}
+          />
+        )}
         {!isMobileScreen && (
           <ActionButtonsContainer>
+            <NavText>
+              {t('translation:navbar.community')}
+              <StyledChevronIcon size="sm" icon="chevron-down" />
+            </NavText>
+            <NavText>{t('translation:navbar.create')}</NavText>
             <LinkButton handleClick={changeThemeHandler}>
               <Icon icon={isLightTheme ? 'moon' : 'sun'} />
             </LinkButton>

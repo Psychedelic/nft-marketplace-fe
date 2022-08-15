@@ -123,6 +123,7 @@ export const ActionButtonsContainer = styled('div', {
   // base styles
   display: 'flex',
   alignItems: 'center',
+  flex: '0.1',
 });
 
 export const MobileMenuContainer = styled('div', {
@@ -320,4 +321,26 @@ export const StyleRouter = styled(RouterLink, {
       },
     },
   },
+});
+
+export const LogoSearchWrapper = styled('div', {
+  display: 'flex',
+  flex: '0.9',
+  alignItems: 'center',
+});
+
+export const NavText = styled('p', {
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '15px',
+  lineHeight: '16px',
+  display: 'flex',
+  alignItems: 'center',
+  color: '$navText',
+  marginRight: '20px',
+  cursor: 'pointer',
+});
+
+export const StyledChevronIcon = styled(Icon, {
+  marginLeft: '5px',
 });

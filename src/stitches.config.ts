@@ -56,6 +56,7 @@ export const {
       mobileTableHeader: '#FBFBFB',
       mobileBackgroundColor: '#FAFAFA',
       lightGreyColor: '#3535354d',
+      navText: '#434D56'
     },
     space: {},
     fonts: {},
@@ -123,6 +124,7 @@ export const darkTheme = createTheme({
     mobileTableHeader: '#141416',
     mobileBackgroundColor: '#141416',
     lightGreyColor: '#353535',
+    navText: '#FFFFFF',
   },
   shadows: {
     default: 'none',
