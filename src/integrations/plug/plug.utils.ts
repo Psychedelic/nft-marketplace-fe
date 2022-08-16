@@ -6,6 +6,10 @@ import {
 import { notificationActions, plugActions } from '../../store';
 import { AppLog } from '../../utils/log';
 import config from '../../config/env';
+import {
+  Provider,
+  WalletConnectRPC,
+} from '@psychedelic/plug-inpage-provider';
 
 type RequestConnectArgs = {
   whitelist?: string[];
@@ -75,7 +79,7 @@ export const getPlugButtonText = (params: PlugButtonTextParams) => {
   if (icnsName) return formatICNSName(icnsName as string);
 
   return formatAddress(principalId as string);
-}
+};
 
 export const onConnectionUpdate = ({
   dispatch,
