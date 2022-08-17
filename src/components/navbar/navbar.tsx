@@ -24,6 +24,7 @@ import {
   MobileSearchBarActions,
   StyleRouter,
   LogoSearchWrapper,
+  NavRouterText,
   NavText,
   StyledChevronIcon,
 } from './styles';
@@ -130,7 +131,9 @@ export const NavBar = () => {
               {t('translation:navbar.community')}
               <StyledChevronIcon size="sm" icon="chevron-down" />
             </NavText>
-            <NavText>{t('translation:navbar.create')}</NavText>
+            <NavRouterText to="/create">
+              {t('translation:navbar.create')}
+            </NavRouterText>
             <LinkButton handleClick={changeThemeHandler}>
               <Icon icon={isLightTheme ? 'moon' : 'sun'} />
             </LinkButton>

@@ -329,6 +329,18 @@ export const LogoSearchWrapper = styled('div', {
   alignItems: 'center',
 });
 
+export const NavRouterText = styled(RouterLink, {
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '15px',
+  lineHeight: '16px',
+  display: 'flex',
+  alignItems: 'center',
+  color: '$cyanBlue',
+  marginRight: '20px',
+  cursor: 'pointer',
+});
+
 export const NavText = styled('p', {
   fontStyle: 'normal',
   fontWeight: '500',
@@ -336,7 +348,7 @@ export const NavText = styled('p', {
   lineHeight: '16px',
   display: 'flex',
   alignItems: 'center',
-  color: '$navText',
+  color: '$cyanBlue',
   marginRight: '20px',
   cursor: 'pointer',
 });
