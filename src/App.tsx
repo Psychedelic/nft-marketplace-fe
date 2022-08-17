@@ -9,6 +9,7 @@ import { useTheme } from './hooks/use-theme';
 import { portalZIndexGlobals } from './utils/styles';
 import { ThemeRootElement } from './constants/common';
 import { useThemeGlobals } from './hooks';
+import Onboarding from './components/onboarding/onboarding-ui';
 
 const App = () => {
   const [theme, themeObject] = useTheme();
@@ -31,6 +32,7 @@ const App = () => {
             path="/activity/:id"
             element={<UserActivityView />}
           />
+          <Route path="/create" element={<Onboarding />} />
         </Routes>
       </BrowserRouter>
       <ToastHandler />
