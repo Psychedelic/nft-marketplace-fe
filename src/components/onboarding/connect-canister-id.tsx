@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   SectionWrapper,
   SectionTextContent,
@@ -21,10 +21,12 @@ const ConnectCanisterId = () => {
             1. {t('translation:onboarding.connectCollection')}
           </Header>
           <SubText>
-            For now, we're providing the insertion of existing
-            collections approved via <a>DAB</a>. If you want to get
-            yours on Jelly, please fill out the <a>DAB form</a> and
-            wait for the approval.
+            <Trans t={t}>
+              For now, we're providing the insertion of existing
+              collections approved via <a>DAB</a>. If you want to get
+              yours on Jelly, please fill out the <a>DAB form</a> and
+              wait for the approval.
+            </Trans>
           </SubText>
         </SectionTextContent>
         <SectionFormContent>
