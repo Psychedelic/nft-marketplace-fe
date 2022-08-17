@@ -53,7 +53,7 @@ export const Button = styled('button', {
       },
       active: {
         background: 'rgba(34, 83, 255, 0.16)',
-        color: '$tableLinkTextColor',
+        color: '$primary',
         border: 'none',
       },
     },
