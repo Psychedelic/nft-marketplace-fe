@@ -52,9 +52,9 @@ export const Button = styled('button', {
         border: '1.5px solid $primary',
       },
       active: {
-        background: 'rgba(34, 83, 255, 0.12)',
-        color: '$primary',
-        border: '1.5px solid $primary',
+        background: 'rgba(34, 83, 255, 0.16)',
+        color: '$tableLinkTextColor',
+        border: 'none',
       },
     },
 

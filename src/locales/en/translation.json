@@ -5,7 +5,8 @@
     "noRecentSearch": "No recent searches",
     "comingSoon": "Coming soon!",
     "crownsDescription": "Crowns are a collection of 10,000 procedurally generated traditional & psychedelic 3D crowns on the Internet Computer, backed by asset provenance from CAP.",
-    "notConnectedMessage": "You’re not connected to Plug yet. Click the button below to connect."
+    "notConnectedMessage": "You’re not connected to Plug yet. Click the button below to connect.",
+    "next": "Next"
   },
   "offers": {
     "myOffers": "My Offers",
@@ -319,5 +320,11 @@
   "navbar": {
     "community": "Community",
     "create": "Create"
+  },
+  "onboarding": {
+    "connectCollection": "Connect your Collection",
+    "canisterId": "Canister Id",
+    "insertCanisterId": "Insert you collections canister id",
+    "validate": "Validate"
   }
 }
