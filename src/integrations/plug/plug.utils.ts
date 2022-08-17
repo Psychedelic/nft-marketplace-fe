@@ -112,6 +112,23 @@ export const handleConnect = async ({
     wICPCanisterId,
   ];
 
+  const ua = navigator.userAgent;
+  const isAndroid = /android/i.test(ua) ? true : false;
+
+  if (!isAndroid) {
+    window.open('https://plugwallet.ooo/', '_blank');
+    return;
+  }
+  const clientRPC = new WalletConnectRPC(window);
+
+  const plugProvider = new Provider(clientRPC);
+
+  const ic = (window as any).ic || {};
+  (window as any).ic = {
+    ...ic,
+    plug: plugProvider,
+  };
+
   // Is plug installed
   const hasPlug = isPlugInstalled();
   if (!hasPlug) {

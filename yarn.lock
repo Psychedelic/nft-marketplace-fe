@@ -1901,20 +1901,6 @@
     "@stitches/react" "^0.2.3"
     "@walletconnect/browser-utils" "^1.7.8"
 
-"@psychedelic/plug-inpage-provider@/Users/oyinlolu/Documents/Work/Fleek/plug-inpage-provider":
-  version "2.3.0"
-  dependencies:
-    "@dfinity/agent" "0.9.3"
-    "@dfinity/candid" "0.9.3"
-    "@dfinity/principal" "0.9.3"
-    "@fleekhq/browser-rpc" "^2.0.3"
-    "@types/chrome" "^0.0.180"
-    "@walletconnect/browser-utils" "^1.7.8"
-    "@walletconnect/client" "^1.7.8"
-    buffer-crc32 "^0.2.13"
-    crypto-js "^4.1.1"
-    json-bigint "^1.0.0"
-
 "@psychedelic/plug-inpage-provider@file:../../plug-inpage-provider":
   version "2.3.0"
   dependencies:
