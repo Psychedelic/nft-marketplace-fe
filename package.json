@@ -9,7 +9,6 @@
     "@dfinity/principal": "^0.10.2",
     "@psychedelic/cap-js": "^0.0.7",
     "@psychedelic/icns-js": "^0.1.11",
-    "@psychedelic/plug-connect": "/Users/oyinlolu/Documents/Work/Fleek/plug-connect",
     "@psychedelic/plug-inpage-provider": "/Users/oyinlolu/Documents/Work/Fleek/plug-inpage-provider",
     "@radix-ui/react-accordion": "^0.1.5",
     "@radix-ui/react-checkbox": "^0.1.4",

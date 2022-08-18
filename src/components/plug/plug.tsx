@@ -23,6 +23,7 @@ import {
 import { PlugStatusCodes } from '../../constants';
 import config from '../../config/env';
 import { AppLog } from '../../utils/log';
+import useMediaQuery from '../../hooks/use-media-query';
 
 const {
   nftCollectionId,
@@ -37,16 +38,13 @@ const whitelist = [
   wICPCanisterId,
 ];
 
-type PlugProps = {
-  isMobileScreen?: boolean;
-};
-
-export const Plug = ({ isMobileScreen }: PlugProps) => {
+export const Plug = () => {
   const { t } = useTranslation();
   const { isConnected, connectionStatus, principalId, icnsName } =
     usePlugStore();
   const dispatch = useAppDispatch();
   const hasPlug = isPlugInstalled();
+  const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
   const isVerifying = useMemo(
     () => connectionStatus === PlugStatusCodes.Verifying,
@@ -148,19 +146,34 @@ export const Plug = ({ isMobileScreen }: PlugProps) => {
           principalId={principalId}
         />
       )}
-      {!isVerifying && !isConnecting && !isConnected && (
-        <PlugButton
-          handleConnect={handleConnect}
-          isMobileScreen={isMobileScreen}
-          text={
-            hasPlug
-              ? t('translation:buttons.action.connectToPlug')
-              : t('translation:buttons.action.installPlug')
-          }
-          isConnected={isConnected}
-          principalId={principalId}
-        />
-      )}
+      {!isVerifying &&
+        !isConnecting &&
+        !isConnected &&
+        isMobileScreen && (
+          <PlugButton
+            handleConnect={handleConnect}
+            isMobileScreen={isMobileScreen}
+            text={t('translation:buttons.action.connectToPlug')}
+            isConnected={isConnected}
+            principalId={principalId}
+          />
+        )}
+      {!isVerifying &&
+        !isConnecting &&
+        !isConnected &&
+        !isMobileScreen && (
+          <PlugButton
+            handleConnect={handleConnect}
+            isMobileScreen={isMobileScreen}
+            text={
+              hasPlug
+                ? t('translation:buttons.action.connectToPlug')
+                : t('translation:buttons.action.installPlug')
+            }
+            isConnected={isConnected}
+            principalId={principalId}
+          />
+        )}
       {!isVerifying && !isConnecting && isConnected && (
         <PlugButton
           handleConnect={() => {
