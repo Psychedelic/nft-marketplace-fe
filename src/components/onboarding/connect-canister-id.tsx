@@ -1,7 +1,7 @@
 import { Trans, useTranslation } from 'react-i18next';
 import {
   SectionWrapper,
-  SectionTextContent,
+  SectionContent,
   Header,
   SubText,
   SectionFormContent,
@@ -16,7 +16,7 @@ const ConnectCanisterId = () => {
   return (
     <SectionWrapper>
       <div>
-        <SectionTextContent>
+        <SectionContent>
           <Header>
             1. {t('translation:onboarding.connectCollection')}
           </Header>
@@ -28,7 +28,7 @@ const ConnectCanisterId = () => {
               wait for the approval.
             </Trans>
           </SubText>
-        </SectionTextContent>
+        </SectionContent>
         <SectionFormContent>
           <SubText type="title" size="sm">
             {t('translation:onboarding.canisterId')}
@@ -36,12 +36,7 @@ const ConnectCanisterId = () => {
           <SubText size="sm">
             {t('translation:onboarding.insertCanisterId')}
           </SubText>
-          <InputContainer
-            style={{
-              display: 'flex',
-              position: 'relative',
-            }}
-          >
+          <InputContainer>
             <SectionInputField
               type="tel"
               placeholder="xxx-xxxxxxxxxx-xx"

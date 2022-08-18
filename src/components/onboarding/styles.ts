@@ -1,4 +1,5 @@
 import { styled } from '../../stitches.config';
+import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { ActionButton } from '../core';
 
 export const OnboardingWrapper = styled('div', {
@@ -61,6 +62,15 @@ export const Divider = styled('div', {
   background: '$borderColor',
   margin: '0px 0px 60px',
   boxShadow: '0px -1px 8px rgba(0, 0, 0, 0.16)',
+
+  variants: {
+    gap: {
+      sm: {
+        margin: '0px 0px 20px',
+        boxShadow: 'unset',
+      },
+    },
+  },
 });
 
 export const ButtonWrapper = styled('div', {
@@ -82,7 +92,7 @@ export const SectionWrapper = styled('div', {
   marginBottom: '80px',
 });
 
-export const SectionTextContent = styled('div', {
+export const SectionContent = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'flex-start',
@@ -131,15 +141,21 @@ export const SubText = styled('p', {
 });
 
 export const SectionFormContent = styled('form', {
-  marginTop: '40px',
+  marginTop: '30px',
 });
 
-export const InputContainer = styled('form', {
-  marginTop: '10px',
+export const SectionFormContentWrapper = styled('div', {
+  margin: '15px 0',
+});
+
+export const InputContainer = styled('div', {
+  display: 'flex',
+  margin: '10px 0',
+  position: 'relative',
 });
 
 export const SectionInputField = styled('input', {
-  width: '100%',
+  width: '480px',
   height: '40px',
   border: '1.5px solid $borderColor',
   borderRadius: '14px',
@@ -151,10 +167,31 @@ export const SectionInputField = styled('input', {
     fontWeight: '400',
     fontSize: '12px',
     lineHeight: '16px',
-    display: 'flex',
-    alignitems: 'center',
     color: '$textNeutralColor',
+    wordWrap: 'break-word',
   },
+
+  variants: {
+    inputStyle: {
+      fullWidth: {
+        margin: '10px 0',
+      },
+    },
+    size: {
+      medium: {},
+    },
+  },
+});
+
+export const SectionTextArea = styled('textarea', {
+  width: '480px',
+  height: '87px',
+  border: '1.5px solid $borderColor',
+  borderRadius: '14px',
+  padding: '10px',
+  background: '$backgroundColor',
+  marginTop: '10px',
+  resize: 'none',
 });
 
 export const SectionInputButton = styled('div', {
@@ -174,4 +211,115 @@ export const SectionInputButton = styled('div', {
   width: '140px',
   borderTopRightRadius: '14px',
   borderBottomRightRadius: '14px',
+});
+
+export const InputWrapper = styled('div', {
+  position: 'relative',
+  width: 'fit-content',
+});
+
+export const ImageInputField = styled('input', {
+  color: 'transparent',
+  marginTop: '15px',
+
+  '&::-webkit-file-upload-button': {
+    visibility: 'hidden',
+  },
+
+  variants: {
+    imageType: {
+      logo: {
+        width: '120px',
+
+        '&::before': {
+          width: '100px',
+          borderRadius: '100%',
+          height: '100px',
+        },
+      },
+      featured: {
+        width: '250px',
+
+        '&::before': {
+          width: '230px',
+          borderRadius: '10px',
+          height: '150px',
+        },
+      },
+      banner: {
+        width: '500px',
+
+        '&::before': {
+          width: '480px',
+          borderRadius: '10px',
+          height: '150px',
+        },
+      },
+    },
+  },
+
+  '&::before': {
+    content: '',
+    background: 'linear-gradient(top, #f9f9f9, #e3e3e3)',
+    padding: '5px 8px',
+    outline: 'none',
+    '-webkit-user-select': 'none',
+    top: '0',
+    border: '2px dashed #ABB2C2',
+    display: 'flex',
+    justifyContent: 'center',
+    cursor: 'pointer',
+  },
+});
+
+export const IconWrapper = styled('div', {
+  position: 'absolute',
+  top: '-10px',
+  left: '0',
+  bottom: '0',
+  right: '0',
+  margin: '0 auto',
+  display: 'flex',
+  justifyContent: 'center',
+  cursor: 'pointer',
+  zIndex: '-1',
+});
+
+export const Label = styled('label', {
+  color: '$textNeutralColor',
+  fontSize: 15,
+  lineHeight: 1,
+  paddingLeft: 10,
+});
+
+export const Flex = styled('div', {
+  display: 'flex',
+  margin: '10px 0',
+  alignItems: 'center',
+});
+
+export const StyledRadio = styled(RadioGroupPrimitive.Item, {
+  all: 'unset',
+  backgroundColor: '$backgroundColor',
+  border: '1.5px solid $borderColor',
+  width: 20,
+  height: 20,
+  borderRadius: '100%',
+});
+
+export const StyledIndicator = styled(RadioGroupPrimitive.Indicator, {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '100%',
+  height: '100%',
+  position: 'relative',
+  '&::after': {
+    content: '""',
+    display: 'block',
+    width: 15,
+    height: 15,
+    borderRadius: '50%',
+    backgroundColor: '$primary',
+  },
 });

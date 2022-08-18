@@ -323,8 +323,16 @@
   },
   "onboarding": {
     "connectCollection": "Connect your Collection",
+    "collectionDetails": "Collection Details",
     "canisterId": "Canister Id",
     "insertCanisterId": "Insert you collections canister id",
-    "validate": "Validate"
+    "validate": "Validate",
+    "collectionDetailsSubText": "Now, confirm/compleate the collection details",
+    "logo": "Logo",
+    "logoInstruction": "This is for your collection logo, 350 x 350 reccomended.",
+    "featuredImage": "Featured Image",
+    "featuredImageInstruction": "This will be used for featuring your collection. 600 x 400 recommended.",
+    "bannerImage": "Banner Image",
+    "bannerImageInstruction": "This will appear at the top of collection page. 1400 x 400 recommended."
   }
 }

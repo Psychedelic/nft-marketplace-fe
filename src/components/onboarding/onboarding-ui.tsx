@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ConnectCanisterId from './connect-canister-id';
+import CollectionDetails from './collection-details';
 import {
   OnboardingWrapper,
   ProgressStepBarContainer,
@@ -67,6 +68,8 @@ const Onboarding = () => {
       </Progress>
       <Divider />
       <ConnectCanisterId />
+      <Divider />
+      <CollectionDetails />
       <Divider />
     </OnboardingWrapper>
   );
