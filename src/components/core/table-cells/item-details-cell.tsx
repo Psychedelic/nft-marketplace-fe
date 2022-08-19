@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
   tableActions,
@@ -18,6 +18,7 @@ import {
   ItemTokenId,
 } from './styles';
 import useMediaQuery from '../../../hooks/use-media-query';
+import config from '../../../config/env';
 
 export interface ItemDetailsCellProps {
   name?: string;
@@ -29,6 +30,7 @@ export const ItemDetailsCell = ({
   name,
   id,
 }: ItemDetailsCellProps) => {
+  const { collectionId } = useParams();
   const dispatch = useAppDispatch();
   const isMobileScreen = useMediaQuery('(max-width: 640px');
   const tokenMetadataById = useSelector(
@@ -53,7 +55,9 @@ export const ItemDetailsCell = ({
   }, [dispatch, id, hasThumbnail]);
 
   return (
-    <RouterLink to={`/nft/${id}`}>
+    <RouterLink
+      to={`/${collectionId || config.nftCollectionId}/nft/${id}`}
+    >
       <ItemDetails>
         {!hasThumbnail ? (
           <ThumbnailSkeleton />

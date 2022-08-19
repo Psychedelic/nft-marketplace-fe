@@ -1,4 +1,5 @@
 import { useCallback, useLayoutEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import * as Popover from '@radix-ui/react-popover';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +25,7 @@ import { useTheme } from '../../hooks';
 import { Icon } from '../icons';
 import wicpImage from '../../assets/wicp.svg';
 import PlugBalance from './plug-balance';
+import config from '../../config/env';
 
 export type PlugButtonProps = {
   handleConnect: (dispatch: any) => void;
@@ -51,6 +53,7 @@ export const PlugButton = ({
   const [openDropdown, setOpenDropdown] = useState(false);
 
   const navigate = useNavigate();
+  const { collectionId } = useParams();
 
   const disconnectHandler = useCallback(() => {
     dispatch(plugActions.setIsConnected(false));
@@ -98,7 +101,7 @@ export const PlugButton = ({
     );
 
   const setMyNfts = () => {
-    navigate('/');
+    navigate(`/${collectionId || config.nftCollectionId}`);
     dispatch(filterActions.setMyNfts(true));
     if (filterExists(t('translation:buttons.action.myNfts'))) return;
     dispatch(

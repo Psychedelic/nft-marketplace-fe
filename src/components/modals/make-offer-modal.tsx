@@ -61,7 +61,7 @@ export const MakeOfferModal = ({
 }: MakeOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { id } = useParams();
+  const { id, collectionId } = useParams();
   const navigate = useNavigate();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
@@ -132,7 +132,7 @@ export const MakeOfferModal = ({
   };
 
   const handleViewNFT = () => {
-    navigate(`/nft/${tokenId}`, { replace: true });
+    navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
     setModalOpened(false);
   };
 

@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CardOptionsDropdown } from '../../dropdown';
 import {
   CardContainer,
@@ -186,6 +186,7 @@ export const NftCard = React.memo(
     const { t } = useTranslation();
     const { isConnected } = usePlugStore();
     const navigate = useNavigate();
+    const { collectionId } = useParams();
     const containerRef = useRef<HTMLDivElement>(null);
 
     // TODO: Move any status code as constant
@@ -198,12 +199,13 @@ export const NftCard = React.memo(
         tabIndex={0}
         onKeyDown={(event: any) => {
           // Keyboard accessibility
-          if (event.keyCode === 13) navigate(`/nft/${data.id}`);
+          if (event.keyCode === 13)
+            navigate(`/${collectionId}/nft/${data.id}`);
         }}
       >
         <CardWrapper>
           <RouterLink
-            to={`/nft/${data.id}`}
+            to={`/${collectionId}/nft/${data.id}`}
             className="card-router"
             previewCard={previewCard}
             tabIndex={-1}
