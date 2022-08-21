@@ -333,6 +333,24 @@
     "featuredImage": "Featured Image",
     "featuredImageInstruction": "This will be used for featuring your collection. 600 x 400 recommended.",
     "bannerImage": "Banner Image",
-    "bannerImageInstruction": "This will appear at the top of collection page. 1400 x 400 recommended."
+    "bannerImageInstruction": "This will appear at the top of collection page. 1400 x 400 recommended.",
+    "name": "Name",
+    "nameInstruction": "This is the name of your collection, series, etc...",
+    "namePlaceholder": "CryptoDickbutts",
+    "description": "Description",
+    "descriptionInstruction": "This is the description of your collection, series, etc...",
+    "url": "URL",
+    "urlDescription": "Customize the URL you get for Jelly.",
+    "urlPlaceholder": "https://jelly.ooo/collection/untitled",
+    "link": "Link",
+    "linkDescription": "Add your links for better recognition of your collection.",
+    "royalties": "Royalties",
+    "royaltiesDescription": "Collect a fee when a user re-sells your NFT on Jelly.",
+    "explicitWarning": "Explicit & sensitive content",
+    "explicitWarningDescription": "Disable seeing explicit content.",
+    "yes": "Yes",
+    "no": "No",
+    "nftDetails": "NFT Details",
+    "nftDetailsSubText": "Lastly, check the NFTS details of your collection"
   }
 }

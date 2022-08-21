@@ -1,48 +1,31 @@
-import { Trans, useTranslation } from 'react-i18next';
-import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
-import { Icon } from '../icons';
+import { useTranslation } from 'react-i18next';
 import {
   SectionWrapper,
   SectionContent,
   Header,
   SubText,
   SectionFormContent,
-  ImageInputField,
-  InputWrapper,
-  IconWrapper,
   SectionFormContentWrapper,
-  Divider,
-  SectionInputField,
-  SectionTextArea,
   Label,
   Flex,
   StyledRadio,
   StyledIndicator,
+  StyledRadioRoot,
+  DetailsButtonWrapper,
+  SubTextLabel,
 } from './styles';
 import { ActionButton } from '../core';
+import ImageForms from './components/image-forms';
+import TextInputFields from './components/text-input-fields';
 
-const CollectionDetails = () => {
+type CollectionDetailsProps = {
+  handleStep?: () => void;
+};
+
+const CollectionDetails = ({
+  handleStep,
+}: CollectionDetailsProps) => {
   const { t } = useTranslation();
-
-  const imageInputFields = [
-    {
-      title: `${t('translation:onboarding.logo')}`,
-      description: `${t('translation:onboarding.logoInstruction')}`,
-      imageType: 'logo',
-    },
-    {
-      title: `${t('translation:onboarding.featuredImage')}`,
-      description: `${t('translation:onboarding.logoInstruction')}`,
-      imageType: 'featured',
-    },
-    {
-      title: `${t('translation:onboarding.bannerImage')}`,
-      description: `${t(
-        'translation:onboarding.bannerImageInstruction',
-      )}`,
-      imageType: 'banner',
-    },
-  ];
 
   return (
     <SectionWrapper>
@@ -52,133 +35,59 @@ const CollectionDetails = () => {
             2. {t('translation:onboarding.collectionDetails')}
           </Header>
           <SubText>
-            <Trans t={t}>
-              {t('translation:onboarding.collectionDetailsSubText')}
-            </Trans>
+            {t('translation:onboarding.collectionDetailsSubText')}
           </SubText>
           <SectionFormContent>
-            {imageInputFields.map((imageInput) => (
-              <SectionFormContentWrapper>
-                <SubText type="title" size="sm">
-                  {imageInput.title}
-                </SubText>
-                <SubText size="sm">{imageInput.description}</SubText>
-                <InputWrapper>
-                  <ImageInputField
-                    type="file"
-                    id="img"
-                    name="img"
-                    accept="image/*"
-                    imageType={
-                      imageInput.imageType === 'logo'
-                        ? 'logo'
-                        : imageInput.imageType === 'featured'
-                        ? 'featured'
-                        : 'banner'
-                    }
-                  />
-                  <IconWrapper>
-                    <Icon icon="myNfts" colorType="input" size="lg" />
-                  </IconWrapper>
-                </InputWrapper>
-              </SectionFormContentWrapper>
-            ))}
-            <Divider gap="sm" />
+            {/* Image input fields */}
+            <ImageForms />
+            {/* Text input fields */}
+            <TextInputFields />
             <SectionFormContentWrapper>
-              <SubText type="title" size="sm">
-                Name
-              </SubText>
+              <SubTextLabel>
+                {t('translation:onboarding.explicitWarning')}
+              </SubTextLabel>
               <SubText size="sm">
-                This is the name of your collection, series, etc...
-              </SubText>
-              <SectionInputField
-                placeholder="CryptoDickbutts"
-                type="text"
-                inputStyle="fullWidth"
-              />
-            </SectionFormContentWrapper>
-            <Divider gap="sm" />
-            <SectionFormContentWrapper>
-              <SubText type="title" size="sm">
-                Description
-              </SubText>
-              <SubText size="sm">
-                This is the description of your collection, series,
-                etc...
-              </SubText>
-              <SectionTextArea />
-            </SectionFormContentWrapper>
-            <Divider gap="sm" />
-            <SectionFormContentWrapper>
-              <SubText type="title" size="sm">
-                URL
-              </SubText>
-              <SubText size="sm">
-                Customize the URL you get for Jelly.
-              </SubText>
-              <SectionInputField
-                placeholder="https://jelly.ooo/collection/untitled"
-                type="text"
-                inputStyle="fullWidth"
-              />
-            </SectionFormContentWrapper>
-            <Divider gap="sm" />
-            <SectionFormContentWrapper>
-              <SubText type="title" size="sm">
-                Royalties
-              </SubText>
-              <SubText size="sm">
-                Collect a fee when a user re-sells your NFT on Jelly.
-              </SubText>
-              <SectionInputField
-                placeholder="0.00%"
-                type="text"
-                inputStyle="fullWidth"
-              />
-            </SectionFormContentWrapper>
-            <Divider gap="sm" />
-            <SectionFormContentWrapper>
-              <SubText type="title" size="sm">
-                Explicit & sensitive content
-              </SubText>
-              <SubText size="sm">
-                Disable seeing explicit content.
+                {t(
+                  'translation:onboarding.explicitWarningDescription',
+                )}
               </SubText>
             </SectionFormContentWrapper>
-            <RadioGroupPrimitive.Root
+            <StyledRadioRoot
               defaultValue="default"
               aria-label="View density"
-              style={{
-                display: 'flex',
-              }}
             >
               <Flex>
-                <StyledRadio value="default" id="yes">
+                <StyledRadio
+                  value="default"
+                  id={t('translation:onboarding.yes')}
+                >
                   <StyledIndicator />
                 </StyledRadio>
-                <Label htmlFor="yes">Yes</Label>
+                <Label htmlFor={t('translation:onboarding.yes')}>
+                  {t('translation:onboarding.yes')}
+                </Label>
               </Flex>
-              <Flex
-                style={{
-                  marginLeft: '20px',
-                }}
-              >
+              <Flex>
                 <StyledRadio value="" id="no">
                   <StyledIndicator />
                 </StyledRadio>
-                <Label htmlFor="no">No</Label>
+                <Label htmlFor={t('translation:onboarding.no')}>
+                  {t('translation:onboarding.no')}
+                </Label>
               </Flex>
-            </RadioGroupPrimitive.Root>
-            <div
-              style={{
-                width: '98px',
-                marginTop: '35px',
-              }}
-            >
-              <ActionButton type="primary" size="small">
-                Next
+            </StyledRadioRoot>
+            <DetailsButtonWrapper>
+              <ActionButton
+                type="primary"
+                size="small"
+                onClick={(e: any) => {
+                  e.preventDefault();
+                  handleStep && handleStep();
+                }}
+              >
+                {t('translation:common.next')}
               </ActionButton>
-            </div>
+            </DetailsButtonWrapper>
           </SectionFormContent>
         </SectionContent>
       </div>

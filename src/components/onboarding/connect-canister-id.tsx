@@ -10,11 +10,17 @@ import {
   InputContainer,
 } from './styles';
 
-const ConnectCanisterId = () => {
+type ConnectCanisterIdProps = {
+  handleStep?: () => void;
+};
+
+const ConnectCanisterId = ({
+  handleStep,
+}: ConnectCanisterIdProps) => {
   const { t } = useTranslation();
 
   return (
-    <SectionWrapper>
+    <SectionWrapper firstItem={true}>
       <div>
         <SectionContent>
           <Header>
@@ -41,7 +47,7 @@ const ConnectCanisterId = () => {
               type="tel"
               placeholder="xxx-xxxxxxxxxx-xx"
             />
-            <SectionInputButton>
+            <SectionInputButton onClick={handleStep}>
               {t('translation:onboarding.validate')}
             </SectionInputButton>
           </InputContainer>

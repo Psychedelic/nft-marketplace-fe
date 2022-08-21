@@ -61,6 +61,7 @@ export const {
       lightAliceBlue: '#FAFBFD',
       lightGray: '#E2DFDF',
       darkGray: '#B1B1B1',
+      mediumLightBlue: '#ABB2C2',
     },
     space: {},
     fonts: {},
@@ -133,6 +134,7 @@ export const darkTheme = createTheme({
     lightAliceBlue: '#141416',
     lightGray: '#E2DFDF',
     darkGray: '#B1B1B1',
+    mediumLightBlue: '#ABB2C2',
   },
   shadows: {
     default: 'none',

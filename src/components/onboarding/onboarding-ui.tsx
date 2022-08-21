@@ -13,6 +13,7 @@ import {
   StyledActionButton,
   ButtonWrapper,
 } from './styles';
+import NftDetails from './nft-details';
 
 const progressBarItem = [
   {
@@ -67,10 +68,11 @@ const Onboarding = () => {
         </ButtonWrapper>
       </Progress>
       <Divider />
-      <ConnectCanisterId />
+      <ConnectCanisterId handleStep={() => setStep([...step, '2'])} />
       <Divider />
-      <CollectionDetails />
+      <CollectionDetails handleStep={() => setStep([...step, '3'])} />
       <Divider />
+      <NftDetails />
     </OnboardingWrapper>
   );
 };

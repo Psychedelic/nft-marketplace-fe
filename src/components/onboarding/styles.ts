@@ -1,13 +1,16 @@
 import { styled } from '../../stitches.config';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { ActionButton } from '../core';
+import { Icon } from '../icons';
 
 export const OnboardingWrapper = styled('div', {
   paddingTop: '70px',
 });
 
 export const Progress = styled('div', {
-  position: 'relative',
+  position: 'fixed',
+  width: '100%',
+  zIndex: '1',
 });
 
 export const ProgressStepBarContainer = styled('div', {
@@ -15,6 +18,8 @@ export const ProgressStepBarContainer = styled('div', {
   justifyContent: 'center',
   background: '$lightAliceBlue',
   padding: '25px 0px 20px',
+  borderBottom: '1px solid $borderColor',
+  boxShadow: '0px -1px 8px rgba(0, 0, 0, 0.16)',
 });
 
 export const ProgressStepBarWrapper = styled('div', {
@@ -45,7 +50,7 @@ export const ProgressStepBarText = styled('p', {
   fontWeight: '500',
   fontSize: '14px',
   lineHeight: '16px',
-  color: '#B1B1B1',
+  color: '$darkGray',
 
   variants: {
     isActive: {
@@ -61,13 +66,11 @@ export const Divider = styled('div', {
   width: '100%',
   background: '$borderColor',
   margin: '0px 0px 60px',
-  boxShadow: '0px -1px 8px rgba(0, 0, 0, 0.16)',
 
   variants: {
     gap: {
       sm: {
         margin: '0px 0px 20px',
-        boxShadow: 'unset',
       },
     },
   },
@@ -90,6 +93,14 @@ export const SectionWrapper = styled('div', {
   display: 'flex',
   justifyContent: 'center',
   marginBottom: '80px',
+
+  variants: {
+    firstItem: {
+      true: {
+        paddingTop: '60px',
+      },
+    },
+  },
 });
 
 export const SectionContent = styled('div', {
@@ -140,6 +151,22 @@ export const SubText = styled('p', {
   },
 });
 
+export const SubTextLabel = styled('label', {
+  fontStyle: 'normal',
+  fontWeight: '600',
+  lineHeight: '26px',
+  color: '$mainTextColor',
+  width: '500px',
+  margin: '0px',
+  fontSize: '15px',
+
+  '&:after': {
+    content: '*',
+    color: 'red',
+    fontSize: '16px',
+  },
+});
+
 export const SectionFormContent = styled('form', {
   marginTop: '30px',
 });
@@ -155,12 +182,13 @@ export const InputContainer = styled('div', {
 });
 
 export const SectionInputField = styled('input', {
-  width: '480px',
+  width: '100%',
   height: '40px',
   border: '1.5px solid $borderColor',
   borderRadius: '14px',
   padding: '0px 10px',
   background: '$backgroundColor',
+  boxSizing: 'border-box',
 
   '&::placeholder': {
     fontStyle: 'normal',
@@ -176,11 +204,24 @@ export const SectionInputField = styled('input', {
       fullWidth: {
         margin: '10px 0',
       },
-    },
-    size: {
-      medium: {},
+      leftButton: {
+        paddingLeft: '66px',
+      },
+      borderless: {
+        paddingLeft: '50px',
+        zIndex: '1',
+      },
     },
   },
+
+  '&:focus': {
+    outline: 'none',
+    borderColor: 'unset',
+  },
+});
+
+export const StyledIcon = styled(Icon, {
+  zIndex: '2',
 });
 
 export const SectionTextArea = styled('textarea', {
@@ -211,6 +252,7 @@ export const SectionInputButton = styled('div', {
   width: '140px',
   borderTopRightRadius: '14px',
   borderBottomRightRadius: '14px',
+  cursor: 'pointer',
 });
 
 export const InputWrapper = styled('div', {
@@ -256,6 +298,13 @@ export const ImageInputField = styled('input', {
         },
       },
     },
+    isInputFilled: {
+      true: {
+        '&::before': {
+          border: '2px solid $mediumLightBlue',
+        },
+      },
+    },
   },
 
   '&::before': {
@@ -265,11 +314,71 @@ export const ImageInputField = styled('input', {
     outline: 'none',
     '-webkit-user-select': 'none',
     top: '0',
-    border: '2px dashed #ABB2C2',
+    border: '2px dashed $mediumLightBlue',
     display: 'flex',
     justifyContent: 'center',
     cursor: 'pointer',
   },
+});
+
+export const LogoImageFieldWrapper = styled('div', {
+  position: 'absolute',
+  width: '100%',
+  borderRadius: '100%',
+  height: '114px',
+  top: '15px',
+  bottom: '0',
+  right: '0',
+  left: '0',
+  cursor: 'pointer',
+  zIndex: '-1',
+});
+
+export const LogoImageField = styled('img', {
+  width: '100%',
+  borderRadius: '100%',
+  height: '100%',
+  objectFit: 'cover',
+});
+
+export const FeaturedImageFieldWrapper = styled('div', {
+  position: 'absolute',
+  width: '100%',
+  borderRadius: '10px',
+  height: '164px',
+  top: '15px',
+  bottom: '0',
+  right: '0',
+  left: '0',
+  cursor: 'pointer',
+  zIndex: '-1',
+});
+
+export const FeaturedImageField = styled('img', {
+  width: '100%',
+  borderRadius: '10px',
+  height: '100%',
+  objectFit: 'cover',
+});
+
+export const BannerImageFieldWrapper = styled('div', {
+  position: 'absolute',
+  width: '100%',
+  borderRadius: '10px',
+  height: '164px',
+  top: '15px',
+  bottom: '0',
+  right: '0',
+  left: '0',
+  cursor: 'pointer',
+  zIndex: '-1',
+});
+
+export const BannerImageField = styled('img', {
+  width: '100%',
+  borderRadius: '10px',
+  height: '100%',
+  objectFit: 'cover',
 });
 
 export const IconWrapper = styled('div', {
@@ -296,6 +405,22 @@ export const Flex = styled('div', {
   display: 'flex',
   margin: '10px 0',
   alignItems: 'center',
+
+  '&:nth-child(1)': {
+    marginRight: '20px',
+  },
+});
+
+export const StyledRadioRoot = styled(RadioGroupPrimitive.Root, {
+  display: 'flex',
+
+  variants: {
+    bottomSpace: {
+      true: {
+        marginBottom: '15px',
+      },
+    },
+  },
 });
 
 export const StyledRadio = styled(RadioGroupPrimitive.Item, {
@@ -305,6 +430,7 @@ export const StyledRadio = styled(RadioGroupPrimitive.Item, {
   width: 20,
   height: 20,
   borderRadius: '100%',
+  cursor: 'pointer',
 });
 
 export const StyledIndicator = styled(RadioGroupPrimitive.Indicator, {
@@ -321,5 +447,47 @@ export const StyledIndicator = styled(RadioGroupPrimitive.Indicator, {
     height: 15,
     borderRadius: '50%',
     backgroundColor: '$primary',
+  },
+});
+
+export const DetailsButtonWrapper = styled('div', {
+  width: '98px',
+  marginTop: '35px',
+});
+
+export const InputIconButton = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'absolute',
+  top: '0px',
+  bottom: '0px',
+  left: '0px',
+  width: '56px',
+  borderTopLeftRadius: '14px',
+  borderBottomLeftRadius: '14px',
+  border: '1.5px solid $borderColor',
+
+  variants: {
+    borderless: {
+      true: {
+        borderRight: 'unset',
+      },
+    },
+  },
+});
+
+export const LinkInputContentWrapper = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+export const LinkInputContent = styled('div', {
+  display: 'flex',
+  margin: '5px 0',
+  position: 'relative',
+
+  '&:first-child': {
+    marginTop: '10px',
   },
 });
