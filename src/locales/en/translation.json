@@ -351,6 +351,21 @@
     "yes": "Yes",
     "no": "No",
     "nftDetails": "NFT Details",
-    "nftDetailsSubText": "Lastly, check the NFTS details of your collection"
+    "nftDetailsSubText": "Lastly, check the NFTS details of your collection",
+    "custodianError": "You must be the canister ID custodian to proceed.",
+    "nftSamples": "NFT samples of [Collection Name]",
+    "nftSamplesDescription": "File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB",
+    "nftNameDescription": "Set the names of your NFTs",
+    "externalLink": "External link",
+    "externalLinkDescription": "Jelly will include a link to this URL on this item's detail page, so that users can click to learn more about it. You are welcome to link to your own webpage with more details.",
+    "nftItemsDescription": "This is the Description of your NFT items",
+    "nftCollection": "Collection",
+    "nftCollectionDetails": "This is the collection where your items will appear.",
+    "unblockableContent": "Unlockable Content",
+    "unblockableContentDescription": "Unlockable content that can only be revealed by the owner of the item. You can acess and edit them individually on the NFT page.",
+    "supply": "Supply",
+    "supplyDescription": "The number of items that can be minted. No gas cost to you!",
+    "blockchain": "Blockchain",
+    "blockchainPlaceholder": "Internet Computer"
   }
 }

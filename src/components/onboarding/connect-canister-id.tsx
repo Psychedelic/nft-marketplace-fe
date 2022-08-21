@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   SectionWrapper,
@@ -8,6 +9,7 @@ import {
   SectionInputField,
   SectionInputButton,
   InputContainer,
+  ErrorMessage,
 } from './styles';
 
 type ConnectCanisterIdProps = {
@@ -18,6 +20,17 @@ const ConnectCanisterId = ({
   handleStep,
 }: ConnectCanisterIdProps) => {
   const { t } = useTranslation();
+  const [error, setError] = useState(false);
+  const [canisterId, setCanisterId] = useState('');
+
+  const handleSubmit = () => {
+    if (canisterId === '') {
+      setError(true);
+    } else {
+      setError(false);
+      handleStep && handleStep();
+    }
+  };
 
   return (
     <SectionWrapper firstItem={true}>
@@ -46,11 +59,17 @@ const ConnectCanisterId = ({
             <SectionInputField
               type="tel"
               placeholder="xxx-xxxxxxxxxx-xx"
+              onChange={(e) => setCanisterId(e.target.value)}
             />
-            <SectionInputButton onClick={handleStep}>
+            <SectionInputButton role="submit" onClick={handleSubmit}>
               {t('translation:onboarding.validate')}
             </SectionInputButton>
           </InputContainer>
+          {error && (
+            <ErrorMessage>
+              {t('translation:onboarding.custodianError')}
+            </ErrorMessage>
+          )}
         </SectionFormContent>
       </div>
     </SectionWrapper>

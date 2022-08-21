@@ -1,7 +1,7 @@
 import { styled } from '../../stitches.config';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
+import * as Switch from '@radix-ui/react-switch';
 import { ActionButton } from '../core';
-import { Icon } from '../icons';
 
 export const OnboardingWrapper = styled('div', {
   paddingTop: '70px',
@@ -172,7 +172,7 @@ export const SectionFormContent = styled('form', {
 });
 
 export const SectionFormContentWrapper = styled('div', {
-  margin: '15px 0',
+  margin: '20px 0',
 });
 
 export const InputContainer = styled('div', {
@@ -204,6 +204,10 @@ export const SectionInputField = styled('input', {
       fullWidth: {
         margin: '10px 0',
       },
+      smallWidth: {
+        width: '23.5%',
+        marginLeft: '1.5%',
+      },
       leftButton: {
         paddingLeft: '66px',
       },
@@ -220,7 +224,7 @@ export const SectionInputField = styled('input', {
   },
 });
 
-export const StyledIcon = styled(Icon, {
+export const StyledImgPlaceholder = styled('img', {
   zIndex: '2',
 });
 
@@ -258,6 +262,16 @@ export const SectionInputButton = styled('div', {
 export const InputWrapper = styled('div', {
   position: 'relative',
   width: 'fit-content',
+
+  variants: {
+    type: {
+      nft: {
+        '&:nth-child(2)': {
+          margin: '0px 11px',
+        },
+      },
+    },
+  },
 });
 
 export const ImageInputField = styled('input', {
@@ -293,6 +307,15 @@ export const ImageInputField = styled('input', {
 
         '&::before': {
           width: '480px',
+          borderRadius: '10px',
+          height: '150px',
+        },
+      },
+      nft: {
+        width: '160px',
+
+        '&::before': {
+          width: '140px',
           borderRadius: '10px',
           height: '150px',
         },
@@ -381,6 +404,26 @@ export const BannerImageField = styled('img', {
   objectFit: 'cover',
 });
 
+export const NftImageFieldWrapper = styled('div', {
+  position: 'absolute',
+  width: '100%',
+  borderRadius: '10px',
+  height: '164px',
+  top: '15px',
+  bottom: '0',
+  right: '0',
+  left: '0',
+  cursor: 'pointer',
+  zIndex: '-1',
+});
+
+export const NftImageField = styled('img', {
+  width: '100%',
+  borderRadius: '10px',
+  height: '100%',
+  objectFit: 'cover',
+});
+
 export const IconWrapper = styled('div', {
   position: 'absolute',
   top: '-10px',
@@ -417,7 +460,7 @@ export const StyledRadioRoot = styled(RadioGroupPrimitive.Root, {
   variants: {
     bottomSpace: {
       true: {
-        marginBottom: '15px',
+        marginBottom: '20px',
       },
     },
   },
@@ -490,4 +533,54 @@ export const LinkInputContent = styled('div', {
   '&:first-child': {
     marginTop: '10px',
   },
+});
+
+export const StyledSwitch = styled(Switch.Root, {
+  all: 'unset',
+  width: 42,
+  height: 25,
+  backgroundColor: '#E3E1E1',
+  borderRadius: '9999px',
+  position: 'relative',
+  WebkitTapHighlightColor: '#E3E1E1',
+  cursor: 'pointer',
+  '&[data-state="checked"]': { backgroundColor: '#3574F4' },
+});
+
+export const StyledThumb = styled(Switch.Thumb, {
+  display: 'block',
+  width: 21,
+  height: 21,
+  backgroundColor: '#EFEEEE',
+  borderRadius: '9999px',
+  transition: 'transform 100ms',
+  transform: 'translateX(2px)',
+  willChange: 'transform',
+  '&[data-state="checked"]': { transform: 'translateX(19px)' },
+});
+
+export const ErrorMessage = styled('p', {
+  fontStyle: 'normal',
+  fontWeight: '400',
+  fontSize: '14px',
+  lineHeight: '16px',
+  display: 'flex',
+  alignItems: 'center',
+  color: '#EF4444',
+  margin: '0',
+});
+
+export const NftSampleWrapper = styled('div', {
+  display: 'flex',
+});
+
+export const NftNameDetailsWrapper = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+});
+
+export const UnblockableContent = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
 });

@@ -61,9 +61,11 @@ const Onboarding = () => {
             type="active"
             size="small"
             onClick={() => handleStep()}
-            disabled
+            disabled={step.length <= 1 && true}
           >
-            {t('translation:common.next')}
+            {step.length === 3
+              ? 'Review Collection'
+              : t('translation:common.next')}
           </StyledActionButton>
         </ButtonWrapper>
       </Progress>

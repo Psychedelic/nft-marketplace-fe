@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   SectionWrapper,
@@ -17,15 +18,29 @@ import {
   SubTextLabel,
   LinkInputContent,
   InputIconButton,
-  StyledIcon,
+  StyledImgPlaceholder,
+  InputWrapper,
+  ImageInputField,
+  NftImageFieldWrapper,
+  NftImageField,
+  IconWrapper,
+  StyledSwitch,
+  StyledThumb,
+  NftSampleWrapper,
+  NftNameDetailsWrapper,
+  UnblockableContent,
 } from './styles';
+import collectionPlaceholder from '../../assets/collection-input-placeholder.svg';
+import blockchainPlaceholder from '../../assets/icp-logo.svg';
+import { Icon } from '../icons';
 
-type NftDetailsProps = {
-  handleStep?: () => void;
-};
-
-const NftDetails = ({ handleStep }: NftDetailsProps) => {
+const NftDetails = () => {
   const { t } = useTranslation();
+  const [image, setImage] = useState({
+    nftOne: '',
+    nftTwo: '',
+    nftThree: '',
+  });
 
   return (
     <SectionWrapper>
@@ -38,13 +53,141 @@ const NftDetails = ({ handleStep }: NftDetailsProps) => {
           <SectionFormContent>
             <SectionFormContentWrapper>
               <SubText type="title" size="sm">
-                External link
+                {t('translation:onboarding.nftSamples')}
               </SubText>
               <SubText size="sm">
-                Jelly will include a link to this URL on this item's
-                detail page, so that users can click to learn more
-                about it. You are welcome to link to your own webpage
-                with more details.
+                {t('translation:onboarding.nftSamplesDescription')}
+              </SubText>
+              <NftSampleWrapper>
+                <InputWrapper>
+                  <ImageInputField
+                    type="file"
+                    id="img"
+                    name="img"
+                    accept="image/*"
+                    imageType="nft"
+                    onChange={(e: any) => {
+                      setImage({
+                        ...image,
+                        nftOne: URL.createObjectURL(
+                          e.target.files[0],
+                        ),
+                      });
+                    }}
+                    isInputFilled={image.nftOne ? true : false}
+                  />
+                  {image.nftOne ? (
+                    <NftImageFieldWrapper>
+                      <NftImageField src={image.nftOne} />
+                    </NftImageFieldWrapper>
+                  ) : (
+                    <IconWrapper>
+                      <Icon
+                        icon="myNfts"
+                        colorType="input"
+                        size="lg"
+                      />
+                    </IconWrapper>
+                  )}
+                </InputWrapper>
+                <InputWrapper type="nft">
+                  <ImageInputField
+                    type="file"
+                    id="img"
+                    name="img"
+                    accept="image/*"
+                    imageType="nft"
+                    onChange={(e: any) => {
+                      setImage({
+                        ...image,
+                        nftTwo: URL.createObjectURL(
+                          e.target.files[0],
+                        ),
+                      });
+                    }}
+                    isInputFilled={image.nftTwo ? true : false}
+                  />
+                  {image.nftTwo ? (
+                    <NftImageFieldWrapper>
+                      <NftImageField src={image.nftTwo} />
+                    </NftImageFieldWrapper>
+                  ) : (
+                    <IconWrapper>
+                      <Icon
+                        icon="myNfts"
+                        colorType="input"
+                        size="lg"
+                      />
+                    </IconWrapper>
+                  )}
+                </InputWrapper>
+                <InputWrapper>
+                  <ImageInputField
+                    type="file"
+                    id="img"
+                    name="img"
+                    accept="image/*"
+                    imageType="nft"
+                    onChange={(e: any) => {
+                      setImage({
+                        ...image,
+                        nftThree: URL.createObjectURL(
+                          e.target.files[0],
+                        ),
+                      });
+                    }}
+                    isInputFilled={image.nftThree ? true : false}
+                  />
+                  {image.nftThree ? (
+                    <NftImageFieldWrapper>
+                      <NftImageField src={image.nftThree} />
+                    </NftImageFieldWrapper>
+                  ) : (
+                    <IconWrapper>
+                      <Icon
+                        icon="myNfts"
+                        colorType="input"
+                        size="lg"
+                      />
+                    </IconWrapper>
+                  )}
+                </InputWrapper>
+              </NftSampleWrapper>
+            </SectionFormContentWrapper>
+            <Divider gap="sm" />
+            <SectionFormContentWrapper>
+              <SubTextLabel>
+                {t('translation:onboarding.name')}
+              </SubTextLabel>
+              <SubText size="sm">
+                {t('translation:onboarding.nftNameDescription')}
+              </SubText>
+              <NftNameDetailsWrapper>
+                <SectionInputField
+                  placeholder={t(
+                    'translation:onboarding.namePlaceholder',
+                  )}
+                  type="text"
+                  inputStyle="fullWidth"
+                />
+                <SectionInputField
+                  placeholder="1"
+                  type="text"
+                  inputStyle="smallWidth"
+                />
+                <SectionInputField
+                  placeholder="10.000"
+                  type="text"
+                  inputStyle="smallWidth"
+                />
+              </NftNameDetailsWrapper>
+            </SectionFormContentWrapper>
+            <SectionFormContentWrapper>
+              <SubText type="title" size="sm">
+                {t('translation:onboarding.externalLink')}
+              </SubText>
+              <SubText size="sm">
+                {t('translation:onboarding.externalLinkDescription')}
               </SubText>
               <SectionInputField
                 placeholder="https://yourwebsite/artwork/6"
@@ -58,25 +201,30 @@ const NftDetails = ({ handleStep }: NftDetailsProps) => {
                 {t('translation:onboarding.description')}
               </SubText>
               <SubText size="sm">
-                This is the Description of your NFT items
+                {t('translation:onboarding.nftItemsDescription')}
               </SubText>
               <SectionTextArea />
             </SectionFormContentWrapper>
             <Divider gap="sm" />
             <SectionFormContentWrapper>
               <SubText type="title" size="sm">
-                Collection
+                {t('translation:onboarding.nftCollection')}
               </SubText>
               <SubText size="sm">
-                This is the collection where your items will appear.
+                {t('translation:onboarding.nftCollectionDetails')}
               </SubText>
               <div>
                 <LinkInputContent>
                   <InputIconButton borderless={true}>
-                    <StyledIcon colorType="input" icon="twitter" />
+                    <StyledImgPlaceholder
+                      src={collectionPlaceholder}
+                      alt=""
+                    />
                   </InputIconButton>
                   <SectionInputField
-                    placeholder="Cryptodickbutts"
+                    placeholder={t(
+                      'translation:onboarding.namePlaceholder',
+                    )}
                     type="text"
                     inputStyle="borderless"
                   />
@@ -121,15 +269,35 @@ const NftDetails = ({ handleStep }: NftDetailsProps) => {
             </StyledRadioRoot>
             <Divider gap="sm" />
             <SectionFormContentWrapper>
-              <SubTextLabel>Supply</SubTextLabel>
+              <SubText type="title">
+                {t('translation:onboarding.unblockableContent')}
+              </SubText>
+              <UnblockableContent>
+                <SubText
+                  size="sm"
+                  style={{
+                    width: '430px',
+                  }}
+                >
+                  {t(
+                    'translation:onboarding.unblockableContentDescription',
+                  )}
+                </SubText>
+                <StyledSwitch>
+                  <StyledThumb />
+                </StyledSwitch>
+              </UnblockableContent>
+            </SectionFormContentWrapper>
+            <Divider gap="sm" />
+            <SectionFormContentWrapper>
+              <SubTextLabel>
+                {t('translation:onboarding.supply')}
+              </SubTextLabel>
               <SubText size="sm">
-                The number of items that can be minted. No gas cost to
-                you!
+                {t('translation:onboarding.supplyDescription')}
               </SubText>
               <SectionInputField
-                placeholder={t(
-                  'translation:onboarding.namePlaceholder',
-                )}
+                placeholder="1"
                 type="text"
                 inputStyle="fullWidth"
               />
@@ -137,15 +305,25 @@ const NftDetails = ({ handleStep }: NftDetailsProps) => {
             <Divider gap="sm" />
             <SectionFormContentWrapper>
               <SubText type="title" size="sm">
-                Blockchain
+                {t('translation:onboarding.blockchain')}
               </SubText>
-              <SectionInputField
-                placeholder={t(
-                  'translation:onboarding.namePlaceholder',
-                )}
-                type="text"
-                inputStyle="fullWidth"
-              />
+              <div>
+                <LinkInputContent>
+                  <InputIconButton borderless={true}>
+                    <StyledImgPlaceholder
+                      src={blockchainPlaceholder}
+                      alt=""
+                    />
+                  </InputIconButton>
+                  <SectionInputField
+                    placeholder={t(
+                      'translation:onboarding.blockchainPlaceholder',
+                    )}
+                    type="text"
+                    inputStyle="borderless"
+                  />
+                </LinkInputContent>
+              </div>
             </SectionFormContentWrapper>
           </SectionFormContent>
         </SectionContent>
