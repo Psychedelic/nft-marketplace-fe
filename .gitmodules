@@ -4,3 +4,6 @@
 [submodule "kyasshu"]
 	path = kyasshu
 	url = git@github.com:Psychedelic/kyasshu.git
+[submodule "jelly"]
+	path = jelly
+	url = git@github.com:Psychedelic/jelly.git
