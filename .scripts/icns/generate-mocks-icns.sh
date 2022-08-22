@@ -23,7 +23,7 @@ while read -r word; do
   dataRecord="record {
       controller = principal \"$principal\";
       expiry = 36000;
-      id = 0:nat;
+      id = $i:nat;
       name = \"$word\";
       operator = principal \"$principal\";
       owner = principal \"$principal\";
