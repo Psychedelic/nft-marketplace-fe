@@ -15,7 +15,7 @@ resolver_id="aaaaa-aa"
 reverse_registrar_id="aaaaa-aa"
 
 # TODO: this is temporary and will change
-cd ../icns || exit 1
+cd ./jelly/dependencies/icns || exit 1
 
 # install registry
 dfx canister install registry \

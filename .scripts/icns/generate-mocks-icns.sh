@@ -53,8 +53,8 @@ dataVec="(
 # so, this is temporary and set to the local developer env
 # if you are reading this you'd have to set it to the icns repo
 # of your local machine
-cd ../icns || exit 1
+cd ./jelly/dependencies/icns || exit 1
 
-dfx canister call registry batchMint "(
+dfx canister --network local call registry batchMint "(
   $dataVec
 )"
