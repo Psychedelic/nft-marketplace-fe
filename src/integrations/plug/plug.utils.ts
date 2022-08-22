@@ -6,6 +6,10 @@ import {
 import { notificationActions, plugActions } from '../../store';
 import { AppLog } from '../../utils/log';
 import config from '../../config/env';
+import {
+  Provider,
+  WalletConnectRPC,
+} from '@psychedelic/plug-inpage-provider';
 
 type RequestConnectArgs = {
   whitelist?: string[];
@@ -75,7 +79,7 @@ export const getPlugButtonText = (params: PlugButtonTextParams) => {
   if (icnsName) return formatICNSName(icnsName as string);
 
   return formatAddress(principalId as string);
-}
+};
 
 export const onConnectionUpdate = ({
   dispatch,
@@ -107,6 +111,23 @@ export const handleConnect = async ({
     marketplaceCanisterId,
     wICPCanisterId,
   ];
+
+  const ua = navigator.userAgent;
+  const isAndroid = /android/i.test(ua) ? true : false;
+
+  if (!isAndroid) {
+    window.open('https://plugwallet.ooo/', '_blank');
+    return;
+  }
+  const clientRPC = new WalletConnectRPC(window);
+
+  const plugProvider = new Provider(clientRPC);
+
+  const ic = (window as any).ic || {};
+  (window as any).ic = {
+    ...ic,
+    plug: plugProvider,
+  };
 
   // Is plug installed
   const hasPlug = isPlugInstalled();
