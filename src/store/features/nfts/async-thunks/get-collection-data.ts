@@ -1,19 +1,25 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { nftsActions } from '../nfts-slice';
-import { KyasshuUrl } from '../../../../integrations/kyasshu';
+import {
+  KyasshuUrl,
+  NSKyasshuUrl,
+} from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { marketplaceActions } from '../../marketplace/marketplace-slice';
 
-export const getCollectionData = createAsyncThunk<void>(
+export const getCollectionData = createAsyncThunk<
+  void,
+  NSKyasshuUrl.GetCollectionDataQueryParams
+>(
   'nfts/getCollectionData',
-  async (_, { dispatch }) => {
+  async ({ collectionId }, { dispatch }) => {
     dispatch(nftsActions.setCollectionDataLoading());
 
     try {
       const response = await axios.get(
-        KyasshuUrl.getCollectionData(),
+        KyasshuUrl.getCollectionData({ collectionId }),
       );
       if (response.status !== 200) {
         throw Error(response.statusText);

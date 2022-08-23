@@ -35,8 +35,10 @@ export class KyasshuUrl {
     return `${config.kyasshuMarketplaceAPI}/cap/capJellySync`;
   }
 
-  static getCollectionData(): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/data`;
+  static getCollectionData({
+    collectionId,
+  }: NSKyasshuUrl.GetCollectionDataQueryParams): string {
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${collectionId}/data`;
   }
 
   static getTokenTransactions({
@@ -70,6 +72,10 @@ export namespace NSKyasshuUrl {
   };
 
   export type GetFilterTraitsQueryParams = {
+    collectionId: string;
+  };
+
+  export type GetCollectionDataQueryParams = {
     collectionId: string;
   };
 
