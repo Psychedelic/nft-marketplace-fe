@@ -47,12 +47,6 @@ dataVec="(
   }
 )"
 
-# TODO: the path should be dynamically allocated
-# based in the project architecture which at the moment
-# does not take into account the ICNS
-# so, this is temporary and set to the local developer env
-# if you are reading this you'd have to set it to the icns repo
-# of your local machine
 cd ./jelly/dependencies/icns || exit 1
 
 dfx canister --network local call registry batchMint "(
