@@ -12,7 +12,7 @@ standard="DIP721v1"
 dfx canister --network local call \
   "$jellyHubCanisterId" deploy_marketplace "(
     record {
-      fee = opt $fee:nat;
+      fee = $fee:nat;
       fee_to = opt principal \"$fee_to\";
       name = \"$name\";
       canister_id = principal \"$icnsRegistryCanisterId\";
@@ -21,3 +21,10 @@ dfx canister --network local call \
       standard = opt \"$standard\";
     }
   )"
+
+marketplaceId=$(dfx canister --network local call --query \
+  "$jellyHubCanisterId" get_marketplace_id "(
+    principal \"$icnsRegistryCanisterId\"
+  )" | cut -d '"' -f 2)
+
+echo "The collection marketplace id is $marketplaceId"
