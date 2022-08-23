@@ -125,6 +125,7 @@ export const NftDetails = () => {
     dispatch(
       marketplaceActions.getTokenListing({
         id,
+        collectionId,
         onSuccess: () => {
           // Listing got successfull so allowing
           // user to take actions over NFT
