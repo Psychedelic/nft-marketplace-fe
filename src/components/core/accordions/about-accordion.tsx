@@ -142,7 +142,7 @@ export const AboutAccordion = ({
 }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { id } = useParams();
+  const { id, collectionId } = useParams();
   const [isAccordionOpen, setIsAccordionOpen] = useState(true);
   const [theme] = useTheme();
 
@@ -150,7 +150,7 @@ export const AboutAccordion = ({
     () => [
       {
         title: t('translation:accordions.about.header.canisterId'),
-        value: config.nftCollectionId,
+        value: collectionId,
       },
       {
         title: t('translation:accordions.about.header.tokenStandard'),

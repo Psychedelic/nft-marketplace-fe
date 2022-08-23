@@ -52,10 +52,10 @@ export const CollectionTabs = () => {
     appliedFilters?.defaultFilters.length || 0;
 
   useEffect(() => {
-    if (appliedFiltersCount > 0) return;
+    if (appliedFiltersCount > 0 || !collectionId) return;
 
-    dispatch(nftsActions.getCollectionData());
-  }, [appliedFiltersCount]);
+    dispatch(nftsActions.getCollectionData({ collectionId }));
+  }, [appliedFiltersCount, collectionId]);
 
   return (
     <TabsRoot defaultValue="items" value={selectedTab}>

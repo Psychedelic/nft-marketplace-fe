@@ -44,15 +44,20 @@ export const ItemDetailsCell = ({
     });
 
   useEffect(() => {
-    if (!isTokenId(id) || hasThumbnail) return;
+    if (!isTokenId(id) || hasThumbnail || !collectionId) return;
 
     // Only request metadata if NOT hasThumbnail as we cache
     dispatch(
-      tableActions.getTokenMetadata({ id } as {
+      tableActions.getTokenMetadata({
+        id,
+        // TODO: remove config.nftCollectionId if user offers table data contains collectionId
+        collectionId: collectionId || config.nftCollectionId,
+      } as {
         id: number | string;
+        collectionId: string;
       }),
     );
-  }, [dispatch, id, hasThumbnail]);
+  }, [dispatch, id, hasThumbnail, collectionId]);
 
   return (
     <RouterLink

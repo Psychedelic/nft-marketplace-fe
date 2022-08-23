@@ -97,8 +97,8 @@ export const MakeOfferModal = ({
   };
 
   const handleSubmitOffer = async () => {
-    if (!tokenId) {
-      AppLog.warn('Oops! Missing NFT id param');
+    if (!tokenId || !collectionId) {
+      AppLog.warn('Oops! Missing NFT/Collection id param');
 
       return;
     }
@@ -120,6 +120,7 @@ export const MakeOfferModal = ({
     dispatch(
       marketplaceActions.makeOffer({
         id: tokenId,
+        collectionId,
         amount,
         onSuccess: () => {
           setModalStep(ListingStatusCodes.Submitted);

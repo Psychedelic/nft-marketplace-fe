@@ -90,8 +90,8 @@ export const BuyNowModal = ({
   };
 
   const handleDirectBuy = () => {
-    if (!isTokenId(tokenId)) {
-      AppLog.warn('Oops! Missing id param');
+    if (!isTokenId(tokenId) || !collectionId) {
+      AppLog.warn('Oops! Missing NFT/Collection id param');
 
       return;
     }
@@ -113,6 +113,7 @@ export const BuyNowModal = ({
     dispatch(
       marketplaceActions.directBuy({
         tokenId: tokenId as bigint,
+        collectionId,
         price,
         onSuccess: () => {
           // TODO: the get all listings is used to get data from the canister

@@ -31,7 +31,7 @@ import useMediaQuery from '../../hooks/use-media-query';
 export const CancelListingModal = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { id } = useParams();
+  const { id, collectionId } = useParams();
   const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
@@ -50,13 +50,14 @@ export const CancelListingModal = () => {
   };
 
   const handleCancelListing = async () => {
-    if (!id) return;
+    if (!id || !collectionId) return;
 
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       marketplaceActions.cancelListing({
         id,
+        collectionId,
         onSuccess: () => {
           // TODO: Do not change the state manually,
           // if required query from the API and update the global state

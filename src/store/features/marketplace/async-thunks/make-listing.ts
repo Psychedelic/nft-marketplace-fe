@@ -8,6 +8,7 @@ import { notificationActions } from '../../notifications';
 import {
   MakeListing,
   marketplaceActions,
+  CollectionDetails,
 } from '../marketplace-slice';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
@@ -15,20 +16,24 @@ import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 import { TransactionStatus } from '../../../../constants/transaction-status';
 
-type MakeListingProps = DefaultCallbacks & MakeListing;
+type MakeListingProps = DefaultCallbacks &
+  MakeListing &
+  CollectionDetails;
 
 export const makeListing = createAsyncThunk<
   MakeListing | undefined,
   MakeListingProps
 >(
   'marketplace/makeListing',
-  async ({ id, amount, onSuccess, onFailure }, { dispatch }) => {
+  async (
+    { id, amount, collectionId, onSuccess, onFailure },
+    { dispatch },
+  ) => {
     const marketplaceCanisterId = Principal.fromText(
       config.marketplaceCanisterId,
     );
-    const nonFungibleContractAddress = Principal.fromText(
-      config.nftCollectionId,
-    );
+    const nonFungibleContractAddress =
+      Principal.fromText(collectionId);
 
     const userOwnedTokenId = BigInt(id);
     const userListForPrice = parseAmountToE8S(amount);
@@ -38,7 +43,7 @@ export const makeListing = createAsyncThunk<
     try {
       const CROWNS_APPROVE_MARKETPLACE = {
         idl: crownsIdlFactory,
-        canisterId: config.nftCollectionId,
+        canisterId: collectionId,
         methodName: 'approve',
         args: [marketplaceCanisterId, userOwnedTokenId],
         onSuccess: (res: any) => {

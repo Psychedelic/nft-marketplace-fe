@@ -139,8 +139,8 @@ export const ChangePriceModal = ({
   };
 
   const handleListing = async () => {
-    if (!isTokenId(tokenId)) {
-      AppLog.warn('Oops! Missing NFT id param');
+    if (!isTokenId(tokenId) || !collectionId) {
+      AppLog.warn('Oops! Missing NFT/Collection id param');
 
       return;
     }
@@ -151,6 +151,7 @@ export const ChangePriceModal = ({
       marketplaceActions.makeListing({
         id: tokenId as string,
         amount,
+        collectionId,
         onSuccess: () => {
           // TODO: should the app state change / update
           // after a new make listing

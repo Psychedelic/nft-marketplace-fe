@@ -59,6 +59,10 @@ export type GetBuyerOffers = {
   userPrincipalId: string;
 };
 
+export type CollectionDetails = {
+  collectionId: string;
+};
+
 type RecentyListedForSale = MakeListing[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;

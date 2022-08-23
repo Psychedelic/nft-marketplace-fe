@@ -2,7 +2,11 @@ import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';
-import { DirectBuy, marketplaceActions } from '../marketplace-slice';
+import {
+  DirectBuy,
+  marketplaceActions,
+  CollectionDetails,
+} from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
@@ -12,13 +16,16 @@ import { errorMessageHandler } from '../../../../utils/error';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { TransactionStatus } from '../../../../constants/transaction-status';
 
-type DirectBuyProps = DefaultCallbacks & DirectBuy;
+type DirectBuyProps = DefaultCallbacks &
+  DirectBuy &
+  CollectionDetails;
 
 export const directBuy = createAsyncThunk<
   DirectBuy | undefined,
   DirectBuyProps
 >('marketplace/directBuy', async (params, { dispatch, getState }) => {
-  const { tokenId, price, onSuccess, onFailure } = params;
+  const { tokenId, price, collectionId, onSuccess, onFailure } =
+    params;
 
   const {
     marketplace: { sumOfUserAllowance },
@@ -27,9 +34,7 @@ export const directBuy = createAsyncThunk<
   const marketplaceCanisterId = Principal.fromText(
     config.marketplaceCanisterId,
   );
-  const nonFungibleContractAddress = Principal.fromText(
-    config.nftCollectionId,
-  );
+  const nonFungibleContractAddress = Principal.fromText(collectionId);
 
   dispatch(marketplaceActions.setTransactionStepsToDefault());
 

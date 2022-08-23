@@ -51,7 +51,7 @@ export const NftDetails = () => {
   const dispatch = useAppDispatch();
   const { loadedNFTS } = useNFTSStore();
   const { loadedFiltersList, loadingFilterList } = useFilterStore();
-  const { id } = useParams();
+  const { id, collectionId } = useParams();
   const [showNFTActionButtons, setShowNFTActionButtons] =
     useState<boolean>(false);
   const recentlyListedForSale = useSelector(
@@ -108,14 +108,14 @@ export const NftDetails = () => {
   // useNFTDetailsFetcher();
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
-    if (!id) return;
+    if (!id || !collectionId) return;
 
     if (!loadedFiltersList.length) {
-      dispatch(filterActions.getFilterTraits());
+      dispatch(filterActions.getFilterTraits({ collectionId }));
     }
 
     if (!nftDetails) {
-      dispatch(nftsActions.getNFTDetails({ id }));
+      dispatch(nftsActions.getNFTDetails({ id, collectionId }));
     }
 
     // TODO: add loading placeholders in action buttons
@@ -125,6 +125,7 @@ export const NftDetails = () => {
     dispatch(
       marketplaceActions.getTokenListing({
         id,
+        collectionId,
         onSuccess: () => {
           // Listing got successfull so allowing
           // user to take actions over NFT
@@ -140,6 +141,7 @@ export const NftDetails = () => {
   }, [
     dispatch,
     id,
+    collectionId,
     recentlyListedForSale,
     recentlyCancelledItems,
     recentlyPurchasedTokens,

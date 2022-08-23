@@ -12,8 +12,7 @@ import { NFTMetadata } from '../../../../declarations/legacy';
 import { parseTraits } from '../../../../utils/traits';
 
 export type GetFilterTraitsProps =
-  | NSKyasshuUrl.GetFilterTraitsQueryParams
-  | undefined;
+  NSKyasshuUrl.GetFilterTraitsQueryParams;
 
 export type TraitsValuesProps = {
   value: string;
@@ -60,43 +59,48 @@ export const getTraitName = (key: string) => {
 export const getFilterTraits = createAsyncThunk<
   void,
   GetFilterTraitsProps
->('filters/getFilterTraits', async (_, { dispatch }) => {
-  dispatch(filterActions.setIsFilterTraitsLoading(true));
+>(
+  'filters/getFilterTraits',
+  async ({ collectionId }, { dispatch }) => {
+    dispatch(filterActions.setIsFilterTraitsLoading(true));
 
-  try {
-    const response = await axios.get(KyasshuUrl.getFilterTraits());
-    if (response.status !== 200) {
-      throw Error(response.statusText);
+    try {
+      const response = await axios.get(
+        KyasshuUrl.getFilterTraits({ collectionId }),
+      );
+      if (response.status !== 200) {
+        throw Error(response.statusText);
+      }
+
+      const responseData = response.data.traits.map(
+        (res: [string, TraitsValuesProps[]]) => {
+          let key = getTraitName(res[0]);
+
+          const parsedTraits = parseTraits(res[1]);
+
+          const data = {
+            key: key,
+            name: res[0],
+            values: [...parsedTraits],
+          };
+
+          return data;
+        },
+      );
+
+      dispatch(filterActions.getAllFilters(responseData));
+      dispatch(filterActions.setIsFilterTraitsLoading(false));
+      dispatch(filterActions.setIsAlreadyFetched(true));
+    } catch (error) {
+      AppLog.error(error);
+      dispatch(
+        notificationActions.setErrorMessage(
+          'Oops! Unable to fetch traits',
+        ),
+      );
     }
-
-    const responseData = response.data.traits.map(
-      (res: [string, TraitsValuesProps[]]) => {
-        let key = getTraitName(res[0]);
-
-        const parsedTraits = parseTraits(res[1]);
-
-        const data = {
-          key: key,
-          name: res[0],
-          values: [...parsedTraits],
-        };
-
-        return data;
-      },
-    );
-
-    dispatch(filterActions.getAllFilters(responseData));
-    dispatch(filterActions.setIsFilterTraitsLoading(false));
-    dispatch(filterActions.setIsAlreadyFetched(true));
-  } catch (error) {
-    AppLog.error(error);
-    dispatch(
-      notificationActions.setErrorMessage(
-        'Oops! Unable to fetch traits',
-      ),
-    );
-  }
-});
+  },
+);
 
 export const extractTraitData = ({
   dispatch,

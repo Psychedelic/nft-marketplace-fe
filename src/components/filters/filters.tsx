@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { triggerWindowResizeEvent } from '../../utils/window';
 import {
@@ -52,6 +53,7 @@ export const Filters = ({
   isOpenFiltersMenu,
 }: FiltersProps) => {
   const { t } = useTranslation();
+  const { collectionId } = useParams();
   const dispatch = useAppDispatch();
   const {
     defaultFilters,
@@ -72,9 +74,11 @@ export const Filters = ({
 
   useEffect(() => {
     if (!isAlreadyFetched) {
-      dispatch(filterActions.getFilterTraits());
+      if (!collectionId) return;
+
+      dispatch(filterActions.getFilterTraits({ collectionId }));
     }
-  }, [dispatch, isAlreadyFetched]);
+  }, [dispatch, isAlreadyFetched, collectionId]);
 
   useEffect(() => {
     if (!displayPriceApplyButton) {

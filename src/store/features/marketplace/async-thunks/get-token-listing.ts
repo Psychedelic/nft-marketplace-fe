@@ -17,12 +17,16 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
       slice: marketplaceSlice,
     });
 
-    const { id: tokenId, onFailure, onSuccess } = params;
+    const {
+      id: tokenId,
+      collectionId,
+      onFailure,
+      onSuccess,
+    } = params;
 
     try {
-      const nonFungibleContractAddress = Principal.fromText(
-        config.nftCollectionId,
-      );
+      const nonFungibleContractAddress =
+        Principal.fromText(collectionId);
       const result = await actorInstance.getTokenListing(
         nonFungibleContractAddress,
         BigInt(tokenId),

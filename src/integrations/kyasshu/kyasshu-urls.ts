@@ -6,18 +6,22 @@ export class KyasshuUrl {
     order,
     page,
     count,
+    collectionId,
   }: NSKyasshuUrl.GetNFTsQueryParams): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${collectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
   }
 
   static getNFTDetails({
     id,
+    collectionId,
   }: NSKyasshuUrl.GetNFTDetailsQueryParams): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/nft/${id}`;
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${collectionId}/nft/${id}`;
   }
 
-  static getFilterTraits(): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/data`;
+  static getFilterTraits({
+    collectionId,
+  }: NSKyasshuUrl.GetFilterTraitsQueryParams): string {
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${collectionId}/data`;
   }
 
   static getCAPActivity({
@@ -31,14 +35,17 @@ export class KyasshuUrl {
     return `${config.kyasshuMarketplaceAPI}/cap/capJellySync`;
   }
 
-  static getCollectionData(): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/data`;
+  static getCollectionData({
+    collectionId,
+  }: NSKyasshuUrl.GetCollectionDataQueryParams): string {
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${collectionId}/data`;
   }
 
   static getTokenTransactions({
     tokenId,
+    collectionId,
   }: NSKyasshuUrl.GetTokenTransactions): string {
-    return `${config.kyasshuMarketplaceAPI}/cap/token/txns/${config.nftCollectionId}/${tokenId}`;
+    return `${config.kyasshuMarketplaceAPI}/cap/token/txns/${collectionId}/${tokenId}`;
   }
 
   static getSearchResults({
@@ -57,13 +64,21 @@ export namespace NSKyasshuUrl {
     sort: string;
     order: string;
     count?: number;
+    collectionId: string;
   };
 
   export type GetNFTDetailsQueryParams = {
     id: string | number;
+    collectionId: string;
   };
 
-  export type GetFilterTraitsQueryParams = {};
+  export type GetFilterTraitsQueryParams = {
+    collectionId: string;
+  };
+
+  export type GetCollectionDataQueryParams = {
+    collectionId: string;
+  };
 
   export type GetCAPActivityQueryParams = {
     pageCount: string;
@@ -72,6 +87,7 @@ export namespace NSKyasshuUrl {
 
   export type GetTokenTransactions = {
     tokenId: number;
+    collectionId: string;
   };
 
   export type GetSearchQueryParams = {
