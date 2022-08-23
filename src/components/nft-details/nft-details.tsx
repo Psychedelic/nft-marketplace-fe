@@ -111,7 +111,7 @@ export const NftDetails = () => {
     if (!id || !collectionId) return;
 
     if (!loadedFiltersList.length) {
-      dispatch(filterActions.getFilterTraits());
+      dispatch(filterActions.getFilterTraits({ collectionId }));
     }
 
     if (!nftDetails) {
@@ -140,6 +140,7 @@ export const NftDetails = () => {
   }, [
     dispatch,
     id,
+    collectionId,
     recentlyListedForSale,
     recentlyCancelledItems,
     recentlyPurchasedTokens,

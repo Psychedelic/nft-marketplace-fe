@@ -18,8 +18,10 @@ export class KyasshuUrl {
     return `${config.kyasshuMarketplaceAPI}/marketplace/${collectionId}/nft/${id}`;
   }
 
-  static getFilterTraits(): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/data`;
+  static getFilterTraits({
+    collectionId,
+  }: NSKyasshuUrl.GetFilterTraitsQueryParams): string {
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${collectionId}/data`;
   }
 
   static getCAPActivity({
@@ -67,7 +69,9 @@ export namespace NSKyasshuUrl {
     collectionId: string;
   };
 
-  export type GetFilterTraitsQueryParams = {};
+  export type GetFilterTraitsQueryParams = {
+    collectionId: string;
+  };
 
   export type GetCAPActivityQueryParams = {
     pageCount: string;
