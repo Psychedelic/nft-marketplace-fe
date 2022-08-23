@@ -131,8 +131,8 @@ export const SellModal = ({
   };
 
   const handleListing = async () => {
-    if (!tokenId) {
-      AppLog.warn('Oops! Missing NFT id param');
+    if (!tokenId || !collectionId) {
+      AppLog.warn('Oops! Missing NFT/Collection id param');
 
       return;
     }
@@ -143,6 +143,7 @@ export const SellModal = ({
       marketplaceActions.makeListing({
         id: tokenId,
         amount,
+        collectionId,
         onSuccess: () => {
           // TODO: update the app state after listing
           // should pull from the API
