@@ -3,9 +3,8 @@
 # TODO: should get cap router id dynamically
 # but due to incompatibility of earlier versions of dfx
 # not able to deploy ICNS it'd fail
-cap_router_id="rkp4c-7iaaa-aaaaa-aaaca-cai"
-# TODO: get registry and registrar canister id dynamically
-registry_id="rrkah-fqaaa-aaaaa-aaaaq-cai"
+cap_router_id=$(cd ./jelly && dfx canister id cap-router)
+registry_id=""
 owner_principal=$(dfx identity get-principal)
 
 # note: it shouldn't be required for marketplace
@@ -16,6 +15,11 @@ reverse_registrar_id="aaaaa-aa"
 
 # TODO: this is temporary and will change
 cd ./jelly/dependencies/icns || exit 1
+
+dfx canister create registry
+dfx build registry
+
+registry_id=$(dfx canister id registry)
 
 # install registry
 dfx canister install registry \
