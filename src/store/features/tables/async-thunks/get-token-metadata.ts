@@ -13,14 +13,16 @@ export type GetTokenMetadataProps =
 export const getTokenMetadata = createAsyncThunk<
   TokenMetadataById | undefined,
   GetTokenMetadataProps
->('table/getTokenMetadata', async ({ id }) => {
+>('table/getTokenMetadata', async ({ id, collectionId }) => {
   try {
     const response = await axios.get(
-      KyasshuUrl.getNFTDetails({ id }),
+      KyasshuUrl.getNFTDetails({ id, collectionId }),
     );
-    const thumbnail = response?.data?.metadata?.thumbnail?.value?.TextContent;
+    const thumbnail =
+      response?.data?.metadata?.thumbnail?.value?.TextContent;
 
-    if (!thumbnail) throw Error('Oops! Failed to retrieve thumbnail from metadata');
+    if (!thumbnail)
+      throw Error('Oops! Failed to retrieve thumbnail from metadata');
 
     return {
       [id]: thumbnail,

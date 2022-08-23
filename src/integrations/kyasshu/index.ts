@@ -85,14 +85,14 @@ export const useNFTSFetcher = () => {
 
 export const useNFTDetailsFetcher = () => {
   const dispatch = useAppDispatch();
-  const { id } = useParams();
+  const { id, collectionId } = useParams();
 
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
-    if (!id) return;
+    if (!id || !collectionId) return;
 
-    dispatch(nftsActions.getNFTDetails({ id }));
-  }, [dispatch, id]);
+    dispatch(nftsActions.getNFTDetails({ id, collectionId }));
+  }, [dispatch, id, collectionId]);
 };
 
 export { KyasshuUrl, type NSKyasshuUrl } from './kyasshu-urls';
