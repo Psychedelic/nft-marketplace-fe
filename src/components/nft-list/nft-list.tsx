@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import InfiniteScroll from 'react-infinite-scroller';
 import { NftCard } from '../core/cards/nft-card';
@@ -24,6 +25,7 @@ export const NftList = () => {
   const dispatch = useAppDispatch();
   const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } =
     useNFTSStore();
+  const { collectionId } = useParams();
   const { isMyNfts, status, defaultFilters } = useFilterStore();
   const { principalId, isConnected } = usePlugStore();
   const traitsPayload = useTraitsPayload();
@@ -54,7 +56,13 @@ export const NftList = () => {
   const { sortBy } = useFilterStore();
 
   const loadMoreNFTS = () => {
-    if (loadingNFTs || !hasMoreNFTs || nextPageNo <= 0) return;
+    if (
+      loadingNFTs ||
+      !hasMoreNFTs ||
+      nextPageNo <= 0 ||
+      !collectionId
+    )
+      return;
 
     dispatch(
       nftsActions.getNFTs({
@@ -63,6 +71,7 @@ export const NftList = () => {
         order: 'd',
         page: nextPageNo,
         count: 25,
+        collectionId,
       }),
     );
   };

@@ -13,6 +13,8 @@ import { useTraitsPayload, usePriceValues } from './utils';
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
+  const { collectionId } = useParams();
+
   const [currentAbortController, setCurrentAbortController] =
     useState<AbortController>();
   const { traits, isMyNfts, status } = useFilterStore();
@@ -49,6 +51,8 @@ export const useNFTSFetcher = () => {
   }, [traits, isMyNfts, priceValues, sortBy, status]);
 
   useEffect(() => {
+    if (!collectionId) return;
+
     // Abort any pending request before proceeding
     if (currentAbortController) currentAbortController.abort();
 
@@ -64,10 +68,19 @@ export const useNFTSFetcher = () => {
         page: 0,
         count: 25,
         abortController,
+        collectionId,
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, traits, isMyNfts, priceValues, sortBy, status]);
+  }, [
+    dispatch,
+    traits,
+    isMyNfts,
+    priceValues,
+    sortBy,
+    status,
+    collectionId,
+  ]);
 };
 
 export const useNFTDetailsFetcher = () => {

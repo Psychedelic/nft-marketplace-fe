@@ -6,8 +6,9 @@ export class KyasshuUrl {
     order,
     page,
     count,
+    collectionId,
   }: NSKyasshuUrl.GetNFTsQueryParams): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${collectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
   }
 
   static getNFTDetails({
@@ -57,6 +58,7 @@ export namespace NSKyasshuUrl {
     sort: string;
     order: string;
     count?: number;
+    collectionId: string;
   };
 
   export type GetNFTDetailsQueryParams = {
