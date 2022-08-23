@@ -22,4 +22,4 @@ marketplaceId=$(dfx canister --network local call \
     }
   )" | cut -d '"' -f 2)
 
-echo "The collection marketplace id is $marketplaceId"
+echo "$marketplaceId"
