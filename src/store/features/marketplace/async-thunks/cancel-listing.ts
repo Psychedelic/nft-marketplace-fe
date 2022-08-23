@@ -2,24 +2,27 @@ import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';
-import { CancelListing } from '../marketplace-slice';
+import {
+  CancelListing,
+  CollectionDetails,
+} from '../marketplace-slice';
 import config from '../../../../config/env';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 
-export type CancelListingProps = DefaultCallbacks & CancelListing;
+export type CancelListingProps = DefaultCallbacks &
+  CancelListing &
+  CollectionDetails;
 
 export const cancelListing = createAsyncThunk<
   CancelListing | undefined,
   CancelListingProps
 >('marketplace/cancelListing', async (params, { dispatch }) => {
-  const { id, onSuccess, onFailure } = params;
+  const { id, collectionId, onSuccess, onFailure } = params;
 
-  const nonFungibleContractAddress = Principal.fromText(
-    config.nftCollectionId,
-  );
+  const nonFungibleContractAddress = Principal.fromText(collectionId);
   const userOwnedTokenId = BigInt(id);
 
   try {
