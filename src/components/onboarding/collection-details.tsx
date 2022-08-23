@@ -29,31 +29,48 @@ import {
   BannerImageFieldWrapper,
   BannerImageField,
   SubTextLabel,
+  ErrorMessage,
+  WarningIcon,
 } from './styles';
 import { ActionButton } from '../core';
 import { Icon } from '../icons';
 import { Website } from '../icons/custom';
+import {
+  onboardingActions,
+  useAppDispatch,
+  useOnboardingStore,
+} from '../../store';
 
 type CollectionDetailsProps = {
-  handleStep?: () => void;
+  handleStep: () => void;
 };
 
 const CollectionDetails = ({
   handleStep,
 }: CollectionDetailsProps) => {
+  const dispatch = useAppDispatch();
   const { t } = useTranslation();
-  const [collectionDetails, setCollectionDetails] = useState({
-    logo: '',
-    featured: '',
-    banner: '',
-    name: '',
-    description: '',
-    url: '',
-    website: '',
-    discord: '',
-    twitter: '',
-    royalties: '',
-  });
+
+  const { collectionDetails } = useOnboardingStore();
+
+  const handleChange = (e: any) => {
+    const { name, value, files, type } = e.target;
+    if (type === 'file') {
+      dispatch(
+        onboardingActions.setCollectionDetails({
+          ...collectionDetails,
+          [name]: URL.createObjectURL(files[0]),
+        }),
+      );
+    } else if (type === 'text' || name === 'description') {
+      dispatch(
+        onboardingActions.setCollectionDetails({
+          ...collectionDetails,
+          [name]: value,
+        }),
+      );
+    }
+  };
 
   return (
     <SectionWrapper>
@@ -77,16 +94,11 @@ const CollectionDetails = ({
               <InputWrapper>
                 <ImageInputField
                   type="file"
-                  id="img"
-                  name="img"
+                  id="logo"
+                  name="logo"
                   accept="image/*"
                   imageType="logo"
-                  onChange={(e: any) => {
-                    setCollectionDetails({
-                      ...collectionDetails,
-                      logo: URL.createObjectURL(e.target.files[0]),
-                    });
-                  }}
+                  onChange={handleChange}
                   isInputFilled={
                     collectionDetails.logo ? true : false
                   }
@@ -101,6 +113,12 @@ const CollectionDetails = ({
                   </IconWrapper>
                 )}
               </InputWrapper>
+              {collectionDetails.formErrors.logo && (
+                <ErrorMessage>
+                  <WarningIcon icon="warning" />
+                  {collectionDetails.formErrors.logo}
+                </ErrorMessage>
+              )}
             </SectionFormContentWrapper>
             <Divider gap="sm" />
             <SectionFormContentWrapper>
@@ -113,18 +131,11 @@ const CollectionDetails = ({
               <InputWrapper>
                 <ImageInputField
                   type="file"
-                  id="img"
-                  name="img"
+                  id="featured"
+                  name="featured"
                   accept="image/*"
                   imageType="featured"
-                  onChange={(e: any) => {
-                    setCollectionDetails({
-                      ...collectionDetails,
-                      featured: URL.createObjectURL(
-                        e.target.files[0],
-                      ),
-                    });
-                  }}
+                  onChange={handleChange}
                   isInputFilled={
                     collectionDetails.featured ? true : false
                   }
@@ -153,16 +164,11 @@ const CollectionDetails = ({
               <InputWrapper>
                 <ImageInputField
                   type="file"
-                  id="img"
-                  name="img"
+                  id="banner"
+                  name="banner"
                   accept="image/*"
                   imageType="banner"
-                  onChange={(e: any) => {
-                    setCollectionDetails({
-                      ...collectionDetails,
-                      banner: URL.createObjectURL(e.target.files[0]),
-                    });
-                  }}
+                  onChange={handleChange}
                   isInputFilled={
                     collectionDetails.banner ? true : false
                   }
@@ -193,15 +199,20 @@ const CollectionDetails = ({
                 placeholder={t(
                   'translation:onboarding.namePlaceholder',
                 )}
+                name="name"
                 type="text"
                 inputStyle="fullWidth"
-                onChange={(e) =>
-                  setCollectionDetails({
-                    ...collectionDetails,
-                    name: e.target.value,
-                  })
+                onChange={handleChange}
+                error={
+                  collectionDetails.formErrors.name ? true : false
                 }
               />
+              {collectionDetails.formErrors.name && (
+                <ErrorMessage>
+                  <WarningIcon icon="warning" />
+                  {collectionDetails.formErrors.name}
+                </ErrorMessage>
+              )}
             </SectionFormContentWrapper>
             <Divider gap="sm" />
             <SectionFormContentWrapper>
@@ -212,12 +223,9 @@ const CollectionDetails = ({
                 {t('translation:onboarding.descriptionInstruction')}
               </SubText>
               <SectionTextArea
-                onChange={(e) =>
-                  setCollectionDetails({
-                    ...collectionDetails,
-                    description: e.target.value,
-                  })
-                }
+                name="description"
+                onChange={handleChange}
+                form="text"
               />
             </SectionFormContentWrapper>
             <Divider gap="sm" />
@@ -232,14 +240,10 @@ const CollectionDetails = ({
                 placeholder={t(
                   'translation:onboarding.urlPlaceholder',
                 )}
+                name="url"
                 type="text"
                 inputStyle="fullWidth"
-                onChange={(e) =>
-                  setCollectionDetails({
-                    ...collectionDetails,
-                    url: e.target.value,
-                  })
-                }
+                onChange={handleChange}
               />
             </SectionFormContentWrapper>
             <Divider gap="sm" />
@@ -258,13 +262,9 @@ const CollectionDetails = ({
                   <SectionInputField
                     placeholder="yourwebsite.ooo"
                     type="text"
+                    name="website"
                     inputStyle="leftButton"
-                    onChange={(e) =>
-                      setCollectionDetails({
-                        ...collectionDetails,
-                        website: e.target.value,
-                      })
-                    }
+                    onChange={handleChange}
                   />
                 </LinkInputContent>
                 <LinkInputContent>
@@ -274,13 +274,9 @@ const CollectionDetails = ({
                   <SectionInputField
                     placeholder="https://discord.gg/"
                     type="text"
+                    name="discord"
                     inputStyle="leftButton"
-                    onChange={(e) =>
-                      setCollectionDetails({
-                        ...collectionDetails,
-                        discord: e.target.value,
-                      })
-                    }
+                    onChange={handleChange}
                   />
                 </LinkInputContent>
                 <LinkInputContent>
@@ -290,13 +286,9 @@ const CollectionDetails = ({
                   <SectionInputField
                     placeholder="https://twitter.com/"
                     type="text"
+                    name="twitter"
                     inputStyle="leftButton"
-                    onChange={(e) =>
-                      setCollectionDetails({
-                        ...collectionDetails,
-                        twitter: e.target.value,
-                      })
-                    }
+                    onChange={handleChange}
                   />
                 </LinkInputContent>
               </LinkInputContentWrapper>
@@ -312,14 +304,21 @@ const CollectionDetails = ({
               <SectionInputField
                 placeholder="0.00%"
                 type="text"
+                name="royalties"
                 inputStyle="fullWidth"
-                onChange={(e) =>
-                  setCollectionDetails({
-                    ...collectionDetails,
-                    royalties: e.target.value,
-                  })
+                onChange={handleChange}
+                error={
+                  collectionDetails.formErrors.royalties
+                    ? true
+                    : false
                 }
               />
+              {collectionDetails.formErrors.royalties && (
+                <ErrorMessage>
+                  <WarningIcon icon="warning" />
+                  {collectionDetails.formErrors.royalties}
+                </ErrorMessage>
+              )}
             </SectionFormContentWrapper>
             <Divider gap="sm" />
             <SectionFormContentWrapper>
@@ -362,7 +361,7 @@ const CollectionDetails = ({
                 size="small"
                 onClick={(e: any) => {
                   e.preventDefault();
-                  handleStep && handleStep();
+                  handleStep();
                 }}
               >
                 {t('translation:common.next')}

@@ -8,3 +8,4 @@ export * from './tables';
 export * from './marketplace';
 export * from './crowns';
 export * from './cap';
+export * from './onboarding';

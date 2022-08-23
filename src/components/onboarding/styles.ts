@@ -2,6 +2,7 @@ import { styled } from '../../stitches.config';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import * as Switch from '@radix-ui/react-switch';
 import { ActionButton } from '../core';
+import { Icon } from '../icons';
 
 export const OnboardingWrapper = styled('div', {
   paddingTop: '70px',
@@ -10,7 +11,7 @@ export const OnboardingWrapper = styled('div', {
 export const Progress = styled('div', {
   position: 'fixed',
   width: '100%',
-  zIndex: '1',
+  zIndex: '3',
 });
 
 export const ProgressStepBarContainer = styled('div', {
@@ -214,6 +215,11 @@ export const SectionInputField = styled('input', {
       borderless: {
         paddingLeft: '50px',
         zIndex: '1',
+      },
+    },
+    error: {
+      true: {
+        border: '1.5px solid $error',
       },
     },
   },
@@ -496,6 +502,14 @@ export const StyledIndicator = styled(RadioGroupPrimitive.Indicator, {
 export const DetailsButtonWrapper = styled('div', {
   width: '98px',
   marginTop: '35px',
+
+  variants: {
+    size: {
+      wide: {
+        width: '198px',
+      },
+    },
+  },
 });
 
 export const InputIconButton = styled('div', {
@@ -570,6 +584,10 @@ export const ErrorMessage = styled('p', {
   margin: '0',
 });
 
+export const WarningIcon = styled(Icon, {
+  marginRight: '8px',
+});
+
 export const NftSampleWrapper = styled('div', {
   display: 'flex',
 });
@@ -583,4 +601,20 @@ export const UnblockableContent = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+});
+
+export const FormSectionContainer = styled('div', {
+  variants: {
+    disable: {
+      true: {
+        opacity: '0.4',
+        pointerEvents: 'none',
+      },
+    },
+    enable: {
+      true: {
+        opacity: '1',
+      },
+    },
+  },
 });

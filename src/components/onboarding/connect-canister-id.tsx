@@ -10,6 +10,7 @@ import {
   SectionInputButton,
   InputContainer,
   ErrorMessage,
+  WarningIcon,
 } from './styles';
 
 type ConnectCanisterIdProps = {
@@ -67,6 +68,7 @@ const ConnectCanisterId = ({
           </InputContainer>
           {error && (
             <ErrorMessage>
+              <WarningIcon icon="warning" />
               {t('translation:onboarding.custodianError')}
             </ErrorMessage>
           )}
