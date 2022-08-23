@@ -6,8 +6,8 @@ jellyHubCanisterId=$(cd ./jelly && dfx canister id jelly-hub)
 fee=100
 fee_to=$(dfx identity get-principal)
 name="icns"
-fungibleStandard="DIP20"
-standard="DIP721v1"
+fungibleStandard="variant { DIP20 }"
+standard="variant { DIP721v2 }"
 
 marketplaceId=$(dfx canister --network local call \
   "$jellyHubCanisterId" deploy_marketplace "(
