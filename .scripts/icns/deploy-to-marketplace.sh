@@ -9,7 +9,7 @@ name="icns"
 fungibleStandard="DIP20"
 standard="DIP721v1"
 
-dfx canister --network local call \
+marketplaceId=$(dfx canister --network local call \
   "$jellyHubCanisterId" deploy_marketplace "(
     record {
       fee = $fee:nat;
@@ -20,11 +20,6 @@ dfx canister --network local call \
       fungible_standard = opt \"$fungibleStandard\";
       standard = opt \"$standard\";
     }
-  )"
-
-marketplaceId=$(dfx canister --network local call --query \
-  "$jellyHubCanisterId" get_marketplace_id "(
-    principal \"$icnsRegistryCanisterId\"
   )" | cut -d '"' -f 2)
 
 echo "The collection marketplace id is $marketplaceId"
