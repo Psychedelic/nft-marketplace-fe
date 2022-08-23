@@ -2,7 +2,11 @@ import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';
-import { MakeOffer, marketplaceActions } from '../marketplace-slice';
+import {
+  MakeOffer,
+  marketplaceActions,
+  CollectionDetails,
+} from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
@@ -12,13 +16,15 @@ import { errorMessageHandler } from '../../../../utils/error';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { TransactionStatus } from '../../../../constants/transaction-status';
 
-export type MakeOfferProps = DefaultCallbacks & MakeOffer;
+export type MakeOfferProps = DefaultCallbacks &
+  MakeOffer &
+  CollectionDetails;
 
 export const makeOffer = createAsyncThunk<
   MakeOffer | undefined,
   MakeOfferProps
 >('marketplace/makeOffer', async (params, { dispatch, getState }) => {
-  const { id, amount, onSuccess, onFailure } = params;
+  const { id, amount, collectionId, onSuccess, onFailure } = params;
 
   const {
     marketplace: { sumOfUserAllowance },
@@ -27,9 +33,7 @@ export const makeOffer = createAsyncThunk<
   const mkpContractAddress = Principal.fromText(
     config.marketplaceCanisterId,
   );
-  const crownsContractAddress = Principal.fromText(
-    config.nftCollectionId,
-  );
+  const crownsContractAddress = Principal.fromText(collectionId);
   const userOwnedTokenId = BigInt(id);
   const userOfferInPrice = parseAmountToE8S(amount);
 
