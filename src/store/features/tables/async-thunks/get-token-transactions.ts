@@ -10,10 +10,10 @@ import { parseTokenTransactions } from '../../../../utils/parser';
 export const getTokenTransactions = createAsyncThunk<
   NSKyasshuUrl.GetTokenTransactions | undefined,
   NSKyasshuUrl.GetTokenTransactions
->('table/getTokenTransactions', async ({ tokenId }) => {
+>('table/getTokenTransactions', async ({ tokenId, collectionId }) => {
   try {
     const response = await axios.get(
-      KyasshuUrl.getTokenTransactions({ tokenId }),
+      KyasshuUrl.getTokenTransactions({ tokenId, collectionId }),
     );
 
     if (
@@ -40,4 +40,3 @@ export const getTokenTransactions = createAsyncThunk<
     AppLog.error(error);
   }
 });
-

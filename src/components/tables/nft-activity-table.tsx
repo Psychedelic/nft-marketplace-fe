@@ -39,15 +39,18 @@ export const NFTActivityTable = () => {
 
   const recentCountOfNFTUpdates = recentNFTUpdatesCount();
 
-  const { id: tokenId } = useParams();
+  const { id: tokenId, collectionId } = useParams();
 
   useEffect(() => {
-    if (!tokenId) return;
+    if (!tokenId || !collectionId) return;
 
     dispatch(
-      tableActions.getTokenTransactions({ tokenId: Number(tokenId) }),
+      tableActions.getTokenTransactions({
+        tokenId: Number(tokenId),
+        collectionId,
+      }),
     );
-  }, [dispatch, tokenId, recentCountOfNFTUpdates]);
+  }, [dispatch, tokenId, collectionId, recentCountOfNFTUpdates]);
 
   const columns = useMemo(
     () => [
