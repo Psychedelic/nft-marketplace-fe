@@ -17,6 +17,8 @@ const App = () => {
   useThemeGlobals(theme);
   portalZIndexGlobals();
 
+  // TODO: Add collection not found component
+
   return (
     <div className={themeObject} id={ThemeRootElement}>
       <BrowserRouter>
