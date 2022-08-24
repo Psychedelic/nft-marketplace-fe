@@ -1,6 +1,6 @@
 #!/bin/bash
 
-crownsMockPath=./nft-marketplace/crowns/mocks
+crownsMockPath=./jelly/dependencies/crowns/mocks
 
 dependenciesHandler() {
   if [ ! -d "$crownsMockPath/node_modules" ];
@@ -47,8 +47,9 @@ mocks_chunk_size=100
 numberOfTokens=$((max_chunks*mocks_chunk_size))
 
 whoami=$(dfx identity whoami)
-alice=$(dfx identity use marketplace.alice > /dev/null 2>&1 && dfx identity get-principal)
-bob=$(dfx identity use marketplace.bob > /dev/null 2>&1 && dfx identity get-principal)
+# TODO: see dfx changes, require update
+# alice=$(dfx identity use marketplace.alice > /dev/null 2>&1 && dfx identity get-principal)
+# bob=$(dfx identity use marketplace.bob > /dev/null 2>&1 && dfx identity get-principal)
 
 whoami=$(dfx identity use "$whoami" > /dev/null 2>&1 && dfx identity get-principal)
 
@@ -59,19 +60,20 @@ userIdentityWarning "$whoami"
 printf "🤖 Mint process will mint a count of %s tokens\n\n" "$numberOfTokens"
 
 (
-  cd ./nft-marketplace/crowns/mocks || exit 1
+  cd $crownsMockPath || exit 1
 
-  USER_PRINCIPALS="[ \"$whoami\", \"$alice\", \"$bob\" ]" MAX_CHUNKS=$max_chunks CROWNS_ID=$(cd ../../crowns && dfx canister id crowns) WICP_ID=$(cd ../../wicp && dfx canister id wicp) node mint-crowns.js
+  # TODO: fix/update alice/bob PEM for latest dfx USER_PRINCIPALS="[\"$whoami\", \"$alice\", \"$bob\" ]"
+  USER_PRINCIPALS="[\"$whoami\" ]" MAX_CHUNKS=$max_chunks CROWNS_ID=$(cd ../../../ && dfx canister id crowns) WICP_ID=$(cd ../../../ && dfx canister id wicp) node mint-crowns.js
 )
 
 printf "👍 Mint process completed!\n\n"
 
-printf "🤖 Kyasshu will now cache %s tokens\n\n" "$numberOfTokens"
+# printf "🤖 Kyasshu will now cache %s tokens\n\n" "$numberOfTokens"
 
-yarn kyasshu:cache "$numberOfTokens"
+# yarn kyasshu:cache "$numberOfTokens"
 
-printf "👍 Kyasshu process completed!\n\n"
+# printf "👍 Kyasshu process completed!\n\n"
 
-printf "✍️ Add collection to Marketplace\n"
+# printf "✍️ Add collection to Marketplace\n"
 
-./nft-marketplace/.scripts/add-collection.sh
+# ./nft-marketplace/.scripts/add-collection.sh
