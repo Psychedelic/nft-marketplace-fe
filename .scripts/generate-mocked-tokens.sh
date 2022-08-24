@@ -92,14 +92,43 @@ printf "👍 Mint process completed!\n\n"
   echo "🧙‍♀️ Will now insert the metadata for the total supply $totalSupply, be patient..."
 
   for ((i=1; i <= "$totalSupply"; i++))
-  do  
+  do 
+    # TODO: call dip721_token_metadata
+    # parse required traits to populate insert
+    location="https://vzb3d-qyaaa-aaaam-qaaqq-cai.raw.ic0.app/0001.mp4"
+    thumbnail="https://vzb3d-qyaaa-aaaam-qaaqq-cai.raw.ic0.app/thumbnails/0001.png"
+    smallgem="valueA"
+    biggem="valueB"
+    base="valueC"
+    rim="valueD"
+
     dfx canister call \
       "$crownsMarketplaceId" insert "(
         vec {
           record {
             operation = \"metadata\";
             token_id = \"$i\";
-            nft_canister_id = principal \"$crownsCanisterId\"
+            nft_canister_id = principal \"$crownsCanisterId\";
+            traits = vec {
+              record {
+                record { \"smallgem\"; variant { TextContent = \"$smallgem\" } };
+                record { \"biggem\"; variant { TextContent = \"$biggem\" } };
+                record { \"base\"; variant { TextContent = \"$base\" } };
+                record { \"rim\"; variant { TextContent = \"$rim\" } };
+                record {
+                  \"location\";
+                  variant {
+                    TextContent = \"$location\"
+                  };
+                };
+                record {
+                  \"thumbnail\";
+                  variant {
+                    TextContent = \"$thumbnail\"
+                  };
+                };
+              }
+            }
           }
         }
       )"
