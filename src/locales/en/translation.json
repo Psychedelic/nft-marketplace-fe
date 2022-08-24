@@ -297,7 +297,10 @@
     "noNFTId": "No NFT found with that ID",
     "noOffersYet": "No offers yet",
     "noOffersMade": "No offers made",
-    "nftActivity": "No activity found"
+    "nftActivity": "No activity found",
+    "notFoundTitle": "404",
+    "notFoundDescription": "We can't find the page that you're looking for",
+    "homeButton": "Take me home"
   },
   "errorMessages": {
     "priceEmptyField": "You need to fill in both values",

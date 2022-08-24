@@ -2,8 +2,6 @@ import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { actorInstanceHandler } from '../../../../integrations/actor';
 import { marketplaceSlice } from '../marketplace-slice';
-import { notificationActions } from '../../notifications';
-import config from '../../../../config/env';
 import { AppLog } from '../../../../utils/log';
 
 export const getTokenListing = createAsyncThunk<any | undefined, any>(
@@ -53,11 +51,6 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
       };
     } catch (err) {
       AppLog.error(err);
-      thunkAPI.dispatch(
-        notificationActions.setErrorMessage(
-          `Oops! Failed to get token listing for id ${tokenId}`,
-        ),
-      );
       if (typeof onFailure === 'function') {
         onFailure(err);
       }

@@ -6,6 +6,7 @@ import NFTView from './views/NFTView';
 import OfferView from './views/OffersView';
 import UserActivityView from './views/UserActivityView';
 import LandingPageView from './views/LandingPageView';
+import PageNotFound from './views/PageNotFoundView';
 import { useTheme } from './hooks/use-theme';
 import { portalZIndexGlobals } from './utils/styles';
 import { ThemeRootElement } from './constants/common';
@@ -36,6 +37,8 @@ const App = () => {
             path="/activity/:id"
             element={<UserActivityView />}
           />
+          {/* 👇️ only match this when no other routes match */}
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
       <ToastHandler />

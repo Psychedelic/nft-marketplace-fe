@@ -8,6 +8,10 @@ export const Container = styled('div', {
   },
 });
 
+export const CollectionContainer = styled('div', {
+  width: '100%',
+});
+
 export const CollectionWrapper = styled('div', {
   paddingTop: '72px',
 
