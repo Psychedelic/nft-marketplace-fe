@@ -1,6 +1,7 @@
 #!/bin/bash
 
-crownsMockPath=./jelly/dependencies/crowns/mocks
+jellyDependenciesPath=./jelly/dependencies
+crownsMockPath="$jellyDependenciesPath/crowns/mocks"
 
 dependenciesHandler() {
   if [ ! -d "$crownsMockPath/node_modules" ];
@@ -68,12 +69,21 @@ printf "🤖 Mint process will mint a count of %s tokens\n\n" "$numberOfTokens"
 
 printf "👍 Mint process completed!\n\n"
 
-# printf "🤖 Kyasshu will now cache %s tokens\n\n" "$numberOfTokens"
+(
+  cd $jellyDependenciesPath || exit 1
 
-# yarn kyasshu:cache "$numberOfTokens"
+  jellyHubCanisterId=$(dfx canister id jelly-hub)
+  crownsCanisterId=$(dfx canister id crowns)
 
-# printf "👍 Kyasshu process completed!\n\n"
+  printf "✍️ Add collection to Marketplace\n"
 
-# printf "✍️ Add collection to Marketplace\n"
+  crownsMarketplaceId=$(dfx canister call "$jellyHubCanisterId" \
+    deploy_marketplace "(
+      record {
+        name = \"crowns_mkp\";
+        canister_id = principal \"$crownsCanisterId\";
+      }
+    )" | cut -d '"' -f 2)
 
-# ./nft-marketplace/.scripts/add-collection.sh
+  echo "👍 Deployed the Crowns marketplace $crownsMarketplaceId"
+)
