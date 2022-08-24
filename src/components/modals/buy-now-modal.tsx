@@ -68,7 +68,7 @@ export const BuyNowModal = ({
     DirectBuyStatusCodes.Pending,
   );
 
-  const { loadingWicpBalance, walletsWICPBalance } = usePlugStore();
+  const { loadingWicpBalance, wicpBalance } = usePlugStore();
 
   const transactionSteps = useSelector(
     (state: RootState) => state.marketplace.transactionSteps,
@@ -102,7 +102,7 @@ export const BuyNowModal = ({
       isBalanceInsufficient({
         loadingWicpBalance,
         amountRequired: Number(price),
-        walletsWICPBalance,
+        walletsWICPBalance: Number(wicpBalance),
       })
     ) {
       setModalStep(DirectBuyStatusCodes.InsufficientBalance);
