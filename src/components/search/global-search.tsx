@@ -89,6 +89,8 @@ export const GlobalSearch = ({
     revertMobileNavAnimation && revertMobileNavAnimation();
   };
 
+  // TODO: handle search over collections
+
   if (isMobileScreen) {
     return (
       <MobileSearchBar>
