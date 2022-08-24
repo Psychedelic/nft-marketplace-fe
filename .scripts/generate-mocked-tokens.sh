@@ -75,7 +75,7 @@ printf "👍 Mint process completed!\n\n"
   jellyHubCanisterId=$(dfx canister id jelly-hub)
   crownsCanisterId=$(dfx canister id crowns)
 
-  printf "✍️ Add collection to Marketplace\n"
+  echo "✍️ Add collection ($crownsCanisterId) to Marketplace"
 
   crownsMarketplaceId=$(dfx canister call "$jellyHubCanisterId" \
     deploy_marketplace "(
@@ -86,4 +86,24 @@ printf "👍 Mint process completed!\n\n"
     )" | cut -d '"' -f 2)
 
   echo "👍 Deployed the Crowns marketplace $crownsMarketplaceId"
+
+  totalSupply=$(dfx canister call "$crownsCanisterId" dip721_total_supply "()" | cut -d '(' -f 2 | cut -d ':' -f 1)
+
+  echo "🧙‍♀️ Will now insert the metadata for the total supply $totalSupply, be patient..."
+
+  for ((i=1; i <= "$totalSupply"; i++))
+  do  
+    dfx canister call \
+      "$crownsMarketplaceId" insert "(
+        vec {
+          record {
+            operation = \"metadata\";
+            token_id = \"$i\";
+            nft_canister_id = principal \"$crownsCanisterId\"
+          }
+        }
+      )"
+  done
+
+  echo "👍 Insertion of metadata for marketplace $crownsMarketplaceId completed!"
 )
