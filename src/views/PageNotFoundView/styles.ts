@@ -7,6 +7,7 @@ export const Container = styled('div', {
 });
 
 export const NotFoundWrapper = styled('div', {
+  minHeight: 'calc(100vh - 300px)',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
