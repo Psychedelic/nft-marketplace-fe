@@ -5,13 +5,22 @@ import { ModalOverlayContainer as ModalOverlayStyled } from './styles';
 export type ModalOverlayProps = {
   enableParticles?: boolean;
   children?: React.ReactChild;
+  type?: string | undefined;
 };
 
 export const ModalOverlay = forwardRef<
   HTMLDivElement,
   ModalOverlayProps
->(({ enableParticles, children = <ConfettiParticles /> }, ref) => (
-  <ModalOverlayStyled ref={ref}>
-    {enableParticles && children}
-  </ModalOverlayStyled>
-));
+>(
+  (
+    { enableParticles, type, children = <ConfettiParticles /> },
+    ref,
+  ) => (
+    <ModalOverlayStyled
+      ref={ref}
+      type={type === 'dark' ? 'dark' : undefined}
+    >
+      {enableParticles && children}
+    </ModalOverlayStyled>
+  ),
+);

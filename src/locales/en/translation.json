@@ -225,7 +225,8 @@
       "editOffer": "Edit Offer",
       "withdrawAssets": "Withdraw Assets",
       "withdrawalSuccess": "Withdrawal Success",
-      "notEnoughFunds": "Insufficient Funds"
+      "notEnoughFunds": "Insufficient Funds",
+      "approveXtc": "You’re almost done!"
     },
     "description": {
       "makeListing": "Enter the sale price you want for your NFT.",
@@ -242,7 +243,8 @@
       "offerAccepted": "Congrats, you successfully accepted an offer.",
       "withdrawAssets": "The following fungible balances remain in the canister due to an error completing a transaction. Review the assets and click retry to receive them.",
       "notEnoughFundsToPurchase": "Transfer funds to your wallet to continue with the purchase of this NFT. If you have another asset you would like to swap for WICP you can use Sonic.",
-      "notEnoughFundsToMakeOffer": "Your wallet does not have the minimum required funds to make this offer. Please acquire the funds and try again."
+      "notEnoughFundsToMakeOffer": "Your wallet does not have the minimum required funds to make this offer. Please acquire the funds and try again.",
+      "approveXtc": "We’re almost ready to spawn your collection! To do so you will need to approve an XTC transaction."
     },
     "labels": {
       "protocolFee": "Protocol fee",
@@ -264,7 +266,8 @@
       "done": "Done",
       "withdraw": "Withdraw",
       "close": "Close",
-      "swapOnSonic": "Swap on Sonic"
+      "swapOnSonic": "Swap on Sonic",
+      "approveXtc": "Approve XTC"
     }
   },
   "nftCard": {
@@ -323,8 +326,51 @@
   },
   "onboarding": {
     "connectCollection": "Connect your Collection",
+    "collectionDetails": "Collection Details",
     "canisterId": "Canister Id",
     "insertCanisterId": "Insert you collections canister id",
-    "validate": "Validate"
+    "validate": "Validate",
+    "collectionDetailsSubText": "Now, confirm/compleate the collection details",
+    "logo": "Logo",
+    "logoInstruction": "This is for your collection logo, 350 x 350 reccomended.",
+    "featuredImage": "Featured Image",
+    "featuredImageInstruction": "This will be used for featuring your collection. 600 x 400 recommended.",
+    "bannerImage": "Banner Image",
+    "bannerImageInstruction": "This will appear at the top of collection page. 1400 x 400 recommended.",
+    "name": "Name",
+    "nameInstruction": "This is the name of your collection, series, etc...",
+    "namePlaceholder": "CryptoDickbutts",
+    "description": "Description",
+    "descriptionInstruction": "This is the description of your collection, series, etc...",
+    "url": "URL",
+    "urlDescription": "Customize the URL you get for Jelly.",
+    "urlPlaceholder": "https://jelly.ooo/collection/untitled",
+    "link": "Link",
+    "linkDescription": "Add your links for better recognition of your collection.",
+    "royalties": "Royalties",
+    "royaltiesDescription": "Collect a fee when a user re-sells your NFT on Jelly.",
+    "explicitWarning": "Explicit & sensitive content",
+    "explicitWarningDescription": "Disable seeing explicit content.",
+    "yes": "Yes",
+    "no": "No",
+    "nftDetails": "NFT Details",
+    "nftDetailsSubText": "Lastly, check the NFTS details of your collection",
+    "custodianError": "You must be the canister ID custodian to proceed.",
+    "nftSamples": "NFT samples of [Collection Name]",
+    "nftSamplesDescription": "File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB",
+    "nftNameDescription": "Set the names of your NFTs",
+    "externalLink": "External link",
+    "externalLinkDescription": "Jelly will include a link to this URL on this item's detail page, so that users can click to learn more about it. You are welcome to link to your own webpage with more details.",
+    "nftItemsDescription": "This is the Description of your NFT items",
+    "nftCollection": "Collection",
+    "nftCollectionDetails": "This is the collection where your items will appear.",
+    "unblockableContent": "Unlockable Content",
+    "unblockableContentDescription": "Unlockable content that can only be revealed by the owner of the item. You can acess and edit them individually on the NFT page.",
+    "supply": "Supply",
+    "supplyDescription": "The number of items that can be minted. No gas cost to you!",
+    "blockchain": "Blockchain",
+    "blockchainPlaceholder": "Internet Computer",
+    "reviewCollection": "Review Collection",
+    "emptyFieldError": "You have to fill this field to continue. Please, try again."
   }
 }

@@ -45,7 +45,7 @@ export const Container = styled('div', {
   right: '0px',
   backgroundColor: '$navBackgroundColor',
   boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.08)',
-  zIndex: 2,
+  zIndex: 4,
 
   // variants
   variants: {

@@ -1,22 +1,42 @@
+import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   SectionWrapper,
-  SectionTextContent,
+  SectionContent,
   Header,
   SubText,
   SectionFormContent,
   SectionInputField,
   SectionInputButton,
   InputContainer,
+  ErrorMessage,
+  WarningIcon,
 } from './styles';
 
-const ConnectCanisterId = () => {
+type ConnectCanisterIdProps = {
+  handleStep?: () => void;
+};
+
+const ConnectCanisterId = ({
+  handleStep,
+}: ConnectCanisterIdProps) => {
   const { t } = useTranslation();
+  const [error, setError] = useState(false);
+  const [canisterId, setCanisterId] = useState('');
+
+  const handleSubmit = () => {
+    if (canisterId === '') {
+      setError(true);
+    } else {
+      setError(false);
+      handleStep && handleStep();
+    }
+  };
 
   return (
-    <SectionWrapper>
+    <SectionWrapper firstItem={true}>
       <div>
-        <SectionTextContent>
+        <SectionContent>
           <Header>
             1. {t('translation:onboarding.connectCollection')}
           </Header>
@@ -28,7 +48,7 @@ const ConnectCanisterId = () => {
               wait for the approval.
             </Trans>
           </SubText>
-        </SectionTextContent>
+        </SectionContent>
         <SectionFormContent>
           <SubText type="title" size="sm">
             {t('translation:onboarding.canisterId')}
@@ -36,20 +56,22 @@ const ConnectCanisterId = () => {
           <SubText size="sm">
             {t('translation:onboarding.insertCanisterId')}
           </SubText>
-          <InputContainer
-            style={{
-              display: 'flex',
-              position: 'relative',
-            }}
-          >
+          <InputContainer>
             <SectionInputField
               type="tel"
               placeholder="xxx-xxxxxxxxxx-xx"
+              onChange={(e) => setCanisterId(e.target.value)}
             />
-            <SectionInputButton>
+            <SectionInputButton role="submit" onClick={handleSubmit}>
               {t('translation:onboarding.validate')}
             </SectionInputButton>
           </InputContainer>
+          {error && (
+            <ErrorMessage>
+              <WarningIcon icon="warning" />
+              {t('translation:onboarding.custodianError')}
+            </ErrorMessage>
+          )}
         </SectionFormContent>
       </div>
     </SectionWrapper>

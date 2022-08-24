@@ -145,6 +145,14 @@ export const ModalOverlayContainer = styled(DialogPrimitive.Overlay, {
   '@md': {
     background: 'rgba(0, 0, 0, 0.6)',
   },
+
+  variants: {
+    type: {
+      dark: {
+        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+      },
+    },
+  },
 });
 
 export const ModalContent = styled(DialogPrimitive.Content, {
@@ -181,6 +189,14 @@ export const ModalContent = styled(DialogPrimitive.Content, {
     padding: '15px 0px 0px',
     borderRadius: '15px',
     animation: 'unset',
+  },
+
+  variants: {
+    size: {
+      small: {
+        width: '430px',
+      },
+    },
   },
 });
 
@@ -244,6 +260,14 @@ export const ModalTitle = styled(DialogPrimitive.Title, {
     fontSize: '24px',
     lineHeight: '29px',
   },
+
+  variants: {
+    alignText: {
+      center: {
+        textAlign: 'center',
+      },
+    },
+  },
 });
 
 export const ModalDescription = styled(DialogPrimitive.Description, {
@@ -261,6 +285,16 @@ export const ModalDescription = styled(DialogPrimitive.Description, {
     size: {
       medium: {
         maxWidth: '396px',
+      },
+    },
+    alignText: {
+      center: {
+        textAlign: 'center',
+      },
+    },
+    width: {
+      unset: {
+        maxWidth: 'unset',
       },
     },
   },
@@ -510,6 +544,14 @@ export const ModalButtonsList = styled('div', {
     justifyContent: 'center',
     flexWrap: 'wrap',
     marginTop: '20px',
+  },
+
+  variants: {
+    justifyContent: {
+      center: {
+        justifyContent: 'center',
+      },
+    },
   },
 });
 

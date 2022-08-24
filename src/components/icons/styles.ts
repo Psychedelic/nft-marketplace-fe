@@ -4,7 +4,6 @@ export const IconWrapper = styled('span', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-
   transition: 'transform 0.1s ease-in-out',
 
   variants: {
@@ -32,6 +31,11 @@ export const IconWrapper = styled('span', {
       },
       lg: {
         fontSize: '1.8rem',
+      },
+    },
+    colorType: {
+      input: {
+        color: '$textNeutralColor',
       },
     },
   },
