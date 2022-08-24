@@ -25,16 +25,18 @@ const PageNotFoundView = () => {
   return (
     <Container>
       <NotFoundWrapper>
-        <NotFoundIcon>404</NotFoundIcon>
+        <NotFoundIcon>
+          {t('translation:emptyStates.notFoundTitle')}
+        </NotFoundIcon>
         <NotFoundText>
-          We can't find the page that you're looking for
+          {t('translation:emptyStates.notFoundDescription')}
         </NotFoundText>
         <ButtonWrapper>
           <ActionButton
             type="primary"
             onClick={handleViewCollections}
           >
-            Take me home
+            {t('translation:emptyStates.homeButton')}
           </ActionButton>
         </ButtonWrapper>
       </NotFoundWrapper>
