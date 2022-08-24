@@ -2,17 +2,16 @@ import { styled } from '../../stitches.config';
 
 export const Container = styled('div', {
   backgroundColor: '$primaryBackgroundColor',
-  paddingTop: '120px',
   overflow: 'hidden',
 });
 
 export const NotFoundWrapper = styled('div', {
-  minHeight: 'calc(100vh - 300px)',
+  minHeight: 'calc(100vh - 80px)',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  margin: '28px auto',
+  margin: 'auto',
 });
 
 export const NotFoundIcon = styled('div', {

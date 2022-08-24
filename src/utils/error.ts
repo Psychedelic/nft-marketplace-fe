@@ -79,7 +79,7 @@ export const errorMessageHandler = (err: Err) => {
 };
 
 export const isUnsupportedPage = (error: ErrorParams) => {
-  if (error.data === ResponseStatus.UnsupportedCollection)
+  if (!error || error.data === ResponseStatus.UnsupportedCollection)
     return true;
 
   return false;

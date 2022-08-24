@@ -6,7 +6,9 @@ import {
   NSKyasshuUrl,
 } from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../notifications';
+import { settingsActions } from '../../settings';
 import { AppLog } from '../../../../utils/log';
+import { isUnsupportedPage } from '../../../../utils/error';
 
 export type GetNFTDetailsProps =
   NSKyasshuUrl.GetNFTDetailsQueryParams;
@@ -63,8 +65,15 @@ export const getNFTDetails = createAsyncThunk<
 
       // update store with loaded NFT details
       dispatch(nftsActions.setLoadedNFTDetails(nftDetails));
-    } catch (error) {
+    } catch (error: any) {
       AppLog.error(error);
+
+      if (isUnsupportedPage(error?.response)) {
+        dispatch(settingsActions.setPageNotFoundStatus(true));
+
+        return;
+      }
+
       dispatch(
         notificationActions.setErrorMessage(
           'Oops! Unable to fetch NFT details',
