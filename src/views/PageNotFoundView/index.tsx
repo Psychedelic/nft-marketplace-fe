@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ActionButton } from '../../components/core';
+import { useAppDispatch, settingsActions } from '../../store';
 import {
   Container,
   NotFoundWrapper,
@@ -15,10 +16,12 @@ import {
 
 const PageNotFoundView = () => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
   const handleViewCollections = () => {
+    dispatch(settingsActions.setPageNotFoundStatus(false));
     navigate('/', { replace: true });
   };
 

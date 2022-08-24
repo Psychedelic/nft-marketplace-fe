@@ -1,6 +1,11 @@
 import React from 'react';
 import { CollectionOverview, CollectionTabs } from '../../components';
-import { Container, CollectionWrapper } from './styles';
+import PageNotFoundView from '../PageNotFoundView';
+import {
+  Container,
+  CollectionContainer,
+  CollectionWrapper,
+} from './styles';
 import { useSettingsStore } from '../../store';
 
 /* --------------------------------------------------------------------------
@@ -8,14 +13,20 @@ import { useSettingsStore } from '../../store';
  * --------------------------------------------------------------------------*/
 
 const CollectionView = () => {
-  const { showAlerts } = useSettingsStore();
+  const { showAlerts, showPageNotFound } = useSettingsStore();
 
   return (
     <Container>
-      <CollectionWrapper showAlerts={showAlerts}>
-        <CollectionOverview />
-      </CollectionWrapper>
-      <CollectionTabs />
+      {!showPageNotFound ? (
+        <CollectionContainer>
+          <CollectionWrapper showAlerts={showAlerts}>
+            <CollectionOverview />
+          </CollectionWrapper>
+          <CollectionTabs />
+        </CollectionContainer>
+      ) : (
+        <PageNotFoundView />
+      )}
     </Container>
   );
 };

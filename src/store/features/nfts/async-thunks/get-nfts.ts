@@ -6,11 +6,13 @@ import {
   NSKyasshuUrl,
 } from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../notifications';
+import { settingsActions } from '../../settings';
 import { AppLog } from '../../../../utils/log';
 import { findLastAction } from '../../../../utils/nfts';
 import { isEmptyObject } from '../../../../utils/common';
 import { ResponseStatus } from '../../../../constants/response-status';
 import { SortOptions } from '../../../../constants/sort-options';
+import { isUnsupportedPage } from '../../../../utils/error';
 
 export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -142,6 +144,12 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
       if (error?.message === ResponseStatus.Canceled) return;
 
       AppLog.error(error);
+
+      if (isUnsupportedPage(error?.response)) {
+        dispatch(settingsActions.setPageNotFoundStatus(true));
+
+        return;
+      }
 
       // set NFTS failed to load
       dispatch(

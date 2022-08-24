@@ -12,6 +12,7 @@ export interface SettingsState {
   displayPriceApplyButton: boolean;
   showAlerts: boolean;
   assetsToWithdraw: AlertsData[];
+  showPageNotFound: boolean;
 }
 
 const initialState: SettingsState = {
@@ -19,6 +20,7 @@ const initialState: SettingsState = {
   displayPriceApplyButton: false,
   showAlerts: false,
   assetsToWithdraw: [],
+  showPageNotFound: false,
 };
 
 export const settingsSlice = createSlice({
@@ -41,6 +43,12 @@ export const settingsSlice = createSlice({
       }
 
       state.showAlerts = true;
+    },
+    setPageNotFoundStatus: (
+      state,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.showPageNotFound = action.payload;
     },
   },
 });

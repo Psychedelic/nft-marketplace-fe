@@ -1,4 +1,12 @@
+import { ResponseStatus } from '../constants/response-status';
+
 type Err = Record<string, any>;
+
+type ErrorParams = {
+  data: string;
+  status: number;
+  statusText?: string;
+};
 
 const toErrorMessage = (errorKey: string) => {
   console.warn(errorKey);
@@ -70,3 +78,9 @@ export const errorMessageHandler = (err: Err) => {
   }
 };
 
+export const isUnsupportedPage = (error: ErrorParams) => {
+  if (error.data === ResponseStatus.UnsupportedCollection)
+    return true;
+
+  return false;
+};

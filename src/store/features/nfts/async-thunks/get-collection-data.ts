@@ -6,8 +6,10 @@ import {
   NSKyasshuUrl,
 } from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../notifications';
+import { settingsActions } from '../../settings';
 import { AppLog } from '../../../../utils/log';
 import { marketplaceActions } from '../../marketplace/marketplace-slice';
+import { isUnsupportedPage } from '../../../../utils/error';
 
 export const getCollectionData = createAsyncThunk<
   void,
@@ -65,8 +67,15 @@ export const getCollectionData = createAsyncThunk<
       );
 
       dispatch(nftsActions.setCollectionData(actionPayload));
-    } catch (error) {
+    } catch (error: any) {
       AppLog.error(error);
+
+      if (isUnsupportedPage(error?.response)) {
+        dispatch(settingsActions.setPageNotFoundStatus(true));
+
+        return;
+      }
+
       dispatch(
         notificationActions.setErrorMessage(
           'Oops! Unable to fetch collection data',

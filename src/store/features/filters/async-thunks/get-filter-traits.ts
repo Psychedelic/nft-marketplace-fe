@@ -7,9 +7,11 @@ import {
 import { FilterConstants } from '../../../../constants';
 import { filterActions, FilterTraitsList } from '..';
 import { notificationActions } from '../../notifications';
+import { settingsActions } from '../../settings';
 import { AppLog } from '../../../../utils/log';
 import { NFTMetadata } from '../../../../declarations/legacy';
 import { parseTraits } from '../../../../utils/traits';
+import { isUnsupportedPage } from '../../../../utils/error';
 
 export type GetFilterTraitsProps =
   NSKyasshuUrl.GetFilterTraitsQueryParams;
@@ -91,8 +93,15 @@ export const getFilterTraits = createAsyncThunk<
       dispatch(filterActions.getAllFilters(responseData));
       dispatch(filterActions.setIsFilterTraitsLoading(false));
       dispatch(filterActions.setIsAlreadyFetched(true));
-    } catch (error) {
+    } catch (error: any) {
       AppLog.error(error);
+
+      if (isUnsupportedPage(error?.response)) {
+        dispatch(settingsActions.setPageNotFoundStatus(true));
+
+        return;
+      }
+
       dispatch(
         notificationActions.setErrorMessage(
           'Oops! Unable to fetch traits',
