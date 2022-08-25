@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   SectionWrapper,
@@ -265,6 +264,7 @@ const CollectionDetails = ({
                     name="website"
                     inputStyle="leftButton"
                     onChange={handleChange}
+                    primaryLinks={true}
                   />
                 </LinkInputContent>
                 <LinkInputContent>
@@ -277,6 +277,7 @@ const CollectionDetails = ({
                     name="discord"
                     inputStyle="leftButton"
                     onChange={handleChange}
+                    primaryLinks={true}
                   />
                 </LinkInputContent>
                 <LinkInputContent>
@@ -289,6 +290,7 @@ const CollectionDetails = ({
                     name="twitter"
                     inputStyle="leftButton"
                     onChange={handleChange}
+                    primaryLinks={true}
                   />
                 </LinkInputContent>
               </LinkInputContentWrapper>

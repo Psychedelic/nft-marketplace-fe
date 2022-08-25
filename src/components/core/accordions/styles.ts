@@ -35,6 +35,11 @@ export const AccordionStyle = styled(Accordion.Root, {
         maxWidth: '670px',
       },
     },
+    marginless: {
+      bottom: {
+        marginBottom: '0px',
+      },
+    },
   },
 });
 
@@ -233,6 +238,10 @@ export const AccordionTrigger = styled(Accordion.Trigger, {
       },
       medium: {
         padding: '25px 25px',
+      },
+      large: {
+        padding: '0px 15px 0px 50px',
+        height: '44px',
       },
     },
     borderTop: {
@@ -481,4 +490,12 @@ export const ItemCount = styled('span', {
   display: 'flex',
   alignItems: 'center',
   color: '$checkboxSelectedFiltersText',
+});
+
+export const CollectionAccordionTitle = styled('p', {
+  fontStyle: 'normal',
+  fontWeight: '400',
+  fontSize: '12px',
+  lineHeight: '16px',
+  color: '$textNeutralColor',
 });

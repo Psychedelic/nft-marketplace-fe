@@ -13,6 +13,7 @@ export interface OnboardingState {
     discord: string;
     twitter: string;
     royalties: string;
+    error: boolean;
     formErrors: {
       logo: string;
       name: string;
@@ -29,6 +30,7 @@ export interface OnboardingState {
     collection: string;
     supply: string;
     blockchain: string;
+    error: boolean;
     formErrors: {
       name: string;
       supply: string;
@@ -48,6 +50,7 @@ const initialState: OnboardingState = {
     discord: '',
     twitter: '',
     royalties: '',
+    error: false,
     formErrors: {
       logo: '',
       name: '',
@@ -64,6 +67,7 @@ const initialState: OnboardingState = {
     collection: '',
     supply: '',
     blockchain: '',
+    error: false,
     formErrors: {
       name: '',
       supply: '',
@@ -75,16 +79,10 @@ export const onboardingSlice = createSlice({
   name: 'onboarding',
   initialState,
   reducers: {
-    setCollectionDetails: (
-      state,
-      action: PayloadAction<any>,
-    ) => {
+    setCollectionDetails: (state, action: PayloadAction<any>) => {
       state.collectionDetails = action.payload;
     },
-    setNftDetails: (
-      state,
-      action: PayloadAction<any>,
-    ) => {
+    setNftDetails: (state, action: PayloadAction<any>) => {
       state.nftDetails = action.payload;
     },
   },

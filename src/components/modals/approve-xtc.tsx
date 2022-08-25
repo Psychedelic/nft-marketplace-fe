@@ -22,7 +22,11 @@ import {
  * Approve XTC
  * --------------------------------------------------------------------------*/
 
-export const ApproveXTC = () => {
+type ApproveXTCProps = {
+  type?: string;
+};
+
+export const ApproveXTC = ({ type }: ApproveXTCProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { nftDetails } = useOnboardingStore();
@@ -39,13 +43,11 @@ export const ApproveXTC = () => {
         ...nftDetails,
         formErrors:
           validateFields && validateFields(nftDetails.formErrors),
+        error: true,
       }),
     );
 
-    if (
-      nftDetails.formErrors.name !== '' ||
-      nftDetails.formErrors.supply !== ''
-    ) {
+    if (!nftDetails.error) {
       setTimeout(() => handleModalOpen(true), 1000);
     }
   };
@@ -73,7 +75,10 @@ export const ApproveXTC = () => {
       onOpenChange={handleModalOpen}
     >
       <DialogPrimitive.Trigger asChild>
-        <ActionButton type="primary" onClick={handleApproval}>
+        <ActionButton
+          type={type ? type : 'primary'}
+          onClick={handleApproval}
+        >
           {t('translation:onboarding.reviewCollection')}
         </ActionButton>
       </DialogPrimitive.Trigger>

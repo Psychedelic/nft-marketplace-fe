@@ -3,6 +3,7 @@ import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import * as Switch from '@radix-ui/react-switch';
 import { ActionButton } from '../core';
 import { Icon } from '../icons';
+import { SpinnerIcon } from '../icons/custom';
 
 export const OnboardingWrapper = styled('div', {
   paddingTop: '70px',
@@ -190,6 +191,7 @@ export const SectionInputField = styled('input', {
   padding: '0px 10px',
   background: '$backgroundColor',
   boxSizing: 'border-box',
+  position: 'relative',
 
   '&::placeholder': {
     fontStyle: 'normal',
@@ -205,10 +207,6 @@ export const SectionInputField = styled('input', {
       fullWidth: {
         margin: '10px 0',
       },
-      smallWidth: {
-        width: '23.5%',
-        marginLeft: '1.5%',
-      },
       leftButton: {
         paddingLeft: '66px',
       },
@@ -216,17 +214,40 @@ export const SectionInputField = styled('input', {
         paddingLeft: '50px',
         zIndex: '1',
       },
+      smallWithLabel: {
+        padding: '0px 0px 0px 25px',
+
+        '&:disabled': {
+          backgroundColor: 'unset',
+          cursor: 'not-allowed',
+        },
+      },
     },
     error: {
       true: {
         border: '1.5px solid $error',
       },
     },
+    primaryLinks: {
+      true: {
+        color: '$primary',
+
+        '&:focus': {
+          color: '$textNeutralColor',
+        },
+      },
+    },
   },
 
   '&:focus': {
-    outline: 'none',
-    borderColor: 'unset',
+    outline: 'none !important',
+  },
+
+  '&:disabled': {
+    backgroundColor: '$whiteSmokyGray',
+    border: '1.5px solid $borderColor',
+    cursor: 'not-allowed',
+    color: '$mediumLightBluishGrey',
   },
 });
 
@@ -243,6 +264,11 @@ export const SectionTextArea = styled('textarea', {
   background: '$backgroundColor',
   marginTop: '10px',
   resize: 'none',
+  fontFamily: 'inherit',
+
+  '&:focus': {
+    outline: 'none !important',
+  },
 });
 
 export const SectionInputButton = styled('div', {
@@ -263,6 +289,14 @@ export const SectionInputButton = styled('div', {
   borderTopRightRadius: '14px',
   borderBottomRightRadius: '14px',
   cursor: 'pointer',
+
+  variants: {
+    submitted: {
+      true: {
+        pointerEvents: 'none',
+      },
+    },
+  },
 });
 
 export const InputWrapper = styled('div', {
@@ -350,6 +384,7 @@ export const ImageInputField = styled('input', {
   },
 });
 
+// TO-D0: refactor to use single style for all image types
 export const LogoImageFieldWrapper = styled('div', {
   position: 'absolute',
   width: '100%',
@@ -410,24 +445,16 @@ export const BannerImageField = styled('img', {
   objectFit: 'cover',
 });
 
-export const NftImageFieldWrapper = styled('div', {
-  position: 'absolute',
-  width: '100%',
-  borderRadius: '10px',
+export const NftImage = styled('img', {
+  width: '160px',
   height: '164px',
-  top: '15px',
-  bottom: '0',
-  right: '0',
-  left: '0',
-  cursor: 'pointer',
-  zIndex: '-1',
+  borderRadius: '10px',
 });
 
-export const NftImageField = styled('img', {
-  width: '100%',
-  borderRadius: '10px',
-  height: '100%',
-  objectFit: 'cover',
+export const NftImageLabel = styled('p', {
+  margin: '0',
+  color: '$textNeutralColor',
+  fontSize: '14px',
 });
 
 export const IconWrapper = styled('div', {
@@ -489,6 +516,7 @@ export const StyledIndicator = styled(RadioGroupPrimitive.Indicator, {
   width: '100%',
   height: '100%',
   position: 'relative',
+
   '&::after': {
     content: '""',
     display: 'block',
@@ -524,11 +552,15 @@ export const InputIconButton = styled('div', {
   borderTopLeftRadius: '14px',
   borderBottomLeftRadius: '14px',
   border: '1.5px solid $borderColor',
+  zIndex: '2',
 
   variants: {
     borderless: {
-      true: {
+      right: {
         borderRight: 'unset',
+      },
+      full: {
+        border: 'none',
       },
     },
   },
@@ -590,6 +622,7 @@ export const WarningIcon = styled(Icon, {
 
 export const NftSampleWrapper = styled('div', {
   display: 'flex',
+  marginTop: '10px',
 });
 
 export const NftNameDetailsWrapper = styled('div', {
@@ -617,4 +650,41 @@ export const FormSectionContainer = styled('div', {
       },
     },
   },
+});
+
+export const RangeWrapper = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  position: 'relative',
+  width: '23.5%',
+  marginLeft: '1.5%',
+});
+
+export const RangeLabel = styled('p', {
+  margin: '0',
+  position: 'absolute',
+  left: '10px',
+  zIndex: '1',
+  background: '#F1F2F3',
+  borderRadius: '4px',
+  width: '15px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '14px',
+});
+
+export const SpinnerWrapper = styled('div', {
+  position: 'absolute',
+  top: '0',
+  bottom: '0',
+  left: '0',
+  right: '0',
+  margin: '0 auto',
+  zIndex: '5',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: 'rgba(0, 0, 0, 0.6)',
+  height: '100%',
 });

@@ -62,6 +62,8 @@ export const {
       lightGray: '#E2DFDF',
       darkGray: '#B1B1B1',
       mediumLightBlue: '#ABB2C2',
+      whiteSmokyGray: '#F3F3F3',
+      mediumLightBluishGrey: '#9297A6',
     },
     space: {},
     fonts: {},
@@ -135,6 +137,8 @@ export const darkTheme = createTheme({
     lightGray: '#E2DFDF',
     darkGray: '#B1B1B1',
     mediumLightBlue: '#ABB2C2',
+    whiteSmokyGray: '#F3F3F3',
+    mediumLightBluishGrey: '#9297A6',
   },
   shadows: {
     default: 'none',

@@ -51,6 +51,10 @@ const Onboarding = () => {
         formErrors: validateFields(collectionDetails),
       }),
     );
+
+    if (!collectionDetails.error) {
+      setStep([...step, '3']);
+    } else return;
   };
 
   const validateFields = (values: any) => {
@@ -76,19 +80,16 @@ const Onboarding = () => {
   };
 
   const handleStep = () => {
-    if (step.length === 1) {
-      setStep([...step, '2']);
-    } else if (step.length === 2) {
-      handleCollectionDetailsSubmit();
-
-      if (
-        collectionDetails.formErrors.logo !== '' ||
-        collectionDetails.formErrors.name !== '' ||
-        collectionDetails.formErrors.royalties !== ''
-      ) {
-        setStep([...step, '3']);
-      } else return;
-    } else return;
+    switch (step.length) {
+      case 1:
+        setStep([...step, '2']);
+        break;
+      case 2:
+        handleCollectionDetailsSubmit();
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -107,7 +108,7 @@ const Onboarding = () => {
           </ProgressStepBarContainer>
           <ButtonWrapper>
             {step.includes('3') ? (
-              <ApproveXTC />
+              <ApproveXTC type="active" />
             ) : (
               <StyledActionButton
                 type="active"

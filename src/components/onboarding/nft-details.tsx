@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   SectionWrapper,
@@ -20,10 +19,8 @@ import {
   InputIconButton,
   StyledImgPlaceholder,
   InputWrapper,
-  ImageInputField,
-  NftImageFieldWrapper,
-  NftImageField,
-  IconWrapper,
+  NftImage,
+  NftImageLabel,
   StyledSwitch,
   StyledThumb,
   NftSampleWrapper,
@@ -32,16 +29,21 @@ import {
   ErrorMessage,
   WarningIcon,
   DetailsButtonWrapper,
+  RangeWrapper,
+  RangeLabel,
 } from './styles';
 import collectionPlaceholder from '../../assets/collection-input-placeholder.svg';
 import blockchainPlaceholder from '../../assets/icp-logo.svg';
-import { Icon } from '../icons';
 import { ApproveXTC } from '../modals/approve-xtc';
 import {
   onboardingActions,
   useAppDispatch,
   useOnboardingStore,
 } from '../../store';
+import placeholderImage from '../../assets/nft-placeholder-image.png';
+import placeholderImageTwo from '../../assets/nft-placeholder-image(2).png';
+import placeholderImageThree from '../../assets/nft-placeholder-image(3).png';
+import { CollectionAccordion } from '../core/accordions/collection-accordion';
 
 const NftDetails = () => {
   const dispatch = useAppDispatch();
@@ -93,78 +95,31 @@ const NftDetails = () => {
                 </SubText>
                 <NftSampleWrapper>
                   <InputWrapper>
-                    <ImageInputField
-                      type="file"
-                      id="nftOne"
-                      name="nftOne"
-                      accept="image/*"
-                      imageType="nft"
-                      onChange={handleChange}
-                      isInputFilled={nftDetails.nftOne ? true : false}
+                    <NftImage
+                      src={placeholderImage}
+                      alt="placeholder-image"
                     />
-                    {nftDetails.nftOne ? (
-                      <NftImageFieldWrapper>
-                        <NftImageField src={nftDetails.nftOne} />
-                      </NftImageFieldWrapper>
-                    ) : (
-                      <IconWrapper>
-                        <Icon
-                          icon="myNfts"
-                          colorType="input"
-                          size="lg"
-                        />
-                      </IconWrapper>
-                    )}
+                    <NftImageLabel>
+                      {t('translation:onboarding.namePlaceholder')} #1
+                    </NftImageLabel>
                   </InputWrapper>
                   <InputWrapper type="nft">
-                    <ImageInputField
-                      type="file"
-                      id="nftTwo"
-                      name="nftTwo"
-                      accept="image/*"
-                      imageType="nft"
-                      onChange={handleChange}
-                      isInputFilled={nftDetails.nftTwo ? true : false}
+                    <NftImage
+                      src={placeholderImageTwo}
+                      alt="placeholder-image"
                     />
-                    {nftDetails.nftTwo ? (
-                      <NftImageFieldWrapper>
-                        <NftImageField src={nftDetails.nftTwo} />
-                      </NftImageFieldWrapper>
-                    ) : (
-                      <IconWrapper>
-                        <Icon
-                          icon="myNfts"
-                          colorType="input"
-                          size="lg"
-                        />
-                      </IconWrapper>
-                    )}
+                    <NftImageLabel>
+                      {t('translation:onboarding.namePlaceholder')} #2
+                    </NftImageLabel>
                   </InputWrapper>
                   <InputWrapper>
-                    <ImageInputField
-                      type="file"
-                      id="nftThree"
-                      name="nftThree"
-                      accept="image/*"
-                      imageType="nft"
-                      onChange={handleChange}
-                      isInputFilled={
-                        nftDetails.nftThree ? true : false
-                      }
+                    <NftImage
+                      src={placeholderImageThree}
+                      alt="placeholder-image"
                     />
-                    {nftDetails.nftThree ? (
-                      <NftImageFieldWrapper>
-                        <NftImageField src={nftDetails.nftThree} />
-                      </NftImageFieldWrapper>
-                    ) : (
-                      <IconWrapper>
-                        <Icon
-                          icon="myNfts"
-                          colorType="input"
-                          size="lg"
-                        />
-                      </IconWrapper>
-                    )}
+                    <NftImageLabel>
+                      {t('translation:onboarding.namePlaceholder')} #3
+                    </NftImageLabel>
                   </InputWrapper>
                 </NftSampleWrapper>
               </SectionFormContentWrapper>
@@ -187,16 +142,24 @@ const NftDetails = () => {
                     onChange={handleChange}
                     error={nftDetails.formErrors.name ? true : false}
                   />
-                  <SectionInputField
-                    placeholder="1"
-                    type="text"
-                    inputStyle="smallWidth"
-                  />
-                  <SectionInputField
-                    placeholder="10.000"
-                    type="text"
-                    inputStyle="smallWidth"
-                  />
+                  <RangeWrapper>
+                    <RangeLabel>#</RangeLabel>
+                    <SectionInputField
+                      placeholder="1"
+                      type="text"
+                      inputStyle="smallWithLabel"
+                      disabled
+                    />
+                  </RangeWrapper>
+                  <RangeWrapper>
+                    <RangeLabel>#</RangeLabel>
+                    <SectionInputField
+                      placeholder="10.000"
+                      type="text"
+                      inputStyle="smallWithLabel"
+                      disabled
+                    />
+                  </RangeWrapper>
                 </NftNameDetailsWrapper>
                 {nftDetails.formErrors.name && (
                   <ErrorMessage>
@@ -245,21 +208,13 @@ const NftDetails = () => {
                 </SubText>
                 <div>
                   <LinkInputContent>
-                    <InputIconButton borderless={true}>
+                    <InputIconButton borderless="full">
                       <StyledImgPlaceholder
                         src={collectionPlaceholder}
                         alt=""
                       />
                     </InputIconButton>
-                    <SectionInputField
-                      placeholder={t(
-                        'translation:onboarding.namePlaceholder',
-                      )}
-                      type="text"
-                      name="collection"
-                      inputStyle="borderless"
-                      onChange={handleChange}
-                    />
+                    <CollectionAccordion />
                   </LinkInputContent>
                 </div>
               </SectionFormContentWrapper>
@@ -350,7 +305,7 @@ const NftDetails = () => {
                 </SubText>
                 <div>
                   <LinkInputContent>
-                    <InputIconButton borderless={true}>
+                    <InputIconButton borderless="right">
                       <StyledImgPlaceholder
                         src={blockchainPlaceholder}
                         alt=""
@@ -364,6 +319,7 @@ const NftDetails = () => {
                       name="blockchain"
                       inputStyle="borderless"
                       onChange={handleChange}
+                      disabled
                     />
                   </LinkInputContent>
                 </div>
