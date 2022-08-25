@@ -8,9 +8,9 @@ printf "🤖 Start env (%s)\n" "$env"
 
 if [[ $env == "development" ]]; then
   MKP_ID=$(cd nft-marketplace && dfx canister id marketplace)
-  CROWNS_ID=$(cd nft-marketplace/crowns && dfx canister id crowns)
-  WICP_ID=$(cd nft-marketplace/wicp && dfx canister id wicp) 
-  CAP_ID=$(cd nft-marketplace/cap && dfx canister id cap-router)
+  CROWNS_ID=$(cd jelly && dfx canister id crowns)
+  WICP_ID=$(cd jelly && dfx canister id wicp) 
+  CAP_ID=$(cd jelly && dfx canister id cap-router)
 
   printf "🤖 Marketplace id (%s), CrownsId (%s), WicpId (%s), CapId (%s)\n" "$MKP_ID" "$CROWNS_ID" "$WICP_ID" "$CAP_ID"
 
