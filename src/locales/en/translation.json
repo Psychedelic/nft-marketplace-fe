@@ -330,7 +330,7 @@
     "canisterId": "Canister Id",
     "insertCanisterId": "Insert you collections canister id",
     "validate": "Validate",
-    "collectionDetailsSubText": "Now, confirm/compleate the collection details",
+    "collectionDetailsSubText": "Now, confirm/complete the collection details",
     "logo": "Logo",
     "logoInstruction": "This is for your collection logo, 350 x 350 reccomended.",
     "featuredImage": "Featured Image",
@@ -369,7 +369,7 @@
     "supply": "Supply",
     "supplyDescription": "The number of items that can be minted. No gas cost to you!",
     "blockchain": "Blockchain",
-    "blockchainPlaceholder": "Internet Computer",
+    "blockchainPlaceholder": "Internet Computer blockchain network",
     "reviewCollection": "Review Collection",
     "emptyFieldError": "You have to fill this field to continue. Please, try again."
   }

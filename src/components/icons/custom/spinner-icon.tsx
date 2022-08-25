@@ -6,12 +6,19 @@ const Circle = styled('circle', {
 
 export interface SpinnerIconProps {
   size?: string;
+  color?: string | undefined;
 }
 
 export const SpinnerIcon: React.VFC<SpinnerIconProps> = ({
   size = '24px',
+  color,
 }: SpinnerIconProps) => (
-  <svg width={size} height={size} viewBox="0 0 100 100">
+  <svg
+    width={size}
+    height={size}
+    color={color ? color : undefined}
+    viewBox="0 0 100 100"
+  >
     <g transform="translate(80,50)">
       <g transform="rotate(0)">
         <Circle cx="0" cy="0" r="6" fillOpacity="1">
