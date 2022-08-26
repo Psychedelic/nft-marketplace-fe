@@ -1,12 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  SearchResultsContainer,
   ItemsEmptyContainer,
   ItemsListContainer,
   ItemDetailsWrapper,
   ItemDetails,
   ItemLogo,
+  ItemNameContainer,
   ItemName,
+  ItemDescription,
   PriceDetails,
   WICPContainer,
   WICPText,
@@ -36,7 +39,7 @@ const NFTsSearchResults = ({
   const { searchResults, loadingSearch } = useFilterStore();
 
   return (
-    <>
+    <SearchResultsContainer>
       {searchText &&
         !loadingSearch &&
         (searchResults.length ? (
@@ -51,7 +54,10 @@ const NFTsSearchResults = ({
                   <ItemDetailsWrapper>
                     <ItemDetails>
                       <ItemLogo src={nft.preview} alt="crowns" />
-                      <ItemName>{`${nft.name} ${nft.id}`}</ItemName>
+                      <ItemNameContainer>
+                        <ItemName>{`#${nft.id}`}</ItemName>
+                        <ItemDescription>{nft.name}</ItemDescription>
+                      </ItemNameContainer>
                     </ItemDetails>
                     <PriceDetails>
                       {Boolean(nft?.wicpPrice) && (
@@ -92,7 +98,7 @@ const NFTsSearchResults = ({
           <SpinnerIcon />
         </LoadingWrapper>
       )}
-    </>
+    </SearchResultsContainer>
   );
 };
 

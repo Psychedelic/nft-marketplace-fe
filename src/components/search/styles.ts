@@ -101,6 +101,11 @@ export const SearchContainer = styled('div', {
   marginBottom: '10px',
 });
 
+export const SearchResultsContainer = styled('div', {
+  position: 'relative',
+  minHeight: '200px',
+});
+
 export const ItemsEmptyContainer = styled('div', {
   // base styles
   display: 'flex',
@@ -139,11 +144,8 @@ export const ItemsListContainer = styled('div', {
 export const ItemDetailsContainer = styled('div', {
   // base styles
   width: '560px',
-  padding: '32px 20px',
-  border: '1.5px solid $borderColor',
-  background: '$chipsBackgroundColor',
-  borderRadius: '14px',
-  margin: '5px 0px',
+  padding: '12px 16px',
+  borderRadius: '16px',
 
   // variants
   variants: {
@@ -159,7 +161,7 @@ export const ItemDetailsContainer = styled('div', {
 
   '&:hover': {
     cursor: 'pointer',
-    background: '$backgroundColor',
+    background: '$gainsboroColor',
   },
 
   '@md': {
@@ -181,7 +183,6 @@ export const ItemDetailsWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  width: '90%',
 });
 
 export const ItemDetails = styled('div', {
@@ -194,14 +195,27 @@ export const ItemLogo = styled('img', {
   width: '40px',
   height: '40px',
   marginRight: '12px',
-  borderRadius: '12px',
+  borderRadius: '6px',
+});
+
+export const ItemNameContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
 });
 
 export const ItemName = styled('div', {
-  fontSize: '16px',
+  fontSize: '15px',
   fontWeight: '600',
-  lineHeight: '20px',
+  lineHeight: '22px',
   color: '$mainTextColor',
+});
+
+export const ItemDescription = styled('div', {
+  fontSize: '13px',
+  fontWeight: '500',
+  lineHeight: '20px',
+  color: '$textNeutralColor',
+  textAlign: 'right',
 });
 
 export const PriceDetails = styled('div', {
@@ -220,7 +234,7 @@ export const WICPContainer = styled('div', {
   variants: {
     size: {
       small: {
-        marginBottom: '4px',
+        marginBottom: '0px',
       },
 
       large: {
@@ -231,16 +245,16 @@ export const WICPContainer = styled('div', {
 });
 
 export const WICPText = styled('div', {
-  fontSize: '16px',
+  fontSize: '14px',
   fontWeight: '600',
-  lineHeight: '20px',
+  lineHeight: '22px',
   color: '$mainTextColor',
 
   // variants
   variants: {
     size: {
       small: {
-        fontSize: '16px',
+        fontSize: '14px',
       },
 
       large: {
@@ -268,7 +282,7 @@ export const WICPLogo = styled('img', {
 });
 
 export const PriceText = styled('div', {
-  fontSize: '16px',
+  fontSize: '13px',
   fontWeight: '500',
   lineHeight: '20px',
   color: '#777E90',
@@ -286,7 +300,7 @@ export const PriceText = styled('div', {
 
 export const SubText = styled('span', {
   '&:first-child': {
-    marginRight: '10px',
+    marginRight: '2px',
   },
 });
 
