@@ -76,6 +76,7 @@ export const getSearchResults = createAsyncThunk<
         const searchResultData = {
           id: nft.index,
           name: 'Cap Crowns',
+          canister: nft.canister,
           price:
             priceInUSD *
             Number(parseE8SAmountToWICP(nft.currentPrice)),

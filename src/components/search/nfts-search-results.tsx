@@ -46,7 +46,7 @@ const NFTsSearchResults = ({
           <ItemsListContainer>
             {searchResults?.map((nft) => (
               <StyledRouterLink
-                to={`/${config.nftCollectionId}/nft/${nft.id}`}
+                to={`/${nft.canister}/nft/${nft.id}`}
                 onClick={closeDropDown}
                 key={nft.id}
               >
