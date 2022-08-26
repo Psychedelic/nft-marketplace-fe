@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   SearchResultsContainer,
@@ -33,6 +33,20 @@ const CollectionsSearchResults = ({
     mockCollectionsList,
   );
   const [loadingSearch, setLoadingSearch] = useState(false);
+
+  useEffect(() => {
+    // TODO: integrate with API to search for collections
+    setLoadingSearch(true);
+    const newSearchResults = mockCollectionsList.filter(
+      (collection) => {
+        return collection.name
+          .toLowerCase()
+          .includes(searchText.toLowerCase());
+      },
+    );
+    setSearchResults(newSearchResults);
+    setLoadingSearch(false);
+  }, [searchText]);
 
   return (
     <SearchResultsContainer>
