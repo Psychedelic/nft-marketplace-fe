@@ -90,7 +90,8 @@
     "kyasshu:start": ".scripts/kyasshu/start.sh",
     "kyasshu:cache": ".scripts/kyasshu/cache-tokens.sh",
     "kyasshu:reset": "pkill java",
-    "mock:generate-tokens": ".scripts/generate-mocked-tokens.sh"
+    "mock:generate-tokens": ".scripts/generate-mocked-tokens.sh",
+    "mock:generate-tokens-v2": ".scripts/generate-mocked-tokens-v2.sh"
   },
   "browserslist": {
     "production": [
