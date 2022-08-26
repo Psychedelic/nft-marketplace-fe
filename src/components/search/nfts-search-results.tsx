@@ -84,7 +84,7 @@ const NFTsSearchResults = ({
           </ItemsListContainer>
         ) : (
           <ItemsEmptyContainer>
-            {t('translation:emptyStates.noNFTId')}
+            {t('translation:emptyStates.noNFTsFound')}
           </ItemsEmptyContainer>
         ))}
       {!searchText && !loadingSearch && (

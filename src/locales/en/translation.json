@@ -302,7 +302,9 @@
     "nftActivity": "No activity found",
     "notFoundTitle": "404",
     "notFoundDescription": "We can't find the page that you're looking for",
-    "homeButton": "Take me home"
+    "homeButton": "Take me home",
+    "noNFTsFound": "No NFTs found",
+    "noCollectionsFound": "No Collections found"
   },
   "errorMessages": {
     "priceEmptyField": "You need to fill in both values",

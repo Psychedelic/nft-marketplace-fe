@@ -67,7 +67,7 @@ const CollectionsSearchResults = ({
           </ItemsListContainer>
         ) : (
           <ItemsEmptyContainer>
-            {t('translation:emptyStates.noNFTId')}
+            {t('translation:emptyStates.noCollectionsFound')}
           </ItemsEmptyContainer>
         ))}
       {!searchText && !loadingSearch && (
