@@ -24,7 +24,6 @@ import { useFilterStore } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
 import wicpIcon from '../../assets/wicp.svg';
 import { SpinnerIcon } from '../icons/custom';
-import config from '../../config/env';
 
 type NFTsSearchResultsTypes = {
   searchText: string;

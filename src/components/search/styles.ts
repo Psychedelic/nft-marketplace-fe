@@ -212,7 +212,20 @@ export const ItemDescription = styled('div', {
   fontWeight: '500',
   lineHeight: '20px',
   color: '$textNeutralColor',
-  textAlign: 'right',
+  textAlign: 'left',
+});
+
+export const ItemMetaDataContainer = styled('div', {
+  // base styles
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+export const ItemMetaTitle = styled('div', {
+  fontSize: '14px',
+  fontWeight: '600',
+  lineHeight: '22px',
+  color: '$mainTextColor',
 });
 
 export const PriceDetails = styled('div', {

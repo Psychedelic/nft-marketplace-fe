@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import NFTsSearchResults from './nfts-search-results';
+import CollectionsSearchResults from './collections-search-results';
 import {
   TabsRoot,
   TabsTrigger,
@@ -35,7 +36,10 @@ const SearchResults = ({
         />
       </TabsContent>
       <TabsContent value="collections">
-        <div>collections</div>
+        <CollectionsSearchResults
+          searchText={searchText}
+          closeDropDown={closeDropDown}
+        />
       </TabsContent>
     </TabsRoot>
   );
