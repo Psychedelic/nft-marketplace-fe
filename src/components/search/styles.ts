@@ -1,4 +1,5 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import * as Tabs from '@radix-ui/react-tabs';
 import { styled, keyframes } from '../../stitches.config';
 import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '../icons';
@@ -319,7 +320,7 @@ export const CloseIcon = styled(Icon, {
         display: 'flex',
         top: 'unset',
         alignItems: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
       },
     },
   },
@@ -329,4 +330,61 @@ export const MobileSearchBar = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
+});
+
+export const TabsRoot = styled(Tabs.Root, {
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: '$backgroundColor',
+
+  '&:focus': {
+    outline: 'none',
+  },
+});
+
+export const TabsList = styled(Tabs.List, {
+  flexShrink: 0,
+  display: 'flex',
+  borderBottom: '1px solid $borderColor',
+  marginBottom: '12px',
+
+  '&:focus': {
+    outline: 'none',
+  },
+});
+
+export const TabsTrigger = styled(Tabs.Trigger, {
+  backgroundColor: '$backgroundColor',
+  padding: '0 20px',
+  height: 45,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontweight: '500',
+  fontSize: '18px',
+  lineHeight: '22px',
+  border: '0px',
+  cursor: 'pointer',
+  fontFamily: 'proxima-nova, sans-serif',
+
+  '&[data-state="active"]': {
+    color: '$primary',
+    boxShadow:
+      'currentcolor 0px -1px 0px 0px inset, currentcolor 0px 1px 0px 0px',
+  },
+  '&[data-state="inactive"]': {
+    color: '$mainTextColor',
+  },
+  '&:hover': {
+    color: '$primary',
+  },
+  '&:focus': {
+    outline: 'none',
+  },
+});
+
+export const TabsContent = styled(Tabs.Content, {
+  '&:focus': {
+    outline: 'none',
+  },
 });

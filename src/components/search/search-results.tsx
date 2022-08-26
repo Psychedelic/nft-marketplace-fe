@@ -1,5 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import NFTsSearchResults from './nfts-search-results';
+import {
+  TabsRoot,
+  TabsTrigger,
+  TabsList,
+  TabsContent,
+} from './styles';
 
 type SearchResultsTypes = {
   searchText: string;
@@ -13,12 +19,25 @@ const SearchResults = ({
   const { t } = useTranslation();
 
   return (
-    <>
-      <NFTsSearchResults
-        searchText={searchText}
-        closeDropDown={closeDropDown}
-      />
-    </>
+    <TabsRoot defaultValue="nfts">
+      <TabsList aria-label="Manage search results">
+        <TabsTrigger value="nfts">
+          {t('translation:tabs.nfts')}
+        </TabsTrigger>
+        <TabsTrigger value="collections">
+          {t('translation:tabs.collections')}
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="nfts">
+        <NFTsSearchResults
+          searchText={searchText}
+          closeDropDown={closeDropDown}
+        />
+      </TabsContent>
+      <TabsContent value="collections">
+        <div>collections</div>
+      </TabsContent>
+    </TabsRoot>
   );
 };
 
