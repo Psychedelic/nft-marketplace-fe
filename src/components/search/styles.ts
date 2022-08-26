@@ -165,15 +165,12 @@ export const ItemDetailsContainer = styled('div', {
   },
 
   '@md': {
-    width: '95%',
+    width: 'auto',
     borderRadius: 'unset',
     margin: '0px',
     padding: '24px 10px',
-    background: 'unset',
     border: 'unset',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     flexDirection: 'column',
   },
 });
@@ -315,9 +312,7 @@ export const LoadingWrapper = styled('div', {
 export const StyledRouterLink = styled(RouterLink, {
   '@md': {
     width: '100%',
-    background: '$chipsBackgroundColor',
-    borderTop: '1.5px solid $borderColor',
-    borderBottom: '1.5px solid $borderColor',
+    borderBottom: '1px solid $borderColor',
   },
 });
 
