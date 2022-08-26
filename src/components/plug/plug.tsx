@@ -32,6 +32,7 @@ const {
   host,
 } = config;
 
+// TODO: update collection Id while whitelisting
 const whitelist = [
   nftCollectionId,
   marketplaceCanisterId,
