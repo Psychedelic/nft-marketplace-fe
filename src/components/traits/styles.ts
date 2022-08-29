@@ -15,7 +15,7 @@ export const HeadingText = styled('p', {
   fontSize: '18px',
   lineHeight: '26px',
   color: '$textNeutralColor',
-  width: '480px',
+  width: '520px',
   margin: '0px',
 
   '& a': {
@@ -45,7 +45,7 @@ export const HeadingText = styled('p', {
     },
     width: {
       sm: {
-        width: '480px',
+        width: '430px',
       },
       unset: {
         width: 'unset',
@@ -67,7 +67,7 @@ export const Flex = styled('div', {
   variants: {
     width: {
       sm: {
-        width: '480px',
+        width: '520px',
       },
       full: {
         width: '100%',
@@ -107,10 +107,10 @@ export const CarouselArrow = styled('div', {
   variants: {
     direction: {
       left: {
-        marginRight: '15px',
+        marginRight: '10px',
       },
       right: {
-        marginLeft: '15px',
+        marginLeft: '10px',
       },
     },
   },
@@ -118,7 +118,7 @@ export const CarouselArrow = styled('div', {
 
 export const CarouselWrapper = styled('div', {
   overflowX: 'hidden',
-  width: '430px',
+  width: '420px',
   overflow: 'scroll',
   msOverflowStyle: 'none',
   scrollbarWidth: 'none',
@@ -147,14 +147,14 @@ export const CarouselName = styled('span', {
 });
 
 export const CarouselDescription = styled('p', {
-  fontSize: '15px',
+  fontSize: '14px',
   color: '$mainTextColor',
   margin: '0',
-  fontWeight: '600',
+  fontWeight: '500',
 });
 
 export const CarouselRarity = styled('p', {
-  fontSize: '14px',
+  fontSize: '13px',
   color: '$mainTextColor',
   margin: '0',
 });

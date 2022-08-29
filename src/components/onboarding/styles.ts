@@ -165,7 +165,7 @@ export const SubText = styled('p', {
   fontSize: '18px',
   lineHeight: '26px',
   color: '$textNeutralColor',
-  width: '480px',
+  width: '520px',
   margin: '0px',
 
   '& a': {
@@ -195,7 +195,7 @@ export const SubTextLabel = styled('label', {
   fontWeight: '600',
   lineHeight: '26px',
   color: '$mainTextColor',
-  width: '480px',
+  width: '520px',
   margin: '0px',
   fontSize: '15px',
 
@@ -395,7 +395,7 @@ export const ImageInputField = styled('input', {
         width: '500px',
 
         '&::before': {
-          width: '480px',
+          width: '520px',
           borderRadius: '10px',
           height: '150px',
         },
@@ -495,8 +495,8 @@ export const BannerImageField = styled('img', {
 });
 
 export const NftImage = styled('img', {
-  width: '160px',
-  height: '164px',
+  width: '165px',
+  height: '165px',
   borderRadius: '10px',
 });
 

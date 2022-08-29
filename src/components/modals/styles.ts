@@ -198,6 +198,13 @@ export const ModalContent = styled(DialogPrimitive.Content, {
         overflow: 'hidden',
       },
     },
+    type: {
+      traits: {
+        padding: '20px 25px 25px 20px',
+        width: '520px',
+        borderRadius: '24px',
+      },
+    },
   },
 });
 
@@ -295,6 +302,14 @@ export const ModalHeader = styled('div', {
   '@md': {
     margin: '0px 15px 25px',
   },
+
+  variants: {
+    type: {
+      traits: {
+        margin: '0px 0px 20px',
+      },
+    },
+  },
 });
 
 export const ModalTitle = styled(DialogPrimitive.Title, {
@@ -314,6 +329,12 @@ export const ModalTitle = styled(DialogPrimitive.Title, {
     alignText: {
       center: {
         textAlign: 'center',
+      },
+    },
+    fontSize: {
+      small: {
+        fontSize: '22px',
+        margin: '0px',
       },
     },
   },
@@ -344,6 +365,11 @@ export const ModalDescription = styled(DialogPrimitive.Description, {
     width: {
       unset: {
         maxWidth: 'unset',
+      },
+    },
+    fontSize: {
+      small: {
+        fontSize: '16px',
       },
     },
   },
@@ -600,6 +626,14 @@ export const ModalButtonsList = styled('div', {
       center: {
         justifyContent: 'center',
       },
+      flexEnd: {
+        justifyContent: 'flex-end',
+      },
+    },
+    noMargin: {
+      top: {
+        marginTop: 'unset',
+      },
     },
   },
 });
@@ -626,6 +660,13 @@ export const ModalButtonWrapper = styled('div', {
     fullWidth: {
       true: {
         width: '430px',
+      },
+    },
+    type: {
+      trait: {
+        width: '175px',
+        height: '50px',
+        marginRight: '15px',
       },
     },
   },
@@ -690,4 +731,39 @@ export const TransactionStepsContainer = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
   marginTop: '50px',
+});
+
+export const EditIconWrapper = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  background: '$chipsBackgroundColor',
+  borderRadius: '14px',
+  padding: '10px',
+  cursor: 'pointer',
+});
+
+export const EditIcon = styled(Icon, {
+  color: '$textNeutralColor',
+});
+
+export const ModalHeaderWrapper = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+
+  variants: {
+    type: {
+      trait: {
+        fontSize: '22px',
+        margin: '0px 0px 10px',
+      },
+    },
+  },
+});
+
+export const Divider = styled('div', {
+  height: '1px',
+  width: '100%',
+  background: '$borderColor',
+  margin: '20px 0px 20px',
 });
