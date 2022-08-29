@@ -226,7 +226,8 @@
       "withdrawAssets": "Withdraw Assets",
       "withdrawalSuccess": "Withdrawal Success",
       "notEnoughFunds": "Insufficient Funds",
-      "approveXtc": "You’re almost done!"
+      "approveXtc": "You’re almost done!",
+      "approvedXtc": "Ready to go!"
     },
     "description": {
       "makeListing": "Enter the sale price you want for your NFT.",
@@ -244,7 +245,8 @@
       "withdrawAssets": "The following fungible balances remain in the canister due to an error completing a transaction. Review the assets and click retry to receive them.",
       "notEnoughFundsToPurchase": "Transfer funds to your wallet to continue with the purchase of this NFT. If you have another asset you would like to swap for WICP you can use Sonic.",
       "notEnoughFundsToMakeOffer": "Your wallet does not have the minimum required funds to make this offer. Please acquire the funds and try again.",
-      "approveXtc": "We’re almost ready to spawn your collection! To do so you will need to approve an XTC transaction."
+      "approveXtc": "We’re almost ready to spawn your collection! To do so you will need to approve an XTC transaction.",
+      "approvedXtc": " are ready to spawn your collection in the marketplace! You can do it now or come back another time to do so."
     },
     "labels": {
       "protocolFee": "Protocol fee",
@@ -267,7 +269,9 @@
       "withdraw": "Withdraw",
       "close": "Close",
       "swapOnSonic": "Swap on Sonic",
-      "approveXtc": "Approve XTC"
+      "approveXtc": "Approve XTC",
+      "doItLater": "I’ll do it later",
+      "spawnMarkeplace": "Spawn Marketplace"
     }
   },
   "nftCard": {
@@ -372,5 +376,12 @@
     "blockchainPlaceholder": "Internet Computer blockchain network",
     "reviewCollection": "Review Collection",
     "emptyFieldError": "You have to fill this field to continue. Please, try again."
+  },
+  "traits": {
+    "traits": "Traits",
+    "traitsDescription": "Traits can be indexable and non-indexable. The Indexable Traits are filterable and are accessible to anyone while the non-indexable hold essencial information and are only availeble to you.",
+    "indexableTraits": "Indexable Traits",
+    "background": "Background",
+    "variants": "Variants"
   }
 }

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   SectionWrapper,
@@ -42,15 +43,22 @@ import {
 
 type CollectionDetailsProps = {
   handleStep: () => void;
+  isSubmitting: boolean;
 };
 
 const CollectionDetails = ({
   handleStep,
+  isSubmitting,
 }: CollectionDetailsProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
   const { collectionDetails } = useOnboardingStore();
+  const isLogoValid =
+    isSubmitting && collectionDetails.formErrors.logo;
+  const isNameValid =
+    isSubmitting && collectionDetails.formErrors.name;
+  const isRoyaltiesValid =
+    isSubmitting && collectionDetails.formErrors.royalties;
 
   const handleChange = (e: any) => {
     const { name, value, files, type } = e.target;
@@ -112,7 +120,7 @@ const CollectionDetails = ({
                   </IconWrapper>
                 )}
               </InputWrapper>
-              {collectionDetails.formErrors.logo && (
+              {isLogoValid && (
                 <ErrorMessage>
                   <WarningIcon icon="warning" />
                   {collectionDetails.formErrors.logo}
@@ -202,11 +210,9 @@ const CollectionDetails = ({
                 type="text"
                 inputStyle="fullWidth"
                 onChange={handleChange}
-                error={
-                  collectionDetails.formErrors.name ? true : false
-                }
+                error={isNameValid ? true : false}
               />
-              {collectionDetails.formErrors.name && (
+              {isNameValid && (
                 <ErrorMessage>
                   <WarningIcon icon="warning" />
                   {collectionDetails.formErrors.name}
@@ -309,13 +315,9 @@ const CollectionDetails = ({
                 name="royalties"
                 inputStyle="fullWidth"
                 onChange={handleChange}
-                error={
-                  collectionDetails.formErrors.royalties
-                    ? true
-                    : false
-                }
+                error={isRoyaltiesValid ? true : false}
               />
-              {collectionDetails.formErrors.royalties && (
+              {isRoyaltiesValid && (
                 <ErrorMessage>
                   <WarningIcon icon="warning" />
                   {collectionDetails.formErrors.royalties}

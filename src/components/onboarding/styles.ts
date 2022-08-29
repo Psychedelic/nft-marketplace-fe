@@ -3,7 +3,6 @@ import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import * as Switch from '@radix-ui/react-switch';
 import { ActionButton } from '../core';
 import { Icon } from '../icons';
-import { SpinnerIcon } from '../icons/custom';
 
 export const OnboardingWrapper = styled('div', {
   paddingTop: '70px',
@@ -27,6 +26,7 @@ export const ProgressStepBarContainer = styled('div', {
 export const ProgressStepBarWrapper = styled('div', {
   width: '16%',
   marginRight: '8px',
+  transition: 'all .5s',
 
   '&:nth-child(3)': {
     marginRight: 'unset',
@@ -35,12 +35,49 @@ export const ProgressStepBarWrapper = styled('div', {
 
 export const ProgressStepBar = styled('div', {
   background: '$lightGray',
+  position: 'relative',
+  width: '100%',
   height: '8px',
+
+  '&::after': {
+    content: '',
+    position: 'absolute',
+    top: '0',
+    height: '100%',
+    transition: 'all .5s',
+  },
 
   variants: {
     isActive: {
       true: {
-        background: '$primary',
+        '&::after': {
+          width: '50%',
+          background: '$primary',
+        },
+      },
+    },
+    isCanisterIdSubmitted: {
+      true: {
+        '&::after': {
+          width: '100%',
+          background: '$primary',
+        },
+      },
+    },
+    isCollectionDetailsSubmitted: {
+      true: {
+        '&::after': {
+          width: '100%',
+          background: '$primary',
+        },
+      },
+    },
+    isNftDetailsSubmitted: {
+      true: {
+        '&::after': {
+          width: '100%',
+          background: '$primary',
+        },
       },
     },
   },
@@ -128,7 +165,7 @@ export const SubText = styled('p', {
   fontSize: '18px',
   lineHeight: '26px',
   color: '$textNeutralColor',
-  width: '500px',
+  width: '480px',
   margin: '0px',
 
   '& a': {
@@ -158,7 +195,7 @@ export const SubTextLabel = styled('label', {
   fontWeight: '600',
   lineHeight: '26px',
   color: '$mainTextColor',
-  width: '500px',
+  width: '480px',
   margin: '0px',
   fontSize: '15px',
 
@@ -227,6 +264,9 @@ export const SectionInputField = styled('input', {
       true: {
         border: '1.5px solid $error',
       },
+      false: {
+        border: '1.5px solid $borderColor',
+      },
     },
     primaryLinks: {
       true: {
@@ -234,6 +274,14 @@ export const SectionInputField = styled('input', {
 
         '&:focus': {
           color: '$textNeutralColor',
+        },
+      },
+    },
+    disabledStyle: {
+      custom: {
+        '&:disabled': {
+          backgroundColor: 'unset',
+          cursor: 'not-allowed',
         },
       },
     },
@@ -256,7 +304,7 @@ export const StyledImgPlaceholder = styled('img', {
 });
 
 export const SectionTextArea = styled('textarea', {
-  width: '480px',
+  width: '100%',
   height: '87px',
   border: '1.5px solid $borderColor',
   borderRadius: '14px',
@@ -265,6 +313,7 @@ export const SectionTextArea = styled('textarea', {
   marginTop: '10px',
   resize: 'none',
   fontFamily: 'inherit',
+  boxSizing: 'border-box',
 
   '&:focus': {
     outline: 'none !important',

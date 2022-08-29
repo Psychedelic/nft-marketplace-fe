@@ -13,11 +13,11 @@ export interface OnboardingState {
     discord: string;
     twitter: string;
     royalties: string;
-    error: boolean;
     formErrors: {
       logo: string;
       name: string;
       royalties: string;
+      error: boolean;
     };
   };
   nftDetails: {
@@ -30,10 +30,10 @@ export interface OnboardingState {
     collection: string;
     supply: string;
     blockchain: string;
-    error: boolean;
     formErrors: {
       name: string;
       supply: string;
+      error: boolean;
     };
   };
 }
@@ -50,11 +50,11 @@ const initialState: OnboardingState = {
     discord: '',
     twitter: '',
     royalties: '',
-    error: false,
     formErrors: {
       logo: '',
       name: '',
       royalties: '',
+      error: false,
     },
   },
   nftDetails: {
@@ -67,10 +67,10 @@ const initialState: OnboardingState = {
     collection: '',
     supply: '',
     blockchain: '',
-    error: false,
     formErrors: {
       name: '',
       supply: '',
+      error: false,
     },
   },
 };

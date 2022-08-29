@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ConnectCanisterId from './connect-canister-id';
 import CollectionDetails from './collection-details';
@@ -39,21 +39,49 @@ const progressBarItem = [
 
 const Onboarding = () => {
   const { t } = useTranslation();
-  const [step, setStep] = useState<Array<string>>(['1']);
-  const setIsActive = (id: string) => step.includes(id);
-  const { collectionDetails } = useOnboardingStore();
   const dispatch = useAppDispatch();
+  const [step, setStep] = useState<Array<string>>(['1']);
+  const [isNftDetailsSubmitting, setIsNftDetailsSubmitting] =
+    useState(false);
+  const [
+    isCollectionDetailsSubmitting,
+    setIsCollectionDetailsSubmitting,
+  ] = useState(false);
+  const [
+    isCollectionDetailsSubmitted,
+    setIsCollectionDetailsSubmitted,
+  ] = useState(false);
+  const [isNftDetailsSubmitted, setIsNftDetailsSubmitted] =
+    useState(false);
+  const [isCanisterIdSubmitted, setIsCanisterIdSubmitted] =
+    useState(false);
+  const { collectionDetails } = useOnboardingStore();
+  const setIsActive = (id: string) => step.includes(id);
+  const setCanisterIdFilled = (id: string) =>
+    id === '1' && isCanisterIdSubmitted;
+  const setCollectionDetailsFilled = (id: string) =>
+    id === '2' && isCollectionDetailsSubmitted;
+  const setNftDetailsFilled = (id: string) =>
+    id === '3' && isNftDetailsSubmitted;
 
-  const handleCollectionDetailsSubmit = () => {
+  useEffect(() => {
     dispatch(
       onboardingActions.setCollectionDetails({
         ...collectionDetails,
         formErrors: validateFields(collectionDetails),
       }),
     );
+  }, [
+    collectionDetails.logo,
+    collectionDetails.name,
+    collectionDetails.royalties,
+  ]);
 
-    if (!collectionDetails.error) {
+  const handleCollectionDetailsSubmit = () => {
+    setIsCollectionDetailsSubmitting(true);
+    if (!collectionDetails.formErrors.error) {
       setStep([...step, '3']);
+      setIsCollectionDetailsSubmitted(true);
     } else return;
   };
 
@@ -62,6 +90,7 @@ const Onboarding = () => {
       logo: '',
       name: '',
       royalties: '',
+      error: false,
     };
 
     if (!values.logo) {
@@ -74,6 +103,10 @@ const Onboarding = () => {
 
     if (!values.royalties) {
       errors.royalties = t('translation:onboarding.emptyFieldError');
+    }
+
+    if (!values.royalties || !values.name || !values.logo) {
+      errors.error = true;
     }
 
     return errors;
@@ -102,13 +135,24 @@ const Onboarding = () => {
                 <ProgressStepBarText isActive={setIsActive(item.id)}>
                   {item.name}
                 </ProgressStepBarText>
-                <ProgressStepBar isActive={setIsActive(item.id)} />
+                <ProgressStepBar
+                  isActive={setIsActive(item.id)}
+                  isCanisterIdSubmitted={setCanisterIdFilled(item.id)}
+                  isCollectionDetailsSubmitted={setCollectionDetailsFilled(
+                    item.id,
+                  )}
+                  isNftDetailsSubmitted={setNftDetailsFilled(item.id)}
+                />
               </ProgressStepBarWrapper>
             ))}
           </ProgressStepBarContainer>
           <ButtonWrapper>
             {step.includes('3') ? (
-              <ApproveXTC type="active" />
+              <ApproveXTC
+                type="active"
+                setIsSubmitting={setIsNftDetailsSubmitting}
+                setIsNftDetailsSubmitted={setIsNftDetailsSubmitted}
+              />
             ) : (
               <StyledActionButton
                 type="active"
@@ -123,21 +167,31 @@ const Onboarding = () => {
         </Progress>
         <Divider />
         <div>
-          <ConnectCanisterId handleStep={handleStep} />
+          <ConnectCanisterId
+            handleStep={handleStep}
+            setIsCanisterIdSubmitted={setIsCanisterIdSubmitted}
+          />
         </div>
         <Divider />
         <FormSectionContainer
           disable={!step.includes('2') && true}
           enable={step.includes('2') && true}
         >
-          <CollectionDetails handleStep={handleStep} />
+          <CollectionDetails
+            handleStep={handleStep}
+            isSubmitting={isCollectionDetailsSubmitting}
+          />
         </FormSectionContainer>
         <Divider />
         <FormSectionContainer
           disable={!step.includes('3') && true}
           enable={step.includes('3') && true}
         >
-          <NftDetails />
+          <NftDetails
+            isSubmitting={isNftDetailsSubmitting}
+            setIsSubmitting={setIsNftDetailsSubmitting}
+            setIsNftDetailsSubmitted={setIsNftDetailsSubmitted}
+          />
         </FormSectionContainer>
       </OnboardingWrapper>
     </>

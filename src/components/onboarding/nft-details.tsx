@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   SectionWrapper,
@@ -44,12 +45,24 @@ import placeholderImage from '../../assets/nft-placeholder-image.png';
 import placeholderImageTwo from '../../assets/nft-placeholder-image(2).png';
 import placeholderImageThree from '../../assets/nft-placeholder-image(3).png';
 import { CollectionAccordion } from '../core/accordions/collection-accordion';
+import Traits from '../traits/traits';
 
-const NftDetails = () => {
+type NftDetailsProps = {
+  isSubmitting: boolean;
+  setIsSubmitting: (value: boolean) => void;
+  setIsNftDetailsSubmitted: (value: boolean) => void;
+};
+
+const NftDetails = ({
+  isSubmitting,
+  setIsSubmitting,
+  setIsNftDetailsSubmitted,
+}: NftDetailsProps) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
-
   const { nftDetails } = useOnboardingStore();
+  const isNameValid = isSubmitting && nftDetails.formErrors.name;
+  const isSupplyValid = isSubmitting && nftDetails.formErrors.supply;
 
   const handleChange = (e: any) => {
     const { name, value, files, type } = e.target;
@@ -76,6 +89,7 @@ const NftDetails = () => {
         <div
           style={{
             marginBottom: '30px',
+            width: '480px',
           }}
         >
           <SectionContent>
@@ -140,7 +154,7 @@ const NftDetails = () => {
                     name="name"
                     inputStyle="fullWidth"
                     onChange={handleChange}
-                    error={nftDetails.formErrors.name ? true : false}
+                    error={isNameValid ? true : false}
                   />
                   <RangeWrapper>
                     <RangeLabel>#</RangeLabel>
@@ -161,7 +175,7 @@ const NftDetails = () => {
                     />
                   </RangeWrapper>
                 </NftNameDetailsWrapper>
-                {nftDetails.formErrors.name && (
+                {isNameValid && (
                   <ErrorMessage>
                     <WarningIcon icon="warning" />
                     {nftDetails.formErrors.name}
@@ -196,6 +210,7 @@ const NftDetails = () => {
                 <SectionTextArea
                   name="description"
                   onChange={handleChange}
+                  form="text"
                 />
               </SectionFormContentWrapper>
               <Divider gap="sm" />
@@ -289,9 +304,9 @@ const NftDetails = () => {
                   name="supply"
                   inputStyle="fullWidth"
                   onChange={handleChange}
-                  error={nftDetails.formErrors.supply ? true : false}
+                  error={isSupplyValid ? true : false}
                 />
-                {nftDetails.formErrors.supply && (
+                {isSupplyValid && (
                   <ErrorMessage>
                     <WarningIcon icon="warning" />
                     {nftDetails.formErrors.supply}
@@ -312,6 +327,7 @@ const NftDetails = () => {
                       />
                     </InputIconButton>
                     <SectionInputField
+                      disabledStyle="custom"
                       placeholder={t(
                         'translation:onboarding.blockchainPlaceholder',
                       )}
@@ -324,8 +340,15 @@ const NftDetails = () => {
                   </LinkInputContent>
                 </div>
               </SectionFormContentWrapper>
+              <Divider gap="sm" />
+              <SectionFormContentWrapper>
+                <Traits />
+              </SectionFormContentWrapper>
               <DetailsButtonWrapper size="wide">
-                <ApproveXTC />
+                <ApproveXTC
+                  setIsSubmitting={setIsSubmitting}
+                  setIsNftDetailsSubmitted={setIsNftDetailsSubmitted}
+                />
               </DetailsButtonWrapper>
             </SectionFormContent>
           </SectionContent>

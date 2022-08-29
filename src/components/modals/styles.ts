@@ -194,10 +194,58 @@ export const ModalContent = styled(DialogPrimitive.Content, {
   variants: {
     size: {
       small: {
-        width: '430px',
+        width: '460px',
+        overflow: 'hidden',
       },
     },
   },
+});
+
+export const ProgressBar = styled('div', {
+  width: '550px',
+  height: '5px',
+  background: '$lightGray',
+  zIndex: '-1',
+  position: 'absolute',
+  top: '0',
+  left: '0',
+  transition: 'all .5s',
+
+  '&::after': {
+    content: '',
+    position: 'absolute',
+    top: '0',
+    height: '100%',
+    width: '290px',
+    transition: 'all .5s',
+    background: '$primary',
+  },
+
+  variants: {
+    isXTCApproved: {
+      true: {
+        '&::after': {
+          width: '550px',
+          background: '$primary',
+        },
+      },
+    },
+  },
+});
+
+export const SpinnerWrapper = styled('div', {
+  position: 'absolute',
+  top: '0',
+  bottom: '0',
+  left: '0',
+  right: '0',
+  margin: '0 auto',
+  zIndex: '5',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  background: '$modalOverlay',
+  height: '100%',
 });
 
 export const SellModalPreviewWrapper = styled('div', {
@@ -236,6 +284,7 @@ export const NFTPreviewText = styled('div', {
 
 export const Container = styled('div', {
   width: '100%',
+  position: 'relative',
 });
 
 export const ModalHeader = styled('div', {
