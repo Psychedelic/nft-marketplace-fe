@@ -17,10 +17,12 @@ import {
 
 type ConnectCanisterIdProps = {
   handleStep?: () => void;
+  setIsCanisterIdSubmitted: (value: boolean) => void;
 };
 
 const ConnectCanisterId = ({
   handleStep,
+  setIsCanisterIdSubmitted,
 }: ConnectCanisterIdProps) => {
   const { t } = useTranslation();
   const [error, setError] = useState(false);
@@ -37,6 +39,7 @@ const ConnectCanisterId = ({
       setTimeout(() => {
         setLoading(false);
         handleStep && handleStep();
+        setIsCanisterIdSubmitted(true);
       }, 1000);
       setSubmitted(true);
     }
