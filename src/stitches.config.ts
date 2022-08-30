@@ -63,6 +63,7 @@ export const {
       lightPink: '#ee38c6',
       lightBlue: '#3ae2f8',
       yellow: '#f5ca32',
+      gainsboroColor: 'rgba(22, 22, 26, 0.04)',
     },
     space: {},
     fonts: {},

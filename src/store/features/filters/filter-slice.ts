@@ -30,6 +30,7 @@ export interface SearchResultDataState {
   price: string;
   wicpPrice: string;
   preview: string;
+  canister: string;
 }
 
 export interface FilterState {

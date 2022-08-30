@@ -1,4 +1,5 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import * as Tabs from '@radix-ui/react-tabs';
 import { styled, keyframes } from '../../stitches.config';
 import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '../icons';
@@ -100,6 +101,11 @@ export const SearchContainer = styled('div', {
   marginBottom: '10px',
 });
 
+export const SearchResultsContainer = styled('div', {
+  position: 'relative',
+  minHeight: '200px',
+});
+
 export const ItemsEmptyContainer = styled('div', {
   // base styles
   display: 'flex',
@@ -138,11 +144,8 @@ export const ItemsListContainer = styled('div', {
 export const ItemDetailsContainer = styled('div', {
   // base styles
   width: '560px',
-  padding: '32px 20px',
-  border: '1.5px solid $borderColor',
-  background: '$chipsBackgroundColor',
-  borderRadius: '14px',
-  margin: '5px 0px',
+  padding: '12px 16px',
+  borderRadius: '16px',
 
   // variants
   variants: {
@@ -158,19 +161,16 @@ export const ItemDetailsContainer = styled('div', {
 
   '&:hover': {
     cursor: 'pointer',
-    background: '$backgroundColor',
+    background: '$gainsboroColor',
   },
 
   '@md': {
-    width: '95%',
+    width: 'auto',
     borderRadius: 'unset',
     margin: '0px',
     padding: '24px 10px',
-    background: 'unset',
     border: 'unset',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     flexDirection: 'column',
   },
 });
@@ -180,7 +180,6 @@ export const ItemDetailsWrapper = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  width: '90%',
 });
 
 export const ItemDetails = styled('div', {
@@ -193,13 +192,39 @@ export const ItemLogo = styled('img', {
   width: '40px',
   height: '40px',
   marginRight: '12px',
-  borderRadius: '12px',
+  borderRadius: '6px',
+});
+
+export const ItemNameContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
 });
 
 export const ItemName = styled('div', {
-  fontSize: '16px',
+  fontSize: '15px',
   fontWeight: '600',
+  lineHeight: '22px',
+  color: '$mainTextColor',
+});
+
+export const ItemDescription = styled('div', {
+  fontSize: '13px',
+  fontWeight: '500',
   lineHeight: '20px',
+  color: '$textNeutralColor',
+  textAlign: 'left',
+});
+
+export const ItemMetaDataContainer = styled('div', {
+  // base styles
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+export const ItemMetaTitle = styled('div', {
+  fontSize: '14px',
+  fontWeight: '600',
+  lineHeight: '22px',
   color: '$mainTextColor',
 });
 
@@ -219,7 +244,7 @@ export const WICPContainer = styled('div', {
   variants: {
     size: {
       small: {
-        marginBottom: '4px',
+        marginBottom: '0px',
       },
 
       large: {
@@ -230,16 +255,16 @@ export const WICPContainer = styled('div', {
 });
 
 export const WICPText = styled('div', {
-  fontSize: '16px',
+  fontSize: '14px',
   fontWeight: '600',
-  lineHeight: '20px',
+  lineHeight: '22px',
   color: '$mainTextColor',
 
   // variants
   variants: {
     size: {
       small: {
-        fontSize: '16px',
+        fontSize: '14px',
       },
 
       large: {
@@ -267,7 +292,7 @@ export const WICPLogo = styled('img', {
 });
 
 export const PriceText = styled('div', {
-  fontSize: '16px',
+  fontSize: '13px',
   fontWeight: '500',
   lineHeight: '20px',
   color: '#777E90',
@@ -285,7 +310,7 @@ export const PriceText = styled('div', {
 
 export const SubText = styled('span', {
   '&:first-child': {
-    marginRight: '10px',
+    marginRight: '2px',
   },
 });
 
@@ -300,9 +325,7 @@ export const LoadingWrapper = styled('div', {
 export const StyledRouterLink = styled(RouterLink, {
   '@md': {
     width: '100%',
-    background: '$chipsBackgroundColor',
-    borderTop: '1.5px solid $borderColor',
-    borderBottom: '1.5px solid $borderColor',
+    borderBottom: '1px solid $borderColor',
   },
 });
 
@@ -319,7 +342,7 @@ export const CloseIcon = styled(Icon, {
         display: 'flex',
         top: 'unset',
         alignItems: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
       },
     },
   },
@@ -329,4 +352,61 @@ export const MobileSearchBar = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
+});
+
+export const TabsRoot = styled(Tabs.Root, {
+  display: 'flex',
+  flexDirection: 'column',
+  backgroundColor: '$backgroundColor',
+
+  '&:focus': {
+    outline: 'none',
+  },
+});
+
+export const TabsList = styled(Tabs.List, {
+  flexShrink: 0,
+  display: 'flex',
+  borderBottom: '1px solid $borderColor',
+  marginBottom: '12px',
+
+  '&:focus': {
+    outline: 'none',
+  },
+});
+
+export const TabsTrigger = styled(Tabs.Trigger, {
+  backgroundColor: '$backgroundColor',
+  padding: '0 20px',
+  height: 45,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontweight: '500',
+  fontSize: '18px',
+  lineHeight: '22px',
+  border: '0px',
+  cursor: 'pointer',
+  fontFamily: 'proxima-nova, sans-serif',
+
+  '&[data-state="active"]': {
+    color: '$primary',
+    boxShadow:
+      'currentcolor 0px -1px 0px 0px inset, currentcolor 0px 1px 0px 0px',
+  },
+  '&[data-state="inactive"]': {
+    color: '$mainTextColor',
+  },
+  '&:hover': {
+    color: '$primary',
+  },
+  '&:focus': {
+    outline: 'none',
+  },
+});
+
+export const TabsContent = styled(Tabs.Content, {
+  '&:focus': {
+    outline: 'none',
+  },
 });

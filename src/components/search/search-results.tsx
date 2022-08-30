@@ -1,27 +1,12 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+import NFTsSearchResults from './nfts-search-results';
+import CollectionsSearchResults from './collections-search-results';
 import {
-  ItemsEmptyContainer,
-  ItemsListContainer,
-  ItemDetailsWrapper,
-  ItemDetails,
-  ItemLogo,
-  ItemName,
-  PriceDetails,
-  WICPContainer,
-  WICPText,
-  WICPLogo,
-  PriceText,
-  SubText,
-  LoadingWrapper,
-  ItemDetailsContainer,
-  StyledRouterLink,
+  TabsRoot,
+  TabsTrigger,
+  TabsList,
+  TabsContent,
 } from './styles';
-import { useFilterStore } from '../../store';
-import { formatPriceValue } from '../../utils/formatters';
-import wicpIcon from '../../assets/wicp.svg';
-import { SpinnerIcon } from '../icons/custom';
-import config from '../../config/env';
 
 type SearchResultsTypes = {
   searchText: string;
@@ -33,66 +18,30 @@ const SearchResults = ({
   closeDropDown,
 }: SearchResultsTypes) => {
   const { t } = useTranslation();
-  const { searchResults, loadingSearch } = useFilterStore();
 
   return (
-    <>
-      {searchText &&
-        !loadingSearch &&
-        (searchResults.length ? (
-          <ItemsListContainer>
-            {searchResults?.map((nft) => (
-              <StyledRouterLink
-                to={`/${config.nftCollectionId}/nft/${nft.id}`}
-                onClick={closeDropDown}
-                key={nft.id}
-              >
-                <ItemDetailsContainer>
-                  <ItemDetailsWrapper>
-                    <ItemDetails>
-                      <ItemLogo src={nft.preview} alt="crowns" />
-                      <ItemName>{`${nft.name} ${nft.id}`}</ItemName>
-                    </ItemDetails>
-                    <PriceDetails>
-                      {Boolean(nft?.wicpPrice) && (
-                        <WICPContainer size="small">
-                          <WICPLogo src={wicpIcon} alt="wicp" />
-                          <WICPText size="small">
-                            {nft.wicpPrice}
-                            WICP
-                          </WICPText>
-                        </WICPContainer>
-                      )}
-                      {Boolean(nft?.price) && (
-                        <PriceText>
-                          <SubText>$</SubText>
-                          <SubText>{`${formatPriceValue(
-                            nft.price.toString(),
-                          )}`}</SubText>
-                        </PriceText>
-                      )}
-                    </PriceDetails>
-                  </ItemDetailsWrapper>
-                </ItemDetailsContainer>
-              </StyledRouterLink>
-            ))}
-          </ItemsListContainer>
-        ) : (
-          <ItemsEmptyContainer>
-            {t('translation:emptyStates.noNFTId')}
-          </ItemsEmptyContainer>
-        ))}
-      {!searchText && !loadingSearch && (
-        <ItemsEmptyContainer>
-          {t('translation:common.noRecentSearch')}
-        </ItemsEmptyContainer>
-      )}
-      {loadingSearch && (
-        <LoadingWrapper>
-          <SpinnerIcon />
-        </LoadingWrapper>
-      )}
-    </>
+    <TabsRoot defaultValue="nfts">
+      <TabsList aria-label="Manage search results">
+        <TabsTrigger value="nfts">
+          {t('translation:tabs.nfts')}
+        </TabsTrigger>
+        <TabsTrigger value="collections">
+          {t('translation:tabs.collections')}
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="nfts">
+        <NFTsSearchResults
+          searchText={searchText}
+          closeDropDown={closeDropDown}
+        />
+      </TabsContent>
+      <TabsContent value="collections">
+        <CollectionsSearchResults
+          searchText={searchText}
+          closeDropDown={closeDropDown}
+        />
+      </TabsContent>
+    </TabsRoot>
   );
 };
 
