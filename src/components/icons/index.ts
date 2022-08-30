@@ -36,6 +36,10 @@ import { IoFilterSharp } from '@react-icons/all-files/io5/IoFilterSharp';
 import { IoChevronForwardSharp } from '@react-icons/all-files/io5/IoChevronForwardSharp';
 import { RiPencilFill } from '@react-icons/all-files/ri/RiPencilFill';
 import { IoChevronBack } from '@react-icons/all-files/io5/IoChevronBack';
+import { MdDelete } from '@react-icons/all-files/md/MdDelete';
+import { FiCode } from '@react-icons/all-files/fi/FiCode';
+import { FiEye } from '@react-icons/all-files/fi/FiEye';
+import { FiEyeOff } from '@react-icons/all-files/fi/FiEyeOff';
 
 import {
   PlugIcon,
@@ -86,6 +90,10 @@ export const Icons = {
   pen: RiPencilFill,
   chevronRight: IoChevronForwardSharp,
   chevronLeft: IoChevronBack,
+  delete: MdDelete,
+  code: FiCode,
+  disable: FiEye,
+  enable: FiEyeOff,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,

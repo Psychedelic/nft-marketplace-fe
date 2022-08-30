@@ -89,7 +89,7 @@ const NftDetails = ({
         <div
           style={{
             marginBottom: '30px',
-            width: '480px',
+            width: '520px',
           }}
         >
           <SectionContent>
