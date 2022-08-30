@@ -391,5 +391,11 @@
     "indexableTraits": "Indexable Traits",
     "background": "Background",
     "variants": "Variants"
+  },
+  "collections": {
+    "exploreCollections": {
+      "exploreCollectionTitle": "Explore Collections",
+      "description": "Discover the collections that are taking shape before our eyes and see what’s new"
+    }
   }
 }
