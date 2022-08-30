@@ -392,10 +392,10 @@ export const ImageInputField = styled('input', {
         },
       },
       banner: {
-        width: '500px',
+        width: '520px',
 
         '&::before': {
-          width: '520px',
+          width: '500px',
           borderRadius: '10px',
           height: '150px',
         },
