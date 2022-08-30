@@ -6,10 +6,11 @@ import {
 import { notificationActions, plugActions } from '../../store';
 import { AppLog } from '../../utils/log';
 import config from '../../config/env';
-import {
-  Provider,
-  WalletConnectRPC,
-} from '@psychedelic/plug-inpage-provider';
+// TODO: mobile wallet connection
+// import {
+//   Provider,
+//   WalletConnectRPC,
+// } from '@psychedelic/plug-inpage-provider';
 
 type RequestConnectArgs = {
   whitelist?: string[];
@@ -112,22 +113,23 @@ export const handleConnect = async ({
     wICPCanisterId,
   ];
 
-  const ua = navigator.userAgent;
-  const isAndroid = /android/i.test(ua) ? true : false;
+  // TODO: mobile wallet connection
+  // const ua = navigator.userAgent;
+  // const isAndroid = /android/i.test(ua) ? true : false;
 
-  if (!isAndroid) {
-    window.open('https://plugwallet.ooo/', '_blank');
-    return;
-  }
-  const clientRPC = new WalletConnectRPC(window);
+  // if (!isAndroid) {
+  //   window.open('https://plugwallet.ooo/', '_blank');
+  //   return;
+  // }
+  // const clientRPC = new WalletConnectRPC(window);
 
-  const plugProvider = new Provider(clientRPC);
+  // const plugProvider = new Provider(clientRPC);
 
-  const ic = (window as any).ic || {};
-  (window as any).ic = {
-    ...ic,
-    plug: plugProvider,
-  };
+  // const ic = (window as any).ic || {};
+  // (window as any).ic = {
+  //   ...ic,
+  //   plug: plugProvider,
+  // };
 
   // Is plug installed
   const hasPlug = isPlugInstalled();
