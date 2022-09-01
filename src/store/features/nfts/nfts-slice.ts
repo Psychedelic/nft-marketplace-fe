@@ -6,6 +6,7 @@ import {
   getNFTDetails,
   getNFTs,
   getCollectionData,
+  getAllNFTs,
 } from './async-thunks';
 
 // Define a type for the slice state
@@ -21,6 +22,7 @@ interface NFTSState {
   totalOwnersCount: number;
   floorPrice: number;
   totalVolume: number;
+  allNFTs: any[];
 }
 
 // Define the initial state using that type
@@ -36,6 +38,7 @@ const initialState: NFTSState = {
   totalOwnersCount: 0,
   floorPrice: 0,
   totalVolume: 0,
+  allNFTs: [],
 };
 
 export interface LoadedNFTData {
@@ -193,6 +196,13 @@ export const nftsSlice = createSlice({
       state.totalVolume = totalVolume;
       state.loadingCollectionData = false;
     },
+    setAllNFTs: (
+      state,
+      // TODO: fix type for jelly-js response
+      action: PayloadAction<any>,
+    ) => {
+      state.allNFTs = action.payload;
+    },
   },
 });
 
@@ -201,6 +211,7 @@ export const nftsActions = {
   getNFTs,
   getNFTDetails,
   getCollectionData,
+  getAllNFTs,
 };
 
 // Other code such as selectors can use the imported `RootState` type
