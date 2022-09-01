@@ -19,6 +19,7 @@ export type GetNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   abortController?: AbortController;
 };
 
+// TODO: can be removed post getAllNFTs
 export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
   'nfts/getNFTs',
   async (
@@ -48,7 +49,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
       };
     }
 
-    let sortingDetails = {
+    const sortingDetails = {
       sortBy: sort,
       orderBy: order,
     };
@@ -111,7 +112,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
             '/thumbnails/$1.png',
           ),
           location: nft?.url,
-          traits: traits,
+          traits,
           status: nft?.status,
           owner: nft?.owner,
           lastActionTaken: findLastAction(nft),
