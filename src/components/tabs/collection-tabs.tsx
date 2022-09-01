@@ -1,7 +1,11 @@
 import { useMemo, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {
+  useParams,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useLocation, useNavigate } from 'react-router-dom';
+
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
 import {
