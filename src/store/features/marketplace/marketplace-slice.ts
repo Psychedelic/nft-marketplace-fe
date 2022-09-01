@@ -19,6 +19,7 @@ import {
   getCollections,
   getAssetsToWithdraw,
   withdrawFungible,
+  getAllNFTs,
 } from './async-thunks';
 import { TransactionStatus } from '../../../constants/transaction-status';
 
@@ -210,6 +211,7 @@ export const marketplaceActions = {
   getTokenOffers,
   makeListing,
   makeOffer,
+  getAllNFTs,
   getFloorPrice,
   getCollections,
   getAssetsToWithdraw,
