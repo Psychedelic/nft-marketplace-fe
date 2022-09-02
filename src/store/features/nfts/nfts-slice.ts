@@ -4,7 +4,6 @@ import type { RootState } from '../../store';
 import { NFTMetadata } from '../../../declarations/legacy';
 import {
   getNFTDetails,
-  getNFTs,
   getCollectionData,
   getAllNFTs,
 } from './async-thunks';
@@ -196,19 +195,11 @@ export const nftsSlice = createSlice({
       state.totalVolume = totalVolume;
       state.loadingCollectionData = false;
     },
-    setAllNFTs: (
-      state,
-      // TODO: fix type for jelly-js response
-      action: PayloadAction<any>,
-    ) => {
-      state.allNFTs = action.payload;
-    },
   },
 });
 
 export const nftsActions = {
   ...nftsSlice.actions,
-  getNFTs,
   getNFTDetails,
   getCollectionData,
   getAllNFTs,
