@@ -100,18 +100,9 @@ export const handleConnect = async ({
   dispatch,
   t,
 }: HandleConnectTypes) => {
-  const {
-    nftCollectionId,
-    marketplaceCanisterId,
-    wICPCanisterId,
-    host,
-  } = config;
+  const { marketplaceCanisterId, wICPCanisterId, host } = config;
 
-  const whitelist = [
-    nftCollectionId,
-    marketplaceCanisterId,
-    wICPCanisterId,
-  ];
+  const whitelist = [marketplaceCanisterId, wICPCanisterId];
 
   // TODO: mobile wallet connection
   // const ua = navigator.userAgent;
