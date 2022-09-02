@@ -71,6 +71,17 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       });
 
       // TODO: map traits
+      // const traits: any = {};
+
+      // data.forEach((item: any) => {
+      //   Object.keys(item.traits).forEach((trait: string) => {
+      //     traits[`${property.name}`] = {
+      //       name: property.value,
+      //       occurance: null,
+      //       rarity: null,
+      //     };
+      //   });
+      // });
 
       // TODO: map nft list
       const extractedNFTSList = data.map((nft: any) => {
@@ -83,9 +94,9 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
           lastOffer: undefined,
           lastSale: nft.lastSale,
           // TODO: update nft thumbnail
-          preview: '',
+          preview: nft.thumbnail,
           location: nft?.url,
-          traits: [],
+          traits: nft.traits,
           status: nft?.status,
           owner: nft?.owner,
           // lastActionTaken: findLastAction(nft),
