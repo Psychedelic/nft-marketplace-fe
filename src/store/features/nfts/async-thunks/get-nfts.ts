@@ -102,7 +102,7 @@ export const getNFTs = createAsyncThunk<void, GetNFTsProps>(
           // TODO: update price, lastOffer & traits values
           // TODO: Finalize object format after validating mock and kyasshu data
           id: nft.index,
-          name: 'Cap Crowns',
+          name: 'TODO: [deprecate] Cap Crowns',
           price: nft.currentPrice,
           lastOffer: nft.lastOfferPrice,
           lastSale: nft.lastSalePrice,

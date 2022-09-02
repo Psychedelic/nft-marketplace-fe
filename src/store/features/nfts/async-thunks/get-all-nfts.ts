@@ -20,12 +20,13 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       // TODO: map previous sorting fields to body jelly js fn args
       // sort,
       // order,
-      // page,
-      // count,
+      page,
+      count,
       collectionId,
     },
     thunkAPI,
   ) => {
+    console.log('[debug] getAllNfts > bp', 1);
     // Checks if an actor instance exists already
     // otherwise creates a new instance
     const jellyInstance = await jellyJsInstanceHandler({
@@ -35,6 +36,8 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     });
 
     const { dispatch } = thunkAPI;
+
+    console.log('[debug] getAllNfts > bp', 2);
 
     // set loading NFTS state to true
     dispatch(nftsActions.setIsNFTSLoading(true));
@@ -63,7 +66,57 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       const jellyCollection = await jellyInstance.getJellyCollection(
         collection,
       );
-      const { data } = await jellyCollection.getAllNFTs();
+
+      const lastIndex = BigInt(page);
+      const { data } = await jellyCollection.getAllNFTs({
+        count: BigInt(count),
+        lastIndex,
+      });
+
+      // TODO: map traits
+
+      // TODO: map nft list
+      const extractedNFTSList = data.map((nft: any) => {
+        const metadata = {
+          // TODO: update price, lastOffer & traits values
+          // TODO: Finalize object format after validating mock and kyasshu data
+          id: nft.id,
+          name: nft.collectionName,
+          price: undefined,
+          lastOffer: undefined,
+          lastSale: nft.lastSale,
+          // TODO: update nft thumbnail
+          preview: '',
+          location: nft?.url,
+          traits: [],
+          status: nft?.status,
+          owner: nft?.owner,
+          // lastActionTaken: findLastAction(nft),
+          operator: nft?.operator,
+        };
+        return metadata;
+      });
+
+      const actionPayload = {
+        loadedNFTList: extractedNFTSList,
+        totalPages: -1,
+        total: -1,
+        nextPage: page + 1,
+      };
+
+      // update store with loaded NFTS details
+      dispatch(nftsActions.setLoadedNFTS(actionPayload));
+
+      if (!isEmptyObject(payload)) {
+        const collectionPayload = {
+          itemsCount: -1,
+          ownersCount: 0,
+          price: 0,
+          totalVolume: 0,
+        };
+
+        dispatch(nftsActions.setCollectionData(collectionPayload));
+      }
 
       console.log('[debug] marketplace/getAllNFTs -> data ->', data);
 

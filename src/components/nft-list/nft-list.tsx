@@ -126,6 +126,8 @@ export const NftList = () => {
     );
   }
 
+  console.log('[debug] loadedNFTS', loadedNFTS);
+
   return (
     <InfiniteScroll
       pageStart={0}
