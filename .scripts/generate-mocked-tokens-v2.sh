@@ -109,25 +109,23 @@ printf "👍 Mint process completed!\n\n"
             operation = \"metadata\";
             token_id = \"$i\";
             nft_canister_id = principal \"$crownsCanisterId\";
-            traits = vec {
+            traits = opt vec {
+              record { \"smallgem\"; variant { TextContent = \"$smallgem\" } };
+              record { \"biggem\"; variant { TextContent = \"$biggem\" } };
+              record { \"base\"; variant { TextContent = \"$base\" } };
+              record { \"rim\"; variant { TextContent = \"$rim\" } };
               record {
-                record { \"smallgem\"; variant { TextContent = \"$smallgem\" } };
-                record { \"biggem\"; variant { TextContent = \"$biggem\" } };
-                record { \"base\"; variant { TextContent = \"$base\" } };
-                record { \"rim\"; variant { TextContent = \"$rim\" } };
-                record {
-                  \"location\";
-                  variant {
-                    TextContent = \"$location\"
-                  };
+                \"location\";
+                variant {
+                  TextContent = \"$location\"
                 };
-                record {
-                  \"thumbnail\";
-                  variant {
-                    TextContent = \"$thumbnail\"
-                  };
+              };
+              record {
+                \"thumbnail\";
+                variant {
+                  TextContent = \"$thumbnail\"
                 };
-              }
+              };
             }
           }
         }
