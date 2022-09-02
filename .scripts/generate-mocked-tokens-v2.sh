@@ -100,10 +100,10 @@ printf "👍 Mint process completed!\n\n"
     # crownsCertifiedAssetsB="vqcq7-gqaaa-aaaam-qaara-cai"
     assetUrl="https://$crownsCertifiedAssetsA.raw.ic0.app/$filename"
 
-    dfx canister --network ic call $crownsNftCanisterId getMetadataDip721 "($i:nat64)"
+    dfx canister --network ic call $crownsNftCanisterId tokenMetadata "($i:nat)"
 
     # Get some data from the mainnet canister
-    mainnetMetadataResult=($(dfx canister --network ic call $crownsNftCanisterId getMetadataDip721 "($token_index:nat64)" | pcregrep -o1  '3_643_416_556 = "([a-zA-Z]*)"'))
+    mainnetMetadataResult=($(dfx canister --network ic call $crownsNftCanisterId tokenMetadata "($i:nat)" | pcregrep -o1  '3_643_416_556 = "([a-zA-Z]*)"'))
 
     if [[ ! "$(declare -p mainnetMetadataResult)" =~ "declare -a" ]];
     then
