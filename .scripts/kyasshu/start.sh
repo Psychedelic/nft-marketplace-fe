@@ -6,7 +6,7 @@ host=$1
 
 if [[ -z $host || "$host" == "local" ]]; then
   export CAP_ID=$(cd ./jelly && dfx canister id cap-router)
-  export MARKETPLACE_CANISTER_ID=$(cd ./jelly && dfx canister id marketplace)
+  export MARKETPLACE_CANISTER_ID=$(cd nft-marketplace && dfx canister id marketplace)
   export NFT_CANISTER_ID=$(cd ./jelly && dfx canister id crowns)
   export NFT_CANISTER_STANDARD='DIP721v2'
   export MARKETPLACE_ALLOWED_CANISTERS="{ \"$NFT_CANISTER_ID\": \"DIP721v2\" }"
