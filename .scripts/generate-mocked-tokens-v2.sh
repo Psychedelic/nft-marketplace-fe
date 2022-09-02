@@ -92,15 +92,31 @@ printf "👍 Mint process completed!\n\n"
   echo "🧙‍♀️ Will now insert the metadata for the total supply $totalSupply, be patient..."
 
   for ((i=1; i <= "$totalSupply"; i++))
-  do 
-    # TODO: call dip721_token_metadata
-    # parse required traits to populate insert
-    location="https://vzb3d-qyaaa-aaaam-qaaqq-cai.raw.ic0.app/0001.mp4"
-    thumbnail="https://vzb3d-qyaaa-aaaam-qaaqq-cai.raw.ic0.app/thumbnails/0001.png"
-    smallgem="valueA"
-    biggem="valueB"
-    base="valueC"
-    rim="valueD"
+  do
+    crownsNftCanisterId="vlhm2-4iaaa-aaaam-qaatq-cai"
+    filename=$(printf "%04d.mp4" "$i")
+    thumbnail=$(printf "%04d.png" "$i")
+    crownsCertifiedAssetsA="vzb3d-qyaaa-aaaam-qaaqq-ca"
+    # crownsCertifiedAssetsB="vqcq7-gqaaa-aaaam-qaara-cai"
+    assetUrl="https://$crownsCertifiedAssetsA.raw.ic0.app/$filename"
+
+    dfx canister --network ic call $crownsNftCanisterId getMetadataDip721 "($i:nat64)"
+
+    # Get some data from the mainnet canister
+    mainnetMetadataResult=($(dfx canister --network ic call $crownsNftCanisterId getMetadataDip721 "($token_index:nat64)" | pcregrep -o1  '3_643_416_556 = "([a-zA-Z]*)"'))
+
+    if [[ ! "$(declare -p mainnetMetadataResult)" =~ "declare -a" ]];
+    then
+      printf "👹 Oops! Metadata array is not fullfiled, will not proceed!"
+      exit 1
+    fi
+
+    location="$assetUrl"
+    thumbnail="https://$crownsCertifiedAssetsA.raw.ic0.app/thumbnails/$thumbnail"
+    smallgem="${mainnetMetadataResult[0]}"
+    biggem=${mainnetMetadataResult[1]}
+    base=${mainnetMetadataResult[2]}
+    rim=${mainnetMetadataResult[3]}
 
     dfx canister call \
       "$crownsMarketplaceId" insert "(
