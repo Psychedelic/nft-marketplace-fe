@@ -26,7 +26,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     },
     thunkAPI,
   ) => {
-    console.log('[debug] getAllNfts > bp', 1);
     // Checks if an actor instance exists already
     // otherwise creates a new instance
     const jellyInstance = await jellyJsInstanceHandler({
@@ -36,8 +35,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     });
 
     const { dispatch } = thunkAPI;
-
-    console.log('[debug] getAllNfts > bp', 2);
 
     // set loading NFTS state to true
     dispatch(nftsActions.setIsNFTSLoading(true));
