@@ -27,7 +27,6 @@ import useMediaQuery from '../../hooks/use-media-query';
 
 const { marketplaceCanisterId, wICPCanisterId, host } = config;
 
-// TODO: update collection Id while whitelisting
 const whitelist = [marketplaceCanisterId, wICPCanisterId];
 
 export const Plug = () => {
