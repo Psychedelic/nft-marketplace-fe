@@ -96,7 +96,7 @@ printf "👍 Mint process completed!\n\n"
     crownsNftCanisterId="vlhm2-4iaaa-aaaam-qaatq-cai"
     filename=$(printf "%04d.mp4" "$i")
     thumbnail=$(printf "%04d.png" "$i")
-    crownsCertifiedAssetsA="vzb3d-qyaaa-aaaam-qaaqq-ca"
+    crownsCertifiedAssetsA="vzb3d-qyaaa-aaaam-qaaqq-cai"
     # crownsCertifiedAssetsB="vqcq7-gqaaa-aaaam-qaara-cai"
     assetUrl="https://$crownsCertifiedAssetsA.raw.ic0.app/$filename"
 
