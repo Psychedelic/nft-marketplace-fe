@@ -44,13 +44,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     }
 
     try {
-      // TODO: populate the getAllNFTs arguments
-      // const lastIndex = null;
-      // const traits = [] as any;
-      // const sortKey = 'all';
-      // const reverse = false;
-      // const count = BigInt(20);
-
       const collections: Collection[] =
         await jellyInstance.getCollections();
       const collection = collections.find(
@@ -64,24 +57,14 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         collection,
       );
 
-      const lastIndex = BigInt(page);
-      const { data } = await jellyCollection.getAllNFTs({
+      // const lastIndex = BigInt(page);
+      const res = await jellyCollection.getAllNFTs({
         count: BigInt(count),
-        lastIndex,
+        // TODO: lastIndex to control pagination
+        // lastIndex,
       });
 
-      // TODO: map traits
-      // const traits: any = {};
-
-      // data.forEach((item: any) => {
-      //   Object.keys(item.traits).forEach((trait: string) => {
-      //     traits[`${property.name}`] = {
-      //       name: property.value,
-      //       occurance: null,
-      //       rarity: null,
-      //     };
-      //   });
-      // });
+      const { data, total, lastIndex: responseLastIndex } = res;
 
       // TODO: map nft list
       const extractedNFTSList = data.map((nft: any) => {
@@ -90,8 +73,9 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
           // TODO: Finalize object format after validating mock and kyasshu data
           id: nft.id,
           name: nft.collectionName,
+          // TODO: parse from listing field when available
           price: undefined,
-          lastOffer: undefined,
+          lastOffer: nft.lastOfferTime,
           lastSale: nft.lastSale,
           // TODO: update nft thumbnail
           preview: nft.thumbnail,
@@ -107,9 +91,10 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
       const actionPayload = {
         loadedNFTList: extractedNFTSList,
-        totalPages: -1,
-        total: -1,
-        nextPage: page + 1,
+        totalPages: Math.ceil(Number(total) / count),
+        total,
+        nextPage:
+          Math.floor(Number(total) / Number(responseLastIndex)) + 1,
       };
 
       // update store with loaded NFTS details
@@ -117,7 +102,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
       if (!isEmptyObject(payload)) {
         const collectionPayload = {
-          itemsCount: -1,
+          itemsCount: total,
           ownersCount: 0,
           price: 0,
           totalVolume: 0,
@@ -125,8 +110,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
         dispatch(nftsActions.setCollectionData(collectionPayload));
       }
-
-      console.log('[debug] marketplace/getAllNFTs -> data ->', data);
 
       if (!data) {
         AppLog.warn('Oops! Failed to get all NFTs via Jelly-js!');
