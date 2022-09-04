@@ -10,6 +10,7 @@ import { portalZIndexGlobals } from './utils/styles';
 import { ThemeRootElement } from './constants/common';
 import { useThemeGlobals } from './hooks';
 import Onboarding from './components/onboarding/onboarding-ui';
+import ExploreCollections from './components/collections/explore-collections';
 
 const App = () => {
   const [theme, themeObject] = useTheme();
@@ -33,6 +34,10 @@ const App = () => {
             element={<UserActivityView />}
           />
           <Route path="/create" element={<Onboarding />} />
+          <Route
+            path="/collections"
+            element={<ExploreCollections />}
+          />
         </Routes>
       </BrowserRouter>
       <ToastHandler />
