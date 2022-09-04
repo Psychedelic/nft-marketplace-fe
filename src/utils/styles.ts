@@ -28,3 +28,10 @@ export const portalZIndexGlobals = globalCss({
   },
 });
 
+export const removePortalZIndexGlobals = globalCss({
+  body: {
+    '& [data-radix-portal]': {
+      zIndex: '10 !important',
+    },
+  },
+});

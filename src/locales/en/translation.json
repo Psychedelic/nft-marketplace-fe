@@ -228,7 +228,8 @@
       "notEnoughFunds": "Insufficient Funds",
       "approveXtc": "You’re almost done!",
       "approvedXtc": "Ready to go!",
-      "indexableTrait": "Indexable Traits"
+      "indexableTrait": "Indexable Traits",
+      "nonIndexableTraits": "Non Indexable Traits"
     },
     "description": {
       "makeListing": "Enter the sale price you want for your NFT.",
@@ -248,7 +249,8 @@
       "notEnoughFundsToMakeOffer": "Your wallet does not have the minimum required funds to make this offer. Please acquire the funds and try again.",
       "approveXtc": "We’re almost ready to spawn your collection! To do so you will need to approve an XTC transaction.",
       "approvedXtc": " are ready to spawn your collection in the marketplace! You can do it now or come back another time to do so.",
-      "indexableTrait": "These traits can be alphabetical or numerical, and can be filtered in your collection's sidebar. But you can always choose to hide specific traits."
+      "indexableTrait": "These traits can be alphabetical or numerical, and can be filtered in your collection's sidebar. But you can always choose to hide specific traits.",
+      "nonIndexableTraits": "These traits contain essential information about your items and are not filterable. Its function is to store specific information."
     },
     "labels": {
       "protocolFee": "Protocol fee",
@@ -330,7 +332,10 @@
     "retryMessage": "click here to withdraw."
   },
   "tooltip": {
-    "disabledBuyNowText": "Oops! Can't be purchased, possibly because token was transferred outside Jelly marketplace to a new wallet"
+    "disabledBuyNowText": "Oops! Can't be purchased, possibly because token was transferred outside Jelly marketplace to a new wallet",
+    "delete": "Delete Category and all variants",
+    "code": "Access developer mode",
+    "disable": "Hide Category and unable filtering"
   },
   "navbar": {
     "community": "Community",
@@ -389,7 +394,17 @@
     "traits": "Traits",
     "traitsDescription": "Traits can be indexable and non-indexable. The Indexable Traits are filterable and are accessible to anyone while the non-indexable hold essencial information and are only availeble to you.",
     "indexableTraits": "Indexable Traits",
+    "nonIndexableTraits": "Non Indexable Traits",
+    "indexableTraitsDescription": "These traits can be alphabetical or numerical, and can be filtered in your collection's sidebar. But you can always choose to hide specific traits.",
+    "nonIndexableTraitsDescription": "These traits contain essential information about your items and are not filterable. Its function is to store specific information.",
     "background": "Background",
-    "variants": "Variants"
+    "variants": "Variants",
+    "popover": {
+      "title": "Developer Mode",
+      "buttons": {
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+      }
+    }
   }
 }

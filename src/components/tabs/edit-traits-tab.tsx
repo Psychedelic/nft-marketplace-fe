@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Tooltip } from '../core';
+import Popover from '../core/popover/popover';
 import {
   TabsRoot,
   TabsTrigger,
@@ -14,9 +16,16 @@ import {
   StyledIcon,
   TabsInnerContentWrapper,
   BottomGradient,
+  DeveloperModeText,
 } from './styles';
 
-export const EditTraitsTab = () => {
+type EditTraitsTabProps = {
+  setShowOverlay: (value: boolean) => void;
+};
+
+export const EditTraitsTab = ({
+  setShowOverlay,
+}: EditTraitsTabProps) => {
   const { t } = useTranslation();
   const [disabledItems, setDisabledItems] = useState(
     Array(0).fill(0),
@@ -90,23 +99,61 @@ export const EditTraitsTab = () => {
             >
               <TabContentWrapper padding="rightSm" width="md">
                 <ActionIconsContainer>
-                  <IconWrapper delete={true}>
-                    <StyledIcon icon="delete" />
-                  </IconWrapper>
-                  <IconWrapper code={true}>
-                    <StyledIcon icon="code" />
-                  </IconWrapper>
-                  <IconWrapper
-                    onClick={() => handleDisabled(item.id)}
-                  >
-                    <StyledIcon
-                      icon={
-                        disabledItems.includes(item.id)
-                          ? 'enable'
-                          : 'disable'
-                      }
-                    />
-                  </IconWrapper>
+                  <Tooltip
+                    type="traits"
+                    children={
+                      <IconWrapper delete={true}>
+                        <StyledIcon icon="delete" />
+                      </IconWrapper>
+                    }
+                    text={t('translation:tooltip.delete')}
+                    width={200}
+                  />
+                  <Popover
+                    trigger={
+                      <Tooltip
+                        type="traits"
+                        children={
+                          <IconWrapper code={true}>
+                            <StyledIcon icon="code" />
+                          </IconWrapper>
+                        }
+                        text={t('translation:tooltip.code')}
+                        width={176}
+                      />
+                    }
+                    text={
+                      <DeveloperModeText>
+                        &#123;
+                        <br />
+                        traitbackground: valueGradient R-Y,
+                        traitbackground: valueGradient B-G,
+                        traitbackground, valueGradient G-W
+                        traitbackground: valueGradient B-R
+                        <br />
+                        &#125;
+                      </DeveloperModeText>
+                    }
+                    setShowOverlay={setShowOverlay}
+                  />
+                  <Tooltip
+                    type="traits"
+                    children={
+                      <IconWrapper
+                        onClick={() => handleDisabled(item.id)}
+                      >
+                        <StyledIcon
+                          icon={
+                            disabledItems.includes(item.id)
+                              ? 'enable'
+                              : 'disable'
+                          }
+                        />
+                      </IconWrapper>
+                    }
+                    text={t('translation:tooltip.disable')}
+                    width={220}
+                  />
                 </ActionIconsContainer>
               </TabContentWrapper>
               <TabContentWrapper width="lg" border="sides">
@@ -140,23 +187,61 @@ export const EditTraitsTab = () => {
             >
               <TabContentWrapper padding="rightSm" width="md">
                 <ActionIconsContainer>
-                  <IconWrapper delete={true}>
-                    <StyledIcon icon="delete" />
-                  </IconWrapper>
-                  <IconWrapper code={true}>
-                    <StyledIcon icon="code" />
-                  </IconWrapper>
-                  <IconWrapper
-                    onClick={() => handleDisabled(item.id)}
-                  >
-                    <StyledIcon
-                      icon={
-                        disabledItems.includes(item.id)
-                          ? 'enable'
-                          : 'disable'
-                      }
-                    />
-                  </IconWrapper>
+                  <Tooltip
+                    type="traits"
+                    children={
+                      <IconWrapper delete={true}>
+                        <StyledIcon icon="delete" />
+                      </IconWrapper>
+                    }
+                    text={t('translation:tooltip.delete')}
+                    width={200}
+                  />
+                  <Popover
+                    trigger={
+                      <Tooltip
+                        type="traits"
+                        children={
+                          <IconWrapper code={true}>
+                            <StyledIcon icon="code" />
+                          </IconWrapper>
+                        }
+                        text={t('translation:tooltip.code')}
+                        width={176}
+                      />
+                    }
+                    text={
+                      <DeveloperModeText>
+                        &#123;
+                        <br />
+                        traitbackground: valueGradient R-Y,
+                        traitbackground: valueGradient B-G,
+                        traitbackground, valueGradient G-W
+                        traitbackground: valueGradient B-R
+                        <br />
+                        &#125;
+                      </DeveloperModeText>
+                    }
+                    setShowOverlay={setShowOverlay}
+                  />
+                  <Tooltip
+                    type="traits"
+                    children={
+                      <IconWrapper
+                        onClick={() => handleDisabled(item.id)}
+                      >
+                        <StyledIcon
+                          icon={
+                            disabledItems.includes(item.id)
+                              ? 'enable'
+                              : 'disable'
+                          }
+                        />
+                      </IconWrapper>
+                    }
+                    text={t('translation:tooltip.disable')}
+                    width={220}
+                  />
                 </ActionIconsContainer>
               </TabContentWrapper>
               <TabContentWrapper width="lg" border="sides">

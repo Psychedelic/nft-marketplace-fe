@@ -184,8 +184,8 @@ const Onboarding = () => {
         </FormSectionContainer>
         <Divider />
         <FormSectionContainer
-          disable={!step.includes('3') && true}
-          enable={step.includes('3') && true}
+          // disable={!step.includes('3') && true}
+          // enable={step.includes('3') && true}
         >
           <NftDetails
             isSubmitting={isNftDetailsSubmitting}

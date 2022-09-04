@@ -6,6 +6,7 @@ export type ModalOverlayProps = {
   enableParticles?: boolean;
   children?: React.ReactChild;
   type?: string | undefined;
+  radius?: boolean;
 };
 
 export const ModalOverlay = forwardRef<
@@ -13,12 +14,18 @@ export const ModalOverlay = forwardRef<
   ModalOverlayProps
 >(
   (
-    { enableParticles, type, children = <ConfettiParticles /> },
+    {
+      enableParticles,
+      type,
+      radius,
+      children = <ConfettiParticles />,
+    },
     ref,
   ) => (
     <ModalOverlayStyled
       ref={ref}
       type={type === 'dark' ? 'dark' : undefined}
+      radius={radius ? true : false}
     >
       {enableParticles && children}
     </ModalOverlayStyled>

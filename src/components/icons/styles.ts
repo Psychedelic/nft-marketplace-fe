@@ -37,6 +37,9 @@ export const IconWrapper = styled('span', {
       input: {
         color: '$textNeutralColor',
       },
+      developerMode: {
+        color: '$darkCyanBlue',
+      },
     },
   },
 });
