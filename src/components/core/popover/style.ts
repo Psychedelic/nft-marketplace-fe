@@ -70,7 +70,7 @@ export const Title = styled('p', {
   lineHeight: '24px',
   display: 'flex',
   alignItems: 'center',
-  color: '$mainTextColor',
+  color: '#ffffff',
 });
 
 export const PopoverContent = styled('div', {
