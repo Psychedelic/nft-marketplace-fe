@@ -37,10 +37,12 @@ export const addToListing = createAsyncThunk<any | undefined, any>(
         slice: marketplaceSlice,
       });
 
-      const collection = getJellyCollection({
+      const collection = await getJellyCollection({
         jellyInstance,
         collectionId,
       });
+
+      console.log('[debug] collection', collection);
 
       if (!collection)
         throw Error(`Oops! collection ${collectionId} not found!`);

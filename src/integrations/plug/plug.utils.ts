@@ -1,3 +1,7 @@
+import {
+  Provider,
+  WalletConnectRPC,
+} from '@psychedelic/plug-inpage-provider';
 import { formatICNSName } from '../../utils/icns';
 import {
   PlugStatusCodes,
