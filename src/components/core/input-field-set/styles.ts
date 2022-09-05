@@ -140,3 +140,11 @@ export const AmountTypeIcon = styled('img', {
   height: '14px',
   marginRight: '5px',
 });
+
+export const NewCategoryInput = styled('input', {
+  border: '0',
+
+  '&:focus': {
+    outline: 'unset !important',
+  },
+});

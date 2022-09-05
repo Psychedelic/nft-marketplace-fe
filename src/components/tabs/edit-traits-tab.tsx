@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Tooltip } from '../core';
+import { ActionButton, Tooltip } from '../core';
+import NewCategoryField from '../core/input-field-set/new-category-field';
 import Popover from '../core/popover/popover';
 import {
   TabsRoot,
@@ -18,19 +19,30 @@ import {
   BottomGradient,
   DeveloperModeText,
 } from './styles';
+import {
+  ModalButtonsList,
+  ModalButtonWrapper,
+  Divider,
+} from '../modals/styles';
 
 type EditTraitsTabProps = {
   setShowOverlay: (value: boolean) => void;
+  handleModalOpen: (value: boolean) => void;
 };
 
 export const EditTraitsTab = ({
   setShowOverlay,
+  handleModalOpen,
 }: EditTraitsTabProps) => {
   const { t } = useTranslation();
   const [disabledItems, setDisabledItems] = useState(
     Array(0).fill(0),
   );
   const [traitType, setTraitType] = useState('alphabetical');
+  const [addAlphabeticalNewCategory, setAddAlphabeticalNewCategory] =
+    useState<boolean>(false);
+  const [addNumericalNewCategory, setAddNumericalNewCategory] =
+    useState<boolean>(false);
 
   const handleDisabled = (id: any) => {
     const clickedItem = alphabetical.find((item) => item.id === id);
@@ -164,8 +176,32 @@ export const EditTraitsTab = ({
               </TabContentWrapper>
             </TabContentContainer>
           ))}
+          {addAlphabeticalNewCategory && <NewCategoryField />}
           <BottomGradient />
         </TabsInnerContentWrapper>
+        <Divider />
+        <ModalButtonsList justifyContent="flexEnd" noMargin="top">
+          <ModalButtonWrapper type="trait">
+            <ActionButton
+              type="outline"
+              size="small"
+              onClick={() => {
+                setAddAlphabeticalNewCategory(true);
+              }}
+            >
+              {t('translation:modals.buttons.addCategory')}
+            </ActionButton>
+          </ModalButtonWrapper>
+          <ModalButtonWrapper type="trait">
+            <ActionButton
+              type="primary"
+              size="small"
+              onClick={() => handleModalOpen(false)}
+            >
+              {t('translation:modals.buttons.confirm')}
+            </ActionButton>
+          </ModalButtonWrapper>
+        </ModalButtonsList>
       </TabsContent>
       <TabsContent value="numerical">
         <TabsInnerContentWrapper>
@@ -256,8 +292,32 @@ export const EditTraitsTab = ({
               </TabContentWrapper>
             </TabContentContainer>
           ))}
+          {addNumericalNewCategory && <NewCategoryField />}
           <BottomGradient />
         </TabsInnerContentWrapper>
+        <Divider />
+        <ModalButtonsList justifyContent="flexEnd" noMargin="top">
+          <ModalButtonWrapper type="trait">
+            <ActionButton
+              type="outline"
+              size="small"
+              onClick={() => {
+                setAddNumericalNewCategory(true);
+              }}
+            >
+              {t('translation:modals.buttons.addCategory')}
+            </ActionButton>
+          </ModalButtonWrapper>
+          <ModalButtonWrapper type="trait">
+            <ActionButton
+              type="primary"
+              size="small"
+              onClick={() => handleModalOpen(false)}
+            >
+              {t('translation:modals.buttons.confirm')}
+            </ActionButton>
+          </ModalButtonWrapper>
+        </ModalButtonsList>
       </TabsContent>
     </TabsRoot>
   );

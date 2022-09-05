@@ -29,6 +29,7 @@ import { ModalOverlay } from './modal-overlay';
 import { Icon } from '../icons';
 import { ActionButton, Tooltip } from '../core';
 import Popover from '../core/popover/popover';
+import NewCategoryField from '../core/input-field-set/new-category-field';
 
 /* --------------------------------------------------------------------------
  * Edit Non Indexable Traits
@@ -38,6 +39,8 @@ export const EditNonIndexableTraitsModal = () => {
   const { t } = useTranslation();
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
   const [modalOpened, setModalOpened] = useState<boolean>(false);
+  const [addNewCategory, setAddNewCategory] =
+    useState<boolean>(false);
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -135,6 +138,7 @@ export const EditNonIndexableTraitsModal = () => {
                       </TabContentWrapper>
                     </TabContentContainer>
                   ))}
+                  {addNewCategory && <NewCategoryField />}
                   <BottomGradient />
                 </TabsInnerContentWrapper>
               </div>
@@ -145,7 +149,7 @@ export const EditNonIndexableTraitsModal = () => {
                 <ActionButton
                   type="outline"
                   size="small"
-                  onClick={() => handleModalOpen(false)}
+                  onClick={() => setAddNewCategory(true)}
                 >
                   {t('translation:modals.buttons.addCategory')}
                 </ActionButton>

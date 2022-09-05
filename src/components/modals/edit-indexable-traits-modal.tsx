@@ -5,18 +5,14 @@ import {
   ModalHeader,
   ModalTitle,
   ModalDescription,
-  ModalButtonsList,
-  ModalButtonWrapper,
   ModalContent,
   EditIconWrapper,
   EditIcon,
   ModalHeaderWrapper,
-  Divider,
 } from './styles';
 import { ModalOverlay } from './modal-overlay';
 import { EditTraitsTab } from '../tabs/edit-traits-tab';
 import { Icon } from '../icons';
-import { ActionButton } from '../core';
 
 /* --------------------------------------------------------------------------
  * Edit Indexable Traits
@@ -64,29 +60,11 @@ export const EditIndexableTraitsModal = () => {
             <ModalDescription fontSize="small">
               {t('translation:modals.description.indexableTrait')}
             </ModalDescription>
-            <EditTraitsTab setShowOverlay={setShowOverlay} />
+            <EditTraitsTab
+              setShowOverlay={setShowOverlay}
+              handleModalOpen={handleModalOpen}
+            />
           </ModalHeader>
-          <Divider />
-          <ModalButtonsList justifyContent="flexEnd" noMargin="top">
-            <ModalButtonWrapper type="trait">
-              <ActionButton
-                type="outline"
-                size="small"
-                onClick={() => handleModalOpen(false)}
-              >
-                {t('translation:modals.buttons.addCategory')}
-              </ActionButton>
-            </ModalButtonWrapper>
-            <ModalButtonWrapper type="trait">
-              <ActionButton
-                type="primary"
-                size="small"
-                onClick={() => handleModalOpen(false)}
-              >
-                {t('translation:modals.buttons.confirm')}
-              </ActionButton>
-            </ModalButtonWrapper>
-          </ModalButtonsList>
         </ModalContent>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
