@@ -61,13 +61,12 @@ export const useNFTSFetcher = () => {
     setCurrentAbortController(abortController);
 
     dispatch(
-      nftsActions.getNFTs({
+      nftsActions.getAllNFTs({
         payload,
         sort: sortBy,
         order: 'd',
         page: 0,
         count: 25,
-        abortController,
         collectionId,
       }),
     );

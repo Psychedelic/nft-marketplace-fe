@@ -84,6 +84,8 @@ type InitialState = {
   recentlyFailedTransactions: string[];
   offersLoaded: boolean;
   transactionSteps: TransactionStepsStatus;
+  // TODO: jelly-js type
+  jellyJsInstance: any;
 };
 
 const defaultTransactionStatus = {
@@ -108,14 +110,20 @@ const initialState: InitialState = {
   recentlyFailedTransactions: [],
   offersLoaded: false,
   transactionSteps: defaultTransactionStatus,
+  jellyJsInstance: {},
 };
 
 export const marketplaceSlice = createSlice({
   name: 'marketplace',
   initialState,
   reducers: {
+    // TODO: deprecate setActor
     setActor: (state, action: PayloadAction<MarketplaceActor>) => {
       state.actor = action.payload;
+    },
+    // TODO: set correct type for jelly-js instance
+    setJellyJsInstance: (state, action: PayloadAction<any>) => {
+      state.jellyJsInstance = action.payload;
     },
     setSumOfUserAllowance: (state, action: PayloadAction<number>) => {
       state.sumOfUserAllowance = action.payload;
