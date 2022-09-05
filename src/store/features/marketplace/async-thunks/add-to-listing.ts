@@ -49,8 +49,14 @@ export const addToListing = createAsyncThunk<any | undefined, any>(
         collection,
       );
 
+      console.log('[debug] jellyCollection >', jellyCollection);
+
+      // const response = await jellyCollection.requestApproval({
+      //   amount: userListForPrice,
+      // });
+
       const { ok } = await jellyCollection.addToListing({
-        tokenId: userOwnedTokenId,
+        tokenId: userOwnedTokenId.toString(),
         price: userListForPrice,
       });
 
@@ -60,6 +66,7 @@ export const addToListing = createAsyncThunk<any | undefined, any>(
         approveWICPStatus: TransactionStatus.completed,
         listingStatus: TransactionStatus.completed,
       };
+
       dispatch(
         marketplaceActions.updateTransactionSteps(
           transactionStepStatus,
