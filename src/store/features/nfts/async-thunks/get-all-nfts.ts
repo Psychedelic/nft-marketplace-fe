@@ -5,6 +5,7 @@ import { nftsActions } from '../nfts-slice';
 import { marketplaceSlice } from '../../marketplace/marketplace-slice';
 import { NSKyasshuUrl } from '../../../../integrations/kyasshu';
 import { isEmptyObject } from '../../../../utils/common';
+import { getJellyCollection } from '../../../../utils/jelly';
 import { AppLog } from '../../../../utils/log';
 
 export type GetAllNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
@@ -44,11 +45,10 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     }
 
     try {
-      const collections: Collection[] =
-        await jellyInstance.getCollections();
-      const collection = collections.find(
-        (c: Collection) => c.id.toText() === collectionId,
-      );
+      const collection = getJellyCollection({
+        jellyInstance,
+        collectionId,
+      });
 
       if (!collection)
         throw Error(`Oops! collection ${collectionId} not found!`);
