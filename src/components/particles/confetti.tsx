@@ -11,6 +11,6 @@ export const ConfettiParticles: React.VFC = () => (
   <Particles
     id="confetti-particles"
     options={ConfettiOptions}
-    init={loadFull}
+    init={loadFull as any}
   />
 );
