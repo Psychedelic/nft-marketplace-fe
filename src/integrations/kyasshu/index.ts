@@ -60,18 +60,6 @@ export const useNFTSFetcher = () => {
 
     setCurrentAbortController(abortController);
 
-    // dispatch(
-    //   nftsActions.getNFTs({
-    //     payload,
-    //     sort: sortBy,
-    //     order: 'd',
-    //     page: 0,
-    //     count: 25,
-    //     abortController,
-    //     collectionId,
-    //   }),
-    // );
-
     dispatch(
       nftsActions.getAllNFTs({
         payload,
