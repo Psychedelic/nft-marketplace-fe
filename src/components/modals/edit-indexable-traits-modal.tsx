@@ -5,26 +5,23 @@ import {
   ModalHeader,
   ModalTitle,
   ModalDescription,
-  ModalButtonsList,
-  ModalButtonWrapper,
   ModalContent,
   EditIconWrapper,
   EditIcon,
   ModalHeaderWrapper,
-  Divider,
-} from '../modals/styles';
+} from './styles';
 import { ModalOverlay } from './modal-overlay';
 import { EditTraitsTab } from '../tabs/edit-traits-tab';
 import { Icon } from '../icons';
-import { ActionButton } from '../core';
 
 /* --------------------------------------------------------------------------
- * Edit Traits
+ * Edit Indexable Traits
  * --------------------------------------------------------------------------*/
 
-export const EditTraitsModal = () => {
+export const EditIndexableTraitsModal = () => {
   const { t } = useTranslation();
   const [modalOpened, setModalOpened] = useState<boolean>(false);
+  const [showOverlay, setShowOverlay] = useState<boolean>(false);
 
   const handleModalOpen = (status: boolean) => {
     setModalOpened(status);
@@ -42,7 +39,11 @@ export const EditTraitsModal = () => {
       </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal>
         <ModalOverlay type="dark" />
-        <ModalContent type="traits">
+        <ModalContent
+          type="traits"
+          onClick={() => showOverlay && setShowOverlay(false)}
+        >
+          {showOverlay && <ModalOverlay radius={true} />}
           <ModalHeader type="traits">
             <ModalHeaderWrapper type="trait">
               <ModalTitle fontSize="small">
@@ -59,29 +60,11 @@ export const EditTraitsModal = () => {
             <ModalDescription fontSize="small">
               {t('translation:modals.description.indexableTrait')}
             </ModalDescription>
-            <EditTraitsTab />
+            <EditTraitsTab
+              setShowOverlay={setShowOverlay}
+              handleModalOpen={handleModalOpen}
+            />
           </ModalHeader>
-          <Divider />
-          <ModalButtonsList justifyContent="flexEnd" noMargin="top">
-            <ModalButtonWrapper type="trait">
-              <ActionButton
-                type="outline"
-                size="small"
-                onClick={() => handleModalOpen(false)}
-              >
-                {t('translation:modals.buttons.addCategory')}
-              </ActionButton>
-            </ModalButtonWrapper>
-            <ModalButtonWrapper type="trait">
-              <ActionButton
-                type="primary"
-                size="small"
-                onClick={() => handleModalOpen(false)}
-              >
-                {t('translation:modals.buttons.confirm')}
-              </ActionButton>
-            </ModalButtonWrapper>
-          </ModalButtonsList>
         </ModalContent>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>

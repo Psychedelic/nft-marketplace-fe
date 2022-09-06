@@ -152,6 +152,11 @@ export const ModalOverlayContainer = styled(DialogPrimitive.Overlay, {
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
       },
     },
+    radius: {
+      true: {
+        borderRadius: '30px',
+      },
+    },
   },
 });
 

@@ -73,6 +73,11 @@ export const Flex = styled('div', {
         width: '100%',
       },
     },
+    alignItems: {
+      flexStart: {
+        alignItems: 'flex-start',
+      },
+    },
   },
 });
 
@@ -136,7 +141,7 @@ export const CarouselItem = styled('div', {
   background: '$chipsBackgroundColor',
   borderRadius: '14px',
   padding: '10px',
-  minWidth: '115px',
+  minWidth: '111px',
   marginRight: '10px',
 });
 

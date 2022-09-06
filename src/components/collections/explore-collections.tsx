@@ -33,14 +33,10 @@ const ExploreCollections = () => {
         <Flex>
           <div>
             <Heading>
-              {t(
-                'translation:collections.exploreCollections.exploreCollectionTitle',
-              )}
+              {t('translation:collections.exploreCollections.exploreCollectionTitle')}
             </Heading>
             <SubText>
-              {t(
-                'translation:collections.exploreCollections.description',
-              )}
+              {t('translation:collections.exploreCollections.description')}
             </SubText>
           </div>
           <CollectionFilterDropdown />

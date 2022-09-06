@@ -8,4 +8,5 @@ export * from './accept-offer-modal';
 export * from './connect-to-plug-modal';
 export * from './withdraw-assets-modal';
 export * from './approve-xtc';
-export * from './edit-traits-modal';
+export * from './edit-indexable-traits-modal';
+export * from './edit-non-indexable-traits-modal';

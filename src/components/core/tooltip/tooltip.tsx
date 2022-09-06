@@ -10,9 +10,11 @@ import { useTheme } from '../../../hooks';
 export type TooltipProps = {
   children?: React.ReactNode;
   text?: string;
+  width?: number;
+  type?: string;
 };
 
-export const Tooltip = ({ children, text }: TooltipProps) => {
+export const Tooltip = ({ children, text, width, type }: TooltipProps) => {
   const [, themeObject] = useTheme();
 
   return (
@@ -21,7 +23,14 @@ export const Tooltip = ({ children, text }: TooltipProps) => {
         <div>{children}</div>
       </TooltipPrimitive.Trigger>
       {text && (
-        <StyledContent sideOffset={5} className={themeObject}>
+        <StyledContent
+          sideOffset={5}
+          className={themeObject}
+          style={{
+            width: `${width}px`,
+          }}
+          type={type === "traits" ? "traits" : undefined}
+        >
           {text}
           <StyledArrow />
         </StyledContent>

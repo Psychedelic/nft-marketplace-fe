@@ -153,6 +153,9 @@ export const TabContentHeaderItem = styled('div', {
 
   variants: {
     width: {
+      sm: {
+        width: '100px',
+      },
       md: {
         width: '160px',
       },
@@ -218,6 +221,9 @@ export const TabContentWrapper = styled('div', {
       },
     },
     width: {
+      sm: {
+        width: '100px',
+      },
       md: {
         width: '160px',
       },
@@ -291,4 +297,12 @@ export const BottomGradient = styled('div', {
   height: '37px',
   left: '0',
   position: 'absolute',
+});
+
+export const DeveloperModeText = styled('p', {
+  fontStyle: 'normal',
+  fontWeight: '400',
+  fontSize: '15px',
+  lineHeight: '22px',
+  color: '$textNeutralColor',
 });

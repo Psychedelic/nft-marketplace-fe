@@ -75,6 +75,20 @@ export const StyledContent = styled(TooltipPrimitive.Content, {
       },
     },
   },
+
+  variants: {
+    type: {
+      traits: {
+        fontSize: '14px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '10px 5px',
+        borderRadius: '14px',
+        height: '25px',
+      },
+    },
+  },
 });
 
 export const StyledArrow = styled(TooltipPrimitive.Arrow, {
