@@ -1,15 +1,16 @@
-import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import config from '../../../../config/env';
-import crownsIdlFactory from '../../../../declarations/nft.did';
-import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
+import nftIdlFactory from '../../../../declarations/nft.did';
+import marketplaceV2IdlFactory from '../../../../declarations/marketplace-v2.did';
 import { notificationActions } from '../../notifications';
 import {
   MakeListing,
   marketplaceActions,
   CollectionDetails,
+  marketplaceSlice,
 } from '../marketplace-slice';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
+import { getJellyCollection } from '../../../../utils/jelly';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
@@ -27,13 +28,32 @@ export const makeListing = createAsyncThunk<
   'marketplace/makeListing',
   async (
     { id, amount, collectionId, onSuccess, onFailure },
-    { dispatch },
+    thunkAPI,
   ) => {
-    const marketplaceCanisterId = Principal.fromText(
-      config.marketplaceCanisterId,
-    );
-    const nonFungibleContractAddress =
-      Principal.fromText(collectionId);
+    const { dispatch } = thunkAPI;
+
+    // Checks if an actor instance exists already
+    // otherwise creates a new instance
+    const jellyInstance = await jellyJsInstanceHandler({
+      thunkAPI,
+      collectionId,
+      slice: marketplaceSlice,
+    });
+
+    const collection = await getJellyCollection({
+      jellyInstance,
+      collectionId,
+    });
+
+    if (!collection)
+      throw Error(`Oops! collection ${collectionId} not found!`);
+
+    if (!collection?.marketplaceId)
+      throw Error(
+        `Oops! marketplace id ${collection?.marketplaceId} not found!`,
+      );
+
+    const { marketplaceId } = collection;
 
     const userOwnedTokenId = BigInt(id);
     const userListForPrice = parseAmountToE8S(amount);
@@ -41,11 +61,11 @@ export const makeListing = createAsyncThunk<
     dispatch(marketplaceActions.setTransactionStepsToDefault());
 
     try {
-      const CROWNS_APPROVE_MARKETPLACE = {
-        idl: crownsIdlFactory,
+      const NFT_APPROVE_MARKETPLACE = {
+        idl: nftIdlFactory,
         canisterId: collectionId,
-        methodName: 'approve',
-        args: [marketplaceCanisterId, userOwnedTokenId],
+        methodName: 'dip721_approve',
+        args: [marketplaceId, userOwnedTokenId],
         onSuccess: (res: any) => {
           if ('Err' in res)
             throw new Error(errorMessageHandler(res.Err));
@@ -66,13 +86,20 @@ export const makeListing = createAsyncThunk<
       };
 
       const MKP_MAKE_LISTING = {
-        idl: marketplaceIdlFactory,
-        canisterId: config.marketplaceCanisterId,
-        methodName: 'makeListing',
+        idl: marketplaceV2IdlFactory,
+        canisterId: marketplaceId.toString(),
+        methodName: 'make_listing',
         args: [
-          nonFungibleContractAddress,
-          userOwnedTokenId,
-          userListForPrice,
+          {
+            token_id: userOwnedTokenId.toString(),
+            collection: collection.id,
+            seller: [],
+            version: [],
+            fungible_id: [],
+            caller: [],
+            buyer: [],
+            price: [userListForPrice],
+          },
         ],
         onSuccess: async (res: any) => {
           if ('Err' in res)
@@ -80,6 +107,7 @@ export const makeListing = createAsyncThunk<
 
           if (typeof onSuccess !== 'function') return;
 
+          // TODO: should run cap sync for v2
           // We call the Cap Sync process
           await axios.get(KyasshuUrl.getCAPJellySync());
 
@@ -102,7 +130,7 @@ export const makeListing = createAsyncThunk<
 
       // TODO: Show transaction progress steps in UI
       const batchTxRes = await window.ic?.plug?.batchTransactions([
-        CROWNS_APPROVE_MARKETPLACE,
+        NFT_APPROVE_MARKETPLACE,
         MKP_MAKE_LISTING,
       ]);
 

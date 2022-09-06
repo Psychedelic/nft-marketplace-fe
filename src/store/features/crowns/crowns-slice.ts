@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
-import crownsIdlService from '../../../declarations/nft';
+import nftIdlService from '../../../declarations/nft';
 import { getOwnerTokenIdentifiers } from './async-thunks';
 
-type CrownsActor = ActorSubclass<crownsIdlService>;
+type CrownsActor = ActorSubclass<nftIdlService>;
 
 type InitialStateCrowns = {
   actor?: CrownsActor;
