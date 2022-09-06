@@ -1,10 +1,6 @@
-import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import config from '../../../../config/env';
 import nftIdlFactory from '../../../../declarations/nft.did';
-import crownsIdlFactory from '../../../../declarations/crowns.did';
-// import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import marketplaceV2IdlFactory from '../../../../declarations/marketplace-v2.did';
 import { notificationActions } from '../../notifications';
 import {
@@ -59,9 +55,6 @@ export const makeListing = createAsyncThunk<
 
     const { marketplaceId } = collection;
 
-    const nonFungibleContractAddress =
-      Principal.fromText(collectionId);
-
     const userOwnedTokenId = BigInt(id);
     const userListForPrice = parseAmountToE8S(amount);
 
@@ -69,8 +62,6 @@ export const makeListing = createAsyncThunk<
 
     try {
       const NFT_APPROVE_MARKETPLACE = {
-        // idl: crownsIdlFactory,
-        // canisterId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
         idl: nftIdlFactory,
         canisterId: collectionId,
         methodName: 'dip721_approve',
