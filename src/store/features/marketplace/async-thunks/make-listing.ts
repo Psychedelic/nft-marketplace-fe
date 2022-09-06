@@ -4,7 +4,8 @@ import axios from 'axios';
 import config from '../../../../config/env';
 import nftIdlFactory from '../../../../declarations/nft.did';
 import crownsIdlFactory from '../../../../declarations/crowns.did';
-import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
+// import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
+import marketplaceV2IdlFactory from '../../../../declarations/marketplace-v2.did';
 import { notificationActions } from '../../notifications';
 import {
   MakeListing,
@@ -48,10 +49,6 @@ export const makeListing = createAsyncThunk<
       collectionId,
     });
 
-    console.log('[debug] collection >>', collection);
-
-    console.log('[debug] make-listing: bp: ', 2);
-
     if (!collection)
       throw Error(`Oops! collection ${collectionId} not found!`);
 
@@ -68,11 +65,7 @@ export const makeListing = createAsyncThunk<
     const userOwnedTokenId = BigInt(id);
     const userListForPrice = parseAmountToE8S(amount);
 
-    console.log('[debug] make-listing: bp: ', 3);
-
     dispatch(marketplaceActions.setTransactionStepsToDefault());
-
-    console.log('[debug] make-listing: bp: ', 4);
 
     try {
       const NFT_APPROVE_MARKETPLACE = {
@@ -80,12 +73,11 @@ export const makeListing = createAsyncThunk<
         // canisterId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
         idl: nftIdlFactory,
         canisterId: collectionId,
-        methodName: 'approve',
+        methodName: 'dip721_approve',
         args: [marketplaceId, userOwnedTokenId],
         onSuccess: (res: any) => {
-          // if ('Err' in res)
-          //   throw new Error(errorMessageHandler(res.Err));
-          console.log('[debug] make-listing: bp: ', 5);
+          if ('Err' in res)
+            throw new Error(errorMessageHandler(res.Err));
 
           const transactionStepStatus = {
             approveWICPStatus: TransactionStatus.completed,
@@ -98,37 +90,35 @@ export const makeListing = createAsyncThunk<
           );
         },
         onFail: (res: any) => {
-          console.log('[debug] make-listing: bp: ', 5.1);
           throw res;
         },
       };
 
-      console.log('[debug] make-listing: bp: ', 4.1);
-
       const MKP_MAKE_LISTING = {
-        idl: marketplaceIdlFactory,
+        idl: marketplaceV2IdlFactory,
         canisterId: marketplaceId.toString(),
         methodName: 'make_listing',
         args: [
           {
             token_id: userOwnedTokenId.toString(),
-            collection,
-            price: userListForPrice,
-            // nonFungibleContractAddress,
-            // userOwnedTokenId,
-            // userListForPrice,
+            collection: collection.id,
+            seller: [],
+            version: [],
+            fungible_id: [],
+            caller: [],
+            buyer: [],
+            price: [userListForPrice],
           },
         ],
         onSuccess: async (res: any) => {
-          // if ('Err' in res)
-          //   throw new Error(errorMessageHandler(res.Err));
+          if ('Err' in res)
+            throw new Error(errorMessageHandler(res.Err));
 
-          // if (typeof onSuccess !== 'function') return;
+          if (typeof onSuccess !== 'function') return;
 
+          // TODO: should run cap sync for v2
           // We call the Cap Sync process
-          // await axios.get(KyasshuUrl.getCAPJellySync());
-
-          console.log('[debug] make-listing: bp: ', 6);
+          await axios.get(KyasshuUrl.getCAPJellySync());
 
           const transactionStepStatus = {
             approveWICPStatus: TransactionStatus.completed,
@@ -140,22 +130,18 @@ export const makeListing = createAsyncThunk<
             ),
           );
 
-          // onSuccess();
+          onSuccess();
         },
         onFail: (res: any) => {
           throw res;
         },
       };
 
-      console.log('[debug] make-listing: bp: ', 4.2);
-
       // TODO: Show transaction progress steps in UI
       const batchTxRes = await window.ic?.plug?.batchTransactions([
         NFT_APPROVE_MARKETPLACE,
-        // MKP_MAKE_LISTING,
+        MKP_MAKE_LISTING,
       ]);
-
-      console.log('[debug] make-listing: bp: ', 4.3);
 
       if (!batchTxRes) {
         throw new Error('Empty response');
