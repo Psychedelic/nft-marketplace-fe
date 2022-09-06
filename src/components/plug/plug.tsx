@@ -25,18 +25,9 @@ import config from '../../config/env';
 import { AppLog } from '../../utils/log';
 import useMediaQuery from '../../hooks/use-media-query';
 
-const {
-  nftCollectionId,
-  marketplaceCanisterId,
-  wICPCanisterId,
-  host,
-} = config;
+const { marketplaceCanisterId, wICPCanisterId, host } = config;
 
-const whitelist = [
-  nftCollectionId,
-  marketplaceCanisterId,
-  wICPCanisterId,
-];
+const whitelist = [marketplaceCanisterId, wICPCanisterId];
 
 export const Plug = () => {
   const { t } = useTranslation();
