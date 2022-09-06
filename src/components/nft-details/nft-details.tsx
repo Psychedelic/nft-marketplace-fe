@@ -118,26 +118,33 @@ export const NftDetails = () => {
       dispatch(nftsActions.getNFTDetails({ id, collectionId }));
     }
 
-    // TODO: add loading placeholders in action buttons
-    // like Sell/Cancel/Edit/Make Offer/Buy Now
-    // to show users that getTokenListing call is under progress
+    // TODO: Deprecated getTokenListing
+    // use
+    // dispatch(
+    //   marketplaceActions.getTokenListing({
+    //     id,
+    //     collectionId,
+    //     onSuccess: () => {
+    //       // Listing got successfull so allowing
+    //       // user to take actions over NFT
+    //       setShowNFTActionButtons(true);
+    //     },
+    //     onFailure: () => {
+    //       // Listing got failed so not allowing
+    //       // user to take actions over NFT
+    //       setShowNFTActionButtons(false);
+    //     },
+    //   }),
+    // );
 
     dispatch(
-      marketplaceActions.getTokenListing({
-        id,
+      marketplaceActions.getNFTs({
         collectionId,
-        onSuccess: () => {
-          // Listing got successfull so allowing
-          // user to take actions over NFT
-          setShowNFTActionButtons(true);
-        },
-        onFailure: () => {
-          // Listing got failed so not allowing
-          // user to take actions over NFT
-          setShowNFTActionButtons(false);
-        },
+        tokenIds: [id],
       }),
     );
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     dispatch,
     id,
