@@ -19,7 +19,6 @@ import {
   getCollections,
   getAssetsToWithdraw,
   withdrawFungible,
-  getNFTs,
 } from './async-thunks';
 import { TransactionStatus } from '../../../constants/transaction-status';
 
@@ -223,7 +222,6 @@ export const marketplaceActions = {
   getCollections,
   getAssetsToWithdraw,
   withdrawFungible,
-  getNFTs,
 };
 
 export default marketplaceSlice.reducer;
