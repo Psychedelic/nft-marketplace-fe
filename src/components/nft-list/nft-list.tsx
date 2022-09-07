@@ -23,8 +23,13 @@ export const NftList = () => {
   const { t } = useTranslation();
   // eslint-disable-next-line
   const dispatch = useAppDispatch();
-  const { loadedNFTS, hasMoreNFTs, loadingNFTs, nextPageNo } =
-    useNFTSStore();
+  const {
+    loadedNFTS,
+    hasMoreNFTs,
+    loadingNFTs,
+    nextPageNo,
+    lastIndexValue,
+  } = useNFTSStore();
   const { collectionId } = useParams();
   const { isMyNfts, status, defaultFilters } = useFilterStore();
   const { principalId, isConnected } = usePlugStore();
@@ -69,7 +74,7 @@ export const NftList = () => {
         payload,
         sort: sortBy,
         order: 'd',
-        page: nextPageNo,
+        page: lastIndexValue,
         count: 25,
         collectionId,
       }),

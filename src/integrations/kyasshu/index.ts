@@ -65,7 +65,6 @@ export const useNFTSFetcher = () => {
         payload,
         sort: sortBy,
         order: 'd',
-        page: 0,
         count: 25,
         collectionId,
       }),
