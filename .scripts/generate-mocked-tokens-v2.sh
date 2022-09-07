@@ -91,7 +91,8 @@ printf "👍 Mint process completed!\n\n"
 
   echo "🧙‍♀️ Will now insert the metadata for the total supply $totalSupply, be patient..."
 
-  for ((i=1; i <= "$totalSupply"; i++))
+  firstIndex=0
+  for ((i="$firstIndex"; i <= "$totalSupply"; i++))
   do
     crownsNftCanisterId="vlhm2-4iaaa-aaaam-qaatq-cai"
     filename=$(printf "%04d.mp4" "$i")
