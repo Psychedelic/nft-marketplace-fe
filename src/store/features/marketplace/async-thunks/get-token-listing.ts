@@ -1,4 +1,3 @@
-import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 // import { actorInstanceHandler } from '../../../../integrations/actor';
 import { marketplaceSlice } from '../marketplace-slice';
@@ -17,13 +16,6 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
       slice: marketplaceSlice,
     });
 
-    console.log(
-      '[debug] collectionId.toString()',
-      collectionId.toString(),
-    );
-
-    console.log('[debug] id', id);
-
     const collection = await getJellyCollection({
       jellyInstance,
       collectionId: collectionId.toString(),
@@ -41,13 +33,7 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
         ids: [id],
       });
 
-      console.log('[debug] result', result);
-
       const { data, ok } = result;
-
-      console.log('[debug] marketplace/getTokenListing: data:', data);
-
-      console.log('[debug] marketplace/getTokenListing: ok:', ok);
 
       if (!ok)
         throw Error(`Oops! Failed to get token listing for id ${id}`);
