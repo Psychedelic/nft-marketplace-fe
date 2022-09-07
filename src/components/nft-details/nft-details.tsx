@@ -75,7 +75,7 @@ export const NftDetails = () => {
     return state.marketplace.tokenListing[id];
   });
 
-  const { isConnected } = usePlugStore();
+  const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
   const nftDetails: NFTMetadata | undefined = useMemo(() => {
     const details = loadedNFTS.find((nft) => nft.id === id);
@@ -92,8 +92,10 @@ export const NftDetails = () => {
   const owner =
     tokenListing?.listing?.seller.toString() || nftDetails?.owner;
   const lastSalePrice =
-    tokenListing?.last_sale?.price &&
-    parseE8SAmountToWICP(tokenListing?.last_sale?.price);
+    (tokenListing?.listing?.price &&
+      parseE8SAmountToWICP(tokenListing?.listing?.price)) ||
+    (tokenListing?.last_sale?.price &&
+      parseE8SAmountToWICP(tokenListing?.last_sale?.price));
   const isListed = !!tokenListing?.listing?.time;
   const isMobileScreen = useMediaQuery('(max-width: 850px)');
 
@@ -106,7 +108,13 @@ export const NftDetails = () => {
     }
 
     if (!nftDetails) {
-      dispatch(nftsActions.getNFTDetails({ id, collectionId }));
+      dispatch(
+        nftsActions.getNFTDetails({
+          id,
+          collectionId,
+          plugPrincipal,
+        }),
+      );
     }
 
     dispatch(
@@ -127,6 +135,7 @@ export const NftDetails = () => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    plugPrincipal,
     dispatch,
     id,
     collectionId,
