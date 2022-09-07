@@ -41,6 +41,7 @@ import TraitsListLoader from './TraitsListLoader';
 import { roundOffDecimalValue } from '../../utils/nfts';
 import NFTDetailsSkeleton from './nft-details-skeleton';
 import useMediaQuery from '../../hooks/use-media-query';
+import { Principal } from '@dfinity/principal';
 
 // type CurrentListing = {
 //   seller: string;
@@ -139,7 +140,7 @@ export const NftDetails = () => {
 
     dispatch(
       marketplaceActions.getNFTs({
-        collectionId,
+        collectionId: Principal.fromText(collectionId),
         tokenIds: [id],
       }),
     );
