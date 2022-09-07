@@ -9,6 +9,8 @@ import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 
+// TODO: update cancel-offer integration using jelly-js
+
 export type CancelOfferProps = DefaultCallbacks & CancelOffer;
 
 export const cancelOffer = createAsyncThunk<
@@ -70,4 +72,3 @@ export const cancelOffer = createAsyncThunk<
     }
   }
 });
-

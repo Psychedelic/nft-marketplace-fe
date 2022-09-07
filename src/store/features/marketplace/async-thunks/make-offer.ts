@@ -16,6 +16,8 @@ import { errorMessageHandler } from '../../../../utils/error';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { TransactionStatus } from '../../../../constants/transaction-status';
 
+// TODO: update make-offer integration using jelly-js
+
 export type MakeOfferProps = DefaultCallbacks &
   MakeOffer &
   CollectionDetails;

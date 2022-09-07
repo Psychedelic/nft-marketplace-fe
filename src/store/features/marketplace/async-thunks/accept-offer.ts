@@ -15,6 +15,8 @@ import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 import { TransactionStatus } from '../../../../constants/transaction-status';
 
+// TODO: update accept-offer integration using jelly-js
+
 export type AcceptOfferProps = DefaultCallbacks & AcceptOffer;
 
 export const acceptOffer = createAsyncThunk<
