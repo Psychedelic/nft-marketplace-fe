@@ -56,11 +56,10 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         collection,
       );
 
-      // const lastIndex = BigInt(page);
+      const lastIndex = page && BigInt(page);
       const res = await jellyCollection.getAllNFTs({
         count: BigInt(count),
-        // TODO: lastIndex to control pagination
-        // lastIndex,
+        lastIndex,
       });
 
       const { data, total, lastIndex: responseLastIndex } = res;
@@ -94,6 +93,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         total,
         nextPage:
           Math.floor(Number(total) / Number(responseLastIndex)) + 1,
+        lastIndex: responseLastIndex,
       };
 
       // update store with loaded NFTS details
@@ -122,4 +122,3 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     }
   },
 );
-

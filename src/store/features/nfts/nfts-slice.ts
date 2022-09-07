@@ -22,6 +22,7 @@ interface NFTSState {
   floorPrice: number;
   totalVolume: number;
   allNFTs: any[];
+  lastIndexValue: number | undefined;
 }
 
 // Define the initial state using that type
@@ -38,6 +39,7 @@ const initialState: NFTSState = {
   floorPrice: 0,
   totalVolume: 0,
   allNFTs: [],
+  lastIndexValue: undefined,
 };
 
 export interface LoadedNFTData {
@@ -45,6 +47,7 @@ export interface LoadedNFTData {
   totalPages: number;
   total: number;
   nextPage: number;
+  lastIndex: number;
 }
 
 interface ListedNFTData {
@@ -94,8 +97,10 @@ export const nftsSlice = createSlice({
       }
     },
     setLoadedNFTS: (state, action: PayloadAction<LoadedNFTData>) => {
-      const { loadedNFTList, totalPages, nextPage } = action.payload;
+      const { loadedNFTList, totalPages, nextPage, lastIndex } =
+        action.payload;
       state.loadingNFTs = false;
+      state.lastIndexValue = Number(lastIndex);
       if (nextPage === 1) {
         state.loadedNFTS = loadedNFTList;
       } else {
