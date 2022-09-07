@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-// import { actorInstanceHandler } from '../../../../integrations/actor';
 import { marketplaceSlice } from '../marketplace-slice';
 import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
 import { getJellyCollection } from '../../../../utils/jelly';
