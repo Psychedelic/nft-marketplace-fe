@@ -48,7 +48,8 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
 
       if (!isListedToSell) throw Error('Oops! Invalid listing');
 
-      onSuccess();
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      typeof onSuccess === 'function' && onSuccess();
 
       return {
         [id]: item,

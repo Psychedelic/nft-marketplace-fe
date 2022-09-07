@@ -87,6 +87,7 @@ export const NftDetails = () => {
       loadedFiltersList,
     });
   }, [loadedNFTS, id, loadedFiltersList, dispatch]);
+
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
   const owner =
@@ -98,6 +99,12 @@ export const NftDetails = () => {
       parseE8SAmountToWICP(tokenListing?.last_sale?.price));
   const isListed = !!tokenListing?.listing?.time;
   const isMobileScreen = useMediaQuery('(max-width: 850px)');
+  const hasNFTOwnership = owner === plugPrincipal;
+
+  // If not set, shall display the Action buttons?
+  if (!showNFTActionButtons && hasNFTOwnership) {
+    setShowNFTActionButtons(true);
+  }
 
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
@@ -121,16 +128,6 @@ export const NftDetails = () => {
       marketplaceActions.getTokenListing({
         id,
         collectionId,
-        onSuccess: () => {
-          // Listing got successfull so allowing
-          // user to take actions over NFT
-          setShowNFTActionButtons(true);
-        },
-        onFailure: () => {
-          // Listing got failed so not allowing
-          // user to take actions over NFT
-          setShowNFTActionButtons(false);
-        },
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
