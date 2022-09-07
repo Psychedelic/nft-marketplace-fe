@@ -7,8 +7,6 @@ import {
   CollectionDetails,
   marketplaceSlice,
 } from '../marketplace-slice';
-// import config from '../../../../config/env';
-// import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
 import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
