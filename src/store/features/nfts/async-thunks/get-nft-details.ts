@@ -1,10 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { nftsActions } from '../nfts-slice';
-import {
-  KyasshuUrl,
-  // NSKyasshuUrl,
-} from '../../../../integrations/kyasshu';
+import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { createActor } from '../../../../integrations/actor';
 import { notificationActions } from '../../notifications';
 import { settingsActions } from '../../settings';

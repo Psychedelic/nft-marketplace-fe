@@ -119,7 +119,6 @@ export const NftDetails = () => {
         nftsActions.getNFTDetails({
           id,
           collectionId,
-          plugPrincipal,
         }),
       );
     }
