@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
-import { nftsActions } from '../nfts-slice';
+import { nftsActions, LoadedNFTData } from '../nfts-slice';
 import { marketplaceSlice } from '../../marketplace/marketplace-slice';
 import { NSKyasshuUrl } from '../../../../integrations/kyasshu';
 import { isEmptyObject } from '../../../../utils/common';
@@ -38,6 +38,14 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     });
 
     const { dispatch } = thunkAPI;
+    const {
+      nfts: { hasMoreNFTs },
+    } = thunkAPI.getState() as any;
+
+    // TODO: should move to the UI side to make this more reusable
+    // and controlled from client use-case only
+    // Prevent pagination
+    if (typeof hasMoreNFTs !== 'undefined' && !hasMoreNFTs) return;
 
     // set loading NFTS state to true
     dispatch(nftsActions.setIsNFTSLoading(true));
@@ -94,14 +102,17 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         return metadata;
       });
 
-      const actionPayload = {
+      const actionPayload: LoadedNFTData = {
         loadedNFTList: extractedNFTSList,
         totalPages: Math.ceil(Number(total) / count),
         total,
         nextPage:
           Math.floor(Number(total) / Number(responseLastIndex)) + 1,
-        lastIndex: responseLastIndex,
       };
+
+      if (responseLastIndex) {
+        actionPayload.lastIndex = Number(responseLastIndex) - 1;
+      }
 
       // update store with loaded NFTS details
       dispatch(nftsActions.setLoadedNFTS(actionPayload));

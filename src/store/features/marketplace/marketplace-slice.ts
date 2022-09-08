@@ -1,9 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
 import marketplaceIdlService, {
-  Listing,
   TransactionStepsStatus,
 } from '../../../declarations/marketplace';
+import {
+  Listing,
+  TokenData,
+  LastSale,
+} from '../../../declarations/marketplace-v2';
 import { OwnerTokenIdentifiers } from '../crowns/crowns-slice';
 import {
   acceptOffer,
@@ -67,6 +71,11 @@ type RecentyListedForSale = MakeListing[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
 
+type TokenListingItem = Omit<TokenData, 'listing' | 'last_sale'> & {
+  listing: Listing;
+  last_sale: LastSale;
+};
+
 type InitialState = {
   recentlyListedForSale: RecentyListedForSale;
   // TODO: the recently* should be typed
@@ -75,7 +84,7 @@ type InitialState = {
   recentlyCancelledOffers: any;
   recentlyAcceptedOffers: any[];
   actor?: MarketplaceActor;
-  tokenListing: Record<string, Listing>;
+  tokenListing: Record<string, TokenListingItem>;
   tokenOffers: any[];
   recentlyMadeOffers: any[];
   recentlyPurchasedTokens: any[];

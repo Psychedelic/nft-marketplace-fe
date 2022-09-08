@@ -75,7 +75,7 @@ export const NftDetails = () => {
     return state.marketplace.tokenListing[id];
   });
 
-  const { isConnected } = usePlugStore();
+  const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
   const nftDetails: NFTMetadata | undefined = useMemo(() => {
     const details = loadedNFTS.find((nft) => nft.id === id);
@@ -86,26 +86,26 @@ export const NftDetails = () => {
       details,
       loadedFiltersList,
     });
-  }, [loadedNFTS, id, loadedFiltersList]);
+  }, [loadedNFTS, id, loadedFiltersList, dispatch]);
+
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
-  const owner = tokenListing?.seller?.toString() || nftDetails?.owner;
+  const owner =
+    tokenListing?.listing?.seller.toString() || nftDetails?.owner;
   const lastSalePrice =
-    (tokenListing?.price &&
-      parseE8SAmountToWICP(tokenListing.price)) ||
-    (nftDetails?.price &&
-      parseE8SAmountToWICP(BigInt(nftDetails.price)));
-  const isListed = !!(tokenListing?.created || nftDetails?.isListed);
+    (tokenListing?.listing?.price &&
+      parseE8SAmountToWICP(tokenListing?.listing?.price)) ||
+    (tokenListing?.last_sale?.price &&
+      parseE8SAmountToWICP(tokenListing?.last_sale?.price));
+  const isListed = !!tokenListing?.listing?.time;
   const isMobileScreen = useMediaQuery('(max-width: 850px)');
+  const hasNFTOwnership = owner === plugPrincipal;
 
-  // TODO: We need more control, plus the
-  // kyasshu calls should be placed as a thunk/action
-  // of the state management of your choice, which is redux toolkit
-  // by encapsulating everying here, we lose control it seems
-  // of course you can pass parameters, but then why is it pulling id from useParams
-  // when you have it in the parent component?
-  // To have this work quickly, I've disabled it for now
-  // useNFTDetailsFetcher();
+  // If not set, shall display the Action buttons?
+  if (!showNFTActionButtons && hasNFTOwnership) {
+    setShowNFTActionButtons(true);
+  }
+
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
     if (!id || !collectionId) return;
@@ -115,30 +115,23 @@ export const NftDetails = () => {
     }
 
     if (!nftDetails) {
-      dispatch(nftsActions.getNFTDetails({ id, collectionId }));
+      dispatch(
+        nftsActions.getNFTDetails({
+          id,
+          collectionId,
+        }),
+      );
     }
-
-    // TODO: add loading placeholders in action buttons
-    // like Sell/Cancel/Edit/Make Offer/Buy Now
-    // to show users that getTokenListing call is under progress
 
     dispatch(
       marketplaceActions.getTokenListing({
         id,
         collectionId,
-        onSuccess: () => {
-          // Listing got successfull so allowing
-          // user to take actions over NFT
-          setShowNFTActionButtons(true);
-        },
-        onFailure: () => {
-          // Listing got failed so not allowing
-          // user to take actions over NFT
-          setShowNFTActionButtons(false);
-        },
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    plugPrincipal,
     dispatch,
     id,
     collectionId,
