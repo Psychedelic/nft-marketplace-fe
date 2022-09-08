@@ -44,6 +44,7 @@ export interface FilterState {
   searchResults: SearchResultDataState[];
   isAlreadyFetched: boolean;
   loadingSearch: boolean;
+  reverse: boolean;
 }
 
 const initialState: FilterState = {
@@ -52,11 +53,12 @@ const initialState: FilterState = {
   loadedFiltersList: [],
   loadingFilterList: false,
   isMyNfts: false,
-  sortBy: 'lastModified',
+  sortBy: 'Recently Actioned',
   status: '',
   searchResults: [],
   isAlreadyFetched: false,
   loadingSearch: false,
+  reverse: false,
 };
 
 export const filterSlice = createSlice({
@@ -208,6 +210,15 @@ export const filterSlice = createSlice({
     },
     setSortingFilter: (state, action: PayloadAction<string>) => {
       state.sortBy = action.payload;
+      if (
+        action.payload === 'Lowest Last Sale' ||
+        action.payload === 'Lowest Last Offer' ||
+        action.payload === 'Price Low to High'
+      ) {
+        state.reverse = true;
+      } else {
+        state.reverse = false;
+      }
     },
     setStatusFilter: (state, action: PayloadAction<string>) => {
       state.status = action.payload;

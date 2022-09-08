@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   filterActions,
+  nftsActions,
   useAppDispatch,
   useFilterStore,
 } from '../../../store';
@@ -15,55 +16,77 @@ import {
 import { AppLog } from '../../../utils/log';
 import { Icon } from '../../icons';
 import { useTheme } from '../../../hooks';
-import { SortOptions } from '../../../constants/sort-options';
+import { SortKey } from '@psychedelic/jelly-js';
 
 export const SortByFilterDropdown = React.memo(() => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { sortBy } = useFilterStore();
+  const { sortBy, reverse } = useFilterStore();
 
   const [selectedValue, setSelectedValue] = useState(
-    `${t('translation:dropdown.priceFilter.recentlyActioned')}`,
+    `${t('translation:dropdown.priceFilter.recentlyListed')}`,
   );
   const [, themeObject] = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
   const sortOptions = [
     {
-      key: SortOptions.LastModified,
+      key: SortKey.all,
+      value: `${t('translation:dropdown.priceFilter.all')}`,
+    },
+    {
+      key: SortKey.lastListing,
       value: `${t(
-        'translation:dropdown.priceFilter.recentlyActioned',
+        'translation:dropdown.priceFilter.recentlyListed',
       )}`,
     },
     {
-      key: SortOptions.LastSale,
+      key: SortKey.lastOffer,
+      value: `${t(
+        'translation:dropdown.priceFilter.recentlyOffered',
+      )}`,
+    },
+    {
+      key: SortKey.lastSale,
       value: `${t('translation:dropdown.priceFilter.recentlySold')}`,
     },
     {
-      key: SortOptions.LastSalePrice,
+      key: SortKey.listingPrice,
       value: `${t(
         'translation:dropdown.priceFilter.highestLastSale',
       )}`,
     },
     {
-      key: SortOptions.LastOfferPrice,
+      key: SortKey.listingPrice,
+      value: `${t(
+        'translation:dropdown.priceFilter.lowestLastSale',
+      )}`,
+    },
+    {
+      key: SortKey.offerPrice,
       value: `${t(
         'translation:dropdown.priceFilter.highestLastOffer',
       )}`,
     },
     {
-      key: SortOptions.PriceLowToHigh,
-      value: `${t('translation:dropdown.priceFilter.lowToHigh')}`,
+      key: SortKey.offerPrice,
+      value: `${t(
+        'translation:dropdown.priceFilter.lowestLastOffer',
+      )}`,
     },
     {
-      key: SortOptions.PriceHighToLow,
+      key: SortKey.salePrice,
       value: `${t('translation:dropdown.priceFilter.highToLow')}`,
+    },
+    {
+      key: SortKey.salePrice,
+      value: `${t('translation:dropdown.priceFilter.lowToHigh')}`,
     },
   ];
 
   const setSortBy = (key: string) => {
     const translated = sortOptions.find(
-      (item) => item.key === key,
+      (item) => item.value === key,
     )?.value;
 
     if (!translated) {
@@ -74,12 +97,13 @@ export const SortByFilterDropdown = React.memo(() => {
       return;
     }
 
+    dispatch(nftsActions.setLastIndex(undefined));
     setSelectedValue(translated);
-    dispatch(filterActions.setSortingFilter(key));
+    dispatch(filterActions.setSortingFilter(translated));
   };
 
   const sortValue = useMemo(() => {
-    return sortOptions.find((sortItem) => sortItem.key === sortBy)
+    return sortOptions.find((sortItem) => sortItem.value === sortBy)
       ?.value;
   }, [sortOptions, sortBy]);
 
@@ -100,8 +124,8 @@ export const SortByFilterDropdown = React.memo(() => {
         <DropdownRadioGroup onValueChange={setSortBy}>
           {sortOptions.map((item) => (
             <DropdownRadioMenuItem
-              value={item.key}
-              key={item.key}
+              value={item.value}
+              key={item.value}
               className="list-item"
             >
               {item.value}

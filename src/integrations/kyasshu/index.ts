@@ -6,9 +6,11 @@ import {
   nftsActions,
   useAppDispatch,
   useFilterStore,
+  useNFTSStore,
   usePlugStore,
 } from '../../store';
 import { parseAmountToE8SAsNum } from '../../utils/formatters';
+import { getSortValue } from '../../utils/sorting';
 import { useTraitsPayload, usePriceValues } from './utils';
 
 export const useNFTSFetcher = () => {
@@ -44,7 +46,8 @@ export const useNFTSFetcher = () => {
     };
   }
 
-  const { sortBy } = useFilterStore();
+  const { sortBy, reverse } = useFilterStore();
+  const { lastIndexValue } = useNFTSStore();
 
   useUpdateEffect(() => {
     dispatch(nftsActions.clearLoadedNFTS());
@@ -63,10 +66,12 @@ export const useNFTSFetcher = () => {
     dispatch(
       nftsActions.getAllNFTs({
         payload,
-        sort: sortBy,
+        sort: getSortValue(sortBy),
         order: 'd',
+        page: lastIndexValue,
         count: 25,
         collectionId,
+        reverse,
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps

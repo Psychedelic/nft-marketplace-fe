@@ -1,3 +1,4 @@
+import { SortKey } from '@psychedelic/jelly-js';
 import { OffersTableItem } from '../declarations/legacy';
 import { ParsedTokenOffers, TokenTransactionItem } from './parser';
 
@@ -25,4 +26,26 @@ export const sortActivitiesByTime = (activities: any) => {
   return activities.sort((a: any, b: any) => {
     return Number(b.time.toString()) - Number(a.time.toString());
   });
+};
+
+export const getSortValue = (key: string) => {
+  switch (key) {
+    case 'Recently Listed':
+      return SortKey.lastListing;
+    case 'Recently Offered':
+      return SortKey.lastOffer;
+    case 'Recently Sold':
+      return SortKey.lastSale;
+    case 'Highest Last Sale':
+    case 'Lowest Last Sale':
+      return SortKey.salePrice;
+    case 'Highest Last Offer':
+    case 'Lowest Last Offer':
+      return SortKey.offerPrice;
+    case 'Price High to Low':
+    case 'Price Low to High':
+      return SortKey.listingPrice;
+    default:
+      return SortKey.all;
+  }
 };
