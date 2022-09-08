@@ -35,6 +35,14 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     });
 
     const { dispatch } = thunkAPI;
+    const {
+      nfts: { hasMoreNFTs },
+    } = thunkAPI.getState() as any;
+
+    // TODO: should move to the UI side to make this more reusable
+    // and controlled from client use-case only
+    // Prevent pagination
+    if (typeof hasMoreNFTs !== 'undefined' && !hasMoreNFTs) return;
 
     // set loading NFTS state to true
     dispatch(nftsActions.setIsNFTSLoading(true));
