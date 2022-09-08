@@ -61,12 +61,16 @@
   },
   "dropdown": {
     "priceFilter": {
+      "recentlyListed": "Recently Listed",
+      "recentlyOffered": "Recently Offered",
       "lowToHigh": "Price Low to High",
       "highToLow": "Price High to Low",
       "highestLastSale": "Highest Last Sale",
+      "lowestLastSale": "Lowest Last Sale",
       "recentlySold": "Recently Sold",
-      "recentlyActioned": "Recent Actions",
-      "highestLastOffer": "Highest Last Offer"
+      "highestLastOffer": "Highest Last Offer",
+      "lowestLastOffer": "Lowest Last Offer",
+      "all": "Default"
     },
     "moreOptions": {
       "copyLink": "Copy Link"

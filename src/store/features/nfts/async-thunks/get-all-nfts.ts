@@ -6,6 +6,8 @@ import { NSKyasshuUrl } from '../../../../integrations/kyasshu';
 import { isEmptyObject } from '../../../../utils/common';
 import { getJellyCollection } from '../../../../utils/jelly';
 import { AppLog } from '../../../../utils/log';
+import { filterActions } from '../../filters';
+import { getSortValue } from '../../../../utils/sorting';
 
 export type GetAllNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -18,7 +20,8 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     {
       payload,
       // TODO: map previous sorting fields to body jelly js fn args
-      // sort,
+      sort,
+      reverse,
       // order,
       page,
       count,
@@ -60,9 +63,13 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       const res = await jellyCollection.getAllNFTs({
         count: BigInt(count),
         lastIndex,
+        sort: getSortValue(sort),
+        reverse,
       });
 
       const { data, total, lastIndex: responseLastIndex } = res;
+
+      console.log(res, reverse);
 
       // TODO: map nft list
       const extractedNFTSList = data.map((nft: any) => {
