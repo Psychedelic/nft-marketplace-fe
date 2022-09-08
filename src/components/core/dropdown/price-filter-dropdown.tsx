@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   filterActions,
+  nftsActions,
   useAppDispatch,
   useFilterStore,
 } from '../../../store';
@@ -96,6 +97,7 @@ export const SortByFilterDropdown = React.memo(() => {
       return;
     }
 
+    dispatch(nftsActions.setLastIndex(undefined));
     setSelectedValue(translated);
     dispatch(filterActions.setSortingFilter(translated));
   };

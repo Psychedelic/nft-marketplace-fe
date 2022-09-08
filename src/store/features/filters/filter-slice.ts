@@ -53,7 +53,7 @@ const initialState: FilterState = {
   loadedFiltersList: [],
   loadingFilterList: false,
   isMyNfts: false,
-  sortBy: 'Default',
+  sortBy: 'Recently Actioned',
   status: '',
   searchResults: [],
   isAlreadyFetched: false,

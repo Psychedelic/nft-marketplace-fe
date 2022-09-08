@@ -200,6 +200,12 @@ export const nftsSlice = createSlice({
       state.totalVolume = totalVolume;
       state.loadingCollectionData = false;
     },
+    setLastIndex: (
+      state,
+      action: PayloadAction<number | undefined>,
+    ) => {
+      state.lastIndexValue = action.payload;
+    },
   },
 });
 

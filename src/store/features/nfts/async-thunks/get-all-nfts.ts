@@ -77,8 +77,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
       const { data, total, lastIndex: responseLastIndex } = res;
 
-      console.log(res, reverse);
-
       // TODO: map nft list
       const extractedNFTSList = data.map((nft: any) => {
         const metadata = {

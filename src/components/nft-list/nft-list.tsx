@@ -71,7 +71,6 @@ export const NftList = () => {
     )
       return;
 
-    console.log(sortBy);
     dispatch(
       nftsActions.getAllNFTs({
         payload,

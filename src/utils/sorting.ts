@@ -37,17 +37,14 @@ export const getSortValue = (key: string) => {
     case 'Recently Sold':
       return SortKey.lastSale;
     case 'Highest Last Sale':
-      return SortKey.listingPrice;
     case 'Lowest Last Sale':
-      return SortKey.listingPrice;
+      return SortKey.salePrice;
     case 'Highest Last Offer':
-      return SortKey.offerPrice;
     case 'Lowest Last Offer':
       return SortKey.offerPrice;
     case 'Price High to Low':
-      return SortKey.salePrice;
     case 'Price Low to High':
-      return SortKey.salePrice;
+      return SortKey.listingPrice;
     default:
       return SortKey.all;
   }
