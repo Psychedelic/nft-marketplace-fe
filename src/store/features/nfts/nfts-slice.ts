@@ -14,7 +14,7 @@ interface NFTSState {
   loadedNFTS: NFTMetadata[];
   failedToLoadNFTS: boolean;
   failedToLoadNFTSMessage: string;
-  hasMoreNFTs: boolean;
+  hasMoreNFTs?: boolean;
   nextPageNo: number;
   loadingCollectionData: boolean;
   totalNFTSCount: number;
@@ -31,7 +31,6 @@ const initialState: NFTSState = {
   loadedNFTS: [],
   failedToLoadNFTS: false,
   failedToLoadNFTSMessage: '',
-  hasMoreNFTs: false,
   nextPageNo: 0,
   loadingCollectionData: false,
   totalNFTSCount: 0,
@@ -47,7 +46,7 @@ export interface LoadedNFTData {
   totalPages: number;
   total: number;
   nextPage: number;
-  lastIndex: number;
+  lastIndex?: number;
 }
 
 interface ListedNFTData {
@@ -115,7 +114,8 @@ export const nftsSlice = createSlice({
     },
     clearLoadedNFTS: (state) => {
       state.loadedNFTS = [];
-      state.hasMoreNFTs = false;
+      // Only defined once checked at least once
+      state.hasMoreNFTs = undefined;
       state.nextPageNo = 0;
     },
     setFailedToLoadNFTS: (state, action: PayloadAction<boolean>) => {
