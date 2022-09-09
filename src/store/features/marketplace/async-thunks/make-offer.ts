@@ -54,13 +54,13 @@ export const makeOffer = createAsyncThunk<
 
   const { marketplaceId } = collection;
 
+  const userOwnedTokenId = BigInt(id);
+  const userOfferInPrice = parseAmountToE8S(amount);
+
+  // Allowance amount calculation
   const {
     marketplace: { sumOfUserAllowance },
   }: any = getState();
-
-  const crownsContractAddress = Principal.fromText(collectionId);
-  const userOwnedTokenId = BigInt(id);
-  const userOfferInPrice = parseAmountToE8S(amount);
 
   const allowanceAmountInWICP = sumOfUserAllowance
     ? sumOfUserAllowance + Number(amount)
@@ -70,6 +70,7 @@ export const makeOffer = createAsyncThunk<
     allowanceAmountInWICP.toString(),
   );
 
+  // Initialize transaction steps in UI
   dispatch(marketplaceActions.setTransactionStepsToDefault());
 
   try {
@@ -101,11 +102,7 @@ export const makeOffer = createAsyncThunk<
       idl: marketplaceV2IdlFactory,
       canisterId: config.marketplaceCanisterId,
       methodName: 'makeOffer',
-      args: [
-        crownsContractAddress,
-        userOwnedTokenId,
-        userOfferInPrice,
-      ],
+      args: [collection.id, userOwnedTokenId, userOfferInPrice],
       onSuccess: async (res: any) => {
         if ('Err' in res)
           throw new Error(errorMessageHandler(res.Err));
