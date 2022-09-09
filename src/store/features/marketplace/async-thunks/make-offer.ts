@@ -98,11 +98,22 @@ export const makeOffer = createAsyncThunk<
       },
     };
 
-    const MKP_MAKE_OFFER_WICP = {
+    const MKP_MAKE_OFFER = {
       idl: marketplaceV2IdlFactory,
-      canisterId: config.marketplaceCanisterId,
-      methodName: 'makeOffer',
-      args: [collection.id, userOwnedTokenId, userOfferInPrice],
+      canisterId: marketplaceId.toString(),
+      methodName: 'make_offer',
+      args: [
+        {
+          token_id: userOwnedTokenId.toString(),
+          collection: collection.id,
+          seller: [],
+          version: [],
+          fungible_id: [],
+          caller: [],
+          buyer: [],
+          price: [userOfferInPrice],
+        },
+      ],
       onSuccess: async (res: any) => {
         if ('Err' in res)
           throw new Error(errorMessageHandler(res.Err));
@@ -132,7 +143,7 @@ export const makeOffer = createAsyncThunk<
     // TODO: Show transaction progress steps in UI
     const batchTxRes = await window.ic?.plug?.batchTransactions([
       WICP_APPROVE_MARKETPLACE,
-      MKP_MAKE_OFFER_WICP,
+      MKP_MAKE_OFFER,
     ]);
 
     if (!batchTxRes) {
