@@ -96,6 +96,8 @@ type InitialState = {
   transactionSteps: TransactionStepsStatus;
   // TODO: jelly-js type
   jellyJsInstance: any;
+  // TODO: NFT offers type
+  nftOffers: any;
 };
 
 const defaultTransactionStatus = {
@@ -121,6 +123,7 @@ const initialState: InitialState = {
   offersLoaded: false,
   transactionSteps: defaultTransactionStatus,
   jellyJsInstance: {},
+  nftOffers: [],
 };
 
 export const marketplaceSlice = createSlice({
@@ -213,6 +216,11 @@ export const marketplaceSlice = createSlice({
       if (!action.payload) return;
 
       state.recentlyWithdrawnAssets.push(action.payload);
+    });
+    builder.addCase(getNFTOffers.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.nftOffers = action.payload;
     });
   },
 });

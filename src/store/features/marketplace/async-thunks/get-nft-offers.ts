@@ -8,6 +8,9 @@ import {
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 
+// TODO: delete getTokenOffers thunk when getNFTOffers is ready
+// to render NFT offers list
+
 export const getNFTOffers = createAsyncThunk<any | undefined, any>(
   'marketplace/getNFTOffers',
   async ({ collectionId, id, onSuccess, onFailure }, thunkAPI) => {
@@ -53,9 +56,9 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
 
       thunkAPI.dispatch(marketplaceActions.setOffersLoaded(true));
 
-      return {
-        [id]: item,
-      };
+      // TODO: parse NFT offers response
+
+      return offers;
     } catch (err) {
       AppLog.error(err);
       thunkAPI.dispatch(
@@ -67,9 +70,7 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
         onFailure(err);
       }
 
-      return {
-        [id]: {},
-      };
+      return [];
     }
   },
 );
