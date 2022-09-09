@@ -9,7 +9,7 @@ import {
 } from '../marketplace-slice';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
-import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
+import marketplaceV2IdlFactory from '../../../../declarations/marketplace-v2.did';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { errorMessageHandler } from '../../../../utils/error';
@@ -73,7 +73,7 @@ export const makeOffer = createAsyncThunk<
     };
 
     const MKP_MAKE_OFFER_WICP = {
-      idl: marketplaceIdlFactory,
+      idl: marketplaceV2IdlFactory,
       canisterId: config.marketplaceCanisterId,
       methodName: 'makeOffer',
       args: [
