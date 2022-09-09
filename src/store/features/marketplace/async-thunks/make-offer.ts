@@ -6,7 +6,10 @@ import {
   MakeOffer,
   marketplaceActions,
   CollectionDetails,
+  marketplaceSlice,
 } from '../marketplace-slice';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
+import { getJellyCollection } from '../../../../utils/jelly';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
 import marketplaceV2IdlFactory from '../../../../declarations/marketplace-v2.did';
@@ -28,13 +31,33 @@ export const makeOffer = createAsyncThunk<
 
   const { dispatch, getState } = thunkAPI;
 
+  // Checks if an actor instance exists already
+  // otherwise creates a new instance
+  const jellyInstance = await jellyJsInstanceHandler({
+    thunkAPI,
+    collectionId,
+    slice: marketplaceSlice,
+  });
+
+  const collection = await getJellyCollection({
+    jellyInstance,
+    collectionId,
+  });
+
+  if (!collection)
+    throw Error(`Oops! collection ${collectionId} not found!`);
+
+  if (!collection?.marketplaceId)
+    throw Error(
+      `Oops! marketplace id ${collection?.marketplaceId} not found!`,
+    );
+
+  const { marketplaceId } = collection;
+
   const {
     marketplace: { sumOfUserAllowance },
   }: any = getState();
 
-  const mkpContractAddress = Principal.fromText(
-    config.marketplaceCanisterId,
-  );
   const crownsContractAddress = Principal.fromText(collectionId);
   const userOwnedTokenId = BigInt(id);
   const userOfferInPrice = parseAmountToE8S(amount);
@@ -54,7 +77,7 @@ export const makeOffer = createAsyncThunk<
       idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,
       methodName: 'approve',
-      args: [mkpContractAddress, allowanceAmount],
+      args: [marketplaceId, allowanceAmount],
       onSuccess: (res: any) => {
         if ('Err' in res)
           throw new Error(errorMessageHandler(res.Err));
