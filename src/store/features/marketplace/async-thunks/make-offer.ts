@@ -23,8 +23,10 @@ export type MakeOfferProps = DefaultCallbacks &
 export const makeOffer = createAsyncThunk<
   MakeOffer | undefined,
   MakeOfferProps
->('marketplace/makeOffer', async (params, { dispatch, getState }) => {
+>('marketplace/makeOffer', async (params, thunkAPI) => {
   const { id, amount, collectionId, onSuccess, onFailure } = params;
+
+  const { dispatch, getState } = thunkAPI;
 
   const {
     marketplace: { sumOfUserAllowance },
