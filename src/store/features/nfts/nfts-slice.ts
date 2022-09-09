@@ -45,7 +45,7 @@ export interface LoadedNFTData {
   loadedNFTList: NFTMetadata[];
   totalPages: number;
   total: number;
-  nextPage: number;
+  nextPage?: number;
   lastIndex?: number;
 }
 
@@ -98,6 +98,7 @@ export const nftsSlice = createSlice({
     setLoadedNFTS: (state, action: PayloadAction<LoadedNFTData>) => {
       const { loadedNFTList, totalPages, nextPage, lastIndex } =
         action.payload;
+
       state.loadingNFTs = false;
       state.lastIndexValue = Number(lastIndex);
       if (nextPage === 1) {
@@ -105,7 +106,7 @@ export const nftsSlice = createSlice({
       } else {
         state.loadedNFTS.push(...loadedNFTList);
       }
-      if (nextPage < totalPages) {
+      if (nextPage && nextPage <= totalPages) {
         state.hasMoreNFTs = true;
         state.nextPageNo = nextPage;
       } else {
