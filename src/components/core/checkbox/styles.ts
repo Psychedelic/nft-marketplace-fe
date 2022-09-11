@@ -36,6 +36,8 @@ export const Wrapper = styled('div', {
       height: '17px',
       cursor: 'pointer',
       display: 'inline-block',
+      position: 'relative',
+      bottom: '-2px',
     },
 
     '& input[type="checkbox"]:checked + span:before': {

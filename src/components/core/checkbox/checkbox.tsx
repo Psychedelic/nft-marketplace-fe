@@ -1,5 +1,4 @@
 import React from 'react';
-import { roundOffDecimalValue } from '../../../utils/nfts';
 import { Wrapper, RarityValue } from './styles';
 
 export type CheckboxProps = {
@@ -11,13 +10,13 @@ export type CheckboxProps = {
   handleSelectedFilters: (
     value: React.MouseEvent<HTMLInputElement, MouseEvent>,
   ) => void;
+  tokenCount: number;
 };
 
 export const Checkbox = ({
   value,
-  percentage,
-  occurence,
   filterValueExists,
+  tokenCount,
   handleSelectedFilters,
 }: CheckboxProps) => (
   <Wrapper
@@ -48,9 +47,6 @@ export const Checkbox = ({
       <span />
       {value.split('+')[1]}
     </label>
-    <RarityValue>{`${occurence} (${roundOffDecimalValue(
-      Number(percentage),
-      1,
-    )}%)`}</RarityValue>
+    <RarityValue>{tokenCount}</RarityValue>
   </Wrapper>
 );

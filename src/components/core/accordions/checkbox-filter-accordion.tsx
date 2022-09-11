@@ -31,7 +31,7 @@ export const CheckboxFilterAccordion = ({
     traitsValue: string,
     checkboxKey: string,
   ) =>
-    traits.some((trait) => {      
+    traits.some((trait) => {
       return (
         trait.values.includes(traitsValue.toString()) &&
         trait.key === checkboxKey
@@ -96,13 +96,14 @@ export const CheckboxFilterAccordion = ({
           <Form>
             {checkboxData.values.map((data: any) => (
               <Checkbox
-                key={`${checkboxData.key}+${data.value}`}
-                value={`${checkboxData.key}+${data.value}`}
+                key={`${checkboxData.key}+${data.name}`}
+                value={`${checkboxData.key}+${data.name}`}
                 percentage={data.rarity}
                 occurence={data.occurance}
+                tokenCount={Number(data.tokenCount)}
                 handleSelectedFilters={handleSelectedFilters}
                 filterValueExists={filterValueExists(
-                  data.value,
+                  data.name,
                   checkboxData.key,
                 )}
               />
