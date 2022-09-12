@@ -1,4 +1,3 @@
-import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';

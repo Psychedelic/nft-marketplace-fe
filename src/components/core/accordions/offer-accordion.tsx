@@ -193,10 +193,7 @@ export const OnConnected = ({
             showNonOwnerButtons && !loadingOffers && userMadeOffer,
           )}
         >
-          <CancelOfferModal
-            item={userMadeOffer?.item}
-            largeTriggerButton
-          />
+          <CancelOfferModal item={userMadeOffer} largeTriggerButton />
         </ButtonDetailsWrapper>
       )}
     </ButtonListWrapper>

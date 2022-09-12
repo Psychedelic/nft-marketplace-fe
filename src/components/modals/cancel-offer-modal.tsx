@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { ActionButton, Pending } from '../core';
@@ -36,6 +37,7 @@ export const CancelOfferModal = ({
 }: CancelOfferModalProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
+  const { collectionId } = useParams();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   // Cancel offer modal steps: cancelOffer/pending
@@ -53,13 +55,14 @@ export const CancelOfferModal = ({
   };
 
   const handleCancelOffer = () => {
-    if (!item?.tokenId) return;
+    if (!item?.tokenId || !collectionId) return;
 
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       marketplaceActions.cancelOffer({
         id: item?.tokenId.toString(),
+        collectionId: collectionId,
         onSuccess: () => {
           setModalOpened(false);
 
