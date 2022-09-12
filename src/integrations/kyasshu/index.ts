@@ -11,7 +11,7 @@ import {
 } from '../../store';
 import { parseAmountToE8SAsNum } from '../../utils/formatters';
 import { getSortValue } from '../../utils/sorting';
-import { useTraitsPayload, usePriceValues } from './utils';
+import { useTraitsPayload, usePriceValues, getTraitPayloadData } from './utils';
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
@@ -66,7 +66,7 @@ export const useNFTSFetcher = () => {
     dispatch(
       nftsActions.getAllNFTs({
         payload,
-        traits: traitsPayload.length ? traitsPayload : undefined,
+        traits: traitsPayload.length ? getTraitPayloadData(traitsPayload) : undefined,
         sort: getSortValue(sortBy),
         order: 'd',
         page: lastIndexValue,
