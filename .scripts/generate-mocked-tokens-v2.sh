@@ -44,7 +44,7 @@ then
   max_chunks=1
 fi
 
-mocks_chunk_size=100
+mocks_chunk_size=50
 numberOfTokens=$((max_chunks*mocks_chunk_size))
 
 whoami=$(dfx identity whoami)
@@ -87,13 +87,16 @@ printf "👍 Mint process completed!\n\n"
 
   echo "👍 Deployed the Crowns marketplace $crownsMarketplaceId"
 
-  totalSupply=$(dfx canister call "$crownsCanisterId" dip721_total_supply "()" | cut -d '(' -f 2 | cut -d ':' -f 1)
+  totalSupply=$(dfx canister call --query "$crownsCanisterId" dip721_total_supply "()" | cut -d '(' -f 2 | cut -d ':' -f 1)
 
   echo "🧙‍♀️ Will now insert the metadata for the total supply $totalSupply, be patient..."
 
   firstIndex=0
+  list=""
   for ((i="$firstIndex"; i <= "$totalSupply"; i++))
   do
+    echo "Preparing metadata for index $i..."
+
     crownsNftCanisterId="vlhm2-4iaaa-aaaam-qaatq-cai"
     filename=$(printf "%04d.mp4" "$i")
     thumbnail=$(printf "%04d.png" "$i")
@@ -101,10 +104,8 @@ printf "👍 Mint process completed!\n\n"
     # crownsCertifiedAssetsB="vqcq7-gqaaa-aaaam-qaara-cai"
     assetUrl="https://$crownsCertifiedAssetsA.raw.ic0.app/$filename"
 
-    dfx canister --network ic call $crownsNftCanisterId tokenMetadata "($i:nat)"
-
     # Get some data from the mainnet canister
-    mainnetMetadataResult=($(dfx canister --network ic call $crownsNftCanisterId tokenMetadata "($i:nat)" | pcregrep -o1  '3_643_416_556 = "([a-zA-Z]*)"'))
+    mainnetMetadataResult=($(dfx canister --network ic call --query $crownsNftCanisterId tokenMetadata "($i:nat)" | pcregrep -o1  '3_643_416_556 = "([a-zA-Z]*)"'))
 
     if [[ ! "$(declare -p mainnetMetadataResult)" =~ "declare -a" ]];
     then
@@ -119,35 +120,44 @@ printf "👍 Mint process completed!\n\n"
     base=${mainnetMetadataResult[2]}
     rim=${mainnetMetadataResult[3]}
 
-    dfx canister call \
-      "$crownsMarketplaceId" insert "(
-        vec {
+    record="
+      record {
+        operation = \"metadata\";
+        token_id = \"$i\";
+        nft_canister_id = principal \"$crownsCanisterId\";
+        traits = opt vec {
+          record { \"smallgem\"; variant { TextContent = \"$smallgem\" } };
+          record { \"biggem\"; variant { TextContent = \"$biggem\" } };
+          record { \"base\"; variant { TextContent = \"$base\" } };
+          record { \"rim\"; variant { TextContent = \"$rim\" } };
           record {
-            operation = \"metadata\";
-            token_id = \"$i\";
-            nft_canister_id = principal \"$crownsCanisterId\";
-            traits = opt vec {
-              record { \"smallgem\"; variant { TextContent = \"$smallgem\" } };
-              record { \"biggem\"; variant { TextContent = \"$biggem\" } };
-              record { \"base\"; variant { TextContent = \"$base\" } };
-              record { \"rim\"; variant { TextContent = \"$rim\" } };
-              record {
-                \"location\";
-                variant {
-                  TextContent = \"$location\"
-                };
-              };
-              record {
-                \"thumbnail\";
-                variant {
-                  TextContent = \"$thumbnail\"
-                };
-              };
-            }
-          }
+            \"location\";
+            variant {
+              TextContent = \"$location\"
+            };
+          };
+          record {
+            \"thumbnail\";
+            variant {
+              TextContent = \"$thumbnail\"
+            };
+          };
         }
-      )"
+      };
+    "
+
+    echo "$record"
+
+    # push to list
+    list="$list $record"
   done
+
+  dfx canister call \
+    "$crownsMarketplaceId" insert "(
+      vec {
+        $list
+      }
+    )"
 
   echo "👍 Insertion of metadata for marketplace $crownsMarketplaceId completed!"
 )
