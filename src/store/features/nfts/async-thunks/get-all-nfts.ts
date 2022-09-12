@@ -23,6 +23,8 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       sort,
       reverse,
       // order,
+      // TODO: what's passed as page is the index
+      // as such it should be refactored, renamed to avoid confusion
       page,
       count,
       collectionId,
@@ -102,7 +104,8 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
       const actionPayload: LoadedNFTData = {
         loadedNFTList: extractedNFTSList,
-        totalPages: Math.ceil(Number(total) / count),
+        // TODO: refactor the concept of page and total pages
+        // totalPages: Math.ceil(Number(total) / count),
         total,
       };
 
