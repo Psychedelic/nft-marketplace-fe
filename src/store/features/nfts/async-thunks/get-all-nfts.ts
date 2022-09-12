@@ -3,6 +3,7 @@ import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
 import { nftsActions, LoadedNFTData } from '../nfts-slice';
 import { marketplaceSlice } from '../../marketplace/marketplace-slice';
 import { NSKyasshuUrl } from '../../../../integrations/kyasshu';
+import { createActor } from '../../../../integrations/actor';
 import { isEmptyObject } from '../../../../utils/common';
 import { getJellyCollection } from '../../../../utils/jelly';
 import { AppLog } from '../../../../utils/log';
@@ -77,13 +78,27 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
       const { data, total, lastIndex: responseLastIndex } = res;
 
+      const collectionName = await (async () => {
+        const actor = await createActor({
+          serviceName: 'dip721',
+          collectionId,
+        });
+
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        const res = await actor.dip721_name();
+
+        if (!res && !Array.isArray(res) && !res.length) return;
+
+        return res.pop();
+      })();
+
       // TODO: map nft list
       const extractedNFTSList = data.map((nft: any) => {
         const metadata = {
           // TODO: update price, lastOffer & traits values
           // TODO: Finalize object format after validating mock and kyasshu data
           id: nft.id,
-          name: nft.collectionName,
+          name: collectionName,
           // TODO: parse from listing field when available
           price: undefined,
           lastOffer: nft.lastOfferTime,
