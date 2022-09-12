@@ -6,8 +6,6 @@ import { NSKyasshuUrl } from '../../../../integrations/kyasshu';
 import { isEmptyObject } from '../../../../utils/common';
 import { getJellyCollection } from '../../../../utils/jelly';
 import { AppLog } from '../../../../utils/log';
-import { filterActions } from '../../filters';
-import { getSortValue } from '../../../../utils/sorting';
 
 export type GetAllNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -20,9 +18,9 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     {
       payload,
       // TODO: map previous sorting fields to body jelly js fn args
-      sort,
-      reverse,
+      // sort,
       // order,
+      traits,
       page,
       count,
       collectionId,
@@ -67,12 +65,13 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         collection,
       );
 
+      console.log(traits);
+
       const lastIndex = page && BigInt(page);
       const res = await jellyCollection.getAllNFTs({
         count: BigInt(count),
         lastIndex,
-        sort: getSortValue(sort),
-        reverse,
+        traits,
       });
 
       const { data, total, lastIndex: responseLastIndex } = res;
@@ -104,12 +103,12 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         loadedNFTList: extractedNFTSList,
         totalPages: Math.ceil(Number(total) / count),
         total,
+        nextPage:
+          Math.floor(Number(total) / Number(responseLastIndex)) + 1,
       };
 
       if (responseLastIndex) {
         actionPayload.lastIndex = Number(responseLastIndex) - 1;
-        actionPayload.nextPage =
-          Math.floor(Number(total) / Number(responseLastIndex)) + 1;
       }
 
       // update store with loaded NFTS details
@@ -138,4 +137,3 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     }
   },
 );
-
