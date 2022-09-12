@@ -1,33 +1,69 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Principal } from '@dfinity/principal';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';
-import { CancelOffer } from '../marketplace-slice';
-import config from '../../../../config/env';
-import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
+import {
+  CancelOffer,
+  CollectionDetails,
+  marketplaceSlice,
+} from '../marketplace-slice';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
+import { getJellyCollection } from '../../../../utils/jelly';
+import marketplaceV2IdlFactory from '../../../../declarations/marketplace-v2.did';
 import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 
-export type CancelOfferProps = DefaultCallbacks & CancelOffer;
+export type CancelOfferProps = DefaultCallbacks &
+  CancelOffer &
+  CollectionDetails;
 
 export const cancelOffer = createAsyncThunk<
   CancelOffer | undefined,
   CancelOfferProps
->('marketplace/cancelOffer', async (params, { dispatch }) => {
-  const { id, onSuccess, onFailure } = params;
+>('marketplace/cancelOffer', async (params, thunkAPI) => {
+  const { id, collectionId, onSuccess, onFailure } = params;
+  const { dispatch } = thunkAPI;
+
+  // Checks if an actor instance exists already
+  // otherwise creates a new instance
+  const jellyInstance = await jellyJsInstanceHandler({
+    thunkAPI,
+    collectionId,
+    slice: marketplaceSlice,
+  });
+
+  const collection = await getJellyCollection({
+    jellyInstance,
+    collectionId,
+  });
+
+  if (!collection)
+    throw Error(`Oops! collection ${collectionId} not found!`);
+
+  if (!collection?.marketplaceId)
+    throw Error(
+      `Oops! marketplace id ${collection?.marketplaceId} not found!`,
+    );
+
+  const { marketplaceId } = collection;
 
   try {
-    const nonFungibleContractAddress = Principal.fromText(
-      config.nftCollectionId,
-    );
-    const userOwnedTokenId = BigInt(id);
-
     const MKP_CANCEL_OFFER = {
-      idl: marketplaceIdlFactory,
-      canisterId: config.marketplaceCanisterId,
-      methodName: 'cancelOffer',
-      args: [nonFungibleContractAddress, userOwnedTokenId],
+      idl: marketplaceV2IdlFactory,
+      canisterId: marketplaceId.toString(),
+      methodName: 'cancel_offer',
+      args: [
+        {
+          token_id: id,
+          collection: collection.id,
+          seller: [],
+          version: [],
+          fungible_id: [],
+          caller: [],
+          buyer: [],
+          price: [],
+        },
+      ],
       onSuccess: async (res: any) => {
         if ('Err' in res)
           throw new Error(errorMessageHandler(res.Err));
@@ -70,4 +106,3 @@ export const cancelOffer = createAsyncThunk<
     }
   }
 });
-
