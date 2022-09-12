@@ -65,8 +65,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         collection,
       );
 
-      console.log(traits);
-
       const lastIndex = page && BigInt(page);
       const res = await jellyCollection.getAllNFTs({
         count: BigInt(count),

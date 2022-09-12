@@ -9,6 +9,7 @@ import {
   settingsActions,
   useSettingsStore,
   notificationActions,
+  nftsActions,
 } from '../../store';
 import {
   ActionButton,
@@ -119,6 +120,7 @@ export const Filters = ({
     switch (true) {
       case filterCategoryExists && filterNameExists:
         dispatch(filterActions.removeFilter(filterName));
+        dispatch(nftsActions.setLastIndex(undefined));
         break;
       case filterCategoryExists && !filterNameExists:
         dispatch(
@@ -278,6 +280,7 @@ export const Filters = ({
                       onClick={() => {
                         dispatch(filterActions.removeFilter(myNfts));
                         dispatch(filterActions.setMyNfts(false));
+                        dispatch(nftsActions.setLastIndex(undefined));
                       }}
                     >
                       {t('translation:buttons.action.allNfts')}
