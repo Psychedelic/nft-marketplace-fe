@@ -1,4 +1,3 @@
-import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';
@@ -6,10 +5,13 @@ import {
   MakeOffer,
   marketplaceActions,
   CollectionDetails,
+  marketplaceSlice,
 } from '../marketplace-slice';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
+import { getJellyCollection } from '../../../../utils/jelly';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
-import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
+import marketplaceV2IdlFactory from '../../../../declarations/marketplace-v2.did';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { errorMessageHandler } from '../../../../utils/error';
@@ -23,19 +25,41 @@ export type MakeOfferProps = DefaultCallbacks &
 export const makeOffer = createAsyncThunk<
   MakeOffer | undefined,
   MakeOfferProps
->('marketplace/makeOffer', async (params, { dispatch, getState }) => {
+>('marketplace/makeOffer', async (params, thunkAPI) => {
   const { id, amount, collectionId, onSuccess, onFailure } = params;
 
+  const { dispatch, getState } = thunkAPI;
+
+  // Checks if an actor instance exists already
+  // otherwise creates a new instance
+  const jellyInstance = await jellyJsInstanceHandler({
+    thunkAPI,
+    collectionId,
+    slice: marketplaceSlice,
+  });
+
+  const collection = await getJellyCollection({
+    jellyInstance,
+    collectionId,
+  });
+
+  if (!collection)
+    throw Error(`Oops! collection ${collectionId} not found!`);
+
+  if (!collection?.marketplaceId)
+    throw Error(
+      `Oops! marketplace id ${collection?.marketplaceId} not found!`,
+    );
+
+  const { marketplaceId } = collection;
+
+  const userOwnedTokenId = BigInt(id);
+  const userOfferInPrice = parseAmountToE8S(amount);
+
+  // Allowance amount calculation
   const {
     marketplace: { sumOfUserAllowance },
   }: any = getState();
-
-  const mkpContractAddress = Principal.fromText(
-    config.marketplaceCanisterId,
-  );
-  const crownsContractAddress = Principal.fromText(collectionId);
-  const userOwnedTokenId = BigInt(id);
-  const userOfferInPrice = parseAmountToE8S(amount);
 
   const allowanceAmountInWICP = sumOfUserAllowance
     ? sumOfUserAllowance + Number(amount)
@@ -45,6 +69,7 @@ export const makeOffer = createAsyncThunk<
     allowanceAmountInWICP.toString(),
   );
 
+  // Initialize transaction steps in UI
   dispatch(marketplaceActions.setTransactionStepsToDefault());
 
   try {
@@ -52,7 +77,7 @@ export const makeOffer = createAsyncThunk<
       idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,
       methodName: 'approve',
-      args: [mkpContractAddress, allowanceAmount],
+      args: [marketplaceId, allowanceAmount],
       onSuccess: (res: any) => {
         if ('Err' in res)
           throw new Error(errorMessageHandler(res.Err));
@@ -72,14 +97,21 @@ export const makeOffer = createAsyncThunk<
       },
     };
 
-    const MKP_MAKE_OFFER_WICP = {
-      idl: marketplaceIdlFactory,
-      canisterId: config.marketplaceCanisterId,
-      methodName: 'makeOffer',
+    const MKP_MAKE_OFFER = {
+      idl: marketplaceV2IdlFactory,
+      canisterId: marketplaceId.toString(),
+      methodName: 'make_offer',
       args: [
-        crownsContractAddress,
-        userOwnedTokenId,
-        userOfferInPrice,
+        {
+          token_id: userOwnedTokenId.toString(),
+          collection: collection.id,
+          seller: [],
+          version: [],
+          fungible_id: [],
+          caller: [],
+          buyer: [],
+          price: [userOfferInPrice],
+        },
       ],
       onSuccess: async (res: any) => {
         if ('Err' in res)
@@ -110,7 +142,7 @@ export const makeOffer = createAsyncThunk<
     // TODO: Show transaction progress steps in UI
     const batchTxRes = await window.ic?.plug?.batchTransactions([
       WICP_APPROVE_MARKETPLACE,
-      MKP_MAKE_OFFER_WICP,
+      MKP_MAKE_OFFER,
     ]);
 
     if (!batchTxRes) {

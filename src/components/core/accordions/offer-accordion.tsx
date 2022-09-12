@@ -89,7 +89,7 @@ export const OnConnected = ({
   showNFTActionButtons,
   operator,
 }: ConnectedProps) => {
-  const { id } = useParams();
+  const { id, collectionId } = useParams();
   const dispatch = useAppDispatch();
   const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
   const { principalId: plugPrincipalId } = usePlugStore();
@@ -106,27 +106,29 @@ export const OnConnected = ({
     (state: RootState) => state.marketplace.recentlyCancelledOffers,
   );
 
-  const tokenOffers = useSelector(
-    (state: RootState) => state.marketplace.tokenOffers,
+  const nftOffers = useSelector(
+    (state: RootState) => state.marketplace.nftOffers,
   );
 
-  const userMadeOffer: OffersTableItem = useMemo(
+  // TODO: offers Item type
+  const userMadeOffer: any = useMemo(
     () =>
-      tokenOffers.find(
-        (offer: OffersTableItem) =>
-          offer?.fromDetails?.address === plugPrincipalId &&
-          offer?.item?.tokenId.toString() === id,
+      nftOffers.find(
+        (offer: any) =>
+          offer?.buyer.toString() === plugPrincipalId &&
+          offer?.tokenId === id,
       ),
-    [id, tokenOffers, plugPrincipalId],
+    [id, nftOffers, plugPrincipalId],
   );
 
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
-    if (!id || !plugPrincipalId) return;
+    if (!id || !collectionId || !plugPrincipalId) return;
 
     dispatch(
-      marketplaceActions.getTokenOffers({
-        ownerTokenIdentifiers: [BigInt(id)],
+      marketplaceActions.getNFTOffers({
+        id,
+        collectionId,
 
         onSuccess: () => {
           setLoadingOffers(false);
@@ -191,10 +193,7 @@ export const OnConnected = ({
             showNonOwnerButtons && !loadingOffers && userMadeOffer,
           )}
         >
-          <CancelOfferModal
-            item={userMadeOffer?.item}
-            largeTriggerButton
-          />
+          <CancelOfferModal item={userMadeOffer} largeTriggerButton />
         </ButtonDetailsWrapper>
       )}
     </ButtonListWrapper>
