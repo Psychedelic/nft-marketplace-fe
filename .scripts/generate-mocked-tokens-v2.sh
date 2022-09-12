@@ -44,7 +44,7 @@ then
   max_chunks=1
 fi
 
-mocks_chunk_size=50
+mocks_chunk_size=$(cat < ./jelly/dependencies/crowns/mocks/settings.json | jq .chunkSize)
 numberOfTokens=$((max_chunks*mocks_chunk_size))
 
 whoami=$(dfx identity whoami)
