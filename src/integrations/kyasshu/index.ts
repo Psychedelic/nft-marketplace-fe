@@ -66,6 +66,7 @@ export const useNFTSFetcher = () => {
     dispatch(
       nftsActions.getAllNFTs({
         payload,
+        traits: traitsPayload.length ? traitsPayload : undefined,
         sort: getSortValue(sortBy),
         order: 'd',
         page: lastIndexValue,
