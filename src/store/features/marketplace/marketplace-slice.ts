@@ -23,6 +23,7 @@ import {
   getCollections,
   getAssetsToWithdraw,
   withdrawFungible,
+  getNFTOffers,
 } from './async-thunks';
 import { TransactionStatus } from '../../../constants/transaction-status';
 
@@ -95,6 +96,8 @@ type InitialState = {
   transactionSteps: TransactionStepsStatus;
   // TODO: jelly-js type
   jellyJsInstance: any;
+  // TODO: NFT offers type
+  nftOffers: any;
 };
 
 const defaultTransactionStatus = {
@@ -120,6 +123,7 @@ const initialState: InitialState = {
   offersLoaded: false,
   transactionSteps: defaultTransactionStatus,
   jellyJsInstance: {},
+  nftOffers: [],
 };
 
 export const marketplaceSlice = createSlice({
@@ -213,6 +217,11 @@ export const marketplaceSlice = createSlice({
 
       state.recentlyWithdrawnAssets.push(action.payload);
     });
+    builder.addCase(getNFTOffers.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.nftOffers = action.payload;
+    });
   },
 });
 
@@ -231,6 +240,7 @@ export const marketplaceActions = {
   getCollections,
   getAssetsToWithdraw,
   withdrawFungible,
+  getNFTOffers,
 };
 
 export default marketplaceSlice.reducer;
