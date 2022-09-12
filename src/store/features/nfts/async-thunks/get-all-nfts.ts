@@ -102,8 +102,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
       const actionPayload: LoadedNFTData = {
         loadedNFTList: extractedNFTSList,
-        // TODO: refactor the concept of page and total pages
-        // totalPages: Math.ceil(Number(total) / count),
         total,
       };
 
