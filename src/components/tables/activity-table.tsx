@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Principal } from '@dfinity/principal';
 import { v4 as uuid } from 'uuid';
+import { useParams } from 'react-router-dom';
 import {
   useThemeStore,
   useAppDispatch,
@@ -70,14 +71,23 @@ export const ActivityTable = () => {
   );
   const tableSkeletonId = uuid();
   const isMobileScreen = useMediaQuery('(max-width: 640px');
+  const { collectionId } = useParams();
 
   useEffect(() => {
+    if (!collectionId) {
+      console.warn(
+        "Oops! Missing collection id, won't be able to get cap transactions",
+      );
+
+      return;
+    }
+
     dispatch(
       capActions.getTokenContractRootBucket({
-        marketplaceCanisterId: config?.marketplaceCanisterId,
+        collectionId,
       }),
     );
-  }, [dispatch]);
+  }, [collectionId, dispatch]);
 
   useEffect(() => {
     if (!bucketId) return;
