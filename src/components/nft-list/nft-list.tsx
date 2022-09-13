@@ -81,7 +81,7 @@ export const NftList = () => {
           : undefined,
         sort: getSortValue(sortBy),
         order: 'd',
-        page: lastIndexValue,
+        lastIndex: lastIndexValue && BigInt(lastIndexValue),
         count: 25,
         collectionId,
         reverse,
