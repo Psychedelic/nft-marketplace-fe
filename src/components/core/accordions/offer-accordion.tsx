@@ -394,8 +394,8 @@ export const OfferAccordion = ({
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
-  const tokenOffers = useSelector(
-    (state: RootState) => state.marketplace.tokenOffers,
+  const nftOffers = useSelector(
+    (state: RootState) => state.marketplace.nftOffers,
   );
 
   const isOwner = isNFTOwner({
@@ -434,7 +434,7 @@ export const OfferAccordion = ({
               <Icon icon="offer" paddingRight />
               <p>
                 {`${t('translation:accordions.offer.header.offer')}`}
-                <ItemCount>{`(${tokenOffers.length})`}</ItemCount>
+                <ItemCount>{`(${nftOffers.length})`}</ItemCount>
               </p>
             </div>
             <Icon icon="chevron-up" rotate={isAccordionOpen} />
