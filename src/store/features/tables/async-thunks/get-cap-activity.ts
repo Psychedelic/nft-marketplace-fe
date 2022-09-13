@@ -18,8 +18,6 @@ export const getCAPActivity = createAsyncThunk<
 >(
   'table/getCAPActivity',
   async ({ pageCount, bucketId }, { dispatch }) => {
-    console.log('[debug] getCAPActivity call', bucketId);
-
     const HttpGetKyasshuUrl = KyasshuUrl.getCAPActivity({
       pageCount,
       bucketId,
@@ -27,15 +25,8 @@ export const getCAPActivity = createAsyncThunk<
 
     dispatch(tableActions.setIsTableDataLoading(true));
 
-    console.log(
-      '[debug] getCAPActivity: HttpGetKyasshuUrl:',
-      HttpGetKyasshuUrl,
-    );
-
     try {
       const response = await axios.get(HttpGetKyasshuUrl);
-
-      console.log('[debug] getCAPActivity: response:', response);
 
       const { Items, Count } = response.data;
       let pageNo;
