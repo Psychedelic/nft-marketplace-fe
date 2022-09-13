@@ -22,8 +22,8 @@ export const getNFTDetails = createAsyncThunk<
 
   try {
     const actor = await createActor({
-      // TODO: This should be a generic DIP-721 actor
-      serviceName: 'crowns',
+      serviceName: 'dip721',
+      collectionId,
     });
 
     const owner = await (async () => {
