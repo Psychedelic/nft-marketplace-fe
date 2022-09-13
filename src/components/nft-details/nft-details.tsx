@@ -171,10 +171,13 @@ export const NftDetails = () => {
                       name={nftDetails?.traits[`${key}`].name}
                       rimValue={`${
                         nftDetails?.traits[`${key}`].occurance
-                      } (${roundOffDecimalValue(
-                        nftDetails?.traits[`${key}`].rarity,
-                        2,
-                      )}%)`}
+                      } (${
+                        nftDetails?.traits[`${key}`].rarity &&
+                        roundOffDecimalValue(
+                          nftDetails?.traits[`${key}`].rarity,
+                          2,
+                        )
+                      }%)`}
                     />
                   ))}
                 </>
