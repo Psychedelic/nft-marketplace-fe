@@ -4,45 +4,74 @@ import axios from 'axios';
 import { notificationActions } from '../../notifications';
 import {
   AcceptOffer,
+  CollectionDetails,
   marketplaceActions,
+  marketplaceSlice,
 } from '../marketplace-slice';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
+import { getJellyCollection } from '../../../../utils/jelly';
 import config from '../../../../config/env';
-import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
-import crownsIdlFactory from '../../../../declarations/nft.did';
+import marketplaceV2IdlFactory from '../../../../declarations/marketplace-v2.did';
+import nftIdlFactory from '../../../../declarations/nft.did';
 import { AppLog } from '../../../../utils/log';
 import { parseAmountToE8S } from '../../../../utils/formatters';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 import { TransactionStatus } from '../../../../constants/transaction-status';
 
-export type AcceptOfferProps = DefaultCallbacks & AcceptOffer;
+export type AcceptOfferProps = DefaultCallbacks &
+  AcceptOffer &
+  CollectionDetails;
 
 export const acceptOffer = createAsyncThunk<
   AcceptOffer | undefined,
   AcceptOfferProps
->('marketplace/acceptOffer', async (params, { dispatch }) => {
-  const { id, buyerPrincipalId, offerPrice, onSuccess, onFailure } =
-    params;
+>('marketplace/acceptOffer', async (params, thunkAPI) => {
+  const {
+    id,
+    collectionId,
+    buyerPrincipalId,
+    offerPrice,
+    onSuccess,
+    onFailure,
+  } = params;
+
+  const { dispatch } = thunkAPI;
 
   dispatch(marketplaceActions.setTransactionStepsToDefault());
 
+  // Checks if an actor instance exists already
+  // otherwise creates a new instance
+  const jellyInstance = await jellyJsInstanceHandler({
+    thunkAPI,
+    collectionId,
+    slice: marketplaceSlice,
+  });
+
+  const collection = await getJellyCollection({
+    jellyInstance,
+    collectionId,
+  });
+
+  if (!collection)
+    throw Error(`Oops! collection ${collectionId} not found!`);
+
+  if (!collection?.marketplaceId)
+    throw Error(
+      `Oops! marketplace id ${collection?.marketplaceId} not found!`,
+    );
+
+  const { marketplaceId } = collection;
+
   try {
-    const marketplaceCanisterId = Principal.fromText(
-      config.marketplaceCanisterId,
-    );
-    const nonFungibleContractAddress = Principal.fromText(
-      config.nftCollectionId,
-    );
     const userOwnedTokenId = BigInt(id);
     const buyerAddress = Principal.fromText(buyerPrincipalId);
 
-    const offerInPrice = parseAmountToE8S(offerPrice);
-
-    const CROWNS_APPROVE_MARKETPLACE = {
-      idl: crownsIdlFactory,
-      canisterId: config.nftCollectionId,
-      methodName: 'approve',
-      args: [marketplaceCanisterId, userOwnedTokenId],
+    const NFT_APPROVE_MARKETPLACE = {
+      idl: nftIdlFactory,
+      canisterId: collectionId,
+      methodName: 'dip721_approve',
+      args: [marketplaceId, userOwnedTokenId],
       onSuccess: (res: any) => {
         // check if error
         if ('Err' in res)
@@ -64,13 +93,20 @@ export const acceptOffer = createAsyncThunk<
     };
 
     const MKP_ACCEPT_OFFER = {
-      idl: marketplaceIdlFactory,
-      canisterId: config.marketplaceCanisterId,
-      methodName: 'acceptOffer',
+      idl: marketplaceV2IdlFactory,
+      canisterId: marketplaceId.toString(),
+      methodName: 'accept_offer',
       args: [
-        nonFungibleContractAddress,
-        userOwnedTokenId,
-        buyerAddress,
+        {
+          token_id: userOwnedTokenId.toString(),
+          collection: collection.id,
+          seller: [],
+          version: [],
+          fungible_id: [],
+          caller: [],
+          buyer: [buyerAddress],
+          price: [],
+        },
       ],
       onSuccess: async (res: any) => {
         if ('Err' in res)
@@ -102,7 +138,7 @@ export const acceptOffer = createAsyncThunk<
     const batchTxRes = await (
       window as any
     )?.ic?.plug?.batchTransactions([
-      CROWNS_APPROVE_MARKETPLACE,
+      NFT_APPROVE_MARKETPLACE,
       MKP_ACCEPT_OFFER,
     ]);
 
