@@ -14,6 +14,7 @@ import {
 } from './sorting';
 import { OperationTypes, OperationType } from '../constants';
 import { checkIfDirectContractEvent } from './nfts';
+import { Offer as NFTOffer } from '../declarations/marketplace-v2';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
@@ -347,6 +348,50 @@ export const parseBalanceResponse = (data: Array<any>) => {
 
     return [...accParent, assetsToWithdraw];
   }, [] as AssetsToWithdraw);
+
+  return parsed;
+};
+
+interface ParseNFTOffersParams {
+  offers: Array<NFTOffer>;
+}
+
+export type ParsedNFTOffers = OffersTableItem[];
+
+export const parseNFTOffers = ({ offers }: ParseNFTOffersParams) => {
+  const parsed = offers.reduce((accParent, currParent) => {
+    const {
+      price,
+      tokenId: token_id,
+      buyer: paymentAddress,
+      time: created,
+    } = currParent;
+
+    // TODO: What to do if payment address not valid principal?
+    const fromDetails = {
+      formattedAddress: paymentAddress._isPrincipal
+        ? formatAddress(paymentAddress.toString())
+        : 'n/a',
+      address: paymentAddress._isPrincipal
+        ? paymentAddress.toString()
+        : 'n/a',
+    };
+
+    const offerTableItem: OffersTableItem = {
+      item: {
+        // TODO: formatter for name, as number should probably have leading 0's
+        // e.g. Cap Crowns #00001 ?!
+        name: `CAP Crowns #${token_id}`,
+        tokenId: BigInt(token_id),
+      },
+      price,
+      floorDifference: 'n/a',
+      fromDetails,
+      time: created.toString(),
+    };
+
+    return [...accParent, offerTableItem];
+  }, [] as ParsedNFTOffers);
 
   return parsed;
 };

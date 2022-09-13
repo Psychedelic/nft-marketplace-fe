@@ -78,7 +78,7 @@ export type ListingStatus =
 export type NFTStandard = { DIP721v2: null };
 export interface Offer {
   status: OfferStatus;
-  token_id: string;
+  tokenId: string;
   time: bigint;
   fungible_id: Principal;
   token_owner: Principal;
@@ -168,4 +168,3 @@ export interface _SERVICE {
 }
 
 export default _SERVICE;
-
