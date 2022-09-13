@@ -105,12 +105,12 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       const actionPayload: LoadedNFTData = {
         loadedNFTList: extractedNFTSList,
         total,
-        nextPage:
-          Math.floor(Number(total) / Number(responseLastIndex)) + 1,
       };
 
       if (responseLastIndex) {
         actionPayload.lastIndex = Number(responseLastIndex) - 1;
+        actionPayload.nextPage =
+          Math.floor(Number(total) / Number(responseLastIndex)) + 1;
       }
 
       // update store with loaded NFTS details
