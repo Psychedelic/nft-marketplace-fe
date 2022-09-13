@@ -220,7 +220,7 @@ export const OfferAccordionHeader = ({
   isMobileScreen,
 }: OfferAccordionHeaderProps) => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const { id, collectionId } = useParams();
   const dispatch = useAppDispatch();
   const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
 
@@ -234,22 +234,23 @@ export const OfferAccordionHeader = ({
     string | undefined
   >();
 
-  const tokenOffers = useSelector(
-    (state: RootState) => state.marketplace.tokenOffers,
+  const nftOffers = useSelector(
+    (state: RootState) => state.marketplace.nftOffers,
   );
 
   const topOffer: OffersTableItem = useMemo(
-    () => tokenOffers && tokenOffers[0],
-    [tokenOffers],
+    () => nftOffers && nftOffers[0],
+    [nftOffers],
   );
 
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
-    if (!isTokenId(id)) return;
+    if (!id || !collectionId) return;
 
     dispatch(
-      marketplaceActions.getTokenOffers({
-        ownerTokenIdentifiers: [BigInt(id as string)],
+      marketplaceActions.getNFTOffers({
+        id,
+        collectionId,
 
         onSuccess: () => {
           setLoadingOffers(false);
