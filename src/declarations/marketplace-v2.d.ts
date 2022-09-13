@@ -105,12 +105,13 @@ export interface QueryResponse {
   last_index: [] | [bigint];
   error: [] | [string];
 }
-export type Result = { Ok: null } | { Err: JellyError };
+export type Result = { Ok: TokenData } | { Err: JellyError };
 export type Result_1 =
   | { Ok: Array<TxLogEntry> }
   | { Err: JellyError };
 export type Result_2 = { Ok: bigint } | { Err: JellyError };
 export type Result_3 = { Ok: Array<TokenData> } | { Err: JellyError };
+export type Result_4 = { Ok: null } | { Err: JellyError };
 export interface TokenData {
   id: string;
   listing: [] | [Listing];
@@ -156,14 +157,18 @@ export interface _SERVICE {
   get_tokens: ActorMethod<[Principal, Array<string>], Result_3>;
   git_commit_hash: ActorMethod<[], string>;
   info: ActorMethod<[], Collection>;
-  insert: ActorMethod<[Array<Event>], Result>;
+  insert: ActorMethod<[Array<Event>], Result_4>;
   make_listing: ActorMethod<[TransactionArgs], Result>;
   make_offer: ActorMethod<[TransactionArgs], Result>;
   query: ActorMethod<[QueryRequest], QueryResponse>;
   rust_toolchain_info: ActorMethod<[], string>;
+  traits: ActorMethod<
+    [Principal],
+    Array<[string, Array<[GenericValue, bigint]>]>
+  >;
   withdraw_fungible: ActorMethod<
     [Principal, FungibleStandard],
-    Result
+    Result_4
   >;
 }
 

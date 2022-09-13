@@ -26,50 +26,6 @@ export default ({ IDL }: { IDL: any }) => {
     buyer: IDL.Opt(IDL.Principal),
     price: IDL.Opt(IDL.Nat),
   });
-  const JellyError = IDL.Variant({
-    IC: IDL.Text,
-    ICNS: IDL.Text,
-    InvalidCollection: IDL.Null,
-    DIP20: IDL.Text,
-    InsufficientFungibleBalance: IDL.Null,
-    DIP721: IDL.Text,
-    NotFound: IDL.Null,
-    InvalidListing: IDL.Null,
-    Unauthorized: IDL.Null,
-    InsufficientFungibleAllowance: IDL.Null,
-    InvalidOffer: IDL.Null,
-    InvalidOwner: IDL.Null,
-    Other: IDL.Text,
-    UnauthorizedProxy: IDL.Null,
-    InvalidOperator: IDL.Null,
-  });
-  const Result = IDL.Variant({ Ok: IDL.Null, Err: JellyError });
-  const TxLogEntry = IDL.Record({
-    to: IDL.Principal,
-    from: IDL.Principal,
-    memo: IDL.Text,
-  });
-  const Result_1 = IDL.Variant({
-    Ok: IDL.Vec(TxLogEntry),
-    Err: JellyError,
-  });
-  const OfferStatus = IDL.Variant({
-    Bought: IDL.Null,
-    Uninitialized: IDL.Null,
-    Denied: IDL.Null,
-    Cancelled: IDL.Null,
-    Created: IDL.Null,
-  });
-  const Offer = IDL.Record({
-    status: OfferStatus,
-    token_id: IDL.Text,
-    time: IDL.Nat64,
-    fungible_id: IDL.Principal,
-    token_owner: IDL.Principal,
-    buyer: IDL.Principal,
-    price: IDL.Nat,
-  });
-  const Result_2 = IDL.Variant({ Ok: IDL.Nat, Err: JellyError });
   const ListingStatus = IDL.Variant({
     Selling: IDL.Null,
     Uninitialized: IDL.Null,
@@ -101,6 +57,22 @@ export default ({ IDL }: { IDL: any }) => {
       TextContent: IDL.Text,
     }),
   );
+  const OfferStatus = IDL.Variant({
+    Bought: IDL.Null,
+    Uninitialized: IDL.Null,
+    Denied: IDL.Null,
+    Cancelled: IDL.Null,
+    Created: IDL.Null,
+  });
+  const Offer = IDL.Record({
+    status: OfferStatus,
+    token_id: IDL.Text,
+    time: IDL.Nat64,
+    fungible_id: IDL.Principal,
+    token_owner: IDL.Principal,
+    buyer: IDL.Principal,
+    price: IDL.Nat,
+  });
   const LastSale = IDL.Record({
     time: IDL.Nat64,
     fungible: IDL.Principal,
@@ -117,6 +89,34 @@ export default ({ IDL }: { IDL: any }) => {
     last_offer_time: IDL.Opt(IDL.Nat64),
     last_listing_time: IDL.Opt(IDL.Nat64),
   });
+  const JellyError = IDL.Variant({
+    IC: IDL.Text,
+    ICNS: IDL.Text,
+    InvalidCollection: IDL.Null,
+    DIP20: IDL.Text,
+    InsufficientFungibleBalance: IDL.Null,
+    DIP721: IDL.Text,
+    NotFound: IDL.Null,
+    InvalidListing: IDL.Null,
+    Unauthorized: IDL.Null,
+    InsufficientFungibleAllowance: IDL.Null,
+    InvalidOffer: IDL.Null,
+    InvalidOwner: IDL.Null,
+    Other: IDL.Text,
+    UnauthorizedProxy: IDL.Null,
+    InvalidOperator: IDL.Null,
+  });
+  const Result = IDL.Variant({ Ok: TokenData, Err: JellyError });
+  const TxLogEntry = IDL.Record({
+    to: IDL.Principal,
+    from: IDL.Principal,
+    memo: IDL.Text,
+  });
+  const Result_1 = IDL.Variant({
+    Ok: IDL.Vec(TxLogEntry),
+    Err: JellyError,
+  });
+  const Result_2 = IDL.Variant({ Ok: IDL.Nat, Err: JellyError });
   const Result_3 = IDL.Variant({
     Ok: IDL.Vec(TokenData),
     Err: JellyError,
@@ -131,12 +131,14 @@ export default ({ IDL }: { IDL: any }) => {
     price: IDL.Opt(IDL.Nat),
     nft_canister_id: IDL.Principal,
   });
+  const Result_4 = IDL.Variant({ Ok: IDL.Null, Err: JellyError });
   const QueryRequest = IDL.Record({
     reverse: IDL.Opt(IDL.Bool),
     traits: IDL.Opt(IDL.Vec(IDL.Tuple(IDL.Text, GenericValue))),
     count: IDL.Opt(IDL.Nat64),
     last_index: IDL.Opt(IDL.Nat64),
     sort_key: IDL.Text,
+    buyer: IDL.Opt(IDL.Principal),
   });
   const QueryResponse = IDL.Record({
     total: IDL.Nat64,
@@ -181,16 +183,27 @@ export default ({ IDL }: { IDL: any }) => {
     ),
     git_commit_hash: IDL.Func([], [IDL.Text], ['query']),
     info: IDL.Func([], [Collection], ['query']),
-    insert: IDL.Func([IDL.Vec(Event)], [Result], []),
+    insert: IDL.Func([IDL.Vec(Event)], [Result_4], []),
     make_listing: IDL.Func([TransactionArgs], [Result], []),
     make_offer: IDL.Func([TransactionArgs], [Result], []),
     query: IDL.Func([QueryRequest], [QueryResponse], ['query']),
     rust_toolchain_info: IDL.Func([], [IDL.Text], ['query']),
+    traits: IDL.Func(
+      [IDL.Principal],
+      [
+        IDL.Vec(
+          IDL.Tuple(
+            IDL.Text,
+            IDL.Vec(IDL.Tuple(GenericValue, IDL.Nat64)),
+          ),
+        ),
+      ],
+      ['query'],
+    ),
     withdraw_fungible: IDL.Func(
       [IDL.Principal, FungibleStandard],
-      [Result],
+      [Result_4],
       [],
     ),
   });
 };
-
