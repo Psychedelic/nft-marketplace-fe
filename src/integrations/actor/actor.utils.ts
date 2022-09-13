@@ -1,30 +1,44 @@
 import { Actor, ActorSubclass, HttpAgent } from '@dfinity/agent';
 import { IDL } from '@dfinity/candid';
-import crownsIdlFactory from '../../declarations/nft.did';
+import nftIdlFactory from '../../declarations/nft.did';
 import wicpIdlFactory from '../../declarations/wicp.did';
 import marketplaceIdlFactory from '../../declarations/marketplace.did';
 import capIdlFactory from '../../declarations/cap.did';
 import config from '../../config/env';
 import { AppLog } from '../../utils/log';
 
-export type ServiceName = 'marketplace' | 'crowns' | 'wicp' | 'cap';
+export type ServiceName =
+  | 'marketplace'
+  | 'crowns'
+  | 'wicp'
+  | 'cap'
+  | 'dip721';
 
 export const createActor = async ({
   serviceName = 'marketplace',
   plugIsConnected = false,
   asPlugInstance = true,
+  collectionId,
 }: {
   serviceName?: ServiceName;
   plugIsConnected?: boolean;
   asPlugInstance?: boolean;
+  collectionId?: string;
 }) => {
   let canisterId: string;
   let interfaceFactory: IDL.InterfaceFactory;
 
   switch (serviceName) {
+    case 'dip721':
+      if (!collectionId)
+        throw Error('Oops! Missing NFT Collection id.');
+
+      canisterId = collectionId;
+      interfaceFactory = nftIdlFactory;
+      break;
     case 'crowns':
       canisterId = config.nftCollectionId;
-      interfaceFactory = crownsIdlFactory;
+      interfaceFactory = nftIdlFactory;
       break;
     case 'wicp':
       canisterId = config.wICPCanisterId;
