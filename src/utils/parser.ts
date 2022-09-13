@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Principal } from '@dfinity/principal';
+import { Offer as NFTOffer } from '@psychedelic/jelly-js';
 import { Listing, Offer } from '../declarations/marketplace';
 import {
   formatAddress,
@@ -14,7 +15,6 @@ import {
 } from './sorting';
 import { OperationTypes, OperationType } from '../constants';
 import { checkIfDirectContractEvent } from './nfts';
-import { Offer as NFTOffer } from '../declarations/marketplace-v2';
 
 type GetAllListingsDataResponse = Array<
   [[Principal, bigint], Listing]
