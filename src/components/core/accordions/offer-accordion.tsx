@@ -110,13 +110,12 @@ export const OnConnected = ({
     (state: RootState) => state.marketplace.nftOffers,
   );
 
-  // TODO: offers Item type
-  const userMadeOffer: any = useMemo(
+  const userMadeOffer: OffersTableItem = useMemo(
     () =>
       nftOffers.find(
-        (offer: any) =>
-          offer?.buyer.toString() === plugPrincipalId &&
-          offer?.tokenId === id,
+        (offer: OffersTableItem) =>
+          offer?.fromDetails?.address === plugPrincipalId &&
+          offer?.item?.tokenId.toString() === id,
       ),
     [id, nftOffers, plugPrincipalId],
   );
@@ -193,7 +192,10 @@ export const OnConnected = ({
             showNonOwnerButtons && !loadingOffers && userMadeOffer,
           )}
         >
-          <CancelOfferModal item={userMadeOffer} largeTriggerButton />
+          <CancelOfferModal
+            item={userMadeOffer?.item}
+            largeTriggerButton
+          />
         </ButtonDetailsWrapper>
       )}
     </ButtonListWrapper>
