@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
-  KyasshuUrl,
   NSKyasshuUrl,
 } from '../../../../integrations/kyasshu';
 import { FilterConstants } from '../../../../constants';
@@ -10,8 +8,10 @@ import { notificationActions } from '../../notifications';
 import { settingsActions } from '../../settings';
 import { AppLog } from '../../../../utils/log';
 import { NFTMetadata } from '../../../../declarations/legacy';
-import { parseTraits } from '../../../../utils/traits';
 import { isUnsupportedPage } from '../../../../utils/error';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
+import { marketplaceSlice } from '../../marketplace';
+import { getJellyCollection } from '../../../../utils/jelly';
 
 export type GetFilterTraitsProps =
   NSKyasshuUrl.GetFilterTraitsQueryParams;
@@ -61,55 +61,63 @@ export const getTraitName = (key: string) => {
 export const getFilterTraits = createAsyncThunk<
   void,
   GetFilterTraitsProps
->(
-  'filters/getFilterTraits',
-  async ({ collectionId }, { dispatch }) => {
-    dispatch(filterActions.setIsFilterTraitsLoading(true));
+>('filters/getFilterTraits', async ({ collectionId }, thunkAPI) => {
+  const jellyInstance = await jellyJsInstanceHandler({
+    thunkAPI,
+    collectionId,
+    slice: marketplaceSlice,
+  });
 
-    try {
-      const response = await axios.get(
-        KyasshuUrl.getFilterTraits({ collectionId }),
-      );
-      if (response.status !== 200) {
-        throw Error(response.statusText);
-      }
+  const { dispatch } = thunkAPI;
 
-      const responseData = response.data.traits.map(
-        (res: [string, TraitsValuesProps[]]) => {
-          let key = getTraitName(res[0]);
+  dispatch(filterActions.setIsFilterTraitsLoading(true));
 
-          const parsedTraits = parseTraits(res[1]);
+  try {
+    const collection = await getJellyCollection({
+      jellyInstance,
+      collectionId,
+    });
 
-          const data = {
-            key: key,
-            name: res[0],
-            values: [...parsedTraits],
-          };
+    if (!collection)
+      throw Error(`Oops! collection ${collectionId} not found!`);
 
-          return data;
-        },
-      );
+    const jellyCollection = await jellyInstance.getJellyCollection(
+      collection,
+    );
 
-      dispatch(filterActions.getAllFilters(responseData));
-      dispatch(filterActions.setIsFilterTraitsLoading(false));
-      dispatch(filterActions.setIsAlreadyFetched(true));
-    } catch (error: any) {
-      AppLog.error(error);
+    const traits = await jellyCollection.getTraits();
 
-      if (isUnsupportedPage(error?.response)) {
-        dispatch(settingsActions.setPageNotFoundStatus(true));
+    const responseData = traits.map((res: any) => {
+      let key = getTraitName(res.trait);
 
-        return;
-      }
+      const data = {
+        key: key,
+        name: res.trait,
+        values: res.values,
+      };
 
-      dispatch(
-        notificationActions.setErrorMessage(
-          'Oops! Unable to fetch traits',
-        ),
-      );
+      return data;
+    });
+
+    dispatch(filterActions.getAllFilters(responseData));
+    dispatch(filterActions.setIsFilterTraitsLoading(false));
+    dispatch(filterActions.setIsAlreadyFetched(true));
+  } catch (error: any) {
+    AppLog.error(error);
+
+    if (isUnsupportedPage(error?.response)) {
+      dispatch(settingsActions.setPageNotFoundStatus(true));
+
+      return;
     }
-  },
-);
+
+    dispatch(
+      notificationActions.setErrorMessage(
+        'Oops! Unable to fetch traits',
+      ),
+    );
+  }
+});
 
 export const extractTraitData = ({
   dispatch,

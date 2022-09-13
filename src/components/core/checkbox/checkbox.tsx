@@ -1,5 +1,4 @@
 import React from 'react';
-import { roundOffDecimalValue } from '../../../utils/nfts';
 import { Wrapper, RarityValue } from './styles';
 
 export type CheckboxProps = {
@@ -11,46 +10,47 @@ export type CheckboxProps = {
   handleSelectedFilters: (
     value: React.MouseEvent<HTMLInputElement, MouseEvent>,
   ) => void;
+  tokenCount: number;
 };
 
 export const Checkbox = ({
   value,
-  percentage,
-  occurence,
   filterValueExists,
+  tokenCount,
   handleSelectedFilters,
 }: CheckboxProps) => (
-  <Wrapper
-    role="checkbox"
-    tabIndex={0}
-    onKeyDown={(event: any) => {
-      // Keyboard accessibility
-      if (
-        event.keyCode === 13 &&
-        typeof handleSelectedFilters === 'function'
-      ) {
-        event.target.value = value;
-        handleSelectedFilters(event);
-      }
-    }}
-  >
-    <label htmlFor={value}>
-      <input
-        type="checkbox"
-        id={value}
-        name={value}
-        value={value}
-        onClick={handleSelectedFilters}
-        // checks if value exists in array and sets checked to true
-        checked={filterValueExists}
-        readOnly
-      />
-      <span />
-      {value.split('+')[1]}
-    </label>
-    <RarityValue>{`${occurence} (${roundOffDecimalValue(
-      Number(percentage),
-      1,
-    )}%)`}</RarityValue>
-  </Wrapper>
+  <>
+    {value.split('+')[1] !== '' && (
+      <Wrapper
+        role="checkbox"
+        tabIndex={0}
+        onKeyDown={(event: any) => {
+          // Keyboard accessibility
+          if (
+            event.keyCode === 13 &&
+            typeof handleSelectedFilters === 'function'
+          ) {
+            event.target.value = value;
+            handleSelectedFilters(event);
+          }
+        }}
+      >
+        <label htmlFor={value}>
+          <input
+            type="checkbox"
+            id={value}
+            name={value}
+            value={value}
+            onClick={handleSelectedFilters}
+            // checks if value exists in array and sets checked to true
+            checked={filterValueExists}
+            readOnly
+          />
+          <span />
+          {value.split('+')[1]}
+        </label>
+        <RarityValue>{tokenCount}</RarityValue>
+      </Wrapper>
+    )}
+  </>
 );

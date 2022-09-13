@@ -16,6 +16,7 @@ import {
   usePriceValues,
   useTraitsPayload,
   isNFTOwner,
+  getTraitPayloadData,
 } from '../../integrations/kyasshu/utils';
 import { parseAmountToE8SAsNum } from '../../utils/formatters';
 import { getSortValue } from '../../utils/sorting';
@@ -36,6 +37,7 @@ export const NftList = () => {
     useFilterStore();
   const { principalId, isConnected } = usePlugStore();
   const traitsPayload = useTraitsPayload();
+
   const priceValues = usePriceValues();
   // eslint-disable-next-line object-curly-newline
   let payload = {};
@@ -74,6 +76,9 @@ export const NftList = () => {
     dispatch(
       nftsActions.getAllNFTs({
         payload,
+        traits: traitsPayload.length
+          ? getTraitPayloadData(traitsPayload)
+          : undefined,
         sort: getSortValue(sortBy),
         order: 'd',
         lastIndex: lastIndexValue && BigInt(lastIndexValue),

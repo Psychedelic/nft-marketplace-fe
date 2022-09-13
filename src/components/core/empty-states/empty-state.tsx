@@ -1,5 +1,9 @@
 import { useTranslation } from 'react-i18next';
-import { filterActions, useAppDispatch } from '../../../store';
+import {
+  filterActions,
+  nftsActions,
+  useAppDispatch,
+} from '../../../store';
 import { ButtonType } from '../../../constants/empty-states';
 import { Plug } from '../../plug';
 import { ActionButton } from '../buttons';
@@ -33,6 +37,7 @@ export const EmptyState = ({
           <div
             role="button"
             onClick={() => {
+              dispatch(nftsActions.setLastIndex(undefined));
               dispatch(
                 filterActions.removeFilter(
                   `${t('translation:buttons.action.myNfts')}`,
@@ -53,6 +58,7 @@ export const EmptyState = ({
                   `${t('translation:buttons.action.myNfts')}`,
                 ),
               );
+              dispatch(nftsActions.setLastIndex(undefined));
               dispatch(filterActions.setMyNfts(false));
               dispatch(filterActions.clearAllFilters());
             }}

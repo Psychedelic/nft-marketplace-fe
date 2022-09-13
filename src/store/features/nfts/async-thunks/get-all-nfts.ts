@@ -23,6 +23,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       sort,
       reverse,
       // order,
+      traits,
       // TODO: what's passed as page is the index
       // as such it should be refactored, renamed to avoid confusion
       lastIndex,
@@ -74,6 +75,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         lastIndex,
         sort: getSortValue(sort),
         reverse,
+        traits,
       });
 
       const { data, total, lastIndex: responseLastIndex } = res;
@@ -152,4 +154,3 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     }
   },
 );
-

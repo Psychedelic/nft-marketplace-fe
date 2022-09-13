@@ -9,6 +9,7 @@ import {
   Image,
 } from './styles';
 import { Icon } from '../../icons';
+import { nftsActions, useAppDispatch } from '../../../store';
 
 export interface FilteredTraitsChipProps {
   name?: string;
@@ -24,6 +25,7 @@ export const FilteredTraitsChip = ({
   removeFilter,
 }: FilteredTraitsChipProps) => {
   const { t } = useTranslation();
+  const dispatch = useAppDispatch();
 
   return (
     <TraitChipContainer type="filtered">
@@ -35,7 +37,12 @@ export const FilteredTraitsChip = ({
         <TraitName>{name}</TraitName>
         <TraitRim>{rim}</TraitRim>
       </TraitSpecsContainer>
-      <TraitActionContainer onClick={() => removeFilter()}>
+      <TraitActionContainer
+        onClick={() => {
+          removeFilter();
+          dispatch(nftsActions.setLastIndex(undefined));
+        }}
+      >
         <Icon icon="close" size="md" />
       </TraitActionContainer>
     </TraitChipContainer>

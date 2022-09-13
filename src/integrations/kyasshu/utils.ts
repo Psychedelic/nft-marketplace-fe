@@ -13,6 +13,18 @@ export const useTraitsPayload = () => {
   return traits.filter((trait) => trait?.values?.length);
 };
 
+export const getTraitPayloadData = (traits: any) => {
+  const traitData = traits.reduce(
+    (acc: any, { name, values }: any) => ({
+      ...acc,
+      [name]: [...values],
+    }),
+    {},
+  );
+
+  return traitData;
+};
+
 export const usePriceValues = () => {
   const { t } = useTranslation();
   const { defaultFilters } = useFilterStore();

@@ -7,6 +7,7 @@ import {
   useNFTSStore,
   settingsActions,
   usePlugStore,
+  nftsActions,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
@@ -58,6 +59,7 @@ export const CollectionItems = () => {
   const handleRemoveFilter = (appliedFilter: any) => {
     // TODO: apply sorting to fetch kyasshu API
     // eslint-disable-next-line no-console
+    dispatch(nftsActions.setLastIndex(undefined));
     if (
       appliedFilter.filterCategory ===
       `${t('translation:filters.priceRange')}`
@@ -252,6 +254,9 @@ export const CollectionItems = () => {
                           rim={`${appliedFilter.filterCategory}`}
                           appliedFilterValue={appliedFilter}
                           removeFilter={() => {
+                            dispatch(
+                              nftsActions.setLastIndex(undefined),
+                            );
                             dispatch(
                               filterActions.removeTraitsFilter({
                                 value,
