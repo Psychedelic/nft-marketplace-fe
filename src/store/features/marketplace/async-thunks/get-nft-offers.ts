@@ -7,6 +7,7 @@ import {
 } from '../marketplace-slice';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
+import { parseNFTOffers } from '../../../../utils/parser';
 
 // TODO: delete getTokenOffers thunk when getNFTOffers is ready
 // to render NFT offers list
@@ -51,14 +52,22 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
 
       if (!offers) throw Error('Oops! Offers not found!');
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      // TODO: get floor price and calculate floor difference
+
+      // TODO: get ICP Price
+
+      const parsedNFTOffers =
+        !Array.isArray(offers) || !offers.length
+          ? []
+          : parseNFTOffers({
+              offers,
+            });
+
       typeof onSuccess === 'function' && onSuccess();
 
       thunkAPI.dispatch(marketplaceActions.setOffersLoaded(true));
 
-      // TODO: parse NFT offers response
-
-      return offers;
+      return parsedNFTOffers;
     } catch (err) {
       AppLog.error(err);
       thunkAPI.dispatch(
