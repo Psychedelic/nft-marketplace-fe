@@ -6,7 +6,7 @@ import { AppLog } from '../../../../utils/log';
 import { notificationActions } from '../../notifications';
 
 type GetTokenContractRootBucket = {
-  marketplaceCanisterId: string;
+  collectionId: string;
 };
 
 export const getTokenContractRootBucket = createAsyncThunk<
@@ -14,7 +14,7 @@ export const getTokenContractRootBucket = createAsyncThunk<
   GetTokenContractRootBucket
 >(
   'cap/getTokenContractRootBucket',
-  async ({ marketplaceCanisterId }, thunkAPI) => {
+  async ({ collectionId }, thunkAPI) => {
     thunkAPI.dispatch(capSlice.actions.setLoading(true));
 
     // Checks if an actor instance exists already
@@ -28,7 +28,7 @@ export const getTokenContractRootBucket = createAsyncThunk<
     try {
       const result =
         await actorInstance.get_token_contract_root_bucket({
-          canister: Principal.fromText(marketplaceCanisterId),
+          canister: Principal.fromText(collectionId),
           witness: false,
         });
 
