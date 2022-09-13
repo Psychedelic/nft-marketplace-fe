@@ -18,41 +18,39 @@ export const Checkbox = ({
   filterValueExists,
   tokenCount,
   handleSelectedFilters,
-}: CheckboxProps) => {
-  return (
-    <>
-      {value.split('+')[1] !== '' && (
-        <Wrapper
-          role="checkbox"
-          tabIndex={0}
-          onKeyDown={(event: any) => {
-            // Keyboard accessibility
-            if (
-              event.keyCode === 13 &&
-              typeof handleSelectedFilters === 'function'
-            ) {
-              event.target.value = value;
-              handleSelectedFilters(event);
-            }
-          }}
-        >
-          <label htmlFor={value}>
-            <input
-              type="checkbox"
-              id={value}
-              name={value}
-              value={value}
-              onClick={handleSelectedFilters}
-              // checks if value exists in array and sets checked to true
-              checked={filterValueExists}
-              readOnly
-            />
-            <span />
-            {value.split('+')[1]}
-          </label>
-          <RarityValue>{tokenCount}</RarityValue>
-        </Wrapper>
-      )}
-    </>
-  );
-};
+}: CheckboxProps) => (
+  <>
+    {value.split('+')[1] !== '' && (
+      <Wrapper
+        role="checkbox"
+        tabIndex={0}
+        onKeyDown={(event: any) => {
+          // Keyboard accessibility
+          if (
+            event.keyCode === 13 &&
+            typeof handleSelectedFilters === 'function'
+          ) {
+            event.target.value = value;
+            handleSelectedFilters(event);
+          }
+        }}
+      >
+        <label htmlFor={value}>
+          <input
+            type="checkbox"
+            id={value}
+            name={value}
+            value={value}
+            onClick={handleSelectedFilters}
+            // checks if value exists in array and sets checked to true
+            checked={filterValueExists}
+            readOnly
+          />
+          <span />
+          {value.split('+')[1]}
+        </label>
+        <RarityValue>{tokenCount}</RarityValue>
+      </Wrapper>
+    )}
+  </>
+);
