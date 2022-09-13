@@ -23,7 +23,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       reverse,
       // order,
       traits,
-      page,
       // TODO: what's passed as page is the index
       // as such it should be refactored, renamed to avoid confusion
       lastIndex,
