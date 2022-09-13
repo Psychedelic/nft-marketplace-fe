@@ -164,22 +164,31 @@ export const NftDetails = () => {
                 <TraitsListLoader />
               ) : (
                 <>
-                  {Object.keys(nftDetails.traits).map((key) => (
-                    <NFTTraitsChip
-                      label={getTraitName(key)}
-                      key={key}
-                      name={nftDetails?.traits[`${key}`].name}
-                      rimValue={`${
-                        nftDetails?.traits[`${key}`].occurance
-                      } (${
-                        nftDetails?.traits[`${key}`].rarity &&
-                        roundOffDecimalValue(
+                  {Object.keys(nftDetails.traits).map((key) => {
+                    const occurance = nftDetails?.traits[`${key}`]
+                      .occurance
+                      ? nftDetails?.traits[`${key}`].occurance
+                      : undefined;
+                    const rarity = nftDetails?.traits[`${key}`].rarity
+                      ? roundOffDecimalValue(
                           nftDetails?.traits[`${key}`].rarity,
                           2,
                         )
-                      }%)`}
-                    />
-                  ))}
+                      : undefined;
+
+                    return (
+                      <NFTTraitsChip
+                        label={getTraitName(key)}
+                        key={key}
+                        name={nftDetails?.traits[`${key}`].name}
+                        rimValue={
+                          occurance && rarity
+                            ? `${occurance} (${rarity}%)`
+                            : undefined
+                        }
+                      />
+                    );
+                  })}
                 </>
               )}
             </NFTTraitsContainer>
