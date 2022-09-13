@@ -304,139 +304,167 @@ export const Filters = ({
                   </FilterButtonWrapper>
                 </Flex>
               </FilterGroup>
-              <FilterGroup>
-                <Subheadings>Status</Subheadings>
-                <Flex justify="spaceBetween">
-                  <FilterButtonWrapper>
-                    <ActionButton
-                      type={
-                        filterExists(
-                          `${t('translation:buttons.action.buyNow')}`,
-                        )
-                          ? 'outline'
-                          : 'secondary'
-                      }
-                      onClick={() => {
-                        if (statusFilter !== '') setStatusFilter('');
-                        applyFilter(
-                          'Status',
-                          `${t('translation:buttons.action.buyNow')}`,
-                        );
-                        if (
-                          status !==
-                          `${t('translation:filters.forSale')}`
-                        ) {
-                          dispatch(
-                            filterActions.setStatusFilter(
-                              `${t('translation:filters.forSale')}`,
-                            ),
-                          );
-                        } else {
-                          dispatch(filterActions.setStatusFilter(''));
-                        }
-                      }}
-                    >
-                      {t('translation:buttons.action.buyNow')}
-                    </ActionButton>
-                  </FilterButtonWrapper>
-                  <Subtext margin="rightAndLeft" color="secondary">
-                    or
-                  </Subtext>
-                  <FilterButtonWrapper>
-                    <ActionButton
-                      type={
-                        filterExists(
-                          `${t(
-                            'translation:buttons.action.hasOffers',
-                          )}`,
-                        )
-                          ? 'outline'
-                          : 'secondary'
-                      }
-                      onClick={() => {
-                        if (statusFilter !== '') setStatusFilter('');
-                        applyFilter(
-                          'Status',
-                          `${t(
-                            'translation:buttons.action.hasOffers',
-                          )}`,
-                        );
-                        if (
-                          status !==
-                          `${t('translation:filters.forOffer')}`
-                        ) {
-                          dispatch(
-                            filterActions.setStatusFilter(
-                              `${t('translation:filters.forOffer')}`,
-                            ),
-                          );
-                        } else {
-                          dispatch(filterActions.setStatusFilter(''));
-                        }
-                      }}
-                    >
-                      {t('translation:buttons.action.hasOffers')}
-                    </ActionButton>
-                  </FilterButtonWrapper>
-                </Flex>
-              </FilterGroup>
-              {Boolean(status.length) && (
-                <FilterGroup>
-                  <Subheadings>Price Range</Subheadings>
-                  <Flex justify="spaceBetween">
-                    <FilterInput
-                      placeholder={t(
-                        'translation:inputField.placeholder.priceMin',
+              {!isMyNfts && (
+                <>
+                  <FilterGroup>
+                    <Subheadings>Status</Subheadings>
+                    <Flex justify="spaceBetween">
+                      <FilterButtonWrapper>
+                        <ActionButton
+                          type={
+                            filterExists(
+                              `${t(
+                                'translation:buttons.action.buyNow',
+                              )}`,
+                            )
+                              ? 'outline'
+                              : 'secondary'
+                          }
+                          onClick={() => {
+                            if (statusFilter !== '')
+                              setStatusFilter('');
+                            applyFilter(
+                              'Status',
+                              `${t(
+                                'translation:buttons.action.buyNow',
+                              )}`,
+                            );
+                            if (
+                              status !==
+                              `${t('translation:filters.forSale')}`
+                            ) {
+                              dispatch(
+                                filterActions.setStatusFilter(
+                                  `${t(
+                                    'translation:filters.forSale',
+                                  )}`,
+                                ),
+                              );
+                            } else {
+                              dispatch(
+                                filterActions.setStatusFilter(''),
+                              );
+                            }
+                          }}
+                        >
+                          {t('translation:buttons.action.buyNow')}
+                        </ActionButton>
+                      </FilterButtonWrapper>
+                      <Subtext
+                        margin="rightAndLeft"
+                        color="secondary"
+                      >
+                        or
+                      </Subtext>
+                      <FilterButtonWrapper>
+                        <ActionButton
+                          type={
+                            filterExists(
+                              `${t(
+                                'translation:buttons.action.hasOffers',
+                              )}`,
+                            )
+                              ? 'outline'
+                              : 'secondary'
+                          }
+                          onClick={() => {
+                            if (statusFilter !== '')
+                              setStatusFilter('');
+                            applyFilter(
+                              'Status',
+                              `${t(
+                                'translation:buttons.action.hasOffers',
+                              )}`,
+                            );
+                            if (
+                              status !==
+                              `${t('translation:filters.forOffer')}`
+                            ) {
+                              dispatch(
+                                filterActions.setStatusFilter(
+                                  `${t(
+                                    'translation:filters.forOffer',
+                                  )}`,
+                                ),
+                              );
+                            } else {
+                              dispatch(
+                                filterActions.setStatusFilter(''),
+                              );
+                            }
+                          }}
+                        >
+                          {t('translation:buttons.action.hasOffers')}
+                        </ActionButton>
+                      </FilterButtonWrapper>
+                    </Flex>
+                  </FilterGroup>
+                  {Boolean(status.length) && (
+                    <FilterGroup>
+                      <Subheadings>Price Range</Subheadings>
+                      <Flex justify="spaceBetween">
+                        <FilterInput
+                          placeholder={t(
+                            'translation:inputField.placeholder.priceMin',
+                          )}
+                          inputValue={priceFilterValue.min}
+                          setValue={(value) => {
+                            applyPriceFilter(value, false);
+                          }}
+                        />
+                        <Subtext
+                          margin="rightAndLeft"
+                          color="secondary"
+                        >
+                          to
+                        </Subtext>
+                        <FilterInput
+                          placeholder={t(
+                            'translation:inputField.placeholder.priceMax',
+                          )}
+                          inputValue={priceFilterValue.max}
+                          setValue={(value) => {
+                            applyPriceFilter(value, true);
+                          }}
+                        />
+                      </Flex>
+                      <br />
+                      {displayPriceApplyButton && (
+                        <ActionButton
+                          type="secondary"
+                          onClick={handlePriceFilter}
+                        >
+                          {t('translation:buttons.action.apply')}
+                        </ActionButton>
                       )}
-                      inputValue={priceFilterValue.min}
-                      setValue={(value) => {
-                        applyPriceFilter(value, false);
-                      }}
-                    />
-                    <Subtext margin="rightAndLeft" color="secondary">
-                      to
-                    </Subtext>
-                    <FilterInput
-                      placeholder={t(
-                        'translation:inputField.placeholder.priceMax',
-                      )}
-                      inputValue={priceFilterValue.max}
-                      setValue={(value) => {
-                        applyPriceFilter(value, true);
-                      }}
-                    />
-                  </Flex>
-                  <br />
-                  {displayPriceApplyButton && (
-                    <ActionButton
-                      type="secondary"
-                      onClick={handlePriceFilter}
-                    >
-                      {t('translation:buttons.action.apply')}
-                    </ActionButton>
+                    </FilterGroup>
                   )}
-                </FilterGroup>
+                </>
               )}
             </FilterSection>
-            <Heading>Traits</Heading>
-            <FilterSection>
-              <CheckboxFilters>
-                {/* TO-DO: Refactor */}
-                {loadingFilterList ? (
-                  <CheckboxAccordionSkeleton />
-                ) : (
-                  (loadedFiltersList[0] as any)?.map(
-                    (checkboxData: any) => (
-                      <CheckboxFilterAccordion
-                        key={checkboxData.name}
-                        checkboxData={checkboxData}
-                        id={checkboxData.key}
-                      />
-                    ),
-                  )
-                )}
-              </CheckboxFilters>
-            </FilterSection>
+            {!isMyNfts && (
+              <>
+                <Heading>Traits</Heading>
+                <FilterSection>
+                  <CheckboxFilters>
+                    {/* TO-DO: Refactor */}
+                    {loadingFilterList ? (
+                      <CheckboxAccordionSkeleton />
+                    ) : (
+                      (loadedFiltersList[0] as any)?.map(
+                        (checkboxData: any) => (
+                          <CheckboxFilterAccordion
+                            key={checkboxData.name}
+                            checkboxData={checkboxData}
+                            id={checkboxData.key}
+                          />
+                        ),
+                      )
+                    )}
+                  </CheckboxFilters>
+                </FilterSection>
+              </>
+            )}
           </FiltersWrapper>
           {isMobileScreen && (
             <FilterMobileActions>

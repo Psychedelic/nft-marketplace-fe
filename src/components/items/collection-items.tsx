@@ -168,7 +168,8 @@ export const CollectionItems = () => {
                     }}
                   >
                     Filter
-                    {appliedFilters.defaultFilters.length > 0 ? (
+                    {appliedFilters.defaultFilters.length > 0 &&
+                    !appliedFilters.isMyNfts ? (
                       <AppliedFilters>
                         {appliedFilters.defaultFilters.length}
                       </AppliedFilters>
@@ -179,15 +180,17 @@ export const CollectionItems = () => {
                 )}
               </ContentFlex>
             )}
-            <ContentFlex mobileBtns>
-              {loadingNFTs && loadedNFTS.length === 0 ? (
-                <SortButtonSkeleton />
-              ) : (
-                <SortByFilterDropdown />
-              )}
-            </ContentFlex>
+            {!appliedFilters.isMyNfts && (
+              <ContentFlex mobileBtns>
+                {loadingNFTs && loadedNFTS.length === 0 ? (
+                  <SortButtonSkeleton />
+                ) : (
+                  <SortByFilterDropdown />
+                )}
+              </ContentFlex>
+            )}
           </Flex>
-          {!isMobileScreen && (
+          {!isMobileScreen && !appliedFilters.isMyNfts && (
             <Flex>
               <ContentFlex>
                 {appliedFilters.defaultFilters.map(
@@ -246,27 +249,22 @@ export const CollectionItems = () => {
                         />
                       );
                     }
-                    return appliedFilter.filterName.map((value) => {
-                      return (
-                        <FilteredTraitsChip
-                          key={value}
-                          name={value}
-                          rim={`${appliedFilter.filterCategory}`}
-                          appliedFilterValue={appliedFilter}
-                          removeFilter={() => {
-                            dispatch(
-                              nftsActions.setLastIndex(undefined),
-                            );
-                            dispatch(
-                              filterActions.removeTraitsFilter({
-                                value,
-                                key: appliedFilter.filterCategory,
-                              }),
-                            );
-                          }}
-                        />
-                      );
-                    });
+                    return appliedFilter.filterName.map((value) => (
+                      <FilteredTraitsChip
+                        key={value}
+                        name={value}
+                        rim={`${appliedFilter.filterCategory}`}
+                        appliedFilterValue={appliedFilter}
+                        removeFilter={() => {
+                          dispatch(
+                            filterActions.removeTraitsFilter({
+                              value,
+                              key: appliedFilter.filterCategory,
+                            }),
+                          );
+                        }}
+                      />
+                    ));
                   },
                 )}
                 {displayClearButton()}

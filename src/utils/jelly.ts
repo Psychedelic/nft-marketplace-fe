@@ -1,11 +1,11 @@
-import { Collection } from '@psychedelic/jelly-js';
+import { Collection, JellyUtils } from '@psychedelic/jelly-js';
 
 export const getJellyCollection = async ({
   jellyInstance,
   collectionId,
 }: {
   // TODO: add jelly type
-  jellyInstance: any;
+  jellyInstance: JellyUtils;
   collectionId: string;
 }) => {
   const collections: Collection[] =
@@ -18,3 +18,4 @@ export const getJellyCollection = async ({
 
   return collection;
 };
+

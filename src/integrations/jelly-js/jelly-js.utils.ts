@@ -24,7 +24,8 @@ export const jellyJsInstanceHandler = async ({
   // Slice should have a `setJellyJsInstance` action
   slice: any;
 }) => {
-  const { jellyJsInstance } = thunkAPI.getState();
+  const { jellyJsInstance }: { jellyJsInstance: JellyUtils } =
+    thunkAPI.getState();
 
   if (!jellyJsInstance) {
     AppLog.warn(

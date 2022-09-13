@@ -1,7 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-  NSKyasshuUrl,
-} from '../../../../integrations/kyasshu';
+import { NSKyasshuUrl } from '../../../../integrations/kyasshu';
 import { FilterConstants } from '../../../../constants';
 import { filterActions, FilterTraitsList } from '..';
 import { notificationActions } from '../../notifications';
@@ -88,10 +86,10 @@ export const getFilterTraits = createAsyncThunk<
     const traits = await jellyCollection.getTraits();
 
     const responseData = traits.map((res: any) => {
-      let key = getTraitName(res.trait);
+      const key = getTraitName(res.trait);
 
       const data = {
-        key: key,
+        key,
         name: res.trait,
         values: res.values,
       };
@@ -99,6 +97,7 @@ export const getFilterTraits = createAsyncThunk<
       return data;
     });
 
+    // @ts-ignore
     dispatch(filterActions.getAllFilters(responseData));
     dispatch(filterActions.setIsFilterTraitsLoading(false));
     dispatch(filterActions.setIsAlreadyFetched(true));

@@ -12,6 +12,13 @@ import reportWebVitals from './reportWebVitals';
 // application store
 import { store } from './store';
 
+// https://github.com/GoogleChromeLabs/jsbi/issues/30
+// @ts-ignore
+// eslint-disable-next-line
+BigInt.prototype['toJSON'] = function () {
+  return this.toString();
+};
+
 i18n.use(initReactI18next).init(localesConfig);
 
 ReactDOM.render(
