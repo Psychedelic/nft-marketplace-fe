@@ -354,11 +354,15 @@ export const parseBalanceResponse = (data: Array<any>) => {
 
 interface ParseNFTOffersParams {
   offers: Array<NFTOffer>;
+  currencyMarketPrice?: number;
 }
 
 export type ParsedNFTOffers = OffersTableItem[];
 
-export const parseNFTOffers = ({ offers }: ParseNFTOffersParams) => {
+export const parseNFTOffers = ({
+  offers,
+  currencyMarketPrice,
+}: ParseNFTOffersParams) => {
   const parsed = offers.reduce((accParent, currParent) => {
     const {
       price,
@@ -377,6 +381,10 @@ export const parseNFTOffers = ({ offers }: ParseNFTOffersParams) => {
         : 'n/a',
     };
 
+    const computedCurrencyPrice =
+      currencyMarketPrice &&
+      currencyMarketPrice * Number(parseE8SAmountToWICP(price));
+
     const offerTableItem: OffersTableItem = {
       item: {
         // TODO: formatter for name, as number should probably have leading 0's
@@ -388,6 +396,7 @@ export const parseNFTOffers = ({ offers }: ParseNFTOffersParams) => {
       floorDifference: 'n/a',
       fromDetails,
       time: created.toString(),
+      computedCurrencyPrice,
     };
 
     return [...accParent, offerTableItem];
