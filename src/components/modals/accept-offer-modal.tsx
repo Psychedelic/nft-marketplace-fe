@@ -74,7 +74,7 @@ export const AcceptOfferModal = ({
 }: AcceptOfferProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { id } = useParams();
+  const { id, collectionId } = useParams();
   const { loadedNFTS } = useNFTSStore();
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
@@ -118,13 +118,14 @@ export const AcceptOfferModal = ({
   };
 
   const handleAcceptOffer = async () => {
-    if (!isTokenId(tokenId)) return;
+    if (!isTokenId(tokenId) || !collectionId) return;
 
     setModalStep(ListingStatusCodes.Pending);
 
     dispatch(
       marketplaceActions.acceptOffer({
         id: tokenId as string,
+        collectionId,
         buyerPrincipalId: offerFrom,
         offerPrice: price,
         onSuccess: () => {
