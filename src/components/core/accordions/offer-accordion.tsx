@@ -239,8 +239,7 @@ export const OfferAccordionHeader = ({
   );
 
   const topOffer: OffersTableItem = useMemo(
-    () =>
-      Array.isArray(nftOffers) && nftOffers.length && nftOffers[0],
+    () => nftOffers && nftOffers[0],
     [nftOffers],
   );
 
