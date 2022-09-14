@@ -165,26 +165,18 @@ export const NftDetails = () => {
               ) : (
                 <>
                   {Object.keys(nftDetails.traits).map((key) => {
-                    const occurance = nftDetails?.traits[`${key}`]
-                      .occurance
-                      ? nftDetails?.traits[`${key}`].occurance
-                      : undefined;
-                    const rarity = nftDetails?.traits[`${key}`].rarity
-                      ? roundOffDecimalValue(
-                          nftDetails?.traits[`${key}`].rarity,
-                          2,
-                        )
-                      : undefined;
+                    const { occurance, rarity, name } =
+                      nftDetails?.traits?.[`${key}`];
 
                     return (
                       <NFTTraitsChip
                         label={getTraitName(key)}
                         key={key}
-                        name={nftDetails?.traits[`${key}`].name}
+                        name={name}
                         rimValue={
-                          occurance && rarity
-                            ? `${occurance} (${rarity}%)`
-                            : undefined
+                          occurance &&
+                          rarity &&
+                          `${occurance} (${rarity}%)`
                         }
                       />
                     );
