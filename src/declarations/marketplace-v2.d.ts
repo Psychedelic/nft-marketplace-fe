@@ -173,4 +173,3 @@ export interface _SERVICE {
 }
 
 export default _SERVICE;
-

@@ -11,17 +11,12 @@ import {
 import { PriceDetailsCell, TextCell, TextLinkCell } from '../core';
 import { AcceptOfferModal } from '../modals';
 import { TableLayout } from './table-layout';
-import {
-  Container,
-  ButtonWrapper,
-  EmptyStateMessage,
-} from './styles';
+import { Container, ButtonWrapper } from './styles';
 import { OffersTableItem } from '../../declarations/legacy';
 import {
   formatPriceValue,
   parseE8SAmountToWICP,
 } from '../../utils/formatters';
-import { isTokenId } from '../../utils/nfts';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { formatTimestamp } from '../../integrations/functions/date';
 import { getICAccountLink } from '../../utils/account-id';
@@ -67,11 +62,11 @@ export const NFTOffersTable = ({
     (state: RootState) => state.marketplace.recentlyCancelledOffers,
   );
 
-  const tokenOffers = useSelector(
-    (state: RootState) => state.marketplace.tokenOffers,
+  const nftOffers = useSelector(
+    (state: RootState) => state.marketplace.nftOffers,
   );
 
-  const { id: tokenId } = useParams();
+  const { id, collectionId } = useParams();
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
@@ -94,12 +89,16 @@ export const NFTOffersTable = ({
   }, [isConnectedOwner]);
 
   useEffect(() => {
-    if (!isTokenId(tokenId)) return;
+    if (!id || !collectionId) return;
 
     dispatch(
-      marketplaceActions.getTokenOffers({
-        // TODO: update ownerTokenIdentifiers naming convention
-        ownerTokenIdentifiers: [BigInt(tokenId as string)],
+      marketplaceActions.getNFTOffers({
+        id,
+        collectionId,
+
+        onSuccess: () => {
+          // TODO: handle success messages
+        },
 
         onFailure: () => {
           // TODO: handle failure messages
@@ -116,9 +115,9 @@ export const NFTOffersTable = ({
   useEffect(() => {
     setTableDetails({
       loading: false,
-      loadedOffers: tokenOffers,
+      loadedOffers: nftOffers,
     });
-  }, [tokenOffers]);
+  }, [nftOffers]);
 
   const columns = useMemo(
     () => [

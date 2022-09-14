@@ -110,13 +110,12 @@ export const OnConnected = ({
     (state: RootState) => state.marketplace.nftOffers,
   );
 
-  // TODO: offers Item type
-  const userMadeOffer: any = useMemo(
+  const userMadeOffer: OffersTableItem = useMemo(
     () =>
       nftOffers.find(
-        (offer: any) =>
-          offer?.buyer.toString() === plugPrincipalId &&
-          offer?.tokenId === id,
+        (offer: OffersTableItem) =>
+          offer?.fromDetails?.address === plugPrincipalId &&
+          offer?.item?.tokenId.toString() === id,
       ),
     [id, nftOffers, plugPrincipalId],
   );
@@ -193,7 +192,10 @@ export const OnConnected = ({
             showNonOwnerButtons && !loadingOffers && userMadeOffer,
           )}
         >
-          <CancelOfferModal item={userMadeOffer} largeTriggerButton />
+          <CancelOfferModal
+            item={userMadeOffer?.item}
+            largeTriggerButton
+          />
         </ButtonDetailsWrapper>
       )}
     </ButtonListWrapper>
@@ -218,7 +220,7 @@ export const OfferAccordionHeader = ({
   isMobileScreen,
 }: OfferAccordionHeaderProps) => {
   const { t } = useTranslation();
-  const { id } = useParams();
+  const { id, collectionId } = useParams();
   const dispatch = useAppDispatch();
   const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
 
@@ -232,22 +234,23 @@ export const OfferAccordionHeader = ({
     string | undefined
   >();
 
-  const tokenOffers = useSelector(
-    (state: RootState) => state.marketplace.tokenOffers,
+  const nftOffers = useSelector(
+    (state: RootState) => state.marketplace.nftOffers,
   );
 
   const topOffer: OffersTableItem = useMemo(
-    () => tokenOffers && tokenOffers[0],
-    [tokenOffers],
+    () => nftOffers && nftOffers[0],
+    [nftOffers],
   );
 
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
-    if (!isTokenId(id)) return;
+    if (!id || !collectionId) return;
 
     dispatch(
-      marketplaceActions.getTokenOffers({
-        ownerTokenIdentifiers: [BigInt(id as string)],
+      marketplaceActions.getNFTOffers({
+        id,
+        collectionId,
 
         onSuccess: () => {
           setLoadingOffers(false);
@@ -392,8 +395,8 @@ export const OfferAccordion = ({
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
-  const tokenOffers = useSelector(
-    (state: RootState) => state.marketplace.tokenOffers,
+  const nftOffers = useSelector(
+    (state: RootState) => state.marketplace.nftOffers,
   );
 
   const isOwner = isNFTOwner({
@@ -432,7 +435,7 @@ export const OfferAccordion = ({
               <Icon icon="offer" paddingRight />
               <p>
                 {`${t('translation:accordions.offer.header.offer')}`}
-                <ItemCount>{`(${tokenOffers.length})`}</ItemCount>
+                <ItemCount>{`(${nftOffers.length})`}</ItemCount>
               </p>
             </div>
             <Icon icon="chevron-up" rotate={isAccordionOpen} />
