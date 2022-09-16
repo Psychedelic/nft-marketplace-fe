@@ -78,12 +78,12 @@
     "eject": "react-scripts eject",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "format": "prettier '**/*.{js,ts,tsx}' --write",
-    "services:init": "git submodule update --init --recursive && cd ./nft-marketplace && npm run services:init",
+    "services:init": "git submodule update --init --recursive && cd ./jelly && make init",
     "services:local-replica": "cd ./jelly && dfx start --clean",
-    "services:start": ".scripts/deploy-services-along-v2.sh",
-    "services:reset": "cd ./nft-marketplace && dfx stop && npm run reset",
-    "services:start-v2": "cd ./jelly && make cap-local && make wicp-local && make jelly-local && make prebuild && make crowns-local",
-    "services:reset-v2": "cd ./jelly && make stop-replica",
+    "services:start": "cd ./jelly && make local",
+    "services:reset": "cd ./jelly && make clean-dfx",
+    "services:start-v1": ".scripts/deploy-services-along-v2.sh",
+    "services:reset-v1": "cd ./nft-marketplace && dfx stop && npm run reset",
     "kyasshu:redis": "redis-server /usr/local/etc/redis.conf",
     "kyasshu:redis-flush-all": "redis-cli flushall",
     "kyasshu:redis-shutdown": "redis-cli shutdown",
@@ -164,3 +164,4 @@
     ]
   }
 }
+
