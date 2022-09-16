@@ -97,6 +97,7 @@ export const getFilterTraits = createAsyncThunk<
       return data;
     });
 
+    // @ts-ignore
     dispatch(filterActions.getAllFilters(responseData));
     dispatch(filterActions.setIsFilterTraitsLoading(false));
     dispatch(filterActions.setIsAlreadyFetched(true));

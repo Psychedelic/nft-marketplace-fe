@@ -11,7 +11,11 @@ import {
 } from '../../store';
 import { parseAmountToE8SAsNum } from '../../utils/formatters';
 import { getSortValue } from '../../utils/sorting';
-import { useTraitsPayload, usePriceValues, getTraitPayloadData } from './utils';
+import {
+  useTraitsPayload,
+  usePriceValues,
+  getTraitPayloadData,
+} from './utils';
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
@@ -62,19 +66,24 @@ export const useNFTSFetcher = () => {
     const abortController = new AbortController();
 
     setCurrentAbortController(abortController);
-
-    dispatch(
-      nftsActions.getAllNFTs({
-        payload,
-        traits: traitsPayload.length ? getTraitPayloadData(traitsPayload) : undefined,
-        sort: getSortValue(sortBy),
-        order: 'd',
-        page: lastIndexValue,
-        count: 25,
-        collectionId,
-        reverse,
-      }),
-    );
+    if (isMyNfts) {
+      dispatch(nftsActions.getMyNFTs({ collectionId }));
+    } else {
+      dispatch(
+        nftsActions.getAllNFTs({
+          payload,
+          traits: traitsPayload.length
+            ? getTraitPayloadData(traitsPayload)
+            : undefined,
+          sort: getSortValue(sortBy),
+          order: 'd',
+          page: lastIndexValue,
+          count: 25,
+          collectionId,
+          reverse,
+        }),
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     dispatch,

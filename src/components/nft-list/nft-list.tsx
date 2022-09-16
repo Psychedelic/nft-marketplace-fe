@@ -69,7 +69,8 @@ export const NftList = () => {
       loadingNFTs ||
       !hasMoreNFTs ||
       nextPageNo <= 0 ||
-      !collectionId
+      !collectionId ||
+      !isMyNfts
     )
       return;
 

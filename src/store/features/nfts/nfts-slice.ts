@@ -6,6 +6,7 @@ import {
   getNFTDetails,
   getCollectionData,
   getAllNFTs,
+  getMyNFTs,
 } from './async-thunks';
 
 // Define a type for the slice state
@@ -97,7 +98,6 @@ export const nftsSlice = createSlice({
     },
     setLoadedNFTS: (state, action: PayloadAction<LoadedNFTData>) => {
       const { loadedNFTList, nextPage, lastIndex } = action.payload;
-
       state.loadingNFTs = false;
       state.lastIndexValue = Number(lastIndex);
 
@@ -212,6 +212,7 @@ export const nftsActions = {
   getNFTDetails,
   getCollectionData,
   getAllNFTs,
+  getMyNFTs,
 };
 
 // Other code such as selectors can use the imported `RootState` type

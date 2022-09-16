@@ -32,13 +32,13 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
         ids: [id],
       });
 
-      const { data, ok } = result;
+      const { ok } = result;
 
       if (!ok)
         throw Error(`Oops! Failed to get token listing for id ${id}`);
 
-      const item = data.pop();
-      const { listing } = item;
+      const item = result.data?.pop();
+      const listing = item?.listing;
 
       if (!listing) throw Error('Oops! Listing not found!');
 

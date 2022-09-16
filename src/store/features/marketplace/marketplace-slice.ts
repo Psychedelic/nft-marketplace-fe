@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
+import { JellyUtils } from '@psychedelic/jelly-js';
 import marketplaceIdlService, {
   TransactionStepsStatus,
 } from '../../../declarations/marketplace';
@@ -94,8 +95,7 @@ type InitialState = {
   recentlyFailedTransactions: string[];
   offersLoaded: boolean;
   transactionSteps: TransactionStepsStatus;
-  // TODO: jelly-js type
-  jellyJsInstance: any;
+  jellyJsInstance?: JellyUtils;
   // TODO: NFT offers type
   nftOffers: any;
 };
@@ -122,7 +122,7 @@ const initialState: InitialState = {
   recentlyFailedTransactions: [],
   offersLoaded: false,
   transactionSteps: defaultTransactionStatus,
-  jellyJsInstance: {},
+  jellyJsInstance: undefined,
   nftOffers: [],
 };
 

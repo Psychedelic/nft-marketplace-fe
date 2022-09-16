@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { JellyUtils } from '@psychedelic/jelly-js';
 import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
 import { getJellyCollection } from '../../../../utils/jelly';
 import {
@@ -18,7 +19,7 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
   async ({ collectionId, id, onSuccess, onFailure }, thunkAPI) => {
     // Checks if an actor instance exists already
     // otherwise creates a new instance
-    const jellyInstance = await jellyJsInstanceHandler({
+    const jellyInstance: JellyUtils = await jellyJsInstanceHandler({
       thunkAPI,
       collectionId: collectionId.toString(),
       slice: marketplaceSlice,
@@ -44,13 +45,13 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
         ids: [id],
       });
 
-      const { data, ok } = result;
+      const { ok } = result;
 
       if (!ok)
         throw Error(`Oops! Failed to get token offers for id ${id}`);
 
-      const item = data.pop();
-      const { offers } = item;
+      const item = result.data?.pop();
+      const offers = item?.offers;
 
       if (!offers) throw Error('Oops! Offers not found!');
 
@@ -90,3 +91,4 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
     }
   },
 );
+

@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { JellyCollection } from '@psychedelic/jelly-js';
 import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
 import { nftsActions, LoadedNFTData } from '../nfts-slice';
 import { marketplaceSlice } from '../../marketplace/marketplace-slice';
@@ -66,14 +67,13 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       if (!collection)
         throw Error(`Oops! collection ${collectionId} not found!`);
 
-      const jellyCollection = await jellyInstance.getJellyCollection(
-        collection,
-      );
+      const jellyCollection: JellyCollection =
+        await jellyInstance.getJellyCollection(collection);
 
       const res = await jellyCollection.getAllNFTs({
         count: BigInt(count),
         lastIndex,
-        sort: getSortValue(sort),
+        sortKey: getSortValue(sort),
         reverse,
         traits,
       });
@@ -102,7 +102,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
           id: nft.id,
           name: collectionName,
           // TODO: parse from listing field when available
-          price: undefined,
+          price: nft.listing?.price,
           lastOffer: nft.lastOfferTime,
           lastSale: nft.lastSale,
           // TODO: update nft thumbnail
@@ -113,13 +113,14 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
           owner: nft?.owner,
           // lastActionTaken: findLastAction(nft),
           operator: nft?.operator,
+          rendered: true,
         };
         return metadata;
       });
 
       const actionPayload: LoadedNFTData = {
         loadedNFTList: extractedNFTSList,
-        total,
+        total: Number(total),
       };
 
       if (responseLastIndex) {
@@ -133,7 +134,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
       if (!isEmptyObject(payload)) {
         const collectionPayload = {
-          itemsCount: total,
+          itemsCount: Number(total),
           ownersCount: 0,
           price: 0,
           totalVolume: 0,
@@ -154,3 +155,4 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     }
   },
 );
+
