@@ -18,12 +18,16 @@ export const getCAPActivity = createAsyncThunk<
 >(
   'table/getCAPActivity',
   async ({ pageCount, bucketId }, { dispatch }) => {
+    const HttpGetKyasshuUrl = KyasshuUrl.getCAPActivity({
+      pageCount,
+      bucketId,
+    });
+
     dispatch(tableActions.setIsTableDataLoading(true));
 
     try {
-      const response = await axios.get(
-        KyasshuUrl.getCAPActivity({ pageCount: pageCount, bucketId }),
-      );
+      const response = await axios.get(HttpGetKyasshuUrl);
+
       const { Items, Count } = response.data;
       let pageNo;
       const result = Items.map((item: any) => {
@@ -56,6 +60,7 @@ export const getCAPActivity = createAsyncThunk<
 
           const data = {
             item: {
+              // TODO: name should be based in collection
               name: `CAP Crowns #${tableData.token_id}`,
               token_id: tableData.token_id,
             },

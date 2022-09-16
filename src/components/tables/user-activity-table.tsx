@@ -28,7 +28,6 @@ import {
   formatAddress,
 } from '../../utils/formatters';
 import { getICAccountLink } from '../../utils/account-id';
-import config from '../../config/env';
 import { OperationType } from '../../constants';
 import MobileItemDetails from '../core/table-cells/mobile-item-details';
 import useMediaQuery from '../../hooks/use-media-query';
@@ -64,17 +63,25 @@ export const UserActivityTable = () => {
   );
   const tableSkeletonId = uuid();
 
-  const { id: plugPrincipal } = useParams();
+  const { id: plugPrincipal, collectionId } = useParams();
 
   const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
   useEffect(() => {
+    if (!collectionId) {
+      console.warn(
+        "Oops! Missing collection id, won't be able to get cap transactions",
+      );
+
+      return;
+    }
+
     dispatch(
       capActions.getTokenContractRootBucket({
-        marketplaceCanisterId: config?.marketplaceCanisterId,
+        collectionId,
       }),
     );
-  }, [dispatch]);
+  }, [collectionId, dispatch]);
 
   useEffect(() => {
     if (!bucketId || !plugPrincipal) return;
@@ -288,3 +295,4 @@ export const UserActivityTable = () => {
     </InfiniteScrollWrapper>
   );
 };
+

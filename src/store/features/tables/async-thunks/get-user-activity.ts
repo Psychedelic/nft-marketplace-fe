@@ -71,6 +71,7 @@ export const getUserActivity = createAsyncThunk<
 
         return {
           item: {
+            // TODO: name should be based in collection
             name: `CAP Crowns #${tableData.token_id}`,
             token_id: tableData.token_id,
           },
