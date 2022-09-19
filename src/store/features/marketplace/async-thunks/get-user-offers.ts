@@ -18,7 +18,7 @@ import { actorInstanceHandler } from '../../../../integrations/actor';
 import { Principal } from '@dfinity/principal';
 import config from '../../../../config/env';
 import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
-import { Offer } from '@psychedelic/jelly-js';
+import { NFTToken, Offer } from '@psychedelic/jelly-js';
 
 export type GetUserNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -63,7 +63,7 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
         collection,
       );
 
-      const res = await jellyCollection.getUserNFTs({
+      const res: any = await jellyCollection.getUserNFTs({
         owner: await getPrincipal(),
       });
 
@@ -78,7 +78,7 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
         floorDifferencePrice = floorDifferenceResponse.Ok.toString();
       }
 
-      const offers = data.map((item: any) => {
+      const offers = data.map((item: NFTToken) => {
         const metadata = item.offers.reduce(
           (
             acc: any,
