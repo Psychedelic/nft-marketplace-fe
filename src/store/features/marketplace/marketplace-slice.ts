@@ -24,7 +24,7 @@ import {
   getAssetsToWithdraw,
   withdrawFungible,
   getNFTOffers,
-  getUserNFTs,
+  getUserOffers,
 } from './async-thunks';
 import { TransactionStatus } from '../../../constants/transaction-status';
 
@@ -206,7 +206,7 @@ export const marketplaceSlice = createSlice({
 
       state.tokenOffers = action.payload;
     });
-    builder.addCase(getUserNFTs.fulfilled, (state, action) => {
+    builder.addCase(getUserOffers.fulfilled, (state, action) => {
       if (!action.payload) return;
 
       state.offersReceived = action.payload;
@@ -250,7 +250,7 @@ export const marketplaceActions = {
   getAssetsToWithdraw,
   withdrawFungible,
   getNFTOffers,
-  getUserNFTs,
+  getUserOffers,
 };
 
 export default marketplaceSlice.reducer;

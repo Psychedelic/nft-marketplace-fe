@@ -2,7 +2,6 @@
 import { Principal } from '@dfinity/principal';
 import { Offer as NFTOffer } from '@psychedelic/jelly-js';
 import { Listing } from '../declarations/marketplace';
-import { Offer } from '../declarations/marketplace-v2';
 import {
   formatAddress,
   floorDiffPercentageCalculator,
@@ -83,7 +82,7 @@ export const parseAllListingResponseAsObj = (
   return parsed;
 };
 
-type TokenOffers = Array<[bigint, Array<Offer>]>;
+type TokenOffers = Array<[bigint, Array<NFTOffer>]>;
 
 export type ParsedTokenOffers = OffersTableItem[];
 
@@ -105,14 +104,14 @@ export const parseGetTokenOffersResponse = ({
   currencyMarketPrice,
 }: ParseGetTokenOffersParams) => {
   const parsed = data.reduce((accParent, currParent) => {
-    const tokenOffers = currParent[1] as Offer[];
+    const tokenOffers = currParent[1] as NFTOffer[];
     const parsedTokenOffers = tokenOffers.reduce(
       (accChild, currChild) => {
         const {
           price,
-          token_id: tokenId,
+          tokenId: tokenId,
           buyer: paymentAddress,
-          created,
+          time,
         } = currChild;
 
         // TODO: What to do if payment address not valid principal?
@@ -129,7 +128,7 @@ export const parseGetTokenOffersResponse = ({
           currencyMarketPrice &&
           currencyMarketPrice * Number(parseE8SAmountToWICP(price));
 
-        const offerTableItem: OffersTableItem = {
+        const offerTableItem: any = {
           item: {
             // TODO: formatter for name, as number should probably have leading 0's
             // e.g. Cap Crowns #00001 ?!
@@ -142,7 +141,7 @@ export const parseGetTokenOffersResponse = ({
             floorDifferencePrice,
           }),
           fromDetails,
-          time: created.toString(),
+          time: time.toString(),
           computedCurrencyPrice,
         };
 
@@ -175,7 +174,7 @@ export const parseOffersMadeResponse = ({
           tokenId: tokenId,
           buyer: paymentAddress,
           time,
-        }: Offer,
+        }: NFTOffer,
       ) => {
         const fromDetails = {
           formattedAddress: paymentAddress._isPrincipal

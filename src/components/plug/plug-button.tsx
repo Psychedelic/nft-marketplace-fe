@@ -62,7 +62,7 @@ export const PlugButton = ({
   }, [dispatch]);
 
   const myOffersHandler = useCallback(() => {
-    navigate(`/offers/${userPrincipal}`);
+    navigate(`${collectionId || config.nftCollectionId}/offers/${userPrincipal}`);
     setOpenDropdown(false);
   }, [navigate, userPrincipal]);
 

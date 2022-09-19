@@ -77,7 +77,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     (state: RootState) => state.marketplace.recentlyCancelledOffers,
   );
 
-  const { id: plugPrincipal } = useParams();
+  const { id: plugPrincipal, collectionId } = useParams();
 
   const isConnectedOwner = isNFTOwner({
     isConnected,
@@ -146,7 +146,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   const nextPageNo = 0;
 
   useEffect(() => {
-    if (!plugPrincipal) return;
+    if (!plugPrincipal || !collectionId) return;
 
     setTableDetails({
       loading: true,
@@ -157,7 +157,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       dispatch(
         marketplaceActions.getBuyerOffers({
           userPrincipalId: plugPrincipal,
-          collectionId: config.nftCollectionId,
+          collectionId,
           onSuccess: (offers: any) => {
             if (offersType === OfferTypeStatusCodes.OffersMade) {
               setTableDetails({
@@ -182,10 +182,12 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       loadedOffers: [],
     });
 
+    if (!collectionId) return;
+
     if (offersType === OfferTypeStatusCodes.OffersReceived) {
       dispatch(
-        marketplaceActions.getUserNFTs({
-          collectionId: config.nftCollectionId,
+        marketplaceActions.getUserOffers({
+          collectionId,
           onSuccess: (offers: any) => {
             if (offersType === OfferTypeStatusCodes.OffersReceived) {
               setTableDetails({

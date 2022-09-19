@@ -8,7 +8,7 @@ import {
 } from '../store';
 import { OffersTableItem } from '../declarations/legacy';
 import { parseE8SAmountToWICP } from '../utils/formatters';
-import config from '../config/env';
+import { useParams } from 'react-router';
 
 export const useBuyerOffers = () => {
   const dispatch = useAppDispatch();
@@ -22,13 +22,15 @@ export const useBuyerOffers = () => {
     (state: RootState) => state.marketplace.recentlyPurchasedTokens,
   );
 
+  const { collectionId } = useParams();
+
   useEffect(() => {
-    if (!isConnected || !plugPrincipal) return;
+    if (!isConnected || !plugPrincipal || !collectionId) return;
 
     dispatch(
       marketplaceActions.getBuyerOffers({
         userPrincipalId: plugPrincipal,
-        collectionId: config.nftCollectionId,
+        collectionId,
 
         onSuccess: (offers) => {
           if (!offers.length) return;

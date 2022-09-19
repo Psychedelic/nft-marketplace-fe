@@ -18,15 +18,15 @@ import { actorInstanceHandler } from '../../../../integrations/actor';
 import { Principal } from '@dfinity/principal';
 import config from '../../../../config/env';
 import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
-import { Offer } from '../../../../declarations/marketplace-v2';
+import { Offer } from '@psychedelic/jelly-js';
 
 export type GetUserNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
   abortController?: AbortController;
 };
 
-export const getUserNFTs = createAsyncThunk<any | undefined, any>(
-  'marketplace/getUserNFTs',
+export const getUserOffers = createAsyncThunk<any | undefined, any>(
+  'marketplace/getUserOffers',
   async ({ collectionId, onSuccess, onFailure }, thunkAPI) => {
     // Checks if an actor instance exists already
     // otherwise creates a new instance
