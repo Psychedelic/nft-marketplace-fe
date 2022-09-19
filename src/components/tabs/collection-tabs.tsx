@@ -59,7 +59,7 @@ export const CollectionTabs = () => {
     if (appliedFiltersCount > 0 || !collectionId) return;
 
     dispatch(nftsActions.getCollectionData({ collectionId }));
-  }, [appliedFiltersCount, collectionId]);
+  }, [appliedFiltersCount, collectionId, dispatch]);
 
   return (
     <TabsRoot defaultValue="items" value={selectedTab}>

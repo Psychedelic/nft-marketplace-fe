@@ -76,7 +76,6 @@ export const NftList = () => {
 
     dispatch(
       nftsActions.getAllNFTs({
-        payload,
         traits: traitsPayload.length
           ? getTraitPayloadData(traitsPayload)
           : undefined,
