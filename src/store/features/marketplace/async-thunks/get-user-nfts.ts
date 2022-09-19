@@ -18,7 +18,7 @@ import { actorInstanceHandler } from '../../../../integrations/actor';
 import { Principal } from '@dfinity/principal';
 import config from '../../../../config/env';
 import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
-import { Offer } from '../../../../declarations/marketplace';
+import { Offer } from '../../../../declarations/marketplace-v2';
 
 export type GetUserNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;

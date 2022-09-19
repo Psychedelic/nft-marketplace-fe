@@ -1,7 +1,8 @@
 /* eslint-disable no-underscore-dangle */
 import { Principal } from '@dfinity/principal';
 import { Offer as NFTOffer } from '@psychedelic/jelly-js';
-import { Listing, Offer } from '../declarations/marketplace';
+import { Listing } from '../declarations/marketplace';
+import { Offer } from '../declarations/marketplace-v2';
 import {
   formatAddress,
   floorDiffPercentageCalculator,
