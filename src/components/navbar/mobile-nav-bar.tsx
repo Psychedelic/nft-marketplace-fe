@@ -33,10 +33,11 @@ import {
 } from '../../store';
 import { openSonicURL } from '../../utils/handle-redirect-urls';
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Plug } from '../plug';
 import { roundOffDecimalValue } from '../../utils/nfts';
 import { SpinnerIcon } from '../icons/custom';
+import config from '../../config/env';
 
 type MobileNavBarTypes = {
   openMobileNavbar: boolean;
@@ -60,6 +61,7 @@ export const MobileNavBar = ({
   } = usePlugStore();
   const { theme } = useThemeStore();
   const navigate = useNavigate();
+  const { collectionId } = useParams();
 
   const myActivityHandler = useCallback(() => {
     navigate(`/activity/${principalId}`);
@@ -67,7 +69,7 @@ export const MobileNavBar = ({
   }, [navigate, principalId]);
 
   const myOffersHandler = useCallback(() => {
-    navigate(`/offers/${principalId}`);
+    navigate(`${collectionId || config.nftCollectionId}/offers/${principalId}`);
     setOpenMobileNavbar(false);
   }, [navigate, principalId]);
 

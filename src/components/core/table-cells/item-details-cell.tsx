@@ -29,6 +29,7 @@ export interface ItemDetailsCellProps {
 export const ItemDetailsCell = ({
   name,
   id,
+  logo,
 }: ItemDetailsCellProps) => {
   const { collectionId } = useParams();
   const dispatch = useAppDispatch();
@@ -64,10 +65,10 @@ export const ItemDetailsCell = ({
       to={`/${collectionId || config.nftCollectionId}/nft/${id}`}
     >
       <ItemDetails>
-        {!hasThumbnail ? (
+        {!logo ? (
           <ThumbnailSkeleton />
         ) : (
-          <ItemLogo src={hasThumbnail} alt="crowns" />
+          <ItemLogo src={logo} alt="crowns" />
         )}
         <ItemName className="item-name">
           {isMobileScreen ? 'Cap Crowns' : name}

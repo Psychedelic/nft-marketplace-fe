@@ -32,7 +32,7 @@ const App = () => {
             path="/:collectionId/nft/:id"
             element={<NFTView />}
           />
-          <Route path="/offers/:id" element={<OfferView />} />
+          <Route path="/:collectionId/offers/:id" element={<OfferView />} />
           <Route
             path="/activity/:id"
             element={<UserActivityView />}

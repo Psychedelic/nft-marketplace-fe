@@ -11,7 +11,14 @@ import { notificationActions } from '../../notifications';
 import { parseOffersMadeResponse } from '../../../../utils/parser';
 import { OffersTableItem } from '../../../../declarations/legacy';
 import { AppLog } from '../../../../utils/log';
-import { parseE8SAmountToWICP } from '../../../../utils/formatters';
+import {
+  floorDiffPercentageCalculator,
+  formatAddress,
+  parseE8SAmountToWICP,
+} from '../../../../utils/formatters';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
+import { getJellyCollection } from '../../../../utils/jelly';
+import { getPrincipal } from '../../../../integrations/plug';
 
 export type GetBuyerOffersProps = DefaultCallbacks & GetBuyerOffers;
 
@@ -27,24 +34,42 @@ export const getBuyerOffers = createAsyncThunk<
     slice: marketplaceSlice,
   });
 
-  const { userPrincipalId, onSuccess, onFailure } = params;
+  const { onSuccess, onFailure, collectionId } = params;
+
+  const jellyInstance = await jellyJsInstanceHandler({
+    thunkAPI,
+    collectionId,
+    slice: marketplaceSlice,
+  });
 
   try {
-    let floorDifferencePrice;
-    let currencyMarketPrice;
+    let floorDifferencePrice: any;
+    let currencyMarketPrice: any;
     const nonFungibleContractAddress = Principal.fromText(
       config.nftCollectionId,
     );
-    const userPrincipalAddress = Principal.fromText(userPrincipalId);
-    const result = await actorInstance.getBuyerOffers(
-      nonFungibleContractAddress,
-      userPrincipalAddress,
+
+    const collection = await getJellyCollection({
+      jellyInstance,
+      collectionId,
+    });
+
+    if (!collection)
+      throw Error(`Oops! collection ${collectionId} not found!`);
+
+    const jellyCollection = await jellyInstance.getJellyCollection(
+      collection,
     );
+
+    const result = await jellyCollection.getAllNFTs({
+      buyer: await getPrincipal(),
+    });
 
     // Floor Difference calculation
     const floorDifferenceResponse = await actorInstance.getFloor(
       nonFungibleContractAddress,
     );
+
     if ('Ok' in floorDifferenceResponse) {
       floorDifferencePrice = floorDifferenceResponse.Ok.toString();
     }
@@ -55,19 +80,19 @@ export const getBuyerOffers = createAsyncThunk<
       currencyMarketPrice = icpPriceResponse.usd;
     }
 
-    const parsedTokenOffers = parseOffersMadeResponse({
-      data: result,
-      floorDifferencePrice: parseE8SAmountToWICP(
-        floorDifferencePrice,
-      ),
+    const { data } = result;
+
+    const offers = parseOffersMadeResponse({
+      data,
+      floorDifferencePrice,
       currencyMarketPrice,
     });
 
     if (typeof onSuccess === 'function') {
-      onSuccess(parsedTokenOffers);
+      onSuccess(offers);
     }
 
-    return parsedTokenOffers;
+    return offers;
   } catch (err) {
     AppLog.error(err);
     thunkAPI.dispatch(
