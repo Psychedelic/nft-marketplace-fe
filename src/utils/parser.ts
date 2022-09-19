@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Principal } from '@dfinity/principal';
-import { Offer as NFTOffer } from '@psychedelic/jelly-js';
+import { NFTToken, Offer as NFTOffer } from '@psychedelic/jelly-js';
 import { Listing } from '../declarations/marketplace';
 import {
   formatAddress,
@@ -93,7 +93,7 @@ interface ParseGetTokenOffersParams {
 }
 
 interface ParseOffersMadeParams {
-  data: Array<NFTMetadata>;
+  data: Array<NFTToken>;
   floorDifferencePrice?: string;
   currencyMarketPrice?: number;
 }
