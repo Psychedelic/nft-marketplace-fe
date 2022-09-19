@@ -73,7 +73,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       const res = await jellyCollection.getAllNFTs({
         count: BigInt(count),
         lastIndex,
-        sort: getSortValue(sort),
+        sortKey: getSortValue(sort),
         reverse,
         traits,
       });
