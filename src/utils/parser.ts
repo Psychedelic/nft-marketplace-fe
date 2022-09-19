@@ -8,7 +8,7 @@ import {
   parseE8SAmountToWICP,
 } from './formatters';
 import { formatTimestamp } from '../integrations/functions/date';
-import { OffersTableItem } from '../declarations/legacy';
+import { NFTMetadata, OffersTableItem } from '../declarations/legacy';
 import {
   sortTokenOffersByPrice,
   sortTransactionsByTime,
@@ -93,7 +93,7 @@ interface ParseGetTokenOffersParams {
 }
 
 interface ParseOffersMadeParams {
-  data: Array<Offer>;
+  data: Array<NFTMetadata>;
   floorDifferencePrice?: string;
   currencyMarketPrice?: number;
 }
@@ -164,44 +164,50 @@ export const parseOffersMadeResponse = ({
   floorDifferencePrice,
   currencyMarketPrice,
 }: ParseOffersMadeParams) => {
-  const parsedOffersMade = data.map((offerDetails) => {
-    const {
-      price,
-      token_id: tokenId,
-      buyer: paymentAddress,
-      created,
-    } = offerDetails;
+  const parsedOffersMade = data.map((item: any) => {
+    const { offers } = item;
+    const offerTableItem = offers.reduce(
+      (
+        acc: any,
+        {
+          price,
+          tokenId: tokenId,
+          buyer: paymentAddress,
+          time,
+        }: Offer,
+      ) => {
+        const fromDetails = {
+          formattedAddress: paymentAddress._isPrincipal
+            ? formatAddress(paymentAddress.toString())
+            : 'n/a',
+          address: paymentAddress._isPrincipal
+            ? paymentAddress.toString()
+            : 'n/a',
+        };
 
-    // TODO: What to do if payment address not valid principal?
-    const fromDetails = {
-      formattedAddress: paymentAddress._isPrincipal
-        ? formatAddress(paymentAddress.toString())
-        : 'n/a',
-      address: paymentAddress._isPrincipal
-        ? paymentAddress.toString()
-        : 'n/a',
-    };
+        const computedCurrencyPrice =
+          currencyMarketPrice &&
+          currencyMarketPrice * Number(parseE8SAmountToWICP(price));
 
-    const computedCurrencyPrice =
-      currencyMarketPrice &&
-      currencyMarketPrice * Number(parseE8SAmountToWICP(price));
-
-    const offerTableItem: OffersTableItem = {
-      item: {
-        // TODO: formatter for name, as number should probably have leading 0's
-        // e.g. Cap Crowns #00001 ?!
-        name: `CAP Crowns #${tokenId}`,
-        tokenId,
+        return {
+          ...acc,
+          item: {
+            name: `CAP Crowns #${tokenId}`,
+            tokenId,
+            logo: item.thumbnail,
+          },
+          price,
+          floorDifference: floorDiffPercentageCalculator({
+            currentPrice: parseE8SAmountToWICP(price),
+            floorDifferencePrice,
+          }),
+          fromDetails,
+          time: time?.toString(),
+          computedCurrencyPrice,
+        };
       },
-      price,
-      floorDifference: floorDiffPercentageCalculator({
-        currentPrice: parseE8SAmountToWICP(price),
-        floorDifferencePrice,
-      }),
-      fromDetails,
-      time: created.toString(),
-      computedCurrencyPrice,
-    };
+      {},
+    );
 
     return offerTableItem;
   });

@@ -24,6 +24,7 @@ import {
   getAssetsToWithdraw,
   withdrawFungible,
   getNFTOffers,
+  getUserNFTs,
 } from './async-thunks';
 import { TransactionStatus } from '../../../constants/transaction-status';
 
@@ -62,6 +63,7 @@ export type GetUserReceivedOffer = {
 
 export type GetBuyerOffers = {
   userPrincipalId: string;
+  collectionId: string;
 };
 
 export type CollectionDetails = {
@@ -87,6 +89,7 @@ type InitialState = {
   actor?: MarketplaceActor;
   tokenListing: Record<string, TokenListingItem>;
   tokenOffers: any[];
+  offersReceived: any[];
   recentlyMadeOffers: any[];
   recentlyPurchasedTokens: any[];
   recentlyWithdrawnAssets: any[];
@@ -115,6 +118,7 @@ const initialState: InitialState = {
   recentlyAcceptedOffers: [],
   tokenListing: {},
   tokenOffers: [],
+  offersReceived: [],
   recentlyMadeOffers: [],
   recentlyPurchasedTokens: [],
   recentlyWithdrawnAssets: [],
@@ -202,6 +206,11 @@ export const marketplaceSlice = createSlice({
 
       state.tokenOffers = action.payload;
     });
+    builder.addCase(getUserNFTs.fulfilled, (state, action) => {
+      if (!action.payload) return;
+
+      state.offersReceived = action.payload;
+    });
     builder.addCase(makeOffer.fulfilled, (state, action) => {
       if (!action.payload) return;
 
@@ -241,6 +250,7 @@ export const marketplaceActions = {
   getAssetsToWithdraw,
   withdrawFungible,
   getNFTOffers,
+  getUserNFTs,
 };
 
 export default marketplaceSlice.reducer;

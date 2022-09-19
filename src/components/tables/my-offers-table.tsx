@@ -8,6 +8,7 @@ import {
   RootState,
   marketplaceActions,
   crownsActions,
+  nftsActions,
 } from '../../store';
 import {
   ItemDetailsCell,
@@ -37,6 +38,7 @@ import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { formatTimestamp } from '../../integrations/functions/date';
 import { getICAccountLink } from '../../utils/account-id';
 import useMediaQuery from '../../hooks/use-media-query';
+import config from '../../config/env';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -64,12 +66,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   );
   const [tableDetails, setTableDetails] = useState<TableDetails>({
     loadedOffers: [],
-    loading: true,
+    loading: false,
   });
-
-  const ownerTokenIdentifiers = useSelector(
-    (state: RootState) => state.crowns.ownerTokenIdentifiers,
-  );
 
   const recentlyAcceptedOffers = useSelector(
     (state: RootState) => state.marketplace.recentlyAcceptedOffers,
@@ -77,10 +75,6 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
   const recentlyCancelledOffers = useSelector(
     (state: RootState) => state.marketplace.recentlyCancelledOffers,
-  );
-
-  const tokenOffers = useSelector(
-    (state: RootState) => state.marketplace.tokenOffers,
   );
 
   const { id: plugPrincipal } = useParams();
@@ -163,7 +157,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       dispatch(
         marketplaceActions.getBuyerOffers({
           userPrincipalId: plugPrincipal,
-          onSuccess: (offers) => {
+          collectionId: config.nftCollectionId,
+          onSuccess: (offers: any) => {
             if (offersType === OfferTypeStatusCodes.OffersMade) {
               setTableDetails({
                 loading: false,
@@ -178,43 +173,34 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       );
       return;
     }
-
-    dispatch(
-      crownsActions.getOwnerTokenIdentifiers({
-        principalId: plugPrincipal,
-      }),
-    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, offersType, isConnected, recentlyCancelledOffers]);
 
   useEffect(() => {
-    if (!ownerTokenIdentifiers) return;
-
     setTableDetails({
       loading: true,
       loadedOffers: [],
     });
 
-    dispatch(
-      marketplaceActions.getTokenOffers({
-        // TODO: handle offers data gracefully
-        ownerTokenIdentifiers,
-
-        onFailure: () => {
-          // TODO: handle failure messages
-        },
-      }),
-    );
-  }, [ownerTokenIdentifiers, dispatch, recentlyAcceptedOffers]);
-
-  useEffect(() => {
     if (offersType === OfferTypeStatusCodes.OffersReceived) {
-      setTableDetails({
-        loading: false,
-        loadedOffers: tokenOffers,
-      });
+      dispatch(
+        marketplaceActions.getUserNFTs({
+          collectionId: config.nftCollectionId,
+          onSuccess: (offers: any) => {
+            if (offersType === OfferTypeStatusCodes.OffersReceived) {
+              setTableDetails({
+                loading: false,
+                loadedOffers: offers,
+              });
+            }
+          },
+          onFailure: () => {
+            // TODO: handle failure messages
+          },
+        }),
+      );
     }
-  }, [tokenOffers]);
+  }, [dispatch, offersType, recentlyAcceptedOffers]);
 
   const loadMoreData = () => {
     // TODO: Add logic to load more data
@@ -227,13 +213,15 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       {
         Header: t('translation:tables.titles.item'),
         // eslint-disable-next-line
-        accessor: ({ item }: OffersTableItem) => (
-          <ItemDetailsCell
-            name={item.name}
-            id={item.tokenId.toString()}
-            logo={item.logo}
-          />
-        ),
+        accessor: ({ item }: OffersTableItem) => {
+          return (
+            <ItemDetailsCell
+              name={item.name}
+              id={item.tokenId.toString()}
+              logo={item.logo}
+            />
+          );
+        },
       },
       {
         Header: t('translation:tables.titles.price'),

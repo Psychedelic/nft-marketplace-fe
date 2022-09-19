@@ -8,6 +8,7 @@ import {
 } from '../store';
 import { OffersTableItem } from '../declarations/legacy';
 import { parseE8SAmountToWICP } from '../utils/formatters';
+import config from '../config/env';
 
 export const useBuyerOffers = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +28,8 @@ export const useBuyerOffers = () => {
     dispatch(
       marketplaceActions.getBuyerOffers({
         userPrincipalId: plugPrincipal,
+        collectionId: config.nftCollectionId,
+
         onSuccess: (offers) => {
           if (!offers.length) return;
 

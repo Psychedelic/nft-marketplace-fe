@@ -55,7 +55,9 @@ export type NFTStandard = { EXT: null } | { DIP721v2: null };
 export interface Offer {
   status: OfferStatus;
   created: bigint;
+  time: bigint;
   token_id: bigint;
+  tokenId: bigint;
   token_owner: Principal;
   buyer: Principal;
   price: bigint;
