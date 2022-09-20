@@ -41,6 +41,7 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
 
     try {
       let currencyMarketPrice;
+      let floorPrice;
       const result = await jellyCollection.getNFTs({
         ids: [id],
       });
@@ -55,7 +56,13 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
 
       if (!offers) throw Error('Oops! Offers not found!');
 
-      // TODO: get floor price and calculate floor difference
+      // Floor Difference calculation
+      const floorDifferenceResponse =
+        await jellyCollection.getFloorPrice();
+
+      if (floorDifferenceResponse.ok) {
+        floorPrice = floorDifferenceResponse?.data;
+      }
 
       // Fetch ICP Price
       const icpPriceResponse = await getICPPrice();
@@ -68,6 +75,7 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
           ? []
           : parseNFTOffers({
               offers,
+              floorPrice,
               currencyMarketPrice,
             });
 
@@ -91,4 +99,3 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
     }
   },
 );
-
