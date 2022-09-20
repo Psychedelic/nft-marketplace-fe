@@ -360,6 +360,7 @@ export const parseBalanceResponse = (data: Array<any>) => {
 
 interface ParseNFTOffersParams {
   offers: Array<NFTOffer>;
+  floorPrice?: bigint;
   currencyMarketPrice?: number;
 }
 
@@ -367,6 +368,7 @@ export type ParsedNFTOffers = OffersTableItem[];
 
 export const parseNFTOffers = ({
   offers,
+  floorPrice,
   currencyMarketPrice,
 }: ParseNFTOffersParams) => {
   const parsed = offers.reduce((accParent, currParent) => {
@@ -399,7 +401,12 @@ export const parseNFTOffers = ({
         tokenId: BigInt(token_id),
       },
       price,
-      floorDifference: 'n/a',
+      floorDifference: floorPrice
+        ? floorDiffPercentageCalculator({
+            currentPrice: parseE8SAmountToWICP(price),
+            floorDifferencePrice: parseE8SAmountToWICP(floorPrice),
+          })
+        : 'n/a',
       fromDetails,
       time: created.toString(),
       computedCurrencyPrice,
