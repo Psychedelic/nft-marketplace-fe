@@ -5,7 +5,6 @@ import { nftsActions, LoadedNFTData } from '../nfts-slice';
 import { marketplaceSlice } from '../../marketplace/marketplace-slice';
 import { NSKyasshuUrl } from '../../../../integrations/kyasshu';
 import { createActor } from '../../../../integrations/actor';
-import { isEmptyObject } from '../../../../utils/common';
 import { getJellyCollection } from '../../../../utils/jelly';
 import { AppLog } from '../../../../utils/log';
 import { getSortValue } from '../../../../utils/sorting';
@@ -19,7 +18,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
   'marketplace/getAllNFTs',
   async (
     {
-      payload,
       // TODO: map previous sorting fields to body jelly js fn args
       sort,
       reverse,
@@ -54,9 +52,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     // set loading NFTS state to true
     dispatch(nftsActions.setIsNFTSLoading(true));
 
-    if (!isEmptyObject(payload)) {
-      dispatch(nftsActions.setCollectionDataLoading());
-    }
+    dispatch(nftsActions.setCollectionDataLoading());
 
     try {
       const collection = await getJellyCollection({
@@ -132,16 +128,10 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       // update store with loaded NFTS details
       dispatch(nftsActions.setLoadedNFTS(actionPayload));
 
-      if (!isEmptyObject(payload)) {
-        const collectionPayload = {
-          itemsCount: Number(total),
-          ownersCount: 0,
-          price: 0,
-          totalVolume: 0,
-        };
-
-        dispatch(nftsActions.setCollectionData(collectionPayload));
-      }
+      const collectionPayload = {
+        itemsCount: Number(total),
+      };
+      dispatch(nftsActions.setCollectionData(collectionPayload));
 
       if (!data) {
         AppLog.warn('Oops! Failed to get all NFTs via Jelly-js!');

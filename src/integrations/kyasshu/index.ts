@@ -71,7 +71,6 @@ export const useNFTSFetcher = () => {
     } else {
       dispatch(
         nftsActions.getAllNFTs({
-          payload,
           traits: traitsPayload.length
             ? getTraitPayloadData(traitsPayload)
             : undefined,

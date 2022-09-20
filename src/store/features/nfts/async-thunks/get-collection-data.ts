@@ -1,86 +1,69 @@
-import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { nftsActions } from '../nfts-slice';
-import {
-  KyasshuUrl,
-  NSKyasshuUrl,
-} from '../../../../integrations/kyasshu';
+import { NSKyasshuUrl } from '../../../../integrations/kyasshu';
 import { notificationActions } from '../../notifications';
 import { settingsActions } from '../../settings';
 import { AppLog } from '../../../../utils/log';
-import { marketplaceActions } from '../../marketplace/marketplace-slice';
+import { marketplaceSlice } from '../../marketplace/marketplace-slice';
 import { isUnsupportedPage } from '../../../../utils/error';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
+import { getJellyCollection } from '../../../../utils/jelly';
 
 export const getCollectionData = createAsyncThunk<
   void,
   NSKyasshuUrl.GetCollectionDataQueryParams
->(
-  'nfts/getCollectionData',
-  async ({ collectionId }, { dispatch }) => {
-    dispatch(nftsActions.setCollectionDataLoading());
+>('nfts/getCollectionData', async ({ collectionId }, thunkAPI) => {
+  const { dispatch } = thunkAPI;
+  dispatch(nftsActions.setCollectionDataLoading());
 
-    try {
-      const response = await axios.get(
-        KyasshuUrl.getCollectionData({ collectionId }),
-      );
-      if (response.status !== 200) {
-        throw Error(response.statusText);
-      }
+  const jellyInstance = await jellyJsInstanceHandler({
+    thunkAPI,
+    collectionId,
+    slice: marketplaceSlice,
+  });
 
-      const responseData = response?.data;
+  try {
+    const collection = await getJellyCollection({
+      jellyInstance,
+      collectionId,
+    });
 
-      const actionPayload = {
-        itemsCount: responseData?.items || 0,
-        ownersCount: responseData?.owners || 0,
-        price: 0,
-        totalVolume: 0,
-      };
+    if (!collection)
+      throw Error(`Oops! collection ${collectionId} not found!`);
 
-      await dispatch(
-        marketplaceActions.getFloorPrice({
-          onSuccess: (floorPrice) => {
-            if (!floorPrice) return;
+    const response = await jellyInstance.getCollections();
+    const responseData = response.find(
+      (collectionData) => collectionData.id.toText() === collectionId,
+    );
+    if (!responseData)
+      throw new Error(`Oops! collection ${collectionId} not found!`);
 
-            actionPayload.price = floorPrice;
-          },
-          onFailure: () => {
-            // TODO: handle failure scenario
-          },
-        }),
-      );
+    const jellyCollection = await jellyInstance.getJellyCollection(
+      collection,
+    );
 
-      await dispatch(
-        marketplaceActions.getCollections({
-          onSuccess: (collections) => {
-            if (!collections.length) return;
+    const uniqueOwners = await jellyCollection.getUniqueNFTOwners();
 
-            const crownsCollection = collections[0];
+    const actionPayload = {
+      ownersCount: Number(uniqueOwners),
+      price: Number(responseData.fungibleFloor),
+      totalVolume: Number(responseData.fungibleVolume),
+    };
+    dispatch(nftsActions.setCollectionData(actionPayload));
+  } catch (error: any) {
+    AppLog.error(error);
 
-            actionPayload.totalVolume = Number(
-              crownsCollection?.fungibleVolume,
-            );
-          },
-          onFailure: () => {
-            // TODO: handle failure scenario
-          },
-        }),
-      );
+    if (isUnsupportedPage(error?.response)) {
+      dispatch(settingsActions.setPageNotFoundStatus(true));
 
-      dispatch(nftsActions.setCollectionData(actionPayload));
-    } catch (error: any) {
-      AppLog.error(error);
-
-      if (isUnsupportedPage(error?.response)) {
-        dispatch(settingsActions.setPageNotFoundStatus(true));
-
-        return;
-      }
-
-      dispatch(
-        notificationActions.setErrorMessage(
-          'Oops! Unable to fetch collection data',
-        ),
-      );
+      return;
     }
-  },
-);
+
+    dispatch(
+      notificationActions.setErrorMessage(
+        'Oops! Unable to fetch collection data',
+      ),
+    );
+  }
+});
+

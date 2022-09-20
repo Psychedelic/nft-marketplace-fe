@@ -69,10 +69,10 @@ interface FindNFTIndexData {
 }
 
 interface LoadedCollectionData {
-  itemsCount: number;
-  ownersCount: number;
-  price: number;
-  totalVolume: number;
+  itemsCount?: number;
+  ownersCount?: number;
+  price?: number;
+  totalVolume?: number;
 }
 
 const findNFTIndex = ({ nftList, idToFind }: FindNFTIndexData) => {
@@ -192,10 +192,10 @@ export const nftsSlice = createSlice({
     ) => {
       const { itemsCount, ownersCount, price, totalVolume } =
         action.payload;
-      state.totalNFTSCount = itemsCount;
-      state.totalOwnersCount = ownersCount;
-      state.floorPrice = price;
-      state.totalVolume = totalVolume;
+      state.totalNFTSCount = itemsCount ?? state.totalNFTSCount;
+      state.totalOwnersCount = ownersCount ?? state.totalOwnersCount;
+      state.floorPrice = price ?? state.floorPrice;
+      state.totalVolume = totalVolume ?? state.totalVolume;
       state.loadingCollectionData = false;
     },
     setLastIndex: (
