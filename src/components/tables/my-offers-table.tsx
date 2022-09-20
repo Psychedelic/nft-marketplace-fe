@@ -38,7 +38,6 @@ import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { formatTimestamp } from '../../integrations/functions/date';
 import { getICAccountLink } from '../../utils/account-id';
 import useMediaQuery from '../../hooks/use-media-query';
-import config from '../../config/env';
 
 /* --------------------------------------------------------------------------
  * My Offers Table Component
@@ -148,12 +147,12 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   useEffect(() => {
     if (!plugPrincipal || !collectionId) return;
 
-    setTableDetails({
-      loading: true,
-      loadedOffers: [],
-    });
-
     if (offersType === OfferTypeStatusCodes.OffersMade) {
+      setTableDetails({
+        loading: true,
+        loadedOffers: [],
+      });
+
       dispatch(
         marketplaceActions.getBuyerOffers({
           userPrincipalId: plugPrincipal,
@@ -177,14 +176,14 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   }, [dispatch, offersType, isConnected, recentlyCancelledOffers]);
 
   useEffect(() => {
-    setTableDetails({
-      loading: true,
-      loadedOffers: [],
-    });
-
     if (!collectionId) return;
 
     if (offersType === OfferTypeStatusCodes.OffersReceived) {
+      setTableDetails({
+        loading: true,
+        loadedOffers: [],
+      });
+      
       dispatch(
         marketplaceActions.getUserOffers({
           collectionId,
