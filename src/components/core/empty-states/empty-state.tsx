@@ -61,6 +61,13 @@ export const EmptyState = ({
               dispatch(nftsActions.setLastIndex(undefined));
               dispatch(filterActions.setMyNfts(false));
               dispatch(filterActions.clearAllFilters());
+              dispatch(
+                filterActions.setSortingFilter(
+                  `${t(
+                    'translation:dropdown.priceFilter.recentlyListed',
+                  )}`,
+                ),
+              );
             }}
           >
             {buttonText}

@@ -98,6 +98,13 @@ export const CollectionItems = () => {
             dispatch(filterActions.clearAllFilters());
             dispatch(settingsActions.setPriceApplyButton(false));
             dispatch(filterActions.setMyNfts(false));
+            dispatch(
+              filterActions.setSortingFilter(
+                `${t(
+                  'translation:dropdown.priceFilter.recentlyListed',
+                )}`,
+              ),
+            );
           }}
         >{`${t('translation:filters.clearAll')}`}</ClearButton>
       );
@@ -244,6 +251,13 @@ export const CollectionItems = () => {
                                 filterActions.setStatusFilter(''),
                               );
                             }
+                            dispatch(
+                              filterActions.setSortingFilter(
+                                `${t(
+                                  'translation:dropdown.priceFilter.recentlyListed',
+                                )}`,
+                              ),
+                            );
                             handleRemoveFilter(appliedFilter);
                           }}
                         />

@@ -219,6 +219,11 @@ export const Filters = ({
     dispatch(filterActions.clearAllFilters());
     dispatch(settingsActions.setPriceApplyButton(false));
     dispatch(filterActions.setMyNfts(false));
+    dispatch(
+      filterActions.setSortingFilter(
+        `${t('translation:dropdown.priceFilter.recentlyListed')}`,
+      ),
+    );
     setPriceFilterValue({
       min: '',
       max: '',
@@ -340,9 +345,23 @@ export const Filters = ({
                                   )}`,
                                 ),
                               );
+                              dispatch(
+                                filterActions.setSortingFilter(
+                                  `${t(
+                                    'translation:dropdown.priceFilter.recentlyListed',
+                                  )}`,
+                                ),
+                              );
                             } else {
                               dispatch(
                                 filterActions.setStatusFilter(''),
+                              );
+                              dispatch(
+                                filterActions.setSortingFilter(
+                                  `${t(
+                                    'translation:dropdown.priceFilter.recentlyListed',
+                                  )}`,
+                                ),
                               );
                             }
                           }}
@@ -387,9 +406,23 @@ export const Filters = ({
                                   )}`,
                                 ),
                               );
+                              dispatch(
+                                filterActions.setSortingFilter(
+                                  `${t(
+                                    'translation:dropdown.priceFilter.recentlyOffered',
+                                  )}`,
+                                ),
+                              );
                             } else {
                               dispatch(
                                 filterActions.setStatusFilter(''),
+                              );
+                              dispatch(
+                                filterActions.setSortingFilter(
+                                  `${t(
+                                    'translation:dropdown.priceFilter.recentlyListed',
+                                  )}`,
+                                ),
                               );
                             }
                           }}
