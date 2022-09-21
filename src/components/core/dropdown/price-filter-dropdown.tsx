@@ -84,10 +84,14 @@ export const SortByFilterDropdown = React.memo(() => {
     {
       key: SortKey.salePrice,
       value: `${t('translation:dropdown.priceFilter.highToLow')}`,
+      forSale: true,
+      forOffer: true,
     },
     {
       key: SortKey.salePrice,
       value: `${t('translation:dropdown.priceFilter.lowToHigh')}`,
+      forSale: true,
+      forOffer: true,
     },
   ];
 
