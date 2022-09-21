@@ -1,11 +1,13 @@
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   notificationActions,
   useAppDispatch,
   useNFTSStore,
   useTableStore,
+  marketplaceActions,
 } from '../../store';
 import { FilteredCountChip, LinkButton } from '../core';
 import {
@@ -34,6 +36,8 @@ export const CollectionOverview = () => {
   const dispatch = useAppDispatch();
   const [theme] = useTheme();
 
+  const { id, collectionId } = useParams();
+
   const { loadingTableData } = useTableStore();
   const {
     loadingNFTs,
@@ -49,6 +53,17 @@ export const CollectionOverview = () => {
     () => loadingTableData || loadingNFTs || loadingCollectionData,
     [loadingTableData, loadingNFTs, loadingCollectionData],
   );
+
+  useEffect(() => {
+    if (!collectionId) return;
+
+    dispatch(
+      marketplaceActions.getCollectionDetails({ collectionId }),
+    );
+
+    // TODO: Update static data like crowns title, icon
+    // by using currentCollectionDetails state
+  }, [id, collectionId]);
 
   return (
     <NftMetadataWrapper>

@@ -59,8 +59,6 @@ export const isOperatorMarketplace = (
 ) => {
   const { operator, marketplaceId } = params;
 
-  console.log(marketplaceId, 'marketplaceId');
-
   if (!operator || !marketplaceId) return;
 
   return operator === marketplaceId;
