@@ -79,10 +79,8 @@ const config: Config = {
     kyasshuMarketplaceAPI: 'http://localhost:3000/local',
     icScan: 'https://icscan.io/principal',
     nftCollectionId: process.env.REACT_APP_CROWNS_ID as string,
-    // marketplaceCanisterId: process.env
-    //   .REACT_APP_MARKETPLACE_ID as string,
-    // TODO: update REACT_APP_MARKETPLACE_ID with correct Id in start script
-    marketplaceCanisterId: 'q4eej-kyaaa-aaaaa-aaaha-cai',
+    marketplaceCanisterId: process.env
+      .REACT_APP_MARKETPLACE_ID as string,
     wICPCanisterId: process.env.REACT_APP_WICP_ID as string,
     capRouterId: process.env.REACT_APP_CAP_ID as string,
   },
