@@ -110,6 +110,10 @@ export const NftDetails = () => {
     // TODO: handle the error gracefully when there is no id
     if (!id || !collectionId) return;
 
+    dispatch(
+      marketplaceActions.getCollectionDetails({ collectionId }),
+    );
+
     if (!loadedFiltersList.length) {
       dispatch(filterActions.getFilterTraits({ collectionId }));
     }
