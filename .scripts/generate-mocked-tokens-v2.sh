@@ -1,7 +1,8 @@
 #!/bin/bash
 
 jellyDependenciesPath=./jelly/dependencies
-crownsMockPath="$jellyDependenciesPath/crowns/mocks"
+crownsPath="$jellyDependenciesPath/crowns"
+crownsMockPath="$crownsPath/mocks"
 
 dependenciesHandler() {
   if [ ! -d "$crownsMockPath/node_modules" ];
@@ -30,6 +31,69 @@ userIdentityWarning() {
   else
     printf "\n"
   fi
+}
+
+getMetadata() {
+  local totalSupply=$1
+  local crownsCanisterId=$2
+  local firstIndex=0
+
+  for ((i="$firstIndex"; i <= "$totalSupply"; i++))
+  do
+    crownsNftCanisterId="vlhm2-4iaaa-aaaam-qaatq-cai"
+    filename=$(printf "%04d.mp4" "$i")
+    thumbnail=$(printf "%04d.png" "$i")
+    crownsCertifiedAssetsA="vzb3d-qyaaa-aaaam-qaaqq-cai"
+    # crownsCertifiedAssetsB="vqcq7-gqaaa-aaaam-qaara-cai"
+    assetUrl="https://$crownsCertifiedAssetsA.raw.ic0.app/$filename"
+
+    # Get some data from the mainnet canister
+    mainnetMetadataResult=($(dfx canister --network ic call --query $crownsNftCanisterId tokenMetadata "($i:nat)" | pcregrep -o1  '3_643_416_556 = "([a-zA-Z]*)"'))
+
+    if [[ ! "$(declare -p mainnetMetadataResult)" =~ "declare -a" ]];
+    then
+      printf "👹 Oops! Metadata array is not fullfiled, will not proceed!"
+      exit 1
+    fi
+
+    location="$assetUrl"
+    thumbnail="https://$crownsCertifiedAssetsA.raw.ic0.app/thumbnails/$thumbnail"
+    smallgem="${mainnetMetadataResult[0]}"
+    biggem=${mainnetMetadataResult[1]}
+    base=${mainnetMetadataResult[2]}
+    rim=${mainnetMetadataResult[3]}
+
+    record="
+      record {
+        operation = \"metadata\";
+        token_id = \"$i\";
+        nft_canister_id = principal \"$crownsCanisterId\";
+        traits = opt vec {
+          record { \"smallgem\"; variant { TextContent = \"$smallgem\" } };
+          record { \"biggem\"; variant { TextContent = \"$biggem\" } };
+          record { \"base\"; variant { TextContent = \"$base\" } };
+          record { \"rim\"; variant { TextContent = \"$rim\" } };
+          record {
+            \"location\";
+            variant {
+              TextContent = \"$location\"
+            };
+          };
+          record {
+            \"thumbnail\";
+            variant {
+              TextContent = \"$thumbnail\"
+            };
+          };
+        }
+      };
+    "
+
+    # push to list
+    list="$list $record"
+
+    echo "$list"
+  done
 }
 
 # Check if dependencies are installed
@@ -91,66 +155,29 @@ printf "👍 Mint process completed!\n\n"
 
   echo "🧙‍♀️ Will now insert the metadata for the total supply $totalSupply, be patient..."
 
-  firstIndex=0
   list=""
-  for ((i="$firstIndex"; i <= "$totalSupply"; i++))
-  do
-    echo "Preparing metadata for index $i..."
 
-    crownsNftCanisterId="vlhm2-4iaaa-aaaam-qaatq-cai"
-    filename=$(printf "%04d.mp4" "$i")
-    thumbnail=$(printf "%04d.png" "$i")
-    crownsCertifiedAssetsA="vzb3d-qyaaa-aaaam-qaaqq-cai"
-    # crownsCertifiedAssetsB="vqcq7-gqaaa-aaaam-qaara-cai"
-    assetUrl="https://$crownsCertifiedAssetsA.raw.ic0.app/$filename"
+  # Do a cache checkup
+  cacheDir="../../.cache"
+  cacheFilePath="$cacheDir/mocked_tokens_list_output"
 
-    # Get some data from the mainnet canister
-    mainnetMetadataResult=($(dfx canister --network ic call --query $crownsNftCanisterId tokenMetadata "($i:nat)" | pcregrep -o1  '3_643_416_556 = "([a-zA-Z]*)"'))
+  mkdir -p "$cacheDir"
 
-    if [[ ! "$(declare -p mainnetMetadataResult)" =~ "declare -a" ]];
-    then
-      printf "👹 Oops! Metadata array is not fullfiled, will not proceed!"
-      exit 1
-    fi
+  if [[ ! -z $(cat "$cacheFilePath" 2> /dev/null) ]] ; then
+    echo "🤗 Found cached list, going to use it!"
+  else
+    echo "🧙‍♀️ Will cache the list to use next time, bare with me..."
 
-    location="$assetUrl"
-    thumbnail="https://$crownsCertifiedAssetsA.raw.ic0.app/thumbnails/$thumbnail"
-    smallgem="${mainnetMetadataResult[0]}"
-    biggem=${mainnetMetadataResult[1]}
-    base=${mainnetMetadataResult[2]}
-    rim=${mainnetMetadataResult[3]}
+    touch "$cacheFilePath"
 
-    record="
-      record {
-        operation = \"metadata\";
-        token_id = \"$i\";
-        nft_canister_id = principal \"$crownsCanisterId\";
-        traits = opt vec {
-          record { \"smallgem\"; variant { TextContent = \"$smallgem\" } };
-          record { \"biggem\"; variant { TextContent = \"$biggem\" } };
-          record { \"base\"; variant { TextContent = \"$base\" } };
-          record { \"rim\"; variant { TextContent = \"$rim\" } };
-          record {
-            \"location\";
-            variant {
-              TextContent = \"$location\"
-            };
-          };
-          record {
-            \"thumbnail\";
-            variant {
-              TextContent = \"$thumbnail\"
-            };
-          };
-        }
-      };
-    "
+    getMetadata "$totalSupply" "$crownsCanisterId" | tee "$cacheFilePath"
 
-    echo "$record"
+    echo "$list" > "$cacheFilePath"
+  fi
 
-    # push to list
-    list="$list $record"
-  done
+  list=$(<"$cacheFilePath")
+
+  echo "🧙‍♀️ Ok now we're going to insert the list..."
 
   dfx canister call \
     "$crownsMarketplaceId" insert "(
