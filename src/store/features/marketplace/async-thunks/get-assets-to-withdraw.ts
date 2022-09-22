@@ -1,40 +1,51 @@
-import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { actorInstanceHandler } from '../../../../integrations/actor';
 import { marketplaceSlice } from '../marketplace-slice';
 import { AppLog } from '../../../../utils/log';
 import { parseBalanceResponse } from '../../../../utils/parser';
 import { settingsActions } from '../../settings';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
+import { getJellyCollection } from '../../../../utils/jelly';
+import { getPrincipal } from '../../../../integrations/plug';
 
 export type GetAssetsToWithdrawProps = {
-  userPrincipalId: string;
+  collectionId: string;
 };
 
 export const getAssetsToWithdraw = createAsyncThunk<
   any | undefined,
   GetAssetsToWithdrawProps
 >('marketplace/balanceOf', async (params, thunkAPI) => {
-  // Checks if an actor instance exists already
-  // otherwise creates a new instance
-  const actorInstance = await actorInstanceHandler({
+  const { collectionId } = params;
+
+  const jellyInstance = await jellyJsInstanceHandler({
     thunkAPI,
-    serviceName: 'marketplace',
+    collectionId,
     slice: marketplaceSlice,
   });
 
-  const { userPrincipalId } = params;
-
   try {
-    const userPrincipalAddress = Principal.fromText(userPrincipalId);
+    const collection = await getJellyCollection({
+      jellyInstance,
+      collectionId,
+    });
 
-    const balanceResponse = await actorInstance.balanceOf(
-      userPrincipalAddress,
+    if (!collection)
+      throw Error(`Oops! collection ${collectionId} not found!`);
+
+    const jellyCollection = await jellyInstance.getJellyCollection(
+      collection,
     );
 
+    const assetsToWithdrawResponse =
+      await jellyCollection.getAssetsToWithdraw({
+        user: await getPrincipal(),
+      });
+
     const assetsToWithdraw =
-      !Array.isArray(balanceResponse) || !balanceResponse.length
+      !Array.isArray(assetsToWithdrawResponse) ||
+      !assetsToWithdrawResponse.length
         ? []
-        : parseBalanceResponse(balanceResponse);
+        : parseBalanceResponse(assetsToWithdrawResponse);
 
     if (!assetsToWithdraw.length) return;
 
@@ -45,3 +56,4 @@ export const getAssetsToWithdraw = createAsyncThunk<
     AppLog.error(err);
   }
 });
+
