@@ -42,8 +42,6 @@ export const getTokenContractRootBucket = createAsyncThunk<
 
     const { marketplaceId } = collection;
 
-    console.log('[debug] getTokenContractRootBucket: bp: ', 1);
-
     thunkAPI.dispatch(capSlice.actions.setLoading(true));
 
     // Checks if an actor instance exists already
@@ -60,12 +58,6 @@ export const getTokenContractRootBucket = createAsyncThunk<
           canister: marketplaceId,
           witness: false,
         });
-
-      console.log('[debug] getTokenContractRootBucket: bp: ', 2);
-      console.log(
-        '[debug] getTokenContractRootBucket: result: ',
-        result,
-      );
 
       // eslint-disable-next-line no-underscore-dangle
       if (!result?.canister || !result?.canister[0]._isPrincipal) {
