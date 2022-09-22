@@ -198,6 +198,8 @@ if [ "$CONT" != "Y" ]; then
   yarn kyasshu:cache "$numberOfTokens"
 
   printf "👍 Kyasshu process completed!\n\n"
+
+  exit 1;
 else
   printf "\n"
 fi
