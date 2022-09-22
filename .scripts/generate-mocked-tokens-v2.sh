@@ -159,7 +159,7 @@ printf "👍 Mint process completed!\n\n"
 
   # Do a cache checkup
   cacheDir="../../.cache"
-  cacheFilePath="$cacheDir/mocked_tokens_list_output"
+  cacheFilePath="$cacheDir/mocked_tokens_list_output_of_total_$totalSupply"
 
   mkdir -p "$cacheDir"
 
@@ -198,8 +198,6 @@ if [ "$CONT" != "Y" ]; then
   yarn kyasshu:cache "$numberOfTokens"
 
   printf "👍 Kyasshu process completed!\n\n"
-
-  exit 1;
 else
   printf "\n"
 fi
