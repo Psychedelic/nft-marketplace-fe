@@ -51,18 +51,23 @@ export const getCAPActivity = createAsyncThunk<
         (tableData: any) => {
           // eslint-disable-next-line no-underscore-dangle
           const seller = parseTablePrincipal(
+            // eslint-disable-next-line no-underscore-dangle
             tableData.seller.Principal._arr,
           );
           // eslint-disable-next-line no-underscore-dangle
           const buyer =
             tableData?.buyer &&
+            // eslint-disable-next-line no-underscore-dangle
             parseTablePrincipal(tableData.buyer.Principal._arr);
+
+          const tokenId =
+            tableData?.token_id?.Text ?? tableData.token_id;
 
           const data = {
             item: {
               // TODO: name should be based in collection
-              name: `CAP Crowns #${tableData.token_id}`,
-              token_id: tableData.token_id,
+              name: `CAP Crowns #${tokenId}`,
+              token_id: tokenId,
             },
             type: tableData.operation,
             price: `${tableData.list_price ?? tableData.price}`,

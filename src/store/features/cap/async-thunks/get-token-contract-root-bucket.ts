@@ -1,8 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Principal } from '@dfinity/principal';
+import { marketplaceSlice } from '../../marketplace/marketplace-slice';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
 import { capSlice } from '../cap-slice';
 import { actorInstanceHandler } from '../../../../integrations/actor';
 import { AppLog } from '../../../../utils/log';
+import { getJellyCollection } from '../../../../utils/jelly';
 import { notificationActions } from '../../notifications';
 
 type GetTokenContractRootBucket = {
@@ -15,6 +17,31 @@ export const getTokenContractRootBucket = createAsyncThunk<
 >(
   'cap/getTokenContractRootBucket',
   async ({ collectionId }, thunkAPI) => {
+    // TODO: make this an util, as its currently used
+    // in different places, see make-listing, cancel-offer, etc
+    // Checks if an actor instance exists already
+    // otherwise creates a new instance
+    const jellyInstance = await jellyJsInstanceHandler({
+      thunkAPI,
+      collectionId,
+      slice: marketplaceSlice,
+    });
+
+    const collection = await getJellyCollection({
+      jellyInstance,
+      collectionId,
+    });
+
+    if (!collection)
+      throw Error(`Oops! collection ${collectionId} not found!`);
+
+    if (!collection?.marketplaceId)
+      throw Error(
+        `Oops! marketplace id ${collection?.marketplaceId} not found!`,
+      );
+
+    const { marketplaceId } = collection;
+
     thunkAPI.dispatch(capSlice.actions.setLoading(true));
 
     // Checks if an actor instance exists already
@@ -28,7 +55,7 @@ export const getTokenContractRootBucket = createAsyncThunk<
     try {
       const result =
         await actorInstance.get_token_contract_root_bucket({
-          canister: Principal.fromText(collectionId),
+          canister: marketplaceId,
           witness: false,
         });
 
