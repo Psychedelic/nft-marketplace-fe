@@ -91,7 +91,7 @@
     "kyasshu:redis-shutdown": "redis-cli shutdown",
     "kyasshu:start": ".scripts/kyasshu/start.sh",
     "kyasshu:cache": ".scripts/kyasshu/cache-tokens.sh",
-    "kyasshu:reset": "pkill java"
+    "kyasshu:reset": "pkill java && .scripts/clear_cache.sh"
   },
   "browserslist": {
     "production": [
@@ -164,3 +164,4 @@
     ]
   }
 }
+
