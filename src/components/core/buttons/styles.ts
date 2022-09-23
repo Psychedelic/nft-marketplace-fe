@@ -123,6 +123,12 @@ export const LinkButtonStyles = styled('a', {
         width: 'initial',
         height: '40px',
       },
+      unstyled: {
+        border: 'unset',
+        backgroundColor: 'unset',
+        marginRight: 'unset',
+        borderRadius: 'unset',
+      },
     },
   },
 

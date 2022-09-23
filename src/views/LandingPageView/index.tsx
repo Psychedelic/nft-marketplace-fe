@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ActionButton } from '../../components/core';
+import { ActionButton, LinkButton } from '../../components/core';
 import {
   Container,
   IntroContainer,
@@ -111,6 +111,7 @@ const LandingPageView = () => {
                 <ActionButton
                   type="outline"
                   onClick={handleViewCollection}
+                  disabled
                 >
                   <ButtonSpan>
                     {t('translation:landingPage.explore')}
@@ -248,9 +249,15 @@ const LandingPageView = () => {
             {t('translation:landingPage.followOnSocial')}
           </FooterText>
           <Flex>
-            <SocialIcons icon="discord" />
-            <SocialIcons icon="twitter" />
-            <SocialIcons icon="github" />
+            <LinkButton url="https://discord.gg/yVEcEzmrgm" type="unstyled">
+              <SocialIcons icon="discord" />
+            </LinkButton>
+            <LinkButton url="https://twitter.com/cap_ois" type="unstyled">
+              <SocialIcons icon="twitter" />
+            </LinkButton>
+            <LinkButton url="https://github.com/Psychedelic/nft-marketplace-fe" type="unstyled">
+              <SocialIcons icon="github" />
+            </LinkButton>
           </Flex>
         </Flex>
       </Footer>

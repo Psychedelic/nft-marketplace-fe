@@ -10,6 +10,7 @@ export const getJellyCollection = async ({
 }) => {
   const collections: Collection[] =
     await jellyInstance.getCollections();
+  console.log(collections);
   const collection = collections.find(
     (c: Collection) => c.id.toText() === collectionId,
   );
@@ -18,4 +19,3 @@ export const getJellyCollection = async ({
 
   return collection;
 };
-
