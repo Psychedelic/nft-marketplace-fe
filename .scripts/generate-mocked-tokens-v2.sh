@@ -177,8 +177,6 @@ printf "👍 Mint process completed!\n\n"
     touch "$cacheFilePath"
 
     getMetadata "$totalSupply" "$crownsCanisterId" | tee "$cacheFilePath"
-
-    echo "$list" > "$cacheFilePath"
   fi
 
   list=$(<"$cacheFilePath")
