@@ -30,22 +30,42 @@ import {
   MultichainDescriptionLink,
   MultichainHubList,
   MultichainHubListItem,
+  ButtonWrapper,
+  ButtonSpan,
+  RecentActivity,
+  RecentActivityText,
+  RecentActivityCrownName,
+  RecentActivityAmountSold,
+  Footer,
+  Flex,
+  FooterText,
+  SocialIcons,
 } from './styles';
-import jellyBackgroundImage from '../../assets/landingpage/jelly-background.svg';
-import jellyBackgroundImageDark from '../../assets/landingpage/jelly-background-dark.svg';
-import collectionSampleImage from '../../assets/landingpage/collection-sample.jpg';
+import jellyBackgroundImage from '../../assets/landingpage/jelly-background-light-mode.svg';
+import jellyBackgroundImageDark from '../../assets/landingpage/jelly-background-dark-mode.svg';
+import previewSampleImage from '../../assets/landingpage/preview-light-mode.svg';
+import previewSampleImageDark from '../../assets/landingpage/preview-dark-mode.svg';
 import ethereumLogo from '../../assets/landingpage/ethereum.png';
+import ethereumLogoDark from '../../assets/landingpage/ethereum-dark-mode.svg';
 import dfinityLogo from '../../assets/landingpage/dfinity.png';
+import dfinityLogoDark from '../../assets/landingpage/dfinity-dark-mode.svg';
 import solanaLogo from '../../assets/landingpage/solana.png';
+import solanaLogoDark from '../../assets/landingpage/solana-dark-mode.svg';
 import polygonLogo from '../../assets/landingpage/polygon.png';
+import polygonLogoDark from '../../assets/landingpage/polygon-dark-mode.svg';
+import icnsLogo from '../../assets/landingpage/icns.svg';
+import crownsLogo from '../../assets/landingpage/crowns.svg';
+import psychedelic from '../../assets/landingpage/psychedelic.svg';
 
 import { useThemeStore } from '../../store';
 
 import config from '../../config/env';
+import { Icon } from '../../components';
 
 const LandingPageView = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
+  const isDarkTheme = theme === 'darkTheme';
 
   const navigate = useNavigate();
 
@@ -60,7 +80,7 @@ const LandingPageView = () => {
           <IntroBackgroundImageWrapper>
             <IntroBackgroundImage
               src={
-                theme === 'darkTheme'
+                isDarkTheme
                   ? jellyBackgroundImageDark
                   : jellyBackgroundImage
               }
@@ -76,27 +96,62 @@ const LandingPageView = () => {
               {t('translation:landingPage.introDescription')}
             </IntroDetailsDescription>
             <ViewCollectionButtonWrapper>
-              <ActionButton
-                type="primary"
-                onClick={handleViewCollection}
-              >
-                {t('translation:landingPage.viewCrowns')}
-              </ActionButton>
+              <ButtonWrapper>
+                <ActionButton
+                  type="primary"
+                  onClick={handleViewCollection}
+                >
+                  <ButtonSpan>
+                    {t('translation:landingPage.explore')}
+                  </ButtonSpan>
+                  <img src={crownsLogo} alt="crowns" />
+                </ActionButton>
+              </ButtonWrapper>
+              <ButtonWrapper>
+                <ActionButton
+                  type="outline"
+                  onClick={handleViewCollection}
+                >
+                  <ButtonSpan>
+                    {t('translation:landingPage.explore')}
+                  </ButtonSpan>
+                  <img src={icnsLogo} alt="icns" />
+                </ActionButton>
+              </ButtonWrapper>
             </ViewCollectionButtonWrapper>
           </IntroDetailsWrapper>
+          <IntroImageContainer>
+            <IntroImage
+              src={
+                isDarkTheme
+                  ? previewSampleImageDark
+                  : previewSampleImage
+              }
+            />
+          </IntroImageContainer>
         </IntroDetailsContainer>
-        <IntroImageContainer>
-          <IntroImage src={collectionSampleImage} />
-        </IntroImageContainer>
       </IntroContainer>
+      <RecentActivity>
+        <Icon icon="sale" size="sm" />
+        <RecentActivityText>
+          <RecentActivityCrownName>
+            CAP Crowns #2111
+          </RecentActivityCrownName>
+          sold at
+          <RecentActivityAmountSold>2 WICP</RecentActivityAmountSold>4
+          mins ago
+        </RecentActivityText>
+      </RecentActivity>
       <FeaturesContainer>
         <FeaturesWrapper>
           <FeaturesTitle>
             {t('translation:landingPage.featuresTitle')}
           </FeaturesTitle>
           <FeaturesList>
-            <FeaturesListItem borderTheme="green">
-              <FeatureIcon iconTheme="green" />
+            <FeaturesListItem backgroundTheme="green">
+              <FeatureIcon
+                iconTheme={isDarkTheme ? 'greenDark' : 'green'}
+              />
               <FeatureTitle>
                 {t('translation:landingPage.jellyFeatureTitle')}
               </FeatureTitle>
@@ -104,8 +159,10 @@ const LandingPageView = () => {
                 {t('translation:landingPage.jellyFeatureDescription')}
               </FeatureDescription>
             </FeaturesListItem>
-            <FeaturesListItem borderTheme="pink">
-              <FeatureIcon iconTheme="pink" />
+            <FeaturesListItem backgroundTheme="pink">
+              <FeatureIcon
+                iconTheme={isDarkTheme ? 'pinkDark' : 'pink'}
+              />
               <FeatureTitle>
                 {t('translation:landingPage.aggregatorFeatureTitle')}
               </FeatureTitle>
@@ -115,8 +172,12 @@ const LandingPageView = () => {
                 )}
               </FeatureDescription>
             </FeaturesListItem>
-            <FeaturesListItem borderTheme="blue">
-              <FeatureIcon iconTheme="blue" />
+          </FeaturesList>
+          <FeaturesList>
+            <FeaturesListItem backgroundTheme="blue">
+              <FeatureIcon
+                iconTheme={isDarkTheme ? 'blueDark' : 'blue'}
+              />
               <FeatureTitle>
                 {t('translation:landingPage.curatorFeatureTitle')}
               </FeatureTitle>
@@ -126,8 +187,10 @@ const LandingPageView = () => {
                 )}
               </FeatureDescription>
             </FeaturesListItem>
-            <FeaturesListItem borderTheme="yellow">
-              <FeatureIcon iconTheme="yellow" />
+            <FeaturesListItem backgroundTheme="yellow">
+              <FeatureIcon
+                iconTheme={isDarkTheme ? 'yellowDark' : 'yellow'}
+              />
               <FeatureTitle>
                 {t('translation:landingPage.creatorFeatureTitle')}
               </FeatureTitle>
@@ -158,13 +221,39 @@ const LandingPageView = () => {
             {t('translation:landingPage.multichainHubDescriptionEnd')}
           </MultichainDescription>
           <MultichainHubList>
-            <MultichainHubListItem src={ethereumLogo} />
-            <MultichainHubListItem src={dfinityLogo} />
-            <MultichainHubListItem src={solanaLogo} />
-            <MultichainHubListItem src={polygonLogo} />
+            <MultichainHubListItem
+              src={isDarkTheme ? ethereumLogoDark : ethereumLogo}
+            />
+            <MultichainHubListItem
+              src={isDarkTheme ? dfinityLogoDark : dfinityLogo}
+            />
+            <MultichainHubListItem
+              src={isDarkTheme ? solanaLogoDark : solanaLogo}
+            />
+            <MultichainHubListItem
+              src={isDarkTheme ? polygonLogoDark : polygonLogo}
+            />
           </MultichainHubList>
         </MultichainWrapper>
       </MultichainContainer>
+      <Footer>
+        <Flex>
+          <img src={psychedelic} />
+          <FooterText>
+            {t('translation:landingPage.builtByPsychedelic')}
+          </FooterText>
+        </Flex>
+        <Flex>
+          <FooterText themeColor={isDarkTheme ? 'steel' : 'primary'}>
+            {t('translation:landingPage.followOnSocial')}
+          </FooterText>
+          <Flex>
+            <SocialIcons icon="discord" />
+            <SocialIcons icon="twitter" />
+            <SocialIcons icon="github" />
+          </Flex>
+        </Flex>
+      </Footer>
     </Container>
   );
 };

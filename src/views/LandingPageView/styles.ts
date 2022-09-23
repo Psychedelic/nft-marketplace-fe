@@ -1,8 +1,13 @@
 import { styled } from '../../stitches.config';
-import greenJellyIcon from '../../assets/landingpage/green-jelly.png';
-import pinkJellyIcon from '../../assets/landingpage/pink-jelly.png';
-import blueJellyIcon from '../../assets/landingpage/blue-jelly.png';
-import yellowJellyIcon from '../../assets/landingpage/yellow-jelly.png';
+import greenJellyIcon from '../../assets/landingpage/green-jelly.svg';
+import greenJellyIconDark from '../../assets/landingpage/green-jelly-dark-mode.svg';
+import pinkJellyIcon from '../../assets/landingpage/pink-jelly.svg';
+import pinkJellyIconDark from '../../assets/landingpage/pink-jelly-dark-mode.svg';
+import blueJellyIcon from '../../assets/landingpage/blue-jelly.svg';
+import blueJellyIconDark from '../../assets/landingpage/blue-jelly-dark-mode.svg';
+import yellowJellyIcon from '../../assets/landingpage/yellow-jelly.svg';
+import yellowJellyIconDark from '../../assets/landingpage/yellow-jelly-dark-mode.svg';
+import { Icon } from '../../components';
 
 export const Container = styled('div', {
   backgroundColor: '$primaryBackgroundColor',
@@ -41,19 +46,29 @@ export const IntroBackgroundImage = styled('img', {
 export const IntroDetailsContainer = styled('div', {
   padding: '80px 10px 60px 10px',
   position: 'relative',
+  display: 'flex',
+
+  '@md': {
+    flexWrap: 'wrap',
+  },
 });
 
 export const IntroDetailsWrapper = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   gap: '20px',
   maxWidth: '700px',
   margin: 'auto',
+
+  '@md': {
+    flexWrap: 'wrap',
+    padding: '0px 10px',
+  },
 });
 
 export const IntroDetailsTitle = styled('h1', {
-  fontSize: '52px',
+  fontSize: '45px',
   lineHeight: '52px',
   fontWeight: '600',
   margin: '0px',
@@ -75,9 +90,10 @@ export const IntroDetailsDescription = styled('p', {
   fontSize: '22px',
   lineHeight: '1.5em',
   fontWeight: '400',
-  textAlign: 'center',
+  textAlign: 'start',
   margin: '0px',
   color: '$secondaryTextColor',
+  maxWidth: '560px',
 
   '@md': {
     fontSize: '18px',
@@ -85,19 +101,48 @@ export const IntroDetailsDescription = styled('p', {
 });
 
 export const ViewCollectionButtonWrapper = styled('div', {
-  width: '155px',
   height: '50px',
-  marginLeft: '10px',
+  marginTop: '25px',
+  display: 'flex',
+
+  '@md': {
+    margin: '0px 0 20px',
+  },
+
+  '@sm': {
+    width: '100%',
+    justifyContent: 'center',
+  },
+});
+
+export const ButtonWrapper = styled('div', {
+  width: '200px',
+
+  '&:nth-child(1)': {
+    marginRight: '15px',
+  },
+
+  '@md': {
+    width: '180px',
+  },
+});
+
+export const ButtonSpan = styled('span', {
+  marginRight: '5px',
+
+  variants: {
+    icns: {
+      darkMode: {
+        color: '$primaryTextColor',
+      },
+    },
+  },
 });
 
 export const IntroImageContainer = styled('div', {
   position: 'relative',
-  maxWidth: '800px',
-  width: '80%',
   margin: 'auto',
   top: '8px',
-  borderRadius: '10px 10px 0px 0px',
-  boxShadow: 'rgb(61 61 61 / 20%) 0px -5px 20px 10px',
 });
 
 export const IntroImage = styled('img', {
@@ -123,7 +168,7 @@ export const FeaturesWrapper = styled('div', {
 });
 
 export const FeaturesTitle = styled('h1', {
-  fontSize: '42px',
+  fontSize: '38px',
   lineHeight: '1.1em',
   letterSpacing: '-2px',
   fontWeight: '600',
@@ -145,9 +190,19 @@ export const FeaturesList = styled('div', {
   flexWrap: 'wrap',
   alignItems: 'center',
   justifyContent: 'center',
-  gap: '30px 50px',
+  gap: '30px',
   width: '100%',
-  margin: 'auto',
+  margin: '30px 0px 0px',
+
+  '&:nth-child(3)': {
+    margin: 'auto',
+    position: 'relative',
+    left: '50px',
+
+    '@md': {
+      left: 'unset',
+    },
+  },
 });
 
 export const FeaturesListItem = styled('div', {
@@ -155,25 +210,27 @@ export const FeaturesListItem = styled('div', {
   flexDirection: 'column',
   width: '100%',
   maxWidth: '455px',
-  gap: '18px',
-  padding: '20px 20px 20px 20px',
-  border: '4px solid $primaryTextColor',
-  borderRadius: '30px',
+  gap: '12px',
+  padding: '30px 40px 20px',
+  boxShadow: '0px 1px 24px 1px rgba(0, 0, 0, 0.24)',
+  borderRadius: '16px',
+  position: 'relative',
+  boxSizing: 'border-box',
 
   // variants
   variants: {
-    borderTheme: {
+    backgroundTheme: {
       green: {
-        borderColor: '$lightGreen',
+        background: '$greenGradient',
       },
       pink: {
-        borderColor: '$lightPink',
+        background: '$pinkGradient',
       },
       blue: {
-        borderColor: '$lightBlue',
+        background: '$blueGradient',
       },
       yellow: {
-        borderColor: '$yellow',
+        background: '$yellowGradient',
       },
     },
   },
@@ -185,6 +242,9 @@ export const FeatureIcon = styled('div', {
   backgroundImage: `url(${greenJellyIcon})`,
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'contain',
+  position: 'absolute',
+  top: '11px',
+  left: '18px',
 
   // variants
   variants: {
@@ -192,14 +252,26 @@ export const FeatureIcon = styled('div', {
       green: {
         backgroundImage: `url(${greenJellyIcon})`,
       },
+      greenDark: {
+        backgroundImage: `url(${greenJellyIconDark})`,
+      },
       pink: {
         backgroundImage: `url(${pinkJellyIcon})`,
+      },
+      pinkDark: {
+        backgroundImage: `url(${pinkJellyIconDark})`,
       },
       blue: {
         backgroundImage: `url(${blueJellyIcon})`,
       },
+      blueDark: {
+        backgroundImage: `url(${blueJellyIconDark})`,
+      },
       yellow: {
         backgroundImage: `url(${yellowJellyIcon})`,
+      },
+      yellowDark: {
+        backgroundImage: `url(${yellowJellyIconDark})`,
       },
     },
   },
@@ -213,16 +285,17 @@ export const FeatureTitle = styled('h1', {
   margin: '0px',
   textAlign: 'left',
   color: '$primaryTextColor',
+  position: 'relative',
 });
 
 export const FeatureDescription = styled('p', {
-  fontSize: '18px',
+  fontSize: '16px',
   lineHeight: '1.6em',
   fontWeight: '400',
   letterSpacing: '-0.4px',
   margin: '0px',
   textAlign: 'left',
-  color: '$secondaryTextColor',
+  color: '$grayAzure',
 });
 
 export const MultichainContainer = styled('div', {
@@ -240,7 +313,7 @@ export const MultichainWrapper = styled('div', {
 });
 
 export const MultichainTitle = styled('h1', {
-  fontSize: '42px',
+  fontSize: '38px',
   lineHeight: '1em',
   fontWeight: '600',
   margin: '0px',
@@ -257,7 +330,7 @@ export const MultichainTitle = styled('h1', {
 });
 
 export const MultichainDescription = styled('p', {
-  fontSize: '22px',
+  fontSize: '18px',
   lineHeight: '1.5em',
   fontWeight: '400',
   maxWidth: '700px',
@@ -266,7 +339,7 @@ export const MultichainDescription = styled('p', {
   color: '$secondaryTextColor',
 
   '@md': {
-    fontSize: '18px',
+    fontSize: '16px',
   },
 });
 
@@ -287,5 +360,97 @@ export const MultichainHubList = styled('div', {
 
 export const MultichainHubListItem = styled('img', {
   width: '100%',
-  maxWidth: '205px',
+  maxWidth: '180px',
+});
+
+export const RecentActivity = styled('div', {
+  width: '100%',
+  height: '40px',
+  display: 'flex',
+  alignItems: 'center',
+  padding: '0px 85px',
+  background: '$whiteSmoke',
+  color: '$mainTextColor',
+
+  '@md': {
+    padding: '0px 15px',
+  },
+});
+
+export const RecentActivityText = styled('p', {
+  margin: '0',
+  fontSize: '14px',
+  color: '$steel',
+  marginLeft: '8px',
+});
+
+export const RecentActivityCrownName = styled('span', {
+  fontSize: '16px',
+  color: '$primary',
+  textDecoration: 'underline',
+  fontWeight: '600',
+  margin: '0px 8px 0px 0px',
+});
+
+export const RecentActivityAmountSold = styled('span', {
+  fontSize: '16px',
+  color: '$primaryTextColor',
+  fontWeight: '600',
+  margin: '0px 8px',
+});
+
+export const Footer = styled('div', {
+  background: '$whiteSmoke',
+  width: '100%',
+  height: '60px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '0px 85px',
+  boxSizing: 'border-box',
+
+  '@md': {
+    padding: '0px 15px',
+  },
+});
+
+export const Flex = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+});
+
+export const FooterText = styled('div', {
+  fontSize: '14px',
+  color: '$mainTextColor',
+  lineHeight: '18px',
+  margin: '0 8px',
+
+  '&:nth-child(1)': {
+    '@sm': {
+      display: 'none',
+    },
+  },
+
+  variants: {
+    themeColor: {
+      steel: {
+        color: '$steel',
+      },
+      primary: {
+        color: '$mainTextColor',
+      },
+    },
+  },
+});
+
+export const SocialIcons = styled(Icon, {
+  border: '1px solid $steel',
+  borderRadius: '12px',
+  padding: '8px',
+  color: '$mainTextColor',
+  cursor: 'pointer',
+
+  '&:nth-child(2)': {
+    margin: '0px 5px',
+  },
 });
