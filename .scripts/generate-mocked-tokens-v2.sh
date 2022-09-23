@@ -5,6 +5,12 @@ crownsPath="$jellyDependenciesPath/crowns"
 crownsMockPath="$crownsPath/mocks"
 
 dependenciesHandler() {
+  if ! command -v jq &> /dev/null; then
+    echo "👹 Oops! The jq json process command not found! Please install!"
+
+    exit 1;
+  fi
+  
   if [ ! -d "$crownsMockPath/node_modules" ];
   then
     (
