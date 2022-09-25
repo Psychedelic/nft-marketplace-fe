@@ -101,6 +101,7 @@ const LandingPageView = () => {
       case 'ICNS (test)':
         return <img src={icnsLogo} alt="icns" />;
       case 'Crowns Test':
+      case 'crowns_mkp':
         return <img src={crownsLogo} alt="crowns" />;
       default:
         return name;
