@@ -76,19 +76,21 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
       const { data, total, lastIndex: responseLastIndex } = res;
 
-      const collectionName = await (async () => {
-        const actor = await createActor({
-          serviceName: 'dip721',
-          collectionId,
-        });
+      // const collectionName = await (async () => {
+      //   const actor = await createActor({
+      //     serviceName: 'dip721',
+      //     collectionId,
+      //   });
 
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        const res = await actor.dip721_name();
+      //   // eslint-disable-next-line @typescript-eslint/no-shadow
+      //   const res = await actor.dip721_name();
 
-        if (!res && !Array.isArray(res) && !res.length) return;
+      //   if (!res && !Array.isArray(res) && !res.length) return;
 
-        return res.pop();
-      })();
+      //   return res.pop();
+      // })();
+
+      const collectionName = collection.name;
 
       // TODO: map nft list
       const extractedNFTSList = data.map((nft: any) => {
@@ -145,4 +147,3 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     }
   },
 );
-

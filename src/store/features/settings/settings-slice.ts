@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getCollections } from './async-thunks';
+import { Collection } from '@psychedelic/jelly-js';
 
 import type { RootState } from '../../store';
 
@@ -13,6 +15,8 @@ export interface SettingsState {
   showAlerts: boolean;
   assetsToWithdraw: AlertsData[];
   showPageNotFound: boolean;
+  collections: Collection[];
+  nameofCollection: string | undefined;
 }
 
 const initialState: SettingsState = {
@@ -21,6 +25,8 @@ const initialState: SettingsState = {
   showAlerts: false,
   assetsToWithdraw: [],
   showPageNotFound: false,
+  collections: [],
+  nameofCollection: '',
 };
 
 export const settingsSlice = createSlice({
@@ -50,10 +56,22 @@ export const settingsSlice = createSlice({
     ) => {
       state.showPageNotFound = action.payload;
     },
+    setCollections: (state, action: PayloadAction<Collection[]>) => {
+      state.collections = action.payload;
+    },
+    setNameOfCollection: (
+      state,
+      action: PayloadAction<string | undefined>,
+    ) => {
+      state.nameofCollection = action.payload;
+    },
   },
 });
 
-export const settingsActions = settingsSlice.actions;
+export const settingsActions = {
+  ...settingsSlice.actions,
+  getCollections,
+};
 
 export const selectSettingsState = (state: RootState) =>
   state.settings;

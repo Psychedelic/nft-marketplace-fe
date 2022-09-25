@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ActionButton, LinkButton } from '../../components/core';
@@ -57,20 +57,54 @@ import icnsLogo from '../../assets/landingpage/icns.svg';
 import crownsLogo from '../../assets/landingpage/crowns.svg';
 import psychedelic from '../../assets/landingpage/psychedelic.svg';
 
-import { useThemeStore } from '../../store';
+import {
+  settingsActions,
+  useAppDispatch,
+  useSettingsStore,
+  useThemeStore,
+} from '../../store';
 
 import config from '../../config/env';
 import { Icon } from '../../components';
+import { Collection } from '@psychedelic/jelly-js';
 
 const LandingPageView = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
   const isDarkTheme = theme === 'darkTheme';
+  const dispatch = useAppDispatch();
+  const { collections } = useSettingsStore();
 
   const navigate = useNavigate();
 
-  const handleViewCollection = () => {
-    navigate(`/${config.nftCollectionId}`, { replace: true });
+  useEffect(() => {
+    dispatch(
+      settingsActions.getCollections(`${config.nftCollectionId}`),
+    );
+  }, []);
+
+  const handleViewCollection = (name: string) => {
+    const collection = collections.find(
+      (collection: Collection) => collection.name === name,
+    );
+
+    dispatch(settingsActions.setNameOfCollection(collection?.name));
+
+    const collectionId = collection?.id.toText();
+
+    navigate(`/${collectionId}`, { replace: true });
+    window.location.reload();
+  };
+
+  const displayCollectionName = (name: string) => {
+    switch (name) {
+      case 'ICNS (test)':
+        return <img src={icnsLogo} alt="icns" />;
+      case 'Crowns Test':
+        return <img src={crownsLogo} alt="crowns" />;
+      default:
+        return name;
+    }
   };
 
   return (
@@ -96,29 +130,25 @@ const LandingPageView = () => {
               {t('translation:landingPage.introDescription')}
             </IntroDetailsDescription>
             <ViewCollectionButtonWrapper>
-              <ButtonWrapper>
-                <ActionButton
-                  type="primary"
-                  onClick={handleViewCollection}
-                >
-                  <ButtonSpan>
-                    {t('translation:landingPage.explore')}
-                  </ButtonSpan>
-                  <img src={crownsLogo} alt="crowns" />
-                </ActionButton>
-              </ButtonWrapper>
-              <ButtonWrapper>
-                <ActionButton
-                  type="outline"
-                  onClick={handleViewCollection}
-                  disabled
-                >
-                  <ButtonSpan>
-                    {t('translation:landingPage.explore')}
-                  </ButtonSpan>
-                  <img src={icnsLogo} alt="icns" />
-                </ActionButton>
-              </ButtonWrapper>
+              {collections.map((collection: Collection) => (
+                <ButtonWrapper key={collection.id.toText()}>
+                  <ActionButton
+                    type={
+                      collection.name === 'ICNS (test)'
+                        ? 'outline'
+                        : 'primary'
+                    }
+                    onClick={() =>
+                      handleViewCollection(collection.name)
+                    }
+                  >
+                    <ButtonSpan>
+                      {t('translation:landingPage.explore')}
+                    </ButtonSpan>
+                    {displayCollectionName(collection.name)}
+                  </ActionButton>
+                </ButtonWrapper>
+              ))}
             </ViewCollectionButtonWrapper>
           </IntroDetailsWrapper>
           <IntroImageContainer>
@@ -249,13 +279,22 @@ const LandingPageView = () => {
             {t('translation:landingPage.followOnSocial')}
           </FooterText>
           <Flex>
-            <LinkButton url="https://discord.gg/yVEcEzmrgm" type="unstyled">
+            <LinkButton
+              url="https://discord.gg/yVEcEzmrgm"
+              type="unstyled"
+            >
               <SocialIcons icon="discord" />
             </LinkButton>
-            <LinkButton url="https://twitter.com/cap_ois" type="unstyled">
+            <LinkButton
+              url="https://twitter.com/cap_ois"
+              type="unstyled"
+            >
               <SocialIcons icon="twitter" />
             </LinkButton>
-            <LinkButton url="https://github.com/Psychedelic/nft-marketplace-fe" type="unstyled">
+            <LinkButton
+              url="https://github.com/Psychedelic/nft-marketplace-fe"
+              type="unstyled"
+            >
               <SocialIcons icon="github" />
             </LinkButton>
           </Flex>
