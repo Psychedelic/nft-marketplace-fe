@@ -38,7 +38,7 @@ if (
 const config: Config = {
   // The production version
   production: {
-    host: 'https://mainnet.dfinity.network',
+    host: 'https://ic0.app',
     kyasshuMarketplaceAPI: 'https://kyasshu.fleek.co',
     icScan: 'https://icscan.io/principal',
     nftCollectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
@@ -65,7 +65,7 @@ const config: Config = {
   // and the cached data points to the same canister ids
   // listed in here
   test: {
-    host: 'https://mainnet.dfinity.network',
+    host: 'https://ic0.app',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
     icScan: 'https://icscan.io/principal',
     nftCollectionId: 'iqvo2-7qaaa-aaaam-qacxa-cai',
