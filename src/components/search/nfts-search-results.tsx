@@ -20,10 +20,11 @@ import {
   ItemDetailsContainer,
   StyledRouterLink,
 } from './styles';
-import { useFilterStore } from '../../store';
+import { useFilterStore, useNFTSStore } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
 import wicpIcon from '../../assets/wicp.svg';
 import { SpinnerIcon } from '../icons/custom';
+import config from '../../config/env';
 
 type NFTsSearchResultsTypes = {
   searchText: string;
@@ -36,16 +37,19 @@ const NFTsSearchResults = ({
 }: NFTsSearchResultsTypes) => {
   const { t } = useTranslation();
   const { searchResults, loadingSearch } = useFilterStore();
+  const { loadingNFTs } = useNFTSStore();
 
   return (
     <SearchResultsContainer>
       {searchText &&
-        !loadingSearch &&
+        !loadingNFTs &&
         (searchResults.length ? (
           <ItemsListContainer>
             {searchResults?.map((nft) => (
               <StyledRouterLink
-                to={`/${nft.canister}/nft/${nft.id}`}
+                to={`/${
+                  nft.canister ? nft.canister : config.nftCollectionId
+                }/nft/${nft.id}`}
                 onClick={closeDropDown}
                 key={nft.id}
               >
@@ -87,12 +91,12 @@ const NFTsSearchResults = ({
             {t('translation:emptyStates.noNFTsFound')}
           </ItemsEmptyContainer>
         ))}
-      {!searchText && !loadingSearch && (
+      {!searchText && !loadingNFTs && (
         <ItemsEmptyContainer>
           {t('translation:common.noRecentSearch')}
         </ItemsEmptyContainer>
       )}
-      {loadingSearch && (
+      {loadingNFTs && (
         <LoadingWrapper>
           <SpinnerIcon />
         </LoadingWrapper>

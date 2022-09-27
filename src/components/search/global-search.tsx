@@ -14,11 +14,14 @@ import {
 } from './styles';
 import {
   filterActions,
+  nftsActions,
   useAppDispatch,
-  useFilterStore,
   useNFTSStore,
 } from '../../store';
 import SearchResults from './search-results';
+import { useParams } from 'react-router';
+import { SortKey } from '@psychedelic/jelly-js';
+import config from '../../config/env';
 
 const DEBOUNCE_TIMEOUT_MS = 400;
 
@@ -40,7 +43,11 @@ export const GlobalSearch = ({
   const { t } = useTranslation();
   const { loadedNFTS } = useNFTSStore();
   const dispatch = useAppDispatch();
-  const { sortBy } = useFilterStore();
+  const { collectionId } = useParams();
+
+  const collection_id = collectionId
+    ? collectionId
+    : config.nftCollectionId;
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState('');
@@ -55,13 +62,14 @@ export const GlobalSearch = ({
   const debouncedSearchHandler = useCallback(
     debounce((value: string, abortController: AbortController) => {
       dispatch(
-        filterActions.getSearchResults({
-          sort: sortBy,
+        nftsActions.getAllNFTs({
+          sort: SortKey.all,
           order: 'd',
           page: 0,
           count: 25,
           search: value,
           abortController,
+          collectionId: collection_id,
         }),
       );
     }, DEBOUNCE_TIMEOUT_MS),

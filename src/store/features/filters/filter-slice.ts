@@ -225,7 +225,7 @@ export const filterSlice = createSlice({
     },
     setSearchResults: (
       state,
-      action: PayloadAction<SearchResultDataState[]>,
+      action: PayloadAction<any[]>,
     ) => {
       state.searchResults = action.payload;
     },

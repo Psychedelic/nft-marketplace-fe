@@ -320,6 +320,7 @@ export const LoadingWrapper = styled('div', {
   left: '50%',
   marginLeft: '-25px',
   height: '100%',
+  color: '$primaryTextColor',
 });
 
 export const StyledRouterLink = styled(RouterLink, {
