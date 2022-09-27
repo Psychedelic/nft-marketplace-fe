@@ -1,4 +1,4 @@
-import { styled } from '../../stitches.config';
+import { styled, keyframes } from '../../stitches.config';
 import greenJellyIcon from '../../assets/landingpage/green-jelly.svg';
 import greenJellyIconDark from '../../assets/landingpage/green-jelly-dark-mode.svg';
 import pinkJellyIcon from '../../assets/landingpage/pink-jelly.svg';
@@ -8,6 +8,15 @@ import blueJellyIconDark from '../../assets/landingpage/blue-jelly-dark-mode.svg
 import yellowJellyIcon from '../../assets/landingpage/yellow-jelly.svg';
 import yellowJellyIconDark from '../../assets/landingpage/yellow-jelly-dark-mode.svg';
 import { Icon } from '../../components';
+
+const fadeIn = keyframes({
+  '0%': {
+    opacity: 0,
+  },
+  '100%': {
+    opacity: 1,
+  },
+});
 
 export const Container = styled('div', {
   backgroundColor: '$primaryBackgroundColor',
@@ -368,9 +377,12 @@ export const RecentActivity = styled('div', {
   height: '40px',
   display: 'flex',
   alignItems: 'center',
+  alignContent: 'center',
   padding: '0px 85px',
   background: '$whiteSmoke',
   color: '$mainTextColor',
+  animation: `${fadeIn} 1s ease-out forwards`,
+  transition: 'all 0.2s ease-in-out',
 
   '@md': {
     padding: '0px 15px',
@@ -382,6 +394,7 @@ export const RecentActivityText = styled('p', {
   fontSize: '14px',
   color: '$steel',
   marginLeft: '8px',
+  animation: `${fadeIn} 1s ease-out forwards`,
 });
 
 export const RecentActivityCrownName = styled('span', {
@@ -396,7 +409,7 @@ export const RecentActivityAmountSold = styled('span', {
   fontSize: '16px',
   color: '$primaryTextColor',
   fontWeight: '600',
-  margin: '0px 8px',
+  margin: '0px 5px',
 });
 
 export const Footer = styled('div', {
@@ -454,3 +467,13 @@ export const SocialIcons = styled(Icon, {
     margin: '0px 5px',
   },
 });
+
+export const TransactionIcon = styled(Icon, {
+  variants: {
+    isOffer: {
+      true: {
+        marginRight: '8px',
+      }
+    }
+  }
+})

@@ -66,10 +66,8 @@ import {
 } from '../../store';
 
 import config from '../../config/env';
-import { Icon } from '../../components';
 import { Collection, SortKey } from '@psychedelic/jelly-js';
-import { formatTimestamp } from '../../integrations/functions/date';
-import { parseE8SAmountToWICP } from '../../utils/formatters';
+import RecentActivities from './recent-activity';
 
 const LandingPageView = () => {
   const { t } = useTranslation();
@@ -92,6 +90,22 @@ const LandingPageView = () => {
         collectionId: config.nftCollectionId,
       }),
     );
+
+    const fetchLatestToken = setInterval(
+      () =>
+        dispatch(
+          nftsActions.getAllNFTs({
+            sort: SortKey.all,
+            count: 1,
+            collectionId: config.nftCollectionId,
+          }),
+        ),
+      30000,
+    );
+
+    return () => {
+      clearInterval(fetchLatestToken);
+    };
   }, []);
 
   const handleViewCollection = (name: string) => {
@@ -116,6 +130,76 @@ const LandingPageView = () => {
         return <img src={crownsLogo} alt="crowns" />;
       default:
         return name;
+    }
+  };
+
+  const getLatestActiveToken = () => {
+    let lastListing = Number(latestActiveToken?.lastListingTime) || 0;
+    let lastOffer = Number(latestActiveToken?.lastOfferTime) || 0;
+    let lastSale = Number(latestActiveToken?.lastSaleTime) || 0;
+
+    var numbers: Record<string, number> = {
+      lastListing: lastListing,
+      lastOffer: lastOffer,
+      lastSale: lastSale,
+    };
+
+    const maxVal = Math.max(...Object.values(numbers));
+    const key = Object.keys(numbers).find(
+      (key) => numbers[key] === maxVal,
+    );
+
+    return key;
+  };
+
+  const lastActiveToken = getLatestActiveToken();
+
+  const displayLatestActiveToken = () => {
+    if (lastActiveToken === 'lastListing') {
+      return (
+        latestActiveToken?.listing && (
+          <RecentActivities
+            icon="list"
+            id={latestActiveToken.id}
+            name={latestActiveToken?.name}
+            price={latestActiveToken?.price}
+            time={latestActiveToken?.lastListingTime.toString()}
+            collectionId={config.nftCollectionId}
+            description={t('translation:landingPage.listingText')}
+          />
+        )
+      );
+    }
+    if (lastActiveToken === 'lastOffer') {
+      return (
+        latestActiveToken?.offers && (
+          <RecentActivities
+            icon="offer"
+            id={latestActiveToken.id}
+            name={latestActiveToken?.name}
+            price={latestActiveToken?.price}
+            time={latestActiveToken?.lastOfferTime.toString()}
+            collectionId={config.nftCollectionId}
+            description={t('translation:landingPage.offerText')}
+            latestActiveToken={latestActiveToken}
+          />
+        )
+      );
+    }
+    if (lastActiveToken === 'lastSale') {
+      return (
+        latestActiveToken?.lastSale && (
+          <RecentActivities
+            icon="sale"
+            id={latestActiveToken.id}
+            name={latestActiveToken?.name}
+            price={latestActiveToken?.price}
+            time={latestActiveToken?.lastSaleTime.toString()}
+            collectionId={config.nftCollectionId}
+            description={t('translation:landingPage.saleText')}
+          />
+        )
+      );
     }
   };
 
@@ -174,27 +258,7 @@ const LandingPageView = () => {
           </IntroImageContainer>
         </IntroDetailsContainer>
       </IntroContainer>
-      {latestActiveToken.listing && (
-        <RecentActivity>
-          <Icon icon="sale" size="sm" />
-          <RecentActivityText>
-            <Link
-              to={`/${config.nftCollectionId}/nft/${latestActiveToken.id}`}
-            >
-              <RecentActivityCrownName>
-                {latestActiveToken?.name} #{latestActiveToken.id}
-              </RecentActivityCrownName>
-            </Link>
-            listed for
-            <RecentActivityAmountSold>
-              {parseE8SAmountToWICP(latestActiveToken?.price)} WICP
-            </RecentActivityAmountSold>
-            {formatTimestamp(
-              BigInt(latestActiveToken?.lastListingTime.toString()),
-            )}
-          </RecentActivityText>
-        </RecentActivity>
-      )}
+      {displayLatestActiveToken()}
       <FeaturesContainer>
         <FeaturesWrapper>
           <FeaturesTitle>
