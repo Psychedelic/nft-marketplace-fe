@@ -15,13 +15,10 @@ import {
 import { EmptyState, NftSkeleton, VirtualizedGrid } from '../core';
 import { ButtonType } from '../../constants/empty-states';
 import {
-  usePriceValues,
   useTraitsPayload,
   isNFTOwner,
   getTraitPayloadData,
 } from '../../integrations/kyasshu/utils';
-import { parseAmountToE8SAsNum } from '../../utils/formatters';
-import { getSortValue } from '../../utils/sorting';
 
 export const NftList = () => {
   const { t } = useTranslation();
@@ -35,8 +32,7 @@ export const NftList = () => {
     lastIndexValue,
   } = useNFTSStore();
   const { collectionId } = useParams();
-  const { isMyNfts, status, defaultFilters, reverse } =
-    useFilterStore();
+  const { isMyNfts, defaultFilters, reverse } = useFilterStore();
   const { principalId, isConnected } = usePlugStore();
 
   const collectionDetails = useSelector(
@@ -44,30 +40,6 @@ export const NftList = () => {
   );
 
   const traitsPayload = useTraitsPayload();
-
-  const priceValues = usePriceValues();
-  // eslint-disable-next-line object-curly-newline
-  let payload = {};
-  if (
-    traitsPayload.length ||
-    isMyNfts ||
-    (priceValues && Object.keys(priceValues).length) ||
-    status !== ''
-  ) {
-    payload = {
-      traits: traitsPayload.length ? traitsPayload : undefined,
-      principal: isMyNfts ? principalId : undefined,
-      status,
-      price:
-        priceValues && Object.keys(priceValues).length
-          ? {
-              min: parseAmountToE8SAsNum(priceValues?.min),
-              max: parseAmountToE8SAsNum(priceValues?.max),
-              type: 'currentPrice',
-            }
-          : undefined,
-    };
-  }
 
   const { sortBy } = useFilterStore();
 
@@ -85,7 +57,7 @@ export const NftList = () => {
         traits: traitsPayload.length
           ? getTraitPayloadData(traitsPayload)
           : undefined,
-        sort: getSortValue(sortBy),
+        sort: sortBy,
         order: 'd',
         lastIndex: lastIndexValue && BigInt(lastIndexValue),
         count: 25,

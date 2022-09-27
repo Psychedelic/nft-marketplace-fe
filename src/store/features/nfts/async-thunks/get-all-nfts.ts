@@ -74,8 +74,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         reverse,
         traits,
       });
-
-      const { data, total, lastIndex: responseLastIndex } = res;
+      const { data, total, lastIndex: responseHasLastIndex } = res;
 
       // TODO: map nft list
       const extractedNFTSList = data.map((nft: any) => {
@@ -111,10 +110,11 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         total: Number(total),
       };
 
-      if (responseLastIndex) {
-        actionPayload.lastIndex = Number(responseLastIndex) - 1;
+      if (responseHasLastIndex) {
+        actionPayload.lastIndex = Number(responseHasLastIndex) - 1;
         actionPayload.nextPage =
-          Math.floor(Number(total) / Number(responseLastIndex)) + 1;
+          Math.floor(Number(total) / Number(responseHasLastIndex)) +
+          1;
       }
 
       // update store with loaded NFTS details
