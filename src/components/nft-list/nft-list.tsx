@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 import { NftCard } from '../core/cards/nft-card';
 import {
@@ -9,6 +10,7 @@ import {
   useAppDispatch,
   usePlugStore,
   nftsActions,
+  RootState,
 } from '../../store';
 import { EmptyState, NftSkeleton, VirtualizedGrid } from '../core';
 import { ButtonType } from '../../constants/empty-states';
@@ -36,6 +38,11 @@ export const NftList = () => {
   const { isMyNfts, status, defaultFilters, reverse } =
     useFilterStore();
   const { principalId, isConnected } = usePlugStore();
+
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
   const traitsPayload = useTraitsPayload();
 
   const priceValues = usePriceValues();
@@ -160,6 +167,7 @@ export const NftList = () => {
               owner: nft?.owner,
               principalId,
             })}
+            collectionDetails={collectionDetails}
           />
         ))}
         Skeleton={NftSkeleton}

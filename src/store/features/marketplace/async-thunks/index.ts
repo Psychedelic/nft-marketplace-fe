@@ -13,3 +13,4 @@ export * from './get-assets-to-withdraw';
 export * from './withdraw-fungible';
 export * from './get-nft-offers';
 export * from './get-user-offers';
+export * from './get-collection-details';

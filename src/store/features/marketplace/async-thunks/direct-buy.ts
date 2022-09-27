@@ -1,4 +1,3 @@
-import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { notificationActions } from '../../notifications';
@@ -6,10 +5,13 @@ import {
   DirectBuy,
   marketplaceActions,
   CollectionDetails,
+  marketplaceSlice,
 } from '../marketplace-slice';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
+import { getJellyCollection } from '../../../../utils/jelly';
 import config from '../../../../config/env';
 import wicpIdlFactory from '../../../../declarations/wicp.did';
-import marketplaceIdlFactory from '../../../../declarations/marketplace.did';
+import marketplaceV2IdlFactory from '../../../../declarations/marketplace-v2.did';
 import { AppLog } from '../../../../utils/log';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
@@ -18,25 +20,46 @@ import { TransactionStatus } from '../../../../constants/transaction-status';
 
 type DirectBuyProps = DefaultCallbacks &
   DirectBuy &
+  CollectionDetails &
   CollectionDetails;
 
 export const directBuy = createAsyncThunk<
   DirectBuy | undefined,
   DirectBuyProps
->('marketplace/directBuy', async (params, { dispatch, getState }) => {
+>('marketplace/directBuy', async (params, thunkAPI) => {
   const { tokenId, price, collectionId, onSuccess, onFailure } =
     params;
+
+  const { dispatch, getState } = thunkAPI;
 
   const {
     marketplace: { sumOfUserAllowance },
   }: any = getState();
 
-  const marketplaceCanisterId = Principal.fromText(
-    config.marketplaceCanisterId,
-  );
-  const nonFungibleContractAddress = Principal.fromText(collectionId);
-
   dispatch(marketplaceActions.setTransactionStepsToDefault());
+
+  // Checks if an actor instance exists already
+  // otherwise creates a new instance
+  const jellyInstance = await jellyJsInstanceHandler({
+    thunkAPI,
+    collectionId,
+    slice: marketplaceSlice,
+  });
+
+  const collection = await getJellyCollection({
+    jellyInstance,
+    collectionId,
+  });
+
+  if (!collection)
+    throw Error(`Oops! collection ${collectionId} not found!`);
+
+  if (!collection?.marketplaceId)
+    throw Error(
+      `Oops! marketplace id ${collection?.marketplaceId} not found!`,
+    );
+
+  const { marketplaceId } = collection;
 
   try {
     const allowanceAmountInWICP = sumOfUserAllowance
@@ -47,11 +70,11 @@ export const directBuy = createAsyncThunk<
       allowanceAmountInWICP.toString(),
     );
 
-    const WICP_APPROVE = {
+    const WICP_APPROVE_MARKETPLACE = {
       idl: wicpIdlFactory,
       canisterId: config.wICPCanisterId,
       methodName: 'approve',
-      args: [marketplaceCanisterId, allowanceAmount],
+      args: [marketplaceId, allowanceAmount],
       onSuccess: (res: any) => {
         // check if error
         if ('Err' in res)
@@ -73,10 +96,21 @@ export const directBuy = createAsyncThunk<
     };
 
     const MKP_DIRECT_BUY = {
-      idl: marketplaceIdlFactory,
-      canisterId: config.marketplaceCanisterId,
-      methodName: 'directBuy',
-      args: [nonFungibleContractAddress, tokenId],
+      idl: marketplaceV2IdlFactory,
+      canisterId: marketplaceId.toString(),
+      methodName: 'direct_buy',
+      args: [
+        {
+          token_id: tokenId.toString(),
+          collection: collection.id,
+          seller: [],
+          version: [],
+          fungible_id: [],
+          caller: [],
+          buyer: [],
+          price: [],
+        },
+      ],
       onFail: (res: any) => {
         throw res;
       },
@@ -103,10 +137,8 @@ export const directBuy = createAsyncThunk<
       },
     };
 
-    // TODO: Show transaction progress steps in UI
     const batchTxRes = await window.ic?.plug?.batchTransactions([
-      WICP_APPROVE,
-      // MKP_DEPOSIT_WICP,
+      WICP_APPROVE_MARKETPLACE,
       MKP_DIRECT_BUY,
     ]);
 

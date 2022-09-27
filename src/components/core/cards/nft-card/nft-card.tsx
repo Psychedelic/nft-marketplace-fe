@@ -25,7 +25,10 @@ import {
   SellModal,
   ChangePriceModal,
 } from '../../../modals';
-import { usePlugStore } from '../../../../store';
+import {
+  usePlugStore,
+  CurrentCollectionDetails,
+} from '../../../../store';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 import { NFTActionStatuses } from '../../../../constants/common';
 import { NumberTooltip } from '../../../number-tooltip';
@@ -39,6 +42,7 @@ export type NftCardProps = {
   data: any;
   previewCard?: boolean;
   previewCardAmount?: string | number;
+  collectionDetails?: CurrentCollectionDetails;
 };
 
 type ConnectedProps = {
@@ -47,6 +51,7 @@ type ConnectedProps = {
   tokenId: string;
   price?: bigint;
   operator?: string;
+  marketplaceId?: string;
 };
 
 type DisconnectedProps = {
@@ -65,6 +70,7 @@ const OnConnected = ({
   tokenId,
   price,
   operator,
+  marketplaceId,
 }: ConnectedProps) => {
   const { t } = useTranslation();
   const showBuyerOptions = !owned;
@@ -97,7 +103,10 @@ const OnConnected = ({
               (price && parseE8SAmountToWICP(BigInt(price))) || ''
             }
             isTriggerVisible={isForSale}
-            isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
+            isNFTOperatedByMKP={isOperatorMarketplace({
+              operator,
+              marketplaceId,
+            })}
           />
           <MakeOfferModal
             actionText={`${t('translation:nftCard.forOffer')}`}
@@ -182,6 +191,7 @@ export const NftCard = React.memo(
     data,
     previewCard = false,
     previewCardAmount,
+    collectionDetails,
   }: NftCardProps) => {
     const { t } = useTranslation();
     const { isConnected } = usePlugStore();
@@ -261,6 +271,7 @@ export const NftCard = React.memo(
                   tokenId={data.id}
                   price={data?.price}
                   operator={data?.operator}
+                  marketplaceId={collectionDetails?.marketplaceId}
                 />
               )) || <OnDisconnected isForSale={isForSale} />}
               <LastActionTakenDetails

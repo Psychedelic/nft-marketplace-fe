@@ -26,6 +26,7 @@ import {
   withdrawFungible,
   getNFTOffers,
   getUserOffers,
+  getCollectionDetails,
 } from './async-thunks';
 import { TransactionStatus } from '../../../constants/transaction-status';
 
@@ -71,6 +72,10 @@ export type CollectionDetails = {
   collectionId: string;
 };
 
+export type CurrentCollectionDetails = {
+  marketplaceId?: string;
+};
+
 type RecentyListedForSale = MakeListing[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
@@ -101,6 +106,7 @@ type InitialState = {
   jellyJsInstance?: JellyUtils;
   // TODO: NFT offers type
   nftOffers: any;
+  currentCollectionDetails: CurrentCollectionDetails;
 };
 
 const defaultTransactionStatus = {
@@ -128,6 +134,7 @@ const initialState: InitialState = {
   transactionSteps: defaultTransactionStatus,
   jellyJsInstance: undefined,
   nftOffers: [],
+  currentCollectionDetails: {},
 };
 
 export const marketplaceSlice = createSlice({
@@ -231,6 +238,14 @@ export const marketplaceSlice = createSlice({
 
       state.nftOffers = action.payload;
     });
+    builder.addCase(
+      getCollectionDetails.fulfilled,
+      (state, action) => {
+        if (!action.payload) return;
+
+        state.currentCollectionDetails = action.payload;
+      },
+    );
   },
 });
 
@@ -251,6 +266,7 @@ export const marketplaceActions = {
   withdrawFungible,
   getNFTOffers,
   getUserOffers,
+  getCollectionDetails,
 };
 
 export default marketplaceSlice.reducer;
