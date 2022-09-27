@@ -78,8 +78,6 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
         floorDifferencePrice = floorDifferenceResponse.Ok.toString();
       }
 
-      console.log(data);
-
       const offers = data.map((item: NFTToken) => {
         const metadata = item.offers.reduce(
           (
