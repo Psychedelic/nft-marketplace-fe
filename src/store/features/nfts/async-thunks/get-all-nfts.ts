@@ -145,4 +145,3 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     }
   },
 );
-
