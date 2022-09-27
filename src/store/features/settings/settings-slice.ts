@@ -3,6 +3,7 @@ import { getCollections } from './async-thunks';
 import { Collection } from '@psychedelic/jelly-js';
 
 import type { RootState } from '../../store';
+import { NFTMetadata } from '../../../declarations/legacy';
 
 interface AlertsData {
   principalId: string;
@@ -17,6 +18,7 @@ export interface SettingsState {
   showPageNotFound: boolean;
   collections: Collection[];
   nameofCollection: string | undefined;
+  latestActiveToken: any;
 }
 
 const initialState: SettingsState = {
@@ -27,6 +29,7 @@ const initialState: SettingsState = {
   showPageNotFound: false,
   collections: [],
   nameofCollection: '',
+  latestActiveToken: null,
 };
 
 export const settingsSlice = createSlice({
@@ -64,6 +67,9 @@ export const settingsSlice = createSlice({
       action: PayloadAction<string | undefined>,
     ) => {
       state.nameofCollection = action.payload;
+    },
+    setLatestActiveToken: (state, action: PayloadAction<any[]>) => {
+      state.latestActiveToken = action.payload[0];
     },
   },
 });

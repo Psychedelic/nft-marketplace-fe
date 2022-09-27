@@ -8,6 +8,7 @@ import { createActor } from '../../../../integrations/actor';
 import { getJellyCollection } from '../../../../utils/jelly';
 import { AppLog } from '../../../../utils/log';
 import { getSortValue } from '../../../../utils/sorting';
+import { settingsActions } from '../../settings';
 
 export type GetAllNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -75,20 +76,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       });
 
       const { data, total, lastIndex: responseLastIndex } = res;
-
-      // const collectionName = await (async () => {
-      //   const actor = await createActor({
-      //     serviceName: 'dip721',
-      //     collectionId,
-      //   });
-
-      //   // eslint-disable-next-line @typescript-eslint/no-shadow
-      //   const res = await actor.dip721_name();
-
-      //   if (!res && !Array.isArray(res) && !res.length) return;
-
-      //   return res.pop();
-      // })();
+      console.log(res);
 
       const collectionName = collection.name;
 
@@ -104,6 +92,11 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
           lastOffer: nft.lastOfferTime,
           lastSale: nft.lastSale,
           // TODO: update nft thumbnail
+          listing: nft.listing,
+          lastListingTime: nft.lastListingTime,
+          offers: nft.offers,
+          lastOfferTime: nft.lastOfferTime,
+          lastSaleTime: nft.lastSaleTime,
           preview: nft.thumbnail,
           location: nft?.url,
           traits: nft.traits,
@@ -129,6 +122,9 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
       // update store with loaded NFTS details
       dispatch(nftsActions.setLoadedNFTS(actionPayload));
+      dispatch(
+        settingsActions.setLatestActiveToken(extractedNFTSList),
+      );
 
       const collectionPayload = {
         itemsCount: Number(total),

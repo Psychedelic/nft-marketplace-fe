@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ActionButton, LinkButton } from '../../components/core';
 import {
@@ -58,6 +58,7 @@ import crownsLogo from '../../assets/landingpage/crowns.svg';
 import psychedelic from '../../assets/landingpage/psychedelic.svg';
 
 import {
+  nftsActions,
   settingsActions,
   useAppDispatch,
   useSettingsStore,
@@ -66,20 +67,30 @@ import {
 
 import config from '../../config/env';
 import { Icon } from '../../components';
-import { Collection } from '@psychedelic/jelly-js';
+import { Collection, SortKey } from '@psychedelic/jelly-js';
+import { formatTimestamp } from '../../integrations/functions/date';
+import { parseE8SAmountToWICP } from '../../utils/formatters';
 
 const LandingPageView = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
   const isDarkTheme = theme === 'darkTheme';
   const dispatch = useAppDispatch();
-  const { collections } = useSettingsStore();
+  const { collections, latestActiveToken } = useSettingsStore();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(
       settingsActions.getCollections(`${config.nftCollectionId}`),
+    );
+
+    dispatch(
+      nftsActions.getAllNFTs({
+        sort: SortKey.all,
+        count: 1,
+        collectionId: config.nftCollectionId,
+      }),
     );
   }, []);
 
@@ -163,17 +174,27 @@ const LandingPageView = () => {
           </IntroImageContainer>
         </IntroDetailsContainer>
       </IntroContainer>
-      <RecentActivity>
-        <Icon icon="sale" size="sm" />
-        <RecentActivityText>
-          <RecentActivityCrownName>
-            CAP Crowns #2111
-          </RecentActivityCrownName>
-          sold at
-          <RecentActivityAmountSold>2 WICP</RecentActivityAmountSold>4
-          mins ago
-        </RecentActivityText>
-      </RecentActivity>
+      {latestActiveToken.listing && (
+        <RecentActivity>
+          <Icon icon="sale" size="sm" />
+          <RecentActivityText>
+            <Link
+              to={`/${config.nftCollectionId}/nft/${latestActiveToken.id}`}
+            >
+              <RecentActivityCrownName>
+                {latestActiveToken?.name} #{latestActiveToken.id}
+              </RecentActivityCrownName>
+            </Link>
+            listed for
+            <RecentActivityAmountSold>
+              {parseE8SAmountToWICP(latestActiveToken?.price)} WICP
+            </RecentActivityAmountSold>
+            {formatTimestamp(
+              BigInt(latestActiveToken?.lastListingTime.toString()),
+            )}
+          </RecentActivityText>
+        </RecentActivity>
+      )}
       <FeaturesContainer>
         <FeaturesWrapper>
           <FeaturesTitle>
