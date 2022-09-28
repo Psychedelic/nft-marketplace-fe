@@ -4,11 +4,9 @@ import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
 import { nftsActions, LoadedNFTData } from '../nfts-slice';
 import { marketplaceSlice } from '../../marketplace/marketplace-slice';
 import { NSKyasshuUrl } from '../../../../integrations/kyasshu';
-import { createActor } from '../../../../integrations/actor';
 import { getJellyCollection } from '../../../../utils/jelly';
 import { AppLog } from '../../../../utils/log';
 import { getSortValue } from '../../../../utils/sorting';
-import { settingsActions } from '../../settings';
 
 export type GetAllNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -137,3 +135,4 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     }
   },
 );
+
