@@ -1,6 +1,6 @@
 #!/bin/bash
 
-principal=$(dfx identity get-principal)
+ownerPrincipal=$(dfx identity get-principal)
 
 dataRecordList=""
 
@@ -8,26 +8,26 @@ filename="$(dirname -- "$0")/wordlist.txt"
 defaultMaxCount=100
 
 # user desired count
-max_count="${1:-$defaultMaxCount}"
+maxCount="${1:-$defaultMaxCount}"
 
 i=0
 while read -r word; do 
   ((i++))
 
-  if [ "$i" -gt "$max_count" ]; then
+  if [ "$i" -gt "$maxCount" ]; then
     break
   fi
 
   # the initial version does not take into account
   # multiple user principals, this will be added later
   dataRecord="record {
-      controller = principal \"$principal\";
+      controller = principal \"$ownerPrincipal\";
       expiry = 36000;
-      id = 0:nat;
-      name = \"$word\";
-      operator = principal \"$principal\";
-      owner = principal \"$principal\";
-      resolver = principal \"$principal\";
+      id = $i:nat;
+      name = \"$word.icp\";
+      operator = principal \"$ownerPrincipal\";
+      owner = principal \"$ownerPrincipal\";
+      resolver = principal \"$ownerPrincipal\";
       ttl = 1800:nat64;
     }"
 
@@ -47,14 +47,8 @@ dataVec="(
   }
 )"
 
-# TODO: the path should be dynamically allocated
-# based in the project architecture which at the moment
-# does not take into account the ICNS
-# so, this is temporary and set to the local developer env
-# if you are reading this you'd have to set it to the icns repo
-# of your local machine
-cd ../../jelly/dependencies/icns || exit 1
+cd ./jelly || exit 1
 
-dfx canister call registry batchMint "(
+dfx canister --network local call icns batchMint "(
   $dataVec
 )"
