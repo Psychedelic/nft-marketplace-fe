@@ -74,30 +74,26 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       });
       const { data, total, lastIndex: responseHasLastIndex } = res;
 
-      // TODO: map nft list
       const extractedNFTSList = data.map((nft: any) => {
         const metadata = {
-          // TODO: update price, lastOffer & traits values
           // TODO: Finalize object format after validating mock and kyasshu data
           id: nft.id,
           name: nft.collectionName,
-          // TODO: parse from listing field when available
-          price: nft.listing?.price,
-          lastOffer: nft.lastOfferTime,
+          price: nft.price,
+          lastOffer: nft.lastOffer,
           lastSale: nft.lastSale,
-          // TODO: update nft thumbnail
-          listing: nft.listing,
-          lastListingTime: nft.lastListingTime,
-          offers: nft.offers,
-          lastOfferTime: nft.lastOfferTime,
-          lastSaleTime: nft.lastSaleTime,
           preview: nft.thumbnail,
-          location: nft?.url,
+          location: nft.location,
           traits: nft.traits,
-          status: nft?.status,
+          status: nft.lastActionTaken,
           owner: nft?.owner,
-          // lastActionTaken: findLastAction(nft),
+          lastActionTaken: nft.lastActionTaken,
           operator: nft?.operator,
+          listing: nft?.listing,
+          lastListingTime: nft?.lastListingTime,
+          offers: nft?.offers,
+          lastOfferTime: nft?.lastOfferTime,
+          lastSaleTime: nft?.lastSaleTime,
           rendered: true,
         };
         return metadata;
@@ -135,4 +131,3 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     }
   },
 );
-
