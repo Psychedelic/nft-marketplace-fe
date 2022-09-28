@@ -328,9 +328,9 @@
     "disabledBuyNowText": "Oops! Can't be purchased, possibly because token was transferred outside Jelly marketplace to a new wallet"
   },
   "landingPage": {
-    "introTitle": "✨ Sweet NFT Tools & Infra ✨",
+    "introTitle": "Sweet NFT Tools & Infra ✨",
     "introDescription": "Allowing creators, curators, and collectors to create their own marketplace experiences. Hook into our trustless, interoperable canister APIs to power your frontend’s sweet sweet NFT data.",
-    "viewCrowns": "View Crowns",
+    "explore": "Explore",
     "featuresTitle": "Not the same old marketplace",
     "jellyFeatureTitle": "Jelly Protocol",
     "jellyFeatureDescription": "Permissionless NFT and marketplace protocol with unified listings, offers, and collection data.",
@@ -343,6 +343,11 @@
     "multichainHubTitle": "A multi-chain NFT hub",
     "multichainHubDescriptionIntro": "By integrating to",
     "terabethiaTitle": "Terabethia's",
-    "multichainHubDescriptionEnd": "upcoming magic bridge for ERC721, and Threshold Signatures, Jelly can open the door to both supporting bridged assets and natively interacting with NFTs on other chains."
+    "multichainHubDescriptionEnd": "upcoming magic bridge for ERC721, and Threshold Signatures, Jelly can open the door to both supporting bridged assets and natively interacting with NFTs on other chains.",
+    "builtByPsychedelic": "Built by Psychedelic",
+    "followOnSocial": "Follow us on social",
+    "listingText": "listed for",
+    "offerText": "offer made on",
+    "saleText": "sold for"
   }
 }

@@ -64,6 +64,17 @@ export const {
       lightBlue: '#3ae2f8',
       yellow: '#f5ca32',
       gainsboroColor: 'rgba(22, 22, 26, 0.04)',
+      whiteSmoke: '#F3F3F3',
+      steel: '#848B9E',
+      greenGradient:
+        'linear-gradient(121.13deg, #FFFFFF 63.87%, #77F89B 174.51%)',
+      pinkGradient:
+        'linear-gradient(121.13deg, #FFFFFF 63.87%, #F97CDD 174.51%)',
+      blueGradient:
+        'linear-gradient(115.46deg, #FFFFFF 62.34%, #80EDFB 139.74%)',
+      yellowGradient:
+        'linear-gradient(121.13deg, #FFFFFF 63.87%, #F8DA73 174.51%)',
+      grayAzure: '#737B8D',
     },
     space: {},
     fonts: {},
@@ -134,6 +145,17 @@ export const darkTheme = createTheme({
     primaryTextColor: '#FFFFFF',
     secondaryTextColor: '#777e90',
     primaryBackgroundColor: '#000000',
+    whiteSmoke: '#242427',
+    steel: '#848B9E',
+    greenGradient:
+      'linear-gradient(121.13deg, #242427 63.87%, #77F89B 174.51%)',
+    pinkGradient:
+      'linear-gradient(121.13deg, #242427 63.87%, #F97CDD 174.51%)',
+    blueGradient:
+      'linear-gradient(121.13deg, #242427 63.87%, #80EDFB 174.51%)',
+    yellowGradient:
+      'linear-gradient(121.13deg, #242427 63.87%, #F8DA73 174.51%)',
+    grayAzure: '#737B8D',
   },
   shadows: {
     default: 'none',

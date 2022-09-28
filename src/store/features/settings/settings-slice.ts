@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
 import type { RootState } from '../../store';
 
 interface AlertsData {
@@ -13,6 +12,7 @@ export interface SettingsState {
   showAlerts: boolean;
   assetsToWithdraw: AlertsData[];
   showPageNotFound: boolean;
+  latestActiveToken: any;
 }
 
 const initialState: SettingsState = {
@@ -21,6 +21,7 @@ const initialState: SettingsState = {
   showAlerts: false,
   assetsToWithdraw: [],
   showPageNotFound: false,
+  latestActiveToken: null,
 };
 
 export const settingsSlice = createSlice({
@@ -49,6 +50,9 @@ export const settingsSlice = createSlice({
       action: PayloadAction<boolean>,
     ) => {
       state.showPageNotFound = action.payload;
+    },
+    setLatestActiveToken: (state, action: PayloadAction<any[]>) => {
+      state.latestActiveToken = action.payload[0];
     },
   },
 });
