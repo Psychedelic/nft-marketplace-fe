@@ -1,7 +1,7 @@
 import { useCallback, useLayoutEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import * as Popover from '@radix-ui/react-popover';
-import { useNavigate } from 'react-router-dom';
+
 import { useTranslation } from 'react-i18next';
 import {
   useAppDispatch,
@@ -62,9 +62,13 @@ export const PlugButton = ({
   }, [dispatch]);
 
   const myOffersHandler = useCallback(() => {
-    navigate(`${collectionId || config.nftCollectionId}/offers/${userPrincipal}`);
+    navigate(
+      `${
+        collectionId || config.nftCollectionId
+      }/offers/${userPrincipal}`,
+    );
     setOpenDropdown(false);
-  }, [navigate, userPrincipal]);
+  }, [navigate, userPrincipal, collectionId]);
 
   const myActivityHandler = useCallback(() => {
     navigate(`/activity/${userPrincipal}`);

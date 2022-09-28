@@ -4,11 +4,9 @@ import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
 import { nftsActions, LoadedNFTData } from '../nfts-slice';
 import { marketplaceSlice } from '../../marketplace/marketplace-slice';
 import { NSKyasshuUrl } from '../../../../integrations/kyasshu';
-import { createActor } from '../../../../integrations/actor';
 import { getJellyCollection } from '../../../../utils/jelly';
 import { AppLog } from '../../../../utils/log';
 import { getSortValue } from '../../../../utils/sorting';
-import { settingsActions } from '../../settings';
 
 export type GetAllNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -74,8 +72,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         reverse,
         traits,
       });
-
-      const { data, total, lastIndex: responseLastIndex } = res;
+      const { data, total, lastIndex: responseHasLastIndex } = res;
 
       // TODO: map nft list
       const extractedNFTSList = data.map((nft: any) => {
@@ -111,10 +108,11 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         total: Number(total),
       };
 
-      if (responseLastIndex) {
-        actionPayload.lastIndex = Number(responseLastIndex) - 1;
+      if (responseHasLastIndex) {
+        actionPayload.lastIndex = Number(responseHasLastIndex) - 1;
         actionPayload.nextPage =
-          Math.floor(Number(total) / Number(responseLastIndex)) + 1;
+          Math.floor(Number(total) / Number(responseHasLastIndex)) +
+          1;
       }
 
       // update store with loaded NFTS details
@@ -137,3 +135,4 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     }
   },
 );
+

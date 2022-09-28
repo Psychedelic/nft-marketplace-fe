@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { JellyCollection } from '@psychedelic/jelly-js';
 import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
-import { nftsActions } from '../nfts-slice';
 import { marketplaceSlice } from '../../marketplace/marketplace-slice';
 import { createActor } from '../../../../integrations/actor';
 import { getJellyCollection } from '../../../../utils/jelly';

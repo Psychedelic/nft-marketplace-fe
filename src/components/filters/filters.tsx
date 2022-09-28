@@ -336,12 +336,12 @@ export const Filters = ({
                             );
                             if (
                               status !==
-                              `${t('translation:filters.forSale')}`
+                              `${t('translation:filters.listed')}`
                             ) {
                               dispatch(
                                 filterActions.setStatusFilter(
                                   `${t(
-                                    'translation:filters.forSale',
+                                    'translation:filters.listed',
                                   )}`,
                                 ),
                               );

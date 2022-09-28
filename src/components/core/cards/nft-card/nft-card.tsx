@@ -97,7 +97,7 @@ const OnConnected = ({
       {(showBuyerOptions && (
         <div role="dialog">
           <BuyNowModal
-            actionText={`${t('translation:nftCard.forSale')}`}
+            actionText={`${t('translation:nftCard.listed')}`}
             actionTextId={Number(tokenId)}
             price={
               (price && parseE8SAmountToWICP(BigInt(price))) || ''
@@ -125,7 +125,7 @@ const OnDisconnected = ({ isForSale }: DisconnectedProps) => {
     <div role="dialog">
       {isForSale ? (
         <ConnectToPlugModal
-          actionText={`${t('translation:nftCard.forSale')}`}
+          actionText={`${t('translation:nftCard.listed')}`}
         />
       ) : (
         <ConnectToPlugModal

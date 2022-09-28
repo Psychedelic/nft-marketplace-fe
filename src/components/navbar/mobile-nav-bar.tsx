@@ -1,4 +1,6 @@
 import { useTranslation } from 'react-i18next';
+import { useCallback } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import {
   MobileMenuContentWrapper,
   NavItem,
@@ -32,8 +34,6 @@ import {
   useThemeStore,
 } from '../../store';
 import { openSonicURL } from '../../utils/handle-redirect-urls';
-import { useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router';
 import { Plug } from '../plug';
 import { roundOffDecimalValue } from '../../utils/nfts';
 import { SpinnerIcon } from '../icons/custom';
@@ -69,7 +69,11 @@ export const MobileNavBar = ({
   }, [navigate, principalId]);
 
   const myOffersHandler = useCallback(() => {
-    navigate(`${collectionId || config.nftCollectionId}/offers/${principalId}`);
+    navigate(
+      `${
+        collectionId || config.nftCollectionId
+      }/offers/${principalId}`,
+    );
     setOpenMobileNavbar(false);
   }, [navigate, principalId]);
 
