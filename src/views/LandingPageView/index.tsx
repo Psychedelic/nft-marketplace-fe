@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ActionButton, LinkButton } from '../../components/core';
 import {
@@ -32,10 +32,6 @@ import {
   MultichainHubListItem,
   ButtonWrapper,
   ButtonSpan,
-  RecentActivity,
-  RecentActivityText,
-  RecentActivityCrownName,
-  RecentActivityAmountSold,
   Footer,
   Flex,
   FooterText,
@@ -58,7 +54,9 @@ import crownsLogo from '../../assets/landingpage/crowns.svg';
 import psychedelic from '../../assets/landingpage/psychedelic.svg';
 
 import {
+  marketplaceActions,
   nftsActions,
+  RootState,
   settingsActions,
   useAppDispatch,
   useSettingsStore,
@@ -68,24 +66,31 @@ import {
 import config from '../../config/env';
 import { Collection, SortKey } from '@psychedelic/jelly-js';
 import RecentActivities from './recent-activity';
+import { useSelector } from 'react-redux';
 
 const LandingPageView = () => {
   const { t } = useTranslation();
   const { theme } = useThemeStore();
   const isDarkTheme = theme === 'darkTheme';
   const dispatch = useAppDispatch();
-  const { collections, latestActiveToken } = useSettingsStore();
+
+  const collections = useSelector(
+    (state: RootState) => state.marketplace.collections,
+  );
+
+  const { latestActiveToken } = useSettingsStore();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(
-      settingsActions.getCollections(`${config.nftCollectionId}`),
+      marketplaceActions.getAllCollections(
+        `${config.nftCollectionId}`,
+      ),
     );
 
     dispatch(
-      nftsActions.getAllNFTs({
-        sort: SortKey.all,
+      nftsActions.getLatestActiveToken({
         count: 1,
         collectionId: config.nftCollectionId,
       }),
@@ -94,8 +99,7 @@ const LandingPageView = () => {
     const fetchLatestToken = setInterval(
       () =>
         dispatch(
-          nftsActions.getAllNFTs({
-            sort: SortKey.all,
+          nftsActions.getLatestActiveToken({
             count: 1,
             collectionId: config.nftCollectionId,
           }),
@@ -113,7 +117,9 @@ const LandingPageView = () => {
       (collection: Collection) => collection.name === name,
     );
 
-    dispatch(settingsActions.setNameOfCollection(collection?.name));
+    dispatch(
+      marketplaceActions.setCollectionId(collection?.id.toText()),
+    );
 
     const collectionId = collection?.id.toText();
 

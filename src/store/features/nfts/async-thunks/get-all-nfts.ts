@@ -76,9 +76,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       });
 
       const { data, total, lastIndex: responseLastIndex } = res;
-      console.log(res);
-
-      const collectionName = collection.name;
 
       // TODO: map nft list
       const extractedNFTSList = data.map((nft: any) => {
@@ -86,7 +83,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
           // TODO: update price, lastOffer & traits values
           // TODO: Finalize object format after validating mock and kyasshu data
           id: nft.id,
-          name: collectionName,
+          name: nft.collectionName,
           // TODO: parse from listing field when available
           price: nft.listing?.price,
           lastOffer: nft.lastOfferTime,
@@ -122,9 +119,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
       // update store with loaded NFTS details
       dispatch(nftsActions.setLoadedNFTS(actionPayload));
-      dispatch(
-        settingsActions.setLatestActiveToken(extractedNFTSList),
-      );
 
       const collectionPayload = {
         itemsCount: Number(total),

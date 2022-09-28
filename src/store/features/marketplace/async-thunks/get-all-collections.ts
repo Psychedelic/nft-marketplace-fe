@@ -1,12 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
-import { marketplaceSlice } from '../../marketplace/marketplace-slice';
-import { getJellyCollection } from '../../../../utils/jelly';
+import {
+  marketplaceActions,
+  marketplaceSlice,
+} from '../marketplace-slice';
 import { AppLog } from '../../../../utils/log';
 import { Collection } from '@psychedelic/jelly-js';
-import { settingsActions } from '../settings-slice';
 
-export const getCollections = createAsyncThunk<any | undefined, any>(
+export const getAllCollections = createAsyncThunk<
+  any | undefined,
+  any
+>(
   'marketplace/getCollections',
   async ({ collectionId }, thunkAPI) => {
     // Checks if an actor instance exists already
@@ -23,7 +27,7 @@ export const getCollections = createAsyncThunk<any | undefined, any>(
       const jellyCollection: Collection[] =
         await jellyInstance.getCollections();
 
-      dispatch(settingsActions.setCollections(jellyCollection));
+      dispatch(marketplaceActions.setCollections(jellyCollection));
     } catch (err) {
       AppLog.error(err);
     }
