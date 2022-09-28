@@ -43,3 +43,12 @@ Which then you'll be able to stop it by:
 ```sh
 pkill java
 ```
+
+## The "Unable to start DynamoDB Local process" error?
+
+As in the instruction guide, you'll have to run the command:
+
+```
+sls dynamodb install
+```
+
