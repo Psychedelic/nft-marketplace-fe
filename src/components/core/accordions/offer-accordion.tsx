@@ -120,6 +120,10 @@ export const OnConnected = ({
     [id, nftOffers, plugPrincipalId],
   );
 
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
     if (!id || !collectionId || !plugPrincipalId) return;
@@ -157,7 +161,10 @@ export const OnConnected = ({
         <BuyNowModal
           price={price?.toString()}
           isTriggerVisible={showNonOwnerButtons && isListed}
-          isNFTOperatedByMKP={isOperatorMarketplace({ operator })}
+          isNFTOperatedByMKP={isOperatorMarketplace({
+            operator,
+            marketplaceId: collectionDetails?.marketplaceId,
+          })}
         />
       </ButtonDetailsWrapper>
       <ButtonDetailsWrapper

@@ -27,6 +27,7 @@ import {
   getNFTOffers,
   getUserOffers,
   getAllCollections,
+  getCollectionDetails,
 } from './async-thunks';
 import { TransactionStatus } from '../../../constants/transaction-status';
 
@@ -72,6 +73,10 @@ export type CollectionDetails = {
   collectionId: string;
 };
 
+export type CurrentCollectionDetails = {
+  marketplaceId?: string;
+};
+
 type RecentyListedForSale = MakeListing[];
 
 type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
@@ -104,6 +109,7 @@ type InitialState = {
   nftOffers: any;
   collections: Collection[];
   collection_id: string | undefined;
+  currentCollectionDetails: CurrentCollectionDetails;
 };
 
 const defaultTransactionStatus = {
@@ -133,6 +139,7 @@ const initialState: InitialState = {
   nftOffers: [],
   collections: [],
   collection_id: '',
+  currentCollectionDetails: {},
 };
 
 export const marketplaceSlice = createSlice({
@@ -245,6 +252,14 @@ export const marketplaceSlice = createSlice({
 
       state.nftOffers = action.payload;
     });
+    builder.addCase(
+      getCollectionDetails.fulfilled,
+      (state, action) => {
+        if (!action.payload) return;
+
+        state.currentCollectionDetails = action.payload;
+      },
+    );
   },
 });
 
@@ -266,6 +281,7 @@ export const marketplaceActions = {
   getNFTOffers,
   getUserOffers,
   getAllCollections,
+  getCollectionDetails,
 };
 
 export default marketplaceSlice.reducer;

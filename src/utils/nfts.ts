@@ -13,6 +13,7 @@ type NFTParams = {
 
 type CheckNFTOperatorParams = {
   operator?: string;
+  marketplaceId?: string;
 };
 
 export const findLastAction = (nft: NFTParams) => {
@@ -56,13 +57,14 @@ export const roundOffDecimalValue = (
 export const isOperatorMarketplace = (
   params: CheckNFTOperatorParams,
 ) => {
-  const { operator } = params;
+  const { operator, marketplaceId } = params;
 
-  return operator === config.marketplaceCanisterId;
+  if (!operator || !marketplaceId) return;
+
+  return operator === marketplaceId;
 };
 
 const userRelevantDirectContractOps = ['mint', 'transfer'];
 export const checkIfDirectContractEvent = (
   operationType: OperationType,
 ) => userRelevantDirectContractOps.includes(operationType);
-
