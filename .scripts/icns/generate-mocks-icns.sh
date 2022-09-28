@@ -1,8 +1,11 @@
 #!/bin/bash
 
 ownerPrincipal=$(dfx identity get-principal)
+icnsCanisterId=$(cd ./jelly && dfx canister id icns)
+marketplaceId=$(cd ./jelly && dfx canister call jelly-hub get_marketplace_id "(principal \"$icnsCanisterId\")" | cut -d '"' -f 2)
 
-dataRecordList=""
+batchMintDataRecordList=""
+insertDataRecordList=""
 
 filename="$(dirname -- "$0")/wordlist.txt"
 defaultMaxCount=100
@@ -18,37 +21,73 @@ while read -r word; do
     break
   fi
 
+  name="$word.icp"
+
   # the initial version does not take into account
   # multiple user principals, this will be added later
-  dataRecord="record {
+  batchMintDataRecord="record {
       controller = principal \"$ownerPrincipal\";
       expiry = 36000;
       id = $i:nat;
-      name = \"$word.icp\";
+      name = \"$name\";
       operator = principal \"$ownerPrincipal\";
       owner = principal \"$ownerPrincipal\";
       resolver = principal \"$ownerPrincipal\";
       ttl = 1800:nat64;
     }"
 
-  if [ "$dataRecordList" == "" ]; then
-    dataRecordList="$dataRecord"
+  # the initial version does not take into account
+  # multiple user principals, this will be added later
+  insertDataRecord="record {
+      operation = \"metadata\";
+      token_id = \"$i\";
+      nft_canister_id = principal \"$icnsCanisterId\";
+      traits = opt vec {
+        record {
+          \"name\";
+          variant { TextContent= \"$name\" }
+        };
+      }
+    }"
+
+  if [ "$batchMintDataRecordList" == "" ] && [ "$insertDataRecordList" == "" ]; then
+    batchMintDataRecordList="$batchMintDataRecord"
+    insertDataRecordList="$insertDataRecord"
 
     continue;
   fi
 
-  dataRecordList="$dataRecordList;
-  $dataRecord"
+  batchMintDataRecordList="$batchMintDataRecordList;
+  $batchMintDataRecord"
+
+  insertDataRecordList="$insertDataRecordList;
+  $insertDataRecord"
 done < "$filename"
 
-dataVec="(
+batchMintDataVec="(
   vec {
-    $dataRecordList
+    $batchMintDataRecordList
+  }
+)"
+
+insertDataVec="(
+  vec {
+    $insertDataRecordList
   }
 )"
 
 cd ./jelly || exit 1
 
-dfx canister --network local call icns batchMint "(
-  $dataVec
-)"
+echo "👩‍🍳 Batch minting, be patient..."
+
+dfx canister --network local call \
+  icns batchMint "(
+    $batchMintDataVec
+  )"
+
+echo "🧙‍♀️ Inserting metadata into marketplace, be patient..."
+
+dfx canister --network local call \
+  "$marketplaceId" insert "(
+    $insertDataVec
+  )"
