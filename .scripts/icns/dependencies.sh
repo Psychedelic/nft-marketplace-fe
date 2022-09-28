@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# TODO: should get cap router id dynamically
-# but due to incompatibility of earlier versions of dfx
-# not able to deploy ICNS it'd fail
-cap_router_id="rkp4c-7iaaa-aaaaa-aaaca-cai"
+# Obs: the call context is the nft-marketplace-fe root
+jellyV2Path="./jelly"
+
+cap_router_id=$(cd $jellyV2Path && dfx canister id cap-router)
 # TODO: get registry and registrar canister id dynamically
-registry_id="rrkah-fqaaa-aaaaa-aaaaq-cai"
-owner_principal=$(dfx identity get-principal)
+registry_id=$(cd $jellyV2Path && dfx canister id nft-registry)
+owner_principal=$(cd $jellyV2Path && dfx identity get-principal)
 
 # note: it shouldn't be required for marketplace
 # so we use a placeholder
@@ -14,7 +14,11 @@ registrar_id="aaaaa-aa"
 resolver_id="aaaaa-aa"
 reverse_registrar_id="aaaaa-aa"
 
-cd ../../jelly/dependencies/icns || exit 1
+echo "cap_router $cap_router_id"
+echo "registry_id $registry_id"
+echo "owner_principal $owner_principal"
+
+cd "$jellyV2Path"/dependencies/icns || exit 1
 
 # install registry
 dfx canister install registry \
