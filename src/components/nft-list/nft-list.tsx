@@ -108,7 +108,7 @@ export const NftList = () => {
     );
   }
 
-  if (defaultFilters.length && !loadedNFTS.length) {
+  if (!loadedNFTS.length) {
     return (
       <EmptyState
         message={`${t('translation:emptyStates.noFilteredNfts')}`}

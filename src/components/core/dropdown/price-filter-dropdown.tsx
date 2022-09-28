@@ -37,7 +37,7 @@ export const SortByFilterDropdown = React.memo(() => {
         value: `${t(
           'translation:dropdown.priceFilter.recentlyListed',
         )}`,
-        forSale: true,
+        listed: true,
       },
       {
         key: SortKey.lastOffer,
@@ -53,18 +53,16 @@ export const SortByFilterDropdown = React.memo(() => {
         )}`,
       },
       {
-        key: SortKey.listingPrice,
+        key: SortKey.salePrice,
         value: `${t(
           'translation:dropdown.priceFilter.highestLastSale',
         )}`,
-        forSale: true,
       },
       {
-        key: SortKey.listingPrice,
+        key: SortKey.salePrice,
         value: `${t(
           'translation:dropdown.priceFilter.lowestLastSale',
         )}`,
-        forSale: true,
       },
       {
         key: SortKey.offerPrice,
@@ -81,12 +79,14 @@ export const SortByFilterDropdown = React.memo(() => {
         forOffer: true,
       },
       {
-        key: SortKey.salePrice,
+        key: SortKey.listingPrice,
         value: `${t('translation:dropdown.priceFilter.highToLow')}`,
+        listed: true,
       },
       {
-        key: SortKey.salePrice,
+        key: SortKey.listingPrice,
         value: `${t('translation:dropdown.priceFilter.lowToHigh')}`,
+        listed: true,
       },
     ],
     [t],
@@ -123,7 +123,7 @@ export const SortByFilterDropdown = React.memo(() => {
   };
 
   const forOfferText = `${t('translation:filters.forOffer')}`;
-  const forSaleText = `${t('translation:filters.forSale')}`;
+  const listedText = `${t('translation:filters.listed')}`;
 
   const setSortBy = (key: string) => {
     const translated = sortOptions.find(
@@ -132,14 +132,14 @@ export const SortByFilterDropdown = React.memo(() => {
 
     const forSale = sortOptions.find(
       (item) => item.value === key,
-    )?.forSale;
+    )?.listed;
 
     const forOffer = sortOptions.find(
       (item) => item.value === key,
     )?.forOffer;
 
     if (forSale) {
-      dispatch(filterActions.setStatusFilter(forSaleText));
+      dispatch(filterActions.setStatusFilter(listedText));
       applyFilter(
         'Status',
         `${t('translation:buttons.action.buyNow')}`,
@@ -201,7 +201,7 @@ export const SortByFilterDropdown = React.memo(() => {
               );
             }
 
-            if (item.forSale && status === forSaleText) {
+            if (item.listed && status === listedText) {
               return (
                 <DropdownRadioMenuItem
                   value={item.value}
