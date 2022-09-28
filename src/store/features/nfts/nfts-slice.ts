@@ -7,6 +7,7 @@ import {
   getCollectionData,
   getAllNFTs,
   getMyNFTs,
+  getSearchResults,
   getLatestActiveToken,
 } from './async-thunks';
 
@@ -214,6 +215,7 @@ export const nftsActions = {
   getCollectionData,
   getAllNFTs,
   getMyNFTs,
+  getSearchResults,
   getLatestActiveToken,
 };
 
