@@ -18,4 +18,3 @@ export const getJellyCollection = async ({
 
   return collection;
 };
-

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ActorSubclass } from '@dfinity/agent';
-import { JellyUtils } from '@psychedelic/jelly-js';
+import { JellyUtils, Collection } from '@psychedelic/jelly-js';
 import marketplaceIdlService, {
   TransactionStepsStatus,
 } from '../../../declarations/marketplace';
@@ -26,6 +26,7 @@ import {
   withdrawFungible,
   getNFTOffers,
   getUserOffers,
+  getAllCollections,
   getCollectionDetails,
 } from './async-thunks';
 import { TransactionStatus } from '../../../constants/transaction-status';
@@ -106,6 +107,8 @@ type InitialState = {
   jellyJsInstance?: JellyUtils;
   // TODO: NFT offers type
   nftOffers: any;
+  collections: Collection[];
+  collection_id: string | undefined;
   currentCollectionDetails: CurrentCollectionDetails;
 };
 
@@ -134,6 +137,8 @@ const initialState: InitialState = {
   transactionSteps: defaultTransactionStatus,
   jellyJsInstance: undefined,
   nftOffers: [],
+  collections: [],
+  collection_id: '',
   currentCollectionDetails: {},
 };
 
@@ -173,6 +178,15 @@ export const marketplaceSlice = createSlice({
         ...state.transactionSteps,
         ...action.payload,
       };
+    },
+    setCollections: (state, action: PayloadAction<Collection[]>) => {
+      state.collections = action.payload;
+    },
+    setCollectionId: (
+      state,
+      action: PayloadAction<string | undefined>,
+    ) => {
+      state.collection_id = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -266,6 +280,7 @@ export const marketplaceActions = {
   withdrawFungible,
   getNFTOffers,
   getUserOffers,
+  getAllCollections,
   getCollectionDetails,
 };
 

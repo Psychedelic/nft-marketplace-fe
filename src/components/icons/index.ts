@@ -34,6 +34,7 @@ import { IoIosMoon } from '@react-icons/all-files/io/IoIosMoon';
 import { IoArrowBackOutline } from '@react-icons/all-files/io5/IoArrowBackOutline';
 import { IoFilterSharp } from '@react-icons/all-files/io5/IoFilterSharp';
 import { IoChevronForwardSharp } from '@react-icons/all-files/io5/IoChevronForwardSharp';
+import { FaGithub } from '@react-icons/all-files/fa/FaGithub';
 
 import {
   PlugIcon,
@@ -81,6 +82,7 @@ export const Icons = {
   filter: IoFilterSharp,
   website: Website,
   nextStep: IoChevronForwardSharp,
+  github: FaGithub,
 
   plug: PlugIcon,
   'app-name': AppNameIcon,
