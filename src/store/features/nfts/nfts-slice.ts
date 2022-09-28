@@ -7,6 +7,7 @@ import {
   getCollectionData,
   getAllNFTs,
   getMyNFTs,
+  getSearchResults,
 } from './async-thunks';
 
 // Define a type for the slice state
@@ -213,6 +214,7 @@ export const nftsActions = {
   getCollectionData,
   getAllNFTs,
   getMyNFTs,
+  getSearchResults,
 };
 
 // Other code such as selectors can use the imported `RootState` type

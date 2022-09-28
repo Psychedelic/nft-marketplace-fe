@@ -9,7 +9,7 @@
     "@dfinity/principal": "^0.10.2",
     "@psychedelic/cap-js": "^0.0.7",
     "@psychedelic/icns-js": "^0.1.11",
-    "@psychedelic/jelly-js": "0.1.0-beta.202209191340-0a71271",
+    "@psychedelic/jelly-js": "0.1.0-beta.202209231427-c3bcc0b",
     "@psychedelic/plug-inpage-provider": "2.3.0-alpha.1",
     "@radix-ui/react-accordion": "^0.1.5",
     "@radix-ui/react-checkbox": "^0.1.4",

@@ -62,10 +62,9 @@ export const GlobalSearch = ({
   const debouncedSearchHandler = useCallback(
     debounce((value: string, abortController: AbortController) => {
       dispatch(
-        nftsActions.getAllNFTs({
+        nftsActions.getSearchResults({
           sort: SortKey.all,
           order: 'd',
-          page: 0,
           count: 25,
           search: value,
           abortController,

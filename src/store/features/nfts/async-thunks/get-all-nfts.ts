@@ -8,7 +8,6 @@ import { createActor } from '../../../../integrations/actor';
 import { getJellyCollection } from '../../../../utils/jelly';
 import { AppLog } from '../../../../utils/log';
 import { getSortValue } from '../../../../utils/sorting';
-import { filterActions } from '../../filters';
 
 export type GetAllNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -29,7 +28,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
       lastIndex,
       count,
       collectionId,
-      search,
     },
     thunkAPI,
   ) => {
@@ -50,12 +48,7 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
     // TODO: should move to the UI side to make this more reusable
     // and controlled from client use-case only
     // Prevent pagination
-    if (
-      typeof hasMoreNFTs !== 'undefined' &&
-      !hasMoreNFTs &&
-      search === ''
-    )
-      return;
+    if (typeof hasMoreNFTs !== 'undefined' && !hasMoreNFTs) return;
 
     // set loading NFTS state to true
     dispatch(nftsActions.setIsNFTSLoading(true));
@@ -79,7 +72,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
         sortKey: getSortValue(sort),
         reverse,
         traits,
-        search,
       });
 
       const { data, total, lastIndex: responseLastIndex } = res;
@@ -135,7 +127,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
       // update store with loaded NFTS details
       dispatch(nftsActions.setLoadedNFTS(actionPayload));
-      dispatch(filterActions.setSearchResults(extractedNFTSList));
 
       const collectionPayload = {
         itemsCount: Number(total),

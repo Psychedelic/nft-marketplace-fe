@@ -20,7 +20,7 @@ import {
   ItemDetailsContainer,
   StyledRouterLink,
 } from './styles';
-import { useFilterStore, useNFTSStore } from '../../store';
+import { useFilterStore } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
 import wicpIcon from '../../assets/wicp.svg';
 import { SpinnerIcon } from '../icons/custom';
@@ -37,12 +37,11 @@ const NFTsSearchResults = ({
 }: NFTsSearchResultsTypes) => {
   const { t } = useTranslation();
   const { searchResults, loadingSearch } = useFilterStore();
-  const { loadingNFTs } = useNFTSStore();
 
   return (
     <SearchResultsContainer>
       {searchText &&
-        !loadingNFTs &&
+        !loadingSearch &&
         (searchResults.length ? (
           <ItemsListContainer>
             {searchResults?.map((nft) => (
@@ -91,12 +90,12 @@ const NFTsSearchResults = ({
             {t('translation:emptyStates.noNFTsFound')}
           </ItemsEmptyContainer>
         ))}
-      {!searchText && !loadingNFTs && (
+      {!searchText && !loadingSearch && (
         <ItemsEmptyContainer>
           {t('translation:common.noRecentSearch')}
         </ItemsEmptyContainer>
       )}
-      {loadingNFTs && (
+      {loadingSearch && (
         <LoadingWrapper>
           <SpinnerIcon />
         </LoadingWrapper>

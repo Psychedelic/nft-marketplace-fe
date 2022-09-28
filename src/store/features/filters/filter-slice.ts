@@ -28,9 +28,11 @@ export interface SearchResultDataState {
   id: number;
   name: string;
   price: string;
-  wicpPrice: string;
   preview: string;
+  location: string;
+  owner: string;
   canister: string;
+  wicpPrice: string;
 }
 
 export interface FilterState {
@@ -225,7 +227,7 @@ export const filterSlice = createSlice({
     },
     setSearchResults: (
       state,
-      action: PayloadAction<any[]>,
+      action: PayloadAction<SearchResultDataState[]>,
     ) => {
       state.searchResults = action.payload;
     },
