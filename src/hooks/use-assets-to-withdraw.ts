@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useMatch } from 'react-router-dom';
 import {
   useAppDispatch,
   RootState,
@@ -11,6 +12,9 @@ export const useAssetsToWithdraw = () => {
   const dispatch = useAppDispatch();
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
+  const match = useMatch('/:collectionId');
+  const collectionId = match?.params?.collectionId;
+
   const recentlyFailedTransactions = useSelector(
     (state: RootState) =>
       state.marketplace.recentlyFailedTransactions,
@@ -21,11 +25,10 @@ export const useAssetsToWithdraw = () => {
   );
 
   useEffect(() => {
-    if (!isConnected || !plugPrincipal) return;
-
+    if (!isConnected || !plugPrincipal || !collectionId) return;
     dispatch(
       marketplaceActions.getAssetsToWithdraw({
-        userPrincipalId: plugPrincipal,
+        collectionId,
       }),
     );
   }, [
@@ -34,5 +37,7 @@ export const useAssetsToWithdraw = () => {
     plugPrincipal,
     recentlyWithdrawnAssets,
     recentlyFailedTransactions,
+    collectionId,
   ]);
 };
+
