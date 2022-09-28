@@ -86,6 +86,7 @@
     "services:start-v1": ".scripts/deploy-services-along-v2.sh",
     "mock:generate-tokens": ".scripts/generate-mocked-tokens-v2.sh",
     "mock:generate-tokens-v1": ".scripts/generate-mocked-tokens-v1.sh",
+    "mock:generate-icns": ".scripts/icns/generate-mocks-icns.sh",
     "kyasshu:redis": "redis-server /usr/local/etc/redis.conf",
     "kyasshu:redis-flush-all": "redis-cli flushall",
     "kyasshu:redis-shutdown": "redis-cli shutdown",
