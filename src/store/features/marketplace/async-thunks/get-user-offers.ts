@@ -17,7 +17,6 @@ import {
   parseE8SAmountToWICP,
 } from '../../../../utils/formatters';
 import { actorInstanceHandler } from '../../../../integrations/actor';
-import config from '../../../../config/env';
 
 export type GetUserNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -46,9 +45,8 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
     try {
       let floorDifferencePrice: string;
       let currencyMarketPrice: number;
-      const nonFungibleContractAddress = Principal.fromText(
-        config.nftCollectionId,
-      );
+      const nonFungibleContractAddress =
+        Principal.fromText(collectionId);
       const collection = await getJellyCollection({
         jellyInstance,
         collectionId,
