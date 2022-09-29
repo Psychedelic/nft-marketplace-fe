@@ -2,7 +2,6 @@ import { Actor, ActorSubclass, HttpAgent } from '@dfinity/agent';
 import { IDL } from '@dfinity/candid';
 import nftIdlFactory from '../../declarations/nft.did';
 import wicpIdlFactory from '../../declarations/wicp.did';
-import marketplaceIdlFactory from '../../declarations/marketplace.did';
 import capIdlFactory from '../../declarations/cap.did';
 import config from '../../config/env';
 import { AppLog } from '../../utils/log';
