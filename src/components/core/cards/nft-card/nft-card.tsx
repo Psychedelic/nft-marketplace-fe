@@ -34,6 +34,7 @@ import { NFTActionStatuses } from '../../../../constants/common';
 import { NumberTooltip } from '../../../number-tooltip';
 import { Media } from './media';
 import { isOperatorMarketplace } from '../../../../utils/nfts';
+import { generateImgFromText } from '../../../../utils/image-generator';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -201,6 +202,12 @@ export const NftCard = React.memo(
     // TODO: Move any status code as constant
     const isForSale = data.status === 'forSale';
 
+    // For NFT which do not have a thumbnail
+    // we generate a generated version
+    const hasThumbnailMedia = data?.location;
+
+    const generated = generateImgFromText(data.name);
+
     return (
       <CardContainer
         ref={containerRef}
@@ -225,12 +232,23 @@ export const NftCard = React.memo(
               </OwnedCardText>
               {!previewCard && <CardOptionsDropdown data={data} />}
             </Flex>
-            <Media
-              containerRef={containerRef}
-              location={data?.location}
-              preview={data?.preview}
-              previewCard={previewCard}
-            />
+            {hasThumbnailMedia ? (
+              <Media
+                containerRef={containerRef}
+                location={data?.location}
+                preview={data?.preview}
+                previewCard={previewCard}
+              />
+            ) : (
+              // TODO: Replace with correct changes either in <Media> component
+              // which should support Video or Static image, not just video
+              // at the moment used <img> as a placeholder, not meant for production
+              <img
+                style={{ width: '100%', height: 'auto' }}
+                src={generated}
+                alt=""
+              />
+            )}
             <Flex>
               <NftDataHeader>{data?.name}</NftDataHeader>
               <NftDataHeader>
