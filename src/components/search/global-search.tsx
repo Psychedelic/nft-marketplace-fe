@@ -70,6 +70,7 @@ export const GlobalSearch = ({
           }),
         );
       }
+      
       dispatch(
         nftsActions.getSearchResults({
           sort: SortKey.all,

@@ -67,8 +67,6 @@ export const getLatestActiveToken = createAsyncThunk<
         return metadata;
       });
 
-      console.log(data);
-
       dispatch(
         settingsActions.setLatestActiveToken(extractedNFTSList),
       );
