@@ -5,12 +5,14 @@ export const generateImgFromText = ({
   bgColour = '#fc0',
   fgColour = '#00f',
 }: {
-  text: string;
+  text?: string;
   fontSize?: number;
   fontFamily?: string;
   bgColour?: string;
   fgColour?: string;
 }) => {
+  if (!text) return;
+
   let el = document.createElement('canvas');
 
   const width = 500;

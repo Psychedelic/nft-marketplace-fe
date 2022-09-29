@@ -205,10 +205,35 @@ export const NftCard = React.memo(
     // For NFT which do not have a thumbnail
     // we generate a generated version
     const hasThumbnailMedia = data?.location;
+    const hasTraitName = data?.traits?.name;
 
-    const generated = generateImgFromText({
-      text: data.name,
-    });
+    const generated = (() => {
+      if (hasThumbnailMedia) return;
+
+      const text = hasTraitName;
+
+      if (!text) {
+        console.warn(
+          `Oops! Failed to gneerate nft card image, ${data.id} has missing name trait`,
+        );
+
+        return;
+      }
+
+      const generatedImg = generateImgFromText({
+        text,
+      });
+
+      if (!generatedImg) {
+        console.warn(
+          `Oops! Failed to generate nft card image for ${data.id}`,
+        );
+
+        return;
+      }
+
+      return generatedImg;
+    })();
 
     return (
       <CardContainer
@@ -252,7 +277,9 @@ export const NftCard = React.memo(
               />
             )}
             <Flex>
-              <NftDataHeader>{data?.name}</NftDataHeader>
+              <NftDataHeader>
+                {hasTraitName ?? data?.name}
+              </NftDataHeader>
               <NftDataHeader>
                 {isForSale || previewCard
                   ? `${t('translation:nftCard.price')}`
