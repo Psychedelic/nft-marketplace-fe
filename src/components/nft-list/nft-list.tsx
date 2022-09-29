@@ -39,6 +39,10 @@ export const NftList = () => {
     (state: RootState) => state.marketplace.currentCollectionDetails,
   );
 
+  const myNFTIds = useSelector(
+    (state: RootState) => state.nfts.myNFTIds,
+  );
+
   const traitsPayload = useTraitsPayload();
 
   const { sortBy } = useFilterStore();
@@ -135,8 +139,8 @@ export const NftList = () => {
             key={nft.id}
             owned={isNFTOwner({
               isConnected,
-              owner: nft?.owner,
-              principalId,
+              myNFTIds,
+              currentNFTId: nft.id,
             })}
             collectionDetails={collectionDetails}
           />

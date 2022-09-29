@@ -162,10 +162,14 @@ export const SellModal = ({
     setModalOpened(false);
   };
 
+  const myNFTIds = useSelector(
+    (state: RootState) => state.nfts.myNFTIds,
+  );
+
   const isOwner = isNFTOwner({
     isConnected,
-    owner: nftDetails?.owner,
-    principalId: plugPrincipal,
+    myNFTIds,
+    currentNFTId: tokenId,
   });
 
   return (

@@ -287,10 +287,14 @@ export const OfferAccordionHeader = ({
 
   const isListedWithPrice = isListed && lastSalePrice;
 
+  const myNFTIds = useSelector(
+    (state: RootState) => state.nfts.myNFTIds,
+  );
+
   const isOwner = isNFTOwner({
     isConnected,
-    owner,
-    principalId: plugPrincipal,
+    myNFTIds,
+    currentNFTId: id,
   });
 
   return (
@@ -406,10 +410,16 @@ export const OfferAccordion = ({
     (state: RootState) => state.marketplace.nftOffers,
   );
 
+  const { id } = useParams();
+
+  const myNFTIds = useSelector(
+    (state: RootState) => state.nfts.myNFTIds,
+  );
+
   const isOwner = isNFTOwner({
     isConnected,
-    owner,
-    principalId: plugPrincipal,
+    myNFTIds,
+    currentNFTId: id,
   });
 
   return (

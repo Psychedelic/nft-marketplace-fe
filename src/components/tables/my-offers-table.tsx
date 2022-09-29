@@ -34,7 +34,7 @@ import {
   formatPriceValue,
   parseE8SAmountToWICP,
 } from '../../utils/formatters';
-import { isNFTOwner } from '../../integrations/kyasshu/utils';
+import { verifyConnectedOwner } from '../../integrations/kyasshu/utils';
 import { formatTimestamp } from '../../integrations/functions/date';
 import { getICAccountLink } from '../../utils/account-id';
 import useMediaQuery from '../../hooks/use-media-query';
@@ -78,7 +78,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
   const { id: plugPrincipal, collectionId } = useParams();
 
-  const isConnectedOwner = isNFTOwner({
+  const isConnectedOwner = verifyConnectedOwner({
     isConnected,
     owner: connectedPlugUser,
     principalId: plugPrincipal,
@@ -183,7 +183,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         loading: true,
         loadedOffers: [],
       });
-      
+
       dispatch(
         marketplaceActions.getUserOffers({
           collectionId,

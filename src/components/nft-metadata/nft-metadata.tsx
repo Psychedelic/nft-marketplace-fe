@@ -1,10 +1,12 @@
 import React from 'react';
 import copyToClipboard from 'copy-to-clipboard';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
   notificationActions,
   useAppDispatch,
   usePlugStore,
+  RootState,
 } from '../../store';
 import {
   LinkButton,
@@ -41,10 +43,15 @@ export const NFTMetaData = ({
   const dispatch = useAppDispatch();
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
   const isMobileScreen = useMediaQuery('(max-width: 640px)');
+
+  const myNFTIds = useSelector(
+    (state: RootState) => state.nfts.myNFTIds,
+  );
+
   const isConnectedOwner = isNFTOwner({
     isConnected,
-    owner,
-    principalId: plugPrincipal,
+    myNFTIds,
+    currentNFTId: id,
   });
 
   return (
