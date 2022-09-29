@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 import {
   SearchResultsContainer,
   ItemsEmptyContainer,
@@ -24,7 +25,6 @@ import { useFilterStore } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
 import wicpIcon from '../../assets/wicp.svg';
 import { SpinnerIcon } from '../icons/custom';
-import config from '../../config/env';
 
 type NFTsSearchResultsTypes = {
   searchText: string;
@@ -37,6 +37,7 @@ const NFTsSearchResults = ({
 }: NFTsSearchResultsTypes) => {
   const { t } = useTranslation();
   const { searchResults, loadingSearch } = useFilterStore();
+  const { collectionId } = useParams();
 
   return (
     <SearchResultsContainer>
@@ -47,7 +48,10 @@ const NFTsSearchResults = ({
             {searchResults?.map((nft) => (
               <StyledRouterLink
                 to={`/${
-                  nft.canister ? nft.canister : config.nftCollectionId
+                  // TODO: Check if fallback collection id is correct
+                  // as this was placed here in principal, not tested, given that
+                  // previously we had a hard typed value
+                  nft.canister ? nft.canister : collectionId
                 }/nft/${nft.id}`}
                 onClick={closeDropDown}
                 key={nft.id}
@@ -105,3 +109,4 @@ const NFTsSearchResults = ({
 };
 
 export default NFTsSearchResults;
+
