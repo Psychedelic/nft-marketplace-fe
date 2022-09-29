@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Collection, SortKey } from '@psychedelic/jelly-js';
+import { Collection } from '@psychedelic/jelly-js';
 import { useSelector } from 'react-redux';
 import { ActionButton, LinkButton } from '../../components/core';
 import {
@@ -59,7 +59,6 @@ import {
   marketplaceActions,
   nftsActions,
   RootState,
-  settingsActions,
   useAppDispatch,
   useSettingsStore,
   useThemeStore,
@@ -110,7 +109,7 @@ const LandingPageView = () => {
 
   const handleViewCollection = (name: string) => {
     const collection = collections.find(
-      (collection: Collection) => collection.name === name,
+      (data: Collection) => data.name === name,
     );
 
     dispatch(
@@ -149,7 +148,7 @@ const LandingPageView = () => {
 
     const maxVal = Math.max(...Object.values(numbers));
     const key = Object.keys(numbers).find(
-      (key) => numbers[key] === maxVal,
+      (k) => numbers[k] === maxVal,
     );
 
     return key;
@@ -358,7 +357,7 @@ const LandingPageView = () => {
       </MultichainContainer>
       <Footer>
         <Flex>
-          <img src={psychedelic} />
+          <img src={psychedelic} alt="" />
           <FooterText>
             {t('translation:landingPage.builtByPsychedelic')}
           </FooterText>
