@@ -19,7 +19,6 @@ export const getSearchResults = createAsyncThunk<
 
     const jellyInstance = await jellyJsInstanceHandler({
       thunkAPI,
-      collectionId,
       slice: marketplaceSlice,
     });
 
@@ -92,3 +91,4 @@ export const getSearchResults = createAsyncThunk<
     }
   },
 );
+

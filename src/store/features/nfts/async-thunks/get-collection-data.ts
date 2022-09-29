@@ -18,7 +18,6 @@ export const getCollectionData = createAsyncThunk<
 
   const jellyInstance = await jellyJsInstanceHandler({
     thunkAPI,
-    collectionId,
     slice: marketplaceSlice,
   });
 

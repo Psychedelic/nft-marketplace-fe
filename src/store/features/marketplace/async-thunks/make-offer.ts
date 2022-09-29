@@ -34,7 +34,6 @@ export const makeOffer = createAsyncThunk<
   // otherwise creates a new instance
   const jellyInstance = await jellyJsInstanceHandler({
     thunkAPI,
-    collectionId,
     slice: marketplaceSlice,
   });
 

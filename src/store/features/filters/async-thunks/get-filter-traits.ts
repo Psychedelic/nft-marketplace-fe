@@ -62,7 +62,6 @@ export const getFilterTraits = createAsyncThunk<
 >('filters/getFilterTraits', async ({ collectionId }, thunkAPI) => {
   const jellyInstance = await jellyJsInstanceHandler({
     thunkAPI,
-    collectionId,
     slice: marketplaceSlice,
   });
 

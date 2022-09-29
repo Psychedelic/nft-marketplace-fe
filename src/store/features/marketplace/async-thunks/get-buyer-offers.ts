@@ -11,11 +11,6 @@ import { notificationActions } from '../../notifications';
 import { parseOffersMadeResponse } from '../../../../utils/parser';
 import { OffersTableItem } from '../../../../declarations/legacy';
 import { AppLog } from '../../../../utils/log';
-import {
-  floorDiffPercentageCalculator,
-  formatAddress,
-  parseE8SAmountToWICP,
-} from '../../../../utils/formatters';
 import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
 import { getJellyCollection } from '../../../../utils/jelly';
 import { getPrincipal } from '../../../../integrations/plug';
@@ -38,7 +33,6 @@ export const getBuyerOffers = createAsyncThunk<
 
   const jellyInstance = await jellyJsInstanceHandler({
     thunkAPI,
-    collectionId,
     slice: marketplaceSlice,
   });
 

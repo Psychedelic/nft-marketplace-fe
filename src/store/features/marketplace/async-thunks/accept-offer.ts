@@ -10,11 +10,9 @@ import {
 } from '../marketplace-slice';
 import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
 import { getJellyCollection } from '../../../../utils/jelly';
-import config from '../../../../config/env';
 import marketplaceV2IdlFactory from '../../../../declarations/marketplace-v2.did';
 import nftIdlFactory from '../../../../declarations/nft.did';
 import { AppLog } from '../../../../utils/log';
-import { parseAmountToE8S } from '../../../../utils/formatters';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { errorMessageHandler } from '../../../../utils/error';
 import { TransactionStatus } from '../../../../constants/transaction-status';
@@ -44,7 +42,6 @@ export const acceptOffer = createAsyncThunk<
   // otherwise creates a new instance
   const jellyInstance = await jellyJsInstanceHandler({
     thunkAPI,
-    collectionId,
     slice: marketplaceSlice,
   });
 
