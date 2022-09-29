@@ -83,11 +83,7 @@ const LandingPageView = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(
-      marketplaceActions.getAllCollections(
-        `${config.nftCollectionId}`,
-      ),
-    );
+    dispatch(marketplaceActions.getAllCollections());
 
     dispatch(
       nftsActions.getLatestActiveToken({

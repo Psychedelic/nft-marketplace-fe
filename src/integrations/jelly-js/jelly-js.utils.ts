@@ -15,12 +15,10 @@ export const createJellyJsInstance = () => {
 // otherwise creates a new instance
 export const jellyJsInstanceHandler = async ({
   thunkAPI,
-  collectionId,
   slice,
 }: {
   // TODO: Where is GetThunkAPI typedef?
   thunkAPI: any;
-  collectionId: string;
   // Slice should have a `setJellyJsInstance` action
   slice: any;
 }) => {
@@ -28,9 +26,7 @@ export const jellyJsInstanceHandler = async ({
     thunkAPI.getState();
 
   if (!jellyJsInstance) {
-    AppLog.warn(
-      `Creating new Jelly-js instance for collection ${collectionId}`,
-    );
+    AppLog.warn('Creating new Jelly-js instance');
 
     // TODO: initialisation of jelly-js
     const newJellyJsInstance = createJellyJsInstance();

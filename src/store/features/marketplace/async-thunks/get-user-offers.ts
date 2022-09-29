@@ -1,4 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { Principal } from '@dfinity/principal';
+import { NFTToken, Offer } from '@psychedelic/jelly-js';
 import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
 import {
   marketplaceActions,
@@ -15,10 +17,7 @@ import {
   parseE8SAmountToWICP,
 } from '../../../../utils/formatters';
 import { actorInstanceHandler } from '../../../../integrations/actor';
-import { Principal } from '@dfinity/principal';
 import config from '../../../../config/env';
-import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
-import { NFTToken, Offer } from '@psychedelic/jelly-js';
 
 export type GetUserNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -41,7 +40,6 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
 
     const jellyInstance = await jellyJsInstanceHandler({
       thunkAPI,
-      collectionId,
       slice: marketplaceSlice,
     });
 
@@ -82,17 +80,14 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
         const metadata = item.offers.reduce(
           (
             acc: any,
-            {
-              price,
-              tokenId: tokenId,
-              buyer: paymentAddress,
-              time,
-            }: Offer,
+            { price, tokenId, buyer: paymentAddress, time }: Offer,
           ) => {
             const fromDetails = {
+              // eslint-disable-next-line no-underscore-dangle
               formattedAddress: paymentAddress._isPrincipal
                 ? formatAddress(paymentAddress.toString())
                 : 'n/a',
+              // eslint-disable-next-line no-underscore-dangle
               address: paymentAddress._isPrincipal
                 ? paymentAddress.toString()
                 : 'n/a',
@@ -146,3 +141,4 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
     }
   },
 );
+

@@ -24,7 +24,6 @@ export const getLatestActiveToken = createAsyncThunk<
     // otherwise creates a new instance
     const jellyInstance = await jellyJsInstanceHandler({
       thunkAPI,
-      collectionId,
       slice: marketplaceSlice,
     });
 
@@ -87,3 +86,4 @@ export const getLatestActiveToken = createAsyncThunk<
     }
   },
 );
+

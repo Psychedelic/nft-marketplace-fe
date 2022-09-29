@@ -11,7 +11,6 @@ export const getTokenListing = createAsyncThunk<any | undefined, any>(
     // otherwise creates a new instance
     const jellyInstance = await jellyJsInstanceHandler({
       thunkAPI,
-      collectionId: collectionId.toString(),
       slice: marketplaceSlice,
     });
 

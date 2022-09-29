@@ -42,7 +42,6 @@ export const directBuy = createAsyncThunk<
   // otherwise creates a new instance
   const jellyInstance = await jellyJsInstanceHandler({
     thunkAPI,
-    collectionId,
     slice: marketplaceSlice,
   });
 

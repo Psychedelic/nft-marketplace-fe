@@ -21,7 +21,6 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
     // otherwise creates a new instance
     const jellyInstance: JellyUtils = await jellyJsInstanceHandler({
       thunkAPI,
-      collectionId: collectionId.toString(),
       slice: marketplaceSlice,
     });
 
@@ -99,3 +98,4 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
     }
   },
 );
+

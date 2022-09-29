@@ -35,7 +35,6 @@ export const getAllNFTs = createAsyncThunk<any | undefined, any>(
 
     const jellyInstance = await jellyJsInstanceHandler({
       thunkAPI,
-      collectionId,
       slice: marketplaceSlice,
     });
 
