@@ -19,7 +19,7 @@ export const getCollections = createAsyncThunk<
     slice: marketplaceSlice,
   });
 
-  const { onSuccess, onFailure } = params;
+  const { collectionId, onSuccess, onFailure } = params;
 
   try {
     const collectionsResponse = await actorInstance.getCollections();

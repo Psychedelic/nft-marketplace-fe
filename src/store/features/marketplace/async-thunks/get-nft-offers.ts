@@ -56,8 +56,10 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
       if (!offers) throw Error('Oops! Offers not found!');
 
       // Floor Difference calculation
-      const floorDifferenceResponse =
-        await jellyCollection.getFloorPrice();
+      // TODO: should ge the Collection from url params
+      // for this reason it has been disabled
+      // await jellyCollection.getFloorPrice();
+      const floorDifferenceResponse: any = {};
 
       if (floorDifferenceResponse?.ok) {
         floorPrice = floorDifferenceResponse?.data;
