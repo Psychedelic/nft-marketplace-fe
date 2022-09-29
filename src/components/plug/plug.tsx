@@ -15,11 +15,9 @@ import {
   createPlugAgent,
   checkIsConnected,
   getPrincipal,
-  formatAddress,
   getICNSInfo,
 } from '../../integrations/plug';
 import {
-  disconnectPlug,
   getPlugButtonText,
   handleConnect,
 } from '../../integrations/plug/plug.utils';
@@ -28,9 +26,9 @@ import config from '../../config/env';
 import { AppLog } from '../../utils/log';
 import useMediaQuery from '../../hooks/use-media-query';
 
-const { marketplaceCanisterId, wICPCanisterId, host } = config;
+const { wICPCanisterId, host } = config;
 
-const whitelist = [marketplaceCanisterId, wICPCanisterId];
+const whitelist = [wICPCanisterId];
 
 export const Plug = () => {
   const { t } = useTranslation();
