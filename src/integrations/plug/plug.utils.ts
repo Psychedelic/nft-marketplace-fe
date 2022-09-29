@@ -100,9 +100,9 @@ export const handleConnect = async ({
   dispatch,
   t,
 }: HandleConnectTypes) => {
-  const { marketplaceCanisterId, wICPCanisterId, host } = config;
+  const { wICPCanisterId, host } = config;
 
-  const whitelist = [marketplaceCanisterId, wICPCanisterId];
+  const whitelist = [wICPCanisterId];
 
   // TODO: mobile wallet connection
   // const ua = navigator.userAgent;

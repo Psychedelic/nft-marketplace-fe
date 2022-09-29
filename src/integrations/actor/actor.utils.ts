@@ -49,9 +49,7 @@ export const createActor = async ({
       interfaceFactory = capIdlFactory;
       break;
     default:
-      canisterId = config.marketplaceCanisterId;
-      interfaceFactory = marketplaceIdlFactory;
-      break;
+      throw new Error('Oops! Unknown actor service');
   }
 
   if (plugIsConnected && asPlugInstance) {

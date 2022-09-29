@@ -1,24 +1,19 @@
 /* eslint-disable no-underscore-dangle */
 import { Principal } from '@dfinity/principal';
 import { NFTToken, Offer as NFTOffer } from '@psychedelic/jelly-js';
-import { Listing } from '../declarations/marketplace';
 import {
   formatAddress,
   floorDiffPercentageCalculator,
   parseE8SAmountToWICP,
 } from './formatters';
 import { formatTimestamp } from '../integrations/functions/date';
-import { NFTMetadata, OffersTableItem } from '../declarations/legacy';
+import { OffersTableItem } from '../declarations/legacy';
 import {
   sortTokenOffersByPrice,
   sortTransactionsByTime,
 } from './sorting';
 import { OperationTypes, OperationType } from '../constants';
 import { checkIfDirectContractEvent } from './nfts';
-
-type GetAllListingsDataResponse = Array<
-  [[Principal, bigint], Listing]
->;
 
 type AssetToWithdraw = {
   principalId: string;
@@ -27,60 +22,8 @@ type AssetToWithdraw = {
 
 type AssetsToWithdraw = AssetToWithdraw[];
 
-export type GetAllListingsDataParsed = {
-  tokenId: BigInt;
-  listing: Listing;
-};
-
-export type GetAllListingsDataParsedObj = Record<number, Listing>;
-
 export const parseTokenId = (val: String) =>
   parseInt(val.replaceAll('_', ''), 10);
-
-export const parseAllListingResponse = (
-  data: GetAllListingsDataResponse,
-) => {
-  const parsed: GetAllListingsDataParsed[] = data.reduce(
-    (acc, curr) => {
-      const tokenId = curr[0][1];
-      const listing = curr[1];
-
-      acc = [
-        ...acc,
-        {
-          tokenId,
-          listing,
-        },
-      ];
-
-      return acc;
-    },
-    [] as GetAllListingsDataParsed[],
-  );
-
-  return parsed;
-};
-
-export const parseAllListingResponseAsObj = (
-  data: GetAllListingsDataResponse,
-) => {
-  const parsed: GetAllListingsDataParsedObj = data.reduce(
-    (acc, curr) => {
-      const tokenId = String(curr[0][1]);
-      const listing = curr[1];
-
-      acc = {
-        ...acc,
-        [tokenId]: listing,
-      };
-
-      return acc;
-    },
-    {} as GetAllListingsDataParsedObj,
-  );
-
-  return parsed;
-};
 
 type TokenOffers = Array<[bigint, Array<NFTOffer>]>;
 
@@ -109,7 +52,7 @@ export const parseGetTokenOffersResponse = ({
       (accChild, currChild) => {
         const {
           price,
-          tokenId: tokenId,
+          tokenId,
           buyer: paymentAddress,
           time,
         } = currChild;
@@ -169,12 +112,7 @@ export const parseOffersMadeResponse = ({
     const offerTableItem = offers.reduce(
       (
         acc: any,
-        {
-          price,
-          tokenId: tokenId,
-          buyer: paymentAddress,
-          time,
-        }: NFTOffer,
+        { price, tokenId, buyer: paymentAddress, time }: NFTOffer,
       ) => {
         const fromDetails = {
           formattedAddress: paymentAddress._isPrincipal
@@ -374,7 +312,7 @@ export const parseNFTOffers = ({
   const parsed = offers.reduce((accParent, currParent) => {
     const {
       price,
-      tokenId: token_id,
+      tokenId,
       buyer: paymentAddress,
       time: created,
     } = currParent;
@@ -397,8 +335,8 @@ export const parseNFTOffers = ({
       item: {
         // TODO: formatter for name, as number should probably have leading 0's
         // e.g. Cap Crowns #00001 ?!
-        name: `CAP Crowns #${token_id}`,
-        tokenId: BigInt(token_id),
+        name: `CAP Crowns #${tokenId}`,
+        tokenId: BigInt(tokenId),
       },
       price,
       floorDifference: floorPrice
