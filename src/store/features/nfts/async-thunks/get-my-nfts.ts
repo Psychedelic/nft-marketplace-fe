@@ -72,6 +72,11 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
       // update store with loaded NFTS details
       dispatch(nftsActions.setLoadedNFTS(actionPayload));
 
+      const myNFTIds = extractedNFTSList.map((nft: any) => nft.id);
+
+      // update store with loaded my NFT Ids
+      dispatch(nftsActions.setMyNFTIds(myNFTIds));
+
       if (!data) {
         AppLog.warn('Oops! Failed to get all NFTs via Jelly-js!');
 

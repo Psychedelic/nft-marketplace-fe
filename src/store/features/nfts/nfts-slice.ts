@@ -26,6 +26,7 @@ interface NFTSState {
   totalVolume: number;
   allNFTs: any[];
   lastIndexValue: number | undefined;
+  myNFTIds: string[];
 }
 
 // Define the initial state using that type
@@ -42,6 +43,7 @@ const initialState: NFTSState = {
   totalVolume: 0,
   allNFTs: [],
   lastIndexValue: undefined,
+  myNFTIds: [],
 };
 
 export interface LoadedNFTData {
@@ -205,6 +207,9 @@ export const nftsSlice = createSlice({
       action: PayloadAction<number | undefined>,
     ) => {
       state.lastIndexValue = action.payload;
+    },
+    setMyNFTIds: (state, action: PayloadAction<string[]>) => {
+      state.myNFTIds = action.payload;
     },
   },
 });
