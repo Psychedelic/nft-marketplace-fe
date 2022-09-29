@@ -34,7 +34,7 @@ import { NFTActionStatuses } from '../../../../constants/common';
 import { NumberTooltip } from '../../../number-tooltip';
 import { Media } from './media';
 import { isOperatorMarketplace } from '../../../../utils/nfts';
-import useMediaQuery from '../../../../hooks/use-media-query';
+import { generateImgFromText } from '../../../../utils/image-generator';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -202,6 +202,39 @@ export const NftCard = React.memo(
     // TODO: Move any status code as constant
     const isForSale = data.status === 'forSale';
 
+    // For NFT which do not have a thumbnail
+    // we generate a generated version
+    const hasThumbnailMedia = data?.location;
+    const hasTraitName = data?.traits?.name;
+
+    const generated = (() => {
+      if (hasThumbnailMedia) return;
+
+      const text = hasTraitName;
+
+      if (!text) {
+        console.warn(
+          `Oops! Failed to gneerate nft card image, ${data.id} has missing name trait`,
+        );
+
+        return;
+      }
+
+      const generatedImg = generateImgFromText({
+        text,
+      });
+
+      if (!generatedImg) {
+        console.warn(
+          `Oops! Failed to generate nft card image for ${data.id}`,
+        );
+
+        return;
+      }
+
+      return generatedImg;
+    })();
+
     return (
       <CardContainer
         ref={containerRef}
@@ -226,14 +259,27 @@ export const NftCard = React.memo(
               </OwnedCardText>
               {!previewCard && <CardOptionsDropdown data={data} />}
             </Flex>
-            <Media
-              containerRef={containerRef}
-              location={data?.location}
-              preview={data?.preview}
-              previewCard={previewCard}
-            />
+            {hasThumbnailMedia ? (
+              <Media
+                containerRef={containerRef}
+                location={data?.location}
+                preview={data?.preview}
+                previewCard={previewCard}
+              />
+            ) : (
+              // TODO: Replace with correct changes either in <Media> component
+              // which should support Video or Static image, not just video
+              // at the moment used <img> as a placeholder, not meant for production
+              <img
+                style={{ width: '100%', height: 'auto' }}
+                src={generated}
+                alt=""
+              />
+            )}
             <Flex>
-              <NftDataHeader>{data?.name}</NftDataHeader>
+              <NftDataHeader>
+                {hasTraitName ?? data?.name}
+              </NftDataHeader>
               <NftDataHeader>
                 {isForSale || previewCard
                   ? `${t('translation:nftCard.price')}`
