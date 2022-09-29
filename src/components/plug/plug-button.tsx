@@ -25,7 +25,6 @@ import { useTheme } from '../../hooks';
 import { Icon } from '../icons';
 import wicpImage from '../../assets/wicp.svg';
 import PlugBalance from './plug-balance';
-import config from '../../config/env';
 
 export type PlugButtonProps = {
   handleConnect: (dispatch: any) => void;
@@ -62,11 +61,7 @@ export const PlugButton = ({
   }, [dispatch]);
 
   const myOffersHandler = useCallback(() => {
-    navigate(
-      `${
-        collectionId || config.nftCollectionId
-      }/offers/${userPrincipal}`,
-    );
+    navigate(`${collectionId}/offers/${userPrincipal}`);
     setOpenDropdown(false);
   }, [navigate, userPrincipal, collectionId]);
 
@@ -105,7 +100,7 @@ export const PlugButton = ({
     );
 
   const setMyNfts = () => {
-    navigate(`/${collectionId || config.nftCollectionId}`);
+    navigate(`/${collectionId}`);
     dispatch(filterActions.setMyNfts(true));
     if (filterExists(t('translation:buttons.action.myNfts'))) return;
     dispatch(
