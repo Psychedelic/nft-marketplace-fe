@@ -48,13 +48,16 @@ export class KyasshuUrl {
     return `${config.kyasshuMarketplaceAPI}/cap/token/txns/${collectionId}/${tokenId}`;
   }
 
+  // TODO: Is getSearchResults still being in use?
+  // if not then this and all related state handling removed...
   static getSearchResults({
     sort,
     order,
     page,
     count,
+    collectionId,
   }: NSKyasshuUrl.GetSearchQueryParams): string {
-    return `${config.kyasshuMarketplaceAPI}/marketplace/${config.nftCollectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
+    return `${config.kyasshuMarketplaceAPI}/marketplace/${collectionId}/nfts/${sort}/${order}/${page}?count=${count}`;
   }
 }
 
@@ -95,5 +98,6 @@ export namespace NSKyasshuUrl {
     sort: string;
     order: string;
     count?: number;
+    collectionId: string;
   };
 }
