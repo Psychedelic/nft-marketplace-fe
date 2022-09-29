@@ -1,4 +1,3 @@
-import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { actorInstanceHandler } from '../../../../integrations/actor';
 import { marketplaceSlice } from '../marketplace-slice';
@@ -48,3 +47,4 @@ export const getCollections = createAsyncThunk<
     }
   }
 });
+
