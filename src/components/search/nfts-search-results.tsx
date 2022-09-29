@@ -19,6 +19,7 @@ import {
   LoadingWrapper,
   ItemDetailsContainer,
   StyledRouterLink,
+  ThumbnailSkeleton,
 } from './styles';
 import { useFilterStore } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
@@ -55,7 +56,11 @@ const NFTsSearchResults = ({
                 <ItemDetailsContainer>
                   <ItemDetailsWrapper>
                     <ItemDetails>
-                      <ItemLogo src={nft.preview} alt="crowns" />
+                      {!nft.preview ? (
+                        <ThumbnailSkeleton />
+                      ) : (
+                        <ItemLogo src={nft.preview} alt="crowns" />
+                      )}
                       <ItemNameContainer>
                         <ItemName>{`#${nft.id}`}</ItemName>
                         <ItemDescription>{nft.name}</ItemDescription>

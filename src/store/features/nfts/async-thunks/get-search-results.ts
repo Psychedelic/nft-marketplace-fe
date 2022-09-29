@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { JellyCollection } from '@psychedelic/jelly-js';
 import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
-import { nftsActions } from '../nfts-slice';
 import { marketplaceSlice } from '../../marketplace/marketplace-slice';
 import { createActor } from '../../../../integrations/actor';
 import { getJellyCollection } from '../../../../utils/jelly';
@@ -48,24 +47,10 @@ export const getSearchResults = createAsyncThunk<
 
       const { data } = res;
 
-      const collectionName = await (async () => {
-        const actor = await createActor({
-          serviceName: 'dip721',
-          collectionId,
-        });
-
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        const res = await actor.dip721_name();
-
-        if (!res && !Array.isArray(res) && !res.length) return;
-
-        return res.pop();
-      })();
-
       const extractedNFTSList = data.map((nft: any) => {
         const metadata = {
           id: nft.id,
-          name: collectionName,
+          name: nft.collectionName,
           price: nft.listing?.price,
           wicpPrice: parseE8SAmountToWICP(nft.listing?.price),
           preview: nft.thumbnail,

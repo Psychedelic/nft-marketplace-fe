@@ -3,6 +3,7 @@ import * as Tabs from '@radix-ui/react-tabs';
 import { styled, keyframes } from '../../stitches.config';
 import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '../icons';
+import { SkeletonBox } from '../core';
 
 const fadeIn = keyframes({
   '0%': {
@@ -410,4 +411,11 @@ export const TabsContent = styled(Tabs.Content, {
   '&:focus': {
     outline: 'none',
   },
+});
+
+export const ThumbnailSkeleton = styled(SkeletonBox, {
+  width: '40px',
+  height: '40px',
+  marginRight: '12px',
+  borderRadius: '6px',
 });

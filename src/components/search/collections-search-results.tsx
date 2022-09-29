@@ -15,6 +15,7 @@ import {
   LoadingWrapper,
   ItemDetailsContainer,
   StyledRouterLink,
+  ThumbnailSkeleton,
 } from './styles';
 import { SpinnerIcon } from '../icons/custom';
 import { mockCollectionsList } from './mock-data';
@@ -63,7 +64,14 @@ const CollectionsSearchResults = ({
                 <ItemDetailsContainer>
                   <ItemDetailsWrapper>
                     <ItemDetails>
-                      <ItemLogo src={collection.logo} alt="crowns" />
+                      {!collection.logo ? (
+                        <ThumbnailSkeleton />
+                      ) : (
+                        <ItemLogo
+                          src={collection.logo}
+                          alt="crowns"
+                        />
+                      )}
                       <ItemNameContainer>
                         <ItemName>{collection.name}</ItemName>
                         <ItemDescription>
