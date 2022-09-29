@@ -34,7 +34,6 @@ import { NFTActionStatuses } from '../../../../constants/common';
 import { NumberTooltip } from '../../../number-tooltip';
 import { Media } from './media';
 import { isOperatorMarketplace } from '../../../../utils/nfts';
-import useMediaQuery from '../../../../hooks/use-media-query';
 
 export type NftCardProps = {
   owned?: boolean;
