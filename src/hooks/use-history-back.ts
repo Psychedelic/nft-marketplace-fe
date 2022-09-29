@@ -9,7 +9,9 @@ export const useHistoryBack = () => {
 
   const goBack = () =>
     (window.history.state.idx !== 0 && history.back()) ||
-    navigate(`/${collectionId}`);
+    // TODO: In any case if collection id not available
+    // here's a fallback, thus need to be verified in context of app
+    navigate(`/${collectionId ?? ''}`);
 
   return goBack;
 };
