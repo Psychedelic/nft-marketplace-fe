@@ -46,21 +46,16 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
       // TODO: map nft list
       const extractedNFTSList = data.map((nft: any) => {
         const metadata = {
-          // TODO: update price, lastOffer & traits values
-          // TODO: Finalize object format after validating mock and kyasshu data
           id: nft.id,
           name: nft.collectionName,
-          // TODO: parse from listing field when available
-          price: nft.listing?.price,
-          lastOffer: nft.lastOfferTime,
-          lastSale: nft.lastSale,
-          // TODO: update nft thumbnail
-          preview: nft.thumbnail,
-          location: nft?.url,
-          traits: nft.traits,
-          status: nft?.status,
+          price: nft?.price,
+          lastOffer: nft?.lastOffer,
+          lastSale: nft?.lastSale,
+          preview: nft?.thumbnail,
+          location: nft?.location,
+          traits: nft?.traits,
+          status: nft?.lastActionTaken,
           owner: nft?.owner,
-          // lastActionTaken: findLastAction(nft),
           operator: nft?.operator,
           rendered: true,
         };
@@ -89,4 +84,3 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
     }
   },
 );
-
