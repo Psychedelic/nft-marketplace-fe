@@ -2,12 +2,13 @@ import { Principal } from '@dfinity/principal';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { actorInstanceHandler } from '../../../../integrations/actor';
 import { marketplaceSlice } from '../marketplace-slice';
-import config from '../../../../config/env';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
-export type GetFloorPriceProps = DefaultCallbacks;
+export type GetFloorPriceProps = {
+  collectionId: string;
+} & DefaultCallbacks;
 
 export const getFloorPrice = createAsyncThunk<
   any | undefined,
@@ -21,13 +22,12 @@ export const getFloorPrice = createAsyncThunk<
     slice: marketplaceSlice,
   });
 
-  const { onSuccess, onFailure } = params;
+  const { collectionId, onSuccess, onFailure } = params;
 
   try {
     let floorPriceinWICP;
-    const nonFungibleContractAddress = Principal.fromText(
-      config.nftCollectionId,
-    );
+    const nonFungibleContractAddress =
+      Principal.fromText(collectionId);
 
     const floorResponse = await actorInstance.getFloor(
       nonFungibleContractAddress,
