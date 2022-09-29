@@ -272,7 +272,7 @@
   },
   "nftCard": {
     "owned": "Owned",
-    "forSale": "Buy Now",
+    "listed": "Buy Now",
     "forOffer": "Make Offer",
     "offerFor": "Offer for",
     "last": "Last",
@@ -289,7 +289,7 @@
   },
   "filters": {
     "priceRange": "Price Range",
-    "forSale": "forSale",
+    "listed": "listed",
     "forOffer": "forOffer",
     "clearAll": "Clear All"
   },

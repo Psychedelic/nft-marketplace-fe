@@ -7,10 +7,7 @@ import {
   useAppDispatch,
   useFilterStore,
   useNFTSStore,
-  usePlugStore,
 } from '../../store';
-import { parseAmountToE8SAsNum } from '../../utils/formatters';
-import { getSortValue } from '../../utils/sorting';
 import {
   useTraitsPayload,
   usePriceValues,
@@ -24,31 +21,8 @@ export const useNFTSFetcher = () => {
   const [currentAbortController, setCurrentAbortController] =
     useState<AbortController>();
   const { traits, isMyNfts, status } = useFilterStore();
-  const { principalId } = usePlugStore();
   const traitsPayload = useTraitsPayload();
   const priceValues = usePriceValues();
-  // eslint-disable-next-line object-curly-newline
-  let payload = {};
-  if (
-    traitsPayload.length ||
-    isMyNfts ||
-    (priceValues && Object.keys(priceValues).length) ||
-    status !== ''
-  ) {
-    payload = {
-      traits: traitsPayload.length ? traitsPayload : undefined,
-      principal: isMyNfts ? principalId : undefined,
-      status,
-      price:
-        priceValues && Object.keys(priceValues).length
-          ? {
-              min: parseAmountToE8SAsNum(priceValues?.min),
-              max: parseAmountToE8SAsNum(priceValues?.max),
-              type: 'currentPrice',
-            }
-          : undefined,
-    };
-  }
 
   const { sortBy, reverse } = useFilterStore();
   const { lastIndexValue } = useNFTSStore();
@@ -74,7 +48,7 @@ export const useNFTSFetcher = () => {
           traits: traitsPayload.length
             ? getTraitPayloadData(traitsPayload)
             : undefined,
-          sort: getSortValue(sortBy),
+          sort: sortBy,
           order: 'd',
           page: lastIndexValue,
           count: 25,
