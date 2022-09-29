@@ -3,6 +3,12 @@ import { useFilterStore } from '../../store';
 
 export type CheckNFTOwnerParams = {
   isConnected: boolean;
+  myNFTIds: string[];
+  currentNFTId?: string;
+};
+
+export type VerifyConnectedOwnerParams = {
+  isConnected: boolean;
   owner?: string;
   principalId?: string;
 };
@@ -36,6 +42,19 @@ export const usePriceValues = () => {
 };
 
 export const isNFTOwner = (params: CheckNFTOwnerParams) => {
+  const { isConnected, myNFTIds, currentNFTId } = params;
+
+  if (!isConnected || !currentNFTId || !myNFTIds.length) return false;
+
+  if (myNFTIds.find((id: string) => id === currentNFTId.toString()))
+    return true;
+
+  return false;
+};
+
+export const verifyConnectedOwner = (
+  params: VerifyConnectedOwnerParams,
+) => {
   const { isConnected, owner, principalId } = params;
 
   if (!isConnected) return false;
