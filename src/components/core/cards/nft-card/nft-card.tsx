@@ -206,7 +206,9 @@ export const NftCard = React.memo(
     // we generate a generated version
     const hasThumbnailMedia = data?.location;
 
-    const generated = generateImgFromText(data.name);
+    const generated = generateImgFromText({
+      text: data.name,
+    });
 
     return (
       <CardContainer
