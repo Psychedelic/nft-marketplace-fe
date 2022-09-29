@@ -69,11 +69,7 @@ export const MobileNavBar = ({
   }, [navigate, principalId]);
 
   const myOffersHandler = useCallback(() => {
-    navigate(
-      `${
-        collectionId || config.nftCollectionId
-      }/offers/${principalId}`,
-    );
+    navigate(`${collectionId}/offers/${principalId}`);
     setOpenMobileNavbar(false);
   }, [navigate, principalId]);
 
@@ -197,3 +193,4 @@ export const MobileNavBar = ({
     </MobileMenuContentWrapper>
   );
 };
+
