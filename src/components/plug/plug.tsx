@@ -1,10 +1,12 @@
 import React, { useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { PlugButton } from './plug-button';
 import {
   usePlugStore,
   plugActions,
   useAppDispatch,
+  RootState,
 } from '../../store';
 import {
   isPlugInstalled,
@@ -45,6 +47,10 @@ export const Plug = () => {
   const isConnecting = useMemo(
     () => connectionStatus === PlugStatusCodes.Connecting,
     [connectionStatus],
+  );
+
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
   );
 
   useEffect(() => {
@@ -116,6 +122,15 @@ export const Plug = () => {
       getPrincipalId();
     }
   }, [isConnected, dispatch]);
+
+  // Get user owned tokens
+  // on connection successful
+  // on collectionId change
+  useEffect(() => {
+    if (!isConnected || !collectionDetails.collectionId) return;
+
+    console.log(collectionDetails.collectionId, 'collectionId');
+  }, [isConnected, collectionDetails, dispatch]);
 
   return (
     <>
