@@ -6,12 +6,7 @@ import capIdlFactory from '../../declarations/cap.did';
 import config from '../../config/env';
 import { AppLog } from '../../utils/log';
 
-export type ServiceName =
-  | 'marketplace'
-  | 'crowns'
-  | 'wicp'
-  | 'cap'
-  | 'dip721';
+export type ServiceName = 'marketplace' | 'wicp' | 'cap' | 'dip721';
 
 export const createActor = async ({
   serviceName = 'marketplace',
@@ -33,10 +28,6 @@ export const createActor = async ({
         throw Error('Oops! Missing NFT Collection id.');
 
       canisterId = collectionId;
-      interfaceFactory = nftIdlFactory;
-      break;
-    case 'crowns':
-      canisterId = config.nftCollectionId;
       interfaceFactory = nftIdlFactory;
       break;
     case 'wicp':
