@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Collection, SortKey } from '@psychedelic/jelly-js';
+import { useSelector } from 'react-redux';
 import { ActionButton, LinkButton } from '../../components/core';
 import {
   Container,
@@ -64,9 +66,7 @@ import {
 } from '../../store';
 
 import config from '../../config/env';
-import { Collection, SortKey } from '@psychedelic/jelly-js';
 import RecentActivities from './recent-activity';
-import { useSelector } from 'react-redux';
 
 const LandingPageView = () => {
   const { t } = useTranslation();
@@ -136,14 +136,15 @@ const LandingPageView = () => {
   };
 
   const getLatestActiveToken = () => {
-    let lastListing = Number(latestActiveToken?.lastListingTime) || 0;
-    let lastOffer = Number(latestActiveToken?.lastOfferTime) || 0;
-    let lastSale = Number(latestActiveToken?.lastSaleTime) || 0;
+    const lastListing =
+      Number(latestActiveToken?.lastListingTime) || 0;
+    const lastOffer = Number(latestActiveToken?.lastOfferTime) || 0;
+    const lastSale = Number(latestActiveToken?.lastSaleTime) || 0;
 
-    var numbers: Record<string, number> = {
-      lastListing: lastListing,
-      lastOffer: lastOffer,
-      lastSale: lastSale,
+    const numbers: Record<string, number> = {
+      lastListing,
+      lastOffer,
+      lastSale,
     };
 
     const maxVal = Math.max(...Object.values(numbers));
