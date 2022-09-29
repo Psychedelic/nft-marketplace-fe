@@ -19,7 +19,7 @@ export const getOwnerTokenIdentifiers = createAsyncThunk<
     // otherwise creates a new instance
     const actorInstance = await actorInstanceHandler({
       thunkAPI,
-      serviceName: 'crowns',
+      serviceName: 'dip721',
       slice: crownsSlice,
     });
 
