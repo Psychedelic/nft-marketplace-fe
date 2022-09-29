@@ -4,14 +4,10 @@ import {
   KyasshuUrl,
   NSKyasshuUrl,
 } from '../../../../integrations/kyasshu';
-import { filterActions } from '..';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
-import {
-  parseAmountToE8S,
-  parseE8SAmountToWICP,
-} from '../../../../utils/formatters';
+import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 import { SearchResultDataState } from '../filter-slice';
 import { SortOptions } from '../../../../constants/sort-options';
 
@@ -21,6 +17,7 @@ export type GetSearchResultsProps =
     abortController: AbortController;
   };
 
+// TODO: Is this still in use? if not then remove it and all related state handling
 export const getSearchResults = createAsyncThunk<
   SearchResultDataState[] | undefined,
   GetSearchResultsProps
@@ -30,11 +27,14 @@ export const getSearchResults = createAsyncThunk<
     { search, sort, order, page, count, abortController },
     { dispatch },
   ) => {
+    // TODO: get dynamically from url
+    const collectionId = '';
+
     const payload = {
       search: search.length > 0 ? search : undefined,
     };
 
-    let sortingDetails = {
+    const sortingDetails = {
       sortBy: sort,
       orderBy: order,
     };
@@ -58,6 +58,7 @@ export const getSearchResults = createAsyncThunk<
           order: sortingDetails.orderBy,
           page,
           count,
+          collectionId,
         }),
         payload,
         {
@@ -104,3 +105,4 @@ export const getSearchResults = createAsyncThunk<
     }
   },
 );
+
