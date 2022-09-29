@@ -7,6 +7,7 @@ import {
   plugActions,
   useAppDispatch,
   RootState,
+  nftsActions,
 } from '../../store';
 import {
   isPlugInstalled,
@@ -123,13 +124,15 @@ export const Plug = () => {
     }
   }, [isConnected, dispatch]);
 
-  // Get user owned tokens
-  // on connection successful
+  // Get user owned tokenIds
+  // on connection successful and
   // on collectionId change
   useEffect(() => {
     if (!isConnected || !collectionDetails.collectionId) return;
 
-    console.log(collectionDetails.collectionId, 'collectionId');
+    const { collectionId } = collectionDetails;
+
+    dispatch(nftsActions.getMyNFTs({ collectionId }));
   }, [isConnected, collectionDetails, dispatch]);
 
   return (
