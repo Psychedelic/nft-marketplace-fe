@@ -2,6 +2,8 @@ import React, { useState, useCallback } from 'react';
 import debounce from 'lodash.debounce';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import { useParams } from 'react-router';
+import { SortKey } from '@psychedelic/jelly-js';
 import { SearchInput } from '../core';
 import {
   SearchModalTrigger,
@@ -19,9 +21,6 @@ import {
   useNFTSStore,
 } from '../../store';
 import SearchResults from './search-results';
-import { useParams } from 'react-router';
-import { SortKey } from '@psychedelic/jelly-js';
-import config from '../../config/env';
 
 const DEBOUNCE_TIMEOUT_MS = 400;
 
@@ -45,10 +44,6 @@ export const GlobalSearch = ({
   const dispatch = useAppDispatch();
   const { collectionId } = useParams();
 
-  const collection_id = collectionId
-    ? collectionId
-    : config.nftCollectionId;
-
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState('');
   const [currentAbortController, setCurrentAbortController] =
@@ -59,6 +54,7 @@ export const GlobalSearch = ({
     setSearchText('');
   };
 
+  // TODO: Are the dependencies for this correct?
   const debouncedSearchHandler = useCallback(
     debounce((value: string, abortController: AbortController) => {
       dispatch(
@@ -68,7 +64,7 @@ export const GlobalSearch = ({
           count: 25,
           search: value,
           abortController,
-          collectionId: collection_id,
+          collectionId,
         }),
       );
     }, DEBOUNCE_TIMEOUT_MS),
@@ -93,6 +89,7 @@ export const GlobalSearch = ({
 
   const closeDropDown = () => {
     handleModalOpen(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     revertMobileNavAnimation && revertMobileNavAnimation();
   };
 
