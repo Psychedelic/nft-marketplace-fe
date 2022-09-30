@@ -75,6 +75,7 @@
   "scripts": {
     "start": ".scripts/start.sh",
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "build:staging": "DISABLE_ESLINT_PLUGIN=true NODE_ENV=test react-scripts build",
     "test": "DISABLE_ESLINT_PLUGIN=true react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
