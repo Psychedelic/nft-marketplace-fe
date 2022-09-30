@@ -10,6 +10,11 @@ import { AppLog } from '../../../../utils/log';
 export const getAllCollections = createAsyncThunk<any>(
   'marketplace/getCollections',
   async (_params, thunkAPI) => {
+    console.log(
+      '[debug] getAllCollections: process.env: ',
+      process.env,
+    );
+
     // Checks if an actor instance exists already
     // otherwise creates a new instance
     const jellyInstance = await jellyJsInstanceHandler({
@@ -22,6 +27,11 @@ export const getAllCollections = createAsyncThunk<any>(
     try {
       const collections: Collection[] =
         await jellyInstance.getCollections();
+
+      console.log(
+        '[debug] getAllCollections: collections: ',
+        collections,
+      );
 
       dispatch(marketplaceActions.setCollections(collections));
     } catch (err) {

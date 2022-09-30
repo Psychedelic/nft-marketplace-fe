@@ -77,13 +77,17 @@ const LandingPageView = () => {
     (state: RootState) => state.marketplace.collections,
   );
 
-  console.log('[debug] collections: ', collections);
+  console.log('[debug] landingPageView: collections: ', collections);
 
   // const { latestActiveToken } = useSettingsStore();
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(
+      '[debug] landingPageView: collections: getAllCollections should call',
+    );
+
     dispatch(marketplaceActions.getAllCollections());
 
     // dispatch(
