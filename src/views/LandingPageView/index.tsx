@@ -77,6 +77,8 @@ const LandingPageView = () => {
     (state: RootState) => state.marketplace.collections,
   );
 
+  console.log('[debug] collections: ', collections);
+
   // const { latestActiveToken } = useSettingsStore();
 
   const navigate = useNavigate();
