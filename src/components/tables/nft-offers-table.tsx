@@ -72,6 +72,10 @@ export const NFTOffersTable = ({
 
   const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
+  const myNFTIds = useSelector(
+    (state: RootState) => state.nfts.myNFTIds,
+  );
+
   useEffect(() => {
     if (!isConnectedOwner && !columnsToHide.includes('action')) {
       setColumnsToHide((oldColumns) => [...oldColumns, 'action']);
@@ -155,8 +159,8 @@ export const NFTOffersTable = ({
         accessor: ({ fromDetails }: OffersTableItem) => {
           const isOwner = isNFTOwner({
             isConnected,
-            owner: fromDetails.address,
-            principalId: plugPrincipal,
+            myNFTIds,
+            currentNFTId: id,
           });
           const url = getICAccountLink(fromDetails.address);
 

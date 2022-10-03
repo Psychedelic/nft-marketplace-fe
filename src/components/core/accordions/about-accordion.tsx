@@ -1,9 +1,14 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
 import * as Accordion from '@radix-ui/react-accordion';
-import { useAppDispatch, usePlugStore } from '../../../store';
+import {
+  useAppDispatch,
+  usePlugStore,
+  RootState,
+} from '../../../store';
 import { LinkButton } from '../buttons';
 import { SkeletonBox } from '../skeleton';
 import {
@@ -35,11 +40,13 @@ import { useTheme } from '../../../hooks';
 export type AboutAccordionProps = {
   owner?: string;
   isMobileScreen?: boolean;
+  id?: string;
 };
 
 export const AboutAccordionHeader = ({
   owner,
   isMobileScreen,
+  id,
 }: AboutAccordionProps) => {
   const { t } = useTranslation();
 
@@ -72,10 +79,14 @@ export const AboutAccordionHeader = ({
 
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
 
+  const myNFTIds = useSelector(
+    (state: RootState) => state.nfts.myNFTIds,
+  );
+
   const isOwner = isNFTOwner({
     isConnected,
-    owner,
-    principalId: plugPrincipal,
+    myNFTIds,
+    currentNFTId: id,
   });
 
   const AccordionHeadContentData = [
@@ -181,6 +192,7 @@ export const AboutAccordion = ({
           <AboutAccordionHeader
             owner={owner}
             isMobileScreen={isMobileScreen}
+            id={id}
           />
         </AccordionHead>
       )}

@@ -39,6 +39,7 @@ export const getCollectionDetails = createAsyncThunk<
 
       const currentCollectionDetails = {
         marketplaceId: collection.marketplaceId.toString(),
+        collectionId: collection.id.toString(),
       };
 
       return currentCollectionDetails;

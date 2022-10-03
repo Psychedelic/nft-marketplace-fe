@@ -1,10 +1,13 @@
 import React, { useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { PlugButton } from './plug-button';
 import {
   usePlugStore,
   plugActions,
   useAppDispatch,
+  RootState,
+  nftsActions,
 } from '../../store';
 import {
   isPlugInstalled,
@@ -45,6 +48,10 @@ export const Plug = () => {
   const isConnecting = useMemo(
     () => connectionStatus === PlugStatusCodes.Connecting,
     [connectionStatus],
+  );
+
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
   );
 
   useEffect(() => {
@@ -116,6 +123,17 @@ export const Plug = () => {
       getPrincipalId();
     }
   }, [isConnected, dispatch]);
+
+  // Get user owned tokenIds
+  // on connection successful and
+  // on collectionId change
+  useEffect(() => {
+    if (!isConnected || !collectionDetails.collectionId) return;
+
+    const { collectionId } = collectionDetails;
+
+    dispatch(nftsActions.getMyNFTs({ collectionId }));
+  }, [isConnected, collectionDetails, dispatch]);
 
   return (
     <>

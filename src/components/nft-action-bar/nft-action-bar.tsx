@@ -1,9 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { useHistoryBack } from '../../hooks/use-history-back';
 import { Container, NftActionBarWrapper, ActionText } from './styles';
 
-import { usePlugStore } from '../../store';
+import { usePlugStore, RootState } from '../../store';
 import { isNFTOwner } from '../../integrations/kyasshu/utils';
 import { Icon } from '../icons';
 import useMediaQuery from '../../hooks/use-media-query';
@@ -27,10 +29,16 @@ export const NftActionBar = ({
   const { isConnected, principalId: plugPrincipal } = usePlugStore();
   const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
+  const { id } = useParams();
+
+  const myNFTIds = useSelector(
+    (state: RootState) => state.nfts.myNFTIds,
+  );
+
   const isConnectedOwner = isNFTOwner({
     isConnected,
-    owner,
-    principalId: plugPrincipal,
+    myNFTIds,
+    currentNFTId: id,
   });
 
   const goBack = useHistoryBack();

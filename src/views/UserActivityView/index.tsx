@@ -4,7 +4,7 @@ import { UserActivityTable } from '../../components/tables';
 import { Container, TitleWrapper, Title } from './styles';
 import { useSettingsStore, usePlugStore } from '../../store';
 import { NftMetadataBackground } from '../../components/collection-overview/styles';
-import { isNFTOwner } from '../../integrations/kyasshu/utils';
+import { verifyConnectedOwner } from '../../integrations/kyasshu/utils';
 
 /* --------------------------------------------------------------------------
  * User Activity View Component
@@ -20,7 +20,7 @@ const UserActivityView = () => {
 
   const { id: plugPrincipal } = useParams();
 
-  const isConnectedOwner = isNFTOwner({
+  const isConnectedOwner = verifyConnectedOwner({
     isConnected,
     owner: connectedPlugUser,
     principalId: plugPrincipal,

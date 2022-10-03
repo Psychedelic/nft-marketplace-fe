@@ -14,7 +14,7 @@ import {
 import { OfferTypeStatusCodes } from '../../constants/my-offers';
 import { useSettingsStore, usePlugStore } from '../../store';
 import { NftMetadataBackground } from '../../components/collection-overview/styles';
-import { isNFTOwner } from '../../integrations/kyasshu/utils';
+import { verifyConnectedOwner } from '../../integrations/kyasshu/utils';
 import useMediaQuery from '../../hooks/use-media-query';
 import { MobileMyOffersTab } from '../../components/tabs/mobile-my-offers-tab';
 
@@ -35,7 +35,7 @@ const OffersView = () => {
 
   const { id: plugPrincipal } = useParams();
 
-  const isConnectedOwner = isNFTOwner({
+  const isConnectedOwner = verifyConnectedOwner({
     isConnected,
     owner: connectedPlugUser,
     principalId: plugPrincipal,
