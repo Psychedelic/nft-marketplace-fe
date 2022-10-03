@@ -7,7 +7,6 @@ export * from './accept-offer';
 export * from './get-buyer-offers';
 export * from './get-token-offers';
 export * from './get-token-listing';
-export * from './get-floor-price';
 export * from './get-collections';
 export * from './get-assets-to-withdraw';
 export * from './withdraw-fungible';
