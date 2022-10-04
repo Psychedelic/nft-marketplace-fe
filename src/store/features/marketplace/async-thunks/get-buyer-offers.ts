@@ -23,11 +23,12 @@ export const getBuyerOffers = createAsyncThunk<
 >('marketplace/getBuyerOffers', async (params, thunkAPI) => {
   // Checks if an actor instance exists already
   // otherwise creates a new instance
-  const actorInstance = await actorInstanceHandler({
-    thunkAPI,
-    serviceName: 'marketplace',
-    slice: marketplaceSlice,
-  });
+
+  // const actorInstance = await actorInstanceHandler({
+  //   thunkAPI,
+  //   serviceName: 'marketplace',
+  //   slice: marketplaceSlice,
+  // });
 
   const { onSuccess, onFailure, collectionId } = params;
 
@@ -59,13 +60,13 @@ export const getBuyerOffers = createAsyncThunk<
     });
 
     // Floor Difference calculation
-    const floorDifferenceResponse = await actorInstance.getFloor(
-      nonFungibleContractAddress,
-    );
+    // const floorDifferenceResponse = await actorInstance.getFloor(
+    //   nonFungibleContractAddress,
+    // );
 
-    if ('Ok' in floorDifferenceResponse) {
-      floorDifferencePrice = floorDifferenceResponse.Ok.toString();
-    }
+    // if ('Ok' in floorDifferenceResponse) {
+    //   floorDifferencePrice = floorDifferenceResponse.Ok.toString();
+    // }
 
     // Fetch ICP Price
     const icpPriceResponse = await getICPPrice();

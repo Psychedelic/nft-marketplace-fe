@@ -29,11 +29,11 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
     // Checks if an actor instance exists already
     // otherwise creates a new instance
 
-    const actorInstance = await actorInstanceHandler({
-      thunkAPI,
-      serviceName: 'marketplace',
-      slice: marketplaceSlice,
-    });
+    // const actorInstance = await actorInstanceHandler({
+    //   thunkAPI,
+    //   serviceName: 'marketplace',
+    //   slice: marketplaceSlice,
+    // });
 
     thunkAPI.dispatch(marketplaceActions.setOffersLoaded(false));
 
@@ -66,16 +66,16 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
       const { data } = res;
 
       // Floor Difference calculation
-      const floorDifferenceResponse = await actorInstance.getFloor(
-        nonFungibleContractAddress,
-      );
+      // const floorDifferenceResponse = await actorInstance.getFloor(
+      //   nonFungibleContractAddress,
+      // );
 
-      if ('Ok' in floorDifferenceResponse) {
-        floorDifferencePrice = floorDifferenceResponse.Ok.toString();
-      }
+      // if ('Ok' in floorDifferenceResponse) {
+      //   floorDifferencePrice = floorDifferenceResponse.Ok.toString();
+      // }
 
-      const offers = data.map((item: NFTToken) => {
-        const metadata = item.offers.reduce(
+      const offers = data?.map((item: NFTToken) => {
+        const metadata = item?.offers.reduce(
           (
             acc: any,
             { price, tokenId, buyer: paymentAddress, time }: Offer,
@@ -139,4 +139,3 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
     }
   },
 );
-
