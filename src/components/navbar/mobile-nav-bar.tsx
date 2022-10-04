@@ -28,6 +28,7 @@ import {
 import {
   filterActions,
   plugActions,
+  RootState,
   useAppDispatch,
   useFilterStore,
   usePlugStore,
@@ -38,6 +39,7 @@ import { Plug } from '../plug';
 import { roundOffDecimalValue } from '../../utils/nfts';
 import { SpinnerIcon } from '../icons/custom';
 import config from '../../config/env';
+import { useSelector } from 'react-redux';
 
 type MobileNavBarTypes = {
   openMobileNavbar: boolean;
@@ -61,7 +63,11 @@ export const MobileNavBar = ({
   } = usePlugStore();
   const { theme } = useThemeStore();
   const navigate = useNavigate();
-  const { collectionId } = useParams();
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
+  const { collectionId } = collectionDetails;
 
   const myActivityHandler = useCallback(() => {
     navigate(`/activity/${principalId}`);

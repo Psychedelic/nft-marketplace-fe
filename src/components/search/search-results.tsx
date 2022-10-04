@@ -7,6 +7,7 @@ import {
   TabsList,
   TabsContent,
 } from './styles';
+import { useLocation } from 'react-router';
 
 type SearchResultsTypes = {
   searchText: string;
@@ -18,23 +19,29 @@ const SearchResults = ({
   closeDropDown,
 }: SearchResultsTypes) => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   return (
-    <TabsRoot defaultValue="nfts">
+    <TabsRoot defaultValue={!isHomePage ? 'nfts' : 'collections'}>
       <TabsList aria-label="Manage search results">
-        <TabsTrigger value="nfts">
-          {t('translation:tabs.nfts')}
-        </TabsTrigger>
+        {!isHomePage && (
+          <TabsTrigger value="nfts">
+            {t('translation:tabs.nfts')}
+          </TabsTrigger>
+        )}
         <TabsTrigger value="collections">
           {t('translation:tabs.collections')}
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="nfts">
-        <NFTsSearchResults
-          searchText={searchText}
-          closeDropDown={closeDropDown}
-        />
-      </TabsContent>
+      {!isHomePage && (
+        <TabsContent value="nfts">
+          <NFTsSearchResults
+            searchText={searchText}
+            closeDropDown={closeDropDown}
+          />
+        </TabsContent>
+      )}
       <TabsContent value="collections">
         <CollectionsSearchResults
           searchText={searchText}

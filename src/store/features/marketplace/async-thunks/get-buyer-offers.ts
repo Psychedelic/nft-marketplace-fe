@@ -21,14 +21,6 @@ export const getBuyerOffers = createAsyncThunk<
   OffersTableItem[] | undefined,
   GetBuyerOffersProps
 >('marketplace/getBuyerOffers', async (params, thunkAPI) => {
-  // Checks if an actor instance exists already
-  // otherwise creates a new instance
-  const actorInstance = await actorInstanceHandler({
-    thunkAPI,
-    serviceName: 'marketplace',
-    slice: marketplaceSlice,
-  });
-
   const { onSuccess, onFailure, collectionId } = params;
 
   const jellyInstance = await jellyJsInstanceHandler({
@@ -59,12 +51,11 @@ export const getBuyerOffers = createAsyncThunk<
     });
 
     // Floor Difference calculation
-    const floorDifferenceResponse = await actorInstance.getFloor(
-      nonFungibleContractAddress,
-    );
+    const floorDifferenceResponse =
+      await jellyCollection.getFloorPrice();
 
-    if ('Ok' in floorDifferenceResponse) {
-      floorDifferencePrice = floorDifferenceResponse.Ok.toString();
+    if (floorDifferenceResponse?.ok) {
+      floorDifferencePrice = floorDifferenceResponse?.data;
     }
 
     // Fetch ICP Price
@@ -84,7 +75,7 @@ export const getBuyerOffers = createAsyncThunk<
     if (typeof onSuccess === 'function') {
       onSuccess(offers);
     }
-
+    
     return offers;
   } catch (err) {
     AppLog.error(err);

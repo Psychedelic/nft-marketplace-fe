@@ -17,7 +17,14 @@ import {
   StyledRouterLink,
 } from './styles';
 import { SpinnerIcon } from '../icons/custom';
-import { mockCollectionsList } from './mock-data';
+import { Collection } from '@psychedelic/jelly-js';
+import { useSelector } from 'react-redux';
+import {
+  marketplaceActions,
+  RootState,
+  useAppDispatch,
+} from '../../store';
+import { useNavigate } from 'react-router';
 
 type CollectionsSearchResultsTypes = {
   searchText: string;
@@ -29,21 +36,27 @@ const CollectionsSearchResults = ({
   closeDropDown,
 }: CollectionsSearchResultsTypes) => {
   const { t } = useTranslation();
-  const [searchResults, setSearchResults] = useState(
-    mockCollectionsList,
-  );
+  const [searchResults, setSearchResults] = useState<Collection[]>();
   const [loadingSearch, setLoadingSearch] = useState(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const collections = useSelector(
+    (state: RootState) => state.marketplace.collections,
+  );
+
+  useEffect(() => {
+    dispatch(marketplaceActions.getAllCollections());
+  }, []);
 
   useEffect(() => {
     // TODO: integrate with API to search for collections
     setLoadingSearch(true);
-    const newSearchResults = mockCollectionsList.filter(
-      (collection) => {
-        return collection.name
-          .toLowerCase()
-          .includes(searchText.toLowerCase());
-      },
-    );
+    const newSearchResults = collections.filter((collection) => {
+      return collection.name
+        .toLowerCase()
+        .includes(searchText.toLowerCase());
+    });
     setSearchResults(newSearchResults);
     setLoadingSearch(false);
   }, [searchText]);
@@ -52,27 +65,33 @@ const CollectionsSearchResults = ({
     <SearchResultsContainer>
       {searchText &&
         !loadingSearch &&
-        (searchResults.length ? (
+        (searchResults?.length ? (
           <ItemsListContainer>
             {searchResults?.map((collection) => (
               <StyledRouterLink
-                to={`/${collection.canisterId}`}
-                onClick={closeDropDown}
-                key={collection.id}
+                to={`/${collection.id.toText()}`}
+                onClick={() => {
+                  closeDropDown();
+                  navigate(`/${collection.id.toText()}`);
+                }}
+                key={collection.id.toText()}
               >
                 <ItemDetailsContainer>
                   <ItemDetailsWrapper>
                     <ItemDetails>
-                      <ItemLogo src={collection.logo} alt="crowns" />
+                      <ItemLogo
+                        src={collection.thumbnail}
+                        alt="crowns"
+                      />
                       <ItemNameContainer>
                         <ItemName>{collection.name}</ItemName>
                         <ItemDescription>
-                          {collection.creator}
+                          {collection.name}
                         </ItemDescription>
                       </ItemNameContainer>
                     </ItemDetails>
                     <ItemMetaDataContainer>
-                      <ItemMetaTitle>{`${collection.items} items`}</ItemMetaTitle>
+                      <ItemMetaTitle>{`10,000 items`}</ItemMetaTitle>
                     </ItemMetaDataContainer>
                   </ItemDetailsWrapper>
                 </ItemDetailsContainer>

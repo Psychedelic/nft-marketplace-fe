@@ -217,9 +217,9 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         accessor: ({ item }: OffersTableItem) => {
           return (
             <ItemDetailsCell
-              name={item.name}
-              id={item.tokenId.toString()}
-              logo={item.logo}
+              name={item?.name}
+              id={item?.tokenId.toString()}
+              logo={item?.logo}
             />
           );
         },
@@ -256,14 +256,13 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       {
         Header: t('translation:tables.titles.from'),
         accessor: ({ fromDetails }: OffersTableItem) => {
-          const url = getICAccountLink(fromDetails.address);
-
+          const url = getICAccountLink(fromDetails?.address);
           return (
             <TextLinkCell
-              text={fromDetails.formattedAddress}
+              text={fromDetails?.formattedAddress}
               url={url}
               type=""
-              principalId={fromDetails.address}
+              principalId={fromDetails?.address}
             />
           );
         },
@@ -272,7 +271,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         Header: t('translation:tables.titles.time'),
         accessor: ({ time }: OffersTableItem) => (
           <TextCell
-            text={formatTimestamp(BigInt(time))}
+            text={time && formatTimestamp(BigInt(time))}
             type="myOffersActivityTime"
             tableType="myOffers"
           />
@@ -296,8 +295,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
                   computedCurrencyPrice.toString()) ||
                 ''
               }
-              offerFrom={fromDetails.address}
-              nftTokenId={item.tokenId.toString()}
+              offerFrom={fromDetails?.address}
+              nftTokenId={item?.tokenId.toString()}
               actionButtonProp="light"
             />
           </ButtonWrapper>

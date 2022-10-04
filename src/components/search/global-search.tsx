@@ -2,8 +2,6 @@ import React, { useState, useCallback } from 'react';
 import debounce from 'lodash.debounce';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { useParams } from 'react-router';
-import { SortKey } from '@psychedelic/jelly-js';
 import { SearchInput } from '../core';
 import {
   SearchModalTrigger,
@@ -17,10 +15,12 @@ import {
 import {
   filterActions,
   nftsActions,
+  RootState,
   useAppDispatch,
   useNFTSStore,
 } from '../../store';
 import SearchResults from './search-results';
+import { useSelector } from 'react-redux';
 
 const DEBOUNCE_TIMEOUT_MS = 400;
 
@@ -42,7 +42,15 @@ export const GlobalSearch = ({
   const { t } = useTranslation();
   const { loadedNFTS } = useNFTSStore();
   const dispatch = useAppDispatch();
-  const { collectionId } = useParams();
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+  const isHomePage = location.pathname === '/';
+  const placeholderText = !isHomePage
+    ? t('translation:inputField.placeholder.searchAll')
+    : t('translation:inputField.placeholder.searchCollection');
+
+  const { collectionId } = collectionDetails;
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState('');
@@ -59,8 +67,6 @@ export const GlobalSearch = ({
     debounce((value: string, abortController: AbortController) => {
       dispatch(
         nftsActions.getSearchResults({
-          sort: SortKey.all,
-          order: 'd',
           count: 25,
           search: value,
           abortController,
@@ -98,9 +104,7 @@ export const GlobalSearch = ({
       <MobileSearchBar>
         <SearchModalTrigger startAnimation={startAnimation}>
           <SearchInput
-            placeholder={t(
-              'translation:inputField.placeholder.searchCollection',
-            )}
+            placeholder={placeholderText}
             setValue={(value) => {
               setSearchText(value);
             }}
@@ -140,11 +144,7 @@ export const GlobalSearch = ({
       */}
       <DialogPrimitive.Trigger asChild>
         <SearchModalTrigger startAnimation={startAnimation}>
-          <SearchInput
-            placeholder={t(
-              'translation:inputField.placeholder.searchCollection',
-            )}
-          />
+          <SearchInput placeholder={placeholderText} />
         </SearchModalTrigger>
       </DialogPrimitive.Trigger>
       {/*
@@ -161,9 +161,7 @@ export const GlobalSearch = ({
       <ModalContent>
         <SearchContainer>
           <SearchInput
-            placeholder={t(
-              'translation:inputField.placeholder.searchCollection',
-            )}
+            placeholder={placeholderText}
             setValue={(value) => setSearchText(value)}
             handleSearch={handleSearch}
             isMobileScreen={isMobileScreen}
