@@ -18,7 +18,6 @@ import {
   ItemTokenId,
 } from './styles';
 import useMediaQuery from '../../../hooks/use-media-query';
-import config from '../../../config/env';
 
 export interface ItemDetailsCellProps {
   name?: string;
@@ -52,7 +51,7 @@ export const ItemDetailsCell = ({
       tableActions.getTokenMetadata({
         id,
         // TODO: remove config.nftCollectionId if user offers table data contains collectionId
-        collectionId: collectionId || config.nftCollectionId,
+        collectionId,
       } as {
         id: number | string;
         collectionId: string;
@@ -61,9 +60,7 @@ export const ItemDetailsCell = ({
   }, [dispatch, id, hasThumbnail, collectionId]);
 
   return (
-    <RouterLink
-      to={`/${collectionId || config.nftCollectionId}/nft/${id}`}
-    >
+    <RouterLink to={`/${collectionId}/nft/${id}`}>
       <ItemDetails>
         {!logo ? (
           <ThumbnailSkeleton />

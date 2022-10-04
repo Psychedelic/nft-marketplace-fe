@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Collection } from '@psychedelic/jelly-js';
+import { useSelector } from 'react-redux';
 import { ActionButton, LinkButton } from '../../components/core';
 import {
   Container,
@@ -55,18 +57,15 @@ import psychedelic from '../../assets/landingpage/psychedelic.svg';
 
 import {
   marketplaceActions,
-  nftsActions,
+  // nftsActions,
   RootState,
-  settingsActions,
   useAppDispatch,
-  useSettingsStore,
+  // useSettingsStore,
   useThemeStore,
 } from '../../store';
 
-import config from '../../config/env';
-import { Collection, SortKey } from '@psychedelic/jelly-js';
-import RecentActivities from './recent-activity';
-import { useSelector } from 'react-redux';
+// import config from '../../config/env';
+// import RecentActivities from './recent-activity';
 
 const LandingPageView = () => {
   const { t } = useTranslation();
@@ -78,39 +77,39 @@ const LandingPageView = () => {
     (state: RootState) => state.marketplace.collections,
   );
 
-  const { latestActiveToken } = useSettingsStore();
+  // const { latestActiveToken } = useSettingsStore();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(marketplaceActions.getAllCollections());
 
-    dispatch(
-      nftsActions.getLatestActiveToken({
-        count: 1,
-        collectionId: config.nftCollectionId,
-      }),
-    );
+    // dispatch(
+    //   nftsActions.getLatestActiveToken({
+    //     count: 1,
+    //     collectionId: config.nftCollectionId,
+    //   }),
+    // );
 
-    const fetchLatestToken = setInterval(
-      () =>
-        dispatch(
-          nftsActions.getLatestActiveToken({
-            count: 1,
-            collectionId: config.nftCollectionId,
-          }),
-        ),
-      30000,
-    );
+    // const fetchLatestToken = setInterval(
+    //   () =>
+    //     dispatch(
+    //       nftsActions.getLatestActiveToken({
+    //         count: 1,
+    //         collectionId: config.nftCollectionId,
+    //       }),
+    //     ),
+    //   30000,
+    // );
 
-    return () => {
-      clearInterval(fetchLatestToken);
-    };
+    // return () => {
+    //   clearInterval(fetchLatestToken);
+    // };
   }, []);
 
   const handleViewCollection = (name: string) => {
     const collection = collections.find(
-      (collection: Collection) => collection.name === name,
+      (data: Collection) => data.name === name,
     );
 
     dispatch(
@@ -135,74 +134,75 @@ const LandingPageView = () => {
     }
   };
 
-  const getLatestActiveToken = () => {
-    let lastListing = Number(latestActiveToken?.lastListingTime) || 0;
-    let lastOffer = Number(latestActiveToken?.lastOfferTime) || 0;
-    let lastSale = Number(latestActiveToken?.lastSaleTime) || 0;
+  // const getLatestActiveToken = () => {
+  //   const lastListing =
+  //     Number(latestActiveToken?.lastListingTime) || 0;
+  //   const lastOffer = Number(latestActiveToken?.lastOfferTime) || 0;
+  //   const lastSale = Number(latestActiveToken?.lastSaleTime) || 0;
 
-    var numbers: Record<string, number> = {
-      lastListing: lastListing,
-      lastOffer: lastOffer,
-      lastSale: lastSale,
-    };
+  //   const numbers: Record<string, number> = {
+  //     lastListing,
+  //     lastOffer,
+  //     lastSale,
+  //   };
 
-    const maxVal = Math.max(...Object.values(numbers));
-    const key = Object.keys(numbers).find(
-      (key) => numbers[key] === maxVal,
-    );
+  //   const maxVal = Math.max(...Object.values(numbers));
+  //   const key = Object.keys(numbers).find(
+  //     (k) => numbers[k] === maxVal,
+  //   );
 
-    return key;
-  };
+  //   return key;
+  // };
 
-  const lastActiveToken = getLatestActiveToken();
+  // const lastActiveToken = getLatestActiveToken();
 
   const displayLatestActiveToken = () => {
-    if (lastActiveToken === 'lastListing') {
-      return (
-        latestActiveToken?.listing && (
-          <RecentActivities
-            icon="list"
-            id={latestActiveToken.id}
-            name={latestActiveToken?.name}
-            price={latestActiveToken?.price}
-            time={latestActiveToken?.lastListingTime.toString()}
-            collectionId={config.nftCollectionId}
-            description={t('translation:landingPage.listingText')}
-          />
-        )
-      );
-    }
-    if (lastActiveToken === 'lastOffer') {
-      return (
-        latestActiveToken?.offers && (
-          <RecentActivities
-            icon="offer"
-            id={latestActiveToken.id}
-            name={latestActiveToken?.name}
-            price={latestActiveToken?.price}
-            time={latestActiveToken?.lastOfferTime.toString()}
-            collectionId={config.nftCollectionId}
-            description={t('translation:landingPage.offerText')}
-            latestActiveToken={latestActiveToken}
-          />
-        )
-      );
-    }
-    if (lastActiveToken === 'lastSale') {
-      return (
-        latestActiveToken?.lastSale && (
-          <RecentActivities
-            icon="sale"
-            id={latestActiveToken.id}
-            name={latestActiveToken?.name}
-            price={latestActiveToken?.price}
-            time={latestActiveToken?.lastSaleTime.toString()}
-            collectionId={config.nftCollectionId}
-            description={t('translation:landingPage.saleText')}
-          />
-        )
-      );
-    }
+    // if (lastActiveToken === 'lastListing') {
+    //   return (
+    //     latestActiveToken?.listing && (
+    //       <RecentActivities
+    //         icon="list"
+    //         id={latestActiveToken.id}
+    //         name={latestActiveToken?.name}
+    //         price={latestActiveToken?.price}
+    //         time={latestActiveToken?.lastListingTime.toString()}
+    //         collectionId={config.nftCollectionId}
+    //         description={t('translation:landingPage.listingText')}
+    //       />
+    //     )
+    //   );
+    // }
+    // if (lastActiveToken === 'lastOffer') {
+    //   return (
+    //     latestActiveToken?.offers && (
+    //       <RecentActivities
+    //         icon="offer"
+    //         id={latestActiveToken.id}
+    //         name={latestActiveToken?.name}
+    //         price={latestActiveToken?.price}
+    //         time={latestActiveToken?.lastOfferTime.toString()}
+    //         collectionId={config.nftCollectionId}
+    //         description={t('translation:landingPage.offerText')}
+    //         latestActiveToken={latestActiveToken}
+    //       />
+    //     )
+    //   );
+    // }
+    // if (lastActiveToken === 'lastSale') {
+    //   return (
+    //     latestActiveToken?.lastSale && (
+    //       <RecentActivities
+    //         icon="sale"
+    //         id={latestActiveToken.id}
+    //         name={latestActiveToken?.name}
+    //         price={latestActiveToken?.price}
+    //         time={latestActiveToken?.lastSaleTime.toString()}
+    //         collectionId={config.nftCollectionId}
+    //         description={t('translation:landingPage.saleText')}
+    //       />
+    //     )
+    //   );
+    // }
   };
 
   return (
@@ -357,7 +357,7 @@ const LandingPageView = () => {
       </MultichainContainer>
       <Footer>
         <Flex>
-          <img src={psychedelic} />
+          <img src={psychedelic} alt="" />
           <FooterText>
             {t('translation:landingPage.builtByPsychedelic')}
           </FooterText>

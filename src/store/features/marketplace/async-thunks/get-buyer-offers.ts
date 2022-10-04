@@ -39,9 +39,8 @@ export const getBuyerOffers = createAsyncThunk<
   try {
     let floorDifferencePrice: any;
     let currencyMarketPrice: any;
-    const nonFungibleContractAddress = Principal.fromText(
-      config.nftCollectionId,
-    );
+    const nonFungibleContractAddress =
+      Principal.fromText(collectionId);
 
     const collection = await getJellyCollection({
       jellyInstance,

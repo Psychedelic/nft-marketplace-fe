@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ActorSubclass } from '@dfinity/agent';
 import { JellyUtils, Collection } from '@psychedelic/jelly-js';
-import marketplaceIdlService, {
-  TransactionStepsStatus,
-} from '../../../declarations/marketplace';
 import {
   Listing,
   TokenData,
@@ -20,7 +16,6 @@ import {
   directBuy,
   getTokenOffers,
   makeOffer,
-  getFloorPrice,
   getCollections,
   getAssetsToWithdraw,
   withdrawFungible,
@@ -30,6 +25,14 @@ import {
   getCollectionDetails,
 } from './async-thunks';
 import { TransactionStatus } from '../../../constants/transaction-status';
+
+interface TransactionStepsStatus {
+  approveWICPStatus?: string;
+  listingStatus?: string;
+  makeOfferStatus?: string;
+  saleStatus?: string;
+  acceptOfferStatus?: string;
+}
 
 export type MakeListing = {
   id: string;
@@ -80,8 +83,6 @@ export type CurrentCollectionDetails = {
 
 type RecentyListedForSale = MakeListing[];
 
-type MarketplaceActor = ActorSubclass<marketplaceIdlService>;
-
 type TokenListingItem = Omit<TokenData, 'listing' | 'last_sale'> & {
   listing: Listing;
   last_sale: LastSale;
@@ -94,7 +95,6 @@ type InitialState = {
   recentlyCancelledItems: any;
   recentlyCancelledOffers: any;
   recentlyAcceptedOffers: any[];
-  actor?: MarketplaceActor;
   tokenListing: Record<string, TokenListingItem>;
   tokenOffers: any[];
   offersReceived: any[];
@@ -147,10 +147,6 @@ export const marketplaceSlice = createSlice({
   name: 'marketplace',
   initialState,
   reducers: {
-    // TODO: deprecate setActor
-    setActor: (state, action: PayloadAction<MarketplaceActor>) => {
-      state.actor = action.payload;
-    },
     // TODO: set correct type for jelly-js instance
     setJellyJsInstance: (state, action: PayloadAction<any>) => {
       state.jellyJsInstance = action.payload;
@@ -275,7 +271,6 @@ export const marketplaceActions = {
   getTokenOffers,
   makeListing,
   makeOffer,
-  getFloorPrice,
   getCollections,
   getAssetsToWithdraw,
   withdrawFungible,

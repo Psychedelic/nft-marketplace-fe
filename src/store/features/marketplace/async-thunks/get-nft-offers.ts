@@ -59,7 +59,7 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
       const floorDifferenceResponse =
         await jellyCollection.getFloorPrice();
 
-      if (floorDifferenceResponse.ok) {
+      if (floorDifferenceResponse?.ok) {
         floorPrice = floorDifferenceResponse?.data;
       }
 
@@ -78,6 +78,7 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
               currencyMarketPrice,
             });
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       typeof onSuccess === 'function' && onSuccess();
 
       thunkAPI.dispatch(marketplaceActions.setOffersLoaded(true));
@@ -98,4 +99,3 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
     }
   },
 );
-

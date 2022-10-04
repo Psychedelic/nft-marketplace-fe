@@ -2,17 +2,11 @@ import { Actor, ActorSubclass, HttpAgent } from '@dfinity/agent';
 import { IDL } from '@dfinity/candid';
 import nftIdlFactory from '../../declarations/nft.did';
 import wicpIdlFactory from '../../declarations/wicp.did';
-import marketplaceIdlFactory from '../../declarations/marketplace.did';
 import capIdlFactory from '../../declarations/cap.did';
 import config from '../../config/env';
 import { AppLog } from '../../utils/log';
 
-export type ServiceName =
-  | 'marketplace'
-  | 'crowns'
-  | 'wicp'
-  | 'cap'
-  | 'dip721';
+export type ServiceName = 'marketplace' | 'wicp' | 'cap' | 'dip721';
 
 export const createActor = async ({
   serviceName = 'marketplace',
@@ -36,10 +30,6 @@ export const createActor = async ({
       canisterId = collectionId;
       interfaceFactory = nftIdlFactory;
       break;
-    case 'crowns':
-      canisterId = config.nftCollectionId;
-      interfaceFactory = nftIdlFactory;
-      break;
     case 'wicp':
       canisterId = config.wICPCanisterId;
       interfaceFactory = wicpIdlFactory;
@@ -49,9 +39,7 @@ export const createActor = async ({
       interfaceFactory = capIdlFactory;
       break;
     default:
-      canisterId = config.marketplaceCanisterId;
-      interfaceFactory = marketplaceIdlFactory;
-      break;
+      throw new Error('Oops! Unknown actor service');
   }
 
   if (plugIsConnected && asPlugInstance) {

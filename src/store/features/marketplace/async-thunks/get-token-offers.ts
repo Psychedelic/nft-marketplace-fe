@@ -6,23 +6,25 @@ import {
   marketplaceActions,
   marketplaceSlice,
 } from '../marketplace-slice';
-import config from '../../../../config/env';
 import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
 import { parseGetTokenOffersResponse } from '../../../../utils/parser';
 import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
-export type GetUserReceivedOfferProps = DefaultCallbacks &
+export type GetUserReceivedOfferProps = {
+  collectionId: string;
+} & DefaultCallbacks &
   GetUserReceivedOffer;
 
+// TODO: Is this still being used? Can be deleted?
 export const getTokenOffers = createAsyncThunk<
   ReturnType<typeof parseGetTokenOffersResponse> | undefined,
   GetUserReceivedOfferProps
 >(
   'marketplace/getTokenOffers',
   async (
-    { ownerTokenIdentifiers, onSuccess, onFailure },
+    { collectionId, ownerTokenIdentifiers, onSuccess, onFailure },
     thunkAPI,
   ) => {
     // Checks if an actor instance exists already
@@ -38,9 +40,8 @@ export const getTokenOffers = createAsyncThunk<
     try {
       let floorDifferencePrice;
       let currencyMarketPrice;
-      const nonFungibleContractAddress = Principal.fromText(
-        config.nftCollectionId,
-      );
+      const nonFungibleContractAddress =
+        Principal.fromText(collectionId);
       const result = await actorInstance.getTokenOffers(
         nonFungibleContractAddress,
         ownerTokenIdentifiers,
