@@ -11,10 +11,7 @@ if [[ -z $host || "$host" == "local" ]]; then
   export NFT_ICNS_CANISTER_ID=$(cd ./jelly && dfx canister id icns)
   export NFT_CANISTER_ID=$(cd ./jelly && dfx canister id crowns)
   export NFT_CANISTER_STANDARD='DIP721'
-  # This will be deprecated in favour of DIP721
-  # used here solely for testing
-  export NFT_CANISTER_STANDARD_V2='DIP721v2'
-  export MARKETPLACE_ALLOWED_CANISTERS="{ \"$NFT_CROWNS_CANISTER_ID\": \"$NFT_CANISTER_STANDARD\", \"$NFT_ICNS_CANISTER_ID\": \"$NFT_CANISTER_STANDARD_V2\" }"
+  export MARKETPLACE_ALLOWED_CANISTERS="{ \"$NFT_CROWNS_CANISTER_ID\": \"$NFT_CANISTER_STANDARD\", \"$NFT_ICNS_CANISTER_ID\": \"$NFT_CANISTER_STANDARD\" }"
   export JELLY_HUB=$(cd ./jelly && dfx canister id jelly-hub)
 elif [[ "$host" != 'mainnet' ]]; then
   printf "usage: yarn kyasshu:start [service cluster: local | mainnet]\n"
