@@ -49,7 +49,7 @@ import useMediaQuery from '../../hooks/use-media-query';
 
 export const NftDetails = () => {
   const dispatch = useAppDispatch();
-  const { loadedNFTS } = useNFTSStore();
+  const { loadedNFTS, loadingNFTDetails } = useNFTSStore();
   const { loadedFiltersList, loadingFilterList } = useFilterStore();
   const { id, collectionId } = useParams();
   const [showNFTActionButtons, setShowNFTActionButtons] =
@@ -164,7 +164,7 @@ export const NftDetails = () => {
               src={nftDetails.location}
             />
             <NFTTraitsContainer>
-              {loadingFilterList ? (
+              {loadingFilterList || loadingNFTDetails ? (
                 <TraitsListLoader />
               ) : (
                 <>
