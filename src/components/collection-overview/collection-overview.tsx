@@ -8,6 +8,8 @@ import {
   useNFTSStore,
   useTableStore,
   marketplaceActions,
+  nftsActions,
+  filterActions,
 } from '../../store';
 import { FilteredCountChip, LinkButton } from '../core';
 import {
@@ -57,13 +59,18 @@ export const CollectionOverview = () => {
   useEffect(() => {
     if (!collectionId) return;
 
+    // reset state to initial on collection Id change
+    // TODO: handle reset state gracefully if required in anyother places
+    dispatch(nftsActions.reset());
+    dispatch(filterActions.reset());
+
     dispatch(
       marketplaceActions.getCollectionDetails({ collectionId }),
     );
 
     // TODO: Update static data like crowns title, icon
     // by using currentCollectionDetails state
-  }, [id, collectionId]);
+  }, [collectionId]);
 
   return (
     <NftMetadataWrapper>

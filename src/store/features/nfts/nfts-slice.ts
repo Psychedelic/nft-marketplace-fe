@@ -94,6 +94,7 @@ export const nftsSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
+    reset: () => initialState,
     setIsNFTSLoading: (state, action: PayloadAction<boolean>) => {
       state.loadingNFTs = action.payload;
       if (state.failedToLoadNFTS) {
