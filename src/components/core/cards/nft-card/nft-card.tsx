@@ -151,9 +151,9 @@ const LastActionTakenDetails = ({
               {t('translation:nftCard.lastSale')}
             </ActionText>
             <PriceInActionSheet>
-              {(data?.lastSale &&
+              {(data?.lastSale?.price &&
                 parseE8SAmountToWICP(
-                  BigInt(data.lastSale),
+                  BigInt(data.lastSale.price),
                 ).toString()) ||
                 ''}
             </PriceInActionSheet>
