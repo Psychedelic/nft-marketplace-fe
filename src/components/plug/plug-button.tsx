@@ -153,24 +153,28 @@ export const PlugButton = ({
           onMouseLeave={() => setOpenDropdown(false)}
         >
           <div>
-            <ListItem onClick={myOffersHandler}>
-              <Icon icon="offer" paddingRight />
-              <p>{t('translation:buttons.action.myOffers')}</p>
-            </ListItem>
-            <ListItem onClick={myActivityHandler}>
-              <Icon icon="activity" paddingRight />
-              <p>{t('translation:buttons.action.myActivity')}</p>
-            </ListItem>
+            {collectionId && (
+              <>
+                <ListItem onClick={myOffersHandler}>
+                  <Icon icon="offer" paddingRight />
+                  <p>{t('translation:buttons.action.myOffers')}</p>
+                </ListItem>
+                <ListItem onClick={myActivityHandler}>
+                  <Icon icon="activity" paddingRight />
+                  <p>{t('translation:buttons.action.myActivity')}</p>
+                </ListItem>
+                <ListItem onClick={setMyNfts}>
+                  <Icon icon="myNfts" paddingRight />
+                  <p>{t('translation:buttons.action.myNfts')}</p>
+                </ListItem>
+              </>
+            )}
             <ListItem onClick={openSonicURL}>
               <WICPLogo
                 src={wicpImage}
                 alt={t('translation:logoAlts.wicp')}
               />
               <p>{t('translation:buttons.action.getWicp')}</p>
-            </ListItem>
-            <ListItem onClick={setMyNfts}>
-              <Icon icon="myNfts" paddingRight />
-              <p>{t('translation:buttons.action.myNfts')}</p>
             </ListItem>
             <ListItem onClick={disconnectHandler}>
               <Icon icon="disconnect" paddingRight />
