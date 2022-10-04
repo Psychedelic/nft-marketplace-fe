@@ -67,6 +67,7 @@ export const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
+    reset: () => initialState,
     getAllFilters: (
       state,
       action: PayloadAction<FilterTraitsList>,
