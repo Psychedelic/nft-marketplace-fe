@@ -38,7 +38,6 @@ import {
   getTraitName,
 } from '../../store/features/filters/async-thunks/get-filter-traits';
 import TraitsListLoader from './TraitsListLoader';
-import { roundOffDecimalValue } from '../../utils/nfts';
 import NFTDetailsSkeleton from './nft-details-skeleton';
 import useMediaQuery from '../../hooks/use-media-query';
 
@@ -49,7 +48,7 @@ import useMediaQuery from '../../hooks/use-media-query';
 
 export const NftDetails = () => {
   const dispatch = useAppDispatch();
-  const { loadedNFTS } = useNFTSStore();
+  const { loadedNFTS, loadingNFTDetails } = useNFTSStore();
   const { loadedFiltersList, loadingFilterList } = useFilterStore();
   const { id, collectionId } = useParams();
   const [showNFTActionButtons, setShowNFTActionButtons] =
@@ -99,12 +98,16 @@ export const NftDetails = () => {
       parseE8SAmountToWICP(tokenListing?.last_sale?.price));
   const isListed = !!tokenListing?.listing?.time;
   const isMobileScreen = useMediaQuery('(max-width: 850px)');
-  const hasNFTOwnership = owner === plugPrincipal;
 
-  // If not set, shall display the Action buttons?
-  if (!showNFTActionButtons && hasNFTOwnership) {
+  useEffect(() => {
+    // don't show action buttons when details are loading
+    if (loadingNFTDetails || !nftDetails) {
+      setShowNFTActionButtons(false);
+      return;
+    }
+
     setShowNFTActionButtons(true);
-  }
+  }, [loadingNFTDetails, nftDetails]);
 
   useEffect(() => {
     // TODO: handle the error gracefully when there is no id
@@ -164,7 +167,7 @@ export const NftDetails = () => {
               src={nftDetails.location}
             />
             <NFTTraitsContainer>
-              {loadingFilterList ? (
+              {loadingFilterList || loadingNFTDetails ? (
                 <TraitsListLoader />
               ) : (
                 <>

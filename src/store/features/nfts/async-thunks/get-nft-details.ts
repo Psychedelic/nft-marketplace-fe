@@ -20,6 +20,8 @@ export const getNFTDetails = createAsyncThunk<
 >('nfts/getNFTDetails', async ({ id, collectionId }, thunkAPI) => {
   const { dispatch } = thunkAPI;
 
+  dispatch(nftsActions.setNFTDetailsLoading());
+
   try {
     const actor = await createActor({
       serviceName: 'dip721',
