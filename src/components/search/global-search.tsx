@@ -45,6 +45,10 @@ export const GlobalSearch = ({
   const collectionDetails = useSelector(
     (state: RootState) => state.marketplace.currentCollectionDetails,
   );
+  const isHomePage = location.pathname === '/';
+  const placeholderText = !isHomePage
+    ? t('translation:inputField.placeholder.searchAll')
+    : t('translation:inputField.placeholder.searchCollection');
 
   const { collectionId } = collectionDetails;
 
@@ -100,9 +104,7 @@ export const GlobalSearch = ({
       <MobileSearchBar>
         <SearchModalTrigger startAnimation={startAnimation}>
           <SearchInput
-            placeholder={t(
-              'translation:inputField.placeholder.searchCollection',
-            )}
+            placeholder={placeholderText}
             setValue={(value) => {
               setSearchText(value);
             }}
@@ -142,11 +144,7 @@ export const GlobalSearch = ({
       */}
       <DialogPrimitive.Trigger asChild>
         <SearchModalTrigger startAnimation={startAnimation}>
-          <SearchInput
-            placeholder={t(
-              'translation:inputField.placeholder.searchCollection',
-            )}
-          />
+          <SearchInput placeholder={placeholderText} />
         </SearchModalTrigger>
       </DialogPrimitive.Trigger>
       {/*
@@ -163,9 +161,7 @@ export const GlobalSearch = ({
       <ModalContent>
         <SearchContainer>
           <SearchInput
-            placeholder={t(
-              'translation:inputField.placeholder.searchCollection',
-            )}
+            placeholder={placeholderText}
             setValue={(value) => setSearchText(value)}
             handleSearch={handleSearch}
             isMobileScreen={isMobileScreen}
