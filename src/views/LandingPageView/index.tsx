@@ -119,7 +119,10 @@ const LandingPageView = () => {
     const collectionId = collection?.id.toText();
 
     navigate(`/${collectionId}`, { replace: true });
-    window.location.reload();
+
+    // TODO: this should not happen and data hydrated correctly
+    // in a graceful way, the page should not have to reload
+    // window.location.reload();
   };
 
   const displayCollectionName = (name: string) => {
