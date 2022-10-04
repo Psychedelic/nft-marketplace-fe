@@ -2,8 +2,6 @@ import React, { useState, useCallback } from 'react';
 import debounce from 'lodash.debounce';
 import { useTranslation } from 'react-i18next';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { useParams } from 'react-router';
-import { SortKey } from '@psychedelic/jelly-js';
 import { SearchInput } from '../core';
 import {
   SearchModalTrigger,
@@ -17,10 +15,12 @@ import {
 import {
   filterActions,
   nftsActions,
+  RootState,
   useAppDispatch,
   useNFTSStore,
 } from '../../store';
 import SearchResults from './search-results';
+import { useSelector } from 'react-redux';
 
 const DEBOUNCE_TIMEOUT_MS = 400;
 
@@ -42,7 +42,11 @@ export const GlobalSearch = ({
   const { t } = useTranslation();
   const { loadedNFTS } = useNFTSStore();
   const dispatch = useAppDispatch();
-  const { collectionId } = useParams();
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
+  const { collectionId } = collectionDetails;
 
   const [modalOpened, setModalOpened] = useState<boolean>(false);
   const [searchText, setSearchText] = useState('');
@@ -59,8 +63,6 @@ export const GlobalSearch = ({
     debounce((value: string, abortController: AbortController) => {
       dispatch(
         nftsActions.getSearchResults({
-          sort: SortKey.all,
-          order: 'd',
           count: 25,
           search: value,
           abortController,

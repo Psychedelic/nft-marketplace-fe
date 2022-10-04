@@ -8,6 +8,7 @@ import {
   plugActions,
   useFilterStore,
   filterActions,
+  RootState,
 } from '../../store';
 import { disconnectPlug } from '../../integrations/plug';
 import { openSonicURL } from '../../utils/handle-redirect-urls';
@@ -25,6 +26,7 @@ import { useTheme } from '../../hooks';
 import { Icon } from '../icons';
 import wicpImage from '../../assets/wicp.svg';
 import PlugBalance from './plug-balance';
+import { useSelector } from 'react-redux';
 
 export type PlugButtonProps = {
   handleConnect: (dispatch: any) => void;
@@ -52,7 +54,11 @@ export const PlugButton = ({
   const [openDropdown, setOpenDropdown] = useState(false);
 
   const navigate = useNavigate();
-  const { collectionId } = useParams();
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
+  const { collectionId } = collectionDetails;
 
   const disconnectHandler = useCallback(() => {
     dispatch(plugActions.setIsConnected(false));
