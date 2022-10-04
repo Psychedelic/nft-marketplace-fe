@@ -26,15 +26,6 @@ export type GetUserNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
 export const getUserOffers = createAsyncThunk<any | undefined, any>(
   'marketplace/getUserOffers',
   async ({ collectionId, onSuccess, onFailure }, thunkAPI) => {
-    // Checks if an actor instance exists already
-    // otherwise creates a new instance
-
-    // const actorInstance = await actorInstanceHandler({
-    //   thunkAPI,
-    //   serviceName: 'marketplace',
-    //   slice: marketplaceSlice,
-    // });
-
     thunkAPI.dispatch(marketplaceActions.setOffersLoaded(false));
 
     const jellyInstance = await jellyJsInstanceHandler({
@@ -43,8 +34,8 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
     });
 
     try {
-      let floorDifferencePrice: string;
-      let currencyMarketPrice: number;
+      let floorDifferencePrice: any;
+      let currencyMarketPrice: any;
       const nonFungibleContractAddress =
         Principal.fromText(collectionId);
       const collection = await getJellyCollection({
@@ -66,13 +57,12 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
       const { data } = res;
 
       // Floor Difference calculation
-      // const floorDifferenceResponse = await actorInstance.getFloor(
-      //   nonFungibleContractAddress,
-      // );
+      const floorDifferenceResponse =
+        await jellyCollection.getFloorPrice();
 
-      // if ('Ok' in floorDifferenceResponse) {
-      //   floorDifferencePrice = floorDifferenceResponse.Ok.toString();
-      // }
+      if (floorDifferenceResponse?.ok) {
+        floorDifferencePrice = floorDifferenceResponse?.data;
+      }
 
       const offers = data?.map((item: NFTToken) => {
         const metadata = item?.offers.reduce(
