@@ -1,4 +1,4 @@
-// /* eslint-disable @typescript-eslint/naming-convention */
+// // /* eslint-disable @typescript-eslint/naming-convention */
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
 
@@ -57,7 +57,10 @@ export interface Stats {
   total_unique_holders: bigint;
   total_supply: bigint;
 }
-export type SupportedInterface = { Mint: null } | { Approval: null };
+export type SupportedInterface =
+  | { Burn: null }
+  | { Mint: null }
+  | { Approval: null };
 export interface TokenMetadata {
   transferred_at: [] | [bigint];
   transferred_by: [] | [Principal];
@@ -97,9 +100,15 @@ export type Vec = Array<
   ]
 >;
 export interface _SERVICE {
+  approve: ActorMethod<[Principal, bigint], Result>;
+  balanceOf: ActorMethod<[Principal], Result>;
+  burn: ActorMethod<[bigint], Result>;
+  custodians: ActorMethod<[], Array<Principal>>;
+  cycles: ActorMethod<[], bigint>;
   dfx_info: ActorMethod<[], string>;
   dip721_approve: ActorMethod<[Principal, bigint], Result>;
   dip721_balance_of: ActorMethod<[Principal], Result>;
+  dip721_burn: ActorMethod<[bigint], Result>;
   dip721_custodians: ActorMethod<[], Array<Principal>>;
   dip721_cycles: ActorMethod<[], bigint>;
   dip721_is_approved_for_all: ActorMethod<
@@ -155,7 +164,35 @@ export interface _SERVICE {
     Result
   >;
   git_commit_hash: ActorMethod<[], string>;
+  isApprovedForAll: ActorMethod<[Principal, Principal], Result_1>;
+  logo: ActorMethod<[], [] | [string]>;
+  metadata: ActorMethod<[], ManualReply>;
+  mint: ActorMethod<
+    [Principal, bigint, Array<[string, GenericValue]>],
+    Result
+  >;
+  name: ActorMethod<[], [] | [string]>;
+  operatorOf: ActorMethod<[bigint], Result_2>;
+  operatorTokenIdentifiers: ActorMethod<[Principal], ManualReply_1>;
+  operatorTokenMetadata: ActorMethod<[Principal], ManualReply_2>;
+  ownerOf: ActorMethod<[bigint], Result_2>;
+  ownerTokenIdentifiers: ActorMethod<[Principal], ManualReply_1>;
+  ownerTokenMetadata: ActorMethod<[Principal], ManualReply_2>;
   rust_toolchain_info: ActorMethod<[], string>;
+  setApprovalForAll: ActorMethod<[Principal, boolean], Result>;
+  setCustodians: ActorMethod<[Array<Principal>], undefined>;
+  setLogo: ActorMethod<[string], undefined>;
+  setName: ActorMethod<[string], undefined>;
+  setSymbol: ActorMethod<[string], undefined>;
+  stats: ActorMethod<[], Stats>;
+  supportedInterfaces: ActorMethod<[], Array<SupportedInterface>>;
+  symbol: ActorMethod<[], [] | [string]>;
+  tokenMetadata: ActorMethod<[bigint], ManualReply_3>;
+  totalSupply: ActorMethod<[], bigint>;
+  totalTransactions: ActorMethod<[], bigint>;
+  totalUniqueHolders: ActorMethod<[], bigint>;
+  transfer: ActorMethod<[Principal, bigint], Result>;
+  transferFrom: ActorMethod<[Principal, Principal, bigint], Result>;
 }
 
 export default _SERVICE;
