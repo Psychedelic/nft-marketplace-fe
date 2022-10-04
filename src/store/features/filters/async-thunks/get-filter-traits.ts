@@ -158,10 +158,5 @@ export const extractTraitData = ({
     return nftDetails;
   } catch (error) {
     AppLog.error(error);
-    dispatch(
-      notificationActions.setErrorMessage(
-        'Oops! Failed to get trait data',
-      ),
-    );
   }
 };
