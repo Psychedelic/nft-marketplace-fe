@@ -48,9 +48,8 @@ mocks_chunk_size=$(cat < ./jelly/dependencies/crowns/mocks/settings.json | jq .c
 numberOfTokens=$((max_chunks*mocks_chunk_size))
 
 whoami=$(dfx identity whoami)
-# TODO: see dfx changes, require update
-# alice=$(dfx identity use marketplace.alice > /dev/null 2>&1 && dfx identity get-principal)
-# bob=$(dfx identity use marketplace.bob > /dev/null 2>&1 && dfx identity get-principal)
+alice=$(dfx identity use marketplace.alice > /dev/null 2>&1 && dfx identity get-principal)
+bob=$(dfx identity use marketplace.bob > /dev/null 2>&1 && dfx identity get-principal)
 
 whoami=$(dfx identity use "$whoami" > /dev/null 2>&1 && dfx identity get-principal)
 
@@ -63,8 +62,7 @@ printf "🤖 Mint process will mint a count of %s tokens\n\n" "$numberOfTokens"
 (
   cd $crownsMockPath || exit 1
 
-  # TODO: fix/update alice/bob PEM for latest dfx USER_PRINCIPALS="[\"$whoami\", \"$alice\", \"$bob\" ]"
-  USER_PRINCIPALS="[\"$whoami\" ]" MAX_CHUNKS=$max_chunks CROWNS_ID=$(cd ../../../ && dfx canister id crowns) WICP_ID=$(cd ../../../ && dfx canister id wicp) node mint-crowns.js
+  USER_PRINCIPALS="[ \"$whoami\", \"$alice\", \"$bob\" ]" MAX_CHUNKS=$max_chunks CROWNS_ID=$(cd ../../../ && dfx canister id crowns) WICP_ID=$(cd ../../../ && dfx canister id wicp) node mint-crowns.js
 )
 
 printf "👍 Mint process completed!\n\n"
