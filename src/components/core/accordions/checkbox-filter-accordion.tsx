@@ -4,6 +4,7 @@ import {
   useFilterStore,
   useAppDispatch,
   filterActions,
+  nftsActions,
 } from '../../../store';
 import { Checkbox } from '../checkbox/checkbox';
 import {
@@ -52,9 +53,12 @@ export const CheckboxFilterAccordion = ({
           key: key,
         }),
       );
+      dispatch(nftsActions.setLastIndex(undefined));
+
       return;
     }
 
+    dispatch(nftsActions.setLastIndex(undefined));
     dispatch(
       filterActions.applytraits({
         key: key,

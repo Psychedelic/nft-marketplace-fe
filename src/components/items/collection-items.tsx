@@ -101,7 +101,7 @@ export const CollectionItems = () => {
             dispatch(
               filterActions.setSortingFilter(
                 `${t(
-                  'translation:dropdown.priceFilter.recentlyListed',
+                  'translation:dropdown.priceFilter.all',
                 )}`,
               ),
             );
@@ -254,7 +254,7 @@ export const CollectionItems = () => {
                             dispatch(
                               filterActions.setSortingFilter(
                                 `${t(
-                                  'translation:dropdown.priceFilter.recentlyListed',
+                                  'translation:dropdown.priceFilter.all',
                                 )}`,
                               ),
                             );

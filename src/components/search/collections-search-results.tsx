@@ -91,7 +91,6 @@ const CollectionsSearchResults = ({
                       </ItemNameContainer>
                     </ItemDetails>
                     <ItemMetaDataContainer>
-                      <ItemMetaTitle>{`10,000 items`}</ItemMetaTitle>
                     </ItemMetaDataContainer>
                   </ItemDetailsWrapper>
                 </ItemDetailsContainer>

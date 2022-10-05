@@ -1,3 +1,4 @@
+import { SortKey } from '@psychedelic/jelly-js';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NFTMetadata } from '../../../declarations/legacy';
 import type { RootState } from '../../store';
@@ -210,6 +211,8 @@ export const filterSlice = createSlice({
       state.defaultFilters = [];
       state.traits = [];
       state.status = '';
+      state.isMyNfts = false;
+      state.sortBy = SortKey.all;
     },
     setSortingFilter: (state, action: PayloadAction<string>) => {
       state.sortBy = action.payload;
