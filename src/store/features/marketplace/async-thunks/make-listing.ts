@@ -84,6 +84,8 @@ export const makeListing = createAsyncThunk<
         },
       };
 
+      const price = [Number(userListForPrice)];
+
       const MKP_MAKE_LISTING = {
         idl: marketplaceV2IdlFactory,
         canisterId: marketplaceId.toString(),
@@ -97,7 +99,7 @@ export const makeListing = createAsyncThunk<
             fungible_id: [],
             caller: [],
             buyer: [],
-            price: [userListForPrice],
+            price,
           },
         ],
         onSuccess: async (res: any) => {
