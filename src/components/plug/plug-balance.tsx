@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { Principal } from '@dfinity/principal';
 import {
   notificationActions,
   plugActions,
@@ -14,12 +15,16 @@ import { SpinnerIcon } from '../icons/custom';
 import { AppLog } from '../../utils/log';
 import wicpImage from '../../assets/wicp.svg';
 import { roundOffDecimalValue } from '../../utils/nfts';
-import { getPlugWalletBalance } from '../../integrations/plug';
+import { getDIP20BalanceOf } from '../../utils/dip20';
 
 const PlugBalance = () => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const { wicpBalance, loadingWicpBalance } = usePlugStore();
+  const {
+    wicpBalance,
+    loadingWicpBalance,
+    principalId: plugPrincipal,
+  } = usePlugStore();
 
   const recentlyPurchasedTokens = useSelector(
     (state: RootState) => state.marketplace.recentlyPurchasedTokens,
@@ -32,15 +37,13 @@ const PlugBalance = () => {
   useEffect(() => {
     (async () => {
       try {
-        const allPlugBalance = await getPlugWalletBalance();
+        if (!plugPrincipal) return;
 
-        const wicpWalletBalance = allPlugBalance?.find(
-          (balance: any) => balance?.name === 'Wrapped ICP',
-        );
+        const balance = await getDIP20BalanceOf({
+          userPrincipal: Principal.fromText(plugPrincipal),
+        });
 
-        dispatch(
-          plugActions.setWICPBalance(wicpWalletBalance?.amount),
-        );
+        dispatch(plugActions.setWICPBalance(balance));
       } catch (err) {
         AppLog.error(err);
         dispatch(
@@ -50,7 +53,7 @@ const PlugBalance = () => {
         );
       }
     })();
-  }, [recentlyPurchasedTokens, recentlyMadeOffers]);
+  }, [recentlyPurchasedTokens, recentlyMadeOffers, plugPrincipal]);
 
   return (
     <PlugWICPBalance>
@@ -69,3 +72,4 @@ const PlugBalance = () => {
 };
 
 export default PlugBalance;
+
