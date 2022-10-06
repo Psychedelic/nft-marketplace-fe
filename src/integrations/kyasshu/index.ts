@@ -50,7 +50,7 @@ export const useNFTSFetcher = () => {
             : undefined,
           sort: sortBy,
           order: 'd',
-          page: lastIndexValue,
+          lastIndex: lastIndexValue,
           count: 25,
           collectionId,
           reverse,

@@ -64,7 +64,7 @@ export const EmptyState = ({
               dispatch(
                 filterActions.setSortingFilter(
                   `${t(
-                    'translation:dropdown.priceFilter.recentlyListed',
+                    'translation:dropdown.priceFilter.all',
                   )}`,
                 ),
               );

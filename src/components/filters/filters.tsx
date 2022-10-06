@@ -217,13 +217,14 @@ export const Filters = ({
 
   const clearAll = () => {
     dispatch(filterActions.clearAllFilters());
+    dispatch(filterActions.removeFilter(myNfts));
     dispatch(settingsActions.setPriceApplyButton(false));
-    dispatch(filterActions.setMyNfts(false));
     dispatch(
       filterActions.setSortingFilter(
-        `${t('translation:dropdown.priceFilter.recentlyListed')}`,
+        `${t('translation:dropdown.priceFilter.all')}`,
       ),
     );
+    dispatch(nftsActions.setLastIndex(undefined));
     setPriceFilterValue({
       min: '',
       max: '',
@@ -352,6 +353,9 @@ export const Filters = ({
                                   )}`,
                                 ),
                               );
+                              dispatch(
+                                nftsActions.setLastIndex(undefined),
+                              );
                             } else {
                               dispatch(
                                 filterActions.setStatusFilter(''),
@@ -359,7 +363,7 @@ export const Filters = ({
                               dispatch(
                                 filterActions.setSortingFilter(
                                   `${t(
-                                    'translation:dropdown.priceFilter.recentlyListed',
+                                    'translation:dropdown.priceFilter.all',
                                   )}`,
                                 ),
                               );
@@ -413,6 +417,9 @@ export const Filters = ({
                                   )}`,
                                 ),
                               );
+                              dispatch(
+                                nftsActions.setLastIndex(undefined),
+                              );
                             } else {
                               dispatch(
                                 filterActions.setStatusFilter(''),
@@ -420,7 +427,7 @@ export const Filters = ({
                               dispatch(
                                 filterActions.setSortingFilter(
                                   `${t(
-                                    'translation:dropdown.priceFilter.recentlyListed',
+                                    'translation:dropdown.priceFilter.all',
                                   )}`,
                                 ),
                               );
