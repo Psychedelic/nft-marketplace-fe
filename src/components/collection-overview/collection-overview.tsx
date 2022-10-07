@@ -80,9 +80,15 @@ export const CollectionOverview = () => {
     // by using currentCollectionDetails state
   }, [collectionId]);
 
+  // TODO: update collection details like name, description, bg from service
+
   return (
     <NftMetadataWrapper>
-      <NftMetadataBackground />
+      <NftMetadataBackground
+        collectionName={
+          collectionName !== 'Crowns Test' ? 'default' : 'crowns'
+        }
+      />
       <NftMetadataContent>
         <NftMetadataContentWrapper>
           <NftProfilePictureWrapper>
@@ -106,7 +112,10 @@ export const CollectionOverview = () => {
               )}
             </Heading>
             <Subtext>
-              {t('translation:common.crownsDescription')}
+              {collectionName === 'Crowns Test' &&
+                t('translation:common.crownsDescription')}
+              {collectionName === 'ICNS (test)' &&
+                t('translation:common.icnsDescription')}
             </Subtext>
           </HeaderWrapper>
         </NftMetadataContentWrapper>
