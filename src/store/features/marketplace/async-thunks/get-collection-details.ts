@@ -40,8 +40,10 @@ export const getCollectionDetails = createAsyncThunk<
       const currentCollectionDetails = {
         marketplaceId: collection.marketplaceId.toString(),
         collectionId: collection.id.toString(),
+        collectionName: collection.name,
+        collectionThumbnail: collection.thumbnail,
       };
-
+      
       return currentCollectionDetails;
     } catch (err) {
       AppLog.error(err);
@@ -55,4 +57,3 @@ export const getCollectionDetails = createAsyncThunk<
     }
   },
 );
-

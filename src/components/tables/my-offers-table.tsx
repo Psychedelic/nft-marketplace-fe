@@ -318,9 +318,10 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
   const { loading, loadedOffers } = tableDetails;
 
+
   return (
     <>
-      {(loading || (!loading && loadedOffers.length > 0)) && (
+      {(loading || (!loading && loadedOffers?.length > 0)) && (
         <InfiniteScrollWrapper
           pageStart={0}
           // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -358,7 +359,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
           </Container>
         </InfiniteScrollWrapper>
       )}
-      {!loading && loadedOffers.length === 0 && (
+      {!loading && loadedOffers?.length === 0 && (
         <EmptyStateMessage type="largeTable">
           {(offersType === OfferTypeStatusCodes.OffersReceived &&
             t('translation:emptyStates.noOffersYet')) ||

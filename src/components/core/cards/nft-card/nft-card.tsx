@@ -270,7 +270,7 @@ export const NftCard = React.memo(
               // which should support Video or Static image, not just video
               // at the moment used <img> as a placeholder, not meant for production
               <img
-                style={{ width: '100%', height: 'auto' }}
+                style={{ width: '100%', height: '207px' }}
                 src={generated}
                 alt=""
               />

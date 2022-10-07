@@ -45,7 +45,7 @@ const initialState: NFTSState = {
   allNFTs: [],
   lastIndexValue: undefined,
   myNFTIds: [],
-  loadingNFTDetails: true,
+  loadingNFTDetails: false,
 };
 
 export interface LoadedNFTData {
