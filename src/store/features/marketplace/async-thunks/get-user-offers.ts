@@ -16,7 +16,6 @@ import {
   formatAddress,
   parseE8SAmountToWICP,
 } from '../../../../utils/formatters';
-import { actorInstanceHandler } from '../../../../integrations/actor';
 
 export type GetUserNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;

@@ -79,6 +79,8 @@ export type CollectionDetails = {
 export type CurrentCollectionDetails = {
   marketplaceId?: string;
   collectionId?: string;
+  collectionName?: string;
+  collectionThumbnail?: string;
 };
 
 type RecentyListedForSale = MakeListing[];

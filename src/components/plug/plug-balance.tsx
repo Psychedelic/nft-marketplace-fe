@@ -16,6 +16,7 @@ import { AppLog } from '../../utils/log';
 import wicpImage from '../../assets/wicp.svg';
 import { roundOffDecimalValue } from '../../utils/nfts';
 import { getDIP20BalanceOf } from '../../utils/dip20';
+import { NumberTooltip } from '../number-tooltip';
 
 const PlugBalance = () => {
   const { t } = useTranslation();
@@ -62,7 +63,9 @@ const PlugBalance = () => {
         alt={t('translation:logoAlts.wicp')}
       />
       {wicpBalance !== '' && !loadingWicpBalance ? (
-        `${roundOffDecimalValue(Number(wicpBalance), 2)}`
+        <NumberTooltip>
+          {wicpBalance}
+        </NumberTooltip>
       ) : (
         <SpinnerIcon />
       )}
@@ -72,4 +75,3 @@ const PlugBalance = () => {
 };
 
 export default PlugBalance;
-

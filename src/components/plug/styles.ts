@@ -130,7 +130,7 @@ export const PlugWICPBalance = styled('div', {
   borderTop: '1.5px solid $borderColor',
   borderBottom: '1.5px solid $borderColor',
   color: '$mainTextColor',
-  fontSize: '16px',
+  fontSize: '14px',
   fontWeight: '500',
 });
 

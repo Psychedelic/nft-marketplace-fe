@@ -10,6 +10,7 @@ import {
   marketplaceActions,
   nftsActions,
   filterActions,
+  RootState,
 } from '../../store';
 import { FilteredCountChip, LinkButton } from '../core';
 import {
@@ -32,6 +33,7 @@ import { Icon } from '../icons';
 import useMediaQuery from '../../hooks/use-media-query';
 import { FilterChipsSkeleton } from './filter-chips-skeleton';
 import { useTheme } from '../../hooks';
+import { useSelector } from 'react-redux';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
@@ -56,6 +58,12 @@ export const CollectionOverview = () => {
     [loadingTableData, loadingNFTs, loadingCollectionData],
   );
 
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
+  const { collectionThumbnail, collectionName } = collectionDetails;
+
   useEffect(() => {
     if (!collectionId) return;
 
@@ -78,11 +86,16 @@ export const CollectionOverview = () => {
       <NftMetadataContent>
         <NftMetadataContentWrapper>
           <NftProfilePictureWrapper>
-            <img src={crown} alt="crown-pfp" />
+            <img
+              src={collectionDetails?.collectionThumbnail}
+              alt="crown-pfp"
+            />
           </NftProfilePictureWrapper>
           <HeaderWrapper>
             <Heading>
-              Crowns
+              {collectionName !== 'Crowns Test'
+                ? collectionName
+                : 'Crowns'}
               <VerifiedIcon icon="verified" paddingLeft size="md" />
               {showLoading && (
                 <Icon
