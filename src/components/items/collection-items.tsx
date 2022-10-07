@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import {
   useFilterStore,
   filterActions,
@@ -8,6 +9,7 @@ import {
   settingsActions,
   usePlugStore,
   nftsActions,
+  RootState,
 } from '../../store';
 import { useNFTSFetcher } from '../../integrations/kyasshu';
 import { NftList } from '../nft-list';
@@ -55,6 +57,10 @@ export const CollectionItems = () => {
 
   useNFTSFetcher();
 
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
   // TODO: move applied filters to seperate component
   const handleRemoveFilter = (appliedFilter: any) => {
     // TODO: apply sorting to fetch kyasshu API
@@ -100,9 +106,7 @@ export const CollectionItems = () => {
             dispatch(filterActions.setMyNfts(false));
             dispatch(
               filterActions.setSortingFilter(
-                `${t(
-                  'translation:dropdown.priceFilter.all',
-                )}`,
+                `${t('translation:dropdown.priceFilter.all')}`,
               ),
             );
           }}
@@ -110,6 +114,8 @@ export const CollectionItems = () => {
       );
     }
   };
+
+  // TODO: owners count value is returning wrong value for ICNS collection
 
   return (
     <Container>
@@ -131,13 +137,18 @@ export const CollectionItems = () => {
                     showLogo={false}
                   />
                 )}
-                {!loadingCollectionData && totalOwnersCount > 0 && (
-                  <FilteredCountChip
-                    label={t('translation:chips.labels.OwnersLabel')}
-                    count={totalOwnersCount}
-                    showLogo={false}
-                  />
-                )}
+                {!loadingCollectionData &&
+                  totalOwnersCount > 0 &&
+                  collectionDetails?.collectionName ===
+                    'Crowns Test' && (
+                    <FilteredCountChip
+                      label={t(
+                        'translation:chips.labels.OwnersLabel',
+                      )}
+                      count={totalOwnersCount}
+                      showLogo={false}
+                    />
+                  )}
                 {!loadingCollectionData && floorPrice > 0 && (
                   <FilteredCountChip
                     label={t(

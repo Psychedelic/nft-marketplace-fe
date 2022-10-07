@@ -5,7 +5,8 @@
     "noRecentSearch": "No recent searches",
     "comingSoon": "Coming soon!",
     "crownsDescription": "Crowns are a collection of 10,000 procedurally generated traditional & psychedelic 3D crowns on the Internet Computer, backed by asset provenance from CAP.",
-    "notConnectedMessage": "You’re not connected to Plug yet. Click the button below to connect."
+    "notConnectedMessage": "You’re not connected to Plug yet. Click the button below to connect.",
+    "icnsDescription": "ICNS maps human-readable names to machine-readable crypto addresses and other customized user metadata, Your ICNS name will be your passport to the web3 ecosystem on the Internet Computer"
   },
   "offers": {
     "myOffers": "My Offers",

@@ -5,6 +5,11 @@ import { Collection } from '@psychedelic/jelly-js';
 import { useSelector } from 'react-redux';
 import { ActionButton, LinkButton } from '../../components/core';
 import {
+  nftsActions,
+  filterActions,
+  settingsActions,
+} from '../../store';
+import {
   Container,
   IntroContainer,
   IntroBackgroundContainer,
@@ -207,6 +212,13 @@ const LandingPageView = () => {
     //   );
     // }
   };
+
+  useEffect(() => {
+    // Reset collection state
+    dispatch(nftsActions.reset());
+    dispatch(filterActions.reset());
+    dispatch(settingsActions.setPageNotFoundStatus(false));
+  }, []);
 
   return (
     <Container>

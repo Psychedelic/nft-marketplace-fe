@@ -1,5 +1,6 @@
 import { styled } from '../../stitches.config';
 import background from '../../assets/nft-background.png';
+import defaultBg from '../../assets/default-banner.svg';
 import { Icon } from '../icons';
 import { SkeletonBox } from '../core';
 
@@ -11,9 +12,21 @@ export const NftMetadataWrapper = styled('div', {
 
 export const NftMetadataBackground = styled('div', {
   height: '200px',
-  backgroundImage: `url(${background})`,
+  backgroundImage: `url(${defaultBg})`,
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
+
+  // variants
+  variants: {
+    collectionName: {
+      crowns: {
+        backgroundImage: `url(${background})`,
+      },
+      default: {
+        backgroundImage: `url(${defaultBg})`,
+      },
+    },
+  },
 });
 
 export const NftMetadataContent = styled('div', {

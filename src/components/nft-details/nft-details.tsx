@@ -20,6 +20,10 @@ import {
   Divider,
   OfferAccordionDetails,
   AboutAccordionDetails,
+  NameCardBg,
+  NameCardContainer,
+  NameCardCollection,
+  NameCardTitle,
 } from './styles';
 import {
   useNFTSStore,
@@ -40,6 +44,8 @@ import {
 import TraitsListLoader from './TraitsListLoader';
 import NFTDetailsSkeleton from './nft-details-skeleton';
 import useMediaQuery from '../../hooks/use-media-query';
+// TODO: replace ICNS logo dynamically
+import icnsLogo from '../../assets/ICNS-logo.svg';
 
 // type CurrentListing = {
 //   seller: string;
@@ -78,7 +84,9 @@ export const NftDetails = () => {
 
   const nftDetails: NFTMetadata | undefined = useMemo(() => {
     const details = loadedNFTS.find((nft) => nft.id === id);
-    if (!details) return;
+    if (!details || !details.traits) return;
+
+    if (details.traits.name) return details;
 
     return extractTraitData({
       dispatch,
@@ -147,6 +155,8 @@ export const NftDetails = () => {
     recentlyPurchasedTokens,
   ]);
 
+  const hasThumbnailMedia = nftDetails?.preview;
+
   return (
     <Container>
       <NftActionBar
@@ -157,40 +167,59 @@ export const NftDetails = () => {
       {nftDetails ? (
         <Wrapper>
           <PreviewContainer>
-            <Video
-              loop
-              autoPlay
-              muted
-              preload="metadata"
-              controls={false}
-              poster={nftDetails.preview}
-              src={nftDetails.location}
-            />
-            <NFTTraitsContainer>
-              {loadingFilterList || loadingNFTDetails ? (
-                <TraitsListLoader />
-              ) : (
-                <>
-                  {Object.keys(nftDetails.traits).map((key) => {
-                    const { occurance, rarity, name } =
-                      nftDetails?.traits?.[`${key}`];
+            {hasThumbnailMedia ? (
+              <Video
+                loop
+                autoPlay
+                muted
+                preload="metadata"
+                controls={false}
+                poster={nftDetails.preview}
+                src={nftDetails.location}
+              />
+            ) : (
+              // TODO: Replace with correct thumbnail from service
+              // which should support Video or Static image
+              // at the moment styled using gradient colors
+              <NameCardBg>
+                <NameCardContainer>
+                  <NameCardCollection
+                    src={icnsLogo}
+                    alt="collection-logo"
+                  />
+                  <NameCardTitle>
+                    {nftDetails?.traits?.name}
+                  </NameCardTitle>
+                </NameCardContainer>
+              </NameCardBg>
+            )}
+            {hasThumbnailMedia && (
+              <NFTTraitsContainer>
+                {loadingFilterList || loadingNFTDetails ? (
+                  <TraitsListLoader />
+                ) : (
+                  <>
+                    {Object.keys(nftDetails.traits).map((key) => {
+                      const { occurance, rarity, name } =
+                        nftDetails?.traits?.[`${key}`];
 
-                    return (
-                      <NFTTraitsChip
-                        label={getTraitName(key)}
-                        key={key}
-                        name={name}
-                        rimValue={
-                          occurance &&
-                          rarity &&
-                          `${occurance} (${rarity}%)`
-                        }
-                      />
-                    );
-                  })}
-                </>
-              )}
-            </NFTTraitsContainer>
+                      return (
+                        <NFTTraitsChip
+                          label={getTraitName(key)}
+                          key={key}
+                          name={name}
+                          rimValue={
+                            occurance &&
+                            rarity &&
+                            `${occurance} (${rarity}%)`
+                          }
+                        />
+                      );
+                    })}
+                  </>
+                )}
+              </NFTTraitsContainer>
+            )}
             {isMobileScreen && <Divider />}
             {isMobileScreen && (
               <>
@@ -237,6 +266,7 @@ export const NftDetails = () => {
               owner={owner}
               isListed={isListed}
               showNFTActionButtons={showNFTActionButtons}
+              collectionName={nftDetails?.name}
             />
             {!isMobileScreen && (
               <>
@@ -247,7 +277,10 @@ export const NftDetails = () => {
                   showNFTActionButtons={showNFTActionButtons}
                   operator={nftDetails?.operator}
                 />
-                <AboutAccordion owner={owner} />
+                <AboutAccordion
+                  owner={owner || nftDetails?.traits?.name}
+                  collectionName={nftDetails?.name}
+                />
               </>
             )}
           </DetailsContainer>

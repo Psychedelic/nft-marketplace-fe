@@ -2,6 +2,7 @@ import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
 import { useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   notificationActions,
   useAppDispatch,
@@ -33,7 +34,6 @@ import { Icon } from '../icons';
 import useMediaQuery from '../../hooks/use-media-query';
 import { FilterChipsSkeleton } from './filter-chips-skeleton';
 import { useTheme } from '../../hooks';
-import { useSelector } from 'react-redux';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
@@ -62,10 +62,11 @@ export const CollectionOverview = () => {
     (state: RootState) => state.marketplace.currentCollectionDetails,
   );
 
-  const { collectionThumbnail, collectionName } = collectionDetails;
+  const { collectionName, collectionId: currentCollectionId } =
+    collectionDetails;
 
   useEffect(() => {
-    if (!collectionId) return;
+    if (!collectionId || collectionId === currentCollectionId) return;
 
     // reset state to initial on collection Id change
     // TODO: handle reset state gracefully if required in anyother places
@@ -78,11 +79,17 @@ export const CollectionOverview = () => {
 
     // TODO: Update static data like crowns title, icon
     // by using currentCollectionDetails state
-  }, [collectionId]);
+  }, [collectionId, currentCollectionId]);
+
+  // TODO: update collection details like name, description, bg from service
 
   return (
     <NftMetadataWrapper>
-      <NftMetadataBackground />
+      <NftMetadataBackground
+        collectionName={
+          collectionName !== 'Crowns Test' ? 'default' : 'crowns'
+        }
+      />
       <NftMetadataContent>
         <NftMetadataContentWrapper>
           <NftProfilePictureWrapper>
@@ -106,7 +113,10 @@ export const CollectionOverview = () => {
               )}
             </Heading>
             <Subtext>
-              {t('translation:common.crownsDescription')}
+              {collectionName === 'Crowns Test' &&
+                t('translation:common.crownsDescription')}
+              {collectionName === 'ICNS (test)' &&
+                t('translation:common.icnsDescription')}
             </Subtext>
           </HeaderWrapper>
         </NftMetadataContentWrapper>
@@ -158,7 +168,9 @@ export const CollectionOverview = () => {
             ) : (
               <FilterChipsSkeleton />
             )}
-            {!loadingCollectionData && totalOwnersCount > 0 ? (
+            {!loadingCollectionData &&
+            totalOwnersCount > 0 &&
+            collectionName === 'Crowns Test' ? (
               <FilteredCountChip
                 label={t('translation:chips.labels.OwnersLabel')}
                 count={totalOwnersCount}

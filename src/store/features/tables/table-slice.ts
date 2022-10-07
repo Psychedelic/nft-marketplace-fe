@@ -30,6 +30,7 @@ export interface TableState {
 export interface CapActivityParams {
   pageCount: string;
   bucketId: string;
+  collectionName?: string;
 }
 
 export interface UserActivityParams {

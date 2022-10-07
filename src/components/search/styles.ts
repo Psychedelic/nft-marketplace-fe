@@ -401,8 +401,7 @@ export const TabsTrigger = styled(Tabs.Trigger, {
 
   '&[data-state="active"]': {
     color: '$primary',
-    boxShadow:
-      'currentcolor 0px -1px 0px 0px inset, currentcolor 0px 1px 0px 0px',
+    borderBottom: '2px solid currentcolor',
   },
   '&[data-state="inactive"]': {
     color: '$mainTextColor',

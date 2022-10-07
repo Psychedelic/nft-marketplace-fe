@@ -31,6 +31,7 @@ export interface NFTMetaDataProps {
   isListed?: boolean;
   owner?: string;
   showNFTActionButtons: boolean;
+  collectionName?: string;
 }
 
 export const NFTMetaData = ({
@@ -38,6 +39,7 @@ export const NFTMetaData = ({
   isListed,
   owner,
   showNFTActionButtons,
+  collectionName,
 }: NFTMetaDataProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -60,7 +62,7 @@ export const NFTMetaData = ({
         <div>
           <Heading>#{id}</Heading>
           <Subtext>
-            Crowns
+            {collectionName}
             <VerifiedIcon icon="verified" paddingLeft />
           </Subtext>
         </div>

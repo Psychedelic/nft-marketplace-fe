@@ -41,12 +41,14 @@ export type AboutAccordionProps = {
   owner?: string;
   isMobileScreen?: boolean;
   id?: string;
+  collectionName?: string;
 };
 
 export const AboutAccordionHeader = ({
   owner,
   isMobileScreen,
   id,
+  collectionName,
 }: AboutAccordionProps) => {
   const { t } = useTranslation();
 
@@ -89,40 +91,41 @@ export const AboutAccordionHeader = ({
     currentNFTId: id,
   });
 
-  const AccordionHeadContentData = [
-    {
-      subheading: 'CAP Crowns',
-      heading: 'Collection',
-      // TODO: replace with collection url after integration is done
-      image:
-        'https://storageapi2.fleek.co/fleek-team-bucket/logos/crowns-ooo.png',
-    },
-    {
-      subheading: 'Psychedelic',
-      heading: 'Creator',
-      // TODO: replace with creator url after integration is done
-      image: 'https://psychedelic.ooo/images/11-2.svg',
-    },
-  ];
+  console.log(collectionName, 'collectionName');
 
   return (
     <>
-      {AccordionHeadContentData.map((data) => (
-        <AccordionHeadContent
-          key={data.heading}
-          flexProperties="about"
-        >
+      <AccordionHeadContent key="Collection" flexProperties="about">
+        {collectionName === 'Crowns Test' ||
+        collectionName === 'Crowns' ? (
           <LogoWrapper
-            style={{ backgroundImage: `url(${data.image})` }}
+            style={{
+              backgroundImage: `url(https://storageapi2.fleek.co/fleek-team-bucket/logos/crowns-ooo.png)`,
+            }}
           />
-          <MetaDataDetails>
-            <MetaDataTitle>{data.heading}</MetaDataTitle>
-            <MetaDataDescription>
-              {data.subheading}
-            </MetaDataDescription>
-          </MetaDataDetails>
-        </AccordionHeadContent>
-      ))}
+        ) : (
+          <LogoWrapper
+            style={{
+              backgroundImage: `url(https://icns.id/ICNS-logo.png)`,
+            }}
+          />
+        )}
+        <MetaDataDetails>
+          <MetaDataTitle>Collection</MetaDataTitle>
+          <MetaDataDescription>{collectionName}</MetaDataDescription>
+        </MetaDataDetails>
+      </AccordionHeadContent>
+      <AccordionHeadContent key="Creator" flexProperties="about">
+        <LogoWrapper
+          style={{
+            backgroundImage: `url(https://psychedelic.ooo/images/11-2.svg)`,
+          }}
+        />
+        <MetaDataDetails>
+          <MetaDataTitle>Creator</MetaDataTitle>
+          <MetaDataDescription>Psychedelic</MetaDataDescription>
+        </MetaDataDetails>
+      </AccordionHeadContent>
       <AccordionHeadContent
         key={t('translation:accordions.about.header.owner')}
         flexProperties="about"
@@ -138,7 +141,7 @@ export const AboutAccordionHeader = ({
             {loadingOwnerAddress ? (
               <SkeletonBox style={{ width: '80px' }} />
             ) : (
-              ownerAddress
+              ownerAddress || owner
             )}
           </MetaDataDescription>
         </MetaDataDetails>
@@ -150,6 +153,7 @@ export const AboutAccordionHeader = ({
 export const AboutAccordion = ({
   owner,
   isMobileScreen,
+  collectionName,
 }: AboutAccordionProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -181,6 +185,8 @@ export const AboutAccordion = ({
     [config, id],
   );
 
+  // TODO: update collection name, logo and description from service
+
   return (
     <AccordionStyle
       type="single"
@@ -193,6 +199,7 @@ export const AboutAccordion = ({
             owner={owner}
             isMobileScreen={isMobileScreen}
             id={id}
+            collectionName={collectionName}
           />
         </AccordionHead>
       )}
@@ -205,11 +212,7 @@ export const AboutAccordion = ({
         >
           <div>
             <Icon icon="info" paddingRight />
-            <p>
-              {`${t(
-                'translation:accordions.about.header.aboutCrowns',
-              )}`}
-            </p>
+            <p>{`About  ${collectionName}`}</p>
           </div>
           <Icon icon="chevron-up" rotate={isAccordionOpen} />
         </AccordionTrigger>
@@ -218,7 +221,11 @@ export const AboutAccordion = ({
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
         >
           <Description>
-            {`${t('translation:common.crownsDescription')}`}
+            {collectionName === 'Crowns Test' ||
+              (collectionName === 'Crowns' &&
+                t('translation:common.crownsDescription'))}
+            {collectionName === 'ICNS (test)' &&
+              t('translation:common.icnsDescription')}
           </Description>
           <div>
             {AccordionContentMetaData.map((data) => (
