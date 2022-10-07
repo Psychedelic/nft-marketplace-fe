@@ -1,6 +1,7 @@
 import { styled } from '../../stitches.config';
 import { SkeletonBox } from '../core';
 import { VideoPreload } from '../video-preload';
+import gradientBg from '../../assets/gradient-card-bg.jpg';
 
 export const Container = styled('div', {
   width: '100%',
@@ -175,4 +176,47 @@ export const AboutAccordionDetails = styled('div', {
       display: 'none',
     },
   },
+});
+
+export const NameCardBg = styled('div', {
+  position: 'relative',
+  width: '100%',
+  height: 'auto',
+  backgroundImage: `url(${gradientBg})`,
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  borderRadius: '14px',
+  maxWidth: '100%',
+  maxHeight: '100%',
+  minHeight: '470px',
+  marginBottom: '10px',
+
+  '@md': {
+    minHeight: 'unset',
+    maxHeight: 'unset',
+    marginTop: '10px',
+  },
+});
+
+export const NameCardContainer = styled('div', {
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+});
+
+export const NameCardCollection = styled('img', {
+  padding: '40px 15px',
+});
+
+export const NameCardTitle = styled('div', {
+  position: 'absolute',
+  bottom: '40px',
+  fontSize: '24px',
+  fontWeight: '700',
+  textAlign: 'left',
+  padding: '70px 15px 0px',
+  color: '#000',
 });
