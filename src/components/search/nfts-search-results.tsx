@@ -20,11 +20,12 @@ import {
   LoadingWrapper,
   ItemDetailsContainer,
   StyledRouterLink,
+  ThumbnailSkeleton,
+  ItemSpan,
 } from './styles';
 import { RootState, useFilterStore } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
 import wicpIcon from '../../assets/wicp.svg';
-import icnsGradientCard from '../../assets/gradient-card-bg.jpeg';
 import { SpinnerIcon } from '../icons/custom';
 import { useSelector } from 'react-redux';
 
@@ -66,14 +67,23 @@ const NFTsSearchResults = ({
                 <ItemDetailsContainer>
                   <ItemDetailsWrapper>
                     <ItemDetails>
-                      {isICNSCollection ? (
-                        <ItemLogo src={icnsGradientCard} alt="icns" />
+                      {isICNSCollection || !nft.preview ? (
+                        <ThumbnailSkeleton />
                       ) : (
                         <ItemLogo src={nft.preview} alt="crowns" />
                       )}
                       <ItemNameContainer>
                         <ItemName>{`#${nft.id}`}</ItemName>
-                        <ItemDescription>{nft.name}</ItemDescription>
+                        {nft.name.includes('ICNS') ? (
+                          <ItemDescription>
+                            {nft.traitName}
+                            <ItemSpan> {`(${nft.name.replace(' (test)','')})`}</ItemSpan>
+                          </ItemDescription>
+                        ) : (
+                          <ItemDescription>
+                            {nft.name}
+                          </ItemDescription>
+                        )}
                       </ItemNameContainer>
                     </ItemDetails>
                     <PriceDetails>
