@@ -20,11 +20,14 @@ import {
   LoadingWrapper,
   ItemDetailsContainer,
   StyledRouterLink,
+  ThumbnailSkeleton,
+  ItemSpan,
 } from './styles';
-import { useFilterStore } from '../../store';
+import { RootState, useFilterStore } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
 import wicpIcon from '../../assets/wicp.svg';
 import { SpinnerIcon } from '../icons/custom';
+import { useSelector } from 'react-redux';
 
 type NFTsSearchResultsTypes = {
   searchText: string;
@@ -38,6 +41,11 @@ const NFTsSearchResults = ({
   const { t } = useTranslation();
   const { searchResults, loadingSearch } = useFilterStore();
   const { collectionId } = useParams();
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+  const { collectionName } = collectionDetails;
+  const isICNSCollection = collectionName?.includes('ICNS');
 
   return (
     <SearchResultsContainer>
@@ -59,10 +67,23 @@ const NFTsSearchResults = ({
                 <ItemDetailsContainer>
                   <ItemDetailsWrapper>
                     <ItemDetails>
-                      <ItemLogo src={nft.preview} alt="crowns" />
+                      {isICNSCollection || !nft.preview ? (
+                        <ThumbnailSkeleton />
+                      ) : (
+                        <ItemLogo src={nft.preview} alt="crowns" />
+                      )}
                       <ItemNameContainer>
                         <ItemName>{`#${nft.id}`}</ItemName>
-                        <ItemDescription>{nft.name}</ItemDescription>
+                        {nft.name.includes('ICNS') ? (
+                          <ItemDescription>
+                            {nft.traitName}
+                            <ItemSpan> {`(${nft.name.replace(' (test)','')})`}</ItemSpan>
+                          </ItemDescription>
+                        ) : (
+                          <ItemDescription>
+                            {nft.name}
+                          </ItemDescription>
+                        )}
                       </ItemNameContainer>
                     </ItemDetails>
                     <PriceDetails>
@@ -109,4 +130,3 @@ const NFTsSearchResults = ({
 };
 
 export default NFTsSearchResults;
-

@@ -34,6 +34,7 @@ export interface SearchResultDataState {
   owner: string;
   canister: string;
   wicpPrice: string;
+  traitName: string;
 }
 
 export interface FilterState {

@@ -55,6 +55,7 @@ export const getSearchResults = createAsyncThunk<
           location: nft?.url,
           owner: nft?.owner,
           canister: nft?.canister,
+          traitName: nft?.traits.name,
         };
         return metadata;
       });
@@ -76,4 +77,3 @@ export const getSearchResults = createAsyncThunk<
     }
   },
 );
-
