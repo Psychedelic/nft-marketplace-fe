@@ -8,7 +8,10 @@ import { getPrincipal } from '../../../../integrations/plug';
 
 export const getMyNFTs = createAsyncThunk<any | undefined, any>(
   'marketplace/getMyNFTs',
-  async ({ collectionId }, thunkAPI) => {
+  async (
+    { collectionId, shouldFetchUserTokenIdsAlone },
+    thunkAPI,
+  ) => {
     // Checks if an actor instance exists already
     // otherwise creates a new instance
     const jellyInstance = await jellyJsInstanceHandler({
@@ -18,8 +21,10 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
 
     const { dispatch } = thunkAPI;
 
-    // set loading NFTS state to true
-    dispatch(nftsActions.setIsNFTSLoading(true));
+    if (!shouldFetchUserTokenIdsAlone) {
+      // set loading NFTS state to true
+      dispatch(nftsActions.setIsNFTSLoading(true));
+    }
 
     try {
       const collection = await getJellyCollection({
@@ -68,8 +73,11 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
         nextPage: undefined,
         lastIndex: undefined,
       };
-      // update store with loaded NFTS details
-      dispatch(nftsActions.setLoadedNFTS(actionPayload));
+
+      if (!shouldFetchUserTokenIdsAlone) {
+        // update store with loaded NFTS details
+        dispatch(nftsActions.setLoadedNFTS(actionPayload));
+      }
 
       const myNFTIds = extractedNFTSList.map((nft: any) => nft.id);
 

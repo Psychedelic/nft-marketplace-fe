@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Collection } from '@psychedelic/jelly-js';
 import { useSelector } from 'react-redux';
 import { ActionButton, LinkButton } from '../../components/core';
+import { nftsActions, filterActions } from '../../store';
 import {
   Container,
   IntroContainer,
@@ -207,6 +208,12 @@ const LandingPageView = () => {
     //   );
     // }
   };
+
+  useEffect(() => {
+    // Reset collection state
+    dispatch(nftsActions.reset());
+    dispatch(filterActions.reset());
+  }, []);
 
   return (
     <Container>

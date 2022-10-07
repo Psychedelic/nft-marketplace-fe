@@ -130,7 +130,12 @@ export const Plug = () => {
 
     const { collectionId } = collectionDetails;
 
-    dispatch(nftsActions.getMyNFTs({ collectionId }));
+    dispatch(
+      nftsActions.getMyNFTs({
+        collectionId,
+        shouldFetchUserTokenIdsAlone: true,
+      }),
+    );
   }, [isConnected, collectionDetails, dispatch]);
 
   return (

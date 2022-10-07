@@ -62,10 +62,11 @@ export const CollectionOverview = () => {
     (state: RootState) => state.marketplace.currentCollectionDetails,
   );
 
-  const { collectionThumbnail, collectionName } = collectionDetails;
+  const { collectionName, collectionId: currentCollectionId } =
+    collectionDetails;
 
   useEffect(() => {
-    if (!collectionId) return;
+    if (!collectionId || collectionId === currentCollectionId) return;
 
     // reset state to initial on collection Id change
     // TODO: handle reset state gracefully if required in anyother places
@@ -78,7 +79,7 @@ export const CollectionOverview = () => {
 
     // TODO: Update static data like crowns title, icon
     // by using currentCollectionDetails state
-  }, [collectionId]);
+  }, [collectionId, currentCollectionId]);
 
   // TODO: update collection details like name, description, bg from service
 
