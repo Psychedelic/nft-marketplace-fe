@@ -17,7 +17,7 @@ export const getCAPActivity = createAsyncThunk<
   GetCAPActivityProps
 >(
   'table/getCAPActivity',
-  async ({ pageCount, bucketId }, { dispatch }) => {
+  async ({ pageCount, bucketId, collectionName }, { dispatch }) => {
     const HttpGetKyasshuUrl = KyasshuUrl.getCAPActivity({
       pageCount,
       bucketId,
@@ -66,7 +66,7 @@ export const getCAPActivity = createAsyncThunk<
           const data = {
             item: {
               // TODO: name should be based in collection
-              name: `CAP Crowns #${tokenId}`,
+              name: `${collectionName} #${tokenId}`,
               token_id: tokenId,
             },
             type: tableData.operation,

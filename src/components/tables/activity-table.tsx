@@ -73,6 +73,10 @@ export const ActivityTable = () => {
   const isMobileScreen = useMediaQuery('(max-width: 640px');
   const { collectionId } = useParams();
 
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
   useEffect(() => {
     if (!collectionId) {
       console.warn(
@@ -93,7 +97,11 @@ export const ActivityTable = () => {
     if (!bucketId) return;
 
     dispatch(
-      tableActions.getCAPActivity({ pageCount: 'last', bucketId }),
+      tableActions.getCAPActivity({
+        pageCount: 'last',
+        bucketId,
+        collectionName: collectionDetails?.collectionName || '',
+      }),
     );
   }, [dispatch, bucketId]);
 
@@ -103,6 +111,7 @@ export const ActivityTable = () => {
       tableActions.getCAPActivity({
         pageCount: nextPageNo.toString(),
         bucketId,
+        collectionName: collectionDetails?.collectionName || '',
       }),
     );
   }, [dispatch, loadingTableData, hasMoreData, nextPageNo, bucketId]);
