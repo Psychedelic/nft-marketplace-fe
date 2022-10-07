@@ -3,6 +3,7 @@ import { styled, keyframes } from '../../../../stitches.config';
 import { ImagePreload } from '../../../image-preload';
 import { NumberTooltip } from '../../../number-tooltip';
 import { VideoPreload } from '../../../video-preload';
+import gradientBg from '../../../../assets/gradient-card-bg.jpg';
 
 const overlaySpinner = keyframes({
   from: {
@@ -201,4 +202,35 @@ export const RouterLink = styled(Link, {
       },
     },
   },
+});
+
+export const NameCardBg = styled('div', {
+  width: '100%',
+  height: '100%',
+  backgroundImage: `url(${gradientBg})`,
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+});
+
+export const NameCardContainer = styled('div', {
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+});
+
+export const NameCardCollection = styled('img', {
+  width: '100%',
+  maxWidth: '64px',
+  padding: '15px',
+});
+
+export const NameCardTitle = styled('div', {
+  fontSize: '20px',
+  fontWeight: '700',
+  textAlign: 'left',
+  padding: '15px',
+  color: '#000',
 });

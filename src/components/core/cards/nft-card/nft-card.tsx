@@ -16,6 +16,12 @@ import {
   ActionText,
   PriceInActionSheet,
   RouterLink,
+  MediaWrapper,
+  PreviewDetails,
+  NameCardBg,
+  NameCardContainer,
+  NameCardCollection,
+  NameCardTitle,
 } from './styles';
 import wicpLogo from '../../../../assets/wicp.svg';
 import {
@@ -35,6 +41,8 @@ import { NumberTooltip } from '../../../number-tooltip';
 import { Media } from './media';
 import { isOperatorMarketplace } from '../../../../utils/nfts';
 import { generateImgFromText } from '../../../../utils/image-generator';
+// TODO: replace ICNS logo dynamically
+import icnsLogo from '../../../../assets/ICNS-logo.svg';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -268,12 +276,22 @@ export const NftCard = React.memo(
             ) : (
               // TODO: Replace with correct changes either in <Media> component
               // which should support Video or Static image, not just video
-              // at the moment used <img> as a placeholder, not meant for production
-              <img
-                style={{ width: '100%', height: '207px' }}
-                src={generated}
-                alt=""
-              />
+              // at the moment styled using gradient colors
+              <MediaWrapper>
+                <PreviewDetails>
+                  <NameCardBg>
+                    <NameCardContainer>
+                      <NameCardCollection
+                        src={icnsLogo}
+                        alt="collection-logo"
+                      />
+                      <NameCardTitle>
+                        {data?.traits?.name}
+                      </NameCardTitle>
+                    </NameCardContainer>
+                  </NameCardBg>
+                </PreviewDetails>
+              </MediaWrapper>
             )}
             <Flex>
               <NftDataHeader>
