@@ -61,50 +61,47 @@ const CollectionsSearchResults = ({
     setLoadingSearch(false);
   }, [searchText]);
 
+  const collectionResultData = searchResults?.length
+    ? searchResults
+    : collections;
+
   return (
     <SearchResultsContainer>
-      {searchText &&
-        !loadingSearch &&
-        (searchResults?.length ? (
-          <ItemsListContainer>
-            {searchResults?.map((collection) => (
-              <StyledRouterLink
-                to={`/${collection.id.toText()}`}
-                onClick={() => {
-                  closeDropDown();
-                  navigate(`/${collection.id.toText()}`);
-                }}
-                key={collection.id.toText()}
-              >
-                <ItemDetailsContainer>
-                  <ItemDetailsWrapper>
-                    <ItemDetails>
-                      <ItemLogo
-                        src={collection.thumbnail}
-                        alt="crowns"
-                      />
-                      <ItemNameContainer>
-                        <ItemName>{collection.name}</ItemName>
-                        <ItemDescription>
-                          {collection.name}
-                        </ItemDescription>
-                      </ItemNameContainer>
-                    </ItemDetails>
-                    <ItemMetaDataContainer>
-                    </ItemMetaDataContainer>
-                  </ItemDetailsWrapper>
-                </ItemDetailsContainer>
-              </StyledRouterLink>
-            ))}
-          </ItemsListContainer>
-        ) : (
-          <ItemsEmptyContainer>
-            {t('translation:emptyStates.noCollectionsFound')}
-          </ItemsEmptyContainer>
-        ))}
-      {!searchText && !loadingSearch && (
+      {collectionResultData?.length && (
+        <ItemsListContainer>
+          {searchResults?.map((collection) => (
+            <StyledRouterLink
+              to={`/${collection.id.toText()}`}
+              onClick={() => {
+                closeDropDown();
+                navigate(`/${collection.id.toText()}`);
+              }}
+              key={collection.id.toText()}
+            >
+              <ItemDetailsContainer>
+                <ItemDetailsWrapper>
+                  <ItemDetails>
+                    <ItemLogo
+                      src={collection.thumbnail}
+                      alt="crowns"
+                    />
+                    <ItemNameContainer>
+                      <ItemName>{collection.name}</ItemName>
+                      <ItemDescription>
+                        {collection.name}
+                      </ItemDescription>
+                    </ItemNameContainer>
+                  </ItemDetails>
+                  <ItemMetaDataContainer></ItemMetaDataContainer>
+                </ItemDetailsWrapper>
+              </ItemDetailsContainer>
+            </StyledRouterLink>
+          ))}
+        </ItemsListContainer>
+      )}
+      {searchText && !loadingSearch && !searchResults?.length && (
         <ItemsEmptyContainer>
-          {t('translation:common.noRecentSearch')}
+          {t('translation:emptyStates.noCollectionsFound')}
         </ItemsEmptyContainer>
       )}
       {loadingSearch && (
