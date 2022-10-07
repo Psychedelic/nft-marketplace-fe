@@ -3,7 +3,7 @@ import { styled, keyframes } from '../../../../stitches.config';
 import { ImagePreload } from '../../../image-preload';
 import { NumberTooltip } from '../../../number-tooltip';
 import { VideoPreload } from '../../../video-preload';
-import gradientBg from '../../../../assets/gradient-card-bg.jpg';
+import gradientBg from '../../../../assets/gradient-bg.png';
 
 const overlaySpinner = keyframes({
   from: {
