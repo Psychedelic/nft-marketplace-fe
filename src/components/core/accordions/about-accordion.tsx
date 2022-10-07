@@ -91,10 +91,13 @@ export const AboutAccordionHeader = ({
     currentNFTId: id,
   });
 
+  console.log(collectionName, 'collectionName');
+
   return (
     <>
       <AccordionHeadContent key="Collection" flexProperties="about">
-        {collectionName === 'Crowns Test' ? (
+        {collectionName === 'Crowns Test' ||
+        collectionName === 'Crowns' ? (
           <LogoWrapper
             style={{
               backgroundImage: `url(https://storageapi2.fleek.co/fleek-team-bucket/logos/crowns-ooo.png)`,
@@ -218,8 +221,9 @@ export const AboutAccordion = ({
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
         >
           <Description>
-            {collectionName === 'Crowns Test' &&
-              t('translation:common.crownsDescription')}
+            {collectionName === 'Crowns Test' ||
+              (collectionName === 'Crowns' &&
+                t('translation:common.crownsDescription'))}
             {collectionName === 'ICNS (test)' &&
               t('translation:common.icnsDescription')}
           </Description>
