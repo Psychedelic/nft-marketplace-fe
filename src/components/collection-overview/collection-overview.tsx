@@ -2,6 +2,7 @@ import copyToClipboard from 'copy-to-clipboard';
 import { useTranslation } from 'react-i18next';
 import { useMemo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import {
   notificationActions,
   useAppDispatch,
@@ -33,7 +34,6 @@ import { Icon } from '../icons';
 import useMediaQuery from '../../hooks/use-media-query';
 import { FilterChipsSkeleton } from './filter-chips-skeleton';
 import { useTheme } from '../../hooks';
-import { useSelector } from 'react-redux';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
@@ -168,7 +168,9 @@ export const CollectionOverview = () => {
             ) : (
               <FilterChipsSkeleton />
             )}
-            {!loadingCollectionData && totalOwnersCount > 0 ? (
+            {!loadingCollectionData &&
+            totalOwnersCount > 0 &&
+            collectionName === 'Crowns Test' ? (
               <FilteredCountChip
                 label={t('translation:chips.labels.OwnersLabel')}
                 count={totalOwnersCount}
