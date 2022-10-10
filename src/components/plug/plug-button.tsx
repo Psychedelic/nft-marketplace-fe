@@ -72,7 +72,7 @@ export const PlugButton = ({
   }, [navigate, userPrincipal, collectionId]);
 
   const myActivityHandler = useCallback(() => {
-    navigate(`/activity/${userPrincipal}`);
+    navigate(`${collectionId}/activity/${userPrincipal}`);
     setOpenDropdown(false);
   }, [navigate, userPrincipal]);
 

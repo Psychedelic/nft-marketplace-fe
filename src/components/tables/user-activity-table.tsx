@@ -11,6 +11,7 @@ import {
   tableActions,
   capActions,
   RootState,
+  marketplaceActions,
 } from '../../store';
 import {
   ItemDetailsCell,
@@ -67,6 +68,10 @@ export const UserActivityTable = () => {
 
   const isMobileScreen = useMediaQuery('(max-width: 640px)');
 
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
   useEffect(() => {
     if (!collectionId) {
       console.warn(
@@ -75,6 +80,10 @@ export const UserActivityTable = () => {
 
       return;
     }
+
+    dispatch(
+      marketplaceActions.getCollectionDetails({ collectionId }),
+    );
 
     dispatch(
       capActions.getTokenContractRootBucket({
@@ -91,6 +100,7 @@ export const UserActivityTable = () => {
         pageCount: 0,
         bucketId,
         plugPrincipal,
+        collectionName: collectionDetails?.collectionName || '',
       }),
     );
   }, [dispatch, bucketId, plugPrincipal]);
@@ -108,6 +118,7 @@ export const UserActivityTable = () => {
         pageCount: nextUserActivityPageNo,
         bucketId,
         plugPrincipal,
+        collectionName: collectionDetails?.collectionName || '',
       }),
     );
   }, [
@@ -295,4 +306,3 @@ export const UserActivityTable = () => {
     </InfiniteScrollWrapper>
   );
 };
-

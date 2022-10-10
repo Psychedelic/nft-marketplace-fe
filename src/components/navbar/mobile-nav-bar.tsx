@@ -70,7 +70,7 @@ export const MobileNavBar = ({
   const { collectionId } = collectionDetails;
 
   const myActivityHandler = useCallback(() => {
-    navigate(`/activity/${principalId}`);
+    navigate(`${collectionId}/activity/${principalId}`);
     setOpenMobileNavbar(false);
   }, [navigate, principalId]);
 
