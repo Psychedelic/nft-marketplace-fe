@@ -19,7 +19,7 @@ export const getUserActivity = createAsyncThunk<
   GetUserActivityProps
 >(
   'table/getUserActivity',
-  async ({ pageCount, bucketId, plugPrincipal }, { dispatch }) => {
+  async ({ pageCount, bucketId, plugPrincipal, collectionName }, { dispatch }) => {
     dispatch(tableActions.setIsTableDataLoading(true));
 
     try {
@@ -72,7 +72,7 @@ export const getUserActivity = createAsyncThunk<
         return {
           item: {
             // TODO: name should be based in collection
-            name: `CAP Crowns #${tableData.token_id.Text}`,
+            name: `${collectionName} #${tableData.token_id.Text}`,
             token_id: tableData.token_id.Text,
           },
           type: tableData.operation,

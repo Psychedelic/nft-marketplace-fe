@@ -34,7 +34,6 @@ import {
   formatAddress,
 } from '../../utils/formatters';
 import { getICAccountLink } from '../../utils/account-id';
-import config from '../../config/env';
 import { OperationType } from '../../constants';
 import useMediaQuery from '../../hooks/use-media-query';
 import MobileItemDetails from '../core/table-cells/mobile-item-details';

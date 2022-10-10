@@ -34,7 +34,7 @@ const App = () => {
           />
           <Route path="/:collectionId/offers/:id" element={<OfferView />} />
           <Route
-            path="/activity/:id"
+            path="/:collectionId/activity/:id"
             element={<UserActivityView />}
           />
           {/* 👇️ only match this when no other routes match */}

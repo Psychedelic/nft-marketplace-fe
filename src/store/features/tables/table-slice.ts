@@ -37,6 +37,7 @@ export interface UserActivityParams {
   pageCount: number;
   bucketId: string;
   plugPrincipal: string;
+  collectionName?: string;
 }
 
 export type TokenMetadataById = Record<string, string>;
