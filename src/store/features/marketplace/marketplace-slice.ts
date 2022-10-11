@@ -70,6 +70,7 @@ export type GetUserReceivedOffer = {
 export type GetBuyerOffers = {
   userPrincipalId: string;
   collectionId: string;
+  collectionName: string;
 };
 
 export type CollectionDetails = {

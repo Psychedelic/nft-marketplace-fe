@@ -1,6 +1,7 @@
 import { styled } from '../../../stitches.config';
 import { Icon } from '../../icons';
 import { SkeletonBox } from '../skeleton';
+import gradientBg from '../../../assets/gradient-bg.png';
 
 export const ItemDetails = styled('div', {
   // base styles
@@ -379,4 +380,48 @@ export const MobileItemDetailsContainer = styled('div', {
   alignItems: 'center',
   width: '310px',
   justifyContent: 'space-between',
+});
+
+export const MediaWrapper = styled('div', {
+  position: 'relative',
+  height: '48px',
+  marginRight: '12px',
+});
+
+export const PreviewDetails = styled('div', {
+  minHeight: '48px',
+  width: '48px',
+  height: '48px',
+});
+
+export const NameCardBg = styled('div', {
+  width: '48px',
+  height: '48px',
+  borderRadius: '5px',
+  backgroundImage: `url(${gradientBg})`,
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+});
+
+export const NameCardContainer = styled('div', {
+  width: '48px',
+  height: '48px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+});
+
+export const NameCardCollection = styled('img', {
+  width: '100%',
+  maxWidth: '24px',
+  padding: '5px',
+});
+
+export const NameCardTitle = styled('div', {
+  fontSize: '10px',
+  fontWeight: '700',
+  textAlign: 'left',
+  padding: '5px 5px 0px',
+  color: '#000',
 });

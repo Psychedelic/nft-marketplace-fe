@@ -16,6 +16,12 @@ import {
   ItemName,
   ThumbnailSkeleton,
   ItemTokenId,
+  MediaWrapper,
+  PreviewDetails,
+  NameCardBg,
+  NameCardContainer,
+  NameCardCollection,
+  NameCardTitle,
 } from './styles';
 import useMediaQuery from '../../../hooks/use-media-query';
 
@@ -36,6 +42,12 @@ export const ItemDetailsCell = ({
   const tokenMetadataById = useSelector(
     (state: RootState) => state.table.tokenMetadataById,
   );
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
+  const { collectionName, collectionThumbnail } = collectionDetails;
+
   const hasThumbnail =
     isTokenId(id) &&
     getTokenMetadataThumbnail({
@@ -59,16 +71,36 @@ export const ItemDetailsCell = ({
     );
   }, [dispatch, id, hasThumbnail, collectionId]);
 
+  const displayThumbnail = () => {
+    if (collectionName?.includes('ICNS') && !logo) {
+      return (
+        <MediaWrapper>
+          <PreviewDetails>
+            <NameCardBg>
+              <NameCardContainer>
+                <NameCardCollection
+                  src={collectionThumbnail}
+                  alt="collection-logo"
+                />
+                <NameCardTitle>{`#${id}`}</NameCardTitle>
+              </NameCardContainer>
+            </NameCardBg>
+          </PreviewDetails>
+        </MediaWrapper>
+      );
+    }
+    if (!logo && !collectionName?.includes('ICNS')) {
+      return <ThumbnailSkeleton />;
+    }
+    return <ItemLogo src={logo} alt="crowns" />;
+  };
+
   return (
     <RouterLink to={`/${collectionId}/nft/${id}`}>
       <ItemDetails>
-        {!logo ? (
-          <ThumbnailSkeleton />
-        ) : (
-          <ItemLogo src={logo} alt="crowns" />
-        )}
+        {displayThumbnail()}
         <ItemName className="item-name">
-          {isMobileScreen ? 'Cap Crowns' : name}
+          {isMobileScreen ? 'Cap Crowns' : name?.replace(' (test)','')}
           <ItemTokenId className="item-name">
             {isMobileScreen && `#${id}`}
           </ItemTokenId>

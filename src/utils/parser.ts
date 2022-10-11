@@ -39,6 +39,7 @@ interface ParseOffersMadeParams {
   data: Array<NFTToken>;
   floorDifferencePrice?: string;
   currencyMarketPrice?: number;
+  collectionName?: string;
 }
 
 export const parseGetTokenOffersResponse = ({
@@ -106,6 +107,7 @@ export const parseOffersMadeResponse = ({
   data,
   floorDifferencePrice,
   currencyMarketPrice,
+  collectionName,
 }: ParseOffersMadeParams) => {
   const parsedOffersMade = data.map((item: any) => {
     const { offers } = item;
@@ -130,7 +132,7 @@ export const parseOffersMadeResponse = ({
         return {
           ...acc,
           item: {
-            name: `CAP Crowns #${tokenId}`,
+            name: `${collectionName} #${tokenId}`,
             tokenId,
             logo: item.thumbnail,
           },

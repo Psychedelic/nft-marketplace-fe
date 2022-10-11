@@ -24,7 +24,10 @@ export type GetUserNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
 
 export const getUserOffers = createAsyncThunk<any | undefined, any>(
   'marketplace/getUserOffers',
-  async ({ collectionId, onSuccess, onFailure }, thunkAPI) => {
+  async (
+    { collectionId, onSuccess, onFailure, collectionName },
+    thunkAPI,
+  ) => {
     thunkAPI.dispatch(marketplaceActions.setOffersLoaded(false));
 
     const jellyInstance = await jellyJsInstanceHandler({
@@ -88,7 +91,7 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
             return {
               ...acc,
               item: {
-                name: `CAP Crowns #${tokenId}`,
+                name: `${collectionName} #${tokenId}`,
                 tokenId,
                 logo: item.thumbnail,
               },
