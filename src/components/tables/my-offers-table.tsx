@@ -76,6 +76,10 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     (state: RootState) => state.marketplace.recentlyCancelledOffers,
   );
 
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
   const { id: plugPrincipal, collectionId } = useParams();
 
   const isConnectedOwner = verifyConnectedOwner({
@@ -83,6 +87,20 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     owner: connectedPlugUser,
     principalId: plugPrincipal,
   });
+
+  useEffect(() => {
+    if (!collectionId) {
+      console.warn(
+        "Oops! Missing collection id",
+      );
+
+      return;
+    }
+
+    dispatch(
+      marketplaceActions.getCollectionDetails({ collectionId }),
+    );
+  }, [collectionId, dispatch]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -157,6 +175,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         marketplaceActions.getBuyerOffers({
           userPrincipalId: plugPrincipal,
           collectionId,
+          collectionName: collectionDetails?.collectionName || '',
           onSuccess: (offers: any) => {
             if (offersType === OfferTypeStatusCodes.OffersMade) {
               setTableDetails({
@@ -187,6 +206,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
       dispatch(
         marketplaceActions.getUserOffers({
           collectionId,
+          collectionName: collectionDetails?.collectionName || '',
           onSuccess: (offers: any) => {
             if (offersType === OfferTypeStatusCodes.OffersReceived) {
               setTableDetails({

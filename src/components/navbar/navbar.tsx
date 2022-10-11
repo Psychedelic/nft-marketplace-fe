@@ -6,6 +6,7 @@ import {
   themeActions,
   useAppDispatch,
   useSettingsStore,
+  RootState,
 } from '../../store';
 import { LinkButton } from '../core';
 import { GlobalSearch } from '../search';
@@ -28,6 +29,7 @@ import { Icon } from '../icons';
 import { useBuyerOffers } from '../../hooks/use-buyer-offers';
 import { MobileNavBar } from './mobile-nav-bar';
 import useMediaQuery from '../../hooks/use-media-query';
+import { useSelector } from 'react-redux';
 
 /* --------------------------------------------------------------------------
  * NavBar Component
@@ -46,6 +48,10 @@ export const NavBar = () => {
   const [startAnimation, setStartAnimation] = useState(false);
   const [stopAnimation, setStopAnimation] = useState(false);
   const isMobileScreen = useMediaQuery('(max-width: 850px)');
+
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
 
   const changeThemeHandler = useCallback(() => {
     dispatch(
@@ -80,10 +86,17 @@ export const NavBar = () => {
           startAnimation={startAnimation}
         >
           <LogoContainer>
-            <LogoIcon
-              src={isLightTheme ? jelly : jellyDark}
-              alt={t('translation:common.collectionName')}
-            />
+            {collectionDetails.collectionName?.includes('ICNS') ? (
+              <LogoIcon
+                src={collectionDetails.collectionThumbnail}
+                alt={t('translation:common.collectionName')}
+              />
+            ) : (
+              <LogoIcon
+                src={isLightTheme ? jelly : jellyDark}
+                alt={t('translation:common.collectionName')}
+              />
+            )}
           </LogoContainer>
         </StyleRouter>
         <MobileSearchBarActions>

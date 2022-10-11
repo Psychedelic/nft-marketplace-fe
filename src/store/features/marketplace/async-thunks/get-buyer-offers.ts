@@ -21,7 +21,8 @@ export const getBuyerOffers = createAsyncThunk<
   OffersTableItem[] | undefined,
   GetBuyerOffersProps
 >('marketplace/getBuyerOffers', async (params, thunkAPI) => {
-  const { onSuccess, onFailure, collectionId } = params;
+  const { onSuccess, onFailure, collectionId, collectionName } =
+    params;
 
   const jellyInstance = await jellyJsInstanceHandler({
     thunkAPI,
@@ -70,12 +71,13 @@ export const getBuyerOffers = createAsyncThunk<
       data,
       floorDifferencePrice,
       currencyMarketPrice,
+      collectionName,
     });
 
     if (typeof onSuccess === 'function') {
       onSuccess(offers);
     }
-    
+
     return offers;
   } catch (err) {
     AppLog.error(err);

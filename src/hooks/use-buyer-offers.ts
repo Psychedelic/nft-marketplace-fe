@@ -22,6 +22,10 @@ export const useBuyerOffers = () => {
     (state: RootState) => state.marketplace.recentlyPurchasedTokens,
   );
 
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
   const { collectionId } = useParams();
 
   useEffect(() => {
@@ -31,6 +35,7 @@ export const useBuyerOffers = () => {
       marketplaceActions.getBuyerOffers({
         userPrincipalId: plugPrincipal,
         collectionId,
+        collectionName: collectionDetails?.collectionName || '',
 
         onSuccess: (offers) => {
           if (!offers.length) return;
