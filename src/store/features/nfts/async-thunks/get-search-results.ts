@@ -12,7 +12,7 @@ export const getSearchResults = createAsyncThunk<
   any
 >(
   'marketplace/getSearchResults',
-  async ({ count, collectionId, search }, thunkAPI) => {
+  async ({ count, collectionId, search, traits }, thunkAPI) => {
     // Checks if an actor instance exists already
     // otherwise creates a new instance
 
@@ -41,6 +41,7 @@ export const getSearchResults = createAsyncThunk<
       const res = await jellyCollection.getAllNFTs({
         count: BigInt(count),
         search,
+        traits,
       });
 
       const { data } = res;

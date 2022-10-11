@@ -21,6 +21,7 @@ import {
 } from '../../store';
 import SearchResults from './search-results';
 import { useSelector } from 'react-redux';
+import { containsAnyLetters } from '../../integrations/kyasshu/utils';
 
 const DEBOUNCE_TIMEOUT_MS = 400;
 
@@ -68,9 +69,12 @@ export const GlobalSearch = ({
       dispatch(
         nftsActions.getSearchResults({
           count: 25,
-          search: value,
+          search: !containsAnyLetters(value) ? value : undefined,
           abortController,
           collectionId,
+          traits: containsAnyLetters(value)
+            ? { name: [value] }
+            : undefined,
         }),
       );
     }, DEBOUNCE_TIMEOUT_MS),
