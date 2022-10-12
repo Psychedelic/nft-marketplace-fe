@@ -67,6 +67,7 @@ export const NftList = () => {
         count: 25,
         collectionId,
         reverse,
+        page: nextPageNo,
       }),
     );
   };

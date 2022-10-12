@@ -109,7 +109,11 @@ export const nftsSlice = createSlice({
         action.payload;
       state.loadingNFTs = false;
       state.lastIndexValue = lastIndex;
-      state.loadedNFTS.push(...loadedNFTList);
+      if (nextPage === 1) {
+        state.loadedNFTS = loadedNFTList;
+      } else {
+        state.loadedNFTS.push(...loadedNFTList);
+      }
 
       if (nextPage && totalPages) {
         if (nextPage < totalPages) {
@@ -159,6 +163,7 @@ export const nftsSlice = createSlice({
       if (index < 0) return;
 
       state.loadedNFTS[index].isListed = true;
+      state.loadedNFTS[index].lastActionTaken = 'for sale';
       state.loadedNFTS[index].price =
         parseAmountToE8S(amount).toString();
     },

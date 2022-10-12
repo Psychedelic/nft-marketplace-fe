@@ -125,7 +125,6 @@ export const getNFTDetails = createAsyncThunk<
       lastSaleTime: nftData?.lastSaleTime,
       rendered: true,
     };
-
     // update store with loaded NFT details
     dispatch(nftsActions.setLoadedNFTDetails(nftDetails));
   } catch (error: any) {

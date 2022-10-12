@@ -16,7 +16,7 @@ import {
 
 export const useNFTSFetcher = () => {
   const dispatch = useAppDispatch();
-  const { collectionId } = useParams();
+  const { collectionId, id } = useParams();
 
   const [currentAbortController, setCurrentAbortController] =
     useState<AbortController>();
@@ -25,7 +25,6 @@ export const useNFTSFetcher = () => {
   const priceValues = usePriceValues();
 
   const { sortBy, reverse } = useFilterStore();
-  const { lastIndexValue } = useNFTSStore();
 
   useUpdateEffect(() => {
     dispatch(nftsActions.clearLoadedNFTS());
@@ -50,10 +49,11 @@ export const useNFTSFetcher = () => {
             : undefined,
           sort: sortBy,
           order: 'd',
-          lastIndex: lastIndexValue,
+          lastIndex: undefined,
           count: 25,
           collectionId,
           reverse,
+          page: 0,
         }),
       );
     }
@@ -66,6 +66,7 @@ export const useNFTSFetcher = () => {
     sortBy,
     status,
     collectionId,
+    id,
   ]);
 };
 
