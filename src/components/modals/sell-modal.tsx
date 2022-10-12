@@ -149,6 +149,15 @@ export const SellModal = ({
           // should pull from the API
           // dispatch(getAllListings());
           setModalStep(ListingStatusCodes.Confirmed);
+
+          // Update NFT listed for sale in store
+          // on successful listing and closing the modal
+          dispatch(
+            nftsActions.setNFTForSale({
+              id: tokenId,
+              amount,
+            }),
+          );
         },
         onFailure: () => {
           setModalStep(ListingStatusCodes.ListingInfo);

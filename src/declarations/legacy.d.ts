@@ -11,6 +11,7 @@ export type NFTMetadata = {
   isListed?: boolean;
   owner?: string;
   operator?: string;
+  lastActionTaken?: string;
 };
 
 export interface MetadataPart {

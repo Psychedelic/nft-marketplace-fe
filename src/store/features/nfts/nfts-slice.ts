@@ -10,6 +10,7 @@ import {
   getSearchResults,
   getLatestActiveToken,
 } from './async-thunks';
+import { parseAmountToE8S } from '../../../utils/formatters';
 
 // Define a type for the slice state
 interface NFTSState {
@@ -108,7 +109,11 @@ export const nftsSlice = createSlice({
         action.payload;
       state.loadingNFTs = false;
       state.lastIndexValue = lastIndex;
-      state.loadedNFTS.push(...loadedNFTList);
+      if (nextPage === 1) {
+        state.loadedNFTS = loadedNFTList;
+      } else {
+        state.loadedNFTS.push(...loadedNFTList);
+      }
 
       if (nextPage && totalPages) {
         if (nextPage < totalPages) {
@@ -158,7 +163,9 @@ export const nftsSlice = createSlice({
       if (index < 0) return;
 
       state.loadedNFTS[index].isListed = true;
-      state.loadedNFTS[index].price = amount;
+      state.loadedNFTS[index].lastActionTaken = 'for sale';
+      state.loadedNFTS[index].price =
+        parseAmountToE8S(amount).toString();
     },
     // TODO: Do not change the state manually,
     // if required query from the API and update the global state
@@ -178,6 +185,8 @@ export const nftsSlice = createSlice({
       if (index < 0) return;
 
       state.loadedNFTS[index].isListed = false;
+      state.loadedNFTS[index].price = '';
+      state.loadedNFTS[index].lastActionTaken = '';
     },
     acceptNFTOffer: (
       state,
