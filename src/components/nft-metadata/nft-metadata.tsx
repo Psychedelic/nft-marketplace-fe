@@ -32,6 +32,7 @@ export interface NFTMetaDataProps {
   owner?: string;
   showNFTActionButtons: boolean;
   collectionName?: string;
+  nftName?: string;
 }
 
 export const NFTMetaData = ({
@@ -40,6 +41,7 @@ export const NFTMetaData = ({
   owner,
   showNFTActionButtons,
   collectionName,
+  nftName,
 }: NFTMetaDataProps) => {
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -60,7 +62,7 @@ export const NFTMetaData = ({
     <Container>
       <CollectionMetadataWrapper>
         <div>
-          <Heading>#{id}</Heading>
+          <Heading>{nftName}</Heading>
           <Subtext>
             {collectionName}
             <VerifiedIcon icon="verified" paddingLeft />

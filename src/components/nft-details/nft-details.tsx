@@ -267,6 +267,11 @@ export const NftDetails = () => {
               isListed={isListed}
               showNFTActionButtons={showNFTActionButtons}
               collectionName={nftDetails?.name}
+              nftName={
+                (nftDetails?.name.toLowerCase().includes('icns') &&
+                  nftDetails?.traits?.name) ||
+                `#${id}`
+              }
             />
             {!isMobileScreen && (
               <>
