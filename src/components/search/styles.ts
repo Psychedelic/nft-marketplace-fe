@@ -4,6 +4,7 @@ import { styled, keyframes } from '../../stitches.config';
 import { Link as RouterLink } from 'react-router-dom';
 import { Icon } from '../icons';
 import { SkeletonBox } from '../core';
+import gradientBg from '../../assets/gradient-bg.png';
 
 const fadeIn = keyframes({
   '0%': {
@@ -425,4 +426,49 @@ export const ThumbnailSkeleton = styled(SkeletonBox, {
   height: '40px',
   marginRight: '12px',
   borderRadius: '6px',
+});
+
+
+export const MediaWrapper = styled('div', {
+  position: 'relative',
+  height: '48px',
+  marginRight: '12px',
+});
+
+export const PreviewDetails = styled('div', {
+  minHeight: '48px',
+  width: '48px',
+  height: '48px',
+});
+
+export const NameCardBg = styled('div', {
+  width: '48px',
+  height: '48px',
+  borderRadius: '5px',
+  backgroundImage: `url(${gradientBg})`,
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+});
+
+export const NameCardContainer = styled('div', {
+  width: '48px',
+  height: '48px',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'flex-start',
+});
+
+export const NameCardCollection = styled('img', {
+  width: '100%',
+  maxWidth: '24px',
+  padding: '5px',
+});
+
+export const NameCardTitle = styled('div', {
+  fontSize: '6px',
+  fontWeight: '700',
+  textAlign: 'left',
+  padding: '5px 5px 2.5px',
+  color: '#000',
 });

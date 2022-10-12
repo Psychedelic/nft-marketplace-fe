@@ -20,8 +20,13 @@ import {
   LoadingWrapper,
   ItemDetailsContainer,
   StyledRouterLink,
-  ThumbnailSkeleton,
   ItemSpan,
+  MediaWrapper,
+  PreviewDetails,
+  NameCardBg,
+  NameCardContainer,
+  NameCardCollection,
+  NameCardTitle,
 } from './styles';
 import { RootState, useFilterStore } from '../../store';
 import { formatPriceValue } from '../../utils/formatters';
@@ -44,7 +49,7 @@ const NFTsSearchResults = ({
   const collectionDetails = useSelector(
     (state: RootState) => state.marketplace.currentCollectionDetails,
   );
-  const { collectionName } = collectionDetails;
+  const { collectionName, collectionThumbnail } = collectionDetails;
   const isICNSCollection = collectionName?.includes('ICNS');
 
   return (
@@ -68,7 +73,19 @@ const NFTsSearchResults = ({
                   <ItemDetailsWrapper>
                     <ItemDetails>
                       {isICNSCollection || !nft.preview ? (
-                        <ThumbnailSkeleton />
+                        <MediaWrapper>
+                          <PreviewDetails>
+                            <NameCardBg>
+                              <NameCardContainer>
+                                <NameCardCollection
+                                  src={collectionThumbnail}
+                                  alt="collection-logo"
+                                />
+                                <NameCardTitle>{`#${nft.traitName}`}</NameCardTitle>
+                              </NameCardContainer>
+                            </NameCardBg>
+                          </PreviewDetails>
+                        </MediaWrapper>
                       ) : (
                         <ItemLogo src={nft.preview} alt="crowns" />
                       )}
@@ -77,7 +94,9 @@ const NFTsSearchResults = ({
                         {nft.name.includes('ICNS') ? (
                           <ItemDescription>
                             {nft.traitName}
-                            <ItemSpan> {`(${nft.name.replace(' (test)','')})`}</ItemSpan>
+                            <ItemSpan>
+                              {`(${nft.name.replace(' (test)', '')})`}
+                            </ItemSpan>
                           </ItemDescription>
                         ) : (
                           <ItemDescription>

@@ -67,3 +67,7 @@ export const verifyConnectedOwner = (
 
   return true;
 };
+
+export const containsAnyLetters = (str: string) => {
+  return /[a-zA-Z]/.test(str);
+};
