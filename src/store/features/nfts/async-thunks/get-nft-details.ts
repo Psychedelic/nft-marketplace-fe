@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
+import { marketplaceSlice } from '../../marketplace/marketplace-slice';
+import { getJellyCollection } from '../../../../utils/jelly';
 import { nftsActions } from '../nfts-slice';
 import { KyasshuUrl } from '../../../../integrations/kyasshu';
 import { createActor } from '../../../../integrations/actor';
@@ -22,7 +25,35 @@ export const getNFTDetails = createAsyncThunk<
 
   dispatch(nftsActions.setNFTDetailsLoading());
 
+  const jellyInstance = await jellyJsInstanceHandler({
+    thunkAPI,
+    slice: marketplaceSlice,
+  });
+
   try {
+    const collection = await getJellyCollection({
+      jellyInstance,
+      collectionId,
+    });
+
+    if (!collection)
+      throw Error(`Oops! collection ${collectionId} not found!`);
+
+    const jellyCollection = await jellyInstance.getJellyCollection(
+      collection,
+    );
+
+    const result = await jellyCollection.getNFTs({
+      ids: [id],
+    });
+
+    const { ok } = result;
+
+    if (!ok)
+      throw Error(`Oops! Unable to fetch NFT details for id ${id}`);
+
+    const nftData: any = result.data?.pop();
+
     const actor = await createActor({
       serviceName: 'dip721',
       collectionId,
@@ -46,52 +77,53 @@ export const getNFTDetails = createAsyncThunk<
       } catch (err) {}
     })();
 
-    const name = await (async () => {
-      const res = await actor.dip721_name();
+    let fetchedTraits: any = {};
 
-      if (!res && !Array.isArray(res) && !res.length) return;
+    // Fetch traits for collections other than ICNS
+    if (
+      nftData?.collectionName &&
+      !nftData.collectionName.toLowerCase().includes('icns')
+    ) {
+      const response = await axios.get(
+        KyasshuUrl.getNFTDetails({ id, collectionId }),
+      );
 
-      return res.pop();
-    })();
+      if (response.status === 200) {
+        const responseData = response.data;
 
-    // TODO: Replace by get token listing
-    // which already exist a thunk for
-    // although src/components/nft-details/nft-details.tsx
-    // triggers it would be wise to reduce to a single call
-    const response = await axios.get(
-      KyasshuUrl.getNFTDetails({ id, collectionId }),
-    );
-
-    if (response.status !== 200) {
-      throw Error(response.statusText);
+        responseData.metadata.properties.forEach((property: any) => {
+          fetchedTraits[`${property.name}`] = {
+            name: property.value,
+            occurance: null,
+            rarity: null,
+          };
+        });
+      }
+    } else {
+      fetchedTraits = nftData?.traits;
     }
-
-    const responseData = response.data;
-
-    const traits: any = {};
-
-    responseData.metadata.properties.forEach((property: any) => {
-      traits[`${property.name}`] = {
-        name: property.value,
-        occurance: null,
-        rarity: null,
-      };
-    });
 
     const nftDetails = {
       // TODO: update price, lastOffer & traits values
       // TODO: Finalize object format after validating mock and kyasshu data
-      id,
-      name,
-      price: responseData?.currentPrice,
-      lastOffer: responseData?.lastOfferPrice,
-      lastSale: responseData?.lastSalePrice,
-      preview: responseData?.metadata?.thumbnail?.value?.TextContent,
-      location: responseData?.url,
-      rendered: true,
-      traits,
+      id: nftData.id,
+      name: nftData.collectionName,
+      price: nftData?.price,
+      lastOffer: nftData?.lastOffer,
+      lastSale: nftData?.lastSale,
+      preview: nftData?.thumbnail,
+      location: nftData?.location,
+      traits: fetchedTraits || nftData?.traits,
+      status: nftData?.lastActionTaken,
       owner,
-      operator: responseData?.operator,
+      lastActionTaken: nftData?.lastActionTaken,
+      operator: nftData?.operator,
+      listing: nftData?.listing,
+      lastListingTime: nftData?.lastListingTime,
+      offers: nftData?.offers,
+      lastOfferTime: nftData?.lastOfferTime,
+      lastSaleTime: nftData?.lastSaleTime,
+      rendered: true,
     };
 
     // update store with loaded NFT details
