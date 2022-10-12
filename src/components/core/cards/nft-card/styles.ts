@@ -3,7 +3,7 @@ import { styled, keyframes } from '../../../../stitches.config';
 import { ImagePreload } from '../../../image-preload';
 import { NumberTooltip } from '../../../number-tooltip';
 import { VideoPreload } from '../../../video-preload';
-import gradientBg from '../../../../assets/gradient-bg.png';
+import gradientBg from '../../../../assets/gradient-card-bg.svg';
 
 const overlaySpinner = keyframes({
   from: {
@@ -118,6 +118,17 @@ export const NftDataText = styled('span', {
   '@xs': {
     fontSize: '16px',
   },
+
+  variants: {
+    icnsCard: {
+      true: {
+        fontWeight: '600',
+        fontSize: '16px',
+        lineHeight: '20px',
+        marginTop: '4px',
+      },
+    },
+  },
 });
 
 export const NftDataHeader = styled('span', {
@@ -205,8 +216,9 @@ export const RouterLink = styled(Link, {
 });
 
 export const NameCardBg = styled('div', {
-  width: '100%',
   height: '100%',
+  margin: '0px 10px',
+  borderRadius: '14px',
   backgroundImage: `url(${gradientBg})`,
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
@@ -223,14 +235,14 @@ export const NameCardContainer = styled('div', {
 
 export const NameCardCollection = styled('img', {
   width: '100%',
-  maxWidth: '64px',
-  padding: '15px',
+  maxWidth: '75px',
+  padding: '18px',
 });
 
 export const NameCardTitle = styled('div', {
   fontSize: '20px',
-  fontWeight: '700',
+  fontWeight: '600',
   textAlign: 'left',
-  padding: '15px',
+  padding: '18px',
   color: '#000',
 });
