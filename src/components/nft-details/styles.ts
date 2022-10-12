@@ -1,7 +1,7 @@
 import { styled } from '../../stitches.config';
 import { SkeletonBox } from '../core';
 import { VideoPreload } from '../video-preload';
-import gradientBg from '../../assets/gradient-card-bg.jpg';
+import gradientBg from '../../assets/gradient-card-bg.svg';
 
 export const Container = styled('div', {
   width: '100%',
@@ -33,7 +33,7 @@ export const Wrapper = styled('div', {
 
 export const PreviewContainer = styled('div', {
   width: '100%',
-  maxWidth: '480px',
+  maxWidth: '489px',
 
   '@md': {
     order: 2,
@@ -61,7 +61,7 @@ export const Video = styled(VideoPreload, {
 
 export const NFTPreview = styled('img', {
   width: '100%',
-  maxWidth: '480px',
+  maxWidth: '489px',
   marginBottom: '25px',
 });
 
@@ -185,10 +185,10 @@ export const NameCardBg = styled('div', {
   backgroundImage: `url(${gradientBg})`,
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
-  borderRadius: '14px',
+  borderRadius: '30px',
   maxWidth: '100%',
   maxHeight: '100%',
-  minHeight: '470px',
+  minHeight: '489px',
   marginBottom: '10px',
 
   '@md': {
@@ -208,14 +208,16 @@ export const NameCardContainer = styled('div', {
 });
 
 export const NameCardCollection = styled('img', {
-  padding: '40px 15px',
+  padding: '46px',
+  minWidth: '170px',
 });
 
 export const NameCardTitle = styled('div', {
   position: 'absolute',
-  bottom: '40px',
-  fontSize: '24px',
-  fontWeight: '700',
+  bottom: '46px',
+  left: '46px',
+  fontSize: '50px',
+  fontWeight: '600',
   textAlign: 'left',
   padding: '70px 15px 0px',
   color: '#000',

@@ -266,9 +266,7 @@ export const NftCard = React.memo(
               </MediaWrapper>
             )}
             <Flex>
-              <NftDataHeader>
-                {hasTraitName ?? data?.name}
-              </NftDataHeader>
+              <NftDataHeader>{data?.name}</NftDataHeader>
               <NftDataHeader>
                 {isForSale || previewCard
                   ? `${t('translation:nftCard.price')}`
@@ -276,7 +274,9 @@ export const NftCard = React.memo(
               </NftDataHeader>
             </Flex>
             <Flex>
-              <NftDataText>#{data?.id}</NftDataText>
+              <NftDataText icnsCard={hasTraitName ? true : false}>
+                {hasTraitName ?? `#${data?.id}`}
+              </NftDataText>
               <NftDataText>
                 {isForSale && !previewCard && (
                   <>
