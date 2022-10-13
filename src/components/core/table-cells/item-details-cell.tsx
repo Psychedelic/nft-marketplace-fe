@@ -24,6 +24,7 @@ import {
   NameCardTitle,
 } from './styles';
 import useMediaQuery from '../../../hooks/use-media-query';
+import { isICNSCollection } from '../../../utils/collections';
 
 export interface ItemDetailsCellProps {
   name?: string;
@@ -72,7 +73,7 @@ export const ItemDetailsCell = ({
   }, [dispatch, id, hasThumbnail, collectionId]);
 
   const displayThumbnail = () => {
-    if (collectionName?.includes('ICNS') && !logo) {
+    if (isICNSCollection(collectionName) && !logo) {
       return (
         <MediaWrapper>
           <PreviewDetails>
@@ -89,7 +90,7 @@ export const ItemDetailsCell = ({
         </MediaWrapper>
       );
     }
-    if (!logo && !collectionName?.includes('ICNS')) {
+    if (!logo && !isICNSCollection(collectionName)) {
       return <ThumbnailSkeleton />;
     }
     return <ItemLogo src={logo} alt="crowns" />;
@@ -100,7 +101,7 @@ export const ItemDetailsCell = ({
       <ItemDetails>
         {displayThumbnail()}
         <ItemName className="item-name">
-          {isMobileScreen ? 'Cap Crowns' : name?.replace(' (test)','')}
+          {name}
           <ItemTokenId className="item-name">
             {isMobileScreen && `#${id}`}
           </ItemTokenId>

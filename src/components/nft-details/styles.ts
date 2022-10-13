@@ -219,6 +219,6 @@ export const NameCardTitle = styled('div', {
   fontSize: '50px',
   fontWeight: '600',
   textAlign: 'left',
-  padding: '70px 15px 0px',
+  padding: '70px 0px 0px',
   color: '#000',
 });
