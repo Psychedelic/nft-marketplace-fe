@@ -6,6 +6,7 @@ import { getJellyCollection } from '../../../../utils/jelly';
 import { AppLog } from '../../../../utils/log';
 import { filterActions } from '../../filters';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
+import { formatICNSName } from '../../../../utils/icns';
 
 export const getSearchResults = createAsyncThunk<
   any | undefined,
@@ -56,7 +57,7 @@ export const getSearchResults = createAsyncThunk<
           location: nft?.url,
           owner: nft?.owner,
           canister: nft?.canister,
-          traitName: nft?.traits.name,
+          traitName: formatICNSName(nft?.traits.name),
         };
         return metadata;
       });

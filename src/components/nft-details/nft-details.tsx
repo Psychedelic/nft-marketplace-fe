@@ -47,6 +47,7 @@ import NFTDetailsSkeleton from './nft-details-skeleton';
 import useMediaQuery from '../../hooks/use-media-query';
 // TODO: replace ICNS logo dynamically
 import icnsLogo from '../../assets/ICNS-logo.svg';
+import { formatICNSName } from '../../utils/icns';
 
 // type CurrentListing = {
 //   seller: string;
@@ -189,7 +190,7 @@ export const NftDetails = () => {
                     alt="collection-logo"
                   />
                   <NameCardTitle>
-                    {nftDetails?.traits?.name}
+                    {formatICNSName(nftDetails?.traits?.name)}
                   </NameCardTitle>
                 </NameCardContainer>
               </NameCardBg>
@@ -284,7 +285,9 @@ export const NftDetails = () => {
                   operator={nftDetails?.operator}
                 />
                 <AboutAccordion
-                  owner={owner || nftDetails?.traits?.name}
+                  owner={
+                    owner || formatICNSName(nftDetails?.traits?.name)
+                  }
                   collectionName={nftDetails?.name}
                 />
               </>
