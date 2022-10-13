@@ -1987,10 +1987,10 @@
     bignumber.js "^9.0.2"
     cross-fetch "^3.1.5"
 
-"@psychedelic/jelly-js@0.1.0-beta.20220930-e588182":
-  version "0.1.0-beta.20220930-e588182"
-  resolved "https://npm.pkg.github.com/download/@psychedelic/jelly-js/0.1.0-beta.20220930-e588182/91e17bdbeb29e7dde11de5ab53a71416550a6ef5#91e17bdbeb29e7dde11de5ab53a71416550a6ef5"
-  integrity sha512-392qvimXf2pO2MXsP2Blxb3gc9JMGZOHTRGkKbNd1LecC5CMi6COfOgmDpaLscA3MrgNx6HjWNbQ18M1FoXejg==
+"@psychedelic/jelly-js@0.1.0-beta.202210121610-667a590":
+  version "0.1.0-beta.202210121610-667a590"
+  resolved "https://npm.pkg.github.com/download/@psychedelic/jelly-js/0.1.0-beta.202210121610-667a590/56ce9732c3de72ad6fa12422676c9bf7eedb096a#56ce9732c3de72ad6fa12422676c9bf7eedb096a"
+  integrity sha512-VDEMZScHbnjI6stHyeST9HdghglFNSnofe42p7qE/HTi5OEmai+uR2TIjxTG+MCzs/+PsCDP0fynwLy51nu9KA==
   dependencies:
     "@dfinity/agent" "^0.12.2"
     "@dfinity/candid" "^0.12.2"
