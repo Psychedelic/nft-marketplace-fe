@@ -34,8 +34,11 @@ import { notificationActions } from '../../../store/features/notifications';
 import config from '../../../config/env';
 import { formatUserAddress } from '../../../utils/addresses';
 import { AppLog } from '../../../utils/log';
-import { Website } from '../../icons/custom/website';
 import { useTheme } from '../../../hooks';
+import {
+  isCrownsCollection,
+  isICNSCollection,
+} from '../../../utils/collections';
 
 export type AboutAccordionProps = {
   owner?: string;
@@ -96,8 +99,7 @@ export const AboutAccordionHeader = ({
   return (
     <>
       <AccordionHeadContent key="Collection" flexProperties="about">
-        {collectionName === 'Crowns Test' ||
-        collectionName === 'Crowns' ? (
+        {isCrownsCollection(collectionName) ? (
           <LogoWrapper
             style={{
               backgroundImage: `url(https://storageapi2.fleek.co/fleek-team-bucket/logos/crowns-ooo.png)`,
@@ -221,10 +223,9 @@ export const AboutAccordion = ({
           backgroundColor={isAccordionOpen ? 'notopen' : 'open'}
         >
           <Description>
-            {collectionName === 'Crowns Test' ||
-              (collectionName === 'Crowns' &&
-                t('translation:common.crownsDescription'))}
-            {collectionName === 'ICNS (test)' &&
+            {isCrownsCollection(collectionName) &&
+              t('translation:common.crownsDescription')}
+            {isICNSCollection(collectionName) &&
               t('translation:common.icnsDescription')}
           </Description>
           <div>

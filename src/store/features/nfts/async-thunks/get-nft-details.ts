@@ -11,6 +11,7 @@ import { settingsActions } from '../../settings';
 import { AppLog } from '../../../../utils/log';
 import { isUnsupportedPage } from '../../../../utils/error';
 import { parseTablePrincipal } from '../../../../utils/parser';
+import { isICNSCollection } from '../../../../utils/collections';
 
 export type GetNFTDetailsProps = {
   id: string;
@@ -80,10 +81,7 @@ export const getNFTDetails = createAsyncThunk<
     let fetchedTraits: any = {};
 
     // Fetch traits for collections other than ICNS
-    if (
-      nftData?.collectionName &&
-      !nftData.collectionName.toLowerCase().includes('icns')
-    ) {
+    if (!isICNSCollection(nftData?.collectionName)) {
       const response = await axios.get(
         KyasshuUrl.getNFTDetails({ id, collectionId }),
       );

@@ -137,18 +137,13 @@ export const CollectionItems = () => {
                     showLogo={false}
                   />
                 )}
-                {!loadingCollectionData &&
-                  totalOwnersCount > 0 &&
-                  collectionDetails?.collectionName ===
-                    'Crowns Test' && (
-                    <FilteredCountChip
-                      label={t(
-                        'translation:chips.labels.OwnersLabel',
-                      )}
-                      count={totalOwnersCount}
-                      showLogo={false}
-                    />
-                  )}
+                {!loadingCollectionData && totalOwnersCount > 0 && (
+                  <FilteredCountChip
+                    label={t('translation:chips.labels.OwnersLabel')}
+                    count={totalOwnersCount}
+                    showLogo={false}
+                  />
+                )}
                 {!loadingCollectionData && floorPrice > 0 && (
                   <FilteredCountChip
                     label={t(

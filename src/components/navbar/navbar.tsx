@@ -30,6 +30,10 @@ import { useBuyerOffers } from '../../hooks/use-buyer-offers';
 import { MobileNavBar } from './mobile-nav-bar';
 import useMediaQuery from '../../hooks/use-media-query';
 import { useSelector } from 'react-redux';
+import {
+  isCrownsCollection,
+  isICNSCollection,
+} from '../../utils/collections';
 
 /* --------------------------------------------------------------------------
  * NavBar Component
@@ -86,12 +90,15 @@ export const NavBar = () => {
           startAnimation={startAnimation}
         >
           <LogoContainer>
-            {collectionDetails.collectionName?.includes('ICNS') ? (
+            {isICNSCollection(collectionDetails?.collectionName) && (
               <LogoIcon
                 src={collectionDetails.collectionThumbnail}
                 alt={t('translation:common.collectionName')}
               />
-            ) : (
+            )}
+            {isCrownsCollection(
+              collectionDetails?.collectionName,
+            ) && (
               <LogoIcon
                 src={isLightTheme ? jelly : jellyDark}
                 alt={t('translation:common.collectionName')}

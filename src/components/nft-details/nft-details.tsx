@@ -37,6 +37,7 @@ import {
 } from '../../store';
 import { NFTMetadata } from '../../declarations/legacy';
 import { parseE8SAmountToWICP } from '../../utils/formatters';
+import { isICNSCollection } from '../../utils/collections';
 import {
   extractTraitData,
   getTraitName,
@@ -268,7 +269,7 @@ export const NftDetails = () => {
               showNFTActionButtons={showNFTActionButtons}
               collectionName={nftDetails?.name}
               nftName={
-                (nftDetails?.name.toLowerCase().includes('icns') &&
+                (isICNSCollection(nftDetails?.name) &&
                   nftDetails?.traits?.name) ||
                 `#${id}`
               }

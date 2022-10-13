@@ -29,11 +29,14 @@ import {
   FilteredCountChipsWrapper,
   Divider,
 } from './styles';
-import crown from '../../assets/crown.svg';
 import { Icon } from '../icons';
 import useMediaQuery from '../../hooks/use-media-query';
 import { FilterChipsSkeleton } from './filter-chips-skeleton';
 import { useTheme } from '../../hooks';
+import {
+  isCrownsCollection,
+  isICNSCollection,
+} from '../../utils/collections';
 
 export const CollectionOverview = () => {
   const { t } = useTranslation();
@@ -87,7 +90,7 @@ export const CollectionOverview = () => {
     <NftMetadataWrapper>
       <NftMetadataBackground
         collectionName={
-          collectionName !== 'Crowns Test' ? 'default' : 'crowns'
+          isCrownsCollection(collectionName) ? 'crowns' : 'default'
         }
       />
       <NftMetadataContent>
@@ -95,12 +98,12 @@ export const CollectionOverview = () => {
           <NftProfilePictureWrapper>
             <img
               src={collectionDetails?.collectionThumbnail}
-              alt="crown-pfp"
+              alt="collection-logo"
             />
           </NftProfilePictureWrapper>
           <HeaderWrapper>
             <Heading>
-              {collectionName !== 'Crowns Test'
+              {!isCrownsCollection(collectionName)
                 ? collectionName
                 : 'Crowns'}
               <VerifiedIcon icon="verified" paddingLeft size="md" />
@@ -113,9 +116,9 @@ export const CollectionOverview = () => {
               )}
             </Heading>
             <Subtext>
-              {collectionName === 'Crowns Test' &&
+              {isCrownsCollection(collectionName) &&
                 t('translation:common.crownsDescription')}
-              {collectionName === 'ICNS (test)' &&
+              {isICNSCollection(collectionName) &&
                 t('translation:common.icnsDescription')}
             </Subtext>
           </HeaderWrapper>
@@ -168,9 +171,7 @@ export const CollectionOverview = () => {
             ) : (
               <FilterChipsSkeleton />
             )}
-            {!loadingCollectionData &&
-            totalOwnersCount > 0 &&
-            collectionName === 'Crowns Test' ? (
+            {!loadingCollectionData && totalOwnersCount > 0 ? (
               <FilteredCountChip
                 label={t('translation:chips.labels.OwnersLabel')}
                 count={totalOwnersCount}

@@ -59,6 +59,10 @@ import polygonLogoDark from '../../assets/landingpage/polygon-dark-mode.svg';
 import icnsLogo from '../../assets/landingpage/icns.svg';
 import crownsLogo from '../../assets/landingpage/crowns.svg';
 import psychedelic from '../../assets/landingpage/psychedelic.svg';
+import {
+  isCrownsCollection,
+  isICNSCollection,
+} from '../../utils/collections';
 
 import {
   marketplaceActions,
@@ -131,15 +135,13 @@ const LandingPageView = () => {
   };
 
   const displayCollectionName = (name: string) => {
-    switch (name) {
-      case 'ICNS (test)':
-        return <img src={icnsLogo} alt="icns" />;
-      case 'Crowns Test':
-      case 'crowns_mkp':
-        return <img src={crownsLogo} alt="crowns" />;
-      default:
-        return name;
-    }
+    if (isCrownsCollection(name))
+      return <img src={crownsLogo} alt="crowns" />;
+
+    if (isICNSCollection(name))
+      return <img src={icnsLogo} alt="icns" />;
+
+    return name;
   };
 
   // const getLatestActiveToken = () => {
@@ -247,7 +249,7 @@ const LandingPageView = () => {
                 <ButtonWrapper key={collection.id.toText()}>
                   <ActionButton
                     type={
-                      collection.name === 'ICNS (test)'
+                      isICNSCollection(collection?.name)
                         ? 'outline'
                         : 'primary'
                     }

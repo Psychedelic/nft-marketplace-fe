@@ -33,6 +33,7 @@ import { formatPriceValue } from '../../utils/formatters';
 import wicpIcon from '../../assets/wicp.svg';
 import { SpinnerIcon } from '../icons/custom';
 import { useSelector } from 'react-redux';
+import { isICNSCollection } from '../../utils/collections';
 
 type NFTsSearchResultsTypes = {
   searchText: string;
@@ -50,7 +51,6 @@ const NFTsSearchResults = ({
     (state: RootState) => state.marketplace.currentCollectionDetails,
   );
   const { collectionName, collectionThumbnail } = collectionDetails;
-  const isICNSCollection = collectionName?.includes('ICNS');
 
   return (
     <SearchResultsContainer>
@@ -72,7 +72,8 @@ const NFTsSearchResults = ({
                 <ItemDetailsContainer>
                   <ItemDetailsWrapper>
                     <ItemDetails>
-                      {isICNSCollection || !nft.preview ? (
+                      {isICNSCollection(collectionName) ||
+                      !nft.preview ? (
                         <MediaWrapper>
                           <PreviewDetails>
                             <NameCardBg>
@@ -91,7 +92,7 @@ const NFTsSearchResults = ({
                       )}
                       <ItemNameContainer>
                         <ItemName>{`#${nft.id}`}</ItemName>
-                        {nft.name.includes('ICNS') ? (
+                        {isICNSCollection(nft?.name) ? (
                           <ItemDescription>
                             {nft.traitName}
                             <ItemSpan>
