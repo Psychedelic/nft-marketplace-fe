@@ -43,6 +43,7 @@ import { isOperatorMarketplace } from '../../../../utils/nfts';
 import { generateImgFromText } from '../../../../utils/image-generator';
 // TODO: replace ICNS logo dynamically
 import icnsLogo from '../../../../assets/ICNS-logo.svg';
+import { formatICNSName } from '../../../../utils/icns';
 
 export type NftCardProps = {
   owned?: boolean;
@@ -258,7 +259,7 @@ export const NftCard = React.memo(
                         alt="collection-logo"
                       />
                       <NameCardTitle>
-                        {data?.traits?.name}
+                        {formatICNSName(data?.traits?.name)}
                       </NameCardTitle>
                     </NameCardContainer>
                   </NameCardBg>
@@ -275,7 +276,9 @@ export const NftCard = React.memo(
             </Flex>
             <Flex>
               <NftDataText icnsCard={hasTraitName ? true : false}>
-                {hasTraitName ?? `#${data?.id}`}
+                {hasTraitName
+                  ? formatICNSName(hasTraitName)
+                  : `#${data?.id}`}
               </NftDataText>
               <NftDataText>
                 {isForSale && !previewCard && (
