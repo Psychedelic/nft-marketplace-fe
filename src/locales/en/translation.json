@@ -149,8 +149,8 @@
   },
   "inputField": {
     "placeholder": {
-      "searchAll": "Search by collection or NFT",
-      "searchCollection": "Search by collection name",
+      "searchAll": "Search by NFTs",
+      "searchNFTs": "Search by NFT name",
       "priceMin": "Min",
       "priceMax": "Max",
       "amount": "Enter Amount"
