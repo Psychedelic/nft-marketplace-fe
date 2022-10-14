@@ -68,6 +68,8 @@ export const makeOffer = createAsyncThunk<
     allowanceAmountInWICP.toString(),
   );
 
+  console.log(allowanceAmount, 'allowanceAmount');
+
   // Initialize transaction steps in UI
   dispatch(marketplaceActions.setTransactionStepsToDefault());
 
