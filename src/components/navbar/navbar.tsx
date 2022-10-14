@@ -7,11 +7,12 @@ import {
   useAppDispatch,
   useSettingsStore,
   RootState,
+  settingsActions,
 } from '../../store';
 import { LinkButton } from '../core';
 import { GlobalSearch } from '../search';
 import { Plug } from '../plug';
-import jelly from '../../assets/jelly-full-image.svg';
+import icnsLogo from '../../assets/ICNS-logo.png';
 import jellyDark from '../../assets/jelly-full-image-dark.svg';
 import {
   Container,
@@ -85,13 +86,14 @@ export const NavBar = () => {
           to="/"
           onClick={() => {
             pathname === '/' && window.location.reload();
+            dispatch(settingsActions.setPageNotFoundStatus(false));
             setOpenMobileNavbar(false);
           }}
           startAnimation={startAnimation}
         >
           <LogoContainer>
             <LogoIcon
-              src={collectionDetails.collectionThumbnail}
+              src={icnsLogo}
               alt={t('translation:common.collectionName')}
             />
           </LogoContainer>
