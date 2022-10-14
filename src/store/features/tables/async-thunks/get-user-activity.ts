@@ -20,7 +20,7 @@ export const getUserActivity = createAsyncThunk<
 >(
   'table/getUserActivity',
   async ({ pageCount, bucketId, plugPrincipal, collectionName }, { dispatch }) => {
-    dispatch(tableActions.setIsTableDataLoading(true));
+    dispatch(tableActions.setIsUserTableDataLoading(true));
 
     try {
       const userAddress = Principal.fromText(plugPrincipal);

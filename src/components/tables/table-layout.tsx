@@ -52,9 +52,7 @@ export const TableLayout = ({
   return (
     <TableWrapper
       type={tableType}
-      loadingTable={Boolean(
-        loading && isTableDataEmpty,
-      )}
+      loadingTable={Boolean(loading && isTableDataEmpty)}
     >
       <table {...getTableProps()}>
         <thead>
