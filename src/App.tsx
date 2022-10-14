@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import { NavBar, ToastHandler, Alerts } from './components';
 import CollectionView from './views/CollectionView';
 import NFTView from './views/NFTView';
@@ -11,6 +16,7 @@ import { useTheme } from './hooks/use-theme';
 import { portalZIndexGlobals } from './utils/styles';
 import { ThemeRootElement } from './constants/common';
 import { useThemeGlobals } from './hooks';
+import config from './config/env';
 
 const App = () => {
   const [theme, themeObject] = useTheme();
@@ -24,7 +30,13 @@ const App = () => {
         <Alerts />
         <NavBar />
         <Routes>
-          <Route path="/" element={<LandingPageView />} />
+          {/* <Route path="/" element={<LandingPageView />} /> */}
+          <Route
+            path="/"
+            element={
+              <Navigate replace to={config.icnsCollectionId} />
+            }
+          />
           <Route path="/:collectionId" element={<CollectionView />}>
             <Route path="/:collectionId/activity" />
           </Route>
@@ -32,7 +44,10 @@ const App = () => {
             path="/:collectionId/nft/:id"
             element={<NFTView />}
           />
-          <Route path="/:collectionId/offers/:id" element={<OfferView />} />
+          <Route
+            path="/:collectionId/offers/:id"
+            element={<OfferView />}
+          />
           <Route
             path="/:collectionId/activity/:id"
             element={<UserActivityView />}
