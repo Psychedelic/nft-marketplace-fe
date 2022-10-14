@@ -365,7 +365,7 @@ export const MobileSearchBar = styled('div', {
   width: '100%',
 });
 
-export const TabsRoot = styled(Tabs.Root, {
+export const TabsRoot = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: '$backgroundColor',
@@ -415,7 +415,7 @@ export const TabsTrigger = styled(Tabs.Trigger, {
   },
 });
 
-export const TabsContent = styled(Tabs.Content, {
+export const TabsContent = styled('div', {
   '&:focus': {
     outline: 'none',
   },

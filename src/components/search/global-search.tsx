@@ -22,6 +22,7 @@ import {
 import SearchResults from './search-results';
 import { useSelector } from 'react-redux';
 import { containsAnyLetters } from '../../integrations/kyasshu/utils';
+import { isICNSCollection } from '../../utils/collections';
 
 const DEBOUNCE_TIMEOUT_MS = 400;
 
@@ -46,10 +47,9 @@ export const GlobalSearch = ({
   const collectionDetails = useSelector(
     (state: RootState) => state.marketplace.currentCollectionDetails,
   );
-  const isHomePage = location.pathname === '/';
-  const placeholderText = !isHomePage
-    ? t('translation:inputField.placeholder.searchAll')
-    : t('translation:inputField.placeholder.searchCollection');
+  const placeholderText = isICNSCollection(collectionDetails.collectionName)
+    ? t('translation:inputField.placeholder.searchNFTs')
+    : t('translation:inputField.placeholder.searchAll');
 
   const { collectionId } = collectionDetails;
 
