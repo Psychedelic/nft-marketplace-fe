@@ -482,12 +482,12 @@ export const Filters = ({
                 </>
               )}
             </FilterSection>
-            {!isMyNfts && (
+            {/* {!isMyNfts && (
+              Commented for ICNS launch
               <>
                 <Heading>Traits</Heading>
                 <FilterSection>
                   <CheckboxFilters>
-                    {/* TO-DO: Refactor */}
                     {loadingFilterList ? (
                       <CheckboxAccordionSkeleton />
                     ) : (
@@ -504,7 +504,7 @@ export const Filters = ({
                   </CheckboxFilters>
                 </FilterSection>
               </>
-            )}
+            )} */}
           </FiltersWrapper>
           {isMobileScreen && (
             <FilterMobileActions>
