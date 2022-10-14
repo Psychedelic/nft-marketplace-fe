@@ -24,6 +24,7 @@ const slideUp = keyframes({
 
 export const Container = styled('div', {
   position: 'relative',
+  borderRight: '1px solid $borderColor',
 
   '@md': {
     position: 'absolute',
@@ -36,7 +37,7 @@ export const CloseFilterContainer = styled('div', {
   // base styles
   position: 'absolute',
   right: '-22px',
-  top: '24px',
+  top: '40px',
   zIndex: 1,
 
   // variants
@@ -45,7 +46,7 @@ export const CloseFilterContainer = styled('div', {
       true: {
         position: 'absolute',
         right: '-34px',
-        top: '24px',
+        top: '40px',
         zIndex: 1,
       },
     },
@@ -56,7 +57,6 @@ export const FiltersContainer = styled('div', {
   width: '340px',
   background: '$backgroundColor',
   height: '100vh',
-  borderTop: '1px solid $borderColor',
   position: 'sticky',
   top: '0',
   overflowY: 'scroll',
@@ -236,7 +236,7 @@ export const FilterHeader = styled('div', {
   width: '100%',
   background: '$backgroundColor',
   top: '0',
-  padding: '32px 20px 20px',
+  padding: '50px 20px 20px',
   zIndex: '5',
 
   '@md': {

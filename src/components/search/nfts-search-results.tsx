@@ -34,6 +34,7 @@ import wicpIcon from '../../assets/wicp.svg';
 import { SpinnerIcon } from '../icons/custom';
 import { useSelector } from 'react-redux';
 import { isICNSCollection } from '../../utils/collections';
+import config from '../../config/env';
 
 type NFTsSearchResultsTypes = {
   searchText: string;
@@ -61,10 +62,9 @@ const NFTsSearchResults = ({
             {searchResults?.map((nft) => (
               <StyledRouterLink
                 to={`/${
-                  // TODO: Check if fallback collection id is correct
-                  // as this was placed here in principal, not tested, given that
-                  // previously we had a hard typed value
-                  nft.canister ? nft.canister : collectionId
+                  nft.canister
+                    ? nft.canister
+                    : config.icnsCollectionId
                 }/nft/${nft.id}`}
                 onClick={closeDropDown}
                 key={nft.id}
@@ -82,7 +82,7 @@ const NFTsSearchResults = ({
                                   src={collectionThumbnail}
                                   alt="collection-logo"
                                 />
-                                <NameCardTitle>{`#${nft.traitName}`}</NameCardTitle>
+                                <NameCardTitle>{`${nft.traitThumbnailName}`}</NameCardTitle>
                               </NameCardContainer>
                             </NameCardBg>
                           </PreviewDetails>

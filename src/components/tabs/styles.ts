@@ -1,7 +1,14 @@
 import * as Tabs from '@radix-ui/react-tabs';
 import { styled } from '../../stitches.config';
 
+export const Container = styled('div', {
+  position: 'relative',
+  display: 'flex',
+});
+
 export const TabsRoot = styled(Tabs.Root, {
+  width: '100%',
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: '$backgroundColor',
@@ -12,9 +19,11 @@ export const TabsRoot = styled(Tabs.Root, {
 });
 
 export const TabsList = styled(Tabs.List, {
+  padding: '40px 80px 34px',
+
   flexShrink: 0,
   display: 'flex',
-  justifyContent: 'center',
+  justifyContent: 'left',
 
   '&:focus': {
     outline: 'none',
@@ -22,26 +31,32 @@ export const TabsList = styled(Tabs.List, {
 });
 
 export const TabsTrigger = styled(Tabs.Trigger, {
-  backgroundColor: '$backgroundColor',
-  padding: '0 20px',
-  height: 45,
+  backgroundColor: '$whiteSmoke',
+  padding: '0',
+  width: 154,
+  height: 40,
+  borderRadius: '100px',
+  marginRight: '12px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  fontweight: '500',
+  fontweight: '600',
   fontSize: '18px',
-  lineHeight: '22px',
+  lineHeight: '18px',
   border: '0px',
   cursor: 'pointer',
   fontFamily: 'proxima-nova, sans-serif',
   variants: {
     status: {
       active: {
-        borderBottom: '3px solid $tabActive',
-        color: '$mainTextColor',
+        backgroundColor: '$primary',
+        color: '#FCFCFD',
         borderTop: 'none',
         borderLeft: 'none',
         borderRight: 'none',
+        '&:hover': {
+          color: '#FCFCFD',
+        },
       },
       inactive: {
         border: '0',

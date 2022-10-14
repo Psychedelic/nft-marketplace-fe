@@ -20,7 +20,7 @@ const CollectionView = () => {
       {!showPageNotFound ? (
         <CollectionContainer>
           <CollectionWrapper showAlerts={showAlerts}>
-            <CollectionOverview />
+            {/* <CollectionOverview /> */}
           </CollectionWrapper>
           <CollectionTabs />
         </CollectionContainer>

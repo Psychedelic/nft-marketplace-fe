@@ -12,6 +12,7 @@ type ConfigParams = {
   icScan: string;
   wICPCanisterId: string;
   capRouterId: string;
+  icnsCollectionId: string;
 };
 
 type Config = {
@@ -40,6 +41,8 @@ const config: Config = {
     icScan: 'https://icscan.io/principal',
     wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
     capRouterId: 'lj532-6iaaa-aaaah-qcc7a-cai',
+    // TODO: update collection Id for production
+    icnsCollectionId: 'mbj2k-saaaa-aaaan-qaaua-cai',
   },
   // Staging (serverless, local-replica)
   // Is similar to the process we have for local development
@@ -51,6 +54,7 @@ const config: Config = {
     icScan: 'https://icscan.io/principal',
     wICPCanisterId: 'qaa6y-5yaaa-aaaaa-aaafa-cai',
     capRouterId: 'rrkah-fqaaa-aaaaa-aaaaq-cai',
+    icnsCollectionId: 'mbj2k-saaaa-aaaan-qaaua-cai',
   },
   // Mainnet test environment
   // Provides the Service Canisters published to the Mainnet
@@ -63,6 +67,7 @@ const config: Config = {
     icScan: 'https://icscan.io/principal',
     wICPCanisterId: 'lassd-pqaaa-aaaag-qakpq-cai',
     capRouterId: 'lj532-6iaaa-aaaah-qcc7a-cai',
+    icnsCollectionId: 'mbj2k-saaaa-aaaan-qaaua-cai',
   },
   // The local development environment settings
   development: {
@@ -71,6 +76,7 @@ const config: Config = {
     icScan: 'https://icscan.io/principal',
     wICPCanisterId: process.env.REACT_APP_WICP_ID as string,
     capRouterId: process.env.REACT_APP_CAP_ID as string,
+    icnsCollectionId: 'qjdve-lqaaa-aaaaa-aaaeq-cai',
   },
 };
 

@@ -205,6 +205,10 @@ export const NameCardContainer = styled('div', {
   flexDirection: 'column',
   justifyContent: 'space-between',
   alignItems: 'flex-start',
+
+  '@md': {
+    minHeight: '300px',
+  },
 });
 
 export const NameCardCollection = styled('img', {

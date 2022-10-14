@@ -5,10 +5,12 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { ActivityTable } from '../tables';
 import { CollectionItems } from '../items';
 import {
+  Container,
   TabsRoot,
   TabsTrigger,
   TabsList,
@@ -22,6 +24,8 @@ import {
   nftsActions,
   useAppDispatch,
   useFilterStore,
+  marketplaceActions,
+  RootState,
 } from '../../store';
 
 export const CollectionTabs = () => {
@@ -61,35 +65,51 @@ export const CollectionTabs = () => {
     dispatch(nftsActions.getCollectionData({ collectionId }));
   }, [appliedFiltersCount, collectionId, dispatch]);
 
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
+  const { collectionId: currentCollectionId } = collectionDetails;
+
+  useEffect(() => {
+    if (!collectionId || collectionId === currentCollectionId) return;
+
+    dispatch(
+      marketplaceActions.getCollectionDetails({ collectionId }),
+    );
+  }, [collectionId, currentCollectionId]);
+
   return (
-    <TabsRoot defaultValue="items" value={selectedTab}>
-      <TabsList aria-label="Manage your account">
-        <TabsTrigger
-          value="items"
-          status={itemsStatus}
-          onClick={() => navigate(`/${collectionId}`)}
-        >
-          <Icon icon="grid" paddingRight />
-          {t('translation:tabs.items')}
-        </TabsTrigger>
-        <TabsTrigger
-          value="activity"
-          status={activityStatus}
-          onClick={() => navigate(`/${collectionId}/activity`)}
-        >
-          <Icon icon="activity" paddingRight />
-          {t('translation:tabs.activity')}
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value="items">
-        <TabsContentWrapper>
-          {!isMobileScreen && <Filters />}
-          <CollectionItems />
-        </TabsContentWrapper>
-      </TabsContent>
-      <TabsContent value="activity">
-        <ActivityTable />
-      </TabsContent>
-    </TabsRoot>
+    <Container>
+      {!isMobileScreen && selectedTab === 'items' && <Filters />}
+      <TabsRoot defaultValue="items" value={selectedTab}>
+        <TabsList aria-label="Manage your account">
+          <TabsTrigger
+            value="items"
+            status={itemsStatus}
+            onClick={() => navigate(`/${collectionId}`)}
+          >
+            <Icon icon="grid" paddingRight />
+            {t('translation:tabs.items')}
+          </TabsTrigger>
+          <TabsTrigger
+            value="activity"
+            status={activityStatus}
+            onClick={() => navigate(`/${collectionId}/activity`)}
+          >
+            <Icon icon="activity" paddingRight />
+            {t('translation:tabs.activity')}
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="items">
+          <TabsContentWrapper>
+            <CollectionItems />
+          </TabsContentWrapper>
+        </TabsContent>
+        <TabsContent value="activity">
+          <ActivityTable />
+        </TabsContent>
+      </TabsRoot>
+    </Container>
   );
 };

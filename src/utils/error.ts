@@ -31,7 +31,7 @@ const toErrorMessage = (errorKey: string) => {
     case 'InvalidListing':
       return 'Oops! The listing is invalid or was not found at this time';
     default:
-      return 'Oops! Unknown error';
+      return errorKey;
   }
 };
 

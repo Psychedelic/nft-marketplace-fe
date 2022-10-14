@@ -35,6 +35,7 @@ export interface SearchResultDataState {
   canister: string;
   wicpPrice: string;
   traitName: string;
+  traitThumbnailName: string;
 }
 
 export interface FilterState {
