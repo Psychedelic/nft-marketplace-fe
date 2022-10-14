@@ -15,6 +15,7 @@ export const NftMetadataBackground = styled('div', {
   backgroundImage: `url(${defaultBg})`,
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat',
+  display: 'none',
 
   // variants
   variants: {
