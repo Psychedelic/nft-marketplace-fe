@@ -57,7 +57,8 @@ export const getSearchResults = createAsyncThunk<
           location: nft?.url,
           owner: nft?.owner,
           canister: nft?.canister,
-          traitName: formatICNSName(nft?.traits.name),
+          traitName: nft?.traits.name,
+          traitThumbnailName: formatICNSName(nft?.traits.name),
         };
         return metadata;
       });
