@@ -90,20 +90,10 @@ export const NavBar = () => {
           startAnimation={startAnimation}
         >
           <LogoContainer>
-            {isICNSCollection(collectionDetails?.collectionName) && (
-              <LogoIcon
-                src={collectionDetails.collectionThumbnail}
-                alt={t('translation:common.collectionName')}
-              />
-            )}
-            {isCrownsCollection(
-              collectionDetails?.collectionName,
-            ) && (
-              <LogoIcon
-                src={isLightTheme ? jelly : jellyDark}
-                alt={t('translation:common.collectionName')}
-              />
-            )}
+            <LogoIcon
+              src={collectionDetails.collectionThumbnail}
+              alt={t('translation:common.collectionName')}
+            />
           </LogoContainer>
         </StyleRouter>
         <MobileSearchBarActions>

@@ -3,12 +3,8 @@ import { SkeletonBox } from '../core';
 
 export const Container = styled('div', {
   position: 'relative',
-  // borderTop: '1px solid rgb(229, 232, 235)',
-  borderTop: '1px solid $borderColor',
   padding: '0px 80px 80px',
   width: '100%',
-  // borderLeft: '1px solid rgb(229, 232, 235)',
-  borderLeft: '1px solid $borderColor',
 
   '@sm': {
     padding: '0px 15px 15px',
@@ -18,10 +14,11 @@ export const Container = styled('div', {
 
 export const FilteredContainer = styled('div', {
   margin: 'auto',
+  borderTop: '1px solid $borderColor',
 });
 
 export const ContentWrapper = styled('div', {
-  margin: '25px 0px 15px',
+  margin: '34px 0px 15px',
 });
 
 export const Flex = styled('div', {
