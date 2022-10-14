@@ -59,7 +59,7 @@ export const getTokenContractRootBucket = createAsyncThunk<
         });
 
       // eslint-disable-next-line no-underscore-dangle
-      if (!result?.canister || !result?.canister[0]._isPrincipal) {
+      if (!result?.canister || !result?.canister[0]?._isPrincipal) {
         throw Error(
           'Oops! Invalid response, canister fieldname not found',
         );
@@ -68,14 +68,8 @@ export const getTokenContractRootBucket = createAsyncThunk<
       return result.canister[0].toString();
     } catch (err) {
       AppLog.error(err);
-      thunkAPI.dispatch(
-        notificationActions.setErrorMessage(
-          'Oops! Failed to retrieve bucket id',
-        ),
-      );
     } finally {
       thunkAPI.dispatch(capSlice.actions.setLoading(false));
     }
   },
 );
-

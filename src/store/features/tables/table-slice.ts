@@ -67,7 +67,7 @@ const initialState: TableState = {
   loadingTokenTransactions: true,
   tokenMetadataById: {},
   loadedUserActivityData: [],
-  loadingUserTableData: true,
+  loadingUserTableData: false,
   hasMoreUserActivities: false,
   nextUserActivityPageNo: 0,
 };

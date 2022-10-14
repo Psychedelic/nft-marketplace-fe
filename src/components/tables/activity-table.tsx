@@ -297,6 +297,7 @@ export const ActivityTable = () => {
           data={loadedCapActivityData}
           tableType="activity"
           loading={isTableLoading}
+          emptyMessage={t('translation:emptyStates.nftActivity')}
           loaderDetails={{
             showItemDetails: true,
             showTypeDetails: true,

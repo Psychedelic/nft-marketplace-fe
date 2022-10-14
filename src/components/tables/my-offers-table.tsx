@@ -90,9 +90,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
 
   useEffect(() => {
     if (!collectionId) {
-      console.warn(
-        "Oops! Missing collection id",
-      );
+      console.warn('Oops! Missing collection id');
 
       return;
     }
@@ -211,7 +209,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
             if (offersType === OfferTypeStatusCodes.OffersReceived) {
               setTableDetails({
                 loading: false,
-                loadedOffers: offers,
+                // TODO: Remove once the backend stops returning undefined for offers received
+                loadedOffers: offers ? offers : [],
               });
             }
           },
@@ -337,7 +336,6 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
   );
 
   const { loading, loadedOffers } = tableDetails;
-
 
   return (
     <>
