@@ -208,7 +208,8 @@ export const NftCard = React.memo(
     const { collectionId } = useParams();
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const isForSale = data.status === NFTActionStatuses.ForSale;
+    const isForSale =
+      data.status === NFTActionStatuses.ForSale && data?.listing;
 
     // For NFT which do not have a thumbnail
     // we generate a generated version
