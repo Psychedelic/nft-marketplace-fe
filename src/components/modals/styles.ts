@@ -178,7 +178,7 @@ export const ModalContent = styled(DialogPrimitive.Content, {
     width: '95%',
     height: 'max-content',
     bottom: '0%',
-    padding: '15px 0px 0px',
+    padding: '15px 0px 15px',
     borderRadius: '15px',
     animation: 'unset',
   },
