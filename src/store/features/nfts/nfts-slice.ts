@@ -164,6 +164,10 @@ export const nftsSlice = createSlice({
 
       state.loadedNFTS[index].isListed = true;
       state.loadedNFTS[index].lastActionTaken = 'for sale';
+      state.loadedNFTS[index].status = 'for sale';
+      state.loadedNFTS[index].listing = {
+        status: 'Created',
+      };
       state.loadedNFTS[index].price =
         parseAmountToE8S(amount).toString();
     },
@@ -187,6 +191,8 @@ export const nftsSlice = createSlice({
       state.loadedNFTS[index].isListed = false;
       state.loadedNFTS[index].price = '';
       state.loadedNFTS[index].lastActionTaken = '';
+      state.loadedNFTS[index].status = '';
+      state.loadedNFTS[index].listing = undefined;
     },
     acceptNFTOffer: (
       state,

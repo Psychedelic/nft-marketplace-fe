@@ -131,14 +131,12 @@ export const NftDetails = () => {
       dispatch(filterActions.getFilterTraits({ collectionId }));
     }
 
-    if (!nftDetails) {
-      dispatch(
-        nftsActions.getNFTDetails({
-          id,
-          collectionId,
-        }),
-      );
-    }
+    dispatch(
+      nftsActions.getNFTDetails({
+        id,
+        collectionId,
+      }),
+    );
 
     dispatch(
       marketplaceActions.getTokenListing({
@@ -285,9 +283,7 @@ export const NftDetails = () => {
                   operator={nftDetails?.operator}
                 />
                 <AboutAccordion
-                  owner={
-                    owner || formatICNSName(nftDetails?.traits?.name)
-                  }
+                  owner={owner || ''}
                   collectionName={nftDetails?.name}
                 />
               </>

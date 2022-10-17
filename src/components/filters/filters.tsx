@@ -439,7 +439,8 @@ export const Filters = ({
                       </FilterButtonWrapper>
                     </Flex>
                   </FilterGroup>
-                  {Boolean(status.length) && (
+                  {/* {Boolean(status.length) && (
+                    Commented for ICNS launch
                     <FilterGroup>
                       <Subheadings>Price Range</Subheadings>
                       <Flex justify="spaceBetween">
@@ -478,7 +479,7 @@ export const Filters = ({
                         </ActionButton>
                       )}
                     </FilterGroup>
-                  )}
+                  )} */}
                 </>
               )}
             </FilterSection>

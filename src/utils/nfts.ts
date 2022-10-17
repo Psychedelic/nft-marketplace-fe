@@ -59,7 +59,8 @@ export const isOperatorMarketplace = (
 ) => {
   const { operator, marketplaceId } = params;
 
-  if (!operator || !marketplaceId) return;
+  // TODO: add operator details in jelly
+  if (!operator || !marketplaceId) return true;
 
   return operator === marketplaceId;
 };

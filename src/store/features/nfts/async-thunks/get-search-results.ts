@@ -7,6 +7,7 @@ import { AppLog } from '../../../../utils/log';
 import { filterActions } from '../../filters';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 import { formatICNSName } from '../../../../utils/icns';
+import config from '../../../../config/env';
 
 export const getSearchResults = createAsyncThunk<
   any | undefined,
@@ -30,7 +31,7 @@ export const getSearchResults = createAsyncThunk<
     try {
       const collection = await getJellyCollection({
         jellyInstance,
-        collectionId,
+        collectionId: collectionId || config.icnsCollectionId,
       });
 
       if (!collection)
