@@ -132,13 +132,6 @@ export const NftDetails = () => {
     }
 
     dispatch(
-      nftsActions.getNFTDetails({
-        id,
-        collectionId,
-      }),
-    );
-
-    dispatch(
       marketplaceActions.getTokenListing({
         id,
         collectionId,
@@ -154,6 +147,18 @@ export const NftDetails = () => {
     recentlyCancelledItems,
     recentlyPurchasedTokens,
   ]);
+
+  useEffect(() => {
+    // TODO: handle the error gracefully when there is no id
+    if (!id || !collectionId) return;
+
+    dispatch(
+      nftsActions.getNFTDetails({
+        id,
+        collectionId,
+      }),
+    );
+  }, [plugPrincipal, dispatch, id, collectionId]);
 
   const hasThumbnailMedia = nftDetails?.preview;
 
