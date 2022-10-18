@@ -109,6 +109,7 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
 
         // update store with loaded NFTS details
         dispatch(nftsActions.setLoadedNFTS(actionPayload));
+        dispatch(nftsActions.setNFTsTotalCount(userNFTIds.length));
       }
 
       const myNFTIds = userNFTIds || [];
@@ -125,6 +126,8 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
       return myNFTIds;
     } catch (err) {
       AppLog.error(err);
+
+      dispatch(nftsActions.setIsNFTSLoading(false));
     }
   },
 );
