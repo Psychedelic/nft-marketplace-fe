@@ -38,5 +38,7 @@ export const getTokenTransactions = createAsyncThunk<
     return parsed;
   } catch (error) {
     AppLog.error(error);
+
+    throw error;
   }
 });

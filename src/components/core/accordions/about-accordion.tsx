@@ -94,8 +94,6 @@ export const AboutAccordionHeader = ({
     currentNFTId: id,
   });
 
-  console.log(collectionName, 'collectionName');
-
   return (
     <>
       <AccordionHeadContent key="Collection" flexProperties="about">

@@ -207,13 +207,18 @@ export const NameCardContainer = styled('div', {
   alignItems: 'flex-start',
 
   '@md': {
-    minHeight: '300px',
+    minHeight: '400px',
   },
 });
 
 export const NameCardCollection = styled('img', {
   padding: '46px',
   minWidth: '170px',
+
+  '@md': {
+    padding: '26px',
+    minWidth: '100px',
+  },
 });
 
 export const NameCardTitle = styled('div', {
@@ -225,4 +230,10 @@ export const NameCardTitle = styled('div', {
   textAlign: 'left',
   padding: '70px 0px 0px',
   color: '#000',
+
+  '@md': {
+    bottom: '26px',
+    left: '26px',
+    fontSize: '30px',
+  },
 });

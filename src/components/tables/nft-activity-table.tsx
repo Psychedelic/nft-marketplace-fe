@@ -16,7 +16,12 @@ import {
 } from '../core';
 import { TableLayout } from './table-layout';
 import { TokenTransactionItem } from '../../utils/parser';
-import { Container, RowWrapper, HeaderText } from './styles';
+import {
+  Container,
+  RowWrapper,
+  HeaderText,
+  EmptyStateMessage,
+} from './styles';
 import { recentNFTUpdatesCount } from '../../hooks/use-marketplace-store';
 import { getICAccountLink } from '../../utils/account-id';
 import MobileItemDetails from '../core/table-cells/mobile-item-details';
@@ -176,19 +181,31 @@ export const NFTActivityTable = () => {
   );
 
   return (
-    <Container>
-      <TableLayout
-        columns={isMobileScreen ? mobileColumns : columns}
-        data={tokenTransactions}
-        tableType="nftActivity"
-        loadingTableRows={loadingTokenTransactions}
-        loaderDetails={{
-          showItemDetails: false,
-          showTypeDetails: true,
-          type: 'medium',
-        }}
-        emptyMessage={t('translation:emptyStates.nftActivity')}
-      />
-    </Container>
+    <>
+      {(loadingTokenTransactions ||
+        (!loadingTokenTransactions &&
+          tokenTransactions?.length > 0)) && (
+        <Container>
+          <TableLayout
+            columns={isMobileScreen ? mobileColumns : columns}
+            data={tokenTransactions}
+            tableType="nftActivity"
+            loadingTableRows={loadingTokenTransactions}
+            loaderDetails={{
+              showItemDetails: false,
+              showTypeDetails: true,
+              type: 'medium',
+            }}
+            emptyMessage={t('translation:emptyStates.nftActivity')}
+          />
+        </Container>
+      )}
+      {!loadingTokenTransactions &&
+        tokenTransactions?.length === 0 && (
+          <EmptyStateMessage type="smallTable">
+            {t('translation:emptyStates.nftActivity')}
+          </EmptyStateMessage>
+        )}
+    </>
   );
 };

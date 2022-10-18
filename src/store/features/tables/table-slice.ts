@@ -64,7 +64,7 @@ const initialState: TableState = {
   hasMoreData: false,
   nextPageNo: 0,
   tokenTransactions: [],
-  loadingTokenTransactions: true,
+  loadingTokenTransactions: false,
   tokenMetadataById: {},
   loadedUserActivityData: [],
   loadingUserTableData: false,
@@ -162,6 +162,7 @@ export const tableSlice = createSlice({
 
     builder.addCase(getTokenTransactions.rejected, (state) => {
       state.tokenTransactions = initialState.tokenTransactions;
+      state.loadingTokenTransactions = false;
     });
 
     builder.addCase(

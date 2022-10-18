@@ -235,8 +235,12 @@ export const NftDetails = () => {
                 </OfferAccordionDetails>
                 <AboutAccordionDetails>
                   <AboutAccordionHeader
-                    owner={owner}
+                    owner={
+                      owner ||
+                      formatICNSName(nftDetails?.traits?.name)
+                    }
                     isMobileScreen={isMobileScreen}
+                    collectionName={nftDetails?.name}
                   />
                 </AboutAccordionDetails>
               </>
@@ -254,8 +258,11 @@ export const NftDetails = () => {
                   />
                 )}
                 <AboutAccordion
-                  owner={owner}
+                  owner={
+                    owner || formatICNSName(nftDetails?.traits?.name)
+                  }
                   isMobileScreen={isMobileScreen}
+                  collectionName={nftDetails?.name}
                 />
               </>
             )}
