@@ -27,7 +27,7 @@ export const CardOptionsDropdown = ({
 
   const handleCopy = (e: any) => {
     e.preventDefault();
-    copyToClipboard(`${window.location.href}nft/${data.id}`);
+    copyToClipboard(`${window.location.href}/nft/${data.id}`);
     dispatch(
       notificationActions.setSuccessMessage(
         `${t('translation:successMessages.copyToClipboard')}`,
