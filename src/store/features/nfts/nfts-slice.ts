@@ -236,6 +236,9 @@ export const nftsSlice = createSlice({
     setNFTDetailsLoading: (state) => {
       state.loadingNFTDetails = true;
     },
+    setNFTsTotalCount: (state, action: PayloadAction<number>) => {
+      state.totalNFTSCount = action.payload;
+    },
   },
 });
 
