@@ -272,55 +272,41 @@ export const UserActivityTable = () => {
   );
 
   return (
-    <>
-      {(loadingUserTableData ||
-        (!loadingUserTableData &&
-          loadedUserActivityData?.length > 0)) && (
-        <InfiniteScrollWrapper
-          pageStart={0}
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          loadMore={
-            nextUserActivityPageNo >= 0 ? loadMoreData : () => {}
-          }
-          hasMore={hasMoreUserActivities}
-          loader={
-            <TableSkeletons
-              loaderDetails={{
-                showItemDetails: true,
-                showTypeDetails: true,
-                type: 'large',
-                infiniteLoader: true,
-                isMobileScreen,
-              }}
-              key={tableSkeletonId}
-            />
-          }
-          useWindow={true || false}
-          threshold={250 * 5}
-          className="infinite-loader"
-        >
-          <Container>
-            <TableLayout
-              columns={isMobileScreen ? mobileColumns : columns}
-              data={loadedUserActivityData}
-              tableType="activity"
-              loading={loadingUserTableData}
-              loaderDetails={{
-                showItemDetails: true,
-                showTypeDetails: true,
-                isMobileScreen,
-              }}
-              emptyMessage={t('translation:emptyStates.nftActivity')}
-            />
-          </Container>
-        </InfiniteScrollWrapper>
-      )}
-      {!loadingUserTableData &&
-        loadedUserActivityData?.length === 0 && (
-          <EmptyStateMessage type="largeTable">
-            {t('translation:emptyStates.nftActivity')}
-          </EmptyStateMessage>
-        )}
-    </>
+    <InfiniteScrollWrapper
+      pageStart={0}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      loadMore={nextUserActivityPageNo >= 0 ? loadMoreData : () => {}}
+      hasMore={hasMoreUserActivities}
+      loader={
+        <TableSkeletons
+          loaderDetails={{
+            showItemDetails: true,
+            showTypeDetails: true,
+            type: 'large',
+            infiniteLoader: true,
+            isMobileScreen,
+          }}
+          key={tableSkeletonId}
+        />
+      }
+      useWindow={true || false}
+      threshold={250 * 5}
+      className="infinite-loader"
+    >
+      <Container>
+        <TableLayout
+          columns={isMobileScreen ? mobileColumns : columns}
+          data={loadedUserActivityData}
+          tableType="activity"
+          loading={loadingUserTableData}
+          loaderDetails={{
+            showItemDetails: true,
+            showTypeDetails: true,
+            isMobileScreen,
+          }}
+          emptyMessage={t('translation:emptyStates.nftActivity')}
+        />
+      </Container>
+    </InfiniteScrollWrapper>
   );
 };
