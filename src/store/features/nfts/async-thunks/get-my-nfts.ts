@@ -13,14 +13,15 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
     { collectionId, shouldFetchUserTokenIdsAlone },
     thunkAPI,
   ) => {
+    const { dispatch } = thunkAPI;
+
+    dispatch(nftsActions.setNFTsTotalCount(0));
     // Checks if an actor instance exists already
     // otherwise creates a new instance
     const jellyInstance = await jellyJsInstanceHandler({
       thunkAPI,
       slice: marketplaceSlice,
     });
-
-    const { dispatch } = thunkAPI;
 
     if (!shouldFetchUserTokenIdsAlone) {
       // set loading NFTS state to true
@@ -127,6 +128,7 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
     } catch (err) {
       AppLog.error(err);
 
+      dispatch(nftsActions.setNFTsTotalCount(0));
       dispatch(nftsActions.setIsNFTSLoading(false));
     }
   },
