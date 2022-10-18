@@ -151,6 +151,8 @@ export const SellModal = ({
           // dispatch(getAllListings());
           setModalStep(ListingStatusCodes.Confirmed);
 
+          if (!id) return;
+
           // Update NFT listed for sale in store
           // on successful listing and closing the modal
           dispatch(
