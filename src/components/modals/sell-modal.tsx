@@ -170,7 +170,7 @@ export const SellModal = ({
   };
 
   const handleViewNFT = () => {
-    navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
+    navigate(`/${collectionId}/nft/${tokenId}`);
     setModalOpened(false);
   };
 

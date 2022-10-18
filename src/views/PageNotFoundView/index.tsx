@@ -22,7 +22,7 @@ const PageNotFoundView = () => {
 
   const handleViewCollections = () => {
     dispatch(settingsActions.setPageNotFoundStatus(false));
-    navigate('/', { replace: true });
+    navigate('/');
   };
 
   return (

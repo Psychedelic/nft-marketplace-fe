@@ -140,7 +140,7 @@ export const BuyNowModal = ({
     // unless there's a reason why for this
     const tokenId =
       location.pathname === `/${collectionId}` ? actionTextId : id;
-    navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
+    navigate(`/${collectionId}/nft/${tokenId}`);
     setModalOpened(false);
   };
 
