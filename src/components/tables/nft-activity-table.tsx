@@ -181,31 +181,19 @@ export const NFTActivityTable = () => {
   );
 
   return (
-    <>
-      {(loadingTokenTransactions ||
-        (!loadingTokenTransactions &&
-          tokenTransactions?.length > 0)) && (
-        <Container>
-          <TableLayout
-            columns={isMobileScreen ? mobileColumns : columns}
-            data={tokenTransactions}
-            tableType="nftActivity"
-            loadingTableRows={loadingTokenTransactions}
-            loaderDetails={{
-              showItemDetails: false,
-              showTypeDetails: true,
-              type: 'medium',
-            }}
-            emptyMessage={t('translation:emptyStates.nftActivity')}
-          />
-        </Container>
-      )}
-      {!loadingTokenTransactions &&
-        tokenTransactions?.length === 0 && (
-          <EmptyStateMessage type="smallTable">
-            {t('translation:emptyStates.nftActivity')}
-          </EmptyStateMessage>
-        )}
-    </>
+    <Container>
+      <TableLayout
+        columns={isMobileScreen ? mobileColumns : columns}
+        data={tokenTransactions}
+        tableType="nftActivity"
+        loadingTableRows={loadingTokenTransactions}
+        loaderDetails={{
+          showItemDetails: false,
+          showTypeDetails: true,
+          type: 'medium',
+        }}
+        emptyMessage={t('translation:emptyStates.nftActivity')}
+      />
+    </Container>
   );
 };

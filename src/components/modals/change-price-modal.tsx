@@ -114,6 +114,7 @@ export const ChangePriceModal = ({
     setModalOpened(modalOpenedStatus);
     setAmount('');
     setModalStep(ListingStatusCodes.ListingInfo);
+    dispatch(marketplaceActions.setTransactionStepsToDefault());
 
     const isConfirmed = modalStep === ListingStatusCodes.Confirmed;
 
@@ -157,8 +158,12 @@ export const ChangePriceModal = ({
           // after a new make listing
           // dispatch(getAllListings());
           setModalStep(ListingStatusCodes.Confirmed);
+
+          if (!id) return;
+
           // Update NFT listed for sale in store
           // on successful listing and closing the modal
+
           dispatch(
             nftsActions.setNFTForSale({
               id: tokenId as string,
@@ -174,7 +179,11 @@ export const ChangePriceModal = ({
   };
 
   const handleViewNFT = () => {
-    navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
+    if (id) {
+      navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
+    } else {
+      navigate(`/${collectionId}/nft/${tokenId}`);
+    }
     setModalOpened(false);
   };
 

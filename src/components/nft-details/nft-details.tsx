@@ -97,6 +97,9 @@ export const NftDetails = () => {
     });
   }, [loadedNFTS, id, loadedFiltersList, dispatch]);
 
+  // debug token listing in mainnet
+  console.log(tokenListing, nftDetails, 'tokenListing');
+
   // TODO: We have the currentList/getAllListings because cap-sync is not available yet
   // which would fail to provide the data on update
   const owner =
@@ -123,20 +126,9 @@ export const NftDetails = () => {
     // TODO: handle the error gracefully when there is no id
     if (!id || !collectionId) return;
 
-    dispatch(
-      marketplaceActions.getCollectionDetails({ collectionId }),
-    );
-
     if (!loadedFiltersList.length) {
       dispatch(filterActions.getFilterTraits({ collectionId }));
     }
-
-    dispatch(
-      nftsActions.getNFTDetails({
-        id,
-        collectionId,
-      }),
-    );
 
     dispatch(
       marketplaceActions.getTokenListing({
@@ -154,6 +146,22 @@ export const NftDetails = () => {
     recentlyCancelledItems,
     recentlyPurchasedTokens,
   ]);
+
+  useEffect(() => {
+    // TODO: handle the error gracefully when there is no id
+    if (!id || !collectionId) return;
+
+    dispatch(
+      marketplaceActions.getCollectionDetails({ collectionId }),
+    );
+
+    dispatch(
+      nftsActions.getNFTDetails({
+        id,
+        collectionId,
+      }),
+    );
+  }, [plugPrincipal, dispatch, id, collectionId]);
 
   const hasThumbnailMedia = nftDetails?.preview;
 

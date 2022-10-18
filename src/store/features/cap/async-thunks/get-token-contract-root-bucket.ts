@@ -17,6 +17,7 @@ export const getTokenContractRootBucket = createAsyncThunk<
 >(
   'cap/getTokenContractRootBucket',
   async ({ collectionId }, thunkAPI) => {
+    thunkAPI.dispatch(capSlice.actions.setLoading(true));
     // TODO: make this an util, as its currently used
     // in different places, see make-listing, cancel-offer, etc
     // Checks if an actor instance exists already
@@ -40,8 +41,6 @@ export const getTokenContractRootBucket = createAsyncThunk<
       );
 
     const { marketplaceId } = collection;
-
-    thunkAPI.dispatch(capSlice.actions.setLoading(true));
 
     // Checks if an actor instance exists already
     // otherwise creates a new instance

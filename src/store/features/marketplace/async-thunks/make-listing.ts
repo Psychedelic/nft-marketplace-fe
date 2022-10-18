@@ -32,6 +32,8 @@ export const makeListing = createAsyncThunk<
   ) => {
     const { dispatch } = thunkAPI;
 
+    dispatch(marketplaceActions.setTransactionStepsToDefault());
+
     // Checks if an actor instance exists already
     // otherwise creates a new instance
     const jellyInstance = await jellyJsInstanceHandler({
@@ -56,8 +58,6 @@ export const makeListing = createAsyncThunk<
 
     const userOwnedTokenId = BigInt(id);
     const userListForPrice = parseAmountToE8S(amount);
-
-    dispatch(marketplaceActions.setTransactionStepsToDefault());
 
     try {
       const NFT_APPROVE_MARKETPLACE = {

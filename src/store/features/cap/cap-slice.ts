@@ -14,7 +14,7 @@ type CapState = {
 // Define the initial state using that type
 const initialState: CapState = {
   bucketId: '',
-  loading: false,
+  loading: true,
 };
 
 export const capSlice = createSlice({
@@ -49,4 +49,3 @@ export const capActions = {
 };
 
 export default capSlice.reducer;
-

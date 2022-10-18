@@ -87,6 +87,7 @@ export const BuyNowModal = ({
   const handleModalOpen = (status: boolean) => {
     setModalStep(DirectBuyStatusCodes.Pending);
     setModalOpened(status);
+    dispatch(marketplaceActions.setTransactionStepsToDefault());
   };
 
   const handleDirectBuy = () => {
@@ -139,7 +140,11 @@ export const BuyNowModal = ({
     // unless there's a reason why for this
     const tokenId =
       location.pathname === `/${collectionId}` ? actionTextId : id;
-    navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
+    if (id) {
+      navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
+    } else {
+      navigate(`/${collectionId}/nft/${tokenId}`);
+    }
     setModalOpened(false);
   };
 

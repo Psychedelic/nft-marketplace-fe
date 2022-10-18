@@ -64,10 +64,10 @@ const initialState: TableState = {
   hasMoreData: false,
   nextPageNo: 0,
   tokenTransactions: [],
-  loadingTokenTransactions: false,
+  loadingTokenTransactions: true,
   tokenMetadataById: {},
   loadedUserActivityData: [],
-  loadingUserTableData: false,
+  loadingUserTableData: true,
   hasMoreUserActivities: false,
   nextUserActivityPageNo: 0,
 };
@@ -84,6 +84,12 @@ export const tableSlice = createSlice({
       if (state.failedToLoadTableData) {
         state.failedToLoadTableData = false;
       }
+    },
+    setIsNFTTableDataLoading: (
+      state,
+      action: PayloadAction<boolean>,
+    ) => {
+      state.loadingTokenTransactions = action.payload;
     },
     setCapActivityTable: (
       state,

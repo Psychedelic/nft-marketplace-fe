@@ -89,6 +89,7 @@ export const MakeOfferModal = ({
     setModalOpened(status);
     setAmount('');
     setModalStep(ListingStatusCodes.ListingInfo);
+    dispatch(marketplaceActions.setTransactionStepsToDefault());
   };
 
   const handleModalClose = () => {
@@ -133,7 +134,11 @@ export const MakeOfferModal = ({
   };
 
   const handleViewNFT = () => {
-    navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
+    if (id) {
+      navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
+    } else {
+      navigate(`/${collectionId}/nft/${tokenId}`);
+    }
     setModalOpened(false);
   };
 

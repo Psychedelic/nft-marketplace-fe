@@ -271,51 +271,41 @@ export const ActivityTable = () => {
   );
 
   return (
-    <>
-      {(isTableLoading ||
-        (!isTableLoading && loadedCapActivityData?.length > 0)) && (
-        <InfiniteScrollWrapper
-          pageStart={0}
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          loadMore={nextPageNo >= 0 ? loadMoreData : () => {}}
-          hasMore={hasMoreData}
-          loader={
-            <TableSkeletons
-              loaderDetails={{
-                showItemDetails: true,
-                showTypeDetails: true,
-                type: 'large',
-                infiniteLoader: true,
-                isMobileScreen,
-              }}
-              key={tableSkeletonId}
-            />
-          }
-          useWindow={true || false}
-          threshold={250 * 5}
-          className="infinite-loader"
-        >
-          <Container>
-            <TableLayout
-              columns={isMobileScreen ? mobileColumns : columns}
-              data={loadedCapActivityData}
-              tableType="activity"
-              loading={isTableLoading}
-              emptyMessage={t('translation:emptyStates.nftActivity')}
-              loaderDetails={{
-                showItemDetails: true,
-                showTypeDetails: true,
-                isMobileScreen,
-              }}
-            />
-          </Container>
-        </InfiniteScrollWrapper>
-      )}
-      {!isTableLoading && loadedCapActivityData?.length === 0 && (
-        <EmptyStateMessage type="largeTable">
-          {t('translation:emptyStates.nftActivity')}
-        </EmptyStateMessage>
-      )}
-    </>
+    <InfiniteScrollWrapper
+      pageStart={0}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      loadMore={nextPageNo >= 0 ? loadMoreData : () => {}}
+      hasMore={hasMoreData}
+      loader={
+        <TableSkeletons
+          loaderDetails={{
+            showItemDetails: true,
+            showTypeDetails: true,
+            type: 'large',
+            infiniteLoader: true,
+            isMobileScreen,
+          }}
+          key={tableSkeletonId}
+        />
+      }
+      useWindow={true || false}
+      threshold={250 * 5}
+      className="infinite-loader"
+    >
+      <Container>
+        <TableLayout
+          columns={isMobileScreen ? mobileColumns : columns}
+          data={loadedCapActivityData}
+          tableType="activity"
+          loading={isTableLoading}
+          emptyMessage={t('translation:emptyStates.nftActivity')}
+          loaderDetails={{
+            showItemDetails: true,
+            showTypeDetails: true,
+            isMobileScreen,
+          }}
+        />
+      </Container>
+    </InfiniteScrollWrapper>
   );
 };

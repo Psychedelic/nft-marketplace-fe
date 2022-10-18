@@ -30,6 +30,9 @@ export const makeOffer = createAsyncThunk<
 
   const { dispatch, getState } = thunkAPI;
 
+  // Initialize transaction steps in UI
+  dispatch(marketplaceActions.setTransactionStepsToDefault());
+
   // Checks if an actor instance exists already
   // otherwise creates a new instance
   const jellyInstance = await jellyJsInstanceHandler({
@@ -69,9 +72,6 @@ export const makeOffer = createAsyncThunk<
   );
 
   console.log(allowanceAmount, 'allowanceAmount');
-
-  // Initialize transaction steps in UI
-  dispatch(marketplaceActions.setTransactionStepsToDefault());
 
   try {
     const WICP_APPROVE_MARKETPLACE = {

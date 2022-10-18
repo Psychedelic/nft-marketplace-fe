@@ -10,6 +10,7 @@ import { notificationActions } from '../../notifications';
 import { AppLog } from '../../../../utils/log';
 import { parseNFTOffers } from '../../../../utils/parser';
 import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
+import { sortTokenOffersByPrice } from '../../../../utils/sorting';
 
 // TODO: delete getTokenOffers thunk when getNFTOffers is ready
 // to render NFT offers list
@@ -83,7 +84,10 @@ export const getNFTOffers = createAsyncThunk<any | undefined, any>(
 
       thunkAPI.dispatch(marketplaceActions.setOffersLoaded(true));
 
-      return parsedNFTOffers;
+      const sortedOffersByPrice =
+        sortTokenOffersByPrice(parsedNFTOffers);
+
+      return sortedOffersByPrice;
     } catch (err) {
       AppLog.error(err);
       thunkAPI.dispatch(
