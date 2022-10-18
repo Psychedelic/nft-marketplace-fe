@@ -105,6 +105,7 @@ export const SellModal = ({
     setModalOpened(status);
     setAmount('');
     setModalStep(ListingStatusCodes.ListingInfo);
+    dispatch(marketplaceActions.setTransactionStepsToDefault());
 
     const notConfirmed = modalStep !== ListingStatusCodes.Confirmed;
 

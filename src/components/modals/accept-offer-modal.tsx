@@ -97,6 +97,7 @@ export const AcceptOfferModal = ({
   const handleModalOpen = (modalOpenedStatus: boolean) => {
     setModalOpened(modalOpenedStatus);
     setModalStep(ListingStatusCodes.OfferInfo);
+    dispatch(marketplaceActions.setTransactionStepsToDefault());
 
     const isAccepted = modalStep === ListingStatusCodes.Accepted;
 

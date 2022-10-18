@@ -114,6 +114,7 @@ export const ChangePriceModal = ({
     setModalOpened(modalOpenedStatus);
     setAmount('');
     setModalStep(ListingStatusCodes.ListingInfo);
+    dispatch(marketplaceActions.setTransactionStepsToDefault());
 
     const isConfirmed = modalStep === ListingStatusCodes.Confirmed;
 

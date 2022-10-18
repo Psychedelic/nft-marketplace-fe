@@ -89,6 +89,7 @@ export const MakeOfferModal = ({
     setModalOpened(status);
     setAmount('');
     setModalStep(ListingStatusCodes.ListingInfo);
+    dispatch(marketplaceActions.setTransactionStepsToDefault());
   };
 
   const handleModalClose = () => {

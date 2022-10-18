@@ -87,6 +87,7 @@ export const BuyNowModal = ({
   const handleModalOpen = (status: boolean) => {
     setModalStep(DirectBuyStatusCodes.Pending);
     setModalOpened(status);
+    dispatch(marketplaceActions.setTransactionStepsToDefault());
   };
 
   const handleDirectBuy = () => {
