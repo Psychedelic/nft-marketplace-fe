@@ -19,7 +19,7 @@ export const TabsRoot = styled(Tabs.Root, {
 });
 
 export const TabsList = styled(Tabs.List, {
-  padding: '40px 80px 34px',
+  padding: '40px 0px 34px',
 
   flexShrink: 0,
   display: 'flex',
@@ -27,6 +27,10 @@ export const TabsList = styled(Tabs.List, {
 
   '&:focus': {
     outline: 'none',
+  },
+
+  '@md': {
+    padding: '20px 0px 30px',
   },
 });
 
@@ -89,5 +93,27 @@ export const TabsContentWrapper = styled('div', {
 export const TabsContent = styled(Tabs.Content, {
   '&:focus': {
     outline: 'none',
+  },
+});
+
+export const ButtonsWrapper = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+
+  '@md': {
+    marginBottom: '20px',
+  },
+});
+
+export const CollectionOptionsList = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  padding: '0px 80px 0px',
+
+  '@md': {
+    justifyContent: 'center',
+    padding: '0px 14px 0px',
   },
 });
