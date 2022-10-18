@@ -237,14 +237,27 @@ export const AboutAccordion = ({
             ))}
             <ButtonWrapper>
               {isMobileScreen ? (
-                <LinkButton url="https://crowns.ooo/">
+                <LinkButton
+                  url={
+                    isCrownsCollection(collectionName)
+                      ? 'https://crowns.ooo/'
+                      : 'https://icns.id/'
+                  }
+                >
                   <Icon
                     icon="website"
                     extraIconProps={{ dark: theme === 'darkTheme' }}
                   />
                 </LinkButton>
               ) : (
-                <LinkButton type="textBtn" url="https://crowns.ooo/">
+                <LinkButton
+                  type="textBtn"
+                  url={
+                    isCrownsCollection(collectionName)
+                      ? 'https://crowns.ooo/'
+                      : 'https://icns.id/'
+                  }
+                >
                   {t('translation:buttons.links.website')}
                 </LinkButton>
               )}
@@ -252,7 +265,13 @@ export const AboutAccordion = ({
                 <Icon icon="discord" />
               </LinkButton>
 
-              <LinkButton url="https://twitter.com/cap_ois">
+              <LinkButton
+                url={
+                  isCrownsCollection(collectionName)
+                    ? 'https://twitter.com/cap_ois'
+                    : 'https://twitter.com/icnsid'
+                }
+              >
                 <Icon icon="twitter" />
               </LinkButton>
 

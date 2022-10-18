@@ -115,6 +115,27 @@ export const CollectionItems = () => {
     }
   };
 
+  const displayOwners = () => {
+    if (
+      appliedFilters.defaultFilters.length
+    )
+      return;
+
+    if (!appliedFilters?.defaultFilters?.length) {
+      return (
+        <>
+          {!loadingCollectionData && totalOwnersCount > 0 && (
+            <FilteredCountChip
+              label={t('translation:chips.labels.OwnersLabel')}
+              count={totalOwnersCount}
+              showLogo={false}
+            />
+          )}
+        </>
+      );
+    }
+  };
+
   // TODO: owners count value is returning wrong value for ICNS collection
 
   return (
@@ -137,13 +158,7 @@ export const CollectionItems = () => {
                     showLogo={false}
                   />
                 )}
-                {!loadingCollectionData && totalOwnersCount > 0 && (
-                  <FilteredCountChip
-                    label={t('translation:chips.labels.OwnersLabel')}
-                    count={totalOwnersCount}
-                    showLogo={false}
-                  />
-                )}
+                {displayOwners()}
                 {!loadingCollectionData && floorPrice > 0 && (
                   <FilteredCountChip
                     label={t(
