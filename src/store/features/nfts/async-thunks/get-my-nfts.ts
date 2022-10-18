@@ -103,7 +103,7 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
           loadedNFTList: extractedNFTSList,
           totalPages: 1,
           total: data.length,
-          nextPage: undefined,
+          nextPage: 1,
           lastIndex: undefined,
         };
 
