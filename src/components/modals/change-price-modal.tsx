@@ -179,7 +179,11 @@ export const ChangePriceModal = ({
   };
 
   const handleViewNFT = () => {
-    navigate(`/${collectionId}/nft/${tokenId}`);
+    if (id) {
+      navigate(`/${collectionId}/nft/${tokenId}`, { replace: true });
+    } else {
+      navigate(`/${collectionId}/nft/${tokenId}`);
+    }
     setModalOpened(false);
   };
 
