@@ -18,14 +18,14 @@ export const getTokenMetadata = createAsyncThunk<
     const response = await axios.get(
       KyasshuUrl.getNFTDetails({ id, collectionId }),
     );
-    const thumbnail =
-      response?.data?.metadata?.thumbnail?.value?.TextContent;
+    const nftName =
+      response?.data?.metadata?.name?.value?.TextContent;
 
-    if (!thumbnail)
-      throw Error('Oops! Failed to retrieve thumbnail from metadata');
+    if (!nftName)
+      throw Error('Oops! Failed to retrieve ICNS name from metadata');
 
     return {
-      [id]: thumbnail,
+      [id]: nftName,
     };
   } catch (error) {
     AppLog.error(error);
