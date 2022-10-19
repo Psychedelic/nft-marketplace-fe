@@ -8,6 +8,7 @@ import { filterActions } from '../../filters';
 import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 import { formatICNSName } from '../../../../utils/icns';
 import config from '../../../../config/env';
+import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
 
 export const getSearchResults = createAsyncThunk<
   any | undefined,
@@ -29,6 +30,7 @@ export const getSearchResults = createAsyncThunk<
     dispatch(filterActions.setLoadingSearch(true));
 
     try {
+      let currencyMarketPrice: number;
       const collection = await getJellyCollection({
         jellyInstance,
         collectionId: collectionId || config.icnsCollectionId,
@@ -48,11 +50,22 @@ export const getSearchResults = createAsyncThunk<
 
       const { data } = res;
 
+      // Fetch ICP Price
+      const icpPriceResponse = await getICPPrice();
+      if (icpPriceResponse && icpPriceResponse.usd) {
+        currencyMarketPrice = icpPriceResponse.usd;
+      }
+
       const extractedNFTSList = data.map((nft: any) => {
         const metadata = {
           id: nft.id,
           name: nft.collectionName,
-          price: nft.listing?.price,
+          price:
+            nft.listing?.price &&
+            (
+              currencyMarketPrice *
+              Number(parseE8SAmountToWICP(nft.listing?.price))
+            ).toString(),
           wicpPrice: parseE8SAmountToWICP(nft.listing?.price),
           preview: nft.thumbnail,
           location: nft?.url,
