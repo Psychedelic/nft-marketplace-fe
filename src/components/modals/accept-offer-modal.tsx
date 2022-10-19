@@ -230,10 +230,8 @@ export const AcceptOfferModal = ({
                     )}
                     <ItemName>
                       {isMobileScreen
-                        ? `CAP Crowns #${
-                            nftTokenId ?? nftDetails?.id
-                          }`
-                        : 'CAP Crowns'}
+                        ? `ICNS #${nftTokenId ?? nftDetails?.id}`
+                        : 'ICNS'}
                       <ItemTokenId>
                         {`#${nftTokenId ?? nftDetails?.id}`}
                       </ItemTokenId>
