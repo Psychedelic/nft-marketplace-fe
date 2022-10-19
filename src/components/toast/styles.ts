@@ -144,6 +144,8 @@ export const StyledIconWrapper = styled('div', {
 });
 
 export const StyledIcon = styled(Icon, {
+  cursor: 'pointer',
+
   '@sm': {
     top: '-45px',
     right: '-15px',

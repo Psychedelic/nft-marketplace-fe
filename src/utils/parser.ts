@@ -37,7 +37,7 @@ interface ParseGetTokenOffersParams {
 
 interface ParseOffersMadeParams {
   data: Array<NFTToken>;
-  floorDifferencePrice?: string;
+  floorDifferencePrice?: bigint;
   currencyMarketPrice?: number;
   collectionName?: string;
 }
@@ -137,10 +137,14 @@ export const parseOffersMadeResponse = ({
             logo: item.thumbnail,
           },
           price,
-          floorDifference: floorDiffPercentageCalculator({
-            currentPrice: parseE8SAmountToWICP(price),
-            floorDifferencePrice,
-          }),
+          floorDifference: floorDifferencePrice
+            ? floorDiffPercentageCalculator({
+                currentPrice: parseE8SAmountToWICP(price),
+                floorDifferencePrice: parseE8SAmountToWICP(
+                  floorDifferencePrice,
+                ),
+              })
+            : 'n/a',
           fromDetails,
           time: time?.toString(),
           computedCurrencyPrice,

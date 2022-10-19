@@ -16,6 +16,7 @@ import {
   formatAddress,
   parseE8SAmountToWICP,
 } from '../../../../utils/formatters';
+import { getICPPrice } from '../../../../integrations/marketplace/price.utils';
 
 export type GetUserNFTsProps = NSKyasshuUrl.GetNFTsQueryParams & {
   payload?: any;
@@ -37,7 +38,7 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
 
     try {
       let floorDifferencePrice: any;
-      let currencyMarketPrice: any;
+      let currencyMarketPrice: number;
       const nonFungibleContractAddress =
         Principal.fromText(collectionId);
       const collection = await getJellyCollection({
@@ -57,6 +58,12 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
       });
 
       const { data } = res;
+
+      // Fetch ICP Price
+      const icpPriceResponse = await getICPPrice();
+      if (icpPriceResponse && icpPriceResponse.usd) {
+        currencyMarketPrice = icpPriceResponse.usd;
+      }
 
       // Floor Difference calculation
       const floorDifferenceResponse =
@@ -96,10 +103,14 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
                 logo: item.thumbnail,
               },
               price,
-              floorDifference: floorDiffPercentageCalculator({
-                currentPrice: parseE8SAmountToWICP(price),
-                floorDifferencePrice,
-              }),
+              floorDifference: floorDifferencePrice
+                ? floorDiffPercentageCalculator({
+                    currentPrice: parseE8SAmountToWICP(price),
+                    floorDifferencePrice: parseE8SAmountToWICP(
+                      floorDifferencePrice,
+                    ),
+                  })
+                : 'n/a',
               fromDetails,
               time: time?.toString(),
               computedCurrencyPrice,

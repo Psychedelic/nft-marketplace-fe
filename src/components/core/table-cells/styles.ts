@@ -359,7 +359,7 @@ export const TextLinkDetails = styled('a', {
     center: {
       true: {
         display: 'flex',
-        justifyContent: 'center',
+        marginLeft: '20px',
       },
     },
   },
