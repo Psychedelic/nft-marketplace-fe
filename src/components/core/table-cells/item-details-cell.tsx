@@ -6,10 +6,7 @@ import {
   useAppDispatch,
   RootState,
 } from '../../../store';
-import {
-  isTokenId,
-  getTokenMetadataThumbnail,
-} from '../../../utils/nfts';
+import { isTokenId, getTokenMetadataName } from '../../../utils/nfts';
 import {
   ItemDetails,
   ItemLogo,
@@ -25,6 +22,8 @@ import {
 } from './styles';
 import useMediaQuery from '../../../hooks/use-media-query';
 import { isICNSCollection } from '../../../utils/collections';
+import { SkeletonBox } from '../skeleton';
+import { formatICNSName } from '../../../utils/icns';
 
 export interface ItemDetailsCellProps {
   name?: string;
@@ -49,17 +48,17 @@ export const ItemDetailsCell = ({
 
   const { collectionName, collectionThumbnail } = collectionDetails;
 
-  const hasThumbnail =
+  const hasICNSName =
     isTokenId(id) &&
-    getTokenMetadataThumbnail({
+    getTokenMetadataName({
       tokenMetadataById,
       tokendId: id as string | number,
     });
 
   useEffect(() => {
-    if (!isTokenId(id) || hasThumbnail || !collectionId) return;
+    if (!isTokenId(id) || hasICNSName || !collectionId) return;
 
-    // Only request metadata if NOT hasThumbnail as we cache
+    // Only request metadata if NOT hasICNSName as we cache
     dispatch(
       tableActions.getTokenMetadata({
         id,
@@ -70,7 +69,7 @@ export const ItemDetailsCell = ({
         collectionId: string;
       }),
     );
-  }, [dispatch, id, hasThumbnail, collectionId]);
+  }, [dispatch, id, hasICNSName, collectionId]);
 
   const displayThumbnail = () => {
     if (isICNSCollection(collectionName) && !logo) {
@@ -83,7 +82,11 @@ export const ItemDetailsCell = ({
                   src={collectionThumbnail}
                   alt="collection-logo"
                 />
-                <NameCardTitle>{`#${id}`}</NameCardTitle>
+                {hasICNSName && (
+                  <NameCardTitle>
+                    {formatICNSName(hasICNSName)}
+                  </NameCardTitle>
+                )}
               </NameCardContainer>
             </NameCardBg>
           </PreviewDetails>
@@ -101,10 +104,15 @@ export const ItemDetailsCell = ({
       <ItemDetails>
         {displayThumbnail()}
         <ItemName className="item-name">
-          {name}
-          <ItemTokenId className="item-name">
-            {isMobileScreen && `#${id}`}
-          </ItemTokenId>
+          {hasICNSName ? (
+            <ItemTokenId className="item-name">
+              {isMobileScreen
+                ? hasICNSName
+                : `${collectionName} - ${hasICNSName}`}
+            </ItemTokenId>
+          ) : (
+            <SkeletonBox />
+          )}
         </ItemName>
       </ItemDetails>
     </RouterLink>
