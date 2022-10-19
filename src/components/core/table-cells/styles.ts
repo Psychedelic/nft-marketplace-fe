@@ -419,9 +419,9 @@ export const NameCardCollection = styled('img', {
 });
 
 export const NameCardTitle = styled('div', {
-  fontSize: '10px',
+  fontSize: '6px',
   fontWeight: '700',
   textAlign: 'left',
-  padding: '5px 5px 0px',
+  padding: '5px 5px 5px',
   color: '#000',
 });
