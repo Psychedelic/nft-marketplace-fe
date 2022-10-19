@@ -69,3 +69,11 @@ const userRelevantDirectContractOps = ['mint', 'transfer'];
 export const checkIfDirectContractEvent = (
   operationType: OperationType,
 ) => userRelevantDirectContractOps.includes(operationType);
+
+export const getTokenMetadataName = ({
+  tokendId,
+  tokenMetadataById,
+}: {
+  tokendId?: string | number;
+  tokenMetadataById: TokenMetadataById;
+}) => typeof tokendId !== 'undefined' && tokenMetadataById[tokendId];
