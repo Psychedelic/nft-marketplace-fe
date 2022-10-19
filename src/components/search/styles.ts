@@ -215,6 +215,9 @@ export const ItemDescription = styled('div', {
   lineHeight: '20px',
   color: '$textNeutralColor',
   textAlign: 'left',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 });
 
 export const ItemSpan = styled('span', {
@@ -223,6 +226,7 @@ export const ItemSpan = styled('span', {
   lineHeight: '20px',
   color: '$textNeutralColor',
   textAlign: 'left',
+  marginLeft: '5px',
 });
 
 export const ItemMetaDataContainer = styled('div', {
@@ -427,7 +431,6 @@ export const ThumbnailSkeleton = styled(SkeletonBox, {
   marginRight: '12px',
   borderRadius: '6px',
 });
-
 
 export const MediaWrapper = styled('div', {
   position: 'relative',
