@@ -12,7 +12,8 @@ import {
 import { LinkButton } from '../core';
 import { GlobalSearch } from '../search';
 import { Plug } from '../plug';
-import icnsLogo from '../../assets/ICNS-logo.png';
+import icnsLogo from '../../assets/ICNS-logo.svg';
+import jellyLogo from '../../assets/powered-by.svg';
 import jellyDark from '../../assets/jelly-full-image-dark.svg';
 import {
   Container,
@@ -25,6 +26,7 @@ import {
   BackIcon,
   MobileSearchBarActions,
   StyleRouter,
+  PoweredByLogoIcon,
 } from './styles';
 import { Icon } from '../icons';
 import { useBuyerOffers } from '../../hooks/use-buyer-offers';
@@ -96,6 +98,7 @@ export const NavBar = () => {
               src={icnsLogo}
               alt={t('translation:common.collectionName')}
             />
+            <PoweredByLogoIcon src={jellyLogo} alt="by-jelly" />
           </LogoContainer>
         </StyleRouter>
         <MobileSearchBarActions>

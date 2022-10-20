@@ -82,7 +82,7 @@ export const LogoContainer = styled('div', {
 });
 
 export const LogoIcon = styled('img', {
-  width: '100px',
+  width: '95px',
   marginRight: '7px',
 
   '@md': {
@@ -319,5 +319,16 @@ export const StyleRouter = styled(RouterLink, {
         display: 'block',
       },
     },
+  },
+});
+
+export const PoweredByLogoIcon = styled('img', {
+  width: '100%',
+  maxWidth: '70px',
+  marginRight: '7px',
+  marginLeft: '2px',
+
+  '@md': {
+    maxWidth: '60px',
   },
 });
