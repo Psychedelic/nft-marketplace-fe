@@ -327,7 +327,9 @@
     "retryMessage": "click here to withdraw."
   },
   "tooltip": {
-    "disabledBuyNowText": "Oops! Can't be purchased, possibly because token was transferred outside Jelly marketplace to a new wallet"
+    "disabledBuyNowText": "Oops! Can't be purchased, possibly because token was transferred outside Jelly marketplace to a new wallet",
+    "protocolFee": "Standard 1% service fee on all NFT trades",
+    "collectionFee": "Royalties granted to collection creators on each NFT sale"
   },
   "landingPage": {
     "introTitle": "Sweet NFT Tools & Infra ✨",
