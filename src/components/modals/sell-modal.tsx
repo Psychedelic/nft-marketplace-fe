@@ -8,6 +8,7 @@ import {
   ModalInput,
   Completed,
   NftCard,
+  Tooltip,
 } from '../core';
 import {
   SellModalTrigger,
@@ -277,7 +278,11 @@ export const SellModal = ({
                         <FeeLabel>
                           {t('translation:modals.labels.protocolFee')}
                         </FeeLabel>
-                        <InfoIcon icon="info" />
+                        <Tooltip
+                          text={t('translation:tooltip.protocolFee')}
+                        >
+                          <InfoIcon icon="info" />
+                        </Tooltip>
                       </FeeLabelContainer>
                       <FeePercent>
                         {t(
@@ -292,7 +297,13 @@ export const SellModal = ({
                             'translation:modals.labels.collectionFee',
                           )}
                         </FeeLabel>
-                        <InfoIcon icon="info" />
+                        <Tooltip
+                          text={t(
+                            'translation:tooltip.collectionFee',
+                          )}
+                        >
+                          <InfoIcon icon="info" />
+                        </Tooltip>
                       </FeeLabelContainer>
                       <FeePercent>
                         {t(
