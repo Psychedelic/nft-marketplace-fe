@@ -141,12 +141,12 @@ export const AcceptOfferModal = ({
 
   const totalEarningsInWICP = totalPriceCalculator({
     price,
-    feesInPercent: 5,
+    feesInPercent: 3.5,
   });
 
   const totalEarningsInDollars = totalPriceCalculator({
     price: formattedPrice,
-    feesInPercent: 5,
+    feesInPercent: 3.5,
   });
 
   return (
