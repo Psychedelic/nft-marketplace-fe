@@ -21,6 +21,7 @@ import {
   PopoverTrigger,
   PlugIconStyled,
   WICPLogo,
+  PlugOwnerName,
 } from './styles';
 import { useTheme } from '../../hooks';
 import { Icon } from '../icons';
@@ -135,7 +136,9 @@ export const PlugButton = ({
                 extraIconProps={{ dark: theme === 'darkTheme' }}
               />
             )}
-            {text}
+            <PlugOwnerName>
+              {text}
+            </PlugOwnerName>
             {isConnected && (
               <PlugArrowDownIcon
                 icon="chevron-down"

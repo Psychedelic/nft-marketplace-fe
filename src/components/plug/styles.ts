@@ -24,8 +24,9 @@ export const PlugButtonContainer = styled('button', {
 export const PlugButtonText = styled('div', {
   // base styles
   width: '136px',
+  maxWidth: '136px',
   height: '40px',
-  padding: '2px 4px',
+  padding: '2px 8px',
   backgroundColor: '$buttonBackgroundColor',
   color: '$mainTextColor',
   borderRadius: '14px',
@@ -100,12 +101,10 @@ export const ListItem = styled('div', {
 });
 
 export const PlugIconStyled = styled(Icon, {
-  marginRight: '10px',
   width: '12px',
 });
 
 export const PlugArrowDownIcon = styled(Icon, {
-  marginLeft: '10px',
   fontSize: '11px',
 });
 
@@ -136,4 +135,14 @@ export const PlugWICPBalance = styled('div', {
 
 export const WICPText = styled('span', {
   marginLeft: '5px',
+});
+
+export const PlugOwnerName = styled('span', {
+  fontSize: '15px',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  margin: '0px 8px',
+  position: 'relative',
+  maxWidth: '90px',
 });
