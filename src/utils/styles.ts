@@ -25,6 +25,8 @@ export const portalZIndexGlobals = globalCss({
     '& [data-radix-portal].above-nav': {
       zIndex: '4 !important',
     },
+    '&.tooltip-open [data-radix-portal]': {
+      zIndex: '30 !important',
+    },
   },
 });
-

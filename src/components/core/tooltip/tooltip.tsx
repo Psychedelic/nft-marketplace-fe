@@ -15,8 +15,27 @@ export type TooltipProps = {
 export const Tooltip = ({ children, text }: TooltipProps) => {
   const [, themeObject] = useTheme();
 
+  const handleTooltipOpen = (status: boolean) => {
+    const applicationBody = document.querySelector('body');
+
+    if (!applicationBody) return;
+
+    if (status) {
+      applicationBody?.classList.add('tooltip-open');
+
+      return;
+    }
+
+    if (applicationBody?.classList.contains('tooltip-open')) {
+      applicationBody?.classList.remove('tooltip-open');
+    }
+  };
+
   return (
-    <TooltipPrimitive.Root delayDuration={300}>
+    <TooltipPrimitive.Root
+      delayDuration={300}
+      onOpenChange={handleTooltipOpen}
+    >
       <TooltipPrimitive.Trigger asChild>
         <div>{children}</div>
       </TooltipPrimitive.Trigger>
