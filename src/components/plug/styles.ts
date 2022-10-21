@@ -144,5 +144,4 @@ export const PlugOwnerName = styled('span', {
   whiteSpace: 'nowrap',
   margin: '0px 8px',
   position: 'relative',
-  maxWidth: '90px',
 });
