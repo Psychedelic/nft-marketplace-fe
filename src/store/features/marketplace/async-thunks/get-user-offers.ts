@@ -73,7 +73,16 @@ export const getUserOffers = createAsyncThunk<any | undefined, any>(
         floorDifferencePrice = floorDifferenceResponse?.data;
       }
 
-      const offers = data?.map((item: NFTToken) => {
+      let offersFetched = [];
+
+      if (data && data.length > 0) {
+        offersFetched = data.filter(
+          (nftData: NFTToken) =>
+            nftData.offers && nftData.offers.length > 0,
+        );
+      }
+
+      const offers = offersFetched?.map((item: NFTToken) => {
         const metadata = item?.offers.reduce(
           (
             acc: any,
