@@ -135,11 +135,7 @@ const NFTsSearchResults = ({
             {t('translation:emptyStates.noNFTsFound')}
           </ItemsEmptyContainer>
         ))}
-      {!searchText && !loadingSearch && (
-        <ItemsEmptyContainer>
-          {t('translation:common.noRecentSearch')}
-        </ItemsEmptyContainer>
-      )}
+      {!searchText && !loadingSearch && <ItemsEmptyContainer />}
       {loadingSearch && (
         <LoadingWrapper>
           <SpinnerIcon />
