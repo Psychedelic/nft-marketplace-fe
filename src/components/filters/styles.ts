@@ -209,8 +209,8 @@ export const FilterButtonWrapper = styled('div', {
 
 export const CollapseIcon = styled(Icon, {
   color: '$mainTextColor',
-  width: '24px',
-  height: '24px',
+  width: '100%',
+  height: '100%',
 
   variants: {
     opened: {
