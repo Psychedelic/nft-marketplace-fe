@@ -16,12 +16,6 @@ import {
   ActionText,
   PriceInActionSheet,
   RouterLink,
-  MediaWrapper,
-  PreviewDetails,
-  NameCardBg,
-  NameCardContainer,
-  NameCardCollection,
-  NameCardTitle,
 } from './styles';
 import wicpLogo from '../../../../assets/wicp.svg';
 import {
@@ -39,10 +33,9 @@ import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 import { NFTActionStatuses } from '../../../../constants/common';
 import { NumberTooltip } from '../../../number-tooltip';
 import { Media } from './media';
+import { NameCard } from './name-card';
 import { isOperatorMarketplace } from '../../../../utils/nfts';
-import { generateImgFromText } from '../../../../utils/image-generator';
 // TODO: replace ICNS logo dynamically
-import icnsLogo from '../../../../assets/ICNS-logo.svg';
 import { formatICNSName } from '../../../../utils/icns';
 
 export type NftCardProps = {
@@ -248,24 +241,11 @@ export const NftCard = React.memo(
                 previewCard={previewCard}
               />
             ) : (
-              // TODO: Replace with correct changes either in <Media> component
-              // which should support Video or Static image, not just video
-              // at the moment styled using gradient colors
-              <MediaWrapper>
-                <PreviewDetails>
-                  <NameCardBg>
-                    <NameCardContainer>
-                      <NameCardCollection
-                        src={icnsLogo}
-                        alt="collection-logo"
-                      />
-                      <NameCardTitle>
-                        {formatICNSName(data?.traits?.name)}
-                      </NameCardTitle>
-                    </NameCardContainer>
-                  </NameCardBg>
-                </PreviewDetails>
-              </MediaWrapper>
+              <NameCard
+                containerRef={containerRef}
+                name={data?.traits?.name}
+                previewCard={previewCard}
+              />
             )}
             <Flex>
               <NftDataHeader>{data?.name}</NftDataHeader>
