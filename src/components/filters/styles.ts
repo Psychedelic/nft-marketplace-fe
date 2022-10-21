@@ -277,4 +277,6 @@ export const ButtonWrapper = styled('div', {
 
 export const CloseIcon = styled(Icon, {
   color: '$mainTextColor',
+  width: '100%',
+  heighht: '100%',
 });
