@@ -149,6 +149,12 @@ export const AcceptOfferModal = ({
     feesInPercent: 3.5,
   });
 
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
+  const { collectionFee } = collectionDetails;
+
   return (
     <DialogPrimitive.Root
       open={modalOpened}
@@ -277,9 +283,7 @@ export const AcceptOfferModal = ({
                       </Tooltip>
                     </FeeLabelContainer>
                     <FeePercent>
-                      {t(
-                        'translation:modals.labels.collectionFeePercent',
-                      )}
+                      {collectionFee}
                     </FeePercent>
                   </FeeDetails>
                 </FeeContainer>

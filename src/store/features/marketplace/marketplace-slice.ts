@@ -82,6 +82,7 @@ export type CurrentCollectionDetails = {
   collectionId?: string;
   collectionName?: string;
   collectionThumbnail?: string;
+  collectionFee?: number;
 };
 
 type RecentyListedForSale = MakeListing[];

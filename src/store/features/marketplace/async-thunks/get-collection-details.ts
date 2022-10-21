@@ -42,8 +42,11 @@ export const getCollectionDetails = createAsyncThunk<
         collectionId: collection.id.toString(),
         collectionName: collection.name,
         collectionThumbnail: collection.thumbnail,
+        collectionFee: collection.fee,
       };
-      
+
+      console.log(currentCollectionDetails.collectionFee);
+
       return currentCollectionDetails;
     } catch (err) {
       AppLog.error(err);
