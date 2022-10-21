@@ -152,19 +152,19 @@ export const CancelOfferModal = ({
               <ModalButtonsList>
                 <ModalButtonWrapper>
                   <ActionButton
-                    type="secondary"
-                    onClick={handleModalClose}
-                  >
-                    {t('translation:modals.buttons.cancel')}
-                  </ActionButton>
-                </ModalButtonWrapper>
-                <ModalButtonWrapper>
-                  <ActionButton
                     type={isMobileScreen ? 'danger' : 'primary'}
                     onClick={handleCancelOffer}
                     danger
                   >
                     {t('translation:modals.buttons.cancelOffer')}
+                  </ActionButton>
+                </ModalButtonWrapper>
+                <ModalButtonWrapper>
+                  <ActionButton
+                    type="secondary"
+                    onClick={handleModalClose}
+                  >
+                    {t('translation:modals.buttons.cancel')}
                   </ActionButton>
                 </ModalButtonWrapper>
               </ModalButtonsList>
