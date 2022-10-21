@@ -181,6 +181,14 @@ export const IconButtonStyles = styled('div', {
   alignItems: 'center',
   justifyContent: 'center',
   marginRight: '10px',
+  transition: 'transform 0.2s ease-in-out',
+  '&:hover': {
+    boxShadow: '0px 0px 8px 3px $navBackgroundColor',
+    transform: 'scale(1.085)',
+  },
+  '&:active': {
+    transform: 'scale(0.985)',
+  },
 
   '&:last-child': {
     marginRight: '0px',

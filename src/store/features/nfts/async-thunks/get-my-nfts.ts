@@ -64,8 +64,6 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
         } catch (err) {}
       })();
 
-      console.log(userNFTIds, 'userNFTIds');
-
       if (!shouldFetchUserTokenIdsAlone) {
         const getUserNFTs = await jellyCollection.getNFTs({
           ids:
