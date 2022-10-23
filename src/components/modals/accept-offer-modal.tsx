@@ -153,6 +153,10 @@ export const AcceptOfferModal = ({
     (state: RootState) => state.marketplace.currentCollectionDetails,
   );
 
+  const protocolFee = useSelector(
+    (state: RootState) => state.marketplace.protocolFee,
+  );
+
   const { collectionFee } = collectionDetails;
 
   return (
@@ -266,9 +270,7 @@ export const AcceptOfferModal = ({
                       </Tooltip>
                     </FeeLabelContainer>
                     <FeePercent>
-                      {t(
-                        'translation:modals.labels.protocolFeePercent',
-                      )}
+                    {`${protocolFee}%`}
                     </FeePercent>
                   </FeeDetails>
                   <FeeDetails>
@@ -283,7 +285,7 @@ export const AcceptOfferModal = ({
                       </Tooltip>
                     </FeeLabelContainer>
                     <FeePercent>
-                      {collectionFee}
+                      {`${collectionFee}%`}
                     </FeePercent>
                   </FeeDetails>
                 </FeeContainer>

@@ -23,6 +23,7 @@ import {
   getUserOffers,
   getAllCollections,
   getCollectionDetails,
+  getProtocolFee,
 } from './async-thunks';
 import { TransactionStatus } from '../../../constants/transaction-status';
 
@@ -115,6 +116,7 @@ type InitialState = {
   collections: Collection[];
   collection_id: string | undefined;
   currentCollectionDetails: CurrentCollectionDetails;
+  protocolFee: number | undefined;
 };
 
 const defaultTransactionStatus = {
@@ -145,6 +147,7 @@ const initialState: InitialState = {
   collections: [],
   collection_id: '',
   currentCollectionDetails: {},
+  protocolFee: undefined,
 };
 
 export const marketplaceSlice = createSlice({
@@ -188,6 +191,12 @@ export const marketplaceSlice = createSlice({
       action: PayloadAction<string | undefined>,
     ) => {
       state.collection_id = action.payload;
+    },
+    setProtocolFee: (
+      state,
+      action: PayloadAction<number | undefined>,
+    ) => {
+      state.protocolFee = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -282,6 +291,7 @@ export const marketplaceActions = {
   getUserOffers,
   getAllCollections,
   getCollectionDetails,
+  getProtocolFee,
 };
 
 export default marketplaceSlice.reducer;

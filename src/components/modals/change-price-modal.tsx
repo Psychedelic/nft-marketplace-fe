@@ -198,6 +198,16 @@ export const ChangePriceModal = ({
     currentNFTId: tokenId,
   });
 
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
+  const protocolFee = useSelector(
+    (state: RootState) => state.marketplace.protocolFee,
+  );
+
+  const { collectionFee } = collectionDetails;
+
   return (
     <DialogPrimitive.Root
       open={modalOpened}
@@ -293,11 +303,7 @@ export const ChangePriceModal = ({
                           <InfoIcon icon="info" />
                         </Tooltip>
                       </FeeLabelContainer>
-                      <FeePercent>
-                        {t(
-                          'translation:modals.labels.protocolFeePercent',
-                        )}
-                      </FeePercent>
+                      <FeePercent>{`${protocolFee}%`}</FeePercent>
                     </FeeDetails>
                     <FeeDetails>
                       <FeeLabelContainer>
@@ -314,11 +320,7 @@ export const ChangePriceModal = ({
                           <InfoIcon icon="info" />
                         </Tooltip>
                       </FeeLabelContainer>
-                      <FeePercent>
-                        {t(
-                          'translation:modals.labels.collectionFeePercent',
-                        )}
-                      </FeePercent>
+                      <FeePercent>{`${collectionFee}%`}</FeePercent>
                     </FeeDetails>
                   </FeeContainer>
                 </SaleContentWrapper>
