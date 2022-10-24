@@ -80,6 +80,8 @@ export const CollectionOverview = () => {
       marketplaceActions.getCollectionDetails({ collectionId }),
     );
 
+    dispatch(marketplaceActions.getProtocolFee({ collectionId }));
+
     // TODO: Update static data like crowns title, icon
     // by using currentCollectionDetails state
   }, [collectionId, currentCollectionId]);

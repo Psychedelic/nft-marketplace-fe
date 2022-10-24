@@ -156,6 +156,10 @@ export const NftDetails = () => {
     );
 
     dispatch(
+      marketplaceActions.getProtocolFee({ collectionId }),
+    );
+
+    dispatch(
       nftsActions.getNFTDetails({
         id,
         collectionId,

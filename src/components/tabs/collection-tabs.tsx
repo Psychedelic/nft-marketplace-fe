@@ -77,7 +77,8 @@ export const CollectionTabs = () => {
     (state: RootState) => state.marketplace.currentCollectionDetails,
   );
 
-  const { collectionId: currentCollectionId, collectionName } = collectionDetails;
+  const { collectionId: currentCollectionId, collectionName } =
+    collectionDetails;
 
   useEffect(() => {
     if (!collectionId || collectionId === currentCollectionId) return;
@@ -85,6 +86,8 @@ export const CollectionTabs = () => {
     dispatch(
       marketplaceActions.getCollectionDetails({ collectionId }),
     );
+
+    dispatch(marketplaceActions.getProtocolFee({ collectionId }));
   }, [collectionId, currentCollectionId]);
 
   return (

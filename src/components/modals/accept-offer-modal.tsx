@@ -139,14 +139,26 @@ export const AcceptOfferModal = ({
     );
   };
 
+  const collectionDetails = useSelector(
+    (state: RootState) => state.marketplace.currentCollectionDetails,
+  );
+
+  const protocolFee = useSelector(
+    (state: RootState) => state.marketplace.protocolFee,
+  );
+
+  const { collectionFee } = collectionDetails;
+
   const totalEarningsInWICP = totalPriceCalculator({
     price,
-    feesInPercent: 3.5,
+    feesInPercent:
+      collectionFee && protocolFee && collectionFee + protocolFee,
   });
 
   const totalEarningsInDollars = totalPriceCalculator({
     price: formattedPrice,
-    feesInPercent: 3.5,
+    feesInPercent:
+      collectionFee && protocolFee && collectionFee + protocolFee,
   });
 
   return (
@@ -259,11 +271,7 @@ export const AcceptOfferModal = ({
                         <InfoIcon icon="info" />
                       </Tooltip>
                     </FeeLabelContainer>
-                    <FeePercent>
-                      {t(
-                        'translation:modals.labels.protocolFeePercent',
-                      )}
-                    </FeePercent>
+                    <FeePercent>{`${protocolFee}%`}</FeePercent>
                   </FeeDetails>
                   <FeeDetails>
                     <FeeLabelContainer>
@@ -276,11 +284,7 @@ export const AcceptOfferModal = ({
                         <InfoIcon icon="info" />
                       </Tooltip>
                     </FeeLabelContainer>
-                    <FeePercent>
-                      {t(
-                        'translation:modals.labels.collectionFeePercent',
-                      )}
-                    </FeePercent>
+                    <FeePercent>{`${collectionFee}%`}</FeePercent>
                   </FeeDetails>
                 </FeeContainer>
                 <ItemDetailsWrapper lastChild>

@@ -14,3 +14,4 @@ export * from './get-nft-offers';
 export * from './get-user-offers';
 export * from './get-all-collections';
 export * from './get-collection-details';
+export * from './get-protocol-fee'
