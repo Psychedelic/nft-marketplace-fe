@@ -139,16 +139,6 @@ export const AcceptOfferModal = ({
     );
   };
 
-  const totalEarningsInWICP = totalPriceCalculator({
-    price,
-    feesInPercent: 3.5,
-  });
-
-  const totalEarningsInDollars = totalPriceCalculator({
-    price: formattedPrice,
-    feesInPercent: 3.5,
-  });
-
   const collectionDetails = useSelector(
     (state: RootState) => state.marketplace.currentCollectionDetails,
   );
@@ -158,6 +148,18 @@ export const AcceptOfferModal = ({
   );
 
   const { collectionFee } = collectionDetails;
+
+  const totalEarningsInWICP = totalPriceCalculator({
+    price,
+    feesInPercent:
+      collectionFee && protocolFee && collectionFee + protocolFee,
+  });
+
+  const totalEarningsInDollars = totalPriceCalculator({
+    price: formattedPrice,
+    feesInPercent:
+      collectionFee && protocolFee && collectionFee + protocolFee,
+  });
 
   return (
     <DialogPrimitive.Root
@@ -269,9 +271,7 @@ export const AcceptOfferModal = ({
                         <InfoIcon icon="info" />
                       </Tooltip>
                     </FeeLabelContainer>
-                    <FeePercent>
-                    {`${protocolFee}%`}
-                    </FeePercent>
+                    <FeePercent>{`${protocolFee}%`}</FeePercent>
                   </FeeDetails>
                   <FeeDetails>
                     <FeeLabelContainer>
@@ -284,9 +284,7 @@ export const AcceptOfferModal = ({
                         <InfoIcon icon="info" />
                       </Tooltip>
                     </FeeLabelContainer>
-                    <FeePercent>
-                      {`${collectionFee}%`}
-                    </FeePercent>
+                    <FeePercent>{`${collectionFee}%`}</FeePercent>
                   </FeeDetails>
                 </FeeContainer>
                 <ItemDetailsWrapper lastChild>
