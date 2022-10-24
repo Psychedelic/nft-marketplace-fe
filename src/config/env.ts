@@ -41,8 +41,7 @@ const config: Config = {
     icScan: 'https://icscan.io/principal',
     wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
     capRouterId: 'lj532-6iaaa-aaaah-qcc7a-cai',
-    // TODO: update collection Id for production
-    icnsCollectionId: 'mbj2k-saaaa-aaaan-qaaua-cai',
+    icnsCollectionId: 'n2tvu-5aaaa-aaaah-abuqq-cai',
   },
   // Staging (serverless, local-replica)
   // Is similar to the process we have for local development
