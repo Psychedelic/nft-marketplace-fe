@@ -144,7 +144,7 @@ export const Plug = () => {
         <PlugButton
           handleConnect={handleConnect}
           isMobileScreen={isMobileScreen}
-          text={t('translation:buttons.action.loading')}
+          text={t('translation:buttons.action.connectToPlug')}
           isConnected={isConnected}
           principalId={principalId}
         />
