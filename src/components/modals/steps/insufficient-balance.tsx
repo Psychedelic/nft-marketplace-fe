@@ -36,13 +36,13 @@ export const InsufficientBalance = ({
       </ModalHeader>
       <ModalButtonsList>
         <ModalButtonWrapper>
-          <ActionButton type="secondary" onClick={onCancel}>
-            {t('translation:modals.buttons.cancel')}
+          <ActionButton type="primary" onClick={openSonicURL}>
+            {t('translation:modals.buttons.swapOnSonic')}
           </ActionButton>
         </ModalButtonWrapper>
         <ModalButtonWrapper>
-          <ActionButton type="primary" onClick={openSonicURL}>
-            {t('translation:modals.buttons.swapOnSonic')}
+          <ActionButton type="secondary" onClick={onCancel}>
+            {t('translation:modals.buttons.cancel')}
           </ActionButton>
         </ModalButtonWrapper>
       </ModalButtonsList>
