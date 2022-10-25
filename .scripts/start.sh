@@ -25,7 +25,7 @@ if [[ $env == "development" ]]; then
   exit 0
 fi;
 
-REACT_APP_HUB_ID=$(cd ./jelly && dfx canister --network ic id jelly-hub-test) \
+REACT_APP_HUB_ID=$(cd ./jelly && dfx canister --network ic id jelly-hub) \
 REACT_APP_NODE_ENV=$1 \
 DISABLE_ESLINT_PLUGIN=true \
 react-scripts start
