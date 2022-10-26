@@ -151,14 +151,12 @@ export const AcceptOfferModal = ({
 
   const totalEarningsInWICP = totalPriceCalculator({
     price,
-    feesInPercent:
-      collectionFee && protocolFee && collectionFee + protocolFee,
+    feesInPercent: (collectionFee || 0) + (protocolFee || 0),
   });
 
   const totalEarningsInDollars = totalPriceCalculator({
     price: formattedPrice,
-    feesInPercent:
-      collectionFee && protocolFee && collectionFee + protocolFee,
+    feesInPercent: (collectionFee || 0) + (protocolFee || 0),
   });
 
   return (

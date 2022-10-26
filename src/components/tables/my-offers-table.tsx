@@ -98,6 +98,8 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     dispatch(
       marketplaceActions.getCollectionDetails({ collectionId }),
     );
+
+    dispatch(marketplaceActions.getProtocolFee({ collectionId }));
   }, [collectionId, dispatch]);
 
   useEffect(() => {
