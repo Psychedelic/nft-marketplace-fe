@@ -596,7 +596,7 @@ export const PlugButtonContainer = styled('div', {
 
 export const TransactionStepsContainer = styled('div', {
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'baseline',
   justifyContent: 'center',
   marginTop: '50px',
 });

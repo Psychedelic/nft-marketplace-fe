@@ -385,7 +385,7 @@ export const SellModal = ({
               <TransactionStepsContainer>
                 {transactionSteps?.approveWICPStatus && (
                   <TransactionStep
-                    name="Approving WICP"
+                    name="Approving Token"
                     status={findTransactionStatus(
                       transactionSteps.approveWICPStatus,
                     )}
