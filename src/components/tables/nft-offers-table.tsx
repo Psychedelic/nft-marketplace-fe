@@ -50,10 +50,6 @@ export const NFTOffersTable = ({
     loading: true,
   });
 
-  const recentlyAcceptedOffers = useSelector(
-    (state: RootState) => state.marketplace.recentlyAcceptedOffers,
-  );
-
   const recentlyMadeOffers = useSelector(
     (state: RootState) => state.marketplace.recentlyMadeOffers,
   );
@@ -109,12 +105,7 @@ export const NFTOffersTable = ({
         },
       }),
     );
-  }, [
-    dispatch,
-    recentlyAcceptedOffers,
-    recentlyMadeOffers,
-    recentlyCancelledOffers,
-  ]);
+  }, [dispatch, recentlyMadeOffers, recentlyCancelledOffers]);
 
   useEffect(() => {
     setTableDetails({

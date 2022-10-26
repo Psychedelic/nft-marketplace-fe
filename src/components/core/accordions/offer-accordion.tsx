@@ -94,10 +94,6 @@ export const OnConnected = ({
   const [loadingOffers, setLoadingOffers] = useState<boolean>(true);
   const { principalId: plugPrincipalId } = usePlugStore();
 
-  const recentlyAcceptedOffers = useSelector(
-    (state: RootState) => state.marketplace.recentlyAcceptedOffers,
-  );
-
   const recentlyMadeOffers = useSelector(
     (state: RootState) => state.marketplace.recentlyMadeOffers,
   );
@@ -146,7 +142,6 @@ export const OnConnected = ({
     id,
     dispatch,
     plugPrincipalId,
-    recentlyAcceptedOffers,
     recentlyMadeOffers,
     recentlyCancelledOffers,
   ]);

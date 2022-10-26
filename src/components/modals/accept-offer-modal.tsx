@@ -151,14 +151,12 @@ export const AcceptOfferModal = ({
 
   const totalEarningsInWICP = totalPriceCalculator({
     price,
-    feesInPercent:
-      collectionFee && protocolFee && collectionFee + protocolFee,
+    feesInPercent: (collectionFee || 0) + (protocolFee || 0),
   });
 
   const totalEarningsInDollars = totalPriceCalculator({
     price: formattedPrice,
-    feesInPercent:
-      collectionFee && protocolFee && collectionFee + protocolFee,
+    feesInPercent: (collectionFee || 0) + (protocolFee || 0),
   });
 
   return (
@@ -420,7 +418,7 @@ export const AcceptOfferModal = ({
                 <ModalButtonWrapper fullWidth>
                   <ActionButton
                     type="primary"
-                    onClick={() => handleModalOpen(false)}
+                    onClick={() => window.location.reload()}
                   >
                     {t('translation:modals.buttons.done')}
                   </ActionButton>
