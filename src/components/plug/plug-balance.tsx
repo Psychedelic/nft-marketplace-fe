@@ -44,6 +44,12 @@ const PlugBalance = () => {
           userPrincipal: Principal.fromText(plugPrincipal),
         });
 
+        if (!balance) {
+          dispatch(plugActions.setWICPBalance('0.0'));
+
+          return;
+        }
+
         dispatch(plugActions.setWICPBalance(balance));
       } catch (err) {
         AppLog.error(err);
