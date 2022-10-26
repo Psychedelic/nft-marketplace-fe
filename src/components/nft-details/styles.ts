@@ -230,8 +230,13 @@ export const NameCardTitle = styled('div', {
   textAlign: 'left',
   padding: '70px 0px 0px',
   color: '#000',
+  width: 'calc(100% - 46px)',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
 
   '@md': {
+    width: 'calc(100% - 26px)',
     bottom: '26px',
     left: '26px',
     fontSize: '30px',
