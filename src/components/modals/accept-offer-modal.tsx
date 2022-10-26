@@ -418,7 +418,7 @@ export const AcceptOfferModal = ({
                 <ModalButtonWrapper fullWidth>
                   <ActionButton
                     type="primary"
-                    onClick={() => handleModalOpen(false)}
+                    onClick={() => window.location.reload()}
                   >
                     {t('translation:modals.buttons.done')}
                   </ActionButton>

@@ -68,10 +68,6 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
     loading: false,
   });
 
-  const recentlyAcceptedOffers = useSelector(
-    (state: RootState) => state.marketplace.recentlyAcceptedOffers,
-  );
-
   const recentlyCancelledOffers = useSelector(
     (state: RootState) => state.marketplace.recentlyCancelledOffers,
   );
@@ -222,7 +218,7 @@ export const MyOffersTable = ({ offersType }: MyOffersTableProps) => {
         }),
       );
     }
-  }, [dispatch, offersType, recentlyAcceptedOffers]);
+  }, [dispatch, offersType]);
 
   const loadMoreData = () => {
     // TODO: Add logic to load more data
