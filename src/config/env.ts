@@ -62,11 +62,11 @@ const config: Config = {
   // listed in here
   test: {
     host: 'https://ic0.app',
-    kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
+    kyasshuMarketplaceAPI: 'https://kyasshu.fleek.co',
     icScan: 'https://icscan.io/principal',
-    wICPCanisterId: 'lassd-pqaaa-aaaag-qakpq-cai',
+    wICPCanisterId: 'utozz-siaaa-aaaam-qaaxq-cai',
     capRouterId: 'lj532-6iaaa-aaaah-qcc7a-cai',
-    icnsCollectionId: 'mbj2k-saaaa-aaaan-qaaua-cai',
+    icnsCollectionId: 'e5kvl-zyaaa-aaaan-qabaq-cai',
   },
   // The local development environment settings
   development: {

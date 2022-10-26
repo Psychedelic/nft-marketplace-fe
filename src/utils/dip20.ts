@@ -1,5 +1,6 @@
 import { Principal } from '@dfinity/principal';
 import { createActor } from '../integrations/actor';
+import { parseE8SAmountToWICP } from './formatters';
 
 export const getDIP20BalanceOf = async ({
   userPrincipal,
@@ -26,6 +27,5 @@ export const getDIP20BalanceOf = async ({
     return;
   }
 
-  return balance;
+  return parseE8SAmountToWICP(balance);
 };
-
