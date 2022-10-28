@@ -64,51 +64,140 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
         } catch (err) {}
       })();
 
+      console.log(userNFTIds, 'userNFTIds');
+
       if (!shouldFetchUserTokenIdsAlone) {
-        const getUserNFTs = await jellyCollection.getNFTs({
-          ids:
-            (userNFTIds &&
-              userNFTIds.length &&
-              userNFTIds.length > 25 &&
-              userNFTIds.slice(0, 25)) ||
-            userNFTIds,
-        });
+        // const getUserNFTs = await jellyCollection.getNFTs({
+        //   ids:
+        //     (userNFTIds &&
+        //       userNFTIds.length &&
+        //       userNFTIds.length > 25 &&
+        //       userNFTIds.slice(0, 25)) ||
+        //     userNFTIds,
+        // });
 
-        if (!getUserNFTs.ok) {
-          throw Error(`Oops! Failed to get my NFTs`);
-        }
-        const { data = [] } = getUserNFTs;
+        if (
+          userNFTIds &&
+          userNFTIds.length &&
+          userNFTIds.length > 0
+        ) {
+          const limit = 20;
+          const totalNFTsCount = userNFTIds.length;
+          const totalPages = Math.ceil(totalNFTsCount / limit);
+          let remainingCount = totalNFTsCount;
+          let startIndex = 0;
+          let endIndex = 0;
+          let fetchedNFTs: any = [];
 
-        // TODO: map nft list
-        const extractedNFTSList = data.map((nft: any) => {
-          const metadata = {
-            id: nft.id,
-            name: nft.collectionName,
-            price: nft?.price,
-            lastOffer: nft?.lastOffer,
-            lastSale: nft?.lastSale,
-            preview: nft?.thumbnail,
-            location: nft?.location,
-            traits: nft?.traits,
-            status: nft?.lastActionTaken,
-            owner: nft?.owner,
-            operator: nft?.operator,
-            rendered: true,
+          for (
+            let currentPageNumber = 1;
+            currentPageNumber < totalPages + 1;
+            currentPageNumber++
+          ) {
+            startIndex = endIndex + 1;
+            if (remainingCount > limit) {
+              endIndex = currentPageNumber * limit;
+            } else {
+              endIndex =
+                (currentPageNumber - 1) * limit + remainingCount + 1;
+            }
+
+            console.log(
+              currentPageNumber,
+              startIndex - 1,
+              endIndex - 1,
+              'index',
+            );
+
+            const nftIdsToFetch = userNFTIds.slice(
+              startIndex - 1,
+              endIndex - 1,
+            );
+
+            const getUserNFTs = await jellyCollection.getNFTs({
+              ids: nftIdsToFetch,
+            });
+
+            if (getUserNFTs.ok) {
+              const { data = [] } = getUserNFTs;
+              fetchedNFTs = [...fetchedNFTs, ...data];
+            }
+
+            remainingCount = totalNFTsCount - endIndex;
+          }
+
+          const extractedNFTSList = fetchedNFTs.map((nft: any) => {
+            const metadata = {
+              id: nft.id,
+              name: nft.collectionName,
+              price: nft?.price,
+              lastOffer: nft?.lastOffer,
+              lastSale: nft?.lastSale,
+              preview: nft?.thumbnail,
+              location: nft?.location,
+              traits: nft?.traits,
+              status: nft?.lastActionTaken,
+              owner: nft?.owner,
+              operator: nft?.operator,
+              rendered: true,
+            };
+            return metadata;
+          });
+
+          const actionPayload = {
+            loadedNFTList: extractedNFTSList,
+            totalPages: 1,
+            total: fetchedNFTs.length,
+            nextPage: 1,
+            lastIndex: undefined,
           };
-          return metadata;
-        });
 
-        const actionPayload = {
-          loadedNFTList: extractedNFTSList,
-          totalPages: 1,
-          total: data.length,
-          nextPage: 1,
-          lastIndex: undefined,
-        };
+          // update store with loaded NFTS details
+          dispatch(nftsActions.setLoadedNFTS(actionPayload));
+          dispatch(nftsActions.setNFTsTotalCount(userNFTIds.length));
 
-        // update store with loaded NFTS details
-        dispatch(nftsActions.setLoadedNFTS(actionPayload));
-        dispatch(nftsActions.setNFTsTotalCount(userNFTIds.length));
+          console.log(fetchedNFTs, 'fetchedNFTs');
+        } else {
+          const getUserNFTs = await jellyCollection.getNFTs({
+            ids: userNFTIds,
+          });
+
+          if (!getUserNFTs.ok) {
+            throw Error(`Oops! Failed to get my NFTs`);
+          }
+          const { data = [] } = getUserNFTs;
+
+          // TODO: map nft list
+          const extractedNFTSList = data.map((nft: any) => {
+            const metadata = {
+              id: nft.id,
+              name: nft.collectionName,
+              price: nft?.price,
+              lastOffer: nft?.lastOffer,
+              lastSale: nft?.lastSale,
+              preview: nft?.thumbnail,
+              location: nft?.location,
+              traits: nft?.traits,
+              status: nft?.lastActionTaken,
+              owner: nft?.owner,
+              operator: nft?.operator,
+              rendered: true,
+            };
+            return metadata;
+          });
+
+          const actionPayload = {
+            loadedNFTList: extractedNFTSList,
+            totalPages: 1,
+            total: data.length,
+            nextPage: 1,
+            lastIndex: undefined,
+          };
+
+          // update store with loaded NFTS details
+          dispatch(nftsActions.setLoadedNFTS(actionPayload));
+          dispatch(nftsActions.setNFTsTotalCount(userNFTIds.length));
+        }
       }
 
       const myNFTIds = userNFTIds || [];
