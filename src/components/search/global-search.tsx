@@ -47,7 +47,9 @@ export const GlobalSearch = ({
   const collectionDetails = useSelector(
     (state: RootState) => state.marketplace.currentCollectionDetails,
   );
-  const placeholderText = isICNSCollection(collectionDetails.collectionName)
+  const placeholderText = isICNSCollection(
+    collectionDetails.collectionName,
+  )
     ? t('translation:inputField.placeholder.searchNFTs')
     : t('translation:inputField.placeholder.searchAll');
 
@@ -69,12 +71,10 @@ export const GlobalSearch = ({
       dispatch(
         nftsActions.getSearchResults({
           count: 25,
-          search: !containsAnyLetters(value) ? value : undefined,
+          search: undefined,
           abortController,
           collectionId,
-          traits: containsAnyLetters(value)
-            ? { name: [value] }
-            : undefined,
+          traits: value ? { name: [value] } : undefined,
         }),
       );
     }, DEBOUNCE_TIMEOUT_MS),
