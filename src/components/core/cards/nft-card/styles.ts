@@ -143,6 +143,8 @@ export const ActionDetails = styled('span', {
   fontWeight: '500',
   fontSize: '14px',
   color: '$nftCardName',
+  display: 'flex',
+  alignItems: 'center',
 
   '& b': {
     color: '$mainTextColor',
