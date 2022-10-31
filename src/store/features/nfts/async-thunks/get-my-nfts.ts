@@ -140,6 +140,12 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
               owner: nft?.owner,
               operator: nft?.operator,
               rendered: true,
+              lastActionTaken: nft?.lastActionTaken,
+              listing: nft?.listing,
+              lastListingTime: nft?.lastListingTime,
+              offers: nft?.offers,
+              lastOfferTime: nft?.lastOfferTime,
+              lastSaleTime: nft?.lastSaleTime,
             };
             return metadata;
           });
@@ -182,6 +188,12 @@ export const getMyNFTs = createAsyncThunk<any | undefined, any>(
               owner: nft?.owner,
               operator: nft?.operator,
               rendered: true,
+              lastActionTaken: nft?.lastActionTaken,
+              listing: nft?.listing,
+              lastListingTime: nft?.lastListingTime,
+              offers: nft?.offers,
+              lastOfferTime: nft?.lastOfferTime,
+              lastSaleTime: nft?.lastSaleTime,
             };
             return metadata;
           });
