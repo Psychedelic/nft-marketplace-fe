@@ -116,10 +116,7 @@ export const CollectionItems = () => {
   };
 
   const displayOwners = () => {
-    if (
-      appliedFilters.defaultFilters.length
-    )
-      return;
+    if (appliedFilters.defaultFilters.length) return;
 
     if (!appliedFilters?.defaultFilters?.length) {
       return (
