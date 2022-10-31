@@ -48,6 +48,7 @@ import useMediaQuery from '../../hooks/use-media-query';
 // TODO: replace ICNS logo dynamically
 import icnsLogo from '../../assets/ICNS-logo.svg';
 import { formatICNSName } from '../../utils/icns';
+import { NameTooltip } from '../core/tooltip';
 
 // type CurrentListing = {
 //   seller: string;
@@ -155,9 +156,7 @@ export const NftDetails = () => {
       marketplaceActions.getCollectionDetails({ collectionId }),
     );
 
-    dispatch(
-      marketplaceActions.getProtocolFee({ collectionId }),
-    );
+    dispatch(marketplaceActions.getProtocolFee({ collectionId }));
 
     dispatch(
       nftsActions.getNFTDetails({
@@ -200,7 +199,7 @@ export const NftDetails = () => {
                     alt="collection-logo"
                   />
                   <NameCardTitle>
-                    {formatICNSName(nftDetails?.traits?.name)}
+                    <NameTooltip name={nftDetails?.traits?.name} />
                   </NameCardTitle>
                 </NameCardContainer>
               </NameCardBg>

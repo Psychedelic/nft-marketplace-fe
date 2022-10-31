@@ -482,3 +482,22 @@ export const ItemCount = styled('span', {
   alignItems: 'center',
   color: '$checkboxSelectedFiltersText',
 });
+
+export const OwnerDetails = styled('a', {
+  margin: '5px 0 0',
+  fontStyle: 'normal',
+  fontWeight: '500',
+  fontSize: '18px',
+  lineHeight: '22px',
+  display: 'flex',
+  alignitems: 'center',
+  color: '$mainTextColor',
+  textDecoration: 'none',
+  cursor: 'pointer',
+
+  '@md': {
+    minWidth: '135px',
+    fontWeight: '600',
+    display: 'block',
+  },
+});

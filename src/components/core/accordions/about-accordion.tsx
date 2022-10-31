@@ -25,6 +25,7 @@ import {
   MetaDataDetails,
   MetaDataTitle,
   MetaDataDescription,
+  OwnerDetails,
 } from './styles';
 import plugIcon from '../../../assets/plug-circle.svg';
 
@@ -39,6 +40,8 @@ import {
   isCrownsCollection,
   isICNSCollection,
 } from '../../../utils/collections';
+import { NameTooltip } from '../tooltip';
+import { getICAccountLink } from '../../../utils/account-id';
 
 export type AboutAccordionProps = {
   owner?: string;
@@ -137,13 +140,16 @@ export const AboutAccordionHeader = ({
           <MetaDataTitle>
             {t('translation:accordions.about.header.owner')}
           </MetaDataTitle>
-          <MetaDataDescription>
+          <OwnerDetails
+            href={owner && getICAccountLink(owner)}
+            target="_blank"
+          >
             {loadingOwnerAddress ? (
               <SkeletonBox style={{ width: '80px' }} />
             ) : (
-              ownerAddress || owner
+              <NameTooltip name={ownerAddress} /> || owner
             )}
-          </MetaDataDescription>
+          </OwnerDetails>
         </MetaDataDetails>
       </AccordionHeadContent>
     </>

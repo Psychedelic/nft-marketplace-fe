@@ -9,7 +9,7 @@ export const getICNSName = async (plugPrincipalId: string) => {
   return icnsName;
 };
 
-export const formatICNSName = (name: string) => {
+export const formatICNSName = (name?: string) => {
   if (!name) {
     return '';
   }
