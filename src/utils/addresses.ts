@@ -1,4 +1,4 @@
-import { getICNSName, formatICNSName } from './icns';
+import { getICNSName } from './icns';
 import { formatAddress } from './formatters';
 
 export const formatUserAddress = async (principal?: string) => {
@@ -6,7 +6,7 @@ export const formatUserAddress = async (principal?: string) => {
 
   const icnsName = await getICNSName(principal);
 
-  if (icnsName) return formatICNSName(icnsName);
+  if (icnsName) return icnsName;
 
   return formatAddress(principal);
 };

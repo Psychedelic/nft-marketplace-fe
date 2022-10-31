@@ -39,6 +39,7 @@ import {
   isCrownsCollection,
   isICNSCollection,
 } from '../../../utils/collections';
+import { NameTooltip } from '../tooltip';
 
 export type AboutAccordionProps = {
   owner?: string;
@@ -141,7 +142,7 @@ export const AboutAccordionHeader = ({
             {loadingOwnerAddress ? (
               <SkeletonBox style={{ width: '80px' }} />
             ) : (
-              ownerAddress || owner
+              <NameTooltip name={ownerAddress} /> || owner
             )}
           </MetaDataDescription>
         </MetaDataDetails>

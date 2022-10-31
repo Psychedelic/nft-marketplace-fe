@@ -9,6 +9,7 @@ import {
 } from './styles';
 import icnsLogo from '../../../../assets/ICNS-logo.svg';
 import { formatICNSName } from '../../../../utils/icns';
+import { NameTooltip } from '../../tooltip';
 
 export type NameCardProps = {
   previewCard?: boolean;
@@ -83,7 +84,9 @@ export const NameCard = ({
               src={icnsLogo}
               alt="collection-logo"
             />
-            <NameCardTitle>{formatICNSName(name)}</NameCardTitle>
+            <NameCardTitle>
+              <NameTooltip name={name} />
+            </NameCardTitle>
           </NameCardContainer>
         </NameCardBg>
       </PreviewDetails>

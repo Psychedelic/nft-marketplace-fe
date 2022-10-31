@@ -3,6 +3,7 @@ import { SkeletonBox } from '../skeleton';
 import { TextLinkDetails } from './styles';
 import { getICNSName, formatICNSName } from '../../../utils/icns';
 import { AppLog } from '../../../utils/log';
+import { NameTooltip } from '../tooltip';
 
 export interface TextLinkCellProps {
   text?: string;
@@ -50,7 +51,7 @@ export const TextLinkCell = ({
   if (icnsName) {
     return (
       <TextLinkDetails type={type} href={url} target="_blank">
-        {formatICNSName(icnsName)}
+        <NameTooltip name={icnsName} />
       </TextLinkDetails>
     );
   }
