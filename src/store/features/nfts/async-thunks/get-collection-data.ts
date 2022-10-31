@@ -8,6 +8,7 @@ import { marketplaceSlice } from '../../marketplace/marketplace-slice';
 import { isUnsupportedPage } from '../../../../utils/error';
 import { jellyJsInstanceHandler } from '../../../../integrations/jelly-js';
 import { getJellyCollection } from '../../../../utils/jelly';
+import { parseE8SAmountToWICP } from '../../../../utils/formatters';
 
 export const getCollectionData = createAsyncThunk<
   void,
@@ -22,6 +23,8 @@ export const getCollectionData = createAsyncThunk<
   });
 
   try {
+    let floorPrice: any = 0;
+
     const collection = await getJellyCollection({
       jellyInstance,
       collectionId,
@@ -43,9 +46,16 @@ export const getCollectionData = createAsyncThunk<
 
     const uniqueOwners = await jellyCollection.getUniqueNFTOwners();
 
+    // Fetch floor price
+    const floorPriceResponse = await jellyCollection.getFloorPrice();
+
+    if (floorPriceResponse?.ok) {
+      floorPrice = floorPriceResponse?.data;
+    }
+
     const actionPayload = {
       ownersCount: Number(uniqueOwners),
-      price: Number(responseData.fungibleFloor),
+      price: Number(parseE8SAmountToWICP(floorPrice)),
       totalVolume: Number(responseData.fungibleVolume),
     };
     dispatch(nftsActions.setCollectionData(actionPayload));
