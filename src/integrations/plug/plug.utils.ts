@@ -104,7 +104,8 @@ export const handleConnect = async ({
 
   const whitelist = [wICPCanisterId];
 
-  // TODO: mobile wallet connection
+  // TODO: handle mobile wallet connection
+
   // const ua = navigator.userAgent;
   // const isAndroid = /android/i.test(ua) ? true : false;
 
