@@ -38,7 +38,7 @@ if (
 const config: Config = {
   // The production version
   production: {
-    host: 'https://mainnet.dfinity.network',
+    host: 'https://ic0.app',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
     icScan: 'https://icscan.io/principal',
     nftCollectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
@@ -65,7 +65,7 @@ const config: Config = {
   // and the cached data points to the same canister ids
   // listed in here
   test: {
-    host: 'https://mainnet.dfinity.network',
+    host: 'https://ic0.app',
     kyasshuMarketplaceAPI: 'https://kyasshu-dev.fleek.co',
     icScan: 'https://icscan.io/principal',
     nftCollectionId: 'vlhm2-4iaaa-aaaam-qaatq-cai',
@@ -86,4 +86,12 @@ const config: Config = {
   },
 };
 
-export default config[env];
+const envConfig = config[env];
+
+// Overrides the Kyasshu API, e.g. to use the mock server
+// see .scripts/kyasshu-mock/server.js
+if (process.env.REACT_APP_KYASSHU_URL) {
+  envConfig.kyasshuMarketplaceAPI = process.env.REACT_APP_KYASSHU_URL;
+}
+
+export default envConfig;
